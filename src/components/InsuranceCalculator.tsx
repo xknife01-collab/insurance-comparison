@@ -4,7 +4,7 @@ import {
   Shield, Activity, Clock, Baby, Smile, 
   Stethoscope, Calendar, PiggyBank, 
   Car, Home, Brain, TrendingUp, MessageCircle, Navigation,
-  Heart, Hospital, Users, Wallet, Flame, Dog, Plane, Target, Scale, Hotel, Sparkles, Plus, Zap, ChevronRight, HelpCircle, HeartHandshake
+  Heart, Hospital, Users, Wallet, Flame, Dog, Plane, Target, Scale, Hotel, Sparkles, Plus, Zap, ChevronRight, HelpCircle, HeartHandshake, AlertCircle
 } from 'lucide-react';
 
 interface SubCategory {
@@ -127,6 +127,12 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   const [careSvcType, setCareSvcType] = useState<'support' | 'expense'>('support');
   const [careStepUp, setCareStepUp] = useState(true);
   
+  // Silson specific states
+  const [silsonHasCurrent, setSilsonHasCurrent] = useState<'yes' | 'no'>('no');
+  const [silson3Month, setSilson3Month] = useState<'yes' | 'no'>('no');
+  const [silson1Year, setSilson1Year] = useState<'yes' | 'no'>('no');
+  const [silson5Year, setSilson5Year] = useState<'yes' | 'no'>('no');
+  
   const [activeTab, setActiveTab] = useState<'standard' | 'simple'>('standard');
   
   // Detailed Coverage States
@@ -202,6 +208,12 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
         caregiving: selectedId === 'care_svc' ? {
           type: careSvcType,
           isStepUp: careStepUp
+        } : undefined,
+        silson: selectedId === 'silson' ? {
+          hasCurrentSilson: silsonHasCurrent,
+          threeMonthTreatment: silson3Month,
+          oneYearExam: silson1Year,
+          fiveYearTreatment: silson5Year
         } : undefined
       });
     }
@@ -477,6 +489,58 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                      <Sparkles className="text-emerald-500 shrink-0" size={24} />
                      <p className="text-xs text-slate-500 font-bold leading-relaxed">
                         최근 치료 이력이 없으시다면 <span className="text-emerald-600 font-black">"진단형"</span> 가입을 통해 면책기간 없이 즉시 보장을 받을 수 있는 플랜을 추천해 드립니다.
+                     </p>
+                  </div>
+                </div>
+              ) : selectedId === 'silson' ? (
+                <div className="bg-blue-50/30 rounded-[3rem] p-10 mb-12 border border-blue-100/50">
+                  <div className="flex items-center gap-3 mb-8">
+                     <div className="w-1.5 h-6 bg-blue-500 rounded-full"></div>
+                     <h3 className="text-xl font-bold text-slate-800">4세대 실손의료비 가입 전 고지사항</h3>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {/* Policy Checks */}
+                    <div className="space-y-4">
+                       <p className="text-[0.65rem] font-black text-slate-400 pl-1 uppercase tracking-widest mb-2">필수 확인 사항</p>
+                       <div className="flex items-center justify-between p-4 bg-white rounded-2xl border border-blue-50 shadow-sm">
+                          <div className="flex flex-col">
+                            <span className="text-sm font-black text-slate-700">기존 실손보험 가입 이력</span>
+                            <span className="text-[0.65rem] text-slate-400 font-bold">실비는 비례보상으로 중복 가입이 불가능합니다.</span>
+                          </div>
+                          <div className="flex gap-2 bg-slate-50 p-1 rounded-xl border border-slate-100 shrink-0 ml-4">
+                            <button onClick={() => setSilsonHasCurrent('yes')} className={`px-4 py-1.5 rounded-lg text-xs font-black transition-all ${silsonHasCurrent === 'yes' ? 'bg-orange-500 text-white shadow-md' : 'text-slate-300'}`}>가입중</button>
+                            <button onClick={() => setSilsonHasCurrent('no')} className={`px-4 py-1.5 rounded-lg text-xs font-black transition-all ${silsonHasCurrent === 'no' ? 'bg-slate-900 text-white shadow-md' : 'text-slate-300'}`}>없음</button>
+                          </div>
+                       </div>
+                    </div>
+                    
+                    {/* Health Questions */}
+                    <div className="space-y-4">
+                       <p className="text-[0.65rem] font-black text-slate-400 pl-1 uppercase tracking-widest mb-2">최근 병력 고지 (필수)</p>
+                       {[
+                         { title: '최근 3개월 내', desc: '질병 의심 소견, 치료, 입원, 수술, 투약 이력', state: silson3Month, setter: setSilson3Month },
+                         { title: '최근 1년 내', desc: '의사로부터 추가 검사(재검사) 이력', state: silson1Year, setter: setSilson1Year },
+                         { title: '최근 5년 내', desc: '입원, 수술, 7일 이상 치료, 30일 이상 투약', state: silson5Year, setter: setSilson5Year },
+                       ].map((q, i) => (
+                         <div key={i} className="flex items-center justify-between p-4 bg-white rounded-2xl border border-blue-50 shadow-sm">
+                            <div className="flex flex-col">
+                              <span className="text-sm font-black text-slate-700">{q.title}</span>
+                              <span className="text-[0.65rem] text-slate-400 font-bold">{q.desc}</span>
+                            </div>
+                            <div className="flex gap-2 bg-slate-50 p-1 rounded-xl border border-slate-100 shrink-0 ml-4">
+                              <button onClick={() => q.setter('yes')} className={`px-4 py-1.5 rounded-lg text-xs font-black transition-all ${q.state === 'yes' ? 'bg-orange-500 text-white shadow-md' : 'text-slate-300'}`}>예</button>
+                              <button onClick={() => q.setter('no')} className={`px-4 py-1.5 rounded-lg text-xs font-black transition-all ${q.state === 'no' ? 'bg-slate-900 text-white shadow-md' : 'text-slate-300'}`}>아니오</button>
+                            </div>
+                         </div>
+                       ))}
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6 p-5 bg-white/60 rounded-2xl border border-blue-100 flex items-start gap-4">
+                     <AlertCircle className="text-blue-500 shrink-0 mt-0.5" size={20} />
+                     <p className="text-xs text-slate-500 font-bold leading-relaxed">
+                        4세대 실손의료비는 비급여 도수치료, 주사료, MRI 등이 <span className="text-blue-600 font-black">특약으로 분리</span>되어 있으며, 비급여금 청구 액수에 따라 매년 보험료가 <span className="text-red-500 font-black">할증 또는 할인(차등제)</span>될 수 있습니다. 고지의무 위반 시 보장이 제한될 수 있습니다.
                      </p>
                   </div>
                 </div>

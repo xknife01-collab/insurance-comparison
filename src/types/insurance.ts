@@ -34,6 +34,12 @@ export interface InsuranceAnalysis {
     type: 'support' | 'expense';
     isStepUp: boolean;
   };
+  silson?: {                    // 실손의료보험 전용 필드
+    hasCurrentSilson: 'yes' | 'no';    // 기존 실손 가입 여부 (중복방지)
+    threeMonthTreatment: 'yes' | 'no'; // 3개월 내 의료행위
+    oneYearExam: 'yes' | 'no';         // 1년 내 추가검사
+    fiveYearTreatment: 'yes' | 'no';   // 5년 내 입원/수술/계속치료
+  };
 }
 
 export interface AnalysisResult {
