@@ -12,13 +12,32 @@ export interface InsuranceAnalysis {
   age: number;               // 연령
   gender: 'M' | 'F';        // 성별
   jobClass?: number;         // 직업급수 (1~3)
+  selectedCategory?: string; // 선택된 보험 카테고리
   cancer: CoverageItem;      // 일반암
   cerebrovascular: CoverageItem; // 뇌혈관
   cardiovascular: CoverageItem;  // 심혈관
+  surgery: CoverageItem;         // 수술비
+  postDisability: CoverageItem;  // 질병후유장해
+  paymentExemption: 'standard' | 'premium'; // 납입면제
+  healthStatus: 'standard' | 'simple'; // 건강상태 (표준체/유병자)
+  preExistingType?: '3.0.5' | '3.2.5' | '3.3.5' | '3.5.5'; // 유병자 상세 유형 (3.0.5 ~ 3.5.5)
   monthlyPremium: number;       // 현재 월 보험료
+  dental?: {                    // 치아보험 전용 필드
+    lastYear: 'yes' | 'no';
+    last5Years: 'yes' | 'no';
+    dentures: 'yes' | 'no';
+    implantLimit: '3' | 'unlimited';
+    crownAmount: number;
+    focus: 'conservative' | 'prosthetic';
+  };
+  caregiving?: {                // 간병 서비스 보험 전용 필드
+    type: 'support' | 'expense';
+    isStepUp: boolean;
+  };
 }
 
 export interface AnalysisResult {
+  analysis: InsuranceAnalysis; // 원본 분석 요청 데이터
   scores: {
     cancerScore: number;
     cerebrovascularScore: number;

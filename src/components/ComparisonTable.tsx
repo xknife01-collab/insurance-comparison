@@ -1,28 +1,59 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import React from 'react';
 import { motion } from 'motion/react';
-import { TrendingDown, ShieldCheck, HeartPulse, User, Brain, Heart, Stethoscope, Clock } from 'lucide-react';
+import { TrendingDown, ShieldCheck, HeartPulse, Brain, Heart, Stethoscope, Clock } from 'lucide-react';
+import { InsuranceAnalysis, RecommendationPlan } from '../types/insurance';
 
 interface ComparisonTableProps {
-  currentPremium: number;
-  recommendedPremium: number;
+  analysis: InsuranceAnalysis;
+  recommendation: RecommendationPlan;
 }
 
-const ComparisonTable: React.FC<ComparisonTableProps> = ({ currentPremium, recommendedPremium }) => {
-  const diff = currentPremium - recommendedPremium;
+const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendation }) => {
+  const savings = analysis.monthlyPremium - recommendation.estimatedPremium;
 
-  const comparisonRows = [
-    { label: '일반암 진단비', current: '3,000만', recommended: '5,000만', icon: <ShieldCheck className="w-4 h-4 text-orange-500" /> },
-    { label: '뇌혈관 질환', current: '1,000만', recommended: '3,000만', icon: <Brain className="w-4 h-4 text-blue-500" /> },
-    { label: '심혈관 질환', current: '1,000만', recommended: '3,000만', icon: <Heart className="w-4 h-4 text-red-500" /> },
-    { label: '수술비 (질병/상해)', current: '30만', recommended: '100만', icon: <HeartPulse className="w-4 h-4 text-green-500" /> },
-    { label: '질병후유장해(3%~)', current: '1,000만', recommended: '3,000만', icon: <Stethoscope className="w-4 h-4 text-purple-500" /> },
-    { label: '납입면제 범위', current: '표준형', recommended: '고급형', icon: <Clock className="w-4 h-4 text-gray-500" /> },
+  const formatAmt = (amt: number) => {
+    if (amt >= 100000000) return `${(amt / 100000000).toFixed(0)}억`;
+    if (amt >= 10000) return `${(amt / 10000).toLocaleString()}만`;
+    return `${amt.toLocaleString()}원`;
+  };
+
+  const isDental = analysis.selectedCategory?.includes('치아');
+  const isSilbi = analysis.selectedCategory?.includes('실손') || analysis.selectedCategory?.includes('실비');
+
+  const benchmark = isSilbi ? 55000 : isDental ? 85000 : 180000;
+  const dietPremium = recommendation.estimatedPremium;
+  const currentPremium = analysis.monthlyPremium;
+  
+  const displaySavings = currentPremium > dietPremium + 5000 ? (currentPremium - dietPremium) : (benchmark - dietPremium);
+
+  const dentalRows = [
+    { label: '임플란트 보장', current: '없음', recommended: analysis.dental?.implantLimit === 'unlimited' ? '무제한' : '연 3회', icon: <ShieldCheck className="w-4 h-4 text-emerald-500" /> },
+    { label: '브릿지 보장', current: '없음', recommended: '연 3회', icon: <HeartPulse className="w-4 h-4 text-emerald-500" /> },
+    { label: '크라운 치료', current: '없음', recommended: formatAmt(analysis.dental?.crownAmount || 0), icon: <ShieldCheck className="w-4 h-4 text-emerald-500" /> },
+    { label: '충전치료(인레이)', current: '없음', recommended: '20만', icon: <Stethoscope className="w-4 h-4 text-emerald-500" /> },
+    { label: '발치/치수치료', current: '없음', recommended: '5만', icon: <HeartPulse className="w-4 h-4 text-emerald-500" /> },
+    { label: '면책/감액기간', current: '해당없음', recommended: '90일/1년', icon: <Clock className="w-4 h-4 text-emerald-500" /> },
   ];
+
+  const silbiRows = [
+    { label: '실손 의료비 세대', current: currentPremium > 40000 ? '1~3세대' : '4세대', recommended: '4세대 (전환 추천)', icon: <ShieldCheck className="w-4 h-4 text-blue-500" /> },
+    { label: '급여 자기부담금', current: '10~20%', recommended: '20%', icon: <HeartPulse className="w-4 h-4 text-blue-500" /> },
+    { label: '비급여 자기부담금', current: '20%', recommended: '30%', icon: <Stethoscope className="w-4 h-4 text-blue-500" /> },
+    { label: '비급여 3대 특약', current: '별도 확인', recommended: '포함 (표준화)', icon: <Brain className="w-4 h-4 text-blue-500" /> },
+    { label: '보험료 차등제', current: '미적용', recommended: '단계별 적용(할인 가능)', icon: <TrendingDown className="w-4 h-4 text-blue-500" /> },
+    { label: '재가입 주기', current: '15년', recommended: '5년', icon: <Clock className="w-4 h-4 text-blue-500" /> },
+  ];
+
+  const standardRows = [
+    { label: '일반암 진단비', current: formatAmt(analysis.cancer.currentAmount), recommended: formatAmt(analysis.cancer.targetAmount), icon: <ShieldCheck className="w-4 h-4 text-orange-500" /> },
+    { label: '뇌혈관 질환', current: formatAmt(analysis.cerebrovascular.currentAmount), recommended: formatAmt(analysis.cerebrovascular.targetAmount), icon: <Brain className="w-4 h-4 text-blue-500" /> },
+    { label: '심혈관 질환', current: formatAmt(analysis.cardiovascular.currentAmount), recommended: formatAmt(analysis.cardiovascular.targetAmount), icon: <Heart className="w-4 h-4 text-red-500" /> },
+    { label: '수술비 (질병/상해)', current: formatAmt(analysis.surgery.currentAmount), recommended: formatAmt(analysis.surgery.targetAmount), icon: <HeartPulse className="w-4 h-4 text-green-500" /> },
+    { label: '질병후유장해(3%~)', current: formatAmt(analysis.postDisability.currentAmount), recommended: formatAmt(analysis.postDisability.targetAmount), icon: <Stethoscope className="w-4 h-4 text-purple-500" /> },
+    { label: '납입면제 범위', current: '표준형', recommended: analysis.paymentExemption === 'premium' ? '고급형' : '표준형', icon: <Clock className="w-4 h-4 text-gray-500" /> },
+  ];
+
+  const comparisonRows = isDental ? dentalRows : (isSilbi ? silbiRows : standardRows);
 
   return (
     <div className="bg-white rounded-[3rem] p-10 md:p-16 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.05)] border border-gray-100 overflow-hidden relative">
@@ -34,46 +65,47 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ currentPremium, recom
         <div className="flex flex-col md:flex-row justify-between items-end gap-6">
           <div className="space-y-2">
             <h3 className="text-3xl font-black text-gray-900 tracking-tighter">1:1 상세 비교 분석</h3>
-            <p className="text-gray-500 font-bold italic">"가격은 낮추고, 보장은 든든하게 채웠습니다."</p>
+            <p className="text-gray-500 font-bold italic">"가격은 낮추고, 보장은 더 든든하게!"</p>
           </div>
           
-          <div className="inline-block bg-orange-50 px-8 py-5 rounded-3xl border border-orange-100 shadow-sm transition-all hover:scale-105 active:scale-95 cursor-default">
-             <div className="text-xs font-black text-orange-600 uppercase tracking-widest mb-1">월 예상 절감액</div>
+          <div className="inline-block bg-blue-50 px-8 py-5 rounded-3xl border border-blue-100 shadow-sm transition-all hover:scale-105 active:scale-95 cursor-default">
+             <div className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1">월 예상 절감액</div>
              <div className="flex items-baseline gap-1">
-               <span className="text-4xl font-black text-orange-500">{diff.toLocaleString()}</span>
+               <span className="text-4xl font-black text-blue-600">{displaySavings.toLocaleString()}</span>
                <span className="text-xl font-bold text-gray-900">원</span>
+               <TrendingDown className="w-6 h-6 text-blue-500 ml-2 animate-bounce" />
              </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-12 gap-1 px-4 text-xs font-black text-gray-400 uppercase tracking-widest uppercase mb-1">
+        <div className="grid grid-cols-12 gap-1 px-4 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-1">
            <div className="col-span-4">보장 항목</div>
-           <div className="col-span-4 text-center">기존 유지 시 (Stay)</div>
+           <div className="col-span-4 text-center">기존 보험 유지 시 (Stay)</div>
            <div className="col-span-4 text-right">교체 제안 (Switch)</div>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-4">
           {comparisonRows.map((row, i) => (
             <motion.div 
               key={i}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.1 * i }}
-              className={`grid grid-cols-12 items-center p-6 rounded-2xl transition-all border ${
-                i % 2 === 0 ? 'bg-gray-50/50 border-gray-100/50' : 'bg-white border-transparent'
-              } hover:bg-orange-50/30 hover:shadow-lg hover:border-orange-100 group`}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.05 * i }}
+              className={`grid grid-cols-12 items-center p-6 rounded-[2rem] transition-all border ${
+                i % 2 === 0 ? 'bg-gray-50/30 border-gray-100/50' : 'bg-white border-transparent'
+              } hover:bg-orange-50/50 hover:shadow-xl hover:border-orange-100 group`}
             >
-              <div className="col-span-4 flex items-center gap-3">
-                 <div className="p-2 bg-white rounded-xl shadow-sm border border-gray-100 transition-transform group-hover:scale-110">
+              <div className="col-span-4 flex items-center gap-4">
+                 <div className="p-3 bg-white rounded-2xl shadow-sm border border-gray-100 transition-transform group-hover:rotate-12 group-hover:scale-110">
                    {row.icon}
                  </div>
-                 <span className="text-sm font-bold text-gray-900">{row.label}</span>
+                 <span className="text-sm font-black text-gray-900">{row.label}</span>
               </div>
-              <div className="col-span-4 text-center font-bold text-gray-400 text-lg">
+              <div className="col-span-4 text-center font-black text-gray-300 text-lg">
                 {row.current}
               </div>
               <div className="col-span-4 text-right">
-                <span className="bg-orange-500 text-white px-5 py-2 rounded-full font-black text-lg shadow-lg shadow-orange-500/30 inline-block transform transition-all group-hover:translate-x-1 group-hover:scale-105">
+                <span className="bg-slate-900 text-white px-6 py-2 rounded-2xl font-black text-lg shadow-lg inline-block transform transition-all group-hover:-translate-x-2">
                   {row.recommended}
                 </span>
               </div>
@@ -82,8 +114,8 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ currentPremium, recom
         </div>
 
         <div className="text-center pt-8 border-t border-gray-50 mt-10">
-          <p className="text-sm font-bold text-gray-400 italic">
-            "전 상품군 중 가장 합리적인 담보만을 선별하여 구성한 1:1 맞춤 비교 리포트입니다."
+          <p className="text-[10px] font-black text-gray-400 italic tracking-widest uppercase text-center">
+            최적화 분석 완료: 매달 {displaySavings.toLocaleString()}원을 자산으로 전환할 수 있습니다.
           </p>
         </div>
       </div>
