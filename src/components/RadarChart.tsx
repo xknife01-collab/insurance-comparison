@@ -16,8 +16,9 @@ const RadarChart: React.FC<RadarChartProps> = ({ data, size = 300 }) => {
   const angleStep = (Math.PI * 2) / data.length;
 
   const getPoint = (index: number, value: number) => {
+    if (isNaN(value) || value === undefined) return { x: center, y: center };
     const angle = index * angleStep - Math.PI / 2;
-    const r = (value / 100) * radius;
+    const r = (Math.max(0, value) / 100) * radius;
     return {
       x: center + r * Math.cos(angle),
       y: center + r * Math.sin(angle)

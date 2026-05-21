@@ -27,19 +27,25 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
       cancer: { currentAmount: Number(cancerAmt), targetAmount: 50000000 },
       cerebrovascular: { currentAmount: 10000000, targetAmount: 30000000 },
       cardiovascular: { currentAmount: 10000000, targetAmount: 30000000 },
+      surgery: { currentAmount: 0, targetAmount: 10000000 },
+      postDisability: { currentAmount: 0, targetAmount: 30000000 },
+      paymentExemption: 'standard',
       monthlyPremium: Number(premium)
     });
   };
 
   const handleSocialFetch = () => {
     onAnalyze({
-      age: 40,
-      gender: 'M',
+      age: Number(age),
+      gender: gender,
       jobClass: 1,
-      cancer: { currentAmount: 30000000, targetAmount: 50000000 },
+      cancer: { currentAmount: Number(cancerAmt), targetAmount: 50000000 },
       cerebrovascular: { currentAmount: 10000000, targetAmount: 30000000 },
       cardiovascular: { currentAmount: 10000000, targetAmount: 30000000 },
-      monthlyPremium: 200000
+      surgery: { currentAmount: 0, targetAmount: 10000000 },
+      postDisability: { currentAmount: 0, targetAmount: 30000000 },
+      paymentExemption: 'standard',
+      monthlyPremium: Number(premium)
     });
   };
 

@@ -1,0 +1,6 @@
+playwright
+playwright-stealth
+python-dotenv
+google-generativeai
+pdfplumber
+psycopg2-binary

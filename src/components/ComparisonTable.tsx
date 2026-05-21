@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { TrendingDown, ShieldCheck, HeartPulse, Brain, Heart, Stethoscope, Clock } from 'lucide-react';
+import { TrendingDown, TrendingUp, ShieldCheck, HeartPulse, Brain, Heart, Stethoscope, Clock } from 'lucide-react';
 import { InsuranceAnalysis, RecommendationPlan } from '../types/insurance';
 
 interface ComparisonTableProps {
@@ -19,8 +19,11 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
 
   const isDental = analysis.selectedCategory?.includes('치아');
   const isSilbi = analysis.selectedCategory?.includes('실손') || analysis.selectedCategory?.includes('실비');
+  const isCaregiving = analysis.selectedCategory?.includes('간병');
+  const isBrain = analysis.selectedCategory?.includes('뇌혈관') || analysis.selectedCategory === 'brain';
+  const isHeart = analysis.selectedCategory?.includes('심장') || analysis.selectedCategory === 'heart';
 
-  const benchmark = isSilbi ? 55000 : isDental ? 85000 : 180000;
+  const benchmark = isSilbi ? 55000 : isDental ? 85000 : isCaregiving ? 45000 : isHeart ? 120000 : 180000;
   const dietPremium = recommendation.estimatedPremium;
   const currentPremium = analysis.monthlyPremium;
   
@@ -44,16 +47,43 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     { label: '재가입 주기', current: '15년', recommended: '5년', icon: <Clock className="w-4 h-4 text-blue-500" /> },
   ];
 
+  const caregivingRows = [
+    { label: '간병 지원 방식', current: '직접 고용', recommended: analysis.caregiving?.type === 'support' ? '보험사 지원(추천)' : '현금 일당형', icon: <ShieldCheck className="w-4 h-4 text-purple-500" /> },
+    { label: '인건비 상승 대비', current: '미보장', recommended: analysis.caregiving?.isStepUp ? '체증형(가입)' : '기본형', icon: <TrendingUp className="w-4 h-4 text-purple-500" /> },
+    { label: '간병인 매칭 스트레스', current: '매우 높음', recommended: '제로 (보험사 대행)', icon: <Stethoscope className="w-4 h-4 text-purple-500" /> },
+    { label: '비갱신형 가입 여부', current: '해당 없음', recommended: analysis.caregiving?.type === 'support' ? '지원형(갱신)' : '사용형(비갱신)', icon: <Clock className="w-4 h-4 text-purple-500" /> },
+    { label: '가족 간병 보장', current: '불가', recommended: analysis.caregiving?.type === 'support' ? '파견 중심' : '가족 간병 가능', icon: <Heart className="w-4 h-4 text-purple-500" /> },
+    { label: '요양병원 한도', current: '부족', recommended: '일당 3~5만', icon: <Brain className="w-4 h-4 text-purple-500" /> },
+  ];
+  
+  const brainRows = [
+    { label: '뇌혈관 진단비', current: formatAmt(analysis.cerebrovascular?.currentAmount || 0), recommended: formatAmt(analysis.cerebrovascular?.targetAmount || 10000000), icon: <Brain className="w-4 h-4 text-indigo-500" /> },
+    { label: '뇌혈관 수술비', current: '미보장', recommended: analysis.cerebrovascular?.surgeryBenefit ? '포함(추천)' : '미포함', icon: <HeartPulse className="w-4 h-4 text-indigo-500" /> },
+    { label: '납입/갱신 방식', current: '확인필요', recommended: analysis.cerebrovascular?.paymentType === 'non-renewable' ? '비갱신형' : '갱신형', icon: <Clock className="w-4 h-4 text-indigo-500" /> },
+    { label: '심사 유형', current: '일반심사', recommended: '표준체', icon: <ShieldCheck className="w-4 h-4 text-indigo-500" /> },
+    { label: '보장 만기', current: '80세', recommended: `${(analysis.cerebrovascular as any)?.coveragePeriod || 90}세`, icon: <TrendingUp className="w-4 h-4 text-indigo-500" /> },
+    { label: '가족 간병인 지원', current: '없음', recommended: '선택 가능', icon: <Stethoscope className="w-4 h-4 text-indigo-500" /> },
+  ];
+
+  const heartRows = [
+    { label: '심혈관 질환 진단비', current: formatAmt(analysis.cardiovascular?.currentAmount || 0), recommended: formatAmt(analysis.cardiovascular?.targetAmount || 30000000), icon: <Heart className="w-4 h-4 text-red-500" /> },
+    { label: '심혈관 수술비', current: '미보장', recommended: '포함(추천)', icon: <HeartPulse className="w-4 h-4 text-rose-500" /> },
+    { label: '보장 범위 (통합/급성)', current: (analysis as any).cardiovascular?.selectedType || '급성만 보장', recommended: '통합(허혈성 포함)', icon: <ShieldCheck className="w-4 h-4 text-red-500" /> },
+    { label: '부정맥/심부전 보장', current: '없음', recommended: '확장 보장', icon: <Stethoscope className="w-4 h-4 text-red-500" /> },
+    { label: '질병후유장해(3%~)', current: formatAmt(analysis.postDisability?.currentAmount || 0), recommended: formatAmt(analysis.postDisability?.targetAmount || 30000000), icon: <TrendingUp className="w-4 h-4 text-red-500" /> },
+    { label: '납입면제 범위', current: '일반형', recommended: analysis.paymentExemption === 'premium' ? '고급형(범위확대)' : '표준형', icon: <Clock className="w-4 h-4 text-red-500" /> },
+  ];
+
   const standardRows = [
-    { label: '일반암 진단비', current: formatAmt(analysis.cancer.currentAmount), recommended: formatAmt(analysis.cancer.targetAmount), icon: <ShieldCheck className="w-4 h-4 text-orange-500" /> },
-    { label: '뇌혈관 질환', current: formatAmt(analysis.cerebrovascular.currentAmount), recommended: formatAmt(analysis.cerebrovascular.targetAmount), icon: <Brain className="w-4 h-4 text-blue-500" /> },
-    { label: '심혈관 질환', current: formatAmt(analysis.cardiovascular.currentAmount), recommended: formatAmt(analysis.cardiovascular.targetAmount), icon: <Heart className="w-4 h-4 text-red-500" /> },
-    { label: '수술비 (질병/상해)', current: formatAmt(analysis.surgery.currentAmount), recommended: formatAmt(analysis.surgery.targetAmount), icon: <HeartPulse className="w-4 h-4 text-green-500" /> },
-    { label: '질병후유장해(3%~)', current: formatAmt(analysis.postDisability.currentAmount), recommended: formatAmt(analysis.postDisability.targetAmount), icon: <Stethoscope className="w-4 h-4 text-purple-500" /> },
+    { label: '일반암 진단비', current: formatAmt(analysis.cancer?.currentAmount || 0), recommended: formatAmt(analysis.cancer?.targetAmount || 0), icon: <ShieldCheck className="w-4 h-4 text-orange-500" /> },
+    { label: '뇌혈관 질환', current: formatAmt(analysis.cerebrovascular?.currentAmount || 0), recommended: formatAmt(analysis.cerebrovascular?.targetAmount || 0), icon: <Brain className="w-4 h-4 text-blue-500" /> },
+    { label: '심혈관 질환', current: formatAmt(analysis.cardiovascular?.currentAmount || 0), recommended: formatAmt(analysis.cardiovascular?.targetAmount || 0), icon: <Heart className="w-4 h-4 text-red-500" /> },
+    { label: '수술비 (질병/상해)', current: formatAmt(analysis.surgery?.currentAmount || 0), recommended: formatAmt(analysis.surgery?.targetAmount || 0), icon: <HeartPulse className="w-4 h-4 text-green-500" /> },
+    { label: '질병후유장해(3%~)', current: formatAmt(analysis.postDisability?.currentAmount || 0), recommended: formatAmt(analysis.postDisability?.targetAmount || 0), icon: <Stethoscope className="w-4 h-4 text-purple-500" /> },
     { label: '납입면제 범위', current: '표준형', recommended: analysis.paymentExemption === 'premium' ? '고급형' : '표준형', icon: <Clock className="w-4 h-4 text-gray-500" /> },
   ];
 
-  const comparisonRows = isDental ? dentalRows : (isSilbi ? silbiRows : standardRows);
+  const comparisonRows = isDental ? dentalRows : (isSilbi ? silbiRows : (isCaregiving ? caregivingRows : (isBrain ? brainRows : (isHeart ? heartRows : standardRows))));
 
   return (
     <div className="bg-white rounded-[3rem] p-10 md:p-16 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.05)] border border-gray-100 overflow-hidden relative">

@@ -40,3 +40,32 @@ $$ language 'plpgsql';
 
 CREATE TRIGGER update_insurance_products_modtime BEFORE UPDATE ON public.insurance_products FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();
 CREATE TRIGGER update_insurance_rates_modtime BEFORE UPDATE ON public.insurance_rates FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();
+
+-- [5] 암보험 전용 테이블
+CREATE TABLE IF NOT EXISTS public.insurance_cancer_products (
+    id SERIAL PRIMARY KEY,
+    company_name VARCHAR(100) NOT NULL,
+    product_name VARCHAR(255) UNIQUE NOT NULL,
+    category VARCHAR(50) DEFAULT '암',
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS public.insurance_cancer_rates (
+    id SERIAL PRIMARY KEY,
+    product_name VARCHAR(255) REFERENCES public.insurance_cancer_products(product_name) ON DELETE CASCADE,
+    gender CHAR(1) CHECK (gender IN ('M', 'F')),
+    age INTEGER NOT NULL,
+    premium INTEGER NOT NULL,
+    benefit_name VARCHAR(255),
+    benefit_amount VARCHAR(255),
+    raw_data JSONB,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_cancer_rates_lookup ON public.insurance_cancer_rates (product_name, gender, age);
+
+CREATE TRIGGER update_insurance_cancer_products_modtime BEFORE UPDATE ON public.insurance_cancer_products FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();
+CREATE TRIGGER update_insurance_cancer_rates_modtime BEFORE UPDATE ON public.insurance_cancer_rates FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();
+

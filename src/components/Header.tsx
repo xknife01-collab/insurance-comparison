@@ -6,7 +6,7 @@
 import React from 'react';
 import { Search, Menu, Phone } from 'lucide-react';
 
-const Header = ({ setView }: { setView: (view: 'home' | 'indemnity' | 'preexisting' | 'dental') => void }) => (
+const Header = ({ setView }: { setView: (view: 'home' | 'indemnity' | 'preexisting' | 'dental' | 'surgery' | 'cancer' | 'caregiving' | 'dementia' | 'cerebrovascular' | 'heart') => void }) => (
   <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex justify-between items-center h-20">
@@ -36,38 +36,75 @@ const Header = ({ setView }: { setView: (view: 'home' | 'indemnity' | 'preexisti
           </button>
         </div>
       </div>
-      <nav className="flex items-center gap-8 h-12 text-sm font-medium text-gray-700">
+      <nav className="flex items-center gap-8 h-12 text-sm font-medium text-gray-700 overflow-x-auto whitespace-nowrap scrollbar-hide">
         <button 
-          className="flex items-center gap-1 font-bold text-orange-500"
+          className="flex items-center gap-1 font-bold text-orange-500 shrink-0"
           onClick={() => setView('home')}
         >
           <Menu className="w-4 h-4" />
           보험종류
         </button>
         <button 
-           className="hover:text-orange-500 font-bold"
+           className="hover:text-orange-500 font-bold shrink-0"
            onClick={() => setView('indemnity')}
         >
           의료실비
         </button>
         <button 
-           className="hover:text-orange-500 font-bold"
+           className="hover:text-orange-500 font-bold shrink-0"
+           onClick={() => setView('dental')}
+        >
+          치아보험
+        </button>
+        <button 
+           className="hover:text-orange-500 font-bold shrink-0"
            onClick={() => setView('preexisting')}
         >
           유병자
         </button>
         <button 
-           className="hover:text-orange-500 font-bold"
-           onClick={() => setView('dental')}
+           className="hover:text-orange-500 font-bold shrink-0"
+           onClick={() => setView('surgery')}
         >
-          치아보험
+          수술/입원
         </button>
-        <button className="hover:text-orange-500">통합보험료계산</button>
-        <button className="hover:text-orange-500">원스톱보험비교</button>
-        <button className="hover:text-orange-500">고객센터</button>
+        <button 
+           className="hover:text-rose-500 font-bold shrink-0 text-rose-600"
+           onClick={() => setView('cancer')}
+        >
+          암보험
+        </button>
+        <button 
+           className="hover:text-indigo-600 font-bold shrink-0 text-indigo-600"
+           onClick={() => setView('cerebrovascular')}
+        >
+          뇌혈관 보험
+        </button>
+        <button 
+           className="hover:text-red-600 font-bold shrink-0 text-red-600"
+           onClick={() => setView('heart')}
+        >
+          심장질환 보험
+        </button>
+        <button 
+           className="hover:text-purple-600 font-bold shrink-0"
+           onClick={() => setView('caregiving')}
+        >
+          간병보험
+        </button>
+        <button 
+           className="hover:text-amber-600 font-bold shrink-0 text-amber-600"
+           onClick={() => setView('dementia')}
+        >
+          치매 간병보험
+        </button>
+        <button className="hover:text-orange-500 shrink-0">통합계산</button>
+        <button className="hover:text-orange-500 shrink-0">고객센터</button>
       </nav>
+
     </div>
   </header>
 );
+
 
 export default Header;

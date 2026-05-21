@@ -20,9 +20,11 @@ import {
   MessageCircle,
   Zap,
   ChevronRight,
-  ShieldIcon
+  ShieldIcon,
+  Activity
 } from 'lucide-react';
 import { InsuranceAnalysis } from '../types/insurance';
+import { BrainFields } from './calculator/fields/BrainFields';
 
 const INSURANCE_TYPES = [
   { id: 'cancer', label: '암', icon: <div className="p-3 bg-orange-100 rounded-2xl text-orange-600"><ShieldCheck className="w-8 h-8" /></div> },
@@ -35,8 +37,9 @@ const INSURANCE_TYPES = [
   { id: 'term', label: '정기', icon: <Clock className="w-8 h-8 text-gray-400" /> },
   { id: 'pension', label: '연금/연금저축', icon: <PiggyBank className="w-8 h-8 text-gray-400" /> },
   { id: 'driver', label: '운전자/상해', icon: <Car className="w-8 h-8 text-gray-400" /> },
+  { id: 'brain', label: '뇌혈관', icon: <div className="p-3 bg-indigo-100 rounded-2xl text-indigo-600"><Brain className="w-8 h-8" /></div> },
   { id: 'home', label: '주택화재', icon: <Home className="w-8 h-8 text-gray-400" /> },
-  { id: 'dementia', label: '치매', icon: <Brain className="w-8 h-8 text-gray-400" /> },
+  { id: 'dementia', label: '치매', icon: <Activity className="w-8 h-8 text-gray-400" /> },
   { id: 'variable', label: '변액/변액연금', icon: <TrendingUp className="w-8 h-8 text-gray-400" /> },
 ];
 
@@ -49,10 +52,20 @@ const InputForm: React.FC<InputFormProps> = ({ onAnalyze }) => {
   const [premium, setPremium] = useState('200000');
   const [cancerAmt, setCancerAmt] = useState('30000000');
   const [isFetching, setIsFetching] = useState(false);
+  const [healthStatus, setHealthStatus] = useState<'standard' | 'simple'>('standard');
+  
+  // 뇌혈관 전용 상태
+  const [brainDiagnosisAmt, setBrainDiagnosisAmt] = useState(10000000);
+  const [brainPaymentType, setBrainPaymentType] = useState<'non-renewable' | 'renewable'>('non-renewable');
+  const [brainScreeningType, setBrainScreeningType] = useState<'standard' | '3.5.5' | '3.10.5'>('standard');
+  const [brainSurgeryBenefit, setBrainSurgeryBenefit] = useState(true);
+  const [brainCoveragePeriod, setBrainCoveragePeriod] = useState(90);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onAnalyze({
+      healthStatus,
+      selectedCategory: selectedType,
       cancer: { currentAmount: Number(cancerAmt), targetAmount: 50000000 },
       cerebrovascular: { currentAmount: 10000000, targetAmount: 30000000 },
       cardiovascular: { currentAmount: 10000000, targetAmount: 30000000 },
@@ -65,6 +78,8 @@ const InputForm: React.FC<InputFormProps> = ({ onAnalyze }) => {
     setTimeout(() => {
       setIsFetching(false);
       onAnalyze({
+        healthStatus,
+        selectedCategory: selectedType,
         cancer: { currentAmount: 30000000, targetAmount: 50000000 },
         cerebrovascular: { currentAmount: 10000000, targetAmount: 30000000 },
         cardiovascular: { currentAmount: 10000000, targetAmount: 30000000 },
@@ -109,13 +124,29 @@ const InputForm: React.FC<InputFormProps> = ({ onAnalyze }) => {
           </div>
 
           <div className="space-y-4 px-2">
-            <h3 className="text-lg font-bold text-gray-800">상세타입을 선택해 보세요</h3>
-            <div className="flex gap-4">
-               <button className="px-8 py-3 rounded-full border-2 border-orange-500 bg-white text-orange-500 font-bold hover:bg-orange-50 transition-colors">
-                 비갱신형 암보험
+            <h3 className="text-lg font-bold text-gray-800">보장 상세와 건강상태 선택</h3>
+            <div className="flex flex-wrap gap-4">
+               <button 
+                 type="button"
+                 onClick={() => setHealthStatus('standard')}
+                 className={`px-8 py-3 rounded-full border-2 font-bold transition-all ${
+                   healthStatus === 'standard' 
+                   ? 'border-orange-500 bg-orange-50 text-orange-600' 
+                   : 'border-gray-100 bg-white text-gray-400 hover:border-gray-200'
+                 }`}
+               >
+                 일반 건강보험 (건강체)
                </button>
-               <button className="px-8 py-3 rounded-full border-2 border-gray-100 bg-white text-gray-400 font-bold hover:bg-gray-50 transition-colors">
-                 갱신형 암보험
+               <button 
+                 type="button"
+                 onClick={() => setHealthStatus('simple')}
+                 className={`px-8 py-3 rounded-full border-2 font-bold transition-all ${
+                   healthStatus === 'simple' 
+                   ? 'border-blue-500 bg-blue-50 text-blue-600' 
+                   : 'border-gray-100 bg-white text-gray-400 hover:border-gray-200'
+                 }`}
+               >
+                 유병자/간편보험 (병력있음)
                </button>
             </div>
           </div>
@@ -163,6 +194,22 @@ const InputForm: React.FC<InputFormProps> = ({ onAnalyze }) => {
               <p className="text-sm text-gray-500 font-medium">보험료와 보장을 직접 알고 계신 경우 알려주세요.</p>
             </div>
             
+            {/* 뇌혈관 전용 필드 (선택 시에만 노출) */}
+            {selectedType === 'brain' && (
+              <BrainFields 
+                diagnosisAmount={brainDiagnosisAmt}
+                setDiagnosisAmount={setBrainDiagnosisAmt}
+                paymentType={brainPaymentType}
+                setPaymentType={setBrainPaymentType}
+                screeningType={brainScreeningType}
+                setScreeningType={setBrainScreeningType}
+                surgeryBenefit={brainSurgeryBenefit}
+                setSurgeryBenefit={setBrainSurgeryBenefit}
+                coveragePeriod={brainCoveragePeriod}
+                setCoveragePeriod={setBrainCoveragePeriod}
+              />
+            )}
+
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] pl-1">현재 총 월 보험료</label>
@@ -178,19 +225,21 @@ const InputForm: React.FC<InputFormProps> = ({ onAnalyze }) => {
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] pl-1">현재 일반암 진단비</label>
-                <div className="relative">
-                  <input 
-                    type="number" 
-                    value={cancerAmt}
-                    onChange={(e) => setCancerAmt(e.target.value)}
-                    className="w-full bg-white border border-gray-100 rounded-2xl py-4.5 px-6 text-lg font-black focus:outline-none focus:ring-4 focus:ring-orange-500/10 shadow-sm transition-all"
-                    placeholder="30,000,000"
-                  />
-                  <span className="absolute right-6 top-1/2 -translate-y-1/2 font-black text-gray-400 text-lg">원</span>
+              {selectedType !== 'brain' && (
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] pl-1">현재 일반암 진단비</label>
+                  <div className="relative">
+                    <input 
+                      type="number" 
+                      value={cancerAmt}
+                      onChange={(e) => setCancerAmt(e.target.value)}
+                      className="w-full bg-white border border-gray-100 rounded-2xl py-4.5 px-6 text-lg font-black focus:outline-none focus:ring-4 focus:ring-orange-500/10 shadow-sm transition-all"
+                      placeholder="30,000,000"
+                    />
+                    <span className="absolute right-6 top-1/2 -translate-y-1/2 font-black text-gray-400 text-lg">원</span>
+                  </div>
                 </div>
-              </div>
+              )}
 
               <button 
                 type="submit"

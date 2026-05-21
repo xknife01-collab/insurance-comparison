@@ -109,7 +109,7 @@ class MySQLLoader:
                 """, (str(uuid.uuid4()), product_code, gender, age, job, rate_json))
 
             self.conn.commit()
-            print(f"[✔] Successfully Data Loaded! Check your HeidiSQL (insurance_db).")
+            print(f"[OK] Successfully Data Loaded! Check your HeidiSQL (insurance_db).")
 
         except Exception as e:
             print(f"[-] Data Loading Error: {e}")

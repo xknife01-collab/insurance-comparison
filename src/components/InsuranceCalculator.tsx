@@ -6,6 +6,17 @@ import {
   Car, Home, Brain, TrendingUp, MessageCircle, Navigation,
   Heart, Hospital, Users, Wallet, Flame, Dog, Plane, Target, Scale, Hotel, Sparkles, Plus, Zap, ChevronRight, HelpCircle, HeartHandshake, AlertCircle
 } from 'lucide-react';
+import { HealthFields } from './insurance/health/HealthFields';
+import { SilsonFields } from './insurance/silson/SilsonFields';
+import { CaregivingFields } from './insurance/caregiving/CaregivingFields';
+import { CaregivingOldFields } from './insurance/caregiving/CaregivingOldFields';
+import { DentalFields } from './insurance/dental/DentalFields';
+import { PreExistingFields } from './insurance/preExisting/PreExistingFields';
+import { SurgeryFields as SurgeryHospitalFields } from './insurance/surgery/SurgeryFields';
+import { CancerFields } from './insurance/cancer/CancerFields';
+import { BrainFields } from './insurance/brain/BrainFields';
+import { HeartFields } from './insurance/heart/HeartFields';
+
 
 interface SubCategory {
   id: string;
@@ -28,35 +39,36 @@ interface MajorCategory {
 const ALL_CATEGORIES: MajorCategory[] = [
   {
     id: 'medical',
-    label: '실손 / 상해 / 입원',
+    label: '인기 보험 전수 조사',
     icon: Hospital,
-    accentColor: '#00D7C4',
+    accentColor: '#FF6B00',
     items: [
       { id: 'silson', label: '의료실비', description: '병원비 90% 보장', icon: Shield, color: '#00D7C4', bgColor: '#F0FDFA', subTypes: ['4세대 실손', '노후 실손'] },
+      { id: 'dental', label: '치아보험', description: '임플란트/크라운', icon: Smile, color: '#10B981', bgColor: '#F0FDF4', subTypes: ['진단형', '무진단형'] },
       { id: 'pre', label: '유병자', description: '아픈 분도 가입', icon: Stethoscope, color: '#2563EB', bgColor: '#EFF6FF', subTypes: ['간편 고지형', '무심사형'] },
-      { id: 'surgery', label: '수술/입원', description: '수술비 반복 지급', icon: Activity, color: '#F59E0B', bgColor: '#FFFBEB', subTypes: ['N대 수술비', '상해 수술비'] },
-      { id: 'fire_simple', label: '화재', description: '우리집 화재 대비', icon: Flame, color: '#EF4444', bgColor: '#FEF2F2', subTypes: ['주택 화재', '도난 보장'] },
+      { id: 'surgery', label: '수술/입원', description: '수술비 반복 지급', icon: Activity, color: '#F59E0B', bgColor: '#FFFBEB', subTypes: ['1-5종 수술비', 'N대 수술비', '상해 수술비'] },
+      { id: 'cancer', label: '암보험', description: '진단비 최대 1억', icon: Shield, color: '#F43F5E', bgColor: '#FFF1F2', subTypes: ['비갱신형', '갱신형', '표적항암형'] },
     ]
   },
   {
     id: 'disease',
-    label: '3대 질병 (핵심)',
+    label: '기타 보장 자산',
     icon: Activity,
-    accentColor: '#F43F5E',
+    accentColor: '#64748B',
     items: [
-      { id: 'cancer', label: '암 (Cancer)', description: '진단비 최대 1억', icon: Shield, color: '#F43F5E', bgColor: '#FFF1F2', subTypes: ['비갱신형', '갱신형'] },
-      { id: 'brain', label: '뇌혈관', description: '뇌질환 무제한 보장', icon: Brain, color: '#8B5CF6', bgColor: '#F5F3FF', subTypes: ['뇌출혈', '뇌경색'] },
-      { id: 'heart', label: '심장질환', description: '허혈성 심장 집중', icon: Heart, color: '#FB7185', bgColor: '#FFF1F2', subTypes: ['급성 심근경색', '허혈성 심장'] },
+      { id: 'brain', label: '뇌혈관', description: '뇌질환 무제한 보장', icon: Brain, color: '#8B5CF6', bgColor: '#F5F3FF', subTypes: ['뇌혈관질환', '뇌출혈'] },
+      { id: 'heart', label: '심장질환', description: '허혈성 심장 집중', icon: Heart, color: '#FB7185', bgColor: '#FFF1F2', subTypes: ['급성 심근경색', '통합(급성+허혈성)'] },
     ]
   },
+
   {
     id: 'care_major',
     label: '간병 / 노후 케어',
     icon: Hotel,
     accentColor: '#7C3AED',
     items: [
-      { id: 'care_svc', label: '간병인 보험', description: '24시간 케어 서비스', icon: Hotel, color: '#7C3AED', bgColor: '#F5F3FF', subTypes: ['지원(파견)', '사용(일당)'] },
-      { id: 'care_old', label: '치매/간병', description: '부모님 치매 간병', icon: Brain, color: '#B45309', bgColor: '#FFFBEB', subTypes: ['경증 치매', '중증 간병'] },
+      { id: 'care_svc', label: '간병 보험', description: '간병인 지원 및 사용일당 집중', icon: Hotel, color: '#7C3AED', bgColor: '#F5F3FF', subTypes: ['지원(파견)', '사용(일당)'] },
+      { id: 'care_old', label: '치매 간병보험', description: '치매 진단비 및 생활자금', icon: Brain, color: '#B45309', bgColor: '#FFFBEB', subTypes: ['경증 치매', '중증 간병'] },
       { id: 'nursing', label: '재가/시설', description: '국가 공인 방문 요양', icon: HeartHandshake, color: '#EC4899', bgColor: '#FDF2F8', subTypes: ['방문 재가', '시설 입소'] },
     ]
   },
@@ -123,15 +135,26 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   const [dentalImplantLimit, setDentalImplantLimit] = useState<'3' | 'unlimited'>('3');
   const [dentalCrownAmount, setDentalCrownAmount] = useState(200000);
   const [dentalFocus, setDentalFocus] = useState<'conservative' | 'prosthetic'>('conservative');
+  const [dentalDiagnosticType, setDentalDiagnosticType] = useState<'diagnostic' | 'non-diagnostic'>('non-diagnostic');
   
   const [careSvcType, setCareSvcType] = useState<'support' | 'expense'>('support');
   const [careStepUp, setCareStepUp] = useState(true);
+  const [careNursingHospital, setCareNursingHospital] = useState(false);
+  const [careGeriatric, setCareGeriatric] = useState(false);
+  const [careIntegrated, setCareIntegrated] = useState(false);
   
   // Silson specific states
   const [silsonHasCurrent, setSilsonHasCurrent] = useState<'yes' | 'no'>('no');
   const [silson3Month, setSilson3Month] = useState<'yes' | 'no'>('no');
   const [silson1Year, setSilson1Year] = useState<'yes' | 'no'>('no');
   const [silson5Year, setSilson5Year] = useState<'yes' | 'no'>('no');
+  const [silsonNonReimbursable, setSilsonNonReimbursable] = useState('under100'); // 기본값: 100만원 미만 (유지)
+  
+  // Surgery & Hospitalization specific states
+  const [surgeryFocus, setSurgeryFocus] = useState<'wide' | 'named' | 'major'>('wide');
+  const [hospitalAmount, setHospitalAmount] = useState(30000);
+  const [caregiverOption, setCaregiverOption] = useState<'none' | 'use' | 'support'>('none');
+  const [tertiaryHospital, setTertiaryHospital] = useState(false);
   
   const [activeTab, setActiveTab] = useState<'standard' | 'simple'>('standard');
   
@@ -142,6 +165,31 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   const [selectedSurgery, setSelectedSurgery] = useState(300000);
   const [selectedDisability, setSelectedDisability] = useState(10000000);
   const [selectedExemption, setSelectedExemption] = useState<'standard' | 'premium'>('standard');
+  const [redirectToast, setRedirectToast] = useState(false);
+  
+  // Cancer specific granular states
+  const [cancerDiagnosisAmount, setCancerDiagnosisAmount] = useState(50000000);
+  const [cancerTargetedTherapy, setCancerTargetedTherapy] = useState(true);
+  const [cancerTreatmentCost2025, setCancerTreatmentCost2025] = useState(true);
+  const [cancerPaymentType, setCancerPaymentType] = useState<'non-renewable' | 'renewable' | 'targeted'>('non-renewable');
+  const [cancerRecurrentCancer, setCancerRecurrentCancer] = useState(false);
+  const [cancerFamilyHistory, setCancerFamilyHistory] = useState(false);
+  
+  // Heart specific states
+  const [heartHealthType, setHeartHealthType] = useState<'normal' | 'simple'>('normal');
+  const [heartCoverageLevel, setHeartCoverageLevel] = useState<'basic' | 'standard' | 'premium'>('standard');
+  
+  // Dementia & Caregiving specific states
+  const [dementiaDiagnosisAmount, setDementiaDiagnosisAmount] = useState(30000000);
+  const [dementiaMonthlyAllowance, setDementiaMonthlyAllowance] = useState(500000);
+  const [dementiaServiceType, setDementiaServiceType] = useState<'home' | 'facility' | 'both'>('home');
+  
+  // Brain specific states for refined component
+  const [brainPaymentType, setBrainPaymentType] = useState<'non-renewable' | 'renewable'>('non-renewable');
+  const [brainScreeningType, setBrainScreeningType] = useState<'standard' | '3.5.5' | '3.10.5'>('standard');
+  const [brainSurgeryBenefit, setBrainSurgeryBenefit] = useState(true);
+  const [brainCoveragePeriod, setBrainCoveragePeriod] = useState(90);
+
   
   const calculatedAge = useMemo(() => {
     if (birthDate && birthDate.length === 8) {
@@ -165,11 +213,28 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   React.useEffect(() => {
     if (selectedId === 'pre' || selectedId === 'pre_family') {
       setHealthStatus('simple');
-    } else if (selectedId === 'dental' || majorId === 'operating' || selectedId === 'silson' || majorId === 'future') {
-      // 치아, 실치, 자동차 등은 일반적인 3.X.5 심사 유형을 사용하지 않으므로 standard로 초기화
+    } else if (selectedId === 'silson') {
+      // 실손보험인 경우 고지사항(3개월/1년/5년) 중 하나라도 '예'면 유병자로 간주
+      if (silson3Month === 'yes' || silson1Year === 'yes' || silson5Year === 'yes') {
+        setHealthStatus('simple');
+      } else {
+        setHealthStatus('standard');
+      }
+    } else if (selectedId === 'dental' || majorId === 'operating' || majorId === 'future') {
       setHealthStatus('standard');
     }
-  }, [selectedId, majorId]);
+  }, [selectedId, majorId, silson3Month, silson1Year, silson5Year]);
+
+  // 실손보험 연령별 자동 추천 로직
+  React.useEffect(() => {
+    if (selectedId === 'silson' && calculatedAge) {
+      if (calculatedAge < 50) {
+        setSelectedDetail(0); // 4세대 실손 고정
+      } else if (calculatedAge >= 60) {
+        setSelectedDetail(1); // 노후 실손 추천
+      }
+    }
+  }, [selectedId, calculatedAge]);
 
   const handleCalculate = () => {
     const effectiveAge = calculatedAge || 40;
@@ -190,12 +255,32 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
         ),
         selectedCategory: activeItem.label,
         // Treat selected options as "Current Coverage" being analyzed
-        cancer: { currentAmount: selectedCancer, targetAmount: 50000000 },
-        cerebrovascular: { currentAmount: selectedBrain, targetAmount: 30000000 },
-        cardiovascular: { currentAmount: selectedHeart, targetAmount: 30000000 },
+        cancer: { 
+          currentAmount: selectedId === 'cancer' ? cancerDiagnosisAmount : selectedCancer, 
+          targetAmount: 50000000,
+          targetedTherapy: cancerTargetedTherapy,
+          treatmentCost2025: cancerTreatmentCost2025,
+          paymentType: cancerPaymentType,
+          recurrentCancer: cancerRecurrentCancer,
+          familyHistory: cancerFamilyHistory
+        },
+        cerebrovascular: { 
+          currentAmount: selectedBrain, 
+          targetAmount: 30000000,
+          selectedType: selectedId === 'brain' ? activeItem.subTypes[selectedDetail] : undefined,
+          surgeryBenefit: brainSurgeryBenefit,
+          paymentType: brainPaymentType,
+          coveragePeriod: brainCoveragePeriod
+        },
+        cardiovascular: selectedId === 'heart' ? {
+          currentAmount: 0,
+          targetAmount: selectedHeart || 30000000,
+          selectedType: selectedDetail === 0 ? '급성 심근경색' : '통합(급성+허혈성)',
+        } : undefined,
         surgery: { currentAmount: selectedSurgery, targetAmount: 1000000 },
         postDisability: { currentAmount: selectedDisability, targetAmount: 30000000 },
         paymentExemption: selectedExemption,
+
         // Dental specific fields
         dental: selectedId === 'dental' ? {
           lastYear: dentalLastYear,
@@ -203,18 +288,35 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
           dentures: dentalDentures,
           implantLimit: dentalImplantLimit,
           crownAmount: dentalCrownAmount,
-          focus: dentalFocus
+          focus: dentalFocus,
+          diagnosticType: dentalDiagnosticType
         } : undefined,
         caregiving: selectedId === 'care_svc' ? {
           type: careSvcType,
-          isStepUp: careStepUp
+          isStepUp: careStepUp,
+          isNursingHospital: careNursingHospital,
+          focusGeriatric: careGeriatric,
+          focusIntegrated: careIntegrated
+        } : selectedId === 'care_old' ? {
+          dementiaDiagnosis: dementiaDiagnosisAmount,
+          monthlyAllowance: dementiaMonthlyAllowance,
+          preferredService: dementiaServiceType
         } : undefined,
         silson: selectedId === 'silson' ? {
           hasCurrentSilson: silsonHasCurrent,
           threeMonthTreatment: silson3Month,
           oneYearExam: silson1Year,
-          fiveYearTreatment: silson5Year
-        } : undefined
+          fiveYearTreatment: silson5Year,
+          subType: activeItem.subTypes[selectedDetail],
+          nonReimbursableUsage: silsonNonReimbursable // 비급여 이용량 추가
+        } : undefined,
+        surgery_hospital: selectedId === 'surgery' ? {
+          focus: surgeryFocus,
+          hospitalAmount,
+          caregiverOption,
+          tertiaryHospital
+        } : undefined,
+        pre_existing_sub_type: (selectedId === 'pre' || selectedId === 'pre_family') ? activeItem.subTypes[selectedDetail] : undefined
       });
     }
   };
@@ -225,8 +327,22 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
         
         <div className="flex flex-col gap-20 mb-20 animate-in fade-in slide-in-from-top-4 duration-1000">
           <div className="flex flex-col items-center gap-6 mb-12">
-               <div className="text-[0.7rem] font-black text-slate-400 uppercase tracking-[0.3em] opacity-70">
+               <div className="text-[0.7rem] font-black text-slate-400 uppercase tracking-[0.3em] opacity-70 mb-10">
                  국내 35개 전 보험사 실시간 통합 비교
+               </div>
+
+               {/* Static Full-width Partner Logos (Top/Bottom) */}
+               <div className="w-full -mx-8 md:-mx-16 px-8 md:px-16 space-y-6 flex flex-col items-center">
+                 <img 
+                   src="/insurance_logos_1.png" 
+                   alt="Partner Logos 1" 
+                   className="w-full max-w-5xl h-auto object-contain opacity-90" 
+                 />
+                 <img 
+                   src="/insurance_logos_2.png" 
+                   alt="Partner Logos 2" 
+                   className="w-full max-w-5xl h-auto object-contain opacity-90" 
+                 />
                </div>
           </div>
 
@@ -299,7 +415,24 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                 {activeItem?.subTypes?.map((sub, idx) => (
                   <button
                     key={idx}
-                    onClick={() => setSelectedDetail(idx)}
+                    onClick={() => {
+                      setSelectedDetail(idx);
+                      if (selectedId === 'care_svc') {
+                        setCareSvcType(idx === 0 ? 'support' : 'expense');
+                      }
+                      // Sync specialized states with sub-tabs
+                      if (selectedId === 'cancer') {
+                        if (idx === 0) setCancerPaymentType('non-renewable');
+                        else if (idx === 1) setCancerPaymentType('renewable');
+                        else if (idx === 2) {
+                          setCancerPaymentType('targeted');
+                          setCancerTargetedTherapy(true);
+                        }
+                      }
+                      if (selectedId === 'dental') {
+                        setDentalDiagnosticType(idx === 0 ? 'diagnostic' : 'non-diagnostic');
+                      }
+                    }}
                     className={`px-12 py-5 rounded-[2.2rem] text-xl font-black transition-all duration-300 border-2
                       ${selectedDetail === idx 
                         ? 'border-[#FF6B00] text-[#FF6B00] bg-white shadow-[0_20px_50px_-10px_rgba(255,107,0,0.25)] scale-105' 
@@ -310,6 +443,19 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                   </button>
                 ))}
              </div>
+             {selectedId === 'brain' && selectedDetail === 1 && (
+               <motion.div 
+                 initial={{ opacity: 0, y: 10 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 className="mt-6 p-4 bg-red-50 border border-red-100 rounded-2xl flex items-center gap-3 justify-center max-w-2xl mx-auto"
+               >
+                 <AlertCircle className="text-red-500" size={18} />
+                 <p className="text-sm font-bold text-red-600">
+                   "뇌출혈"은 보장 범위가 매우 좁아 전체 뇌질환의 약 90%를 차지하는 뇌경색을 보장하지 못합니다. 
+                   <span className="ml-1 underline font-black text-xs">뇌혈관질환 타입을 권장합니다.</span>
+                 </p>
+               </motion.div>
+             )}
           </div>
         </div>
 
@@ -349,242 +495,94 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                  </div>
               </div>
 
+              {/* Modular Specialized Field Components */}
               {selectedId === 'care_svc' ? (
-                <div className="bg-purple-50/30 rounded-[3rem] p-10 mb-12 border border-purple-100/50">
-                  <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-10">
-                     <div className="flex items-center gap-3">
-                        <div className="w-1.5 h-6 bg-purple-500 rounded-full"></div>
-                        <h3 className="text-xl font-bold text-slate-800">간병 서비스 맞춤 설정</h3>
-                     </div>
-                     <div className="flex bg-white p-1.5 rounded-2xl border border-purple-100 shadow-sm self-start lg:self-auto">
-                        <button 
-                          onClick={() => setCareSvcType('support')}
-                          className={`px-8 py-2.5 rounded-xl text-sm font-black transition-all ${careSvcType === 'support' ? 'bg-purple-600 text-white shadow-lg' : 'text-slate-400 hover:text-slate-600'}`}
-                        >
-                          간병인 지원 (파견)
-                        </button>
-                        <button 
-                          onClick={() => setCareSvcType('expense')}
-                          className={`px-8 py-2.5 rounded-xl text-sm font-black transition-all ${careSvcType === 'expense' ? 'bg-purple-600 text-white shadow-lg' : 'text-slate-400 hover:text-slate-600'}`}
-                        >
-                          간병비 사용 (현금)
-                        </button>
-                     </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-8">
-                     <div className="bg-white p-8 rounded-[2.5rem] border border-purple-100 shadow-sm">
-                        <div className="flex items-center justify-between mb-4">
-                           <p className="font-black text-slate-900">체증형 특약 가입</p>
-                           <button 
-                             onClick={() => setCareStepUp(!careStepUp)}
-                             className={`w-14 h-8 rounded-full transition-all relative ${careStepUp ? 'bg-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.4)]' : 'bg-slate-200'}`}
-                           >
-                              <div className={`absolute top-1 w-6 h-6 bg-white rounded-full transition-all ${careStepUp ? 'left-7' : 'left-1'}`}></div>
-                           </button>
-                        </div>
-                        <p className="text-xs text-slate-400 font-bold leading-relaxed mb-4">
-                           {careStepUp ? '5년/10년마다 보장 금액이 늘어나 인건비 상승에 대비합니다.' : '물가가 올라도 보장 금액은 고정되며 보험료는 저렴합니다.'}
-                        </p>
-                     </div>
-                  </div>
+                <CaregivingFields
+                  careType={careSvcType} setCareType={setCareSvcType}
+                  isStepUp={careStepUp} setIsStepUp={setCareStepUp}
+                  isNursingHospital={careNursingHospital} setNursingHospital={setCareNursingHospital}
+                  focusGeriatric={careGeriatric} setFocusGeriatric={setCareGeriatric}
+                  focusIntegrated={careIntegrated} setFocusIntegrated={setCareIntegrated}
+                />
+              ) : selectedId === 'care_old' ? (
+                <div className="space-y-12">
+                  <CaregivingOldFields
+                    diagnosisAmount={dementiaDiagnosisAmount} setDiagnosisAmount={setDementiaDiagnosisAmount}
+                    monthlyAllowance={dementiaMonthlyAllowance} setMonthlyAllowance={setDementiaMonthlyAllowance}
+                    serviceType={dementiaServiceType} setServiceType={setDementiaServiceType}
+                  />
                 </div>
               ) : selectedId === 'dental' ? (
-                <div className="bg-emerald-50/30 rounded-[3rem] p-10 mb-12 border border-emerald-100/50">
-                  <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-10">
-                     <div className="flex items-center gap-3">
-                        <div className="w-1.5 h-6 bg-emerald-500 rounded-full"></div>
-                        <h3 className="text-xl font-bold text-slate-800">치아 전용 정밀 설계</h3>
-                     </div>
-                     <div className="flex bg-white p-1.5 rounded-2xl border border-emerald-100 shadow-sm self-start lg:self-auto">
-                        <button 
-                          onClick={() => setDentalFocus('conservative')}
-                          className={`px-8 py-2.5 rounded-xl text-sm font-black transition-all ${dentalFocus === 'conservative' ? 'bg-emerald-600 text-white shadow-lg' : 'text-slate-400 hover:text-slate-600'}`}
-                        >
-                          보존 치료 중심 (크라운/레진)
-                        </button>
-                        <button 
-                          onClick={() => setDentalFocus('prosthetic')}
-                          className={`px-8 py-2.5 rounded-xl text-sm font-black transition-all ${dentalFocus === 'prosthetic' ? 'bg-emerald-600 text-white shadow-lg' : 'text-slate-400 hover:text-slate-600'}`}
-                        >
-                          보철 치료 중심 (임플란트/브릿지)
-                        </button>
-                     </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                    {/* Left: Notifications */}
-                    <div className="space-y-6">
-                      <p className="text-[0.65rem] font-black text-slate-400 pl-1 uppercase tracking-widest mb-4">가입 전 필수 고지 사항</p>
-                      
-                      {[
-                        { label: '1년 내 충치 치료/진단 이력', state: dentalLastYear, setter: setDentalLastYear },
-                        { label: '5년 내 잇몸질환으로 발치/수술', state: dentalLast5Years, setter: setDentalLast5Years },
-                        { label: '현재 틀니(가철성 의치) 사용 중', state: dentalDentures, setter: setDentalDentures },
-                      ].map((q, i) => (
-                        <div key={i} className="flex items-center justify-between p-4 bg-white rounded-2xl border border-emerald-50 shadow-sm">
-                           <span className="text-sm font-black text-slate-700">{q.label}</span>
-                           <div className="flex gap-2 bg-slate-50 p-1 rounded-xl border border-slate-100">
-                             <button 
-                               onClick={() => q.setter('yes')}
-                               className={`px-4 py-1.5 rounded-lg text-xs font-black transition-all ${q.state === 'yes' ? 'bg-orange-500 text-white shadow-md' : 'text-slate-300'}`}
-                             >
-                               예
-                             </button>
-                             <button 
-                               onClick={() => q.setter('no')}
-                               className={`px-4 py-1.5 rounded-lg text-xs font-black transition-all ${q.state === 'no' ? 'bg-slate-900 text-white shadow-md' : 'text-slate-300'}`}
-                             >
-                               아니오
-                             </button>
-                           </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Right: Coverage Options */}
-                    <div className="space-y-8">
-                       <p className="text-[0.65rem] font-black text-slate-400 pl-1 uppercase tracking-widest mb-4">원하는 보장 한도</p>
-                       
-                       <div className="space-y-3">
-                          <p className="text-xs font-black text-slate-500 pl-1">임플란트 보장 횟수</p>
-                          <div className="flex bg-white rounded-2xl p-1.5 shadow-sm border border-emerald-50">
-                            {[
-                              { l: '연간 3개 한도', v: '3' },
-                              { l: '연간 무제한', v: 'unlimited' }
-                            ].map((opt, i) => (
-                              <button
-                                key={i}
-                                onClick={() => setDentalImplantLimit(opt.v as any)}
-                                className={`flex-1 py-3 rounded-xl text-xs font-black transition-all ${dentalImplantLimit === opt.v ? 'bg-emerald-600 text-white shadow-lg' : 'text-slate-300'}`}
-                              >
-                                {opt.l}
-                              </button>
-                            ))}
-                          </div>
-                       </div>
-
-                       <div className="space-y-3">
-                          <p className="text-xs font-black text-slate-500 pl-1">크라운 치료 보장 (개당)</p>
-                          <div className="flex bg-white rounded-2xl p-1.5 shadow-sm border border-emerald-50">
-                            {[
-                              { l: '20만', v: 200000 },
-                              { l: '30만', v: 300000 },
-                              { l: '50만', v: 500000 }
-                            ].map((opt, i) => (
-                              <button
-                                key={i}
-                                onClick={() => setDentalCrownAmount(opt.v as any)}
-                                className={`flex-1 py-3 rounded-xl text-xs font-black transition-all ${dentalCrownAmount === opt.v ? 'bg-emerald-600 text-white shadow-lg' : 'text-slate-300'}`}
-                              >
-                                {opt.l}
-                              </button>
-                            ))}
-                          </div>
-                       </div>
-                    </div>
-                  </div>
-                  
-                  <div className="mt-8 p-6 bg-white/60 rounded-3xl border border-emerald-100 flex items-center gap-4">
-                     <Sparkles className="text-emerald-500 shrink-0" size={24} />
-                     <p className="text-xs text-slate-500 font-bold leading-relaxed">
-                        최근 치료 이력이 없으시다면 <span className="text-emerald-600 font-black">"진단형"</span> 가입을 통해 면책기간 없이 즉시 보장을 받을 수 있는 플랜을 추천해 드립니다.
-                     </p>
-                  </div>
-                </div>
+                <DentalFields
+                  lastYear={dentalLastYear} setLastYear={setDentalLastYear}
+                  last5Years={dentalLast5Years} setLast5Years={setDentalLast5Years}
+                  dentures={dentalDentures} setDentures={setDentalDentures}
+                  implantLimit={dentalImplantLimit} setImplantLimit={setDentalImplantLimit}
+                  crownAmount={dentalCrownAmount} setCrownAmount={setDentalCrownAmount}
+                  focus={dentalFocus} setFocus={setDentalFocus}
+                  diagnosticType={dentalDiagnosticType} setDiagnosticType={setDentalDiagnosticType}
+                />
               ) : selectedId === 'silson' ? (
-                <div className="bg-blue-50/30 rounded-[3rem] p-10 mb-12 border border-blue-100/50">
-                  <div className="flex items-center gap-3 mb-8">
-                     <div className="w-1.5 h-6 bg-blue-500 rounded-full"></div>
-                     <h3 className="text-xl font-bold text-slate-800">4세대 실손의료비 가입 전 고지사항</h3>
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {/* Policy Checks */}
-                    <div className="space-y-4">
-                       <p className="text-[0.65rem] font-black text-slate-400 pl-1 uppercase tracking-widest mb-2">필수 확인 사항</p>
-                       <div className="flex items-center justify-between p-4 bg-white rounded-2xl border border-blue-50 shadow-sm">
-                          <div className="flex flex-col">
-                            <span className="text-sm font-black text-slate-700">기존 실손보험 가입 이력</span>
-                            <span className="text-[0.65rem] text-slate-400 font-bold">실비는 비례보상으로 중복 가입이 불가능합니다.</span>
-                          </div>
-                          <div className="flex gap-2 bg-slate-50 p-1 rounded-xl border border-slate-100 shrink-0 ml-4">
-                            <button onClick={() => setSilsonHasCurrent('yes')} className={`px-4 py-1.5 rounded-lg text-xs font-black transition-all ${silsonHasCurrent === 'yes' ? 'bg-orange-500 text-white shadow-md' : 'text-slate-300'}`}>가입중</button>
-                            <button onClick={() => setSilsonHasCurrent('no')} className={`px-4 py-1.5 rounded-lg text-xs font-black transition-all ${silsonHasCurrent === 'no' ? 'bg-slate-900 text-white shadow-md' : 'text-slate-300'}`}>없음</button>
-                          </div>
-                       </div>
-                    </div>
-                    
-                    {/* Health Questions */}
-                    <div className="space-y-4">
-                       <p className="text-[0.65rem] font-black text-slate-400 pl-1 uppercase tracking-widest mb-2">최근 병력 고지 (필수)</p>
-                       {[
-                         { title: '최근 3개월 내', desc: '질병 의심 소견, 치료, 입원, 수술, 투약 이력', state: silson3Month, setter: setSilson3Month },
-                         { title: '최근 1년 내', desc: '의사로부터 추가 검사(재검사) 이력', state: silson1Year, setter: setSilson1Year },
-                         { title: '최근 5년 내', desc: '입원, 수술, 7일 이상 치료, 30일 이상 투약', state: silson5Year, setter: setSilson5Year },
-                       ].map((q, i) => (
-                         <div key={i} className="flex items-center justify-between p-4 bg-white rounded-2xl border border-blue-50 shadow-sm">
-                            <div className="flex flex-col">
-                              <span className="text-sm font-black text-slate-700">{q.title}</span>
-                              <span className="text-[0.65rem] text-slate-400 font-bold">{q.desc}</span>
-                            </div>
-                            <div className="flex gap-2 bg-slate-50 p-1 rounded-xl border border-slate-100 shrink-0 ml-4">
-                              <button onClick={() => q.setter('yes')} className={`px-4 py-1.5 rounded-lg text-xs font-black transition-all ${q.state === 'yes' ? 'bg-orange-500 text-white shadow-md' : 'text-slate-300'}`}>예</button>
-                              <button onClick={() => q.setter('no')} className={`px-4 py-1.5 rounded-lg text-xs font-black transition-all ${q.state === 'no' ? 'bg-slate-900 text-white shadow-md' : 'text-slate-300'}`}>아니오</button>
-                            </div>
-                         </div>
-                       ))}
-                    </div>
-                  </div>
-                  
-                  <div className="mt-6 p-5 bg-white/60 rounded-2xl border border-blue-100 flex items-start gap-4">
-                     <AlertCircle className="text-blue-500 shrink-0 mt-0.5" size={20} />
-                     <p className="text-xs text-slate-500 font-bold leading-relaxed">
-                        4세대 실손의료비는 비급여 도수치료, 주사료, MRI 등이 <span className="text-blue-600 font-black">특약으로 분리</span>되어 있으며, 비급여금 청구 액수에 따라 매년 보험료가 <span className="text-red-500 font-black">할증 또는 할인(차등제)</span>될 수 있습니다. 고지의무 위반 시 보장이 제한될 수 있습니다.
-                     </p>
-                  </div>
-                </div>
-              ) : (majorId === 'disease' || majorId === 'medical' || majorId === 'family') && selectedId !== 'silson' && selectedId !== 'fire_simple' && (
-                <div className="bg-orange-50/30 rounded-[3rem] p-10 mb-12 border border-orange-100/50">
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-8">
-                     <div className="flex items-center gap-3">
-                        <div className="w-1.5 h-6 bg-orange-500 rounded-full"></div>
-                        <h3 className="text-xl font-bold text-slate-800">상세 보장 한도 설정</h3>
-                     </div>
-                     <div className="flex items-center gap-2">
-                        <span className="text-[0.6rem] font-black text-orange-400 border border-orange-200 px-3 py-1 rounded-full uppercase tracking-widest">Disease Protection</span>
-                        <span className="text-[0.7rem] font-black text-slate-500 bg-slate-100/80 px-3 py-1 rounded-lg border border-slate-200/50">
-                           💡 이 한도는 진단 시 지급되는 목돈 보장액입니다
-                        </span>
-                     </div>
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {[
-                      { label: '일반암 진단비', state: selectedCancer, setter: setSelectedCancer, options: [{l:'3,000만',v:30000000}, {l:'5,000만',v:50000000}] },
-                      { label: '뇌혈관 질환', state: selectedBrain, setter: setSelectedBrain, options: [{l:'1,000만',v:10000000}, {l:'3,000만',v:30000000}] },
-                      { label: '심혈관 질환', state: selectedHeart, setter: setSelectedHeart, options: [{l:'1,000만',v:10000000}, {l:'3,000만',v:30000000}] },
-                      { label: '수술비(질병/상해)', state: selectedSurgery, setter: setSelectedSurgery, options: [{l:'30만',v:300000}, {l:'100만',v:1000000}] },
-                      { label: '질병후유장해(3%~)', state: selectedDisability, setter: setSelectedDisability, options: [{l:'1,000만',v:10000000}, {l:'3,000만',v:30000000}] },
-                      { label: '납입면제 범위', state: selectedExemption, setter: setSelectedExemption, options: [{l:'표준형',v:'standard'}, {l:'고급형',v:'premium'}] },
-                    ].map((item, i) => (
-                      <div key={i} className="space-y-3">
-                         <p className="text-[0.65rem] font-black text-slate-400 pl-1 uppercase tracking-widest">{item.label}</p>
-                         <div className="flex bg-white rounded-2xl p-1.5 shadow-sm border border-slate-100">
-                           {item.options.map((opt, oi) => (
-                             <button
-                               key={oi}
-                               onClick={() => item.setter(opt.v as any)}
-                               className={`flex-1 py-3 rounded-xl text-xs font-black transition-all ${item.state === opt.v ? 'bg-slate-900 text-white shadow-lg scale-102' : 'text-slate-300 hover:text-slate-500'}`}
-                             >
-                               {opt.l}
-                             </button>
-                           ))}
-                         </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                <SilsonFields
+                  hasCurrent={silsonHasCurrent} setHasCurrent={setSilsonHasCurrent}
+                  threeMonth={silson3Month} setThreeMonth={setSilson3Month}
+                  oneYear={silson1Year} setOneYear={setSilson1Year}
+                  fiveYear={silson5Year} setFiveYear={setSilson5Year}
+                  nonReimbursableUsage={silsonNonReimbursable} setNonReimbursableUsage={setSilsonNonReimbursable}
+                />
+              ) : selectedId === 'surgery' ? (
+                <SurgeryHospitalFields
+                  surgeryFocus={surgeryFocus} setSurgeryFocus={setSurgeryFocus}
+                  hospitalAmount={hospitalAmount} setHospitalAmount={setHospitalAmount}
+                  caregiverOption={caregiverOption} setCaregiverOption={setCaregiverOption}
+                  tertiaryHospital={tertiaryHospital} setTertiaryHospital={setTertiaryHospital}
+                />
+              ) : selectedId === 'cancer' ? (
+                <CancerFields
+                  diagnosisAmount={cancerDiagnosisAmount} setDiagnosisAmount={setCancerDiagnosisAmount}
+                  targetedTherapy={cancerTargetedTherapy} setTargetedTherapy={setCancerTargetedTherapy}
+                  treatmentCost2025={cancerTreatmentCost2025} setTreatmentCost2025={setCancerTreatmentCost2025}
+                  paymentType={cancerPaymentType} setPaymentType={setCancerPaymentType}
+                  recurrentCancer={cancerRecurrentCancer} setRecurrentCancer={setCancerRecurrentCancer}
+                  familyHistory={cancerFamilyHistory} setFamilyHistory={setCancerFamilyHistory}
+                />
+              ) : (selectedId === 'pre' || selectedId === 'pre_family' || healthStatus === 'simple') && selectedId !== 'silson' ? (
+                <PreExistingFields
+                  threeMonth={silson3Month} setThreeMonth={setSilson3Month}
+                  noAccidentYears={preExistingType.split('.')[1]}
+                  setNoAccidentYears={(v: string) => setPreExistingType(`3.${v}.5` as any)}
+                  fiveYearMajor={silson5Year} setFiveYearMajor={setSilson5Year}
+                />
+              ) : selectedId === 'brain' ? (
+                <BrainFields
+                  diagnosisAmount={selectedBrain} setDiagnosisAmount={setSelectedBrain}
+                  paymentType={brainPaymentType} setPaymentType={setBrainPaymentType}
+                  surgeryBenefit={brainSurgeryBenefit} setSurgeryBenefit={setBrainSurgeryBenefit}
+                  coveragePeriod={brainCoveragePeriod} setCoveragePeriod={setBrainCoveragePeriod}
+                />
+              ) : selectedId === 'heart' ? (
+                <HeartFields
+                  gender={gender === 'M' ? 'male' : 'female'}
+                  setGender={(g) => setGender(g === 'male' ? 'M' : 'F')}
+                  age={calculatedAge || 40}
+                  setAge={() => {}} // Controlled by birthDate
+                  healthType={heartHealthType}
+                  setHealthType={setHeartHealthType}
+                  coverageLevel={heartCoverageLevel}
+                  setCoverageLevel={setHeartCoverageLevel}
+                  currentAmount={selectedHeart}
+                  setCurrentAmount={setSelectedHeart}
+                />
+              ) : (majorId === 'disease' || majorId === 'medical' || majorId === 'family') && 
+                  selectedId !== 'silson' && selectedId !== 'fire_simple' && selectedId !== 'brain' && (
+                <HealthFields
+                  selectedCancer={selectedCancer} setSelectedCancer={setSelectedCancer}
+                  selectedBrain={selectedBrain} setSelectedBrain={setSelectedBrain}
+                  selectedHeart={selectedHeart} setSelectedHeart={setSelectedHeart}
+                  selectedSurgery={selectedSurgery} setSelectedSurgery={setSelectedSurgery}
+                  selectedDisability={selectedDisability} setSelectedDisability={setSelectedDisability}
+                  selectedExemption={selectedExemption} setSelectedExemption={setSelectedExemption}
+                />
               )}
 
               <div className="flex items-center justify-center gap-4 mb-10">
@@ -601,7 +599,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                    whileTap={{ scale: 0.98 }}
                    className="w-full py-8 bg-gradient-to-r from-orange-600 to-orange-400 rounded-[2.5rem] text-white text-3xl font-black shadow-[0_30px_70px_-20px_rgba(255,107,0,0.4)] transition-all flex items-center justify-center gap-4 group"
                 >
-                   무료 보험료 계산하기
+                   무료로 비교 분석하기
                    <ChevronRight size={28} />
                 </motion.button>
 
