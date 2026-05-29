@@ -34,8 +34,8 @@ export const CaregivingFields: React.FC<Props> = ({
            <p className="text-[0.65rem] font-black text-slate-400 pl-1 uppercase tracking-widest mb-2">간병인 매칭 방식</p>
            <div className="flex bg-white rounded-2xl p-1.5 shadow-sm border border-purple-100">
              {[
-               { l: '보험사 직접 파견(지원형)', v: 'support' },
-               { l: '현금 일당 지급(사용형)', v: 'expense' }
+               { l: '현금 일당 지급(사용형)', v: 'expense' },
+               { l: '보험사 직접 파견(지원형)', v: 'support' }
              ].map((opt, i) => (
                <button
                  key={i}
@@ -124,8 +124,8 @@ export const CaregivingFields: React.FC<Props> = ({
            <p className="text-[0.65rem] font-black text-slate-400 pl-1 uppercase tracking-widest mb-2">기타 병동</p>
            <div className="flex items-center justify-between p-4 bg-white rounded-2xl border border-purple-50 shadow-sm">
               <div className="flex flex-col">
-                <span className="text-sm font-black text-slate-700">노인성 질환 집중보장</span>
-                <span className="text-[0.65rem] text-purple-400 font-bold">치매/파킨슨 등 특화</span>
+                <span className="text-sm font-black text-slate-700">장기요양등급 집중보장</span>
+                <span className="text-[0.65rem] text-purple-400 font-bold">1~2등급 중증 요양 특화</span>
               </div>
               <button 
                 onClick={() => setFocusGeriatric(!focusGeriatric)}

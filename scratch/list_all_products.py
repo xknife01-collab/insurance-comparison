@@ -1,21 +1,72 @@
-import pandas as pd
 import os
+import pandas as pd
+import io
+import warnings
 
-dir_path = r'C:\Users\zkfnt\Desktop\insurance-comparison-main\insurance-comparison-main\insurance_data\1_guaranteed\brain'
-input_file = "뇌보험_담보_통합_최종.xlsx"
+warnings.filterwarnings('ignore')
 
-def main():
-    path = os.path.join(dir_path, input_file)
-    if not os.path.exists(path): return
+SOURCE_DIR = r"c:\Users\zkfnt\Desktop\insurance-comparison-main"
+
+def clean_val(v):
+    if pd.isna(v): return ""
+    return str(v).replace('\n', ' ').strip()
+
+def scan():
+    files = [f for f in os.listdir(SOURCE_DIR) if f.endswith(".xls")]
     
-    df = pd.read_excel(path)
-    unique_products = df[['보험회사', '상품명']].drop_duplicates()
+    products_by_file = {}
     
-    print(f"Total entries: {len(df)}")
-    print(f"Unique products: {len(unique_products)}")
-    print("\nListing all unique products:")
-    for i, row in unique_products.iterrows():
-        print(f"- {row['보험회사']}: {row['상품명']}")
+    for filename in sorted(files):
+        filepath = os.path.join(SOURCE_DIR, filename)
+        df = None
+        try:
+            try:
+                df = pd.read_excel(filepath, engine='xlrd', header=None)
+            except Exception as e:
+                raw_bytes = open(filepath, 'rb').read()
+                for enc in ['cp949', 'euc-kr', 'utf-8']:
+                    try:
+                        raw_text = raw_bytes.decode(enc)
+                        if '<table' in raw_text.lower():
+                            frames = pd.read_html(io.StringIO(raw_text), flavor='bs4')
+                            if frames:
+                                df = frames[0]
+                                break
+                    except:
+                        continue
+            
+            if df is None:
+                continue
+                
+            prod_col = 1
+            for i in range(min(20, len(df))):
+                row = [clean_val(v) for v in df.iloc[i].tolist()]
+                for col_idx, val in enumerate(row):
+                    if "상품명" in val:
+                        prod_col = col_idx
+                        break
+            
+            for idx, row in df.iterrows():
+                row_list = [clean_val(v) for v in row.tolist()]
+                if prod_col < len(row_list):
+                    product_name = str(row_list[prod_col]).strip()
+                    if product_name and len(product_name) > 3 and "상품명" not in product_name:
+                        if filename not in products_by_file:
+                            products_by_file[filename] = set()
+                        products_by_file[filename].add(product_name)
+        except Exception as e:
+            pass
+
+    out_path = r"c:\Users\zkfnt\Desktop\insurance-comparison-main\insurance-comparison-main\scratch\all_products.txt"
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write(f"Total files with products: {len(products_by_file)}\n\n")
+        for fn in sorted(products_by_file.keys()):
+            f.write(f"File: {fn}\n")
+            for prod in sorted(list(products_by_file[fn])):
+                f.write(f"  - {prod}\n")
+            f.write("\n")
+            
+    print(f"Done! Written to {out_path}")
 
 if __name__ == "__main__":
-    main()
+    scan()

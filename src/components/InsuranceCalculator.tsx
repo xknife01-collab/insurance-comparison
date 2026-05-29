@@ -10,12 +10,19 @@ import { HealthFields } from './insurance/health/HealthFields';
 import { SilsonFields } from './insurance/silson/SilsonFields';
 import { CaregivingFields } from './insurance/caregiving/CaregivingFields';
 import { CaregivingOldFields } from './insurance/caregiving/CaregivingOldFields';
+import { NursingFields } from './insurance/nursing/NursingFields';
 import { DentalFields } from './insurance/dental/DentalFields';
 import { PreExistingFields } from './insurance/preExisting/PreExistingFields';
 import { SurgeryFields as SurgeryHospitalFields } from './insurance/surgery/SurgeryFields';
 import { CancerFields } from './insurance/cancer/CancerFields';
 import { BrainFields } from './insurance/brain/BrainFields';
 import { HeartFields } from './insurance/heart/HeartFields';
+import { ChildFields } from './insurance/child/ChildFields';
+import { PreFamilyFields } from './insurance/child/PreFamilyFields';
+import { CarFields } from './insurance/car/CarFields';
+import { DriverFields } from './insurance/driver/DriverFields';
+import { PetFields } from './insurance/pet/PetFields';
+
 
 
 interface SubCategory {
@@ -69,12 +76,12 @@ const ALL_CATEGORIES: MajorCategory[] = [
     items: [
       { id: 'care_svc', label: '간병 보험', description: '간병인 지원 및 사용일당 집중', icon: Hotel, color: '#7C3AED', bgColor: '#F5F3FF', subTypes: ['지원(파견)', '사용(일당)'] },
       { id: 'care_old', label: '치매 간병보험', description: '치매 진단비 및 생활자금', icon: Brain, color: '#B45309', bgColor: '#FFFBEB', subTypes: ['경증 치매', '중증 간병'] },
-      { id: 'nursing', label: '재가/시설', description: '국가 공인 방문 요양', icon: HeartHandshake, color: '#EC4899', bgColor: '#FDF2F8', subTypes: ['방문 재가', '시설 입소'] },
+      { id: 'nursing', label: '재가/시설', description: '국가 공인 방문 요양', icon: HeartHandshake, color: '#EC4899', bgColor: '#FDF2F8', subTypes: ['방문 재가', '시설 입소', '전체보장'] },
     ]
   },
   {
     id: 'family',
-    label: '가족 / 어린이',
+    label: '태아 / 어린이 / 청소년',
     icon: Users,
     accentColor: '#FACC15',
     items: [
@@ -112,10 +119,17 @@ const ALL_CATEGORIES: MajorCategory[] = [
 
 interface InsuranceCalculatorProps {
   onCalculate?: (analysis: any) => void;
+  initialTarget?: string | null;
 }
 
-export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalculate }) => {
-  const [selectedId, setSelectedId] = useState('cancer');
+export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalculate, initialTarget }) => {
+  const [selectedId, setSelectedId] = useState(initialTarget || 'cancer');
+
+  React.useEffect(() => {
+    if (initialTarget) {
+      setSelectedId(initialTarget);
+    }
+  }, [initialTarget]);
   const [selectedDetail, setSelectedDetail] = useState(0);
   const [gender, setGender] = useState<'M' | 'F'>('M');
   
@@ -137,7 +151,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   const [dentalFocus, setDentalFocus] = useState<'conservative' | 'prosthetic'>('conservative');
   const [dentalDiagnosticType, setDentalDiagnosticType] = useState<'diagnostic' | 'non-diagnostic'>('non-diagnostic');
   
-  const [careSvcType, setCareSvcType] = useState<'support' | 'expense'>('support');
+  const [careSvcType, setCareSvcType] = useState<'support' | 'expense'>('expense');
   const [careStepUp, setCareStepUp] = useState(true);
   const [careNursingHospital, setCareNursingHospital] = useState(false);
   const [careGeriatric, setCareGeriatric] = useState(false);
@@ -183,12 +197,72 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   const [dementiaDiagnosisAmount, setDementiaDiagnosisAmount] = useState(30000000);
   const [dementiaMonthlyAllowance, setDementiaMonthlyAllowance] = useState(500000);
   const [dementiaServiceType, setDementiaServiceType] = useState<'home' | 'facility' | 'both'>('home');
+  const [dementiaHasProxyClaim, setDementiaHasProxyClaim] = useState(true);
+  const [dementiaHasHistory, setDementiaHasHistory] = useState<boolean | null>(null);
+  const [dementiaHasLtcGrade, setDementiaHasLtcGrade] = useState<boolean | null>(null);
+  
+  // At-home & Facility Care (Nursing) specific states
+  const [nursingPreferredService, setNursingPreferredService] = useState<'home' | 'facility' | 'both'>('both');
+  const [nursingHomeAmount, setNursingHomeAmount] = useState(500000);
+  const [nursingFacilityAmount, setNursingFacilityAmount] = useState(500000);
+  const [nursingHasProxyClaim, setNursingHasProxyClaim] = useState(true);
+  const [nursingHasBrainHistory, setNursingHasBrainHistory] = useState(false);
+  const [nursingHasLtcHistory, setNursingHasLtcHistory] = useState(false);
   
   // Brain specific states for refined component
   const [brainPaymentType, setBrainPaymentType] = useState<'non-renewable' | 'renewable'>('non-renewable');
   const [brainScreeningType, setBrainScreeningType] = useState<'standard' | '3.5.5' | '3.10.5'>('standard');
   const [brainSurgeryBenefit, setBrainSurgeryBenefit] = useState(true);
   const [brainCoveragePeriod, setBrainCoveragePeriod] = useState(90);
+
+  // Child / Prenatal specific states
+  const [childAgeGroup, setChildAgeGroup] = useState<'prenatal' | 'child' | 'youth'>('child');
+  const [childMaturity, setChildMaturity] = useState<30 | 100>(30);
+  const [childFocusArea, setChildFocusArea] = useState<'majorDisease' | 'hospitalization'>('majorDisease');
+  const [childHasPrenatalRider, setChildHasPrenatalRider] = useState(false);
+  const [childWeeksPregnancy, setChildWeeksPregnancy] = useState(12);
+
+  // Pre-Family (Sick Child / Youth) specific states
+  const [preFamilyIllnessType, setPreFamilyIllnessType] = useState<string>('development');
+  const [preFamilyNoAccidentYears, setPreFamilyNoAccidentYears] = useState<'0' | '2' | '3' | '5'>('5');
+  const [preFamilyMaturity, setPreFamilyMaturity] = useState<30 | 100>(30);
+
+  // Car specific states
+  const [carMileage, setCarMileage] = useState<'under_3k' | 'under_5k' | 'under_10k' | 'over_15k'>('under_5k');
+  const [carSafetyScore, setCarSafetyScore] = useState<'none' | 'under_70' | 'under_80' | 'over_80'>('under_80');
+  const [carConnected, setCarConnected] = useState(true);
+  const [carBlackbox, setCarBlackbox] = useState(true);
+  const [carChildRider, setCarChildRider] = useState(false);
+  const [carPropertyLimit, setCarPropertyLimit] = useState(2); // 2억
+  const [carInjuryType, setCarInjuryType] = useState<'jason' | 'jasang'>('jason');
+  const [carBrand, setCarBrand] = useState<string>('hyundai');
+  const [carModel, setCarModel] = useState<string>('grandeur');
+  const [carYear, setCarYear] = useState<number>(2024);
+  const [carDriverLimit, setCarDriverLimit] = useState<'single' | 'couple' | 'family' | 'anyone'>('single');
+  const [carOwnDamage, setCarOwnDamage] = useState<'join' | 'exclude_single' | 'none'>('join');
+  const [carLaneSafety, setCarLaneSafety] = useState(true);
+  const [carForwardCollision, setCarForwardCollision] = useState(true);
+  const [carEngine, setCarEngine] = useState<string>('g2_5');
+  const [carTrim, setCarTrim] = useState<string>('premium');
+
+  // 운전자보험 states
+  const [driverDrivingPurpose, setDriverDrivingPurpose] = useState<'private' | 'commercial'>('private');
+  const [driverJobClass, setDriverJobClass] = useState<1 | 2 | 3>(1);
+  const [driverPlanType, setDriverPlanType] = useState<'saving' | 'standard' | 'premium'>('standard');
+
+  // 펫보험 states
+  const [petType, setPetType] = useState<'dog' | 'cat'>('dog');
+  const [petName, setPetName] = useState('우리애기');
+  const [petBreed, setPetBreed] = useState('말티즈');
+  const [petBirthYearMonth, setPetBirthYearMonth] = useState('202305');
+  const [petSelfPayRatio, setPetSelfPayRatio] = useState<50 | 70 | 80 | 90>(70);
+  const [petDeductible, setPetDeductible] = useState<10000 | 20000 | 30000 | 50000 | 100000>(30000);
+  const [petIsRegistered, setPetIsRegistered] = useState(false);
+  const [petPatellaRider, setPetPatellaRider] = useState(true);
+  const [petSkinRider, setPetSkinRider] = useState(true);
+  const [petDentalRider, setPetDentalRider] = useState(false);
+
+
 
   
   const calculatedAge = useMemo(() => {
@@ -236,6 +310,32 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
     }
   }, [selectedId, calculatedAge]);
 
+  // 재가/시설 보험 선호 돌봄 서비스 선택에 따른 상세 탭 동기화
+  React.useEffect(() => {
+    if (selectedId === 'nursing') {
+      if (nursingPreferredService === 'home') {
+        setSelectedDetail(0);
+      } else if (nursingPreferredService === 'facility') {
+        setSelectedDetail(1);
+      } else if (nursingPreferredService === 'both') {
+        setSelectedDetail(2);
+      }
+    }
+  }, [nursingPreferredService, selectedId]);
+
+  // 어린이/태아보험 선택 타입에 따른 상세 상태 동기화
+  React.useEffect(() => {
+    if (selectedId === 'child') {
+      if (selectedDetail === 0) {
+        setChildAgeGroup('prenatal');
+        setChildHasPrenatalRider(true);
+      } else {
+        setChildAgeGroup('youth');
+        setChildMaturity(100);
+      }
+    }
+  }, [selectedDetail, selectedId]);
+
   const handleCalculate = () => {
     const effectiveAge = calculatedAge || 40;
 
@@ -250,6 +350,9 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
         monthlyPremium: parseInt(currentPremium) || (
           selectedId === 'silson' ? 25000 : 
           selectedId === 'dental' ? 45000 :
+          selectedId === 'nursing' ? 70000 :
+          selectedId === 'pet' ? 35000 :
+          selectedId === 'child' ? (childMaturity === 30 ? 32000 : 78000) :
           (selectedId === 'pre' || selectedId === 'pre_family' || healthStatus === 'simple') ? 150000 : 
           120000
         ),
@@ -291,6 +394,14 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
           focus: dentalFocus,
           diagnosticType: dentalDiagnosticType
         } : undefined,
+        nursing: selectedId === 'nursing' ? {
+          preferredService: nursingPreferredService,
+          homeAmount: nursingHomeAmount,
+          facilityAmount: nursingFacilityAmount,
+          hasProxyClaim: nursingHasProxyClaim,
+          hasBrainHistory: nursingHasBrainHistory,
+          hasLtcHistory: nursingHasLtcHistory
+        } : undefined,
         caregiving: selectedId === 'care_svc' ? {
           type: careSvcType,
           isStepUp: careStepUp,
@@ -300,7 +411,11 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
         } : selectedId === 'care_old' ? {
           dementiaDiagnosis: dementiaDiagnosisAmount,
           monthlyAllowance: dementiaMonthlyAllowance,
-          preferredService: dementiaServiceType
+          preferredService: dementiaServiceType,
+          hasProxyClaim: dementiaHasProxyClaim,
+          hasDementiaHistory: dementiaHasHistory,
+          hasLtcGrade: dementiaHasLtcGrade,
+          subType: selectedDetail === 0 ? 'mild' : 'severe'
         } : undefined,
         silson: selectedId === 'silson' ? {
           hasCurrentSilson: silsonHasCurrent,
@@ -316,35 +431,85 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
           caregiverOption,
           tertiaryHospital
         } : undefined,
-        pre_existing_sub_type: (selectedId === 'pre' || selectedId === 'pre_family') ? activeItem.subTypes[selectedDetail] : undefined
+        pre_existing_sub_type: (selectedId === 'pre' || selectedId === 'pre_family') ? activeItem.subTypes[selectedDetail] : undefined,
+        child: selectedId === 'child' ? {
+          targetAgeGroup: childAgeGroup,
+          maturity: childMaturity,
+          focusArea: childFocusArea,
+          hasPrenatalRider: childHasPrenatalRider,
+          weeksPregnancy: childWeeksPregnancy
+        } : selectedId === 'pre_family' ? {
+          targetAgeGroup: 'child',
+          maturity: preFamilyMaturity,
+          focusArea: 'majorDisease',
+          hasPrenatalRider: false,
+          weeksPregnancy: 12,
+          isPreFamily: true,
+          illnessType: preFamilyIllnessType,
+          noAccidentYears: preFamilyNoAccidentYears
+        } : undefined,
+        car: selectedId === 'car' ? {
+          annualMileage: carMileage,
+          safeDrivingScore: carSafetyScore,
+          hasConnectedCar: carConnected,
+          hasBlackbox: carBlackbox,
+          hasChildRider: carChildRider,
+          currentPropertyLimit: carPropertyLimit,
+          currentInjuryType: carInjuryType,
+          brand: carBrand,
+          model: carModel,
+          year: carYear,
+          driverLimit: carDriverLimit,
+          ownDamage: carOwnDamage,
+          hasLaneSafety: carLaneSafety,
+          hasForwardCollision: carForwardCollision,
+          engine: carEngine,
+          trim: carTrim
+        } : undefined,
+        driver: selectedId === 'driver' ? {
+          drivingPurpose: driverDrivingPurpose,
+          jobClass: driverJobClass,
+          planType: driverPlanType
+        } : undefined,
+        pet: selectedId === 'pet' ? {
+          petType,
+          petName,
+          breed: petBreed,
+          birthYearMonth: petBirthYearMonth,
+          selfPayRatio: petSelfPayRatio,
+          deductible: petDeductible,
+          isRegistered: petIsRegistered,
+          patellaRider: petPatellaRider,
+          skinRider: petSkinRider,
+          dentalRider: petDentalRider
+        } : undefined
       });
     }
   };
-
   return (
     <section className="w-full max-w-7xl mx-auto py-12 px-4 font-sans">
-      <div className="bg-white rounded-[4.5rem] shadow-[0_60px_180px_-40px_rgba(20,40,80,0.12)] p-8 md:p-16 flex flex-col overflow-hidden border border-gray-50">
-        
-        <div className="flex flex-col gap-20 mb-20 animate-in fade-in slide-in-from-top-4 duration-1000">
-          <div className="flex flex-col items-center gap-6 mb-12">
-               <div className="text-[0.7rem] font-black text-slate-400 uppercase tracking-[0.3em] opacity-70 mb-10">
-                 국내 35개 전 보험사 실시간 통합 비교
-               </div>
+      <div className="flex flex-col items-center gap-6 mb-12 animate-in fade-in slide-in-from-top-4 duration-1000">
+        <div className="text-[0.7rem] font-black text-slate-400 uppercase tracking-[0.3em] opacity-70 mb-4">
+          국내 35개 전 보험사 실시간 통합 비교
+        </div>
 
-               {/* Static Full-width Partner Logos (Top/Bottom) */}
-               <div className="w-full -mx-8 md:-mx-16 px-8 md:px-16 space-y-6 flex flex-col items-center">
-                 <img 
-                   src="/insurance_logos_1.png" 
-                   alt="Partner Logos 1" 
-                   className="w-full max-w-5xl h-auto object-contain opacity-90" 
-                 />
-                 <img 
-                   src="/insurance_logos_2.png" 
-                   alt="Partner Logos 2" 
-                   className="w-full max-w-5xl h-auto object-contain opacity-90" 
-                 />
-               </div>
-          </div>
+        {/* Static Full-width Partner Logos (Top/Bottom) */}
+        <div className="w-full space-y-6 flex flex-col items-center">
+          <img 
+            src="/insurance_logos_1.png" 
+            alt="Partner Logos 1" 
+            className="w-full max-w-6xl h-auto object-contain opacity-90" 
+          />
+          <img 
+            src="/insurance_logos_2.png" 
+            alt="Partner Logos 2" 
+            className="w-full max-w-6xl h-auto object-contain opacity-90" 
+          />
+        </div>
+      </div>
+
+      <div className="bg-white rounded-[4.5rem] shadow-[0_60px_180px_-40px_rgba(20,40,80,0.12)] p-8 md:p-16 flex flex-col overflow-hidden border border-gray-50">
+        <div className="flex flex-col gap-20 mb-20 animate-in fade-in slide-in-from-top-4 duration-1000">
 
           <div className="flex flex-col items-center">
                <div className="inline-flex items-center gap-2 px-6 py-2 bg-slate-900 text-white rounded-full text-[0.65rem] font-black mb-4 uppercase tracking-[0.25em] shadow-xl">
@@ -418,7 +583,19 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                     onClick={() => {
                       setSelectedDetail(idx);
                       if (selectedId === 'care_svc') {
-                        setCareSvcType(idx === 0 ? 'support' : 'expense');
+                        setCareSvcType(idx === 0 ? 'expense' : 'support');
+                      }
+                      if (selectedId === 'nursing') {
+                        setNursingPreferredService(idx === 0 ? 'home' : idx === 1 ? 'facility' : 'both');
+                      }
+                      if (selectedId === 'child') {
+                        if (idx === 0) {
+                          setChildAgeGroup('prenatal');
+                          setChildHasPrenatalRider(true);
+                        } else {
+                          setChildAgeGroup('youth');
+                          setChildMaturity(100);
+                        }
                       }
                       // Sync specialized states with sub-tabs
                       if (selectedId === 'cancer') {
@@ -510,8 +687,21 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                     diagnosisAmount={dementiaDiagnosisAmount} setDiagnosisAmount={setDementiaDiagnosisAmount}
                     monthlyAllowance={dementiaMonthlyAllowance} setMonthlyAllowance={setDementiaMonthlyAllowance}
                     serviceType={dementiaServiceType} setServiceType={setDementiaServiceType}
+                    hasProxyClaim={dementiaHasProxyClaim} setHasProxyClaim={setDementiaHasProxyClaim}
+                    hasDementiaHistory={dementiaHasHistory} setHasDementiaHistory={setDementiaHasHistory}
+                    hasLtcGrade={dementiaHasLtcGrade} setHasLtcGrade={setDementiaHasLtcGrade}
+                    subType={selectedDetail === 0 ? 'mild' : 'severe'}
                   />
                 </div>
+              ) : selectedId === 'nursing' ? (
+                <NursingFields
+                  preferredService={nursingPreferredService} setPreferredService={setNursingPreferredService}
+                  homeAmount={nursingHomeAmount} setHomeAmount={setNursingHomeAmount}
+                  facilityAmount={nursingFacilityAmount} setFacilityAmount={setNursingFacilityAmount}
+                  hasProxyClaim={nursingHasProxyClaim} setHasProxyClaim={setNursingHasProxyClaim}
+                  hasBrainHistory={nursingHasBrainHistory} setHasBrainHistory={setNursingHasBrainHistory}
+                  hasLtcHistory={nursingHasLtcHistory} setHasLtcHistory={setNursingHasLtcHistory}
+                />
               ) : selectedId === 'dental' ? (
                 <DentalFields
                   lastYear={dentalLastYear} setLastYear={setDentalLastYear}
@@ -546,7 +736,72 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                   recurrentCancer={cancerRecurrentCancer} setRecurrentCancer={setCancerRecurrentCancer}
                   familyHistory={cancerFamilyHistory} setFamilyHistory={setCancerFamilyHistory}
                 />
-              ) : (selectedId === 'pre' || selectedId === 'pre_family' || healthStatus === 'simple') && selectedId !== 'silson' ? (
+              ) : selectedId === 'child' ? (
+                <ChildFields
+                  targetAgeGroup={childAgeGroup} setTargetAgeGroup={setChildAgeGroup}
+                  maturity={childMaturity} setMaturity={setChildMaturity}
+                  focusArea={childFocusArea} setFocusArea={setChildFocusArea}
+                  hasPrenatalRider={childHasPrenatalRider} setHasPrenatalRider={setChildHasPrenatalRider}
+                  weeksPregnancy={childWeeksPregnancy} setWeeksPregnancy={setChildWeeksPregnancy}
+                />
+              ) : selectedId === 'pre_family' ? (
+                <PreFamilyFields
+                  illnessType={preFamilyIllnessType} setIllnessType={setPreFamilyIllnessType}
+                  noAccidentYears={preFamilyNoAccidentYears} setNoAccidentYears={setPreFamilyNoAccidentYears}
+                  maturity={preFamilyMaturity} setMaturity={setPreFamilyMaturity}
+                />
+              ) : selectedId === 'car' ? (
+                <CarFields
+                  annualMileage={carMileage} setAnnualMileage={setCarMileage}
+                  safeDrivingScore={carSafetyScore} setSafeDrivingScore={setCarSafetyScore}
+                  hasConnectedCar={carConnected} setHasConnectedCar={setCarConnected}
+                  hasBlackbox={carBlackbox} setHasBlackbox={setCarBlackbox}
+                  hasChildRider={carChildRider} setHasChildRider={setCarChildRider}
+                  currentPropertyLimit={carPropertyLimit} setCurrentPropertyLimit={setCarPropertyLimit}
+                  currentInjuryType={carInjuryType} setCurrentInjuryType={setCarInjuryType}
+                  carBrand={carBrand} setCarBrand={setCarBrand}
+                  carModel={carModel} setCarModel={setCarModel}
+                  carYear={carYear} setCarYear={setCarYear}
+                  carDriverLimit={carDriverLimit} setCarDriverLimit={setCarDriverLimit}
+                  carOwnDamage={carOwnDamage} setCarOwnDamage={setCarOwnDamage}
+                  hasLaneSafety={carLaneSafety} setHasLaneSafety={setCarLaneSafety}
+                  hasForwardCollision={carForwardCollision} setHasForwardCollision={setCarForwardCollision}
+                  selectedEngine={carEngine} setSelectedEngine={setCarEngine}
+                  selectedTrim={carTrim} setSelectedTrim={setCarTrim}
+                />
+              ) : selectedId === 'driver' ? (
+                <DriverFields
+                  drivingPurpose={driverDrivingPurpose}
+                  setDrivingPurpose={setDriverDrivingPurpose}
+                  jobClass={driverJobClass}
+                  setJobClass={setDriverJobClass}
+                  planType={driverPlanType}
+                  setPlanType={setDriverPlanType}
+                />
+              ) : selectedId === 'pet' ? (
+                <PetFields
+                  petType={petType}
+                  setPetType={setPetType}
+                  petName={petName}
+                  setPetName={setPetName}
+                  breed={petBreed}
+                  setBreed={setPetBreed}
+                  birthYearMonth={petBirthYearMonth}
+                  setBirthYearMonth={setPetBirthYearMonth}
+                  selfPayRatio={petSelfPayRatio}
+                  setSelfPayRatio={setPetSelfPayRatio}
+                  deductible={petDeductible}
+                  setDeductible={setPetDeductible}
+                  isRegistered={petIsRegistered}
+                  setIsRegistered={setPetIsRegistered}
+                  patellaRider={petPatellaRider}
+                  setPatellaRider={setPetPatellaRider}
+                  skinRider={petSkinRider}
+                  setSkinRider={setPetSkinRider}
+                  dentalRider={petDentalRider}
+                  setDentalRider={setPetDentalRider}
+                />
+              ) : (selectedId === 'pre' || healthStatus === 'simple') && selectedId !== 'silson' ? (
                 <PreExistingFields
                   threeMonth={silson3Month} setThreeMonth={setSilson3Month}
                   noAccidentYears={preExistingType.split('.')[1]}

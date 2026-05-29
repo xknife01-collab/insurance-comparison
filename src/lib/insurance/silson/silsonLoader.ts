@@ -13,7 +13,7 @@ export async function fetchSilsonPremium(analysis: InsuranceAnalysis) {
     const dbGender = (genderVal.startsWith('M') || genderVal === '남') ? 'M' : 'F';
     const targetAge = analysis.age || 40;
 
-    const subType = analysis.silson?.subType || '4세대 실손';
+    const subType = (analysis.silson as any)?.subType || '4세대 실손';
     const dbCategory = subType === '노후 실손' ? '노후_의료실비' : '실속_의료실비';
 
     const { data: silsonRates } = await supabase
@@ -43,7 +43,7 @@ export async function fetchSilsonPremium(analysis: InsuranceAnalysis) {
         const ageCorrectedPremium = Math.round(basePremium * ageRatio);
 
         // 비급여 차등제 적용
-        const usageType = analysis.silson?.nonReimbursableUsage || 'under100';
+        const usageType = (analysis.silson as any)?.nonReimbursableUsage || 'under100';
         const getUsageMultiplier = (type: string): number => {
           switch (type) {
             case 'none': return 0.95; case 'under100': return 1.0;

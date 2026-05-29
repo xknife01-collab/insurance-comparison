@@ -87,7 +87,7 @@ export async function fetchBrainPremium(analysis: InsuranceAnalysis) {
       });
 
       // 4. 상세 타입 및 갱신 유형 필터링
-      const selectedType = analysis.cerebrovascular?.selectedType;
+      const selectedType = (analysis.cerebrovascular as any)?.selectedType;
       const isSelectedRenewable = (analysis.cerebrovascular as any)?.paymentType === 'renewable';
       
       results = results.filter(r => r.isRenewable === isSelectedRenewable);

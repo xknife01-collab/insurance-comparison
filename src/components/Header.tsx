@@ -3,108 +3,317 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
-import { Search, Menu, Phone } from 'lucide-react';
+import React, { useState, useRef, useCallback, ReactNode } from 'react';
+import {
+  Search, Phone, X, ChevronRight,
+  Shield, Activity, Baby, Car, Wallet, HeartPulse,
+  ChevronDown
+} from 'lucide-react';
 
-const Header = ({ setView }: { setView: (view: 'home' | 'indemnity' | 'preexisting' | 'dental' | 'surgery' | 'cancer' | 'caregiving' | 'dementia' | 'cerebrovascular' | 'heart') => void }) => (
-  <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex justify-between items-center h-20">
-        <div 
-          className="flex items-center gap-2 cursor-pointer transition-transform hover:scale-105 active:scale-95"
-          onClick={() => setView('home')}
-        >
-          <img src="/logo.png" alt="Incar" className="h-14 w-auto object-contain" />
-        </div>
-        <div className="hidden md:flex flex-1 max-w-md mx-8">
-          <div className="relative w-full">
-            <input 
-              type="text" 
-              placeholder="검색어를 입력하세요" 
-              className="w-full bg-gray-50 border border-gray-200 rounded-full py-2 px-4 pr-10 focus:outline-none focus:ring-2 focus:ring-orange-500/20 shadow-sm"
-            />
-            <Search className="absolute right-3 top-2.5 text-gray-400 w-5 h-5" />
+type ViewType =
+  | 'home' | 'indemnity' | 'preexisting' | 'dental' | 'surgery'
+  | 'cancer' | 'caregiving' | 'dementia' | 'cerebrovascular' | 'heart'
+  | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver';
+
+interface NavItem { label: string; view: ViewType; desc?: string; }
+interface NavGroup {
+  groupLabel: string;
+  icon: ReactNode;
+  headerBg: string;
+  textColor: string;
+  itemHover: string;
+  items: NavItem[];
+}
+
+const ALL_GROUPS: NavGroup[] = [
+  {
+    groupLabel: '핵심 질병 보험',
+    icon: <HeartPulse className="w-4 h-4" />,
+    headerBg: 'bg-rose-50',
+    textColor: 'text-rose-600',
+    itemHover: 'hover:text-rose-600',
+    items: [
+      { label: '암보험', view: 'cancer', desc: '3대 진단비 집중 설계' },
+      { label: '뇌혈관 보험', view: 'cerebrovascular', desc: '뇌졸중·출혈 무제한' },
+      { label: '심장질환 보험', view: 'heart', desc: '허혈성 심장 집중' },
+      { label: '수술/입원', view: 'surgery', desc: '실비의 완벽한 파트너' },
+    ],
+  },
+  {
+    groupLabel: '건강 기본 보험',
+    icon: <Activity className="w-4 h-4" />,
+    headerBg: 'bg-blue-50',
+    textColor: 'text-blue-600',
+    itemHover: 'hover:text-blue-600',
+    items: [
+      { label: '의료실비', view: 'indemnity', desc: '제 2의 건강보험' },
+      { label: '치아보험', view: 'dental', desc: '임플란트/크라운 집중' },
+      { label: '유병자 보험', view: 'preexisting', desc: '간편고지 3.X.5 매칭' },
+    ],
+  },
+  {
+    groupLabel: '노후 케어 보험',
+    icon: <Shield className="w-4 h-4" />,
+    headerBg: 'bg-purple-50',
+    textColor: 'text-purple-600',
+    itemHover: 'hover:text-purple-600',
+    items: [
+      { label: '간병보험', view: 'caregiving', desc: '간병인 지원/사용형' },
+      { label: '치매 간병보험', view: 'dementia', desc: '경증 치매부터 보장' },
+      { label: '재가/시설 보험', view: 'nursing', desc: '국가공인 방문 요양' },
+    ],
+  },
+  {
+    groupLabel: '어린이/태아 보험',
+    icon: <Baby className="w-4 h-4" />,
+    headerBg: 'bg-yellow-50',
+    textColor: 'text-yellow-600',
+    itemHover: 'hover:text-yellow-600',
+    items: [
+      { label: '어린이/태아 보험', view: 'child', desc: '태아부터 성인까지' },
+      { label: '유병자 어린이보험', view: 'child_sick', desc: 'ADHD·발달지연 OK' },
+    ],
+  },
+  {
+    groupLabel: '생활/운행/레저',
+    icon: <Car className="w-4 h-4" />,
+    headerBg: 'bg-orange-50',
+    textColor: 'text-orange-600',
+    itemHover: 'hover:text-orange-600',
+    items: [
+      { label: '자동차 보험', view: 'car', desc: '전사 가격 자동 비교' },
+      { label: '운전자 보험', view: 'driver', desc: '벌금 및 민사 보장' },
+      { label: '펫 보험', view: 'home', desc: '우리 아이 병원비' },
+      { label: '여행자 보험', view: 'home', desc: '상해 및 질병 보장' },
+      { label: '골프/레저', view: 'home', desc: '취미 생활 보호' },
+      { label: '주택화재', view: 'home', desc: '재산 피해 보호' },
+    ],
+  },
+  {
+    groupLabel: '저축/미래/법률',
+    icon: <Wallet className="w-4 h-4" />,
+    headerBg: 'bg-emerald-50',
+    textColor: 'text-emerald-600',
+    itemHover: 'hover:text-emerald-600',
+    items: [
+      { label: '연금저축', view: 'home', desc: '노후 자금 준비' },
+      { label: '종신', view: 'home', desc: '가격 대비 최다보장' },
+      { label: '변액/정기', view: 'home', desc: '수익형 자산 관리' },
+      { label: '민사/형사', view: 'home', desc: '법률 비용 보전' },
+    ],
+  },
+];
+
+const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [megaOpen, setMegaOpen] = useState(false);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const navigate = (view: ViewType) => {
+    setView(view);
+    setMobileOpen(false);
+    setMegaOpen(false);
+  };
+
+  const handleMouseEnter = useCallback(() => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setMegaOpen(true);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    closeTimer.current = setTimeout(() => setMegaOpen(false), 150);
+  }, []);
+
+  return (
+    <>
+      <header className="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+          {/* ── 상단 바 ── */}
+          <div className="flex justify-between items-center h-16">
+            <div
+              className="flex items-center gap-2 cursor-pointer transition-transform hover:scale-105 active:scale-95 shrink-0"
+              onClick={() => navigate('home')}
+            >
+              <img src="/logo.png" alt="Incar" className="h-12 w-auto object-contain" />
+            </div>
+
+            <div className="hidden md:flex flex-1 max-w-sm mx-6">
+              <div className="relative w-full">
+                <input
+                  type="text"
+                  placeholder="검색어를 입력하세요"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-full py-2 px-4 pr-10 focus:outline-none focus:ring-2 focus:ring-orange-500/20 shadow-sm text-sm"
+                />
+                <Search className="absolute right-3 top-2.5 text-gray-400 w-5 h-5" />
+              </div>
+            </div>
+
+            <div className="hidden lg:flex items-center gap-4">
+              <div className="flex items-center gap-2 text-gray-600">
+                <Phone className="w-4 h-4" />
+                <span className="font-bold text-sm">080.808.1088</span>
+              </div>
+              <button className="bg-white border border-gray-300 text-gray-700 px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors">
+                나의 라이프 플래너
+              </button>
+            </div>
+
+            {/* 모바일 햄버거 */}
+            <button
+              className="lg:hidden flex flex-col gap-1.5 p-2 rounded-lg hover:bg-gray-50"
+              onClick={() => setMobileOpen(true)}
+            >
+              <span className="w-6 h-0.5 bg-gray-700 rounded-full" />
+              <span className="w-6 h-0.5 bg-gray-700 rounded-full" />
+              <span className="w-4 h-0.5 bg-gray-700 rounded-full" />
+            </button>
+          </div>
+
+          {/* ── 데스크탑 Slim 네비 바 (hover → mega menu) ── */}
+          <div
+            className="hidden lg:flex items-center gap-1 h-11 border-t border-gray-100"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            {ALL_GROUPS.map((group) => (
+              <button
+                key={group.groupLabel}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all
+                  ${megaOpen
+                    ? `${group.headerBg} ${group.textColor}`
+                    : `text-gray-600 hover:${group.headerBg} hover:${group.textColor}`
+                  }`}
+              >
+                <span className={megaOpen ? group.textColor : 'text-gray-400'}>{group.icon}</span>
+                {group.groupLabel}
+                <ChevronDown className={`w-3 h-3 transition-transform ${megaOpen ? 'rotate-180' : ''}`} />
+              </button>
+            ))}
+            <div className="flex-1" />
+            <button className="text-xs font-bold text-gray-500 hover:text-orange-500 px-3">통합계산</button>
+            <button className="text-xs font-bold text-gray-500 hover:text-orange-500 px-3">고객센터</button>
           </div>
         </div>
-        <div className="flex items-center gap-6">
-          <div className="hidden lg:flex items-center gap-2 text-gray-600">
-            <Phone className="w-5 h-5" />
-            <span className="font-bold text-lg">080.808.1088</span>
+
+        {/* ── 메가 메뉴 드롭다운 ── */}
+        {megaOpen && (
+          <div
+            className="hidden lg:block absolute left-0 right-0 top-full bg-white border-t border-gray-100 shadow-2xl z-40"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+              <div className="grid grid-cols-6 gap-6">
+                {ALL_GROUPS.map((group) => (
+                  <div key={group.groupLabel} className="flex flex-col">
+                    {/* 그룹 헤더 — 모바일과 동일한 스타일 */}
+                    <div className={`flex items-center gap-2 px-3 py-2 rounded-xl mb-3 ${group.headerBg}`}>
+                      <span className={group.textColor}>{group.icon}</span>
+                      <span className={`text-[11px] font-black uppercase tracking-wide ${group.textColor}`}>
+                        {group.groupLabel}
+                      </span>
+                    </div>
+                    {/* 항목 세로 1열 */}
+                    <div className="flex flex-col gap-0.5">
+                      {group.items.map((item) => (
+                        <button
+                          key={item.label}
+                          onClick={() => navigate(item.view)}
+                          className={`text-left px-2 py-1.5 rounded-lg group transition-all ${group.itemHover} hover:bg-gray-50`}
+                        >
+                          <p className={`text-sm font-bold text-gray-700 group-hover:${group.textColor.replace('text-', 'text-')} transition-colors`}>
+                            {item.label}
+                          </p>
+                          {item.desc && (
+                            <p className="text-[10px] text-gray-400 font-bold mt-0.5">{item.desc}</p>
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* 메가 메뉴 하단 배너 */}
+              <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+                <p className="text-xs text-gray-400 font-bold">
+                  💡 보험 전문가가 직접 분석한 <span className="text-orange-500">실시간 맞춤 비교</span>를 무료로 받아보세요.
+                </p>
+                <button
+                  onClick={() => navigate('home')}
+                  className="bg-orange-500 text-white px-5 py-2 rounded-full text-xs font-black hover:bg-orange-600 transition-colors shadow-lg shadow-orange-500/20"
+                >
+                  무료 보험료 비교하기 →
+                </button>
+              </div>
+            </div>
           </div>
-          <button className="bg-white border border-gray-300 text-gray-700 px-4 py-1.5 rounded text-sm font-medium hover:bg-gray-50 transition-colors">
-            나의 라이프 플래너
-          </button>
+        )}
+      </header>
+
+      {/* ── 모바일 드로어 ── */}
+      {mobileOpen && (
+        <div className="fixed inset-0 z-[100] lg:hidden">
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
+          <div className="absolute right-0 top-0 h-full w-[85vw] max-w-sm bg-white shadow-2xl flex flex-col overflow-y-auto">
+
+            <div className="flex items-center justify-between p-5 border-b border-gray-100 sticky top-0 bg-white z-10">
+              <img src="/logo.png" alt="Incar" className="h-10 w-auto object-contain" />
+              <button onClick={() => setMobileOpen(false)} className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors">
+                <X className="w-5 h-5 text-gray-600" />
+              </button>
+            </div>
+
+            <div className="p-4 border-b border-gray-50">
+              <div className="relative">
+                <input type="text" placeholder="보험 종류를 검색하세요"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-full py-2.5 px-4 pr-10 focus:outline-none focus:ring-2 focus:ring-orange-500/20 text-sm" />
+                <Search className="absolute right-3 top-2.5 text-gray-400 w-5 h-5" />
+              </div>
+            </div>
+
+            <div className="flex-1 p-4 space-y-3">
+              {ALL_GROUPS.map((group) => (
+                <div key={group.groupLabel} className="rounded-2xl overflow-hidden border border-gray-100">
+                  <div className={`flex items-center gap-2 px-4 py-3 ${group.headerBg}`}>
+                    <span className={group.textColor}>{group.icon}</span>
+                    <span className={`text-xs font-black uppercase tracking-wider ${group.textColor}`}>{group.groupLabel}</span>
+                  </div>
+                  <div className="bg-white">
+                    {group.items.map((item, idx) => (
+                      <button
+                        key={item.label}
+                        onClick={() => navigate(item.view)}
+                        className={`w-full flex items-center justify-between px-4 py-3.5 text-left hover:bg-gray-50 active:bg-gray-100 transition-colors
+                          ${idx < group.items.length - 1 ? 'border-b border-gray-50' : ''}`}
+                      >
+                        <div>
+                          <p className="text-sm font-bold text-gray-700">{item.label}</p>
+                          {item.desc && <p className="text-[10px] text-gray-400 font-bold mt-0.5">{item.desc}</p>}
+                        </div>
+                        <ChevronRight className="w-4 h-4 text-gray-300 shrink-0" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="p-4 border-t border-gray-100 bg-gray-50 space-y-3">
+              <div className="flex items-center gap-2 text-gray-600 justify-center">
+                <Phone className="w-4 h-4" />
+                <span className="font-bold">080.808.1088</span>
+              </div>
+              <button className="w-full bg-orange-500 text-white py-3 rounded-2xl font-black text-sm hover:bg-orange-600 transition-colors">
+                나의 라이프 플래너
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-      <nav className="flex items-center gap-8 h-12 text-sm font-medium text-gray-700 overflow-x-auto whitespace-nowrap scrollbar-hide">
-        <button 
-          className="flex items-center gap-1 font-bold text-orange-500 shrink-0"
-          onClick={() => setView('home')}
-        >
-          <Menu className="w-4 h-4" />
-          보험종류
-        </button>
-        <button 
-           className="hover:text-orange-500 font-bold shrink-0"
-           onClick={() => setView('indemnity')}
-        >
-          의료실비
-        </button>
-        <button 
-           className="hover:text-orange-500 font-bold shrink-0"
-           onClick={() => setView('dental')}
-        >
-          치아보험
-        </button>
-        <button 
-           className="hover:text-orange-500 font-bold shrink-0"
-           onClick={() => setView('preexisting')}
-        >
-          유병자
-        </button>
-        <button 
-           className="hover:text-orange-500 font-bold shrink-0"
-           onClick={() => setView('surgery')}
-        >
-          수술/입원
-        </button>
-        <button 
-           className="hover:text-rose-500 font-bold shrink-0 text-rose-600"
-           onClick={() => setView('cancer')}
-        >
-          암보험
-        </button>
-        <button 
-           className="hover:text-indigo-600 font-bold shrink-0 text-indigo-600"
-           onClick={() => setView('cerebrovascular')}
-        >
-          뇌혈관 보험
-        </button>
-        <button 
-           className="hover:text-red-600 font-bold shrink-0 text-red-600"
-           onClick={() => setView('heart')}
-        >
-          심장질환 보험
-        </button>
-        <button 
-           className="hover:text-purple-600 font-bold shrink-0"
-           onClick={() => setView('caregiving')}
-        >
-          간병보험
-        </button>
-        <button 
-           className="hover:text-amber-600 font-bold shrink-0 text-amber-600"
-           onClick={() => setView('dementia')}
-        >
-          치매 간병보험
-        </button>
-        <button className="hover:text-orange-500 shrink-0">통합계산</button>
-        <button className="hover:text-orange-500 shrink-0">고객센터</button>
-      </nav>
-
-    </div>
-  </header>
-);
-
+      )}
+    </>
+  );
+};
 
 export default Header;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { TrendingDown, TrendingUp, ShieldCheck, HeartPulse, Brain, Heart, Stethoscope, Clock } from 'lucide-react';
+import { TrendingDown, TrendingUp, ShieldCheck, HeartPulse, Brain, Heart, Stethoscope, Clock, Scale } from 'lucide-react';
 import { InsuranceAnalysis, RecommendationPlan } from '../types/insurance';
 
 interface ComparisonTableProps {
@@ -20,70 +20,376 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
   const isDental = analysis.selectedCategory?.includes('치아');
   const isSilbi = analysis.selectedCategory?.includes('실손') || analysis.selectedCategory?.includes('실비');
   const isCaregiving = analysis.selectedCategory?.includes('간병');
+  const isDementia = isCaregiving && (analysis.caregiving as any)?.dementiaDiagnosis !== undefined;
+  const isGeneralCaregiving = isCaregiving && !isDementia;
+  const isNursing = analysis.selectedCategory === '재가/시설' || analysis.selectedCategory?.includes('재가') || analysis.selectedCategory?.includes('시설');
   const isBrain = analysis.selectedCategory?.includes('뇌혈관') || analysis.selectedCategory === 'brain';
   const isHeart = analysis.selectedCategory?.includes('심장') || analysis.selectedCategory === 'heart';
+  const isChild = analysis.selectedCategory?.includes('어린이') || analysis.selectedCategory?.includes('태아') || analysis.selectedCategory === 'child' || analysis.selectedCategory === 'pre_family' || !!analysis.child;
+  const isCar = analysis.selectedCategory?.includes('자동차') || analysis.selectedCategory === 'car';
+  const isDriver = analysis.selectedCategory?.includes('운전자') || analysis.selectedCategory === 'driver';
 
-  const benchmark = isSilbi ? 55000 : isDental ? 85000 : isCaregiving ? 45000 : isHeart ? 120000 : 180000;
+  const benchmark = isSilbi ? 55000 : isDental ? 85000 : isCaregiving ? 45000 : isNursing ? 70000 : isHeart ? 120000 : isChild ? (analysis.child?.maturity === 30 ? 45000 : 95000) : isDriver ? 22000 : 180000;
   const dietPremium = recommendation.estimatedPremium;
   const currentPremium = analysis.monthlyPremium;
   
   const displaySavings = currentPremium > dietPremium + 5000 ? (currentPremium - dietPremium) : (benchmark - dietPremium);
-
-  const dentalRows = [
-    { label: '임플란트 보장', current: '없음', recommended: analysis.dental?.implantLimit === 'unlimited' ? '무제한' : '연 3회', icon: <ShieldCheck className="w-4 h-4 text-emerald-500" /> },
-    { label: '브릿지 보장', current: '없음', recommended: '연 3회', icon: <HeartPulse className="w-4 h-4 text-emerald-500" /> },
-    { label: '크라운 치료', current: '없음', recommended: formatAmt(analysis.dental?.crownAmount || 0), icon: <ShieldCheck className="w-4 h-4 text-emerald-500" /> },
-    { label: '충전치료(인레이)', current: '없음', recommended: '20만', icon: <Stethoscope className="w-4 h-4 text-emerald-500" /> },
-    { label: '발치/치수치료', current: '없음', recommended: '5만', icon: <HeartPulse className="w-4 h-4 text-emerald-500" /> },
-    { label: '면책/감액기간', current: '해당없음', recommended: '90일/1년', icon: <Clock className="w-4 h-4 text-emerald-500" /> },
-  ];
-
-  const silbiRows = [
-    { label: '실손 의료비 세대', current: currentPremium > 40000 ? '1~3세대' : '4세대', recommended: '4세대 (전환 추천)', icon: <ShieldCheck className="w-4 h-4 text-blue-500" /> },
-    { label: '급여 자기부담금', current: '10~20%', recommended: '20%', icon: <HeartPulse className="w-4 h-4 text-blue-500" /> },
-    { label: '비급여 자기부담금', current: '20%', recommended: '30%', icon: <Stethoscope className="w-4 h-4 text-blue-500" /> },
-    { label: '비급여 3대 특약', current: '별도 확인', recommended: '포함 (표준화)', icon: <Brain className="w-4 h-4 text-blue-500" /> },
-    { label: '보험료 차등제', current: '미적용', recommended: '단계별 적용(할인 가능)', icon: <TrendingDown className="w-4 h-4 text-blue-500" /> },
-    { label: '재가입 주기', current: '15년', recommended: '5년', icon: <Clock className="w-4 h-4 text-blue-500" /> },
-  ];
-
-  const caregivingRows = [
-    { label: '간병 지원 방식', current: '직접 고용', recommended: analysis.caregiving?.type === 'support' ? '보험사 지원(추천)' : '현금 일당형', icon: <ShieldCheck className="w-4 h-4 text-purple-500" /> },
-    { label: '인건비 상승 대비', current: '미보장', recommended: analysis.caregiving?.isStepUp ? '체증형(가입)' : '기본형', icon: <TrendingUp className="w-4 h-4 text-purple-500" /> },
-    { label: '간병인 매칭 스트레스', current: '매우 높음', recommended: '제로 (보험사 대행)', icon: <Stethoscope className="w-4 h-4 text-purple-500" /> },
-    { label: '비갱신형 가입 여부', current: '해당 없음', recommended: analysis.caregiving?.type === 'support' ? '지원형(갱신)' : '사용형(비갱신)', icon: <Clock className="w-4 h-4 text-purple-500" /> },
-    { label: '가족 간병 보장', current: '불가', recommended: analysis.caregiving?.type === 'support' ? '파견 중심' : '가족 간병 가능', icon: <Heart className="w-4 h-4 text-purple-500" /> },
-    { label: '요양병원 한도', current: '부족', recommended: '일당 3~5만', icon: <Brain className="w-4 h-4 text-purple-500" /> },
-  ];
   
+  // 1. 치아보험
+  const dentalRows = [
+    { 
+      label: '임플란트 보장 한도', 
+      current: analysis.dental?.implantLimit === 'unlimited' ? '무제한' : (analysis.dental?.implantLimit ? `${analysis.dental.implantLimit}개` : '연 3개'), 
+      recommended: '무제한 (보증금 한도 걱정 없이 든든하게)', 
+      icon: <ShieldCheck className="w-4 h-4 text-purple-600" /> 
+    },
+    { 
+      label: '크라운 보장 금액', 
+      current: formatAmt(analysis.dental?.crownAmount || 200000), 
+      recommended: '최대 50만 원 (고액 보존치료 자기부담금 축소)', 
+      icon: <TrendingUp className="w-4 h-4 text-purple-600" /> 
+    },
+    { 
+      label: '레진/인레이 보장', 
+      current: formatAmt(analysis.dental?.inlayAmount || 100000), 
+      recommended: '최대 15만 원 (자주 쓰는 보존치료 집중 케어)', 
+      icon: <HeartPulse className="w-4 h-4 text-purple-600" /> 
+    },
+  ];
+
+  // 2. 실손의료비
+  const silbiRows = [
+    { 
+      label: '세대 구분 및 본인부담금', 
+      current: `${analysis.silbi?.generation || 4}세대 (급여 20%/비급여 30%)`, 
+      recommended: '4세대 유지 및 비급여 특약 할인 연동 적용', 
+      icon: <ShieldCheck className="w-4 h-4 text-blue-600" /> 
+    },
+    { 
+      label: '비급여 주사제 보장', 
+      current: '가입 (연 250만 원 한도)', 
+      recommended: '가입 유지 및 3대 비급여 한도 관리', 
+      icon: <HeartPulse className="w-4 h-4 text-blue-600" /> 
+    },
+  ];
+
+  // 3. 치매보험
+  const dementiaRows = [
+    { 
+      label: '경도 치매 진단금 (CDR 1점)', 
+      current: formatAmt(analysis.caregiving?.dementiaDiagnosis || 3000000), 
+      recommended: '최대 1,000만 원 (초기 발견 시 즉각 치료비 확보)', 
+      icon: <Brain className="w-4 h-4 text-rose-600" /> 
+    },
+    { 
+      label: '중등도 치매 진단금 (CDR 2점)', 
+      current: formatAmt((analysis.caregiving?.dementiaDiagnosis || 3000000) * 2), 
+      recommended: '최대 2,000만 원 (간병 인프라 조기 세팅 자금)', 
+      icon: <Brain className="w-4 h-4 text-rose-600" /> 
+    },
+    { 
+      label: '중증 치매 생활비 (CDR 3점)', 
+      current: '없음', 
+      recommended: '매월 100만 원 평생 지급 (종신 보장으로 가족 간병 부담 해소)', 
+      icon: <Clock className="w-4 h-4 text-rose-600" /> 
+    },
+  ];
+
+  // 4. 일반 간병보험
+  const caregivingRows = [
+    { 
+      label: '간병인 지원 일당 (보험사 직접 파견)', 
+      current: '없음', 
+      recommended: '일반 병실/요양병원 간병인 100% 매칭 지원', 
+      icon: <Stethoscope className="w-4 h-4 text-emerald-600" /> 
+    },
+    { 
+      label: '간병비 사용 일당 (현금 지급형)', 
+      current: '없음', 
+      recommended: '하루 최대 15만 원 현금 지급 (간병비 부담 제거)', 
+      icon: <ShieldCheck className="w-4 h-4 text-emerald-600" /> 
+    },
+  ];
+
+  // 5. 재가/시설 (장기요양)
+  const nursingRows = [
+    { 
+      label: '재가급여 지원 한도 (장기요양 1~5등급)', 
+      current: '없음', 
+      recommended: '매월 최대 100만 원 (방문요양/방문목욕 서비스 국가지원 외 추가 지원)', 
+      icon: <ShieldCheck className="w-4 h-4 text-teal-600" /> 
+    },
+    { 
+      label: '시설급여 지원 한도 (요양원/실버타운)', 
+      current: '없음', 
+      recommended: '매월 최대 120만 원 (요양시설 입소 시 매달 생활비 보조)', 
+      icon: <HeartPulse className="w-4 h-4 text-teal-600" /> 
+    },
+  ];
+
+  // 6. 뇌혈관질환
   const brainRows = [
-    { label: '뇌혈관 진단비', current: formatAmt(analysis.cerebrovascular?.currentAmount || 0), recommended: formatAmt(analysis.cerebrovascular?.targetAmount || 10000000), icon: <Brain className="w-4 h-4 text-indigo-500" /> },
-    { label: '뇌혈관 수술비', current: '미보장', recommended: analysis.cerebrovascular?.surgeryBenefit ? '포함(추천)' : '미포함', icon: <HeartPulse className="w-4 h-4 text-indigo-500" /> },
-    { label: '납입/갱신 방식', current: '확인필요', recommended: analysis.cerebrovascular?.paymentType === 'non-renewable' ? '비갱신형' : '갱신형', icon: <Clock className="w-4 h-4 text-indigo-500" /> },
-    { label: '심사 유형', current: '일반심사', recommended: '표준체', icon: <ShieldCheck className="w-4 h-4 text-indigo-500" /> },
-    { label: '보장 만기', current: '80세', recommended: `${(analysis.cerebrovascular as any)?.coveragePeriod || 90}세`, icon: <TrendingUp className="w-4 h-4 text-indigo-500" /> },
-    { label: '가족 간병인 지원', current: '없음', recommended: '선택 가능', icon: <Stethoscope className="w-4 h-4 text-indigo-500" /> },
+    { 
+      label: '뇌혈관질환 진단비 (넓은 보장)', 
+      current: formatAmt(analysis.brain?.diagnosisAmount || 10000000), 
+      recommended: '최대 2,000만 원 (뇌졸중/뇌출혈 전조 증상인 뇌동맥류 단계부터 보장)', 
+      icon: <Brain className="w-4 h-4 text-indigo-600" /> 
+    },
+    { 
+      label: '뇌졸중/뇌출혈 진단비', 
+      current: formatAmt(analysis.brain?.strokeAmount || 20000000), 
+      recommended: '최대 3,000만 원 (중증 뇌질환 진단 시 집중 보강)', 
+      icon: <ShieldCheck className="w-4 h-4 text-indigo-600" /> 
+    },
+    { 
+      label: '뇌혈관질환 수술비', 
+      current: '없음', 
+      recommended: '수술 1회당 1,000만 원 (관혈/비관혈 구분 없이 반복 지급)', 
+      icon: <HeartPulse className="w-4 h-4 text-indigo-600" /> 
+    },
   ];
 
+  // 7. 허혈성심장질환
   const heartRows = [
-    { label: '심혈관 질환 진단비', current: formatAmt(analysis.cardiovascular?.currentAmount || 0), recommended: formatAmt(analysis.cardiovascular?.targetAmount || 30000000), icon: <Heart className="w-4 h-4 text-red-500" /> },
-    { label: '심혈관 수술비', current: '미보장', recommended: '포함(추천)', icon: <HeartPulse className="w-4 h-4 text-rose-500" /> },
-    { label: '보장 범위 (통합/급성)', current: (analysis as any).cardiovascular?.selectedType || '급성만 보장', recommended: '통합(허혈성 포함)', icon: <ShieldCheck className="w-4 h-4 text-red-500" /> },
-    { label: '부정맥/심부전 보장', current: '없음', recommended: '확장 보장', icon: <Stethoscope className="w-4 h-4 text-red-500" /> },
-    { label: '질병후유장해(3%~)', current: formatAmt(analysis.postDisability?.currentAmount || 0), recommended: formatAmt(analysis.postDisability?.targetAmount || 30000000), icon: <TrendingUp className="w-4 h-4 text-red-500" /> },
-    { label: '납입면제 범위', current: '일반형', recommended: analysis.paymentExemption === 'premium' ? '고급형(범위확대)' : '표준형', icon: <Clock className="w-4 h-4 text-red-500" /> },
+    { 
+      label: '허혈성 심장질환 진단비 (협심증 포함)', 
+      current: formatAmt(analysis.heart?.diagnosisAmount || 10000000), 
+      recommended: '최대 2,000만 원 (심장 질환의 70%인 협심증 단계부터 확실한 보장)', 
+      icon: <Heart className="w-4 h-4 text-red-600" /> 
+    },
+    { 
+      label: '급성심근경색증 진단비', 
+      current: formatAmt(analysis.heart?.infarctionAmount || 20000000), 
+      recommended: '최대 3,000만 원 (심장 쇼크 등 급성 중증 상태 대비)', 
+      icon: <ShieldCheck className="w-4 h-4 text-red-600" /> 
+    },
+    { 
+      label: '심장질환 수술비 (스텐트 삽입술 등)', 
+      current: '없음', 
+      recommended: '수술 1회당 1,000만 원 (재수술 빈도가 높은 스텐트 시술 매회 보장)', 
+      icon: <HeartPulse className="w-4 h-4 text-red-600" /> 
+    },
   ];
 
+  // 8. 자동차보험
+  const carModel = analysis.car?.model || 'grandeur';
+  const carYear = analysis.car?.year || 2020;
+  const carOwnDamage = analysis.car?.ownDamage || 'join';
+  const carDriverLimit = analysis.car?.driverLimit || 'single';
+
+  const ALL_MODEL_PRICES: Record<string, number> = {
+    morning: 15000000,
+    avante: 22000000,
+    sonata: 32000000,
+    grandeur: 43000000,
+    g80: 68000000,
+    sorento: 38000000,
+    palisade: 45000000,
+  };
+
+  const ALL_MODEL_LABELS: Record<string, string> = {
+    morning: '모닝',
+    avante: '아반떼',
+    sonata: '쏘나타',
+    grandeur: '그랜저',
+    g80: '제네시스 G80',
+    sorento: '쏘렌토',
+    palisade: '팰리세이드',
+  };
+
+  const DRIVER_LABELS: Record<string, string> = {
+    single: '1인 한정',
+    couple: '부부 한정',
+    family: '가족 한정',
+    anyone: '누구나',
+  };
+
+  const basePrice = ALL_MODEL_PRICES[carModel] || 43000000;
+  const ageYears = Math.max(0, 2026 - carYear);
+  const calculatedCarValue = Math.max(
+    Math.round(basePrice * Math.pow(0.85, ageYears)),
+    Math.round(basePrice * 0.1)
+  );
+
+  const carRows = [
+    { 
+      label: '평가 차량 모델 및 가액', 
+      current: `${ALL_MODEL_LABELS[carModel] || carModel} (${carYear}년식)`, 
+      recommended: `차량가액 ${(calculatedCarValue / 10000).toFixed(0)}만 원 산정 보장`, 
+      icon: <ShieldCheck className="w-4 h-4 text-blue-600" /> 
+    },
+    { 
+      label: '운전자 범위 특약', 
+      current: DRIVER_LABELS[carDriverLimit] || '1인 한정', 
+      recommended: carDriverLimit === 'single' ? '부부 한정 (가족 대비 절약) 권장' : `${DRIVER_LABELS[carDriverLimit]} 유지`, 
+      icon: <HeartPulse className="w-4 h-4 text-blue-600" /> 
+    },
+    { 
+      label: '자기차량손해 (자차) 보장 방식', 
+      current: carOwnDamage === 'join' ? '자차 가입 (종합 보장)' : (carOwnDamage === 'exclude_single' ? '단독사고 제외 가입' : '자차 미가입'), 
+      recommended: carOwnDamage === 'none' ? '침수·단독 사고 대비 종합 보장 권장' : '자기차량손해 완벽 보장', 
+      icon: <ShieldCheck className="w-4 h-4 text-blue-600" /> 
+    },
+    { 
+      label: '자기신체 상해 담보 방식', 
+      current: analysis.car?.currentInjuryType === 'jasang' ? '자동차상해 (자상)' : '자기신체사고 (자손)', 
+      recommended: '자동차상해 (치료비+위자료+휴업손해 100% 보장)', 
+      icon: <HeartPulse className="w-4 h-4 text-blue-600" /> 
+    },
+    { 
+      label: '대물배상 보장 한도', 
+      current: `${analysis.car?.currentPropertyLimit || 2}억 원`, 
+      recommended: '10억 원 (연간 약 1.5만원 차이로 고가차 다중사고 완전 대비)', 
+      icon: <Brain className="w-4 h-4 text-blue-600" /> 
+    },
+    { 
+      label: '안전운전 특약 할인 (Tmap)', 
+      current: analysis.car?.safeDrivingScore === 'none' ? '미적용' : `${analysis.car?.safeDrivingScore === 'over_80' ? '12%' : '7%'} 할인 적용 중`, 
+      recommended: '최대 12% 캐시백 환급 (티맵 점수 연동 최적화)', 
+      icon: <TrendingDown className="w-4 h-4 text-blue-600" /> 
+    },
+  ];
+
+  // 9. 운전자보험
+  const driverPlanType = analysis.driver?.planType || 'standard';
+  const driverRows = [
+    { 
+      label: '교통사고처리지원금 (형사합의금)', 
+      current: driverPlanType === 'saving' ? '1억 원' : (driverPlanType === 'standard' ? '1.5억 원' : '2억 원'), 
+      recommended: '최대 2억 원 (형사합의비 한도 완벽 보강)', 
+      icon: <ShieldCheck className="w-4 h-4 text-purple-600" /> 
+    },
+    { 
+      label: '변호사 선임 비용 (경찰조사단계 포함)', 
+      current: driverPlanType === 'saving' ? '3,000만 원' : '5,000만 원', 
+      recommended: '5,000만 원 (경찰 첫 출석 단계부터 선지원)', 
+      icon: <Clock className="w-4 h-4 text-purple-600" /> 
+    },
+    { 
+      label: '대인 벌금 (민식이법 법정 최고 벌금)', 
+      current: driverPlanType === 'saving' ? '2,000만 원' : '3,000만 원', 
+      recommended: '3,000만 원 (대인 벌금 리스크 전액 실손방어)', 
+      icon: <ShieldCheck className="w-4 h-4 text-purple-600" /> 
+    },
+    { 
+      label: '대물 벌금 (도로 파손 대비)', 
+      current: driverPlanType === 'premium' ? '500만 원' : '없음', 
+      recommended: '500만 원 (가드레일 및 공공기물 훼손 대비)', 
+      icon: <Brain className="w-4 h-4 text-purple-600" /> 
+    },
+    { 
+      label: '자동차사고 부상치료비 (자부상)', 
+      current: '없음', 
+      recommended: '14급 단순염좌 시 30만 원 정액 보장', 
+      icon: <HeartPulse className="w-4 h-4 text-purple-600" /> 
+    },
+  ];
+
+  // 10. 어린이보험
+  const childInfo = analysis.child || { targetAgeGroup: 'youth', maturity: 100 };
+  const isPreFamily = analysis.selectedCategory === 'pre_family';
+
+  const preFamilyRows = [
+    { 
+      label: '산모 임신질환 수술/입원비', 
+      current: '없음', 
+      recommended: '가입 (임신성 고혈압/당뇨 및 조기진통 집중 방어)', 
+      icon: <ShieldCheck className="w-4 h-4 text-emerald-600" /> 
+    },
+    { 
+      label: '태아 선천이상 수술비', 
+      current: '없음', 
+      recommended: '최대 500만 원 (혀유착증, 다지증 등 출생 즉시 수술 케어)', 
+      icon: <HeartPulse className="w-4 h-4 text-emerald-600" /> 
+    },
+  ];
+
+  const prenatalRows = [
+    { 
+      label: '저체중아/신생아 입원일당', 
+      current: '없음', 
+      recommended: '2.5kg 미만 출생 시 인큐베이터 비용 100% 매칭 지원', 
+      icon: <ShieldCheck className="w-4 h-4 text-emerald-600" /> 
+    },
+    { 
+      label: '선천이상 수술비 (혀유착 등)', 
+      current: '없음', 
+      recommended: '1회당 최대 500만 원 (다지증, 선천성 모반 등 사소한 이상 완벽 보장)', 
+      icon: <HeartPulse className="w-4 h-4 text-emerald-600" /> 
+    },
+  ];
+
+  const youthRows = [
+    { 
+      label: 'ADHD / 소아 우울증 진단비', 
+      current: '없음', 
+      recommended: '진단 시 최초 1회 최고 300만 원 지급', 
+      icon: <Brain className="w-4 h-4 text-emerald-600" /> 
+    },
+    { 
+      label: '독감(인플루엔자) 치료비', 
+      current: '없음', 
+      recommended: '타미플루 처방 시 연간 1회 10만 원 실손 정액 보장', 
+      icon: <Stethoscope className="w-4 h-4 text-emerald-600" /> 
+    },
+  ];
+
+  const childRows = [
+    { 
+      label: '3대 진단비 (암·뇌·심장)', 
+      current: formatAmt(30000000), 
+      recommended: '최대 5,000만 원 (어린이보험 특유의 면책기간/감액기간 없음 활용)', 
+      icon: <ShieldCheck className="w-4 h-4 text-emerald-600" /> 
+    },
+  ];
+
+  // 11. 표준/일반 종합보험 기본행 (그 외 카테고리)
   const standardRows = [
-    { label: '일반암 진단비', current: formatAmt(analysis.cancer?.currentAmount || 0), recommended: formatAmt(analysis.cancer?.targetAmount || 0), icon: <ShieldCheck className="w-4 h-4 text-orange-500" /> },
-    { label: '뇌혈관 질환', current: formatAmt(analysis.cerebrovascular?.currentAmount || 0), recommended: formatAmt(analysis.cerebrovascular?.targetAmount || 0), icon: <Brain className="w-4 h-4 text-blue-500" /> },
-    { label: '심혈관 질환', current: formatAmt(analysis.cardiovascular?.currentAmount || 0), recommended: formatAmt(analysis.cardiovascular?.targetAmount || 0), icon: <Heart className="w-4 h-4 text-red-500" /> },
-    { label: '수술비 (질병/상해)', current: formatAmt(analysis.surgery?.currentAmount || 0), recommended: formatAmt(analysis.surgery?.targetAmount || 0), icon: <HeartPulse className="w-4 h-4 text-green-500" /> },
-    { label: '질병후유장해(3%~)', current: formatAmt(analysis.postDisability?.currentAmount || 0), recommended: formatAmt(analysis.postDisability?.targetAmount || 0), icon: <Stethoscope className="w-4 h-4 text-purple-500" /> },
-    { label: '납입면제 범위', current: '표준형', recommended: analysis.paymentExemption === 'premium' ? '고급형' : '표준형', icon: <Clock className="w-4 h-4 text-gray-500" /> },
+    { 
+      label: '일반암 진단비', 
+      current: formatAmt(30000000), 
+      recommended: '최대 5,000만 원 (가장 빈번한 고액 질병 치료비 선제 확보)', 
+      icon: <ShieldCheck className="w-4 h-4 text-orange-500" /> 
+    },
+    { 
+      label: '유사암 진단비 (갑상선/경계성 등)', 
+      current: formatAmt(6000000), 
+      recommended: '최대 1,000만 원 (일반암 진단비의 20% 법정 최고 한도 업셀링)', 
+      icon: <HeartPulse className="w-4 h-4 text-orange-500" /> 
+    },
+    { 
+      label: '가족 일상생활 배상책임', 
+      current: '미가입', 
+      recommended: '가입 (대인/대물 과실 누수 사고 시 자기부담금 20만 원 방어)', 
+      icon: <TrendingDown className="w-4 h-4 text-orange-500" /> 
+    },
   ];
 
-  const comparisonRows = isDental ? dentalRows : (isSilbi ? silbiRows : (isCaregiving ? caregivingRows : (isBrain ? brainRows : (isHeart ? heartRows : standardRows))));
+  // 조건 분기를 if-else 문으로 안전하고 깔끔하게 매칭
+  let comparisonRows = standardRows;
+  if (isChild) {
+    comparisonRows = isPreFamily 
+      ? preFamilyRows 
+      : (childInfo.targetAgeGroup === 'prenatal' ? prenatalRows : childInfo.targetAgeGroup === 'youth' ? youthRows : childRows);
+  } else if (isDental) {
+    comparisonRows = dentalRows;
+  } else if (isSilbi) {
+    comparisonRows = silbiRows;
+  } else if (isDementia) {
+    comparisonRows = dementiaRows;
+  } else if (isGeneralCaregiving) {
+    comparisonRows = caregivingRows;
+  } else if (isNursing) {
+    comparisonRows = nursingRows;
+  } else if (isBrain) {
+    comparisonRows = brainRows;
+  } else if (isHeart) {
+    comparisonRows = heartRows;
+  } else if (isCar) {
+    comparisonRows = carRows;
+  } else if (isDriver) {
+    comparisonRows = driverRows;
+  }
 
   return (
     <div className="bg-white rounded-[3rem] p-10 md:p-16 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.05)] border border-gray-100 overflow-hidden relative">

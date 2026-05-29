@@ -7,17 +7,27 @@ import { CaregivingDetailedGuide } from './CaregivingDetailedGuide';
 export const CaregivingSlider: React.FC<{ result: AnalysisResult }> = ({ result }) => {
   const currentPremium = result.analysis.monthlyPremium || 50000;
   const dietPremium = result.recommendations?.diet?.estimatedPremium || Math.floor(currentPremium * 0.4);
-  const luxuryPremium = result.recommendations?.hybrid?.estimatedPremium || Math.floor(currentPremium * 1.5);
+  const luxuryPremium = Math.max(
+    result.recommendations?.upgrade?.estimatedPremium || 0,
+    result.recommendations?.hybrid?.estimatedPremium || 0,
+    Math.floor(currentPremium * 1.2)
+  );
   const [value, setValue] = useState(currentPremium);
 
   const metrics = useMemo(() => {
-    const ratio = (value - dietPremium) / (luxuryPremium - dietPremium);
+    let ratio = 0;
+    const diff = luxuryPremium - dietPremium;
+    if (diff > 0) {
+      ratio = (value - dietPremium) / diff;
+    }
+    ratio = Math.max(0, Math.min(1, ratio));
+
     return {
       benefit: Math.round(5 + (ratio * 15)), // 만원 단위 (5~20만원)
       index: Math.round(72 + (ratio * 23)),
       percentage: Math.round(15 + ratio * 40)
     };
-  }, [value]);
+  }, [value, dietPremium, luxuryPremium]);
 
   return (
     <section className="space-y-16">

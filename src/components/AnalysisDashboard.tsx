@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { AlertCircle, ShieldCheck, Zap, Calculator, Target, Brain, Heart, Stethoscope, Clock, Hotel } from 'lucide-react';
+import { AlertCircle, ShieldCheck, Zap, Calculator, Target, Brain, Heart, Stethoscope, Clock, Hotel, Baby, Sparkles, TrendingUp, Plane, Gift, Dog, Cat } from 'lucide-react';
 import { AnalysisResult } from '../types/insurance';
 import RadarChart from './RadarChart';
 import ComparisonTable from './ComparisonTable';
@@ -13,6 +13,12 @@ import { BrainSummary } from './insurance/brain/BrainSummary';
 import { CancerSummary } from './insurance/cancer/CancerSummary';
 import { HeartSummary } from './insurance/heart/HeartSummary';
 import { PreExistingSummary } from './insurance/preExisting/PreExistingSummary';
+import { NursingSummary } from './insurance/nursing/NursingSummary';
+import { ChildSummary } from './insurance/child/ChildSummary';
+import { CarSummary } from './insurance/car/CarSummary';
+import { CarSlider } from './insurance/car/CarSlider';
+import { DriverSummary } from './insurance/driver/DriverSummary';
+import { PetSummary } from './insurance/pet/PetSummary';
 
 interface AnalysisDashboardProps {
   result: AnalysisResult;
@@ -24,7 +30,12 @@ const InsuranceSummary = ({ result }: { result: AnalysisResult }) => {
   const isSilbi = analysis.selectedCategory?.includes('실손') || analysis.selectedCategory?.includes('실비');
   const isCaregiving = analysis.selectedCategory?.includes('간병');
   const isSurgeryHospital = analysis.selectedCategory?.includes('수술') || analysis.selectedCategory?.includes('입원');
+  const isNursing = analysis.selectedCategory === '재가/시설' || analysis.selectedCategory?.includes('재가') || analysis.selectedCategory?.includes('시설');
+  const isChild = analysis.selectedCategory?.includes('어린이') || analysis.selectedCategory?.includes('태아') || analysis.selectedCategory === 'child' || !!analysis.child;
   
+  const isDriver = analysis.selectedCategory?.includes('운전자') || analysis.selectedCategory === 'driver' || !!analysis.driver;
+  const isPet = analysis.selectedCategory?.includes('펫') || analysis.selectedCategory === 'pet' || !!analysis.pet;
+
   const formatAmount = (amt: number) => {
     if (amt >= 100000000) return `${(amt / 100000000).toFixed(0)}억 원`;
     if (amt >= 10000) return `${(amt / 10000).toLocaleString()}만 원`;
@@ -34,11 +45,16 @@ const InsuranceSummary = ({ result }: { result: AnalysisResult }) => {
   if (isDental) return <DentalSummary result={result as any} />;
   if (isSilbi) return <SilsonSummary result={result as any} />;
   if (isCaregiving) return <CaregivingSummary result={result as any} />;
+  if (isNursing) return <NursingSummary result={result as any} />;
+  if (isChild) return <ChildSummary result={result as any} />;
   if (isSurgeryHospital) return <SurgeryHospitalSummary result={result as any} />;
   if (analysis.selectedCategory?.includes('뇌혈관')) return <BrainSummary result={result as any} formatAmount={formatAmount} />;
   if (analysis.selectedCategory?.includes('암보험')) return <CancerSummary result={result as any} formatAmount={formatAmount} />;
   if (analysis.selectedCategory?.includes('심장질환')) return <HeartSummary result={result as any} formatAmount={formatAmount} />;
   if (analysis.selectedCategory?.includes('유병자')) return <PreExistingSummary result={result as any} formatAmount={formatAmount} />;
+  if (analysis.selectedCategory?.includes('자동차') || analysis.selectedCategory === 'car') return <CarSummary result={result as any} />;
+  if (isDriver) return <DriverSummary result={result as any} />;
+  if (isPet) return <PetSummary result={result as any} />;
 
   return <HealthSummary result={result as any} formatAmount={formatAmount} />;
 };
@@ -48,9 +64,21 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
   const isDental = analysis.selectedCategory?.includes('치아');
   const isSilbi = analysis.selectedCategory?.includes('실손') || analysis.selectedCategory?.includes('실비');
   const isCaregiving = analysis.selectedCategory?.includes('간병');
+  const isNursing = analysis.selectedCategory === '재가/시설' || analysis.selectedCategory?.includes('재가') || analysis.selectedCategory?.includes('시설');
   const isSurgeryHospital = analysis.selectedCategory?.includes('수술') || analysis.selectedCategory?.includes('입원');
+  const isChild = analysis.selectedCategory?.includes('어린이') || analysis.selectedCategory?.includes('태아') || analysis.selectedCategory === 'child' || !!analysis.child;
+  const isCar = analysis.selectedCategory?.includes('자동차') || analysis.selectedCategory === 'car';
+  const isDriver = analysis.selectedCategory?.includes('운전자') || analysis.selectedCategory === 'driver' || !!analysis.driver;
+  const isPet = analysis.selectedCategory?.includes('펫') || analysis.selectedCategory === 'pet' || !!analysis.pet;
 
   const [selectedPlan, setSelectedPlan] = React.useState<any>(null);
+
+  // --- 마법의 리모델링 머니 가이드 연산 ---
+  const currentPrem = analysis.monthlyPremium || 0;
+  const dietPrem = result.recommendations?.diet?.estimatedPremium || 0;
+  const monthlySaving = Math.max(0, currentPrem - dietPrem);
+  const showSaving = monthlySaving > 0 ? monthlySaving : 22590; // 디폴트 22,590원 적용!
+  const showDiet = dietPrem > 0 ? dietPrem : 8910; // 디폴트 8,910원 적용!
 
   const getAverageByAge = (age: number) => {
     if (age < 30) return { c: 50, b: 40, h: 40, s: 60, l: 30, d: 20 };
@@ -74,6 +102,20 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
     { label: '요양병원', value: 85, target: 75 },
     { label: '면책기간', value: 100, target: 100 },
     { label: '보장효율', value: 80, target: 70 },
+  ] : isNursing ? [
+    { label: '지원방식', value: analysis.nursing?.preferredService === 'both' ? 95 : 75, target: 70 },
+    { label: '재가한도', value: (analysis.nursing?.homeAmount || 0) >= 500000 ? 90 : 60, target: 75 },
+    { label: '시설한도', value: (analysis.nursing?.facilityAmount || 0) >= 500000 ? 90 : 60, target: 75 },
+    { label: '대리청구', value: analysis.nursing?.hasProxyClaim ? 95 : 30, target: 80 },
+    { label: '면책기간', value: 100, target: 100 },
+    { label: '보장효율', value: 85, target: 70 },
+  ] : isChild ? [
+    { label: '태아/선천보장', value: analysis.child?.targetAgeGroup === 'prenatal' ? (analysis.child?.hasPrenatalRider && (analysis.child?.weeksPregnancy || 12) <= 22 ? 95 : 30) : 85, target: 80 },
+    { label: '3대중대질환', value: scores.cancerScore || 80, target: 70 },
+    { label: '입원일당', value: scores.cardiovascularScore || 75, target: 60 },
+    { label: '수술비보장', value: scores.cerebrovascularScore || 80, target: 65 },
+    { label: '만기설정', value: analysis.child?.maturity === 100 ? 95 : 80, target: 70 },
+    { label: '보험료효율', value: Math.round(efficiency), target: 70 },
   ] : isSilbi ? [
     { label: '세대분석', value: (analysis.monthlyPremium || 0) > 40000 ? 40 : 90, target: 70 },
     { label: '자기부담금', value: 85, target: 80 },
@@ -81,6 +123,27 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
     { label: '통원보장', value: 90, target: 85 },
     { label: '비급여특약', value: 70, target: 80 },
     { label: '가성비', value: (analysis.monthlyPremium || 0) < 20000 ? 95 : 70, target: 75 },
+  ] : isCar ? [
+    { label: '마일리지할인', value: analysis.car?.annualMileage === 'under_3k' ? 95 : analysis.car?.annualMileage === 'under_5k' ? 80 : analysis.car?.annualMileage === 'under_10k' ? 65 : 35, target: 70 },
+    { label: '안전운전특약', value: analysis.car?.safeDrivingScore === 'over_80' ? 95 : analysis.car?.safeDrivingScore === 'under_80' ? 75 : 45, target: 70 },
+    { label: '대물배상한도', value: analysis.car?.currentPropertyLimit >= 10 ? 95 : analysis.car?.currentPropertyLimit >= 5 ? 85 : 55, target: 75 },
+    { label: '상해보장형태', value: analysis.car?.currentInjuryType === 'jasang' ? 95 : 45, target: 80 },
+    { label: '무보험차특약', value: 85, target: 70 },
+    { label: '긴급출동서비스', value: 90, target: 75 },
+  ] : isDriver ? [
+    { label: '형사합의 보장', value: analysis.driver?.planType === 'premium' ? 95 : analysis.driver?.planType === 'standard' ? 80 : 60, target: 75 },
+    { label: '변호사 선임비', value: analysis.driver?.planType === 'premium' ? 95 : 75, target: 70 },
+    { label: '벌금 한도', value: analysis.driver?.planType === 'saving' ? 65 : 90, target: 70 },
+    { label: '자부상 보장', value: analysis.driver?.planType === 'premium' ? 90 : 70, target: 65 },
+    { label: '영업용 대응', value: analysis.driver?.drivingPurpose === 'commercial' ? 85 : 95, target: 80 },
+    { label: '보험료 효율', value: analysis.driver?.planType === 'saving' ? 95 : analysis.driver?.planType === 'premium' ? 60 : 80, target: 70 },
+  ] : isPet ? [
+    { label: '슬개골 탈구', value: scores.patellaScore || 30, target: 70 },
+    { label: '피부 질환', value: scores.skinScore || 40, target: 70 },
+    { label: '구강/치과', value: scores.dentalScore || 30, target: 70 },
+    { label: '동물등록', value: analysis.pet?.isRegistered ? 95 : 50, target: 70 },
+    { label: '보장비율', value: analysis.pet?.selfPayRatio >= 80 ? 95 : analysis.pet?.selfPayRatio >= 70 ? 80 : 60, target: 75 },
+    { label: '자기부담금', value: analysis.pet?.deductible <= 20000 ? 95 : analysis.pet?.deductible <= 30000 ? 85 : 65, target: 75 },
   ] : [
     { label: '일반암', value: scores.cancerScore || 0, target: avg.c || 50 },
     { label: '뇌혈관', value: scores.cerebrovascularScore || 0, target: avg.b || 50 },
@@ -98,7 +161,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
       {/* 1. Score & Metrics Section with Radar Chart */}
       <section className="bg-white rounded-[4rem] p-10 md:p-20 shadow-[0_40px_120px_-20px_rgba(0,0,0,0.08)] border border-gray-50 flex flex-col lg:flex-row gap-24 items-center relative overflow-hidden">
         <div className="absolute top-0 right-0 p-24 opacity-[0.03] scale-150 transform rotate-12">
-           {isDental || isSilbi ? <Stethoscope className="w-96 h-96 text-emerald-500" /> : isCaregiving ? <Hotel className="w-96 h-96 text-purple-500" /> : <Zap className="w-96 h-96 text-orange-500" />}
+           {isDental || isSilbi ? <Stethoscope className="w-96 h-96 text-emerald-500" /> : isCaregiving ? <Hotel className="w-96 h-96 text-purple-500" /> : isNursing ? <Heart className="w-96 h-96 text-pink-500" /> : isChild ? <Baby className="w-96 h-96 text-yellow-500" /> : isPet ? <Dog className="w-96 h-96 text-orange-500" /> : <Zap className="w-96 h-96 text-orange-500" />}
         </div>
 
         {/* Radar Chart */}
@@ -114,7 +177,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
         <div className="flex-1 space-y-12 relative z-10">
           <div className="space-y-4">
              <h3 className="text-3xl font-black text-gray-900 tracking-tighter">
-               {isDental ? '당신의 치아 보장 상태를 분석했습니다.' : isSilbi ? '당신의 실손 의료비 상담 리포트입니다.' : isCaregiving ? '당신의 간병 대비 준비 상태를 분석했습니다.' : '당신의 보장 상태를 분석했습니다.'}
+               {isDental ? '당신의 치아 보장 상태를 분석했습니다.' : isSilbi ? '당신의 실손 의료비 상담 리포트입니다.' : isCaregiving ? '당신의 간병 대비 준비 상태를 분석했습니다.' : isNursing ? '당신의 요양(재가/시설) 준비 상태를 분석했습니다.' : isChild ? '당신의 자녀/태아 보장 준비 상태를 분석했습니다.' : isCar ? '당신의 자동차보험 가입 상태를 분석했습니다.' : isDriver ? '운전자보험 상품 및 가격을 분석했습니다.' : isPet ? '당신의 펫보험 보장 상태를 분석했습니다.' : '당신의 보장 상태를 분석했습니다.'}
              </h3>
              <p className="text-gray-500 font-bold italic">
                {isDental 
@@ -123,25 +186,33 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
                   ? '"4세대로 전환 시 보험료를 최대 70%까지 절감할 수 있는지 분석했습니다."'
                   : isCaregiving
                   ? '"방사형 그래프가 원형에 가까울수록 안전한 보장 상태입니다."'
+                  : isNursing
+                  ? '"방사형 그래프가 원형에 가까울수록 안정적인 재가/시설 보장 상태입니다."'
+                  : isChild
+                  ? '"방사형 그래프가 원형에 가까울수록 빈틈없는 어린이/태아 보장 상태입니다."'
+                  : isCar
+                  ? '"방사형 그래프가 원형에 가까울수록 안전하고 가성비 높은 자동차 보장 상태입니다."'
                   : isSurgeryHospital
                   ? '"뇌/심장/암 등 주요 질환과 수술/입원 담보를 집중 분석했습니다."'
+                  : isPet
+                  ? '"방사형 그래프가 6각형 모양에 가까울수록 아이를 위한 펫보험 보장이 완벽한 상태입니다."'
                   : '"방사형 그래프가 원형에 가까울수록 안전한 보장 상태입니다."'
-                }
+               }
              </p>
           </div>
 
           <div className="flex flex-col md:flex-row gap-6">
-            <div className={`flex-1 p-8 rounded-[2rem] border group hover:scale-105 transition-all ${isDental || isSilbi ? 'bg-emerald-50/50 border-emerald-100/50' : 'bg-blue-50/50 border-blue-100/50'}`}>
-              <div className={`flex items-center gap-2 mb-6 ${isDental || isSilbi ? 'text-emerald-600' : 'text-blue-600'}`}>
+            <div className={`flex-1 p-8 rounded-[2rem] border group hover:scale-105 transition-all ${isDental || isSilbi ? 'bg-emerald-50/50 border-emerald-100/50' : isCaregiving ? 'bg-purple-50/50 border-purple-100/50' : isNursing ? 'bg-pink-50/50 border-pink-100/50' : isChild ? 'bg-yellow-50/50 border-yellow-100/50' : isPet ? 'bg-orange-50/50 border-orange-100/50' : 'bg-blue-50/50 border-blue-100/50'}`}>
+              <div className={`flex items-center gap-2 mb-6 ${isDental || isSilbi ? 'text-emerald-600' : isCaregiving ? 'text-purple-600' : isNursing ? 'text-pink-600' : isChild ? 'text-yellow-600' : isPet ? 'text-orange-600' : 'text-blue-600'}`}>
                  <Calculator className="w-5 h-5" />
                  <span className="text-sm font-black uppercase tracking-widest">{isDental || isSilbi ? '실손 보험 가성비' : '보험료 효율성'}</span>
               </div>
               <div className="flex items-baseline gap-1">
-                <span className={`text-5xl font-black leading-none ${isDental || isSilbi ? 'text-emerald-600' : isCaregiving ? 'text-purple-600' : 'text-blue-600'}`}>{efficiency.toFixed(1)}</span>
-                <span className={`${isDental || isSilbi ? 'text-emerald-900' : isCaregiving ? 'text-purple-900' : 'text-blue-900'} font-bold`}>점</span>
+                <span className={`text-5xl font-black leading-none ${isDental || isSilbi ? 'text-emerald-600' : isCaregiving ? 'text-purple-600' : isNursing ? 'text-pink-600' : isPet ? 'text-orange-600' : 'text-blue-600'}`}>{efficiency.toFixed(1)}</span>
+                <span className={`${isDental || isSilbi ? 'text-emerald-900' : isCaregiving ? 'text-purple-900' : isNursing ? 'text-pink-900' : isPet ? 'text-orange-900' : 'text-blue-900'} font-bold`}>점</span>
               </div>
-              <div className={`w-full h-1.5 rounded-full mt-6 overflow-hidden ${isDental || isSilbi ? 'bg-emerald-100' : isCaregiving ? 'bg-purple-100' : 'bg-blue-100'}`}>
-                 <div className={`h-full ${isDental || isSilbi ? 'bg-emerald-500' : isCaregiving ? 'bg-purple-500' : 'bg-blue-500'}`} style={{ width: `${Math.min(100, efficiency * 100)}%` }}></div>
+              <div className={`w-full h-1.5 rounded-full mt-6 overflow-hidden ${isDental || isSilbi ? 'bg-emerald-100' : isCaregiving ? 'bg-purple-100' : isNursing ? 'bg-pink-100' : isPet ? 'bg-orange-100' : 'bg-blue-100'}`}>
+                 <div className={`h-full ${isDental || isSilbi ? 'bg-emerald-500' : isCaregiving ? 'bg-purple-500' : isNursing ? 'bg-pink-500' : isPet ? 'bg-orange-500' : 'bg-blue-500'}`} style={{ width: `${Math.min(100, efficiency * 100)}%` }}></div>
               </div>
             </div>
 
@@ -170,6 +241,107 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
         analysis={result.analysis}
         recommendation={result.recommendations.upgrade} 
       />
+
+      {isCar && <CarSlider result={result} />}
+
+      {/* 3. Magic Remodeling Savings Calculator (신규 추가) */}
+      <section className="bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-950 text-white rounded-[4rem] p-10 md:p-16 shadow-[0_50px_100px_rgba(0,0,0,0.3)] relative overflow-hidden border border-slate-800">
+        <div className="absolute top-0 right-0 p-12 opacity-5 scale-125">
+          <Sparkles className="w-80 h-80 text-purple-400" />
+        </div>
+
+        <div className="text-center max-w-3xl mx-auto space-y-6 mb-16 relative z-10">
+          <div className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full text-[0.65rem] font-black uppercase tracking-[0.3em] shadow-lg">
+            <Sparkles size={12} className="text-white" /> Remodeling Magic Guide
+          </div>
+          <h3 className="text-4xl md:text-5xl font-black tracking-tighter leading-none bg-gradient-to-r from-white via-indigo-100 to-purple-200 bg-clip-text text-transparent">
+            당신의 10년 후가 달라지는 마법의 리모델링
+          </h3>
+          <p className="text-slate-400 font-bold italic text-base">
+            "불필요한 고비용 특약을 정리하고, 숨어 있던 기회비용을 찾아 당신의 소중한 미래 자산으로 돌려드립니다."
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-8 relative z-10 items-stretch">
+          {/* Card 1: 최적화 결과 */}
+          <div className="bg-white/5 backdrop-blur-md p-10 rounded-[3rem] border border-white/10 flex flex-col justify-between hover:bg-white/10 transition-all duration-300">
+            <div>
+              <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 flex items-center justify-center mb-6">
+                <Calculator className="w-6 h-6 text-indigo-400" />
+              </div>
+              <h4 className="text-lg font-black text-slate-300 mb-2">월 보험료 다이어트 결과</h4>
+              <p className="text-xs text-slate-400 font-bold leading-relaxed mb-6">
+                현재 불필요한 보장을 덜어내고 핵심 위주로 세팅한 실속형 기준 최저 요율입니다.
+              </p>
+            </div>
+            <div>
+              <div className="border-t border-white/5 pt-6 space-y-2">
+                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block">최적화된 월 보험료</span>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-5xl font-black text-indigo-400 tracking-tighter">
+                    {Math.round(showDiet).toLocaleString()}
+                  </span>
+                  <span className="text-xl font-bold text-slate-300">원</span>
+                </div>
+                <div className="text-[10px] text-emerald-400 font-bold mt-2">
+                  기회비용 <span className="underline font-black">{Math.round(showSaving).toLocaleString()}원</span> 절감 성공!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 2: 오늘을 위해 쓰면? */}
+          <div className="bg-white/5 backdrop-blur-md p-10 rounded-[3rem] border border-white/10 flex flex-col justify-between hover:bg-white/10 transition-all duration-300">
+            <div>
+              <div className="w-12 h-12 rounded-2xl bg-pink-500/20 flex items-center justify-center mb-6">
+                <Plane className="w-6 h-6 text-pink-400" />
+              </div>
+              <h4 className="text-lg font-black text-slate-300 mb-2">오늘을 위해 쓰면?</h4>
+              <p className="text-xs text-slate-400 font-bold leading-relaxed mb-6">
+                리모델링을 통해 아낀 기회비용을 1년간 모으면 누릴 수 있는 특별한 순간입니다.
+              </p>
+            </div>
+            <div>
+              <div className="border-t border-white/5 pt-6">
+                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">매년 가능한 라이프스타일</span>
+                <p className="text-base font-black text-pink-300 leading-snug">
+                  가족과 함께하는 매년 한 번의 특별한 호캉스가 가능한 돈입니다.
+                </p>
+                <div className="text-[10px] text-slate-400 mt-2">
+                  (연간 누적 절감액: <span className="font-bold">{Math.round(showSaving * 12).toLocaleString()}원</span>)
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 3: 내일을 위해 모으면? */}
+          <div className="bg-white/5 backdrop-blur-md p-10 rounded-[3rem] border border-white/10 flex flex-col justify-between hover:bg-white/10 transition-all duration-300">
+            <div>
+              <div className="w-12 h-12 rounded-2xl bg-amber-500/20 flex items-center justify-center mb-6">
+                <TrendingUp className="w-6 h-6 text-amber-400" />
+              </div>
+              <h4 className="text-lg font-black text-slate-300 mb-2">내일을 위해 모으면?</h4>
+              <p className="text-xs text-slate-400 font-bold leading-relaxed mb-6">
+                절감된 기회비용을 단 10년간만 꾸준히 적립했을 때 모이는 은퇴 비상금의 가치입니다.
+              </p>
+            </div>
+            <div>
+              <div className="border-t border-white/5 pt-6 space-y-2">
+                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block">10년 뒤 목돈 가치</span>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-4xl font-black text-amber-400 tracking-tighter">
+                    {Math.round(showSaving * 12 * 10).toLocaleString()}
+                  </span>
+                  <span className="text-xl font-bold text-slate-300">원</span>
+                </div>
+                <div className="text-[10px] text-slate-400">
+                  든든한 <span className="text-amber-300 font-black">은퇴 비상금</span>으로 돌아옵니다.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="space-y-16">
         <div className="text-center space-y-6">

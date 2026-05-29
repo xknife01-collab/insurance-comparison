@@ -43,9 +43,13 @@ export const analyzeCaregiving = (analysis: any): any => {
     switchingLossNotice: '가입 기간에 따라 해약 환급금이 적을 수 있습니다.'
   };
 
+  const refPremium = diet.estimatedPremium || analysis.monthlyPremium || 50000;
+  const premiumRatio = refPremium / 50000;
+  const efficiencyScore = Math.round(Math.min(99, Math.max(40, totalScore * (1 / Math.sqrt(premiumRatio)))));
+
   return {
     estimatedPremium: diet.estimatedPremium,
-    efficiency: totalScore / (analysis.monthlyPremium / 1000),
+    efficiency: efficiencyScore,
     deficiencies,
     scores: {
       totalScore,

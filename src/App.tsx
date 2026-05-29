@@ -12,15 +12,18 @@ import ComparisonSection from './components/ComparisonSection';
 import AnalysisSection from './components/AnalysisSection';
 import AnalysisDashboard from './components/AnalysisDashboard';
 import SimulationSlider from './components/SimulationSlider';
-import { ProblemSection, IndemnitySection, PreExistingSection, DentalSection, CaregivingSection, CaregivingOldSection, SurgerySection, CancerSection, CerebrovascularSection, HeartSection, PhilosophySection, Footer } from './components/Sections';
+import { ProblemSection, IndemnitySection, PreExistingSection, DentalSection, CaregivingSection, CaregivingOldSection, NursingSection, SurgerySection, CancerSection, CerebrovascularSection, HeartSection, PhilosophySection, Footer, ChildPrenatalSection, ChildSickSection } from './components/Sections';
 import { InsuranceAnalysis, AnalysisResult } from './types/insurance';
 import { runAnalysis } from './lib/analysisEngine';
 import { Sparkles, ChevronRight } from 'lucide-react';
+import { CarExplanation } from './components/insurance/car/CarExplanation';
+import { DriverExplanation } from './components/insurance/driver/DriverExplanation';
 
 export default function App() {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [currentAnalysis, setCurrentAnalysis] = useState<InsuranceAnalysis | null>(null);
-  const [view, setView] = useState<'home' | 'indemnity' | 'preexisting' | 'dental' | 'caregiving' | 'dementia' | 'surgery' | 'cancer' | 'cerebrovascular' | 'heart'>('home');
+  const [view, setView] = useState<'home' | 'indemnity' | 'preexisting' | 'dental' | 'caregiving' | 'dementia' | 'surgery' | 'cancer' | 'cerebrovascular' | 'heart' | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver'>('home');
+  const [calcTarget, setCalcTarget] = useState<string | null>(null);
 
   const handleAnalyze = async (analysis: InsuranceAnalysis) => {
     setCurrentAnalysis(analysis);
@@ -41,14 +44,14 @@ export default function App() {
         <main className="pt-12 px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
-                onClick={() => setView('home')}
+                onClick={() => { setCalcTarget(null); setView('home'); }}
                 className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-orange-500 text-white hover:bg-orange-600 font-black text-xs transition-all mb-6 shadow-lg shadow-orange-500/20 active:scale-95 group"
               >
                 메인으로 돌아가기
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <IndemnitySection onAction={() => setView('home')} />
+           <IndemnitySection onAction={() => { setCalcTarget('silson'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -62,14 +65,14 @@ export default function App() {
         <main className="pt-12 px-4 bg-gray-50">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
-                onClick={() => setView('home')}
+                onClick={() => { setCalcTarget(null); setView('home'); }}
                 className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-indigo-600 text-white hover:bg-indigo-700 font-black text-xs transition-all mb-6 shadow-lg shadow-indigo-500/20 active:scale-95 group"
               >
                 메인으로 돌아가기
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <PreExistingSection onAction={() => setView('home')} />
+           <PreExistingSection onAction={() => { setCalcTarget('pre'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -83,14 +86,14 @@ export default function App() {
         <main className="pt-12 px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
-                onClick={() => setView('home')}
+                onClick={() => { setCalcTarget(null); setView('home'); }}
                 className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-emerald-600 text-white hover:bg-emerald-700 font-black text-xs transition-all mb-6 shadow-lg shadow-emerald-500/20 active:scale-95 group"
               >
                 메인으로 돌아가기
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <DentalSection onAction={() => setView('home')} />
+           <DentalSection onAction={() => { setCalcTarget('dental'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -104,14 +107,14 @@ export default function App() {
         <main className="pt-12 px-4 bg-slate-50">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
-                onClick={() => setView('home')}
+                onClick={() => { setCalcTarget(null); setView('home'); }}
                 className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-purple-600 text-white hover:bg-purple-700 font-black text-xs transition-all mb-6 shadow-lg shadow-purple-500/20 active:scale-95 group"
               >
                 메인으로 돌아가기
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <CaregivingSection onAction={() => setView('home')} />
+           <CaregivingSection onAction={() => { setCalcTarget('care_svc'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -124,14 +127,14 @@ export default function App() {
         <main className="pt-12 px-4 bg-amber-50/30">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
-                onClick={() => setView('home')}
+                onClick={() => { setCalcTarget(null); setView('home'); }}
                 className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-amber-600 text-white hover:bg-amber-700 font-black text-xs transition-all mb-6 shadow-lg shadow-amber-500/20 active:scale-95 group"
               >
                 메인으로 돌아가기
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <CaregivingOldSection onAction={() => setView('home')} />
+           <CaregivingOldSection onAction={() => { setCalcTarget('care_old'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -145,14 +148,14 @@ export default function App() {
         <main className="pt-12 px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
-                onClick={() => setView('home')}
+                onClick={() => { setCalcTarget(null); setView('home'); }}
                 className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-orange-500 text-white hover:bg-orange-600 font-black text-xs transition-all mb-6 shadow-lg shadow-orange-500/20 active:scale-95 group"
               >
                 메인으로 돌아가기
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <SurgerySection onAction={() => setView('home')} />
+           <SurgerySection onAction={() => { setCalcTarget('surgery'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -165,14 +168,14 @@ export default function App() {
         <main className="pt-12 px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
-                onClick={() => setView('home')}
+                onClick={() => { setCalcTarget(null); setView('home'); }}
                 className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-indigo-600 text-white hover:bg-indigo-700 font-black text-xs transition-all mb-6 shadow-lg shadow-indigo-500/20 active:scale-95 group"
               >
                 메인으로 돌아가기
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <CerebrovascularSection onAction={() => setView('home')} />
+           <CerebrovascularSection onAction={() => { setCalcTarget('brain'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -185,14 +188,14 @@ export default function App() {
         <main className="pt-12 px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
-                onClick={() => setView('home')}
+                onClick={() => { setCalcTarget(null); setView('home'); }}
                 className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-red-600 text-white hover:bg-red-700 font-black text-xs transition-all mb-6 shadow-lg shadow-red-500/20 active:scale-95 group"
               >
                 메인으로 돌아가기
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <HeartSection onAction={() => setView('home')} />
+           <HeartSection onAction={() => { setCalcTarget('heart'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -206,14 +209,119 @@ export default function App() {
         <main className="pt-12 px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
-                onClick={() => setView('home')}
+                onClick={() => { setCalcTarget(null); setView('home'); }}
                 className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-rose-600 text-white hover:bg-rose-700 font-black text-xs transition-all mb-6 shadow-lg shadow-rose-500/20 active:scale-95 group"
               >
                 메인으로 돌아가기
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <CancerSection onAction={() => setView('home')} />
+           <CancerSection onAction={() => { setCalcTarget('cancer'); setView('home'); }} />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (view === 'nursing') {
+    return (
+      <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-orange-100 selection:text-orange-900 antialiased">
+        <Header setView={setView} />
+        <main className="pt-12 px-4 bg-white">
+           <div className="max-w-7xl mx-auto flex justify-end">
+              <button 
+                onClick={() => { setCalcTarget(null); setView('home'); }}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-pink-600 text-white hover:bg-pink-700 font-black text-xs transition-all mb-6 shadow-lg shadow-pink-500/20 active:scale-95 group"
+              >
+                메인으로 돌아가기
+                <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
+              </button>
+           </div>
+           <NursingSection onAction={() => { setCalcTarget('nursing'); setView('home'); }} />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (view === 'child_sick') {
+    return (
+      <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-blue-100 selection:text-blue-900 antialiased">
+        <Header setView={setView} />
+        <main className="pt-12 px-4 bg-white">
+           <div className="max-w-7xl mx-auto flex justify-end">
+              <button 
+                onClick={() => { setCalcTarget(null); setView('home'); }}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-blue-600 text-white hover:bg-blue-700 font-black text-xs transition-all mb-6 shadow-lg shadow-blue-500/20 active:scale-95 group"
+              >
+                메인으로 돌아가기
+                <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
+              </button>
+           </div>
+           <ChildSickSection onAction={() => { setCalcTarget('pre_family'); setView('home'); }} />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (view === 'child') {
+    return (
+      <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-orange-100 selection:text-orange-900 antialiased">
+        <Header setView={setView} />
+        <main className="pt-12 px-4 bg-white">
+           <div className="max-w-7xl mx-auto flex justify-end">
+              <button 
+                onClick={() => { setCalcTarget(null); setView('home'); }}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-yellow-500 text-white hover:bg-yellow-600 font-black text-xs transition-all mb-6 shadow-lg shadow-yellow-500/20 active:scale-95 group"
+              >
+                메인으로 돌아가기
+                <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
+              </button>
+           </div>
+           <ChildPrenatalSection onAction={() => { setCalcTarget('child'); setView('home'); }} />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (view === 'car') {
+    return (
+      <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-blue-100 selection:text-blue-900 antialiased">
+        <Header setView={setView} />
+        <main className="pt-12 px-4 bg-white">
+           <div className="max-w-7xl mx-auto flex justify-end">
+              <button 
+                onClick={() => { setCalcTarget(null); setView('home'); }}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-blue-600 text-white hover:bg-blue-700 font-black text-xs transition-all mb-6 shadow-lg shadow-blue-500/20 active:scale-95 group"
+              >
+                메인으로 돌아가기
+                <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
+              </button>
+           </div>
+           <CarExplanation onAction={() => { setCalcTarget('car'); setView('home'); }} />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (view === 'driver') {
+    return (
+      <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-purple-100 selection:text-purple-900 antialiased">
+        <Header setView={setView} />
+        <main className="pt-12 px-4 bg-white">
+           <div className="max-w-7xl mx-auto flex justify-end">
+              <button 
+                onClick={() => { setCalcTarget(null); setView('home'); }}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-purple-600 text-white hover:bg-purple-700 font-black text-xs transition-all mb-6 shadow-lg shadow-purple-500/20 active:scale-95 group"
+              >
+                메인으로 돌아가기
+                <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
+              </button>
+           </div>
+           <DriverExplanation onAction={() => { setCalcTarget('driver'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -221,7 +329,6 @@ export default function App() {
   }
 
   return (
-
     <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-orange-100 selection:text-orange-900 antialiased">
       <Header setView={setView} />
       
@@ -229,7 +336,7 @@ export default function App() {
         {/* Section 1: Insurance Hero & Quick Match (Moved to top) */}
         <ComparisonSection />
 
-        <InsuranceCalculator onCalculate={handleAnalyze} />
+        <InsuranceCalculator onCalculate={handleAnalyze} initialTarget={calcTarget} />
 
         <AnimatePresence>
           {analysisResult && (
@@ -247,7 +354,6 @@ export default function App() {
                 const isSurgeryHospital = analysisResult.analysis.selectedCategory?.includes('수술') || analysisResult.analysis.selectedCategory?.includes('입원');
                 const isCancer = analysisResult.analysis.selectedCategory?.includes('암') || analysisResult.analysis.selectedCategory === 'cancer';
 
-                
                 const dietPremium = analysisResult.recommendations.diet.estimatedPremium;
                 const currentPremium = analysisResult.analysis.monthlyPremium;
                 
@@ -263,8 +369,8 @@ export default function App() {
                       </div>
                       
                       <h2 className="text-4xl md:text-5xl font-black mb-10 tracking-tighter leading-tight relative z-10">
-                         당신의 10년 후가 달라지는<br/>
-                         <span className="bg-gradient-to-r from-orange-500 to-orange-400 bg-clip-text text-transparent">마법의 리모델링</span>
+                          당신의 10년 후가 달라지는<br/>
+                          <span className="bg-gradient-to-r from-orange-500 to-orange-400 bg-clip-text text-transparent">마법의 리모델링</span>
                       </h2>
 
                       <div className="flex flex-col items-center gap-6 w-full">

@@ -30,7 +30,8 @@ export const analyzeCancer = (analysis: any): any => {
       '일반암 진단비 최대 확보',
       '비유사암 전이 시 보장 강화',
       '업계 최저 수준 보험료'
-    ]
+    ],
+    switchingLossNotice: '기존 보험 해지 후 재가입 시 조건 및 연령에 따라 제한이 생길 수 있습니다.'
   };
 
   const hasFamilyHistory = (analysis as any).cancer?.familyHistory === true;

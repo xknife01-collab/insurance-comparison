@@ -2,12 +2,16 @@ import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Shield, TrendingUp, Sparkles, Calculator } from 'lucide-react';
 import { AnalysisResult } from '../../../types/insurance';
-import { CaregivingOldGuide } from './CaregivingOldGuide';
+import { DementiaGuideSection } from '../dementia/DementiaGuideSection';
 
 export const CaregivingOldSlider: React.FC<{ result: AnalysisResult }> = ({ result }) => {
   const currentPremium = result.analysis.monthlyPremium || 65000;
   const dietPremium = result.recommendations?.diet?.estimatedPremium || Math.floor(currentPremium * 0.4);
-  const luxuryPremium = result.recommendations?.hybrid?.estimatedPremium || Math.floor(currentPremium * 1.5);
+  const luxuryPremium = Math.max(
+    result.recommendations?.upgrade?.estimatedPremium || 0,
+    result.recommendations?.hybrid?.estimatedPremium || 0,
+    Math.floor(currentPremium * 1.2)
+  );
   const [value, setValue] = useState(currentPremium);
 
   const metrics = useMemo(() => {
@@ -25,6 +29,10 @@ export const CaregivingOldSlider: React.FC<{ result: AnalysisResult }> = ({ resu
       percentage: Math.round(15 + ratio * 40)
     };
   }, [value, dietPremium, luxuryPremium]);
+
+  const handleScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <section className="space-y-16">
@@ -95,7 +103,7 @@ export const CaregivingOldSlider: React.FC<{ result: AnalysisResult }> = ({ resu
             </div>
           </div>
         </div>
-        <CaregivingOldGuide />
+        <DementiaGuideSection onAction={handleScrollToTop} />
       </div>
     </section>
   );

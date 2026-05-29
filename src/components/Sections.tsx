@@ -447,39 +447,10 @@ export const CaregivingSection = ({ onAction }: { onAction: () => void }) => (
   </section>
 );
 
-export const CaregivingOldSection = ({ onAction }: { onAction: () => void }) => (
-  <section className="py-32 bg-amber-50/30 px-4 relative overflow-hidden" id="dementia-detail">
-    <div className="max-w-7xl mx-auto">
-      <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
-        <div>
-           <div className="inline-flex items-center gap-2 bg-amber-100 text-amber-700 px-4 py-2 rounded-full text-sm font-black mb-6 border border-amber-200 shadow-sm">
-             <div className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse"></div>
-             부모님을 위한 가장 따뜻한 준비, 치매 간병보험 가이드
-           </div>
-           <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[1.1]">
-             기억을 잃어도 <span className="text-amber-600">존엄함</span>은<br />
-             잃지 않도록 지켜드립니다.
-           </h2>
-        </div>
-        <div className="max-w-md text-right hidden lg:block opacity-60">
-           <p className="text-sm font-bold text-slate-500 leading-relaxed">
-             전국 65세 이상 10명 중 1명이 치매인 시대.<br />
-             복잡한 CDR 척도부터 생활자금 플랜까지 전문가가 완벽히 정리했습니다.
-           </p>
-        </div>
-      </div>
-
-      <div className="mt-20 flex flex-col md:flex-row justify-center items-center gap-10">
-         <button 
-           onClick={onAction}
-           className="bg-amber-600 text-white px-16 py-7 rounded-full font-black text-xl hover:bg-amber-700 transition-all hover:scale-105 shadow-2xl"
-         >
-            치매 보험료 실시간 비교하기
-         </button>
-      </div>
-    </div>
-  </section>
-);
+export { DementiaGuideSection as CaregivingOldSection } from './insurance/dementia/DementiaGuideSection';
+export { NursingSection } from './insurance/nursing/NursingSection';
+export { ChildPrenatalSection } from './insurance/child/ChildPrenatalSection';
+export { ChildSickSection } from './insurance/child/ChildSickSection';
 
 export const PreExistingSection = ({ onAction }: { onAction: () => void }) => (
   <section className="py-32 bg-gray-50 px-4 relative overflow-hidden" id="preexisting-detail">

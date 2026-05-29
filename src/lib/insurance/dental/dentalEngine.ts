@@ -27,6 +27,10 @@ export const analyzeDental = (analysis: any): any => {
   const bestPlan = allOptions[0] || { premium: 38500, companyName: '라이나생명', productName: '(무)THE건강한치아보험V' };
   const upgradePlan = allOptions[1] || { premium: 48900, companyName: '삼성화재', productName: '치아보험 덴탈파트너' };
 
+  const refPremium = bestPlan.premium || analysis.monthlyPremium || 45000;
+  const premiumRatio = refPremium / 45000;
+  const efficiencyScore = Math.round(Math.min(99, Math.max(40, total * (1 / Math.sqrt(premiumRatio)))));
+
   return {
     estimatedPremium: bestPlan.premium,
     scores: {
@@ -35,7 +39,7 @@ export const analyzeDental = (analysis: any): any => {
       conservative: conservativeScore,
       totalScore: total
     },
-    efficiency: (total / (analysis.monthlyPremium / 1000)) * 1.2,
+    efficiency: efficiencyScore,
     deficiencies,
     recommendations: {
       diet: {

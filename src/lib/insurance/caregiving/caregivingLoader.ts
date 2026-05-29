@@ -25,8 +25,8 @@ export async function fetchCaregivingPremium(analysis: InsuranceAnalysis) {
 
     careData.forEach(p => {
       const rawName = p.product_name || '';
-      const isCareTarget = rawName.includes('간병') || rawName.includes('요양') || rawName.includes('치매');
-      const isExcluded = /건강보험|종합보험|암보험|운전자|뇌혈관|심장|수술|입원|정기보험/.test(rawName);
+      const isCareTarget = rawName.includes('간병') || rawName.includes('요양');
+      const isExcluded = /건강보험|종합보험|암보험|운전자|뇌혈관|심장|치매|CDR/.test(rawName);
       if (!isCareTarget || isExcluded) return;
 
       const rawPremium = dbGender === 'M' ? p.premium_male_40 : p.premium_female_40;
@@ -60,8 +60,7 @@ export async function fetchCaregivingPremium(analysis: InsuranceAnalysis) {
       const userWantsIntegrated = !!(analysis as any).caregiving?.focusIntegrated;
       if (userWantsIntegrated) basePremium = Math.round(basePremium * 1.08);
 
-      const normalizedName = rawName.replace(/\(.*?\)|\[.*?\]|\d+종|\d+/g, '').trim();
-      const groupKey = `${p.company_name}__${p.care_type}__${normalizedName}`;
+      const groupKey = `${p.company_name}__${p.care_type}__${rawName}`;
       const typeMatch = !!(p.care_type === careTypePreference || (p.care_type && p.care_type.includes(careTypePreference)));
 
       const existing = groupMin.get(groupKey);
