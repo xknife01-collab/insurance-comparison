@@ -637,7 +637,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-2">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 px-2">
                   {major.items.map((item) => {
                     const isSelected = selectedId === item.id;
                     return (
@@ -649,21 +649,21 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                         }}
                         whileHover={{ y: -5, shadow: "0 20px 40px -10px rgba(0,0,0,0.1)" }}
                         whileTap={{ scale: 0.98 }}
-                        className={`relative flex items-center gap-4 p-5 rounded-[2.2rem] transition-all duration-500
+                        className={`relative flex items-center gap-2 sm:gap-4 p-3.5 sm:p-5 rounded-[1.5rem] sm:rounded-[2.2rem] transition-all duration-500
                           ${isSelected 
                             ? 'bg-white shadow-[0_20px_60px_-15px_rgba(255,107,0,0.3)] border-2 border-[#FF6B00]' 
                             : 'bg-white border-2 border-slate-50 shadow-sm hover:border-slate-200'}
                         `}
                       >
-                        <div className={`flex-shrink-0 w-12 h-12 rounded-[1rem] flex items-center justify-center transition-all duration-500 ${isSelected ? 'bg-[#FFF0E5]' : 'bg-slate-50 text-slate-300'}`}>
-                          <item.icon size={26} color={isSelected ? '#FF6B00' : 'currentColor'} strokeWidth={2} />
+                        <div className={`flex-shrink-0 w-8 h-8 sm:w-12 sm:h-12 rounded-[0.7rem] sm:rounded-[1rem] flex items-center justify-center transition-all duration-500 ${isSelected ? 'bg-[#FFF0E5]' : 'bg-slate-50 text-slate-300'}`}>
+                          <item.icon className="w-4 h-4 sm:w-6 sm:h-6" color={isSelected ? '#FF6B00' : 'currentColor'} strokeWidth={2} />
                         </div>
 
                         <div className="flex flex-col items-start text-left overflow-hidden">
-                          <span className={`text-[1.05rem] font-black tracking-tight leading-none mb-1.5 ${isSelected ? 'text-slate-900' : 'text-slate-400 group-hover:text-slate-700'}`}>
+                          <span className={`text-[0.85rem] sm:text-[1.05rem] font-black tracking-tight leading-none mb-1 sm:mb-1.5 ${isSelected ? 'text-slate-900' : 'text-slate-400 group-hover:text-slate-700'}`}>
                             {item.label}
                           </span>
-                          <p className={`text-[0.6rem] font-black uppercase tracking-widest truncate w-full ${isSelected ? 'text-orange-500 opacity-70' : 'text-slate-200'}`}>
+                          <p className={`text-[0.5rem] sm:text-[0.6rem] font-black uppercase tracking-widest truncate w-full ${isSelected ? 'text-orange-500 opacity-70' : 'text-slate-200'}`}>
                             {item.description}
                           </p>
                         </div>
