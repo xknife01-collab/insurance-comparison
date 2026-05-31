@@ -1,0 +1,331 @@
+<html><head></head><body><div class="headWrap">
+  <h2 class="head">상품 검색</h2>
+  <div class="rightSide"><a href="#none" class="btnLink"><span>공시이율변경 안내</span></a></div>
+</div>
+<form name="frm" id="frm" method="post">
+  <input type="hidden" name="PType" value="1">
+  <input type="hidden" name="sellFlag" value="Y">
+
+  <input type="hidden" name="goodsType" id="goodsType" value="">
+  <input type="hidden" name="sellType" id="sellType" value="">
+  <input type="hidden" name="goodsIndex" id="goodsIndex" value="">
+
+  <div class="schBox"><!-- 검색엔진을 통해 들어온 경우 param.schText등이 전달될수 있음 -->
+    <input type="text" id="schText" name="schText" value="" title="검색어 입력" maxlength="20" style="widht:600px;" placeholder="상품명을 입력하세요" class="placeholder">
+    <button type="button" class="btnDefault orange small" id="btnSearch">검색하기</button>
+  </div>
+</form>
+<div class="searchGoodsList">
+  <div class="goodsListType">
+    <table class="dataTable" id="LIST_GRID1" data-grid="{scroll: false, databind: true, resultMsg: false, paging: 'number', emptyData: true}">
+      <caption>상품구분 및 종류 목록</caption>
+      <thead>
+      <tr>
+        <th scope="col">상품구분 및 종류</th>
+      </tr>
+      </thead>
+      <tbody id="List1">
+      <tr>
+        <td class="alignL" data-bind="getDivList(SELL_TYPE, GOODS_TYPE, SELL_TYPE_NM, GOODS_TYPE_NM)"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="goodsListSubType">
+    <table class="dataTable">
+      <caption>상품구분 및 종류 검색 상품명 결과 목록</caption>
+      <tbody>
+      <tr>
+        <th scope="col">상품명</th>
+      </tr>
+      </tbody>
+    </table>
+    <div class="scroll">
+      <table class="dataTable" id="LIST_GRID2" data-grid="{scroll: false, databind: true, resultMsg: false, paging: 'number', emptyData: true}">
+        <caption>상품구분 및 종류 검색 상품명 결과 목록</caption>
+        <thead>
+        <tr>
+          <th scope="col">상품명</th>
+        </tr>
+        </thead>
+        <tbody id="List2">
+        <tr>
+          <td class="alignL" data-bind="getGoodsList(IDX, GOODS_NAME)"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<a name="resultList"></a>
+
+<div class="goodsListResult">
+  <h4 id="title3"></h4>
+  <table class="dataTable" id="LIST_GRID3" data-grid="{scroll: false, databind: true, resultMsg: false, paging: 'number', emptyData: true}">
+    <caption>상품명 검색 결과 목록</caption>
+    <colgroup>
+      <col span="4" style="width:*;">
+    </colgroup>
+    <thead>
+    <tr>
+      <th scope="col">판매기간</th>
+      <th scope="col">상품요약서</th>
+      <th scope="col">사업방법서</th>
+      <th scope="col">약관</th>
+    </tr>
+    </thead>
+    <tbody id="List3">
+    <tr>
+      <td class="alignL" data-bind="getTerm(SELL_START_DT, SELL_END_DT)"></td>
+      <td data-bind="getButton(FILE_NAME1)"></td>
+      <td data-bind="getButton(FILE_NAME2)"></td>
+      <td data-bind="getButton(FILE_NAME3)"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="pdfGuideBox">
+  <p>※ PDF 파일이 안보이실 경우 Adobe Acrobat Reader를 설치하신 후 보시기 바랍니다.</p>
+  <div><a href="http://get.adobe.com/kr/reader/" target="_blank" class="btnIco downAcrobat">Adobe Acrobat Reader 다운로드</a></div>
+</div>
+
+
+  
+  
+    
+  
+
+
+<script type="text/javascript">
+  var pathUrl = "/main/disclosure/goods/goodslist/";
+  require(['hwlife', 'grid'], function(hwlife, grid) {
+
+    var boardListForm   = document.getElementById('frm');
+    var $boardListForm = $(boardListForm);
+    var boardListGrid1    = $('#LIST_GRID1').initGrid();
+    var boardListGrid2    = $('#LIST_GRID2').initGrid();
+    var boardListGrid3    = $('#LIST_GRID3').initGrid();
+
+    /********************
+     * 목록조회
+     ********************/
+    function getList() {
+      hwlife.secure.ajax($("#frm"), {
+        url: pathUrl+'getList.do',
+        dataType: 'json',
+        success: function(data) {
+          //console.log(JSON.stringify(data));
+          boardListGrid1.databind(data, 'list1', {
+            getDivList: function(SELL_TYPE, GOODS_TYPE, SELL_TYPE_NM, GOODS_TYPE_NM) {
+              return "<a href=\"#none\" class=\"f_black222  ck-search1\" data-sellType=\""+SELL_TYPE+"\"  data-goodsType=\""+GOODS_TYPE+"\">"+SELL_TYPE_NM+"&nbsp;"+GOODS_TYPE_NM+"</a>";
+            }
+          });
+          boardListGrid2.databind(data, 'list2', {
+            getGoodsList: function(IDX, GOODS_NAME) {
+              return "<a href=\"#resultList\" class=\"f_black222 ck-search2\" data-idx=\""+IDX+"\">"+GOODS_NAME+"</a>";
+            }
+          });
+
+          $("#List1 td:first").attr("class","alignL on");
+          $("#List2 td:first").attr("class","alignL on");
+          if(data.list3 == undefined){
+            boardListGrid3.clear();
+            $("#title3").text("");
+          }else{
+            boardListGrid3.databind(data, 'list3', {
+              getTerm: function(SELL_START_DT, SELL_END_DT) {
+                return SELL_START_DT+" ~ "+SELL_END_DT;
+              },
+              getButton: function(FILE_NAME) {
+                var rtnHtml = "";
+                if(FILE_NAME != undefined && FILE_NAME.length > 0 ){
+                  
+                  
+                  
+                  rtnHtml = "<button type=\"button\" class=\"btn_pdf ck-fileDownload\" data-file=\""+FILE_NAME+"\"><img src=\"/resources/main/img/button/btn_pdf.png\" alt=\""+FILE_NAME+"\"></button>";
+                  
+                  
+                }
+                return rtnHtml;
+              }
+            });
+            $("#title3").text(data.list3[0].GOODS_NAME);
+          }
+
+          if("" != ""){
+            //검색엔진등에서 넘어온경우 약관을 바로 볼수 있도록 스크롤을 내림..
+            $("body").scrollTop($(".goodsListResult").offset().top);
+          }
+        },
+        error: function(request, status, error){
+          console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
+      });
+    }
+
+    /********************
+     * 목록조회 (상품구분 및 종류 선택시)
+     ********************/
+    function getList2() {
+      hwlife.secure.ajax($("#frm"), {
+        url: pathUrl+'getList2.do',
+        dataType: 'json',
+        success: function(data) {
+          //console.log(JSON.stringify(data));
+
+          boardListGrid2.databind(data, 'list2', {
+            getGoodsList: function(IDX, GOODS_NAME) {
+              return "<a href=\"#none\" class=\"f_black222 ck-search2\" data-idx=\""+IDX+"\">"+GOODS_NAME+"</a>";
+            }
+          });
+          boardListGrid3.databind(data, 'list3', {
+            getTerm: function(SELL_START_DT, SELL_END_DT) {
+              return SELL_START_DT+" ~ "+SELL_END_DT;
+            },
+            getButton: function(FILE_NAME) {
+              var rtnHtml = "";
+              if(FILE_NAME != undefined && FILE_NAME.length > 0 ){
+                
+                
+                
+                rtnHtml = "<button type=\"button\" class=\"btn_pdf ck-fileDownload\" data-file=\""+FILE_NAME+"\"><img src=\"/resources/main/img/button/btn_pdf.png\" alt=\""+FILE_NAME+"\"></button>";
+                
+                
+              }
+              return rtnHtml;
+            }
+          });
+
+          $("#List2 td:first").attr("class","alignL on");
+          if(data.list3 == undefined){
+            $("#title3").text("");
+          }else{
+            $("#title3").text(data.list3[0].GOODS_NAME);
+          }
+
+        },
+        error: function(request, status, error){
+          console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
+      });
+    }
+
+    /********************
+     * 목록조회 (상품명 선택시)
+     ********************/
+    function getList3() {
+      hwlife.secure.ajax($("#frm"), {
+        url: pathUrl+'getList3.do',
+        dataType: 'json',
+        success: function(data) {
+          //console.log(JSON.stringify(data));
+
+          boardListGrid3.databind(data, 'list3', {
+            getTerm: function(SELL_START_DT, SELL_END_DT) {
+              return SELL_START_DT+" ~ "+SELL_END_DT;
+            },
+            getButton: function(FILE_NAME) {
+              var rtnHtml = "";
+
+              if(FILE_NAME != undefined && FILE_NAME.length > 0 ){
+                
+                
+                
+                rtnHtml = "<button type=\"button\" class=\"btn_pdf ck-fileDownload\" data-file=\""+FILE_NAME+"\"><img src=\"/resources/main/img/button/btn_pdf.png\" alt=\""+FILE_NAME+"\"></button>";
+                
+                
+              }
+              return rtnHtml;
+            }
+          });
+
+          if(data.list3 == undefined){
+            $("#title3").text("");
+          }else{
+            $("#title3").text(data.list3[0].GOODS_NAME);
+          }
+        },
+        error: function(request, status, error){
+          console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
+      });
+    }
+
+    /********************
+     * 검색버튼 실행
+     ********************/
+    $("#btnSearch").click(function(){
+      getList();
+      return false;
+    });
+
+    // enter 처리
+    $('#schText').on('keypress', function(e){
+      e = (e) ? e : window.event;
+      if (e.keyCode) code = e.keyCode;
+      else if (e.which) code = e.which;
+      if (code == 13) {
+        getList();
+        return false;
+      }
+    });
+
+    /********************
+     * 상품구분 및 종류 선택
+     ********************/
+    $('#List1').on('click', '.ck-search1', function(e){
+
+      $("#List1 td").attr("class","alignL");
+      $(this).parent().attr("class","alignL on");
+
+      $("#goodsType").val($(this).attr('data-goodsType'));
+      $("#sellType").val($(this).attr('data-sellType'));
+      $("#goodsIndex").val("");
+      getList2()
+    });
+
+    /********************
+     * 상품명 선택
+     ********************/
+    $('#List2').on('click', '.ck-search2', function(e){
+      //console.log($(this).attr('data-idx'));
+      $("#List2 td").attr("class","alignL");
+      $(this).parent().attr("class","alignL on");
+      $("#goodsIndex").val($(this).attr('data-idx'));
+      getList3();
+    });
+
+    /********************
+     * 파일다운로드
+     ********************/
+    $('#List3').on('click', '.ck-fileDownload', function(e){
+      var option = {
+        file_name: $(this).attr('data-file')
+      };
+      hwlife.util.fileDownload("/www/announce/goods/download_chk.asp", option);
+    });
+
+    /********************
+     * 공시이율변경 안내 레이어팝업
+     ********************/
+    $('.rightSide .btnLink').on('click', function() {
+      hwlife.util.openLayer({
+        id: 'ajaxLayer4',
+        title: '공시이율변경 안내',
+        url: pathUrl+"DF_GDGL000_W1T100.do",
+        width:900, //레이어팝업 넓이 px 단위 입력
+        height:776, //레이어팝업 높이 px 단위 입력
+        closebutton : false
+      });
+    });
+
+    /********************
+     * 폼 첫조회
+     ********************/
+    getList();
+
+  });
+</script>
+</body></html>

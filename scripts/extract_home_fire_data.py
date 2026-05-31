@@ -1,0 +1,200 @@
+import os
+import pandas as pd
+import io
+import re
+import warnings
+
+warnings.filterwarnings('ignore')
+
+SOURCE_DIR = r"C:\Users\zkfnt\Desktop\insurance-comparison-main"
+TARGET_DIR = r"C:\Users\zkfnt\Desktop\insurance-comparison-main\insurance-comparison-main\insurance_data\4_life\home_fire"
+
+STANDARD_HEADERS = [
+    "보험회사", "상품명", "구분", "담보명(급부명)", "지급사유", 
+    "지급금액", "가입금액", "기준보험료", "가입보험료", "적용이율",
+    "갱신구분", "판매채널", "기준일자", "상세안내", "연락처", "source_file"
+]
+
+def load_df(filepath):
+    try:
+        return pd.read_excel(filepath, engine='xlrd', header=None)
+    except Exception:
+        try:
+            with open(filepath, 'rb') as f:
+                raw_bytes = f.read()
+            for enc in ['cp949', 'euc-kr', 'utf-8']:
+                try:
+                    raw_text = raw_bytes.decode(enc)
+                    if '<table' in raw_text.lower():
+                        frames = pd.read_html(io.StringIO(raw_text), flavor='bs4')
+                        if frames:
+                            return frames[0]
+                except Exception:
+                    continue
+        except Exception:
+            pass
+    return None
+
+def clean_val(v):
+    if pd.isna(v): return ""
+    return str(v).replace('\n', ' ').strip()
+
+def parse_premium(val):
+    if not val:
+        return ""
+    cleaned = re.sub(r'[^\d]', '', str(val))
+    if cleaned.isdigit():
+        return f"{int(cleaned):,} 원"
+    return str(val)
+
+def extract_home_fire_data():
+    os.makedirs(TARGET_DIR, exist_ok=True)
+    extracted_rows = []
+    
+    # 1. Load file_50.xls (Home Fire Insurance products)
+    f50_path = os.path.join(SOURCE_DIR, "file_50.xls")
+    df50 = load_df(f50_path)
+    if df50 is not None:
+        print(f"Loaded file_50.xls (Shape: {df50.shape})")
+        ranges_50 = [
+            ("메리츠화재", 7, 11),
+            ("한화손보", 12, 16),
+            ("삼성화재", 17, 22),
+            ("KB손보", 28, 32),
+            ("하나손보", 33, 37),
+            ("에이스손보(라이나)", 38, 45),
+            ("에이스손보(라이나)", 46, 53),
+            ("エ이스손보(라이나)", 54, 61), # Note Ace / Lina names
+            ("에이스손보(라이나)", 62, 68),
+            ("신한EZ손보", 69, 73),
+            ("신한EZ손보", 74, 78),
+            ("농협손보", 79, 83), # NH Nonghyup fixed mapping
+        ]
+        
+        for company_name, start_idx, end_idx in ranges_50:
+            product_name = clean_val(df50.iloc[start_idx, 2])
+            for idx in range(start_idx, end_idx + 1):
+                row = df50.iloc[idx]
+                row_list = [clean_val(v) for v in row.tolist()]
+                
+                mapped_data = {h: "" for h in STANDARD_HEADERS}
+                mapped_data["보험회사"] = company_name
+                mapped_data["상품명"] = product_name
+                mapped_data["구분"] = "주계약" if idx == start_idx else "특약"
+                mapped_data["담보명(급부명)"] = row_list[3]
+                mapped_data["지급사유"] = row_list[4]
+                mapped_data["지급금액"] = row_list[5]
+                mapped_data["가입금액"] = row_list[5]
+                
+                if idx == start_idx:
+                    mapped_data["기준보험료"] = parse_premium(row_list[6])
+                    mapped_data["가입보험료"] = parse_premium(row_list[7])
+                
+                mapped_data["source_file"] = "file_50.xls"
+                
+                ordered_part = [mapped_data[h] for h in STANDARD_HEADERS]
+                raw_part = row_list[:30] + [""] * max(0, 30 - len(row_list))
+                extracted_rows.append(ordered_part + raw_part)
+    
+    # 2. Load file_47.xls (Hyundai Marine & Fire H주택화재보험)
+    f47_path = os.path.join(SOURCE_DIR, "file_47.xls")
+    df47 = load_df(f47_path)
+    if df47 is not None:
+        print(f"Loaded file_47.xls (Shape: {df47.shape})")
+        start_idx = 1533
+        end_idx = 1538
+        company_name = "현대해상"
+        product_name = clean_val(df47.iloc[start_idx, 2])
+        
+        for idx in range(start_idx, end_idx + 1):
+            row = df47.iloc[idx]
+            row_list = [clean_val(v) for v in row.tolist()]
+            
+            mapped_data = {h: "" for h in STANDARD_HEADERS}
+            mapped_data["보험회사"] = company_name
+            mapped_data["상품명"] = product_name
+            mapped_data["구분"] = "주계약" if idx == start_idx else "특약"
+            mapped_data["담보명(급부명)"] = row_list[3]
+            mapped_data["지급사유"] = row_list[4]
+            mapped_data["지급금액"] = row_list[5]
+            mapped_data["가입금액"] = row_list[5]
+            
+            if idx == start_idx:
+                mapped_data["기준보험료"] = parse_premium(row_list[6])
+                mapped_data["가입보험료"] = parse_premium(row_list[7])
+            
+            mapped_data["source_file"] = "file_47.xls"
+            
+            ordered_part = [mapped_data[h] for h in STANDARD_HEADERS]
+            raw_part = row_list[:30] + [""] * max(0, 30 - len(row_list))
+            extracted_rows.append(ordered_part + raw_part)
+
+    # 3. Load file_38.xls (Property & Commercial Fire Insurance products)
+    f38_path = os.path.join(SOURCE_DIR, "file_38.xls")
+    df38 = load_df(f38_path)
+    if df38 is not None:
+        print(f"Loaded file_38.xls (Shape: {df38.shape})")
+        ranges_38 = [
+            ("메리츠화재", 7, 13),
+            ("메리츠화재", 14, 19),
+            ("한화손보", 20, 25),
+            ("한화손보", 26, 30),
+            ("롯데손보", 31, 37),
+            ("흥국화재", 42, 47),
+            ("흥국화재", 48, 53),
+            ("삼성화재", 54, 62),
+            ("삼성화재", 63, 73),
+            ("삼성화재", 82, 89),
+            ("현대해상", 90, 95),
+            ("현대해상", 96, 101),
+            ("KB손보", 102, 106),
+            ("KB손보", 107, 110),
+            ("KB손보", 111, 115),
+            ("DB손보", 116, 121),
+            ("DB손보", 122, 127),
+            ("DB손보", 128, 133),
+            ("AXA손보", 139, 145),
+        ]
+        
+        for company_name, start_idx, end_idx in ranges_38:
+            product_name = clean_val(df38.iloc[start_idx, 2])
+            for idx in range(start_idx, end_idx + 1):
+                row = df38.iloc[idx]
+                row_list = [clean_val(v) for v in row.tolist()]
+                
+                mapped_data = {h: "" for h in STANDARD_HEADERS}
+                mapped_data["보험회사"] = company_name
+                mapped_data["상품명"] = product_name
+                mapped_data["구분"] = "주계약" if idx == start_idx else "특약"
+                mapped_data["담보명(급부명)"] = row_list[3]
+                mapped_data["지급사유"] = row_list[4]
+                mapped_data["지급금액"] = row_list[5]
+                mapped_data["가입금액"] = row_list[5]
+                
+                if idx == start_idx:
+                    mapped_data["기준보험료"] = parse_premium(row_list[6])
+                    mapped_data["가입보험료"] = parse_premium(row_list[7])
+                
+                mapped_data["source_file"] = "file_38.xls"
+                
+                ordered_part = [mapped_data[h] for h in STANDARD_HEADERS]
+                raw_part = row_list[:30] + [""] * max(0, 30 - len(row_list))
+                extracted_rows.append(ordered_part + raw_part)
+                
+    # Write to DataFrame
+    num_raw = 30
+    dynamic_headers = STANDARD_HEADERS + [f"원본_열_{i}" for i in range(num_raw)]
+    df_out = pd.DataFrame(extracted_rows, columns=dynamic_headers)
+    
+    # Save CSV
+    csv_path = os.path.join(TARGET_DIR, "extracted_data.csv")
+    df_out.to_csv(csv_path, index=False, encoding='utf-8-sig')
+    print(f"Successfully extracted {len(df_out)} rows and saved to {csv_path}")
+    
+    # Save XLSX
+    xlsx_path = os.path.join(TARGET_DIR, "extracted_data.xlsx")
+    df_out.to_excel(xlsx_path, index=False)
+    print(f"Successfully saved to {xlsx_path}")
+
+if __name__ == "__main__":
+    extract_home_fire_data()

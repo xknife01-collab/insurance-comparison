@@ -28,7 +28,14 @@ import { fetchDriverPremium } from './insurance/driver/driverLoader';
 import { fetchPremiumFromDatabase } from './engines/databaseLoader';
 import { fetchPetPremium } from './insurance/pet/petLoader';
 import { analyzePet } from './insurance/pet/petEngine';
-
+import { fetchGolfPremium } from './insurance/golf/golfLoader';
+import { analyzeGolf } from './insurance/golf/golfEngine';
+import { fetchFirePremium } from './insurance/fire/fireLoader';
+import { analyzeFire } from './insurance/fire/fireEngine';
+import { fetchAnnuityPremium } from './insurance/annuity/annuityLoader';
+import { analyzeAnnuity } from './insurance/annuity/annuityEngine';
+import { fetchWholeLifePremium } from './insurance/wholeLife/wholeLifeLoader';
+import { analyzeWholeLife } from './insurance/wholeLife/wholeLifeEngine';
 
 export const runAnalysis = async (analysis: InsuranceAnalysis): Promise<any> => {
   const category = analysis.selectedCategory || '';
@@ -48,7 +55,10 @@ export const runAnalysis = async (analysis: InsuranceAnalysis): Promise<any> => 
   const isCar = category.includes('자동차') || category === 'car';
   const isDriver = category.includes('운전자') || category === 'driver';
   const isPet = category.includes('펫') || category === 'pet' || !!analysis.pet;
-  
+  const isGolf = category.includes('골프') || category.includes('레저') || category === 'golf' || category === 'leisure' || !!analysis.golf;
+  const isFire = category.includes('주택화재') || category.includes('화재') || category === 'fire_real' || !!analysis.fire;
+  const isAnnuity = category.includes('연금') || category === 'annuity_savings' || !!analysis.annuity;
+  const isWholeLife = category.includes('종신') || category === 'whole' || !!analysis.wholeLife;
   
   const dbData = isDementia
     ? await fetchDementiaPremium(analysis)
@@ -76,8 +86,16 @@ export const runAnalysis = async (analysis: InsuranceAnalysis): Promise<any> => 
     ? await fetchDriverPremium(analysis)
     : isPet
     ? await fetchPetPremium(analysis)
+    : isGolf
+    ? await fetchGolfPremium(analysis)
+    : isFire
+    ? await fetchFirePremium(analysis)
+    : isAnnuity
+    ? await fetchAnnuityPremium(analysis)
+    : isWholeLife
+    ? await fetchWholeLifePremium(analysis)
     : await fetchPremiumFromDatabase(analysis);
-    
+     
   const realPremium = dbData ? dbData.premium : 0;
   
   // Inject the real premium and product info into the analysis object
@@ -144,6 +162,22 @@ export const runAnalysis = async (analysis: InsuranceAnalysis): Promise<any> => 
 
   if (isPet) {
     return { analysis: augmentedAnalysis, ...analyzePet(augmentedAnalysis as any) };
+  }
+
+  if (isGolf) {
+    return { analysis: augmentedAnalysis, ...analyzeGolf(augmentedAnalysis as any) };
+  }
+
+  if (isFire) {
+    return { analysis: augmentedAnalysis, ...analyzeFire(augmentedAnalysis as any) };
+  }
+
+  if (isAnnuity) {
+    return { analysis: augmentedAnalysis, ...analyzeAnnuity(augmentedAnalysis as any) };
+  }
+
+  if (isWholeLife) {
+    return { analysis: augmentedAnalysis, ...analyzeWholeLife(augmentedAnalysis as any) };
   }
 
   // 기본적으로 건강보험 엔진 사용

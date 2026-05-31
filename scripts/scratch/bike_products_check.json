@@ -1,0 +1,132 @@
+{
+  "bike": [
+    {
+      "id": 78,
+      "company_name": "메리츠화재",
+      "product_name": "(무) 메리츠 안전한 MY바이크 운전자보험2601",
+      "category": "driver",
+      "created_at": "2026-05-29T11:00:48.752929"
+    },
+    {
+      "id": 90,
+      "company_name": "KB손보",
+      "product_name": "KB 다이렉트 플러스 오토바이 운전자보험(무배당)(26.01)",
+      "category": "driver",
+      "created_at": "2026-05-29T11:00:48.752929"
+    },
+    {
+      "id": 92,
+      "company_name": "KB손보",
+      "product_name": "KB 플러스 오토바이 운전자보험(무배당)(26.01)",
+      "category": "driver",
+      "created_at": "2026-05-29T11:00:48.752929"
+    }
+  ],
+  "private_sample": [
+    {
+      "id": 79,
+      "company_name": "메리츠화재",
+      "product_name": "(무) 메리츠 운전자 상해 종합보험2601(1종)",
+      "category": "driver",
+      "created_at": "2026-05-29T11:00:48.752929"
+    },
+    {
+      "id": 80,
+      "company_name": "메리츠화재",
+      "product_name": "(무) 메리츠 운전자 상해 종합보험2601(2종)",
+      "category": "driver",
+      "created_at": "2026-05-29T11:00:48.752929"
+    },
+    {
+      "id": 81,
+      "company_name": "한화손보",
+      "product_name": "캐롯 운전자보험 (무) 2종(자가용, 표준형)",
+      "category": "driver",
+      "created_at": "2026-05-29T11:00:48.752929"
+    },
+    {
+      "id": 82,
+      "company_name": "한화손보",
+      "product_name": "캐롯 운전자보험 (무) 4종(영업용, 표준형)",
+      "category": "driver",
+      "created_at": "2026-05-29T11:00:48.752929"
+    },
+    {
+      "id": 83,
+      "company_name": "한화손보",
+      "product_name": "한화 운전자상해보험 (무)2601 1종(운전자보장형)",
+      "category": "driver",
+      "created_at": "2026-05-29T11:00:48.752929"
+    },
+    {
+      "id": 84,
+      "company_name": "한화손보",
+      "product_name": "한화 운전자상해보험 (무)2601 2종(상해보장형)",
+      "category": "driver",
+      "created_at": "2026-05-29T11:00:48.752929"
+    },
+    {
+      "id": 85,
+      "company_name": "롯데손보",
+      "product_name": "(무) 운전자보험(2601)",
+      "category": "driver",
+      "created_at": "2026-05-29T11:00:48.752929"
+    },
+    {
+      "id": 86,
+      "company_name": "롯데손보",
+      "product_name": "(무) let:drive 운전자보험(2601.2)_1종(연만기,운전자형)",
+      "category": "driver",
+      "created_at": "2026-05-29T11:00:48.752929"
+    },
+    {
+      "id": 87,
+      "company_name": "흥국화재",
+      "product_name": "무배당 흥Good 다이렉트 운전자보험(26.01)",
+      "category": "driver",
+      "created_at": "2026-05-29T11:00:48.752929"
+    },
+    {
+      "id": 88,
+      "company_name": "흥국화재",
+      "product_name": "무배당 흥Good The편한 운전자상해보험(26.03)",
+      "category": "driver",
+      "created_at": "2026-05-29T11:00:48.752929"
+    },
+    {
+      "id": 89,
+      "company_name": "흥국화재",
+      "product_name": "무배당 흥Good 든든한 SMILE 운전자 종합보험(26.03)",
+      "category": "driver",
+      "created_at": "2026-05-29T11:00:48.752929"
+    },
+    {
+      "id": 91,
+      "company_name": "KB손보",
+      "product_name": "KB 다이렉트 플러스 운전자보험(무배당)(26.01)",
+      "category": "driver",
+      "created_at": "2026-05-29T11:00:48.752929"
+    },
+    {
+      "id": 93,
+      "company_name": "KB손보",
+      "product_name": "보험가입금액(최초1회한)",
+      "category": "driver",
+      "created_at": "2026-05-29T11:00:48.752929"
+    },
+    {
+      "id": 94,
+      "company_name": "DB손보",
+      "product_name": "(무)다이렉트 참좋은라이더 보험2601(CM)(2종)",
+      "category": "driver",
+      "created_at": "2026-05-29T11:00:48.752929"
+    },
+    {
+      "id": 95,
+      "company_name": "DB손보",
+      "product_name": "(무)다이렉트 참좋은라이더 보험2601(CM)(1종)",
+      "category": "driver",
+      "created_at": "2026-05-29T11:00:48.752929"
+    }
+  ]
+}

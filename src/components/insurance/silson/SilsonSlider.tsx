@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { motion } from 'motion/react';
 import { Shield, TrendingUp, Sparkles, Calculator } from 'lucide-react';
 import { AnalysisResult } from '../../../types/insurance';
-import { SilbiDetailedGuide } from './SilsonDetailedGuide';
+import { SilsonExplanation } from './SilsonExplanation';
 
 export const SilsonSlider: React.FC<{ result: AnalysisResult }> = ({ result }) => {
   const currentPremium = result.analysis.monthlyPremium || 45000;
@@ -84,7 +84,7 @@ export const SilsonSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =
             </div>
           </div>
         </div>
-        <SilbiDetailedGuide />
+        <SilsonExplanation />
       </div>
     </section>
   );

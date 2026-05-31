@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { motion } from 'motion/react';
 import { Shield, TrendingUp, Sparkles, Calculator, ChevronRight } from 'lucide-react';
 import { AnalysisResult } from '../../../types/insurance';
-import { CerebrovascularDetailedGuide } from './BrainDetailedGuide';
+import { CerebrovascularExplanation } from './CerebrovascularExplanation';
 
 export const BrainSlider: React.FC<{ result: AnalysisResult }> = ({ result }) => {
   const currentPremium = result.analysis.monthlyPremium || 120000;
@@ -22,8 +22,8 @@ export const BrainSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =>
   return (
     <section className="space-y-16">
       <div className="text-center space-y-6">
-        <div className="inline-flex items-center gap-2 px-6 py-2 bg-indigo-900 text-white rounded-full text-[0.65rem] font-black uppercase tracking-[0.3em] shadow-xl">
-          <Calculator size={14} className="text-indigo-500" /> Brain Simulation
+        <div className="inline-flex items-center gap-2 px-6 py-2 bg-indigo-950 text-white rounded-full text-[0.65rem] font-black uppercase tracking-[0.3em] shadow-xl border border-indigo-500/20">
+          <Calculator size={14} className="text-indigo-400" /> Brain Simulation
         </div>
         <h2 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tighter leading-tight">예산에 따른 보장 변화 시뮬레이션</h2>
       </div>
@@ -60,7 +60,7 @@ export const BrainSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-slate-900 rounded-[3rem] p-10 text-white space-y-6 shadow-2xl">
+            <div className="bg-slate-900 rounded-[3rem] p-10 text-white space-y-6 shadow-2xl border border-slate-800">
               <div className="flex justify-between items-start">
                 <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center text-indigo-400"><Shield size={20} /></div>
                 <span className="text-[0.6rem] font-black text-slate-500 uppercase tracking-widest">Expected Benefit</span>
@@ -84,7 +84,7 @@ export const BrainSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =>
             </div>
           </div>
         </div>
-        <CerebrovascularDetailedGuide />
+        <CerebrovascularExplanation />
       </div>
     </section>
   );

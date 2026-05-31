@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { TrendingDown, TrendingUp, ShieldCheck, HeartPulse, Brain, Heart, Stethoscope, Clock, Scale } from 'lucide-react';
+import { TrendingDown, TrendingUp, ShieldCheck, HeartPulse, Brain, Heart, Stethoscope, Clock, Scale, Dog, Cat, Coins, Calendar, PiggyBank } from 'lucide-react';
 import { InsuranceAnalysis, RecommendationPlan } from '../types/insurance';
 
 interface ComparisonTableProps {
@@ -28,8 +28,14 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
   const isChild = analysis.selectedCategory?.includes('어린이') || analysis.selectedCategory?.includes('태아') || analysis.selectedCategory === 'child' || analysis.selectedCategory === 'pre_family' || !!analysis.child;
   const isCar = analysis.selectedCategory?.includes('자동차') || analysis.selectedCategory === 'car';
   const isDriver = analysis.selectedCategory?.includes('운전자') || analysis.selectedCategory === 'driver';
+  const isPet = analysis.selectedCategory?.includes('펫') || analysis.selectedCategory === 'pet' || !!analysis.pet;
+  const isGolf = analysis.selectedCategory?.includes('골프') || analysis.selectedCategory?.includes('레저') || analysis.selectedCategory === 'golf' || analysis.selectedCategory === 'leisure' || !!analysis.golf;
+  const isFire = analysis.selectedCategory?.includes('주택화재') || analysis.selectedCategory?.includes('화재') || analysis.selectedCategory === 'fire_real' || !!analysis.fire;
+  const isAnnuity = analysis.selectedCategory?.includes('연금') || analysis.selectedCategory === 'annuity_savings' || !!analysis.annuity;
+  const isWholeLife = analysis.selectedCategory?.includes('종신') || analysis.selectedCategory === 'whole' || !!analysis.wholeLife;
 
-  const benchmark = isSilbi ? 55000 : isDental ? 85000 : isCaregiving ? 45000 : isNursing ? 70000 : isHeart ? 120000 : isChild ? (analysis.child?.maturity === 30 ? 45000 : 95000) : isDriver ? 22000 : 180000;
+
+  const benchmark = isSilbi ? 55000 : isDental ? 85000 : isCaregiving ? 45000 : isNursing ? 70000 : isHeart ? 120000 : isChild ? (analysis.child?.maturity === 30 ? 45000 : 95000) : isDriver ? 22000 : isPet ? 42000 : isGolf ? 15000 : isFire ? 12000 : isWholeLife ? 150000 : 180000;
   const dietPremium = recommendation.estimatedPremium;
   const currentPremium = analysis.monthlyPremium;
   
@@ -365,6 +371,179 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     },
   ];
 
+  // 12. 펫보험 (Pet Insurance)
+  const petRows = [
+    { 
+      label: '슬개골/고관절 탈구 보장', 
+      current: analysis.pet?.patellaRider ? '가입 완료' : '미보장', 
+      recommended: '실손 보장 (1년 대기 후 수술비 실비 지원)', 
+      icon: <Dog className="w-4 h-4 text-orange-600" /> 
+    },
+    { 
+      label: '피부염/귓병(외이염) 보장', 
+      current: analysis.pet?.skinRider ? '가입 완료' : '미보장', 
+      recommended: '통원 치료비 지원 (만성 피부질환 장기 처방)', 
+      icon: <Heart className="w-4 h-4 text-orange-600" /> 
+    },
+    { 
+      label: '구강 질환/스케일링 보장', 
+      current: analysis.pet?.dentalRider ? '가입 완료' : '미보장', 
+      recommended: '스케일링 및 치주염 수술 지원 (구강 관리 최적화)', 
+      icon: <Stethoscope className="w-4 h-4 text-orange-600" /> 
+    },
+    { 
+      label: '반려동물 배상책임', 
+      current: '미가입', 
+      recommended: '사고당 최대 1,000만 원 (자부담 3만 원 전액 방어)', 
+      icon: <Scale className="w-4 h-4 text-orange-600" /> 
+    },
+  ];
+
+  // 13. 골프보험 (Golf Insurance)
+  const golfRows = [
+    { 
+      label: '홀인원 축하비용', 
+      current: analysis.golf?.hasHoleInOneRider ? '가입 완료' : '미보장', 
+      recommended: '실손 보장 (라운딩 후 1~3개월 이내 증빙영수증 청구 시 최대 200만 원 지원)', 
+      icon: <ShieldCheck className="w-4 h-4 text-emerald-600" /> 
+    },
+    { 
+      label: '골프 배상책임 (타구 사고)', 
+      current: analysis.golf?.hasLiabilityRider ? '가입 완료' : '미보장', 
+      recommended: '사고당 최대 3,000만 원 (스윙 오발 사고 대인/대물 배상안심)', 
+      icon: <Scale className="w-4 h-4 text-emerald-600" /> 
+    },
+    { 
+      label: '골프용품 손해 (도난/파손)', 
+      current: analysis.golf?.hasEquipmentRider ? '가입 완료' : '미보장', 
+      recommended: '세트당 최대 200만 원 (드라이버 헤드 깨짐, 샤프트 부러짐 실 AS비 지원)', 
+      icon: <HeartPulse className="w-4 h-4 text-emerald-600" /> 
+    },
+    { 
+      label: '4인 동반 단체 할인', 
+      current: analysis.golf?.isGroup ? '적용 완료' : '미적용', 
+      recommended: '5% 즉시 추가할인 (1팀 동반 가입 시 일괄 적용 패키지 우대)', 
+      icon: <TrendingDown className="w-4 h-4 text-emerald-600" /> 
+    },
+  ];
+
+  const fireOpts = analysis.fire || {
+    residenceType: 'apartment',
+    occupancyType: 'owner',
+    buildingLimit: 100000000,
+    householdGoodsLimit: 30000000,
+    hasWaterLeakRider: true,
+    hasLiabilityRider: true,
+  };
+
+  const fireRows = [
+    { 
+      label: '건물 복구 가입 금액', 
+      current: fireOpts.buildingLimit ? formatAmt(fireOpts.buildingLimit) + '원' : '1억 원', 
+      recommended: `${formatAmt(fireOpts.buildingLimit || 100000000)}원 (시세 대비 비례보상 방지를 위한 실손 한도 설정)`, 
+      icon: <ShieldCheck className="w-4 h-4 text-red-600" /> 
+    },
+    { 
+      label: '가재도구 가입 금액', 
+      current: fireOpts.householdGoodsLimit ? formatAmt(fireOpts.householdGoodsLimit) + '원' : '3천만 원', 
+      recommended: `${formatAmt(fireOpts.householdGoodsLimit || 30000000)}원 (생활 가전/가구 일체 전손 피해 시 복구 지원)`, 
+      icon: <TrendingUp className="w-4 h-4 text-red-600" /> 
+    },
+    { 
+      label: '급배수시설누출손해 (누수 보장)', 
+      current: fireOpts.hasWaterLeakRider ? '가입 완료' : '미보장', 
+      recommended: '가입 유지 (아랫집 누수 피해 및 우리집 수리비 보장)', 
+      icon: <HeartPulse className="w-4 h-4 text-red-600" /> 
+    },
+    { 
+      label: '화재 배상책임 (이웃집 피해보상)', 
+      current: fireOpts.hasLiabilityRider ? '가입 완료' : '미보장', 
+      recommended: fireOpts.occupancyType === 'owner' ? '대물 20억 / 대인 1.5억 최고한도 설정' : '임차자 배상책임 1억 완벽 설정', 
+      icon: <Scale className="w-4 h-4 text-red-600" /> 
+    },
+    { 
+      label: '최저보험료 룰 및 적립금 전환', 
+      current: '최저보험료 미달 (소멸)', 
+      recommended: `실 납입 월 10,000원 (남는 차액은 만기 시 환급되는 적립금으로 자동 전환)`, 
+      icon: <Clock className="w-4 h-4 text-red-600" /> 
+    },
+  ];
+  const annuityOpts = analysis.annuity || {
+    annuityType: 'savings',
+    monthlyPremium: 300000,
+    paymentPeriod: 10,
+    commencementAge: 60,
+    annualIncome: 50000000,
+    hasIrp: false,
+    receivingPeriod: 20
+  };
+
+  const isSavings = annuityOpts.annuityType === 'savings';
+
+  const annuityRows = [
+    { 
+      label: '세액공제 연말정산 환급', 
+      current: isSavings ? '세액공제 한도 미달 상태' : '환급 혜택 제외 (비과세 타겟)', 
+      recommended: isSavings ? '최대 600만 원 풀 세액공제 최적 세팅' : '10년 이상 유지 시 이자소득세 전액 면제 매칭', 
+      icon: <Coins className="w-4 h-4 text-blue-600" /> 
+    },
+    { 
+      label: '납입 기간 설계', 
+      current: `${annuityOpts.paymentPeriod}년납`, 
+      recommended: '10년 이상 납입하여 장기 복리 효과 극대화', 
+      icon: <Clock className="w-4 h-4 text-blue-600" /> 
+    },
+    { 
+      label: '연금 개시 연령 및 세율', 
+      current: `만 ${annuityOpts.commencementAge}세 개시`, 
+      recommended: '70세 이후 개시 설정으로 3.3% 초저율 연금과세 적용', 
+      icon: <Calendar className="w-4 h-4 text-blue-600" /> 
+    },
+    { 
+      label: 'IRP 퇴직연금 매칭', 
+      current: annuityOpts.hasIrp ? '가입 완료' : '미연동', 
+      recommended: 'IRP 연동으로 통합 공제 한도 900만 원으로 확대', 
+      icon: <PiggyBank className="w-4 h-4 text-blue-600" /> 
+    },
+  ];
+
+  const wholeLifeOpts = analysis.wholeLife || {
+    objective: 'family',
+    paymentPeriod: 10,
+    deathBenefit: 100000000,
+    refundType: 'low',
+    isStepUp: false
+  };
+
+  const wholeLifeRows = [
+    { 
+      label: '사망 보장 한도', 
+      current: '기본 가입 (5,000만 원 상당)', 
+      recommended: `최대 ${formatAmt(wholeLifeOpts.deathBenefit)} (평생 상속세 및 유가족 안심 생활 자금)`, 
+      icon: <ShieldCheck className="w-4 h-4 text-indigo-600" /> 
+    },
+    { 
+      label: '보험료 납입 구조', 
+      current: '20년납 장기 납부 의무', 
+      recommended: `${wholeLifeOpts.paymentPeriod}년납 단기완납 (납기 단축을 통한 장기 복리 효율화)`, 
+      icon: <Clock className="w-4 h-4 text-indigo-600" /> 
+    },
+    { 
+      label: '해약환급금 구조', 
+      current: '일반형 (비싸고 완납 후 환급률 낮음)', 
+      recommended: wholeLifeOpts.refundType === 'low' ? '저해지/무해지형 (보험료 18% 즉시할인 + 완납 후 높은 환급금 확보)' : '일반형 (중도 해지 페널티 최소화 구조)', 
+      icon: <PiggyBank className="w-4 h-4 text-indigo-600" /> 
+    },
+    { 
+      label: '물가상승 대응특약', 
+      current: '일반 정액 보장 (인플레이션 시 가치 하락)', 
+      recommended: wholeLifeOpts.isStepUp ? '체증형 적용 (만 60세부터 매년 5%씩 20년간 보장 금액 증액)' : '기본 고정형 적용 (체증형 미설정)', 
+      icon: <TrendingUp className="w-4 h-4 text-indigo-600" /> 
+    },
+  ];
+
+
+
   // 조건 분기를 if-else 문으로 안전하고 깔끔하게 매칭
   let comparisonRows = standardRows;
   if (isChild) {
@@ -389,7 +568,18 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     comparisonRows = carRows;
   } else if (isDriver) {
     comparisonRows = driverRows;
+  } else if (isPet) {
+    comparisonRows = petRows;
+  } else if (isGolf) {
+    comparisonRows = golfRows;
+  } else if (isFire) {
+    comparisonRows = fireRows;
+  } else if (isAnnuity) {
+    comparisonRows = annuityRows;
+  } else if (isWholeLife) {
+    comparisonRows = wholeLifeRows;
   }
+
 
   return (
     <div className="bg-white rounded-[3rem] p-10 md:p-16 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.05)] border border-gray-100 overflow-hidden relative">
@@ -413,6 +603,18 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
              </div>
           </div>
         </div>
+
+        {isGolf && analysis.golf?.gameType === 'professional' && (
+          <div className="p-6 bg-amber-50 rounded-3xl border border-amber-100/70 flex items-start gap-4 animate-in slide-in-from-top-4 duration-300">
+            <span className="text-xl">💡</span>
+            <div>
+              <p className="text-xs font-black text-amber-800">프로 골퍼 요금제 가격 안내</p>
+              <p className="text-[11px] text-slate-600 font-bold leading-relaxed mt-1">
+                프로/지도자 자격은 라운딩 빈도가 아주 높고 사고 확률이 높은 초고위험군에 해당하여, 보험사 규정 상 <span className="text-rose-600 font-black">홀인원 축하비용 및 골프용품 손해 특약 가입이 면책(제외)</span>됩니다. 이에 따라 아마추어 회원에게 추가로 부과되는 특약 비용(총 7,000원 상당)이 모두 제외되고 순수 상해 보장 위주로 가입되어 보험료가 매우 실속 있게 산정되었습니다.
+              </p>
+            </div>
+          </div>
+        )}
 
         <div className="grid grid-cols-12 gap-1 px-4 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-1">
            <div className="col-span-4">보장 항목</div>

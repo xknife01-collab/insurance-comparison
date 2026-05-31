@@ -1,0 +1,372 @@
+[
+  {
+    "category": "일반보험",
+    "product_name": "KB주택화재보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\KB주택화재보험.pdf"
+  },
+  {
+    "category": "일반보험",
+    "product_name": "KB아파트화재보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\KB아파트화재보험.pdf"
+  },
+  {
+    "category": "일반보험",
+    "product_name": "KB주택종합보험(舊 플러스감동단체보험)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\KB주택종합보험(舊_플러스감동단체보험).pdf"
+  },
+  {
+    "category": "일반보험",
+    "product_name": "KB주택화재보험(II)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\KB주택화재보험(II).pdf"
+  },
+  {
+    "category": "일반보험",
+    "product_name": "KB간편가입아파트화재보험(실손형)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\KB간편가입아파트화재보험(실손형).pdf"
+  },
+  {
+    "category": "일반보험",
+    "product_name": "시민안전주택종합보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\시민안전주택종합보험.pdf"
+  },
+  {
+    "category": "일반보험",
+    "product_name": "승강기사고배상책임보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\승강기사고배상책임보험.pdf"
+  },
+  {
+    "category": "일반보험",
+    "product_name": "휠체어 및 스쿠터배상책임보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\휠체어_및_스쿠터배상책임보험.pdf"
+  },
+  {
+    "category": "일반보험",
+    "product_name": "KB드론배상책임보험(개인용)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\KB드론배상책임보험(개인용).pdf"
+  },
+  {
+    "category": "일반보험",
+    "product_name": "KB개인상해보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\KB개인상해보험.pdf"
+  },
+  {
+    "category": "개인연금",
+    "product_name": "연금저축손해보험 KB멀티플러스연금보험(26.01)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\연금저축손해보험_KB멀티플러스연금보험(26.01).pdf"
+  },
+  {
+    "category": "개인연금",
+    "product_name": "연금저축손해보험 KB계약이전연금보험(26.01)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\연금저축손해보험_KB계약이전연금보험(26.01).pdf"
+  },
+  {
+    "category": "퇴직연금",
+    "product_name": "무배당 KB손보 개인형퇴직연금(개인형) 자산관리보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_KB손보_개인형퇴직연금(개인형)_자산관리보험.pdf"
+  },
+  {
+    "category": "퇴직연금",
+    "product_name": "무배당 KB손보 개인형퇴직연금(기업형) 자산관리보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_KB손보_개인형퇴직연금(기업형)_자산관리보험.pdf"
+  },
+  {
+    "category": "퇴직연금",
+    "product_name": "무배당 KB손보 확정급여형 퇴직연금 자산관리보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_KB손보_확정급여형_퇴직연금_자산관리보험.pdf"
+  },
+  {
+    "category": "퇴직연금",
+    "product_name": "무배당 KB손보 확정기여형 퇴직연금 자산관리보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_KB손보_확정기여형_퇴직연금_자산관리보험.pdf"
+  },
+  {
+    "category": "질병보험",
+    "product_name": "KB 골든라이프케어 간병보험(무배당)(26.01)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\KB_골든라이프케어_간병보험(무배당)(26.01).pdf"
+  },
+  {
+    "category": "질병보험",
+    "product_name": "KB 골든라이프케어 간병보험(무배당)(26.01)_해약환급금 미지급형",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\KB_골든라이프케어_간병보험(무배당)(26.01)_해약환급금_미지급형.pdf"
+  },
+  {
+    "category": "질병보험",
+    "product_name": "KB 9회주는 암보험Plus(무배당)(26.01)_1종_세만기",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\KB_9회주는_암보험Plus(무배당)(26.01)_1종_세만기.pdf"
+  },
+  {
+    "category": "질병보험",
+    "product_name": "KB 9회주는 암보험Plus(무배당)(26.01)_2종_해약환급금 미지급형",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\KB_9회주는_암보험Plus(무배당)(26.01)_2종_해약환급금_미지급형.pdf"
+  },
+  {
+    "category": "질병보험",
+    "product_name": "KB 9회주는 암보험Plus(무배당)(26.01)_3종_연만기갱신형",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\KB_9회주는_암보험Plus(무배당)(26.01)_3종_연만기갱신형.pdf"
+  },
+  {
+    "category": "질병보험",
+    "product_name": "KB The건강한 치아보험(무배당)(26.01)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\KB_The건강한_치아보험(무배당)(26.01).pdf"
+  },
+  {
+    "category": "방카슈랑스",
+    "product_name": "무배당 교통안심 매직저축보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_교통안심_매직저축보험.pdf"
+  },
+  {
+    "category": "방카슈랑스",
+    "product_name": "무배당 주말안심 매직저축보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_주말안심_매직저축보험.pdf"
+  },
+  {
+    "category": "방카슈랑스",
+    "product_name": "무배당 자녀안심 매직저축보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_자녀안심_매직저축보험.pdf"
+  },
+  {
+    "category": "방카슈랑스",
+    "product_name": "무배당 자녀안심 매직저축보험(L3.10)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_자녀안심_매직저축보험(L3.10).pdf"
+  },
+  {
+    "category": "방카슈랑스",
+    "product_name": "무배당 교통안심 매직저축보험(L4.01)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_교통안심_매직저축보험(L4.01).pdf"
+  },
+  {
+    "category": "방카슈랑스",
+    "product_name": "무배당 자녀안심 매직저축보험(L4.02)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_자녀안심_매직저축보험(L4.02).pdf"
+  },
+  {
+    "category": "방카슈랑스",
+    "product_name": "무배당 건강안심 매직저축보험(L4.02)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_건강안심_매직저축보험(L4.02).pdf"
+  },
+  {
+    "category": "방카슈랑스",
+    "product_name": "무배당 매직교통안심보험(L4.05)_연동형(1,2종)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_매직교통안심보험(L4.05)_연동형(1,2종).pdf"
+  },
+  {
+    "category": "방카슈랑스",
+    "product_name": "무배당 매직자녀안심보험(L4.05)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_매직자녀안심보험(L4.05).pdf"
+  },
+  {
+    "category": "방카슈랑스",
+    "product_name": "무배당 매직파워안심보험(L4.07)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_매직파워안심보험(L4.07).pdf"
+  },
+  {
+    "category": "제휴",
+    "product_name": "무배당 365가족사랑상해보험Ⅱ",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_365가족사랑상해보험Ⅱ.pdf"
+  },
+  {
+    "category": "제휴",
+    "product_name": "무배당 365암플러스보장Ⅳ",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_365암플러스보장Ⅳ.pdf"
+  },
+  {
+    "category": "제휴",
+    "product_name": "무배당 365메디컬보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_365메디컬보험.pdf"
+  },
+  {
+    "category": "제휴",
+    "product_name": "무배당 365암플러스보장보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_365암플러스보장보험.pdf"
+  },
+  {
+    "category": "제휴",
+    "product_name": "무배당 365가족사랑상해보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_365가족사랑상해보험.pdf"
+  },
+  {
+    "category": "제휴",
+    "product_name": "무배당 365메디칼보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_365메디칼보험.pdf"
+  },
+  {
+    "category": "제휴",
+    "product_name": "무배당 매직세이프보험(L3.10)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_매직세이프보험(L3.10).pdf"
+  },
+  {
+    "category": "제휴",
+    "product_name": "무배당 매직세이프보험(L3.10)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_매직세이프보험(L3.10).pdf"
+  },
+  {
+    "category": "제휴",
+    "product_name": "무배당 매직세이프보험(L3.10)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_매직세이프보험(L3.10).pdf"
+  },
+  {
+    "category": "저축성보험",
+    "product_name": "무배당 슈퍼밀레니엄저축보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_슈퍼밀레니엄저축보험.pdf"
+  },
+  {
+    "category": "저축성보험",
+    "product_name": "무배당 장기주택마련저축보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_장기주택마련저축보험.pdf"
+  },
+  {
+    "category": "저축성보험",
+    "product_name": "무배당 슈퍼밀레니엄저축보험(L3.10)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_슈퍼밀레니엄저축보험(L3.10).pdf"
+  },
+  {
+    "category": "저축성보험",
+    "product_name": "무배당 LIG우리집안심저축보험(L9.10)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_LIG우리집안심저축보험(L9.10).pdf"
+  },
+  {
+    "category": "저축성보험",
+    "product_name": "무배당 LIG매직파워플러스저축보험(L10.02)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_LIG매직파워플러스저축보험(L10.02).pdf"
+  },
+  {
+    "category": "저축성보험",
+    "product_name": "무배당 LIG우리집안심저축보험(L10.04)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_LIG우리집안심저축보험(L10.04).pdf"
+  },
+  {
+    "category": "저축성보험",
+    "product_name": "무배당 LIG플러스장기우대저축보험(L10.07)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_LIG플러스장기우대저축보험(L10.07).pdf"
+  },
+  {
+    "category": "저축성보험",
+    "product_name": "무배당 LIG안심플러스저축보험(L10.09)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_LIG안심플러스저축보험(L10.09).pdf"
+  },
+  {
+    "category": "저축성보험",
+    "product_name": "무배당 LIG안심플러스저축보험II(L10.09)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_LIG안심플러스저축보험II(L10.09).pdf"
+  },
+  {
+    "category": "저축성보험",
+    "product_name": "무배당 LIG 안심플러스저축보험II(L11.02)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_LIG_안심플러스저축보험II(L11.02).pdf"
+  },
+  {
+    "category": "독립특별약관",
+    "product_name": "무배당 LIG실손의료비【갱신계약】 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_LIG실손의료비【갱신계약】_특별약관.pdf"
+  },
+  {
+    "category": "독립특별약관",
+    "product_name": "무배당 LIG노후실손의료비【갱신계약】 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_LIG노후실손의료비【갱신계약】_특별약관.pdf"
+  },
+  {
+    "category": "독립특별약관",
+    "product_name": "무배당 실손의료비【갱신계약】 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_실손의료비【갱신계약】_특별약관.pdf"
+  },
+  {
+    "category": "독립특별약관",
+    "product_name": "무배당 노후실손의료비【갱신계약】 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_노후실손의료비【갱신계약】_특별약관.pdf"
+  },
+  {
+    "category": "독립특별약관",
+    "product_name": "무배당 KB손보실손의료비【갱신계약】특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_KB손보실손의료비【갱신계약】특별약관.pdf"
+  },
+  {
+    "category": "독립특별약관",
+    "product_name": "무배당 KB손보노후실손의료비【갱신계약】특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_KB손보노후실손의료비【갱신계약】특별약관.pdf"
+  },
+  {
+    "category": "독립특별약관",
+    "product_name": "무배당 KB손보실손의료비【갱신계약】특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_KB손보실손의료비【갱신계약】특별약관.pdf"
+  },
+  {
+    "category": "독립특별약관",
+    "product_name": "무배당 KB손보노후실손의료비【갱신계약】특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_KB손보노후실손의료비【갱신계약】특별약관.pdf"
+  },
+  {
+    "category": "제도성 특별약관",
+    "product_name": "표준화실손의료비보장유예계약특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\표준화실손의료비보장유예계약특별약관.pdf"
+  },
+  {
+    "category": "제도성 특별약관",
+    "product_name": "실손의료비보장(적립대체형)무사고할인특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\실손의료비보장(적립대체형)무사고할인특별약관.pdf"
+  },
+  {
+    "category": "제도성 특별약관",
+    "product_name": "실손의료비보장(추가납입형)무사고할인특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\실손의료비보장(추가납입형)무사고할인특별약관.pdf"
+  },
+  {
+    "category": "제도성 특별약관",
+    "product_name": "표준화 실손의료비보장 안정화 할인 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\표준화_실손의료비보장_안정화_할인_특별약관.pdf"
+  },
+  {
+    "category": "제도성 특별약관",
+    "product_name": "표준화이전 실손의료비보장 안정화 할인 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\표준화이전_실손의료비보장_안정화_할인_특별약관.pdf"
+  },
+  {
+    "category": "제도성 특별약관",
+    "product_name": "실손의료비보장 계약전환제도 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\실손의료비보장_계약전환제도_특별약관.pdf"
+  },
+  {
+    "category": "제도성 특별약관",
+    "product_name": "직업(직무)변경시 정산금액 분할납입 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\직업(직무)변경시_정산금액_분할납입_특별약관.pdf"
+  },
+  {
+    "category": "제도성 특별약관",
+    "product_name": "표준화 실손의료비보장 안정화 할인Ⅲ 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\표준화_실손의료비보장_안정화_할인Ⅲ_특별약관.pdf"
+  },
+  {
+    "category": "기타보험",
+    "product_name": "무배당 LIG실손의료비보장보험(L13.01)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\무배당_LIG실손의료비보장보험(L13.01).pdf"
+  },
+  {
+    "category": "기타보험",
+    "product_name": "KB주택종합보험(舊 플러스감동단체보험)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\KB주택종합보험(舊_플러스감동단체보험).pdf"
+  },
+  {
+    "category": "기타보험",
+    "product_name": "KB주택화재보험(II)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\KB주택화재보험(II).pdf"
+  },
+  {
+    "category": "기타보험",
+    "product_name": "KB간편가입아파트화재보험(실손형)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\KB간편가입아파트화재보험(실손형).pdf"
+  },
+  {
+    "category": "기타보험",
+    "product_name": "시민안전주택종합보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\시민안전주택종합보험.pdf"
+  },
+  {
+    "category": "기타보험",
+    "product_name": "승강기사고배상책임보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\승강기사고배상책임보험.pdf"
+  },
+  {
+    "category": "기타보험",
+    "product_name": "휠체어 및 스쿠터배상책임보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\scripts\\scraper\\downloads\\kb_insurance\\휠체어_및_스쿠터배상책임보험.pdf"
+  }
+]

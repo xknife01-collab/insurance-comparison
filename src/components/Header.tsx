@@ -13,7 +13,7 @@ import {
 type ViewType =
   | 'home' | 'indemnity' | 'preexisting' | 'dental' | 'surgery'
   | 'cancer' | 'caregiving' | 'dementia' | 'cerebrovascular' | 'heart'
-  | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver';
+  | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'annuity' | 'whole';
 
 interface NavItem { label: string; view: ViewType; desc?: string; }
 interface NavGroup {
@@ -27,55 +27,57 @@ interface NavGroup {
 
 const ALL_GROUPS: NavGroup[] = [
   {
-    groupLabel: '핵심 질병 보험',
+    groupLabel: '인기 보험 전수 조사',
     icon: <HeartPulse className="w-4 h-4" />,
     headerBg: 'bg-rose-50',
     textColor: 'text-rose-600',
     itemHover: 'hover:text-rose-600',
     items: [
-      { label: '암보험', view: 'cancer', desc: '3대 진단비 집중 설계' },
-      { label: '뇌혈관 보험', view: 'cerebrovascular', desc: '뇌졸중·출혈 무제한' },
-      { label: '심장질환 보험', view: 'heart', desc: '허혈성 심장 집중' },
-      { label: '수술/입원', view: 'surgery', desc: '실비의 완벽한 파트너' },
+      { label: '의료실비', view: 'indemnity', desc: '병원비 90% 보장' },
+      { label: '치아보험', view: 'dental', desc: '임플란트/크라운' },
+      { label: '유병자', view: 'preexisting', desc: '아픈 분도 가입' },
+      { label: '수술/입원', view: 'surgery', desc: '수술비 반복 지급' },
+      { label: '암보험', view: 'cancer', desc: '진단비 최대 1억' },
+      { label: '종합건강', view: 'home', desc: '하나의 보험으로 빈틈없이 조립' },
     ],
   },
   {
-    groupLabel: '건강 기본 보험',
+    groupLabel: '기타 보장 자산',
     icon: <Activity className="w-4 h-4" />,
     headerBg: 'bg-blue-50',
     textColor: 'text-blue-600',
     itemHover: 'hover:text-blue-600',
     items: [
-      { label: '의료실비', view: 'indemnity', desc: '제 2의 건강보험' },
-      { label: '치아보험', view: 'dental', desc: '임플란트/크라운 집중' },
-      { label: '유병자 보험', view: 'preexisting', desc: '간편고지 3.X.5 매칭' },
+      { label: '뇌혈관', view: 'cerebrovascular', desc: '뇌질환 무제한 보장' },
+      { label: '심장질환', view: 'heart', desc: '허혈성 심장 집중' },
+      { label: '상해보험', view: 'home', desc: '사고 장해 및 골절 치료 자산' },
     ],
   },
   {
-    groupLabel: '노후 케어 보험',
+    groupLabel: '간병 / 노후 케어',
     icon: <Shield className="w-4 h-4" />,
     headerBg: 'bg-purple-50',
     textColor: 'text-purple-600',
     itemHover: 'hover:text-purple-600',
     items: [
-      { label: '간병보험', view: 'caregiving', desc: '간병인 지원/사용형' },
-      { label: '치매 간병보험', view: 'dementia', desc: '경증 치매부터 보장' },
-      { label: '재가/시설 보험', view: 'nursing', desc: '국가공인 방문 요양' },
+      { label: '간병 보험', view: 'caregiving', desc: '간병인 지원 및 사용일당 집중' },
+      { label: '치매 간병보험', view: 'dementia', desc: '치매 진단비 및 생활자금' },
+      { label: '재가/시설', view: 'nursing', desc: '국가 공인 방문 요양' },
     ],
   },
   {
-    groupLabel: '어린이/태아 보험',
+    groupLabel: '태아 / 어린이 / 청소년',
     icon: <Baby className="w-4 h-4" />,
     headerBg: 'bg-yellow-50',
     textColor: 'text-yellow-600',
     itemHover: 'hover:text-yellow-600',
     items: [
-      { label: '어린이/태아 보험', view: 'child', desc: '태아부터 성인까지' },
-      { label: '유병자 어린이보험', view: 'child_sick', desc: 'ADHD·발달지연 OK' },
+      { label: '어린이/신생아', view: 'child', desc: '태아부터 성인까지' },
+      { label: '유병력자 전용', view: 'child_sick', desc: '간편 고지 가입' },
     ],
   },
   {
-    groupLabel: '생활/운행/레저',
+    groupLabel: '생활 / 운행 / 레저',
     icon: <Car className="w-4 h-4" />,
     headerBg: 'bg-orange-50',
     textColor: 'text-orange-600',
@@ -83,23 +85,25 @@ const ALL_GROUPS: NavGroup[] = [
     items: [
       { label: '자동차 보험', view: 'car', desc: '전사 가격 자동 비교' },
       { label: '운전자 보험', view: 'driver', desc: '벌금 및 민사 보장' },
-      { label: '펫 보험', view: 'home', desc: '우리 아이 병원비' },
-      { label: '여행자 보험', view: 'home', desc: '상해 및 질병 보장' },
-      { label: '골프/레저', view: 'home', desc: '취미 생활 보호' },
-      { label: '주택화재', view: 'home', desc: '재산 피해 보호' },
+      { label: '펫 보험', view: 'pet', desc: '우리 아이 병원비' },
+      { label: '골프 / 레저', view: 'golf', desc: '취미 생활 보호' },
+      { label: '주택화재', view: 'fire_real', desc: '재산 피해 보호' },
+      { label: '재물종합', view: 'home', desc: '상가 화재 및 소상공인 자산 보호' },
     ],
   },
   {
-    groupLabel: '저축/미래/법률',
+    groupLabel: '저축 / 미래 / 법률',
     icon: <Wallet className="w-4 h-4" />,
     headerBg: 'bg-emerald-50',
     textColor: 'text-emerald-600',
     itemHover: 'hover:text-emerald-600',
     items: [
-      { label: '연금저축', view: 'home', desc: '노후 자금 준비' },
-      { label: '종신', view: 'home', desc: '가격 대비 최다보장' },
-      { label: '변액/정기', view: 'home', desc: '수익형 자산 관리' },
+      { label: '연금저축', view: 'annuity', desc: '노후 자금 준비' },
+      { label: '종신', view: 'whole', desc: '가격대비 최다보장' },
+      { label: '변액, 정기', view: 'home', desc: '수익형 자산 관리' },
       { label: '민사/형사', view: 'home', desc: '법률 비용 보전' },
+      { label: '일반 저축', view: 'home', desc: '비과세 목돈 마련 재테크' },
+      { label: '신용보험', view: 'home', desc: '대출금 상환 안심 보장' },
     ],
   },
 ];

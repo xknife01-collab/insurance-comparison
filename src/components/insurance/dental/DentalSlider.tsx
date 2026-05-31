@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { motion } from 'motion/react';
 import { Shield, TrendingUp, Sparkles, Calculator } from 'lucide-react';
 import { AnalysisResult } from '../../../types/insurance';
-import { DentalDetailedGuide } from './DentalDetailedGuide';
+import { DentalExplanation } from './DentalExplanation';
 
 export const DentalSlider: React.FC<{ result: AnalysisResult }> = ({ result }) => {
   const currentPremium = result.analysis.monthlyPremium || 85000;
@@ -84,7 +84,7 @@ export const DentalSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =
             </div>
           </div>
         </div>
-        <DentalDetailedGuide />
+        <DentalExplanation />
       </div>
     </section>
   );

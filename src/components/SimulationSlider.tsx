@@ -13,6 +13,11 @@ import { SurgerySlider } from './insurance/surgery/SurgerySlider';
 import { HealthSlider } from './insurance/health/HealthSlider';
 import { ChildSlider } from './insurance/child/ChildSlider';
 import { DriverSlider } from './insurance/driver/DriverSlider';
+import { PetSlider } from './insurance/pet/PetSlider';
+import { GolfSlider } from './insurance/golf/GolfSlider';
+import { FireSlider } from './insurance/fire/FireSlider';
+import { AnnuitySlider } from './insurance/annuity/AnnuitySlider';
+import { WholeLifeSlider } from './insurance/wholeLife/WholeLifeSlider';
 
 interface SimulationSliderProps {
   result: AnalysisResult;
@@ -33,6 +38,27 @@ export const SimulationSlider: React.FC<SimulationSliderProps> = ({ result }) =>
   
   // 운전자보험 지원
   if (category.includes('운전자') || category === 'driver' || !!result.analysis.driver) return <DriverSlider result={result} />;
+
+  // 펫보험 지원
+  if (category.includes('펫') || category === 'pet') return <PetSlider result={result} />;
+
+  // 골프보험 지원
+  if (category.includes('골프') || category === 'golf') return <GolfSlider result={result} />;
+
+  // 주택화재보험 지원
+  if (category.includes('주택화재') || category.includes('화재') || category === 'fire_real') {
+    return <FireSlider result={result} />;
+  }
+
+  // 연금저축보험 지원
+  if (category.includes('연금') || category === 'annuity_savings') {
+    return <AnnuitySlider result={result} />;
+  }
+
+  // 종신보험 지원
+  if (category.includes('종신') || category === 'whole' || !!result.analysis.wholeLife) {
+    return <WholeLifeSlider result={result} />;
+  }
 
   // 어린이/태아 유병력자 (pre_family) — 반드시 어른 유병자보다 먼저 체크
   if (result.analysis.child?.isPreFamily || category.includes('유병력자')) return <ChildSlider result={result} />;

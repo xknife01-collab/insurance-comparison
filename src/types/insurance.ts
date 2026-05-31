@@ -85,6 +85,43 @@ export interface InsuranceAnalysis {
     skinRider: boolean;       // 피부질환 특약
     dentalRider: boolean;      // 치과질환 특약
   };
+  golf?: {                     // 골프·레저보험 전용 필드
+    gameType: 'amateur' | 'professional'; // 경기 유형 (아마추어 vs 프로/지도자)
+    planType: 'one_day' | 'annual';        // 플랜 유형 (원데이 1일형 vs 1년형)
+    durationDays: number;                  // 가입 기간 (1일 ~ 365일)
+    isGroup: boolean;                      // 4인 동반 가입 여부
+    companionNames?: string[];             // 동반 가입자 명단 (최대 3인)
+    hasHoleInOneRider: boolean;            // 홀인원 축하 비용 특약
+    hasLiabilityRider: boolean;            // 골프 배상책임 특약
+    hasEquipmentRider: boolean;            // 골프용품 손해 특약
+  };
+  fire?: {                     // 주택화재보험 전용 필드
+    residenceType: 'apartment' | 'villa' | 'house'; // 주거 유형 (아파트 / 빌라·연립 / 단독주택)
+    occupancyType: 'owner' | 'tenant';              // 거주 유형 (소유자/집주인 / 임차인/세입자)
+    buildingArea: number;                           // 건물 전용면적 (㎡)
+    structureGrade: 1 | 2 | 3;                      // 건물 구조 등급 (1급: 콘크리트 / 2급: 벽돌 / 3급: 목조 등)
+    hasWaterLeakRider: boolean;                     // 급배수시설누출손해 특약 여부 (누수 보장)
+    hasLiabilityRider: boolean;                     // 화재배상책임 / 일상생활배상책임 특약 여부 (옆집 배상)
+    hasTemporaryHousingRider: boolean;              // 임시거주비 특약 여부
+    householdGoodsLimit: number;                    // 가재도구 가입금액 (원)
+    buildingLimit: number;                          // 건물 가입금액 (원)
+  };
+  annuity?: {                     // 연금저축보험 전용 필드
+    annuityType: 'savings' | 'insurance'; // 세액공제형 연금저축 vs 비과세형 일반연금
+    monthlyPremium: number;       // 희망 월 납입 보험료 (원)
+    paymentPeriod: number;        // 납입 기간 (5, 10, 20년 등)
+    commencementAge: number;     // 연금 개시 나이 (55세 ~ 70세)
+    annualIncome: number;         // 연간 총 급여액 (원)
+    hasIrp: boolean;              // IRP 가입 여부
+    receivingPeriod: number;      // 연금 수령 기간 (년, 10, 20년 또는 종신/999)
+  };
+  wholeLife?: {                   // 종신보험 전용 필드
+    objective: 'family' | 'inheritance' | 'savings'; // 가입 목적 (가족생활비 / 상속세 재원 / 목적자금 마련)
+    paymentPeriod: number;        // 납입 기간 (5, 7, 10, 20년 등)
+    deathBenefit: number;         // 사망 보장금액 (원)
+    refundType: 'standard' | 'low'; // 환급형태 (일반 환급형 / 저해지 환급형)
+    isStepUp: boolean;            // 체증형 여부 (매년 5%씩 사망보험금 증가)
+  };
 }
 
 export interface AnalysisResult {

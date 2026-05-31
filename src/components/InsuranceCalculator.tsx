@@ -22,6 +22,10 @@ import { PreFamilyFields } from './insurance/child/PreFamilyFields';
 import { CarFields } from './insurance/car/CarFields';
 import { DriverFields } from './insurance/driver/DriverFields';
 import { PetFields } from './insurance/pet/PetFields';
+import { GolfFields } from './insurance/golf/GolfFields';
+import { FireFields } from './insurance/fire/FireFields';
+import { AnnuityFields } from './insurance/annuity/AnnuityFields';
+import { WholeLifeFields } from './insurance/wholeLife/WholeLifeFields';
 
 
 
@@ -55,6 +59,7 @@ const ALL_CATEGORIES: MajorCategory[] = [
       { id: 'pre', label: '유병자', description: '아픈 분도 가입', icon: Stethoscope, color: '#2563EB', bgColor: '#EFF6FF', subTypes: ['간편 고지형', '무심사형'] },
       { id: 'surgery', label: '수술/입원', description: '수술비 반복 지급', icon: Activity, color: '#F59E0B', bgColor: '#FFFBEB', subTypes: ['1-5종 수술비', 'N대 수술비', '상해 수술비'] },
       { id: 'cancer', label: '암보험', description: '진단비 최대 1억', icon: Shield, color: '#F43F5E', bgColor: '#FFF1F2', subTypes: ['비갱신형', '갱신형', '표적항암형'] },
+      { id: 'health_general', label: '종합건강', description: '하나의 보험으로 빈틈없이 조립', icon: Shield, color: '#FF6B00', bgColor: '#FFF0E5', subTypes: ['기본형', '종합형'] },
     ]
   },
   {
@@ -65,6 +70,7 @@ const ALL_CATEGORIES: MajorCategory[] = [
     items: [
       { id: 'brain', label: '뇌혈관', description: '뇌질환 무제한 보장', icon: Brain, color: '#8B5CF6', bgColor: '#F5F3FF', subTypes: ['뇌혈관질환', '뇌출혈'] },
       { id: 'heart', label: '심장질환', description: '허혈성 심장 집중', icon: Heart, color: '#FB7185', bgColor: '#FFF1F2', subTypes: ['급성 심근경색', '통합(급성+허혈성)'] },
+      { id: 'accident', label: '상해보험', description: '사고 장해 및 골절 치료 자산', icon: Activity, color: '#8B5CF6', bgColor: '#F5F3FF', subTypes: ['상해장해형', '골절/치료형'] },
     ]
   },
 
@@ -98,9 +104,9 @@ const ALL_CATEGORIES: MajorCategory[] = [
       { id: 'car', label: '자동차 보험', description: '전사 가격 자동 비교', icon: Car, color: '#334155', bgColor: '#F8FAFC', subTypes: ['개인용 차', '업무용 차'] },
       { id: 'driver', label: '운전자 보험', description: '벌금 및 민사 보장', icon: Navigation, color: '#4F46E5', bgColor: '#EEF2FF', subTypes: ['교통 사고 처리', '변호사 비용'] },
       { id: 'pet', label: '펫 보험', description: '우리 아이 병원비', icon: Dog, color: '#D97706', bgColor: '#FEF3C7', subTypes: ['슬개골 탈구', '피부 질환'] },
-      { id: 'travel', label: '여행자 보험', description: '상해 및 보장', icon: Plane, color: '#0EA5E9', bgColor: '#F0F9FF', subTypes: ['해외 여행', '국내 여행'] },
       { id: 'golf', label: '골프 / 레저', description: '취미 생활 보호', icon: Target, color: '#16A34A', bgColor: '#F0FDF4', subTypes: ['홀인원 축합', '필드 사고'] },
       { id: 'fire_real', label: '주택화재', description: '재산 피해 보호', icon: Home, color: '#EF4444', bgColor: '#FEF2F2', subTypes: ['건물 소실', '가재 도구'] },
+      { id: 'property', label: '재물종합', description: '상가 화재 및 소상공인 자산 보호', icon: Home, color: '#3B82F6', bgColor: '#EFF6FF', subTypes: ['상가 화재형', '화재배상책임형'] },
     ]
   },
   {
@@ -113,6 +119,8 @@ const ALL_CATEGORIES: MajorCategory[] = [
       { id: 'whole', label: '종신', description: '가격대비 최다보장', icon: Clock, color: '#6366F1', bgColor: '#EEF2FF', subTypes: ['납입 면제', '연말 정산'] },
       { id: 'variable', label: '변액, 정기', description: '수익형 자산 관리', icon: TrendingUp, color: '#3B82F6', bgColor: '#EFF6FF', subTypes: ['적립식 투자', '정기적 보호'] },
       { id: 'legal', label: '민사/형사', description: '법률 비용 보전', icon: Scale, color: '#64748B', bgColor: '#F1F5F9', subTypes: ['변호사 선임', '소송 비용'] },
+      { id: 'savings_general', label: '일반 저축', description: '비과세 목돈 마련 재테크', icon: PiggyBank, color: '#10B981', bgColor: '#ECFDF5', subTypes: ['적립식 저축', '일시납 저축'] },
+      { id: 'credit', label: '신용보험', description: '대출금 상환 안심 보장', icon: Scale, color: '#6366F1', bgColor: '#EEF2FF', subTypes: ['대출안심형', '정기보장형'] },
     ]
   }
 ];
@@ -262,6 +270,45 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   const [petSkinRider, setPetSkinRider] = useState(true);
   const [petDentalRider, setPetDentalRider] = useState(false);
 
+  // 골프보험 states
+  const [golfGameType, setGolfGameType] = useState<'amateur' | 'professional'>('amateur');
+  const [golfPlanType, setGolfPlanType] = useState<'one_day' | 'annual'>('annual');
+  const [golfDurationDays, setGolfDurationDays] = useState(365);
+  const [golfIsGroup, setGolfIsGroup] = useState(false);
+  const [golfCompanionNames, setGolfCompanionNames] = useState<string[]>([]);
+  const [golfHasHoleInOneRider, setGolfHasHoleInOneRider] = useState(true);
+  const [golfHasLiabilityRider, setGolfHasLiabilityRider] = useState(true);
+  const [golfHasEquipmentRider, setGolfHasEquipmentRider] = useState(true);
+
+  // 주택화재보험 states
+  const [fireResidenceType, setFireResidenceType] = useState<'apartment' | 'villa' | 'house'>('apartment');
+  const [fireOccupancyType, setFireOccupancyType] = useState<'owner' | 'tenant'>('owner');
+  const [fireBuildingArea, setFireBuildingArea] = useState<number>(84);
+  const [fireStructureGrade, setFireStructureGrade] = useState<1 | 2 | 3>(1);
+  const [fireHasWaterLeakRider, setFireHasWaterLeakRider] = useState<boolean>(true);
+  const [fireHasLiabilityRider, setFireHasLiabilityRider] = useState<boolean>(true);
+  const [fireHasTemporaryHousingRider, setFireHasTemporaryHousingRider] = useState<boolean>(true);
+  const [fireHouseholdGoodsLimit, setFireHouseholdGoodsLimit] = useState<number>(30000000);
+  const [fireBuildingLimit, setFireBuildingLimit] = useState<number>(100000000);
+
+  // 연금저축보험 states
+  const [annuityType, setAnnuityType] = useState<'savings' | 'insurance'>('savings');
+  const [annuityMonthlyPremium, setAnnuityMonthlyPremium] = useState<number>(300000);
+  const [annuityPaymentPeriod, setAnnuityPaymentPeriod] = useState<number>(10);
+  const [annuityCommencementAge, setAnnuityCommencementAge] = useState<number>(60);
+  const [annuityAnnualIncome, setAnnuityAnnualIncome] = useState<number>(50000000);
+  const [annuityHasIrp, setAnnuityHasIrp] = useState<boolean>(false);
+  const [annuityReceivingPeriod, setAnnuityReceivingPeriod] = useState<number>(20);
+
+  // 종신보험 states
+  const [wholeLifeObjective, setWholeLifeObjective] = useState<'family' | 'inheritance' | 'savings'>('family');
+  const [wholeLifePaymentPeriod, setWholeLifePaymentPeriod] = useState<number>(10);
+  const [wholeLifeDeathBenefit, setWholeLifeDeathBenefit] = useState<number>(100000000);
+  const [wholeLifeRefundType, setWholeLifeRefundType] = useState<'standard' | 'low'>('low');
+  const [wholeLifeIsStepUp, setWholeLifeIsStepUp] = useState<boolean>(false);
+
+
+
 
 
   
@@ -336,6 +383,20 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
     }
   }, [selectedDetail, selectedId]);
 
+  // 주택화재보험 거주 유형 변경 시 상세 탭 및 한도 일괄 동기화 (루프 방지를 위해 occupancyType과 selectedId만 감시)
+  React.useEffect(() => {
+    if (selectedId === 'fire_real') {
+      if (fireOccupancyType === 'owner') {
+        if (selectedDetail !== 0) setSelectedDetail(0);
+        if (fireBuildingLimit === 0) setFireBuildingLimit(100000000);
+      } else if (fireOccupancyType === 'tenant') {
+        if (selectedDetail !== 1) setSelectedDetail(1);
+        if (fireBuildingLimit !== 0) setFireBuildingLimit(0);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fireOccupancyType, selectedId]);
+
   const handleCalculate = () => {
     const effectiveAge = calculatedAge || 40;
 
@@ -351,7 +412,10 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
           selectedId === 'silson' ? 25000 : 
           selectedId === 'dental' ? 45000 :
           selectedId === 'nursing' ? 70000 :
-          selectedId === 'pet' ? 35000 :
+          selectedId === 'pet' ? 35000 : 
+          selectedId === 'fire_real' ? 12000 :
+          selectedId === 'pension' ? annuityMonthlyPremium :
+          selectedId === 'golf' ? (golfPlanType === 'one_day' ? 2500 : 9900) :
           selectedId === 'child' ? (childMaturity === 30 ? 32000 : 78000) :
           (selectedId === 'pre' || selectedId === 'pre_family' || healthStatus === 'simple') ? 150000 : 
           120000
@@ -482,6 +546,43 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
           patellaRider: petPatellaRider,
           skinRider: petSkinRider,
           dentalRider: petDentalRider
+        } : undefined,
+        golf: selectedId === 'golf' ? {
+          gameType: golfGameType,
+          planType: golfPlanType,
+          durationDays: golfDurationDays,
+          isGroup: golfIsGroup,
+          companionNames: golfCompanionNames,
+          hasHoleInOneRider: golfHasHoleInOneRider,
+          hasLiabilityRider: golfHasLiabilityRider,
+          hasEquipmentRider: golfHasEquipmentRider
+        } : undefined,
+        fire: selectedId === 'fire_real' ? {
+          residenceType: fireResidenceType,
+          occupancyType: fireOccupancyType,
+          buildingArea: fireBuildingArea,
+          structureGrade: fireStructureGrade,
+          hasWaterLeakRider: fireHasWaterLeakRider,
+          hasLiabilityRider: fireHasLiabilityRider,
+          hasTemporaryHousingRider: fireHasTemporaryHousingRider,
+          householdGoodsLimit: fireHouseholdGoodsLimit,
+          buildingLimit: fireBuildingLimit
+        } : undefined,
+        annuity: selectedId === 'pension' ? {
+          annuityType: annuityType,
+          monthlyPremium: annuityMonthlyPremium,
+          paymentPeriod: annuityPaymentPeriod,
+          commencementAge: annuityCommencementAge,
+          annualIncome: annuityAnnualIncome,
+          hasIrp: annuityHasIrp,
+          receivingPeriod: annuityReceivingPeriod
+        } : undefined,
+        wholeLife: selectedId === 'whole' ? {
+          objective: wholeLifeObjective,
+          paymentPeriod: wholeLifePaymentPeriod,
+          deathBenefit: wholeLifeDeathBenefit,
+          refundType: wholeLifeRefundType,
+          isStepUp: wholeLifeIsStepUp
         } : undefined
       });
     }
@@ -608,6 +709,15 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                       }
                       if (selectedId === 'dental') {
                         setDentalDiagnosticType(idx === 0 ? 'diagnostic' : 'non-diagnostic');
+                      }
+                      if (selectedId === 'fire_real') {
+                        if (idx === 0) {
+                          setFireOccupancyType('owner');
+                          if (fireBuildingLimit === 0) setFireBuildingLimit(100000000);
+                        } else {
+                          setFireOccupancyType('tenant');
+                          setFireBuildingLimit(0);
+                        }
                       }
                     }}
                     className={`px-12 py-5 rounded-[2.2rem] text-xl font-black transition-all duration-300 border-2
@@ -800,6 +910,77 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                   setSkinRider={setPetSkinRider}
                   dentalRider={petDentalRider}
                   setDentalRider={setPetDentalRider}
+                />
+              ) : selectedId === 'golf' ? (
+                <GolfFields
+                  gameType={golfGameType}
+                  setGameType={setGolfGameType}
+                  planType={golfPlanType}
+                  setPlanType={setGolfPlanType}
+                  durationDays={golfDurationDays}
+                  setDurationDays={setGolfDurationDays}
+                  isGroup={golfIsGroup}
+                  setIsGroup={setGolfIsGroup}
+                  companionNames={golfCompanionNames}
+                  setCompanionNames={setGolfCompanionNames}
+                  hasHoleInOneRider={golfHasHoleInOneRider}
+                  setHasHoleInOneRider={setGolfHasHoleInOneRider}
+                  hasLiabilityRider={golfHasLiabilityRider}
+                  setHasLiabilityRider={setGolfHasLiabilityRider}
+                  hasEquipmentRider={golfHasEquipmentRider}
+                  setHasEquipmentRider={setGolfHasEquipmentRider}
+                />
+              ) : selectedId === 'fire_real' ? (
+                <FireFields
+                  selectedDetail={selectedDetail}
+                  residenceType={fireResidenceType}
+                  setResidenceType={setFireResidenceType}
+                  occupancyType={fireOccupancyType}
+                  setOccupancyType={setFireOccupancyType}
+                  buildingArea={fireBuildingArea}
+                  setBuildingArea={setFireBuildingArea}
+                  structureGrade={fireStructureGrade}
+                  setStructureGrade={setFireStructureGrade}
+                  hasWaterLeakRider={fireHasWaterLeakRider}
+                  setWaterLeakRider={setFireHasWaterLeakRider}
+                  hasLiabilityRider={fireHasLiabilityRider}
+                  setLiabilityRider={setFireHasLiabilityRider}
+                  hasTemporaryHousingRider={fireHasTemporaryHousingRider}
+                  setTemporaryHousingRider={setFireHasTemporaryHousingRider}
+                  householdGoodsLimit={fireHouseholdGoodsLimit}
+                  setHouseholdGoodsLimit={setFireHouseholdGoodsLimit}
+                  buildingLimit={fireBuildingLimit}
+                  setBuildingLimit={setFireBuildingLimit}
+                />
+              ) : selectedId === 'pension' ? (
+                <AnnuityFields
+                  annuityType={annuityType}
+                  setAnnuityType={setAnnuityType}
+                  monthlyPremium={annuityMonthlyPremium}
+                  setMonthlyPremium={setAnnuityMonthlyPremium}
+                  paymentPeriod={annuityPaymentPeriod}
+                  setPaymentPeriod={setAnnuityPaymentPeriod}
+                  commencementAge={annuityCommencementAge}
+                  setCommencementAge={setAnnuityCommencementAge}
+                  annualIncome={annuityAnnualIncome}
+                  setAnnualIncome={setAnnuityAnnualIncome}
+                  hasIrp={annuityHasIrp}
+                  setHasIrp={setAnnuityHasIrp}
+                  receivingPeriod={annuityReceivingPeriod}
+                  setReceivingPeriod={setAnnuityReceivingPeriod}
+                />
+              ) : selectedId === 'whole' ? (
+                <WholeLifeFields
+                  objective={wholeLifeObjective}
+                  setObjective={setWholeLifeObjective}
+                  paymentPeriod={wholeLifePaymentPeriod}
+                  setPaymentPeriod={setWholeLifePaymentPeriod}
+                  deathBenefit={wholeLifeDeathBenefit}
+                  setDeathBenefit={setWholeLifeDeathBenefit}
+                  refundType={wholeLifeRefundType}
+                  setRefundType={setWholeLifeRefundType}
+                  isStepUp={wholeLifeIsStepUp}
+                  setIsStepUp={setWholeLifeIsStepUp}
                 />
               ) : (selectedId === 'pre' || healthStatus === 'simple') && selectedId !== 'silson' ? (
                 <PreExistingFields
