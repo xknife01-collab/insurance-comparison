@@ -33,9 +33,10 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
   const isFire = analysis.selectedCategory?.includes('주택화재') || analysis.selectedCategory?.includes('화재') || analysis.selectedCategory === 'fire_real' || !!analysis.fire;
   const isAnnuity = analysis.selectedCategory?.includes('연금') || analysis.selectedCategory === 'annuity_savings' || !!analysis.annuity;
   const isWholeLife = analysis.selectedCategory?.includes('종신') || analysis.selectedCategory === 'whole' || !!analysis.wholeLife;
+  const isVariable = analysis.selectedCategory?.includes('변액') || analysis.selectedCategory?.includes('정기') || analysis.selectedCategory === 'variable' || analysis.selectedCategory === 'term' || !!analysis.variable;
 
 
-  const benchmark = isSilbi ? 55000 : isDental ? 85000 : isCaregiving ? 45000 : isNursing ? 70000 : isHeart ? 120000 : isChild ? (analysis.child?.maturity === 30 ? 45000 : 95000) : isDriver ? 22000 : isPet ? 42000 : isGolf ? 15000 : isFire ? 12000 : isWholeLife ? 150000 : 180000;
+  const benchmark = isSilbi ? 55000 : isDental ? 85000 : isCaregiving ? 45000 : isNursing ? 70000 : isHeart ? 120000 : isChild ? (analysis.child?.maturity === 30 ? 45000 : 95000) : isDriver ? 22000 : isPet ? 42000 : isGolf ? 15000 : isFire ? 12000 : isWholeLife ? 150000 : isVariable ? 150000 : 180000;
   const dietPremium = recommendation.estimatedPremium;
   const currentPremium = analysis.monthlyPremium;
   
@@ -542,6 +543,61 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     },
   ];
 
+  const varOpts = analysis.variable || {
+    subType: 'term',
+    deathBenefit: 100000000,
+    isHealthyDiscount: false,
+    equityRatio: 50,
+    paymentPeriod: 10
+  };
+  const isInvestment = ['investment', 'variable_saving'].includes(varOpts.subType);
+
+  const variableRows = isInvestment ? [
+    {
+      label: '투자 매칭 및 펀드 비중',
+      current: '미지정 (또는 보수적 채권형 위주)',
+      recommended: `${varOpts.equityRatio || 50}% 주식형 비중 (투자 성향 맞춤형 포트폴리오)`,
+      icon: <TrendingUp className="w-4 h-4 text-blue-600" />
+    },
+    {
+      label: '비과세 절세 혜택',
+      current: '미적용 (일반 예적금/과세 상품)',
+      recommended: varOpts.paymentPeriod >= 10 ? '10년 유지 시 이자소득세 비과세 100% 만족' : '10년 비과세 최적 조건 충족 설계',
+      icon: <Coins className="w-4 h-4 text-blue-600" />
+    },
+    {
+      label: '중도인출 및 납입 일시정지',
+      current: '불가능 (일반 적금은 해지 외에 출금 제한)',
+      recommended: '유연한 추가납입 및 필요 시 중도인출 기능 활성화',
+      icon: <Clock className="w-4 h-4 text-blue-600" />
+    }
+  ] : [
+    { 
+      label: '사망 보장 한도', 
+      current: `${formatAmt(varOpts.deathBenefit || 100000000)} (평생 사망 보장)`, 
+      recommended: `최대 ${formatAmt(varOpts.deathBenefit || 100000000)} (가장 빈번한 경제활동기 집중 보장)`, 
+      icon: <ShieldCheck className="w-4 h-4 text-orange-600" /> 
+    },
+    { 
+      label: '보험료 납입 규모', 
+      current: '월 15만 ~ 25만 원 (평생 사망 보장 준비로 인한 고비용 구조)', 
+      recommended: '월 1만 ~ 3만 원대 (동일 사망 보장 대비 보험료 최대 80%~90% 이상 절감)', 
+      icon: <Coins className="w-4 h-4 text-orange-600" /> 
+    },
+    { 
+      label: '우량체 특별 할인', 
+      current: '미적용 (일반 종신보험은 할인 적용이 매우 제한적)', 
+      recommended: '최대 15%~18% 즉시 할인 (비흡연 + 혈압/BMI 정상 기준 만족 시 즉시 적용)', 
+      icon: <TrendingDown className="w-4 h-4 text-orange-600" /> 
+    },
+    { 
+      label: '가족 일상생활 배상책임', 
+      current: '미가입 (특약 배제로 대인/대물 과실 누수 사고 시 무방비)', 
+      recommended: '가입 (대인/대물 과실 누수 사고 시 자기부담금 20만 원 방어 특약 결합)', 
+      icon: <ShieldCheck className="w-4 h-4 text-orange-600" /> 
+    },
+  ];
+
 
 
   // 조건 분기를 if-else 문으로 안전하고 깔끔하게 매칭
@@ -578,7 +634,10 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     comparisonRows = annuityRows;
   } else if (isWholeLife) {
     comparisonRows = wholeLifeRows;
+  } else if (isVariable) {
+    comparisonRows = variableRows;
   }
+
 
 
   return (

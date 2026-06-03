@@ -122,6 +122,17 @@ export interface InsuranceAnalysis {
     refundType: 'standard' | 'low'; // 환급형태 (일반 환급형 / 저해지 환급형)
     isStepUp: boolean;            // 체증형 여부 (매년 5%씩 사망보험금 증가)
   };
+  variable?: {                   // 변액/정기보험 전용 필드
+    subType: 'investment' | 'term';
+    monthlyPremium: number;
+    paymentPeriod: number;
+    investmentStyle: 'conservative' | 'balanced' | 'aggressive';
+    equityRatio: number;
+    isAnnuityConversion: boolean;
+    deathBenefit: number;
+    coveragePeriod: number;
+    isHealthyDiscount: boolean;
+  };
 }
 
 export interface AnalysisResult {

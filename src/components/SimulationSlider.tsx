@@ -18,6 +18,7 @@ import { GolfSlider } from './insurance/golf/GolfSlider';
 import { FireSlider } from './insurance/fire/FireSlider';
 import { AnnuitySlider } from './insurance/annuity/AnnuitySlider';
 import { WholeLifeSlider } from './insurance/wholeLife/WholeLifeSlider';
+import { VariableSlider } from './insurance/variable/VariableSlider';
 
 interface SimulationSliderProps {
   result: AnalysisResult;
@@ -55,10 +56,16 @@ export const SimulationSlider: React.FC<SimulationSliderProps> = ({ result }) =>
     return <AnnuitySlider result={result} />;
   }
 
+  // 변액/정기보험 지원
+  if (category.includes('변액') || category.includes('정기') || category === 'variable' || category === 'term' || !!result.analysis.variable) {
+    return <VariableSlider result={result} />;
+  }
+
   // 종신보험 지원
   if (category.includes('종신') || category === 'whole' || !!result.analysis.wholeLife) {
     return <WholeLifeSlider result={result} />;
   }
+
 
   // 어린이/태아 유병력자 (pre_family) — 반드시 어른 유병자보다 먼저 체크
   if (result.analysis.child?.isPreFamily || category.includes('유병력자')) return <ChildSlider result={result} />;

@@ -23,6 +23,8 @@ import { GolfSummary } from './insurance/golf/GolfSummary';
 import { FireSummary } from './insurance/fire/FireSummary';
 import { AnnuitySummary } from './insurance/annuity/AnnuitySummary';
 import { WholeLifeSummary } from './insurance/wholeLife/WholeLifeSummary';
+import { VariableSummary } from './insurance/variable/VariableSummary';
+
 
 interface AnalysisDashboardProps {
   result: AnalysisResult;
@@ -43,6 +45,8 @@ const InsuranceSummary = ({ result }: { result: AnalysisResult }) => {
   const isFire = analysis.selectedCategory?.includes('주택화재') || analysis.selectedCategory?.includes('화재') || analysis.selectedCategory === 'fire_real' || !!analysis.fire;
   const isAnnuity = analysis.selectedCategory?.includes('연금') || analysis.selectedCategory === 'annuity_savings' || !!analysis.annuity;
   const isWholeLife = analysis.selectedCategory?.includes('종신') || analysis.selectedCategory === 'whole' || !!analysis.wholeLife;
+  const isVariable = analysis.selectedCategory?.includes('변액') || analysis.selectedCategory?.includes('정기') || analysis.selectedCategory === 'variable' || analysis.selectedCategory === 'term' || !!analysis.variable;
+
 
   const formatAmount = (amt: number) => {
     if (amt >= 100000000) return `${(amt / 100000000).toFixed(0)}억 원`;
@@ -67,6 +71,8 @@ const InsuranceSummary = ({ result }: { result: AnalysisResult }) => {
   if (isFire) return <FireSummary result={result as any} />;
   if (isAnnuity) return <AnnuitySummary result={result as any} />;
   if (isWholeLife) return <WholeLifeSummary result={result as any} />;
+  if (isVariable) return <VariableSummary result={result as any} />;
+
 
   return <HealthSummary result={result as any} formatAmount={formatAmount} />;
 };
@@ -86,6 +92,8 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
   const isFire = analysis.selectedCategory?.includes('주택화재') || analysis.selectedCategory?.includes('화재') || analysis.selectedCategory === 'fire_real' || !!analysis.fire;
   const isAnnuity = analysis.selectedCategory?.includes('연금') || analysis.selectedCategory === 'annuity_savings' || !!analysis.annuity;
   const isWholeLife = analysis.selectedCategory?.includes('종신') || analysis.selectedCategory === 'whole' || !!analysis.wholeLife;
+  const isVariable = analysis.selectedCategory?.includes('변액') || analysis.selectedCategory?.includes('정기') || analysis.selectedCategory === 'variable' || analysis.selectedCategory === 'term' || !!analysis.variable;
+
 
   const [selectedPlan, setSelectedPlan] = React.useState<any>(null);
 
@@ -118,7 +126,23 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
     { label: '물가상방어', value: analysis.wholeLife?.isStepUp ? 95 : 45, target: 70 },
     { label: '연금전환성', value: analysis.wholeLife?.objective === 'savings' ? 90 : 75, target: 70 },
     { label: '가입가성비', value: analysis.wholeLife?.refundType === 'low' ? 92 : 60, target: 75 }
-  ] : isCaregiving ? [
+  ] : isVariable ? (
+    (['term', 'term_pure', 'term_ceo', 'variable_term'].includes(analysis.variable?.subType)) ? [
+      { label: '사망보장액', value: scores.cancerScore || 80, target: 70 },
+      { label: '보장만기설계', value: scores.cerebrovascularScore || 80, target: 65 },
+      { label: '우량체할인율', value: scores.cardiovascularScore || 85, target: 70 },
+      { label: '종신대비가성비', value: 98, target: 60 },
+      { label: '납기유연성', value: 85, target: 70 },
+      { label: '위험대응적합도', value: 90, target: 75 }
+    ] : [
+      { label: '투자매칭', value: scores.cancerScore || 80, target: 70 },
+      { label: '납입안정성', value: scores.cerebrovascularScore || 80, target: 65 },
+      { label: '위험관리', value: scores.cardiovascularScore || 85, target: 70 },
+      { label: '수익지향성', value: analysis.variable?.equityRatio || 50, target: 60 },
+      { label: '비과세효율', value: (analysis.variable?.paymentPeriod || 10) >= 10 ? 95 : 50, target: 70 },
+      { label: '가입가성비', value: 92, target: 75 }
+    ]
+  ) : isCaregiving ? [
     { label: '지원방식', value: analysis.caregiving?.type === 'support' ? 90 : 80, target: 70 },
     { label: '체증형보장', value: analysis.caregiving?.isStepUp ? 95 : 40, target: 75 },
     { label: '인건비대응', value: analysis.caregiving?.isStepUp ? 90 : 50, target: 80 },
@@ -214,7 +238,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
         <div className="flex-1 space-y-12 relative z-10">
           <div className="space-y-4">
              <h3 className="text-3xl font-black text-gray-900 tracking-tighter">
-               {isDental ? '당신의 치아 보장 상태를 분석했습니다.' : isSilbi ? '당신의 실손 의료비 상담 리포트입니다.' : isCaregiving ? '당신의 간병 대비 준비 상태를 분석했습니다.' : isNursing ? '당신의 요양(재가/시설) 준비 상태를 분석했습니다.' : isChild ? '당신의 자녀/태아 보장 준비 상태를 분석했습니다.' : isCar ? '당신의 자동차보험 가입 상태를 분석했습니다.' : isDriver ? '운전자보험 상품 및 가격을 분석했습니다.' : isPet ? '당신의 펫보험 보장 상태를 분석했습니다.' : isGolf ? '당신의 골프보험 가입 상태를 분석했습니다.' : '당신의 보장 상태를 분석했습니다.'}
+               {isDental ? '당신의 치아 보장 상태를 분석했습니다.' : isSilbi ? '당신의 실손 의료비 상담 리포트입니다.' : isCaregiving ? '당신의 간병 대비 준비 상태를 분석했습니다.' : isNursing ? '당신의 요양(재가/시설) 준비 상태를 분석했습니다.' : isChild ? '당신의 자녀/태아 보장 준비 상태를 분석했습니다.' : isCar ? '당신의 자동차보험 가입 상태를 분석했습니다.' : isDriver ? '운전자보험 상품 및 가격을 분석했습니다.' : isPet ? '당신의 펫보험 보장 상태를 분석했습니다.' : isGolf ? '당신의 골프보험 가입 상태를 분석했습니다.' : isVariable ? '변액 투자 및 정기 사망보장 상태를 분석했습니다.' : '당신의 보장 상태를 분석했습니다.'}
              </h3>
              <p className="text-gray-500 font-bold italic">
                {isDental 
@@ -404,9 +428,9 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
              </div>
               <h4 className="text-2xl font-black mb-1 tracking-tighter text-blue-900 group-hover:text-blue-600 transition-colors uppercase">{result.recommendations.diet.title}</h4>
               {result.recommendations.diet.companyName && (
-                <div className="mb-4 animate-in fade-in slide-in-from-left-2 transition-all">
+                <div className="flex flex-wrap items-center gap-y-1.5 mb-4 animate-in fade-in slide-in-from-left-2 transition-all">
                   <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-lg text-[0.6rem] font-black mr-2 uppercase tracking-widest">{result.recommendations.diet.companyName}</span>
-                  <span className="text-xs font-bold text-slate-500 italic">{result.recommendations.diet.productName}</span>
+                  <span className="text-xs font-bold text-slate-500 italic break-keep">{result.recommendations.diet.productName}</span>
                 </div>
               )}
               <p className="text-sm text-gray-400 font-bold leading-relaxed mb-10 min-h-[4rem]">
@@ -466,9 +490,9 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
              </div>
               <h4 className="text-2xl font-black mb-1 tracking-tighter text-orange-400 uppercase">{result.recommendations.upgrade.title}</h4>
               {result.recommendations.upgrade.companyName && (
-                <div className="mb-4 animate-in fade-in slide-in-from-left-2 transition-all">
+                <div className="flex flex-wrap items-center gap-y-1.5 mb-4 animate-in fade-in slide-in-from-left-2 transition-all">
                   <span className="inline-block px-3 py-1 bg-orange-500 text-white rounded-lg text-[0.6rem] font-black mr-2 uppercase tracking-widest">{result.recommendations.upgrade.companyName}</span>
-                  <span className="text-xs font-bold text-slate-400 italic">{result.recommendations.upgrade.productName}</span>
+                  <span className="text-xs font-bold text-slate-400 italic break-keep">{result.recommendations.upgrade.productName}</span>
                 </div>
               )}
               <p className="text-sm text-slate-400 font-bold leading-relaxed mb-10 min-h-[4rem]">
@@ -528,9 +552,9 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
              </div>
               <h4 className="text-2xl font-black mb-1 tracking-tighter text-purple-900 relative z-10 uppercase">{result.recommendations.hybrid.title}</h4>
               {result.recommendations.hybrid.companyName && (
-                <div className="mb-4 animate-in fade-in slide-in-from-left-2 transition-all relative z-10">
+                <div className="flex flex-wrap items-center gap-y-1.5 mb-4 animate-in fade-in slide-in-from-left-2 transition-all relative z-10">
                   <span className="inline-block px-3 py-1 bg-purple-200 text-purple-800 rounded-lg text-[0.6rem] font-black mr-2 uppercase tracking-widest">{result.recommendations.hybrid.companyName}</span>
-                  <span className="text-xs font-bold text-purple-400 italic">{result.recommendations.hybrid.productName}</span>
+                  <span className="text-xs font-bold text-purple-400 italic break-keep">{result.recommendations.hybrid.productName}</span>
                 </div>
               )}
               <p className="text-sm text-gray-400 font-bold leading-relaxed mb-10 min-h-[4rem] relative z-10">
@@ -602,6 +626,33 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
           </div>
         )}
 
+        {isVariable && (
+          <div className="p-8 bg-indigo-50/70 rounded-[2.2rem] border border-indigo-100 flex items-start gap-4 max-w-3xl mx-auto text-left shadow-sm backdrop-blur-sm animate-in fade-in slide-in-from-bottom-2 duration-300">
+            <span className="text-2xl mt-0.5">💡</span>
+            <div className="space-y-2 w-full">
+              <h5 className="text-sm font-black text-indigo-950">정기보험 상품 간 보험료가 최대 50배 이상 차이 나는 이유</h5>
+              <p className="text-xs font-bold text-indigo-800 leading-relaxed">
+                정기보험은 설계 방식과 자산 축적 여부에 따라 아래와 같이 크게 성격이 구분됩니다.
+              </p>
+              <div className="grid md:grid-cols-2 gap-4 mt-2">
+                <div className="bg-white/90 p-5 rounded-2xl border border-indigo-50 space-y-2">
+                  <span className="inline-block text-[9px] px-2 py-0.5 rounded-full font-black bg-emerald-100 text-emerald-700">🛡️ 실속 순수보장형 (1~3만 원대)</span>
+                  <p className="text-[10px] font-bold text-slate-500 leading-normal">
+                    사망 시에만 약정된 보장금을 지급하고 만기 시 소멸하는 가성비 상품입니다. 순수한 사망 위험률만 비용으로 청구되므로 가격이 매우 저렴합니다.
+                  </p>
+                </div>
+                <div className="bg-white/90 p-5 rounded-2xl border border-indigo-50 space-y-2">
+                  <span className="inline-block text-[9px] px-2 py-0.5 rounded-full font-black bg-indigo-100 text-indigo-700">🏢 CEO / 경영인 절세형 (40~60만 원대)</span>
+                  <p className="text-[10px] font-bold text-slate-500 leading-normal">
+                    사망보장금이 매년 5%~10%씩 체증(복리 증가)되며, 법인 비용 처리를 통한 법인세 절세 및 은퇴 시 높은 해약환급금(90%~100%+)을 퇴직금 재원으로 활용하도록 고안된 특수 목적용 법인 자산 적립 상품입니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+
         <div className="bg-white rounded-[3rem] border border-gray-100 shadow-xl overflow-hidden">
           <div className="grid grid-cols-12 bg-gray-50 p-8 text-[10px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-100">
             <div className="col-span-1 text-center">순위</div>
@@ -623,6 +674,30 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
                    <div className="flex flex-col gap-1">
                       <p className="text-sm text-gray-500 font-bold group-hover:text-gray-900 transition-colors">{opt.productName}</p>
                       <div className="flex flex-wrap gap-1.5 mt-1">
+                        {isVariable && (
+                          <>
+                            {opt.subType === 'term_ceo' && (
+                              <span className="bg-indigo-100 text-indigo-700 text-[9px] px-2 py-0.5 rounded-md font-black border border-indigo-200">
+                                🏢 CEO 경영인 절세형
+                              </span>
+                            )}
+                            {opt.subType === 'variable_term' && (
+                              <span className="bg-blue-100 text-blue-700 text-[9px] px-2 py-0.5 rounded-md font-black border border-blue-200">
+                                📈 변액 투자형
+                              </span>
+                            )}
+                            {opt.subType === 'term_pure' && (
+                              <span className="bg-emerald-100 text-emerald-700 text-[9px] px-2 py-0.5 rounded-md font-black border border-emerald-200">
+                                🛡️ 실속 순수보장형
+                              </span>
+                            )}
+                            {opt.subType === 'variable_saving' && (
+                              <span className="bg-amber-100 text-amber-700 text-[9px] px-2 py-0.5 rounded-md font-black border border-amber-200">
+                                💰 변액 적립/저축형
+                              </span>
+                            )}
+                          </>
+                        )}
                         {opt.features ? (
                           opt.features.split(' | ').map((feat: string, fIdx: number) => (
                             <span key={fIdx} className="bg-slate-100 text-slate-600 text-[9px] px-2 py-0.5 rounded-md font-bold">
@@ -654,7 +729,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
                 <div className="col-span-3 text-right">
                     <div className="flex flex-col items-end">
                        <span className="text-xl font-black text-gray-900">{Math.round(opt.premium).toLocaleString()}원</span>
-                       {opt.riskPremium !== undefined && !isAnnuity && (
+                       {opt.riskPremium !== undefined && !isAnnuity && !isVariable && (
                          <span className="text-[10px] text-gray-400 font-bold mt-1">
                            보장 {opt.riskPremium.toLocaleString()}원 (소멸성 사업비+보장) / 적립 {opt.savingsPremium.toLocaleString()}원 (이자가 복리로 굴러가는 순적립금)
                          </span>

@@ -26,6 +26,8 @@ import { GolfFields } from './insurance/golf/GolfFields';
 import { FireFields } from './insurance/fire/FireFields';
 import { AnnuityFields } from './insurance/annuity/AnnuityFields';
 import { WholeLifeFields } from './insurance/wholeLife/WholeLifeFields';
+import { VariableFields } from './insurance/variable/VariableFields';
+
 
 
 
@@ -307,6 +309,18 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   const [wholeLifeRefundType, setWholeLifeRefundType] = useState<'standard' | 'low'>('low');
   const [wholeLifeIsStepUp, setWholeLifeIsStepUp] = useState<boolean>(false);
 
+  // 변액/정기보험 states
+  const [variableSubType, setVariableSubType] = useState<'term_pure' | 'term_ceo' | 'variable_term' | 'variable_saving' | 'investment' | 'term'>('variable_saving');
+  const [variableMonthlyPremium, setVariableMonthlyPremium] = useState<number>(150000);
+  const [variablePaymentPeriod, setVariablePaymentPeriod] = useState<number>(10);
+  const [variableInvestmentStyle, setVariableInvestmentStyle] = useState<'conservative' | 'balanced' | 'aggressive'>('balanced');
+  const [variableEquityRatio, setVariableEquityRatio] = useState<number>(50);
+  const [variableIsAnnuityConversion, setVariableIsAnnuityConversion] = useState<boolean>(false);
+  const [variableDeathBenefit, setVariableDeathBenefit] = useState<number>(100000000);
+  const [variableCoveragePeriod, setVariableCoveragePeriod] = useState<number>(70);
+  const [variableIsHealthyDiscount, setVariableIsHealthyDiscount] = useState<boolean>(false);
+
+
 
 
 
@@ -383,6 +397,20 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
     }
   }, [selectedDetail, selectedId]);
 
+  // 변액/정기보험 선택 타입에 따른 상세 상태 동기화
+  React.useEffect(() => {
+    if (selectedId === 'variable') {
+      if (selectedDetail === 0) {
+        setVariableSubType('variable_saving');
+      } else {
+        if (variableSubType === 'variable_saving' || variableSubType === 'investment') {
+          setVariableSubType('term_pure');
+        }
+      }
+    }
+  }, [selectedDetail, selectedId, variableSubType]);
+
+
   // 주택화재보험 거주 유형 변경 시 상세 탭 및 한도 일괄 동기화 (루프 방지를 위해 occupancyType과 selectedId만 감시)
   React.useEffect(() => {
     if (selectedId === 'fire_real') {
@@ -415,6 +443,12 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
           selectedId === 'pet' ? 35000 : 
           selectedId === 'fire_real' ? 12000 :
           selectedId === 'pension' ? annuityMonthlyPremium :
+          selectedId === 'variable' ? (
+            (variableSubType === 'variable_saving' || variableSubType === 'investment') ? variableMonthlyPremium :
+            variableSubType === 'term_ceo' ? 450000 :
+            (variableIsHealthyDiscount ? 12000 : 16000)
+          ) :
+
           selectedId === 'golf' ? (golfPlanType === 'one_day' ? 2500 : 9900) :
           selectedId === 'child' ? (childMaturity === 30 ? 32000 : 78000) :
           (selectedId === 'pre' || selectedId === 'pre_family' || healthStatus === 'simple') ? 150000 : 
@@ -583,6 +617,17 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
           deathBenefit: wholeLifeDeathBenefit,
           refundType: wholeLifeRefundType,
           isStepUp: wholeLifeIsStepUp
+        } : undefined,
+        variable: selectedId === 'variable' ? {
+          subType: variableSubType,
+          monthlyPremium: variableMonthlyPremium,
+          paymentPeriod: variablePaymentPeriod,
+          investmentStyle: variableInvestmentStyle,
+          equityRatio: variableEquityRatio,
+          isAnnuityConversion: variableIsAnnuityConversion,
+          deathBenefit: variableDeathBenefit,
+          coveragePeriod: variableCoveragePeriod,
+          isHealthyDiscount: variableIsHealthyDiscount
         } : undefined
       });
     }
@@ -981,6 +1026,30 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                   setRefundType={setWholeLifeRefundType}
                   isStepUp={wholeLifeIsStepUp}
                   setIsStepUp={setWholeLifeIsStepUp}
+                />
+              ) : selectedId === 'variable' ? (
+                <VariableFields
+                  subType={variableSubType}
+                  setSubType={(v) => {
+                    setVariableSubType(v);
+                    setSelectedDetail(v === 'variable_saving' ? 0 : 1);
+                  }}
+                  monthlyPremium={variableMonthlyPremium}
+                  setMonthlyPremium={setVariableMonthlyPremium}
+                  paymentPeriod={variablePaymentPeriod}
+                  setPaymentPeriod={setVariablePaymentPeriod}
+                  investmentStyle={variableInvestmentStyle}
+                  setInvestmentStyle={setVariableInvestmentStyle}
+                  equityRatio={variableEquityRatio}
+                  setEquityRatio={setVariableEquityRatio}
+                  isAnnuityConversion={variableIsAnnuityConversion}
+                  setIsAnnuityConversion={setVariableIsAnnuityConversion}
+                  deathBenefit={variableDeathBenefit}
+                  setDeathBenefit={setVariableDeathBenefit}
+                  coveragePeriod={variableCoveragePeriod}
+                  setCoveragePeriod={setVariableCoveragePeriod}
+                  isHealthyDiscount={variableIsHealthyDiscount}
+                  setIsHealthyDiscount={setVariableIsHealthyDiscount}
                 />
               ) : (selectedId === 'pre' || healthStatus === 'simple') && selectedId !== 'silson' ? (
                 <PreExistingFields

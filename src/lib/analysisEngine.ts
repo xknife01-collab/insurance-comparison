@@ -36,6 +36,8 @@ import { fetchAnnuityPremium } from './insurance/annuity/annuityLoader';
 import { analyzeAnnuity } from './insurance/annuity/annuityEngine';
 import { fetchWholeLifePremium } from './insurance/wholeLife/wholeLifeLoader';
 import { analyzeWholeLife } from './insurance/wholeLife/wholeLifeEngine';
+import { fetchVariablePremium } from './insurance/variable/variableLoader';
+import { analyzeVariable } from './insurance/variable/variableEngine';
 
 export const runAnalysis = async (analysis: InsuranceAnalysis): Promise<any> => {
   const category = analysis.selectedCategory || '';
@@ -59,6 +61,7 @@ export const runAnalysis = async (analysis: InsuranceAnalysis): Promise<any> => 
   const isFire = category.includes('주택화재') || category.includes('화재') || category === 'fire_real' || !!analysis.fire;
   const isAnnuity = category.includes('연금') || category === 'annuity_savings' || !!analysis.annuity;
   const isWholeLife = category.includes('종신') || category === 'whole' || !!analysis.wholeLife;
+  const isVariable = category.includes('변액') || category.includes('정기') || category === 'variable' || !!(analysis as any).variable;
   
   const dbData = isDementia
     ? await fetchDementiaPremium(analysis)
@@ -94,6 +97,8 @@ export const runAnalysis = async (analysis: InsuranceAnalysis): Promise<any> => 
     ? await fetchAnnuityPremium(analysis)
     : isWholeLife
     ? await fetchWholeLifePremium(analysis)
+    : isVariable
+    ? await fetchVariablePremium(analysis)
     : await fetchPremiumFromDatabase(analysis);
      
   const realPremium = dbData ? dbData.premium : 0;
@@ -178,6 +183,10 @@ export const runAnalysis = async (analysis: InsuranceAnalysis): Promise<any> => 
 
   if (isWholeLife) {
     return { analysis: augmentedAnalysis, ...analyzeWholeLife(augmentedAnalysis as any) };
+  }
+
+  if (isVariable) {
+    return { analysis: augmentedAnalysis, ...analyzeVariable(augmentedAnalysis as any) };
   }
 
   // 기본적으로 건강보험 엔진 사용

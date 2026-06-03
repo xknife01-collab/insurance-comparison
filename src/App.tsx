@@ -31,6 +31,8 @@ import { CaregivingExplanation } from './components/insurance/caregiving/Caregiv
 import { FireExplanation } from './components/insurance/fire/FireExplanation';
 import { AnnuityExplanation } from './components/insurance/annuity/AnnuityExplanation';
 import { WholeLifeExplanation } from './components/insurance/wholeLife/WholeLifeExplanation';
+import { VariableExplanation } from './components/insurance/variable/VariableExplanation';
+
 
 
 
@@ -41,7 +43,8 @@ import { WholeLifeExplanation } from './components/insurance/wholeLife/WholeLife
 export default function App() {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [currentAnalysis, setCurrentAnalysis] = useState<InsuranceAnalysis | null>(null);
-  const [view, setView] = useState<'home' | 'indemnity' | 'preexisting' | 'dental' | 'caregiving' | 'dementia' | 'surgery' | 'cancer' | 'cerebrovascular' | 'heart' | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'annuity' | 'whole'>('home');
+  const [view, setView] = useState<'home' | 'indemnity' | 'preexisting' | 'dental' | 'caregiving' | 'dementia' | 'surgery' | 'cancer' | 'cerebrovascular' | 'heart' | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'annuity' | 'whole' | 'variable'>('home');
+
   const [calcTarget, setCalcTarget] = useState<string | null>(null);
 
   const handleAnalyze = async (analysis: InsuranceAnalysis) => {
@@ -451,6 +454,28 @@ export default function App() {
       </div>
     );
   }
+
+  if (view === 'variable') {
+    return (
+      <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-indigo-100 selection:text-indigo-900 antialiased">
+        <Header setView={setView} />
+        <main className="pt-12 px-4 bg-white">
+           <div className="max-w-7xl mx-auto flex justify-end">
+              <button 
+                onClick={() => { setCalcTarget(null); setView('home'); }}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-indigo-600 text-white hover:bg-indigo-700 font-black text-xs transition-all mb-6 shadow-lg shadow-indigo-500/20 active:scale-95 group"
+              >
+                메인으로 돌아가기
+                <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
+              </button>
+           </div>
+           <VariableExplanation onAction={() => { setCalcTarget('variable'); setView('home'); }} />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
 
   return (
     <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-orange-100 selection:text-orange-900 antialiased">
