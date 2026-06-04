@@ -34,9 +34,13 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
   const isAnnuity = analysis.selectedCategory?.includes('연금') || analysis.selectedCategory === 'annuity_savings' || !!analysis.annuity;
   const isWholeLife = analysis.selectedCategory?.includes('종신') || analysis.selectedCategory === 'whole' || !!analysis.wholeLife;
   const isVariable = analysis.selectedCategory?.includes('변액') || analysis.selectedCategory?.includes('정기') || analysis.selectedCategory === 'variable' || analysis.selectedCategory === 'term' || !!analysis.variable;
+  const isLegal = analysis.selectedCategory?.includes('민사') || analysis.selectedCategory?.includes('형사') || analysis.selectedCategory?.includes('법률') || analysis.selectedCategory === 'legal' || !!analysis.legal;
+  const isSavingsGeneral = analysis.selectedCategory?.includes('일반 저축') || analysis.selectedCategory === 'savings_general' || !!analysis.savingsGeneral;
+  const isCredit = analysis.selectedCategory?.includes('신용') || analysis.selectedCategory === 'credit' || !!analysis.credit;
 
 
-  const benchmark = isSilbi ? 55000 : isDental ? 85000 : isCaregiving ? 45000 : isNursing ? 70000 : isHeart ? 120000 : isChild ? (analysis.child?.maturity === 30 ? 45000 : 95000) : isDriver ? 22000 : isPet ? 42000 : isGolf ? 15000 : isFire ? 12000 : isWholeLife ? 150000 : isVariable ? 150000 : 180000;
+
+  const benchmark = isSilbi ? 55000 : isDental ? 85000 : isCaregiving ? 45000 : isNursing ? 70000 : isHeart ? 120000 : isChild ? (analysis.child?.maturity === 30 ? 45000 : 95000) : isDriver ? 22000 : isPet ? 42000 : isGolf ? 15000 : isFire ? 12000 : isWholeLife ? 150000 : isVariable ? 150000 : isLegal ? 18000 : isCredit ? 40000 : 180000;
   const dietPremium = recommendation.estimatedPremium;
   const currentPremium = analysis.monthlyPremium;
   
@@ -251,7 +255,13 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     },
     { 
       label: '안전운전 특약 할인 (Tmap)', 
-      current: analysis.car?.safeDrivingScore === 'none' ? '미적용' : `${analysis.car?.safeDrivingScore === 'over_80' ? '12%' : '7%'} 할인 적용 중`, 
+      current: analysis.car?.safeDrivingScore === 'none' 
+        ? '미적용' 
+        : analysis.car?.safeDrivingScore === 'under_70' 
+          ? '미적용 (70점 미만)' 
+          : analysis.car?.safeDrivingScore === 'over_80' 
+            ? '12% 할인 적용 중' 
+            : '7% 할인 적용 중', 
       recommended: '최대 12% 캐시백 환급 (티맵 점수 연동 최적화)', 
       icon: <TrendingDown className="w-4 h-4 text-blue-600" /> 
     },
@@ -590,15 +600,127 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
       recommended: '최대 15%~18% 즉시 할인 (비흡연 + 혈압/BMI 정상 기준 만족 시 즉시 적용)', 
       icon: <TrendingDown className="w-4 h-4 text-orange-600" /> 
     },
-    { 
-      label: '가족 일상생활 배상책임', 
-      current: '미가입 (특약 배제로 대인/대물 과실 누수 사고 시 무방비)', 
-      recommended: '가입 (대인/대물 과실 누수 사고 시 자기부담금 20만 원 방어 특약 결합)', 
-      icon: <ShieldCheck className="w-4 h-4 text-orange-600" /> 
+  ];
+
+  const savingsGeneralOpts = analysis.savingsGeneral || {
+    savingType: 'installment',
+    monthlyPremium: 300000,
+    paymentPeriod: 5,
+    maintenancePeriod: 10,
+    savingsObjective: 'wealth',
+    hasUniversal: true
+  };
+
+  const isInstallmentSavings = savingsGeneralOpts.savingType === 'installment';
+  const isSavingsGeneralTaxExempt = isInstallmentSavings
+    ? (savingsGeneralOpts.paymentPeriod >= 5 && savingsGeneralOpts.maintenancePeriod >= 10 && savingsGeneralOpts.monthlyPremium <= 1500000)
+    : (savingsGeneralOpts.maintenancePeriod >= 10 && savingsGeneralOpts.monthlyPremium <= 100000000);
+
+  const savingsRows = [
+    {
+      label: '이자 소득세 (15.4%)',
+      current: '과세 대상 (만기 시 발생한 이자액의 15.4% 원천징수 차감)',
+      recommended: isSavingsGeneralTaxExempt ? '비과세 대상 (이자소득세 0% 전액 비과세 혜택 자동 적용)' : '요건 불충족 (납입/거치 조건 변경 시 비과세 혜택 가능)',
+      icon: <Coins className="w-4 h-4 text-emerald-600" />
     },
+    {
+      label: '이자 계산 방식',
+      current: '단리 이자 (원금에만 이자가 붙는 은행 적금 방식)',
+      recommended: '월 복리 이자 (원금+이자가 새로운 원금이 되어 굴러가는 복리 부리)',
+      icon: <TrendingUp className="w-4 h-4 text-emerald-600" />
+    },
+    {
+      label: '납입 유연성 (유니버셜)',
+      current: '일반 적금 (약정 금액 미납 시 우대이율 취소 및 만기연장 발생)',
+      recommended: savingsGeneralOpts.hasUniversal ? '자유 납입/추가 납입 (기본료 외 추가 납입 200% 및 중도인출 지원)' : '일반 납입 (유니버셜 미작동)',
+      icon: <Clock className="w-4 h-4 text-emerald-600" />
+    },
+    {
+      label: '금리 방어막 (최저보증)',
+      current: '시중 연동 금리 (기준금리 급락 시 0%대 만기금리 발생 우려)',
+      recommended: '최저보증이율 (금리가 아무리 하락해도 평생 0.75%~1.25% 최저 이율 보장)',
+      icon: <ShieldCheck className="w-4 h-4 text-emerald-600" />
+    }
   ];
 
 
+  // 14. 법률비용보험 (Legal Insurance)
+  const isLawyerFocus = analysis.legal?.subType === 'lawyer';
+  const legalRows = [
+    { 
+      label: '심급별 변호사 선임비용', 
+      current: analysis.legal?.lawyerLimit ? `${(analysis.legal.lawyerLimit / 10000).toLocaleString()}만 원` : '1,000만 원', 
+      recommended: `최대 ${(isLawyerFocus ? 30000000 : 20000000) / 10000}만 원 (선택한 집중 영역에 맞춰 심급별 선임비 한도 최적 보강)`, 
+      icon: <Scale className="w-4 h-4 text-indigo-600" /> 
+    },
+    { 
+      label: '인지대 및 송달료 실비', 
+      current: analysis.legal?.courtFeeLimit ? `${(analysis.legal.courtFeeLimit / 10000).toLocaleString()}만 원` : '500만 원', 
+      recommended: `최대 ${(!isLawyerFocus ? 10000000 : 5000000) / 10000}만 원 (대형 소송 전 발생 시 인지액 및 송달 실비 부족액 방어)`, 
+      icon: <ShieldCheck className="w-4 h-4 text-indigo-600" /> 
+    },
+    { 
+      label: '급발진 사고 분쟁 소송 특약', 
+      current: analysis.legal?.suddenAccelerationRider ? '가입' : '미가입', 
+      recommended: '가입 (EDR 입증 및 급발진 사고 시 전문 변호사 선임비 완비)', 
+      icon: <ShieldCheck className="w-4 h-4 text-indigo-600" /> 
+    },
+    { 
+      label: '소송비용 자기부담 공제방식', 
+      current: analysis.legal?.deductibleType === 'fixed' ? '건당 10만원 정액 공제' : '지출액의 10% 비례 공제', 
+      recommended: '비례 자부담 10% 적용 (동등 보장 대비 월 보험료 10% 자동 할인 획득)', 
+      icon: <TrendingDown className="w-4 h-4 text-indigo-600" /> 
+    },
+  ];
+
+  const creditOpts = analysis.credit || {
+    loanType: 'mortgage',
+    loanAmount: 100000000,
+    loanPeriod: 10,
+    creditBureau: 'nice',
+    creditScore: 850,
+    hasIllnessRider: true,
+    hasDisabilityRider: true
+  };
+
+  const creditLoanAmount = creditOpts.loanAmount || 100000000;
+  const creditBureauVal = creditOpts.creditBureau || 'nice';
+  const creditScoreVal = creditOpts.creditScore || 850;
+  const creditHasIllnessRider = creditOpts.hasIllnessRider;
+  const creditHasDisabilityRider = creditOpts.hasDisabilityRider;
+
+  let creditDiscountRate = 0;
+  if (creditScoreVal >= 900) creditDiscountRate = 10;
+  else if (creditScoreVal >= 800) creditDiscountRate = 8;
+  else if (creditScoreVal >= 700) creditDiscountRate = 5;
+  else if (creditScoreVal >= 600) creditDiscountRate = 3;
+
+  const creditRows = [
+    {
+      label: '사망 상환 보장',
+      current: '미가입 (유고 시 대출금이 가족에게 승계)',
+      recommended: `대출금 ${formatAmt(creditLoanAmount)} 전액 즉시 대위변제 (채무 완전소거)`,
+      icon: <ShieldCheck className="w-4 h-4 text-emerald-600" />
+    },
+    {
+      label: '3대 질병 보장',
+      current: '미가입 (암/뇌/심 투병 시 가계 연체 노출)',
+      recommended: creditHasIllnessRider ? '진단 확정 즉시 대출 잔액 전액 상환' : '사망 특화 가입 (질병 상환 제외)',
+      icon: <HeartPulse className="w-4 h-4 text-emerald-600" />
+    },
+    {
+      label: '고도후유장해 완납',
+      current: '미가입 (장해 시 소득상실 및 경매 리스크)',
+      recommended: creditHasDisabilityRider ? '장해율 50% 이상 시 잔여 대출금 전액 상환' : '사망 특화 가입 (장해 상환 제외)',
+      icon: <Scale className="w-4 h-4 text-emerald-600" />
+    },
+    {
+      label: '신용평가사 할인 연계',
+      current: '일반 정액 보험료 (할인 없음)',
+      recommended: `${creditBureauVal.toUpperCase()} 신용등급 반영 ${creditDiscountRate}% 추가 할인 및 갱신`,
+      icon: <Coins className="w-4 h-4 text-emerald-600" />
+    }
+  ];
 
   // 조건 분기를 if-else 문으로 안전하고 깔끔하게 매칭
   let comparisonRows = standardRows;
@@ -636,7 +758,14 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     comparisonRows = wholeLifeRows;
   } else if (isVariable) {
     comparisonRows = variableRows;
+  } else if (isLegal) {
+    comparisonRows = legalRows;
+  } else if (isSavingsGeneral) {
+    comparisonRows = savingsRows;
+  } else if (isCredit) {
+    comparisonRows = creditRows;
   }
+
 
 
 
@@ -654,9 +783,9 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
           </div>
           
           <div className="inline-block bg-blue-50 px-8 py-5 rounded-3xl border border-blue-100 shadow-sm transition-all hover:scale-105 active:scale-95 cursor-default">
-             <div className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1">월 예상 절감액</div>
+             <div className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1">{isCar ? '연 예상 절감액' : '월 예상 절감액'}</div>
              <div className="flex items-baseline gap-1">
-               <span className="text-4xl font-black text-blue-600">{displaySavings.toLocaleString()}</span>
+               <span className="text-4xl font-black text-blue-600">{Math.round(isCar ? displaySavings * 12 : displaySavings).toLocaleString()}</span>
                <span className="text-xl font-bold text-gray-900">원</span>
                <TrendingDown className="w-6 h-6 text-blue-500 ml-2 animate-bounce" />
              </div>
@@ -712,7 +841,10 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
 
         <div className="text-center pt-8 border-t border-gray-50 mt-10">
           <p className="text-[10px] font-black text-gray-400 italic tracking-widest uppercase text-center">
-            최적화 분석 완료: 매달 {displaySavings.toLocaleString()}원을 자산으로 전환할 수 있습니다.
+            {isCar 
+              ? `최적화 분석 완료: 매년 ${Math.round(displaySavings * 12).toLocaleString()}원을 자산으로 전환할 수 있습니다.`
+              : `최적화 분석 완료: 매달 ${displaySavings.toLocaleString()}원을 자산으로 전환할 수 있습니다.`
+            }
           </p>
         </div>
       </div>

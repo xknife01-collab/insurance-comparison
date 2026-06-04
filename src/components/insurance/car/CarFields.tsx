@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { motion } from 'motion/react';
-import { Car, Compass, Navigation, HelpCircle, Shield, AlertTriangle, Users, Search, X } from 'lucide-react';
+import { Car, Compass, Navigation, HelpCircle, Shield, AlertTriangle, Users, Search, X, Sparkles, Smartphone, Key, RefreshCw, Lock, ShieldCheck, Check } from 'lucide-react';
 import { CAR_DATABASE, FLAT_CAR_MODELS, CAR_MODEL_MAP } from '../../../data/carDatabase';
 import { getEngineOptions, getTrimOptions } from '../../../lib/insurance/car/carSpecHelpers';
+import { requestHyphenInit, requestHyphenCaptcha, requestHyphenSms } from '../../../lib/insurance/car/hyphenService';
 
 interface CarFieldsProps {
   annualMileage: 'under_3k' | 'under_5k' | 'under_10k' | 'over_15k';
@@ -37,6 +38,13 @@ interface CarFieldsProps {
   setSelectedEngine: (v: string) => void;
   selectedTrim: string;
   setSelectedTrim: (v: string) => void;
+  noAccidentYears: 'none' | '1year' | '3years' | '5years';
+  setNoAccidentYears: (v: 'none' | '1year' | '3years' | '5years') => void;
+  initialUserName?: string;
+  initialBirthDate?: string;
+  initialMobileNo?: string;
+  triggerHyphenModal?: boolean;
+  setTriggerHyphenModal?: (v: boolean) => void;
 }
 
 export const CarFields: React.FC<CarFieldsProps> = ({
@@ -71,14 +79,256 @@ export const CarFields: React.FC<CarFieldsProps> = ({
   selectedEngine,
   setSelectedEngine,
   selectedTrim,
-  setSelectedTrim
+  setSelectedTrim,
+  noAccidentYears,
+  setNoAccidentYears,
+  initialUserName,
+  initialBirthDate,
+  initialMobileNo,
+  triggerHyphenModal,
+  setTriggerHyphenModal
 }) => {
+  const getSsnFrontFromBirthDate = (birth: string) => {
+    if (!birth) return '';
+    const clean = birth.replace(/[^0-9]/g, '');
+    if (clean.length === 8) {
+      return clean.substring(2, 8);
+    }
+    if (clean.length === 6) {
+      return clean;
+    }
+    return '';
+  };
+
   // 1. 상태 선언
   const [originTab, setOriginTab] = useState<'domestic' | 'imported'>('domestic');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedVehicleType, setSelectedVehicleType] = useState<string>('all');
+
+  useEffect(() => {
+    if (triggerHyphenModal) {
+      setIsHyphenModalOpen(true);
+      setHyphenStep('init');
+      setHyphenError('');
+
+      if (initialUserName) setUserName(initialUserName);
+      if (initialBirthDate) {
+        setSsnFront(getSsnFrontFromBirthDate(initialBirthDate));
+      }
+      if (initialMobileNo) setMobileNo(initialMobileNo);
+
+      if (setTriggerHyphenModal) {
+        setTriggerHyphenModal(false);
+      }
+    }
+  }, [triggerHyphenModal, initialUserName, initialBirthDate, initialMobileNo, setTriggerHyphenModal]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalStep, setModalStep] = useState<'brand' | 'model' | 'year' | 'confirm'>('brand');
+
+  // 하이픈 API 연동 상태
+  const [isHyphenModalOpen, setIsHyphenModalOpen] = useState(false);
+  const [hyphenStep, setHyphenStep] = useState<'init' | 'captcha' | 'sms' | 'success'>('init');
+  const [hyphenLoading, setHyphenLoading] = useState(false);
+  const [hyphenError, setHyphenError] = useState('');
+
+  const [userName, setUserName] = useState('');
+  const [ssnFront, setSsnFront] = useState('');
+  const [ssnBack, setSsnBack] = useState('');
+  const [mobileCo, setMobileCo] = useState('SKT');
+  const [mobileNo, setMobileNo] = useState('');
+  const [captchaInput, setCaptchaInput] = useState('');
+  const [smsInput, setSmsInput] = useState('');
+  const [vhrno, setVhrno] = useState('');
+
+  const [stepData, setStepData] = useState('');
+  const [captchaImg, setCaptchaImg] = useState('');
+  const [retrievedCarInfo, setRetrievedCarInfo] = useState<any>(null);
+  const [retrievedInsuranceInfo, setRetrievedInsuranceInfo] = useState<any[]>([]);
+
+  // 날짜 포맷팅 헬퍼 (YYYYMMDD -> YYYY-MM-DD)
+  const formatDate = (dateStr: string): string => {
+    if (!dateStr) return '';
+    if (dateStr.length === 8) {
+      return `${dateStr.slice(0, 4)}-${dateStr.slice(4, 6)}-${dateStr.slice(6, 8)}`;
+    }
+    return dateStr;
+  };
+
+  // 하이픈 차량 정보 상태 반영 헬퍼
+  const applyRetrievedCar = (info: any) => {
+    const parsedYear = parseInt(info.PRYE) || 2024;
+    setCarYear(parsedYear);
+
+    // 주행거리 매핑
+    const mileageNum = parseInt(info.TRVL_DSTNC) || 8000;
+    const yearsUsed = Math.max(1, new Date().getFullYear() - parsedYear);
+    const estimatedAnnual = mileageNum / yearsUsed;
+    if (estimatedAnnual <= 3000) setAnnualMileage('under_3k');
+    else if (estimatedAnnual <= 5000) setAnnualMileage('under_5k');
+    else if (estimatedAnnual <= 10000) setAnnualMileage('under_10k');
+    else setAnnualMileage('over_15k');
+
+    // 차종/제조사 매칭
+    const cnm = info.CNM || '';
+    const normalizedCNM = cnm.toLowerCase().replace(/\s+/g, '');
+    let matchedBrand = 'hyundai';
+    let matchedModel = 'grandeur';
+
+    const match = FLAT_CAR_MODELS.find(m => {
+      const labelNorm = m.label.toLowerCase().replace(/\s+/g, '');
+      const idNorm = m.id.toLowerCase();
+      return normalizedCNM.includes(labelNorm) || normalizedCNM.includes(idNorm) || labelNorm.includes(normalizedCNM);
+    });
+
+    if (match) {
+      matchedBrand = match.brandId;
+      matchedModel = match.id;
+    } else {
+      if (normalizedCNM.includes('아반떼') || normalizedCNM.includes('avante')) {
+        matchedBrand = 'hyundai'; matchedModel = 'avante';
+      } else if (normalizedCNM.includes('쏘나타') || normalizedCNM.includes('sonata')) {
+        matchedBrand = 'hyundai'; matchedModel = 'sonata';
+      } else if (normalizedCNM.includes('쏘렌토') || normalizedCNM.includes('sorento')) {
+        matchedBrand = 'kia'; matchedModel = 'sorento';
+      } else if (normalizedCNM.includes('스포티지') || normalizedCNM.includes('sportage')) {
+        matchedBrand = 'kia'; matchedModel = 'sportage';
+      } else if (normalizedCNM.includes('bmw')) {
+        matchedBrand = 'bmw'; matchedModel = 'bmw5';
+      } else if (normalizedCNM.includes('벤츠') || normalizedCNM.includes('mercedes')) {
+        matchedBrand = 'mercedes'; matchedModel = 'merc_e';
+      } else if (normalizedCNM.includes('테슬라') || normalizedCNM.includes('tesla')) {
+        matchedBrand = 'tesla'; matchedModel = 'model3';
+      }
+    }
+
+    setCarBrand(matchedBrand);
+    setCarModel(matchedModel);
+
+    const modelObj = CAR_MODEL_MAP[matchedModel];
+    const type = modelObj?.type || 'sedan';
+    const dynEngines = getEngineOptions(type, matchedBrand, matchedModel);
+    const dynTrims = getTrimOptions(type, matchedBrand, matchedModel);
+    setSelectedEngine(dynEngines[0]?.id || 'gasoline');
+    setSelectedTrim(dynTrims[0]?.id || 'base');
+    setCarOwnDamage('join');
+  };
+
+  // Hex 문자열을 Data URL (base64) 형태로 변환하는 헬퍼 함수
+  const convertHexToDataUrl = (hex: string): string => {
+    if (!hex) return '';
+    const cleanHex = hex.replace(/[^0-9a-fA-F]/g, '');
+    const bytes = new Uint8Array(cleanHex.length / 2);
+    for (let i = 0; i < cleanHex.length; i += 2) {
+      bytes[i / 2] = parseInt(cleanHex.substring(i, i + 2), 16);
+    }
+    let binary = '';
+    for (let i = 0; i < bytes.length; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    const base64 = window.btoa(binary);
+    
+    // MIME 타입 판별 (기본값 png)
+    const header = cleanHex.slice(0, 8).toLowerCase();
+    let mime = 'image/png';
+    if (header.startsWith('89504e47')) mime = 'image/png';
+    else if (header.startsWith('ffd8ff')) mime = 'image/jpeg';
+    else if (header.startsWith('47494638')) mime = 'image/gif';
+    
+    return `data:${mime};base64,${base64}`;
+  };
+
+  const handleHyphenInit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!userName || !ssnFront || !ssnBack || !mobileCo) {
+      setHyphenError('모든 필수 정보를 입력해 주세요.');
+      return;
+    }
+    setHyphenLoading(true);
+    setHyphenError('');
+    try {
+      const res = await requestHyphenInit({ userName, ssnFront, ssnBack, mobileCo });
+      if (res.common.errYn === 'Y') {
+        setHyphenError(res.common.errMsg || '본인인증 요청에 실패했습니다.');
+      } else if (res.data) {
+        setStepData(res.data.step_data);
+        // hex 데이터를 Data URL(Base64)로 신속 변환하여 저장
+        setCaptchaImg(convertHexToDataUrl(res.data.captcha_img));
+        setHyphenStep('captcha');
+      }
+    } catch (err: any) {
+      setHyphenError(err.message || '인증 요청 중 오류가 발생했습니다.');
+    } finally {
+      setHyphenLoading(false);
+    }
+  };
+
+  const handleHyphenCaptcha = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!captchaInput || !mobileNo) {
+      setHyphenError('캡차 번호와 휴대폰 번호를 입력해 주세요.');
+      return;
+    }
+    setHyphenLoading(true);
+    setHyphenError('');
+    try {
+      const res = await requestHyphenCaptcha({
+        userName,
+        ssnFront,
+        ssnBack,
+        mobileCo,
+        mobileNo,
+        step_data: stepData,
+        step_input: captchaInput
+      });
+      if (res.common.errYn === 'Y') {
+        setHyphenError(res.common.errMsg || '캡차 인증에 실패했습니다.');
+      } else if (res.data) {
+        setStepData(res.data.step_data);
+        setHyphenStep('sms');
+      }
+    } catch (err: any) {
+      setHyphenError(err.message || '캡차 제출 중 오류가 발생했습니다.');
+    } finally {
+      setHyphenLoading(false);
+    }
+  };
+
+  const handleHyphenSms = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!smsInput || !vhrno) {
+      setHyphenError('인증번호와 차량번호를 입력해 주세요.');
+      return;
+    }
+    setHyphenLoading(true);
+    setHyphenError('');
+    try {
+      const res = await requestHyphenSms({
+        userName,
+        ssnFront,
+        ssnBack,
+        step_data: stepData,
+        step_input: smsInput,
+        vhrno
+      });
+      if (res.common.errYn === 'Y') {
+        setHyphenError(res.common.errMsg || '인증번호 또는 차량번호가 올바르지 않습니다.');
+      } else if (res.data && res.data.CARINFOLIST && res.data.CARINFOLIST.length > 0) {
+        const carInfo = res.data.CARINFOLIST[0];
+        setRetrievedCarInfo(carInfo);
+        if (res.data.INSRNCHISTLIST) {
+          setRetrievedInsuranceInfo(res.data.INSRNCHISTLIST);
+        }
+        applyRetrievedCar(carInfo);
+        setHyphenStep('success');
+      } else {
+        setHyphenError('차량 정보를 찾을 수 없습니다.');
+      }
+    } catch (err: any) {
+      setHyphenError(err.message || '차량 정보 조회 중 오류가 발생했습니다.');
+    } finally {
+      setHyphenLoading(false);
+    }
+  };
 
   // 차종/모델 선택 핸들러 - 엔진/트림을 해당 차종의 최적화된 옵션으로 실시간 매핑 초기화!
   const handleSelectModel = (modelId: string, brandId: string) => {
@@ -198,19 +448,8 @@ export const CarFields: React.FC<CarFieldsProps> = ({
   };
   const driverMultiplier = driverMultipliers[carDriverLimit] || 1.0;
 
-  // 차종/제조사별 보험개발원(KIDI) 기준 수리비 등급 요율 현실적 반영
-  let baseOwnDamageRate = 0.0165; // 국산 일반 세단 기준 (1.65%)
-  if (carType === 'suv' || carType === 'van' || carType === 'truck') {
-    baseOwnDamageRate = 0.0185; // 국산 대형 RV/SUV (수리 빈도 및 규모가 큼) 기준 (1.85%)
-  } else if (carType === 'ev' || carBrand === 'tesla') {
-    baseOwnDamageRate = 0.0225; // 전기차 (배터리 교체비 가산) 기준 (2.25%)
-  } else if (carBrand === 'bmw' || carBrand === 'mercedes' || carBrand === 'audi' || carBrand === 'volvo' || carBrand === 'porsche') {
-    baseOwnDamageRate = 0.0235; // 수입 프리미엄 브랜드 (고가 부품 및 공임 가산) 기준 (2.35%)
-  }
-
-  // 예상 자차 보험료 (자차 가입=100%, 단독제외=70%, 미가입=0% 에 운전자 할증 및 KIDI 요율 반영)
-  const ownDamageRateFactor = carOwnDamage === 'join' ? baseOwnDamageRate : carOwnDamage === 'exclude_single' ? baseOwnDamageRate * 0.7 : 0;
-  const ownDamagePremium = Math.round(calculatedCarValue * ownDamageRateFactor * driverMultiplier);
+  // 하이픈 차량 정보 연동 대기 상태로 기존 정적 요율 계산 로직을 삭제합니다.
+  const ownDamagePremium = 0;
 
 
   return (
@@ -245,21 +484,28 @@ export const CarFields: React.FC<CarFieldsProps> = ({
                 <span className="px-2.5 py-1 bg-blue-50 rounded-lg text-[10px] font-black text-blue-600">
                   차량가액: {(calculatedCarValue / 10000).toLocaleString()}만원
                 </span>
+                {retrievedInsuranceInfo && retrievedInsuranceInfo.length > 0 && (
+                  <span className="px-2.5 py-1 bg-emerald-50 rounded-lg text-[10px] font-black text-emerald-600 flex items-center gap-1">
+                    🔒 기존가입: {retrievedInsuranceInfo[0].SBSCRB_CMPNY_NM} (~{formatDate(retrievedInsuranceInfo[0].PRSNL_ENDDE)})
+                  </span>
+                )}
               </div>
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={() => {
-              setModalStep('brand');
-              setIsModalOpen(true);
-            }}
-            className="px-6 py-3.5 bg-slate-900 text-white rounded-2xl font-black text-sm hover:bg-blue-600 transition-all flex items-center gap-2 shadow-md active:scale-95 self-start md:self-auto"
-          >
-            <Search className="w-4 h-4" />
-            차종 / 연식 변경하기 (다이렉트 검색)
-          </button>
+          <div className="flex flex-wrap gap-3 self-start md:self-auto">
+            <button
+              type="button"
+              onClick={() => {
+                setModalStep('brand');
+                setIsModalOpen(true);
+              }}
+              className="px-6 py-3.5 bg-white border border-slate-200 text-slate-400 rounded-2xl font-bold text-sm hover:bg-slate-50 hover:text-slate-600 transition-all flex items-center gap-2 active:scale-95"
+            >
+              <Search className="w-4 h-4 text-slate-300" />
+              차종 / 연식 변경하기 (수동 입력)
+            </button>
+          </div>
         </div>
 
         {/* 1-4. 자차 보장 방식 설정 */}
@@ -309,11 +555,10 @@ export const CarFields: React.FC<CarFieldsProps> = ({
             </div>
             <div className="h-10 w-px bg-white/10" />
             <div className="text-right">
-              <span className="text-[10px] font-black text-emerald-400 block">연간 자차 보험료 (예상)</span>
-              <span className="text-2xl font-black text-emerald-400">
-                {carOwnDamage === 'none' ? '0' : (ownDamagePremium).toLocaleString()}
+              <span className="text-[10px] font-black text-emerald-400 block">연간 자차 보험료 (연동 대기)</span>
+              <span className="text-xl font-black text-emerald-400">
+                연동 대기
               </span>
-              <span className="text-xs font-bold text-emerald-300 ml-0.5">원</span>
             </div>
           </div>
         </div>
@@ -429,6 +674,42 @@ export const CarFields: React.FC<CarFieldsProps> = ({
                   onClick={() => setSafeDrivingScore(item.id)}
                   className={`p-4 rounded-xl border text-center font-black transition-all text-sm ${
                     safeDrivingScore === item.id
+                      ? 'border-slate-800 bg-slate-900 text-white shadow-md'
+                      : 'border-slate-100 bg-white hover:border-slate-300 text-slate-700'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* 무사고 기간 (우량할인 요율) */}
+          <div className="space-y-4">
+            <label className="text-sm font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
+              직전 무사고 기간 (우량할인 특약)
+              <span className="group relative cursor-help text-slate-300">
+                <HelpCircle size={14} />
+                <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-slate-800 text-white text-[10px] p-3 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 font-normal leading-relaxed">
+                  직전 무사고 연차에 따라 보험료가 추가 할인됩니다. (3년 이상 무사고 시 평균 10%~15% 할인)
+                </span>
+              </span>
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              {(
+                [
+                  { id: 'none', label: '1년 미만 (사고 있음)' },
+                  { id: '1year', label: '1년 이상 무사고' },
+                  { id: '3years', label: '3년 이상 무사고' },
+                  { id: '5years', label: '5년 이상 무사고 (최대)' }
+                ] as const
+              ).map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => setNoAccidentYears(item.id)}
+                  className={`p-4 rounded-xl border text-center font-black transition-all text-sm ${
+                    noAccidentYears === item.id
                       ? 'border-slate-800 bg-slate-900 text-white shadow-md'
                       : 'border-slate-100 bg-white hover:border-slate-300 text-slate-700'
                   }`}
@@ -1026,6 +1307,344 @@ export const CarFields: React.FC<CarFieldsProps> = ({
                 차량 가액 시뮬레이터 v1.2
               </span>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* 하이픈 실시간 차량 연동 모달 */}
+      {isHyphenModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-md overflow-y-auto">
+          <div className="relative w-full max-w-lg bg-white rounded-[40px] shadow-2xl p-6 md:p-8 border border-slate-100 flex flex-col max-h-[90vh] overflow-y-auto">
+            {/* 닫기 버튼 */}
+            <button
+              onClick={() => setIsHyphenModalOpen(false)}
+              className="absolute top-6 right-6 p-2 rounded-full hover:bg-slate-50 transition-all text-slate-400 hover:text-slate-600 active:scale-95"
+            >
+              <X size={20} />
+            </button>
+
+            {/* 헤더 */}
+            <div className="space-y-2 text-center pb-4 border-b border-slate-50 mb-6">
+              <div className="inline-flex p-3 bg-blue-50 text-blue-600 rounded-2xl">
+                <Sparkles className="w-6 h-6 text-indigo-600 animate-pulse" />
+              </div>
+              <h4 className="text-xl font-black text-slate-800">실시간 차량 정보 연동 (car365)</h4>
+              <p className="text-xs text-slate-400">
+                본인인증을 통해 고객님 명의의 차량 명세 및 주행거리를 0.1초 만에 불러옵니다.
+              </p>
+            </div>
+
+            {/* 단계별 상태 표시 바 */}
+            <div className="flex items-center justify-center gap-4 mb-6">
+              {[
+                { step: 'init', label: '1. 정보 입력' },
+                { step: 'captcha', label: '2. 캡차 인증' },
+                { step: 'sms', label: '3. 인증 완료' }
+              ].map((s) => {
+                const isCurrent = hyphenStep === s.step;
+                const isDone = 
+                  (s.step === 'init' && (hyphenStep === 'captcha' || hyphenStep === 'sms' || hyphenStep === 'success')) ||
+                  (s.step === 'captcha' && (hyphenStep === 'sms' || hyphenStep === 'success')) ||
+                  (s.step === 'sms' && hyphenStep === 'success');
+                return (
+                  <div key={s.step} className="flex items-center gap-2">
+                    <span className={`text-xs font-black px-2.5 py-1 rounded-lg ${
+                      isCurrent 
+                        ? 'bg-blue-600 text-white shadow-sm'
+                        : isDone
+                          ? 'bg-emerald-500 text-white'
+                          : 'bg-slate-100 text-slate-400'
+                    }`}>
+                      {s.label}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+
+            {hyphenError && (
+              <div className="mb-4 p-4 bg-rose-50 border border-rose-100 rounded-2xl text-rose-600 text-xs font-bold flex items-center gap-2">
+                <AlertTriangle size={14} className="shrink-0" />
+                <span>{hyphenError}</span>
+              </div>
+            )}
+
+            {/* STEP 1: 본인인증 및 캡차요청 */}
+            {hyphenStep === 'init' && (
+              <form onSubmit={handleHyphenInit} className="space-y-4">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-black text-slate-500 uppercase tracking-wider">이름</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="성명을 입력하세요"
+                    value={userName}
+                    onChange={(e) => setUserName(e.target.value)}
+                    className="w-full px-4 py-3 border border-slate-200 rounded-xl text-slate-800 font-bold focus:outline-none focus:border-blue-500 text-sm"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-black text-slate-500 uppercase tracking-wider">주민번호 앞자리</label>
+                    <input
+                      type="text"
+                      required
+                      maxLength={6}
+                      placeholder="YYMMDD"
+                      value={ssnFront}
+                      onChange={(e) => setSsnFront(e.target.value.replace(/[^0-9]/g, ''))}
+                      className="w-full px-4 py-3 border border-slate-200 rounded-xl text-slate-800 font-bold text-center tracking-widest focus:outline-none focus:border-blue-500 text-sm"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-black text-slate-500 uppercase tracking-wider">주민번호 뒷자리</label>
+                    <input
+                      type="password"
+                      required
+                      maxLength={7}
+                      placeholder="7자리"
+                      value={ssnBack}
+                      onChange={(e) => setSsnBack(e.target.value.replace(/[^0-9]/g, ''))}
+                      className="w-full px-4 py-3 border border-slate-200 rounded-xl text-slate-800 font-bold text-center tracking-widest focus:outline-none focus:border-blue-500 text-sm"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-black text-slate-500 uppercase tracking-wider">통신사 선택</label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {['SKT', 'KTF', 'LGT', 'SKM', 'KTM', 'LGM'].map((co) => (
+                      <button
+                        key={co}
+                        type="button"
+                        onClick={() => setMobileCo(co)}
+                        className={`py-2 px-3 border rounded-xl font-bold text-xs transition-all ${
+                          mobileCo === co
+                            ? 'border-blue-600 bg-blue-50 text-blue-700 shadow-inner'
+                            : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
+                        }`}
+                      >
+                        {co === 'SKT' && 'SKT'}
+                        {co === 'KTF' && 'KT'}
+                        {co === 'LGT' && 'LGU+'}
+                        {co === 'SKM' && 'SKT 알뜰폰'}
+                        {co === 'KTM' && 'KT 알뜰폰'}
+                        {co === 'LGM' && 'LGU+ 알뜰폰'}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={hyphenLoading}
+                  className="w-full py-3.5 bg-blue-600 text-white rounded-2xl font-black text-sm hover:bg-blue-700 shadow-lg shadow-blue-500/20 active:scale-95 transition-all text-center flex items-center justify-center gap-2"
+                >
+                  {hyphenLoading ? (
+                    <>
+                      <RefreshCw className="w-4 h-4 animate-spin" />
+                      요청 중...
+                    </>
+                  ) : (
+                    <>
+                      <Smartphone className="w-4 h-4" />
+                      본인인증 시작 및 캡차요청
+                    </>
+                  )}
+                </button>
+              </form>
+            )}
+
+            {/* STEP 2: 캡차 이미지 입력 및 휴대폰 번호 입력 */}
+            {hyphenStep === 'captcha' && (
+              <form onSubmit={handleHyphenCaptcha} className="space-y-4">
+                <div className="p-4 bg-slate-50 rounded-2xl flex flex-col items-center justify-center gap-3">
+                  <span className="text-[10px] font-black text-slate-400">아래 캡차 이미지를 보고 입력해 주세요</span>
+                  {captchaImg ? (
+                    <img
+                      src={captchaImg}
+                      alt="Captcha"
+                      className="h-14 border border-slate-200 rounded-lg shadow-sm"
+                    />
+                  ) : (
+                    <div className="w-full h-14 bg-slate-200 animate-pulse rounded-lg" />
+                  )}
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-black text-slate-500 uppercase tracking-wider">캡차 보안문자</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="이미지 속 숫자를 입력하세요"
+                    value={captchaInput}
+                    onChange={(e) => setCaptchaInput(e.target.value.replace(/[^0-9]/g, ''))}
+                    className="w-full px-4 py-3 border border-slate-200 rounded-xl text-slate-800 font-bold focus:outline-none focus:border-blue-500 text-sm"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-black text-slate-500 uppercase tracking-wider">휴대폰 번호</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="숫자만 입력 (예: 01012345678)"
+                    value={mobileNo}
+                    onChange={(e) => setMobileNo(e.target.value.replace(/[^0-9]/g, ''))}
+                    className="w-full px-4 py-3 border border-slate-200 rounded-xl text-slate-800 font-bold focus:outline-none focus:border-blue-500 text-sm"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={hyphenLoading}
+                  className="w-full py-3.5 bg-blue-600 text-white rounded-2xl font-black text-sm hover:bg-blue-700 shadow-lg shadow-blue-500/20 active:scale-95 transition-all text-center flex items-center justify-center gap-2"
+                >
+                  {hyphenLoading ? (
+                    <>
+                      <RefreshCw className="w-4 h-4 animate-spin" />
+                      제출 중...
+                    </>
+                  ) : (
+                    <>
+                      <Key className="w-4 h-4" />
+                      캡차 인증 및 SMS 발송 요청
+                    </>
+                  )}
+                </button>
+              </form>
+            )}
+
+            {/* STEP 3: SMS 인증코드 & 차량번호 입력 */}
+            {hyphenStep === 'sms' && (
+              <form onSubmit={handleHyphenSms} className="space-y-4">
+                <div className="p-4 bg-slate-50 border border-slate-100 rounded-2xl text-center space-y-1">
+                  <span className="text-xs text-slate-500 block font-bold">휴대폰으로 전송된 인증번호와</span>
+                  <span className="text-xs text-slate-500 block font-bold">조회할 차량번호를 입력해 주세요.</span>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-black text-slate-500 uppercase tracking-wider">SMS 인증번호</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="6자리 숫자 입력"
+                    value={smsInput}
+                    onChange={(e) => setSmsInput(e.target.value.replace(/[^0-9]/g, ''))}
+                    className="w-full px-4 py-3 border border-slate-200 rounded-xl text-slate-800 font-bold text-center tracking-widest focus:outline-none focus:border-blue-500 text-sm"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-black text-slate-500 uppercase tracking-wider">차량번호</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="예> 12가3456"
+                    value={vhrno}
+                    onChange={(e) => setVhrno(e.target.value)}
+                    className="w-full px-4 py-3 border border-slate-200 rounded-xl text-slate-800 font-bold text-center focus:outline-none focus:border-blue-500 text-sm"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={hyphenLoading}
+                  className="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-2xl font-black text-sm hover:opacity-90 shadow-lg active:scale-95 transition-all text-center flex items-center justify-center gap-2"
+                >
+                  {hyphenLoading ? (
+                    <>
+                      <RefreshCw className="w-4 h-4 animate-spin" />
+                      인증 완료 및 차량 조회 중...
+                    </>
+                  ) : (
+                    <>
+                      <Lock className="w-4 h-4" />
+                      인증 완료 및 실시간 연동
+                    </>
+                  )}
+                </button>
+              </form>
+            )}
+
+            {/* STEP 4: 성공 완료 화면 */}
+            {hyphenStep === 'success' && (
+              <div className="space-y-6 text-center py-4">
+                <div className="inline-flex p-4 bg-emerald-50 text-emerald-500 rounded-3xl animate-bounce">
+                  <ShieldCheck className="w-10 h-10 animate-pulse" />
+                </div>
+                <h5 className="text-lg font-black text-slate-800">실시간 차량 연동 완료!</h5>
+                
+                <div className="bg-slate-50 border border-slate-100 rounded-3xl p-5 text-left space-y-3 max-w-sm mx-auto animate-in fade-in slide-in-from-bottom-2 duration-300">
+                  <div className="flex justify-between text-xs border-b border-slate-100 pb-2">
+                    <span className="text-slate-400 font-bold">차량 명세명</span>
+                    <span className="text-slate-800 font-black">{retrievedCarInfo?.CNM}</span>
+                  </div>
+                  <div className="flex justify-between text-xs border-b border-slate-100 pb-2">
+                    <span className="text-slate-400 font-bold">차량 연식</span>
+                    <span className="text-slate-800 font-black">{retrievedCarInfo?.PRYE}년식</span>
+                  </div>
+                  {retrievedCarInfo?.FRST_REGIST_DE && (
+                    <div className="flex justify-between text-xs border-b border-slate-100 pb-2">
+                      <span className="text-slate-400 font-bold">최초 등록일</span>
+                      <span className="text-slate-800 font-black">{formatDate(retrievedCarInfo.FRST_REGIST_DE)}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between text-xs border-b border-slate-100 pb-2">
+                    <span className="text-slate-400 font-bold">차량 번호</span>
+                    <span className="text-slate-800 font-black">{retrievedCarInfo?.VHRNO}</span>
+                  </div>
+                  {retrievedCarInfo?.PRPOS_SE_NM && (
+                    <div className="flex justify-between text-xs border-b border-slate-100 pb-2">
+                      <span className="text-slate-400 font-bold">용도 구분</span>
+                      <span className="text-slate-800 font-black">{retrievedCarInfo.PRPOS_SE_NM}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between text-xs border-b border-slate-100 pb-2">
+                    <span className="text-slate-400 font-bold">누적 주행거리</span>
+                    <span className="text-blue-600 font-black">{parseInt(retrievedCarInfo?.TRVL_DSTNC || '0').toLocaleString()} km</span>
+                  </div>
+                  {retrievedCarInfo?.TRANSR_REGIST_CO && (
+                    <div className="flex justify-between text-xs border-b border-slate-100 pb-2">
+                      <span className="text-slate-400 font-bold">소유자 변경 횟수</span>
+                      <span className="text-slate-800 font-black">{retrievedCarInfo.TRANSR_REGIST_CO}회</span>
+                    </div>
+                  )}
+                  {retrievedCarInfo?.ATLOS_PROCESS_RESN_NM && retrievedCarInfo.ATLOS_PROCESS_RESN_NM !== '해당없음' && (
+                    <div className="flex justify-between text-xs border-b border-slate-100 pb-2 bg-rose-50 p-1.5 rounded-lg">
+                      <span className="text-rose-600 font-black">⚠️ 전손 이력</span>
+                      <span className="text-rose-700 font-black">{retrievedCarInfo.ATLOS_PROCESS_RESN_NM}</span>
+                    </div>
+                  )}
+                  
+                  {retrievedInsuranceInfo && retrievedInsuranceInfo.length > 0 && (
+                    <div className="pt-2 border-t border-slate-200/60 mt-2 space-y-2">
+                      <span className="text-[10px] font-black text-slate-400 block mb-1">기존 의무보험 가입 내역</span>
+                      {retrievedInsuranceInfo.map((ins, index) => (
+                        <div key={index} className="bg-white border border-slate-100 rounded-xl p-2.5 flex flex-col gap-1 text-[10px] shadow-sm">
+                          <div className="flex justify-between font-bold text-slate-700">
+                            <span>{ins.SBSCRB_CMPNY_NM} ({ins.INSRNC_ITEM_NM || '자동차보험'})</span>
+                            <span className="text-emerald-600 px-1 bg-emerald-50 rounded text-[9px] font-black">{ins.PRSNL_DTA_SE_NM || '정상'}</span>
+                          </div>
+                          <div className="text-[9px] text-slate-400">
+                            기간: {formatDate(ins.PRSNL_BGNDE)} ~ {formatDate(ins.PRSNL_ENDDE)}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setIsHyphenModalOpen(false)}
+                  className="w-full py-3.5 bg-blue-600 text-white rounded-2xl font-black text-sm hover:bg-blue-700 shadow-md active:scale-95 transition-all text-center"
+                >
+                  시뮬레이터 반영 및 요금 확인
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}

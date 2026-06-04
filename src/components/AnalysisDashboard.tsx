@@ -16,7 +16,7 @@ import { PreExistingSummary } from './insurance/preExisting/PreExistingSummary';
 import { NursingSummary } from './insurance/nursing/NursingSummary';
 import { ChildSummary } from './insurance/child/ChildSummary';
 import { CarSummary } from './insurance/car/CarSummary';
-import { CarSlider } from './insurance/car/CarSlider';
+
 import { DriverSummary } from './insurance/driver/DriverSummary';
 import { PetSummary } from './insurance/pet/PetSummary';
 import { GolfSummary } from './insurance/golf/GolfSummary';
@@ -303,8 +303,6 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
         recommendation={result.recommendations.upgrade} 
       />
 
-      {isCar && <CarSlider result={result} />}
-
       {/* 3. Magic Remodeling Savings Calculator (신규 추가) */}
       <section className="bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-950 text-white rounded-[4rem] p-10 md:p-16 shadow-[0_50px_100px_rgba(0,0,0,0.3)] relative overflow-hidden border border-slate-800">
         <div className="absolute top-0 right-0 p-12 opacity-5 scale-125">
@@ -438,9 +436,9 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
               </p>
 
              <div className="mb-10 border-b border-gray-50 pb-10">
-                <span className="text-[0.65rem] font-black text-gray-300 uppercase tracking-widest block mb-3">월 예상 보험료</span>
+                <span className="text-[0.65rem] font-black text-gray-300 uppercase tracking-widest block mb-3">{isCar ? '연 예상 보험료' : '월 예상 보험료'}</span>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-6xl font-black text-blue-600 tracking-tighter">{result.recommendations.diet.estimatedPremium.toLocaleString()}</span>
+                  <span className="text-6xl font-black text-blue-600 tracking-tighter">{Math.round(isCar ? result.recommendations.diet.estimatedPremium * 12 : result.recommendations.diet.estimatedPremium).toLocaleString()}</span>
                   <span className="text-2xl font-black text-gray-900">원</span>
                 </div>
                 {result.recommendations.diet.isFire && (
@@ -500,9 +498,9 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
               </p>
 
              <div className="mb-10 border-b border-white/5 pb-10">
-                <span className="text-[0.65rem] font-black text-slate-600 uppercase tracking-widest block mb-3">월 예상 보험료</span>
+                <span className="text-[0.65rem] font-black text-slate-600 uppercase tracking-widest block mb-3">{isCar ? '연 예상 보험료' : '월 예상 보험료'}</span>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-6xl font-black text-orange-500 tracking-tighter">{result.recommendations.upgrade.estimatedPremium.toLocaleString()}</span>
+                  <span className="text-6xl font-black text-orange-500 tracking-tighter">{Math.round(isCar ? result.recommendations.upgrade.estimatedPremium * 12 : result.recommendations.upgrade.estimatedPremium).toLocaleString()}</span>
                   <span className="text-2xl font-black text-white">원</span>
                 </div>
                 {result.recommendations.upgrade.isFire && (
@@ -562,9 +560,9 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
               </p>
 
              <div className="mb-10 border-b border-gray-50 pb-10">
-                <span className="text-[0.65rem] font-black text-gray-300 uppercase tracking-widest block mb-3">월 예상 보험료</span>
+                <span className="text-[0.65rem] font-black text-gray-300 uppercase tracking-widest block mb-3">{isCar ? '연 예상 보험료' : '월 예상 보험료'}</span>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-6xl font-black text-gray-900 tracking-tighter">{result.recommendations.hybrid.estimatedPremium.toLocaleString()}</span>
+                  <span className="text-6xl font-black text-gray-900 tracking-tighter">{Math.round(isCar ? result.recommendations.hybrid.estimatedPremium * 12 : result.recommendations.hybrid.estimatedPremium).toLocaleString()}</span>
                   <span className="text-2xl font-black text-gray-900">원</span>
                 </div>
                 {result.recommendations.hybrid.isFire && (
@@ -658,7 +656,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
             <div className="col-span-1 text-center">순위</div>
             <div className="col-span-3">보험사</div>
             <div className="col-span-5">상품명</div>
-            <div className="col-span-3 text-right">월 예상 보험료</div>
+            <div className="col-span-3 text-right">{isCar ? '연 예상 보험료' : '월 예상 보험료'}</div>
           </div>
           
           <div className="divide-y divide-gray-50">
@@ -728,7 +726,21 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
                 </div>
                 <div className="col-span-3 text-right">
                     <div className="flex flex-col items-end">
-                       <span className="text-xl font-black text-gray-900">{Math.round(opt.premium).toLocaleString()}원</span>
+                        {isCar ? (
+                          <>
+                            <span className="text-xl font-black text-emerald-600">최종 {Math.round(opt.premium * 12).toLocaleString()}원</span>
+                            {opt.paymentPremium !== undefined && (
+                              <span className="text-xs text-gray-400 font-bold mt-0.5">
+                                결제 {Math.round(opt.paymentPremium * 12).toLocaleString()}원
+                                {opt.paymentPremium > opt.premium && (
+                                  <> | 환급 {Math.round((opt.paymentPremium - opt.premium) * 12).toLocaleString()}원</>
+                                )}
+                              </span>
+                            )}
+                          </>
+                        ) : (
+                          <span className="text-xl font-black text-gray-900">{Math.round(opt.premium).toLocaleString()}원</span>
+                        )}
                        {opt.riskPremium !== undefined && !isAnnuity && !isVariable && (
                          <span className="text-[10px] text-gray-400 font-bold mt-1">
                            보장 {opt.riskPremium.toLocaleString()}원 (소멸성 사업비+보장) / 적립 {opt.savingsPremium.toLocaleString()}원 (이자가 복리로 굴러가는 순적립금)

@@ -23,6 +23,7 @@ export const CarSummary: React.FC<Props> = ({ result }) => {
     year: 2024,
     driverLimit: 'single',
     ownDamage: 'join',
+    noAccidentYears: '3years',
   };
 
   const ALL_MODEL_LABELS: Record<string, string> = {
@@ -60,6 +61,15 @@ export const CarSummary: React.FC<Props> = ({ result }) => {
     }
   };
 
+  const getNoAccidentLabel = (years: string) => {
+    switch (years) {
+      case '1year': return '1년 이상 무사고 (8% 할인)';
+      case '3years': return '3년 이상 무사고 (13% 할인)';
+      case '5years': return '5년 이상 무사고 (최대 20% 할인)';
+      default: return '1년 미만 (사고 있음 / 할인 없음)';
+    }
+  };
+
   const getLimitLabel = (lim: number) => {
     return `대물배상 ${lim}억 원`;
   };
@@ -82,6 +92,12 @@ export const CarSummary: React.FC<Props> = ({ result }) => {
       color: 'text-blue-600 bg-blue-50'
     },
     {
+      label: '차량 상세 용도',
+      amount: car.subType === 'business' ? '업무용 차량 (20% 할증)' : '개인용 차량',
+      status: '확인됨',
+      color: car.subType === 'business' ? 'text-amber-600 bg-amber-50' : 'text-blue-600 bg-blue-50'
+    },
+    {
       label: '운전자 범위 특약',
       amount: DRIVER_LABELS[driverLimitVal] || driverLimitVal,
       status: driverLimitVal === 'single' ? '최저가' : driverLimitVal === 'anyone' ? '고비용' : '보통',
@@ -90,14 +106,20 @@ export const CarSummary: React.FC<Props> = ({ result }) => {
     { 
       label: '연간 예상 주행거리', 
       amount: getMileageLabel(car.annualMileage), 
-      status: car.annualMileage === 'under_3k' || car.annualMileage === 'under_5k' ? '환급 대상' : '확인됨', 
-      color: car.annualMileage === 'under_3k' || car.annualMileage === 'under_5k' ? 'text-emerald-600 bg-emerald-50' : 'text-gray-500 bg-gray-50' 
+      status: car.annualMileage !== 'over_15k' ? '환급 대상' : '대상 제외', 
+      color: car.annualMileage !== 'over_15k' ? 'text-emerald-600 bg-emerald-50' : 'text-rose-600 bg-rose-50' 
     },
     { 
       label: 'T-map 안전운전 점수', 
       amount: getScoreLabel(car.safeDrivingScore), 
       status: car.safeDrivingScore === 'over_80' ? '최대할인' : '적용완료', 
       color: car.safeDrivingScore === 'over_80' ? 'text-blue-600 bg-blue-50' : 'text-orange-600 bg-orange-50' 
+    },
+    {
+      label: '직전 무사고 기간',
+      amount: getNoAccidentLabel(car.noAccidentYears),
+      status: car.noAccidentYears && car.noAccidentYears !== 'none' ? '우량할인 대상' : '할인 제외',
+      color: car.noAccidentYears && car.noAccidentYears !== 'none' ? 'text-emerald-600 bg-emerald-50' : 'text-slate-600 bg-slate-50'
     },
     {
       label: '자기차량손해 (자차)',
@@ -120,8 +142,8 @@ export const CarSummary: React.FC<Props> = ({ result }) => {
   ];
 
   const currentPremium = analysis.monthlyPremium || 80000;
-  const recommendedPremium = result.recommendations?.upgrade?.estimatedPremium || 65000;
-  const annualSavings = (currentPremium - recommendedPremium) * 12;
+  const recommendedPremium = result.recommendations?.hybrid?.estimatedPremium || 0;
+  const annualSavings = recommendedPremium > 0 ? Math.max(0, (currentPremium - recommendedPremium) * 12) : 0;
 
   return (
     <div className="space-y-6 text-left">
@@ -165,12 +187,25 @@ export const CarSummary: React.FC<Props> = ({ result }) => {
             <span className="text-[10px] font-black text-blue-300 uppercase tracking-widest block mb-1">
               연간 기대 절감액 (환급금 포함)
             </span>
-            <div className="text-4xl font-black text-white mb-2">
-              {annualSavings.toLocaleString()} <span className="text-xl">원 환급 가능</span>
-            </div>
-            <span className="text-[10px] text-blue-200/60 block">
-              * 국내 Top 6 보험사 종합 실시간 최적화 기준
-            </span>
+            {recommendedPremium > 0 ? (
+              <>
+                <div className="text-3xl font-black text-white mb-1">
+                  ₩{Math.round(annualSavings).toLocaleString()}원
+                </div>
+                <span className="text-[10px] text-blue-200 block">
+                  연간 예상 보험료: ₩{Math.round(recommendedPremium * 12).toLocaleString()}원 (기존 대비 -{Math.round((1 - recommendedPremium / currentPremium) * 100)}%)
+                </span>
+              </>
+            ) : (
+              <>
+                <div className="text-2xl font-black text-white mb-2">
+                  차량 정보 연동 대기 중
+                </div>
+                <span className="text-[10px] text-blue-200/60 block">
+                  * car365 연동 완료 시 산출됩니다
+                </span>
+              </>
+            )}
           </div>
         </div>
       </div>

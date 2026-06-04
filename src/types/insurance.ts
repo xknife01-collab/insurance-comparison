@@ -13,6 +13,11 @@ export interface InsuranceAnalysis {
   gender: 'M' | 'F';        // 성별
   jobClass?: number;         // 직업급수 (1~3)
   selectedCategory?: string; // 선택된 보험 카테고리
+  subType?: string;          // 상세 타입 (예: 대출안심형, 정기보장형 등)
+  _realDbPremium?: number;
+  _productName?: string;
+  _companyName?: string;
+  _allOptions?: any[];
   cancer: CoverageItem;      // 일반암
   cerebrovascular: CoverageItem; // 뇌혈관
   cardiovascular: CoverageItem;  // 심혈관
@@ -50,7 +55,7 @@ export interface InsuranceAnalysis {
     illnessType?: string;       // 유병력 유형 (발달지연/ADHD 등)
     noAccidentYears?: '0' | '2' | '3' | '5'; // 무사고 기간 (3.N.5)
   };
-  car?: {                     // 자동차보험 전용 필드
+  car?: {                     // 자동차 보험 필드
     annualMileage: 'under_3k' | 'under_5k' | 'under_10k' | 'over_15k';
     safeDrivingScore: 'none' | 'under_70' | 'under_80' | 'over_80';
     hasConnectedCar: boolean;
@@ -59,14 +64,16 @@ export interface InsuranceAnalysis {
     currentPropertyLimit: number;
     currentInjuryType: 'jason' | 'jasang';
     brand?: string;           // 차량 브랜드 (hyundai/kia/genesis/kg_renault_gm/imported)
-    model?: string;           // 세부 차종 ID (avante/grandeur/sorento 등)
-    year?: number;            // 제조 연식 (2018~2026)
+    model?: string;           // 차량 모델 ID (avante/grandeur/sorento 등)
+    year?: number;            // 차량 연식 (2018~2026)
     driverLimit?: 'single' | 'couple' | 'family' | 'anyone'; // 운전자 범위 특약
-    ownDamage?: 'join' | 'exclude_single' | 'none'; // 자기차량손해 가입 방식
+    ownDamage?: 'join' | 'exclude_single' | 'none'; // 자기차량손해 가입여부
     hasLaneSafety?: boolean;
     hasForwardCollision?: boolean;
     engine?: string;
     trim?: string;
+    subType?: 'personal' | 'business'; // 개인용 차 vs 업무용 차
+    noAccidentYears?: 'none' | '1year' | '3years' | '5years'; // 무사고 기간
   };
   driver?: {                  // 운전자보험 전용 필드
     drivingPurpose: 'private' | 'commercial'; // 운전 목적 (자가용/영업용)
@@ -133,6 +140,34 @@ export interface InsuranceAnalysis {
     coveragePeriod: number;
     isHealthyDiscount: boolean;
   };
+  legal?: {                      // 민사/형사 법률비용보전보험 전용 필드
+    subType?: 'lawyer' | 'court_fee'; // 상세 타입 (변호사 선임 / 소송 비용)
+    litigationType: 'civil' | 'criminal' | 'administrative'; // 소송 구분 (민사소송 / 형사사건 / 행정소송)
+    lawyerLimit: number;      // 변호사선임비용 한도 (원, 500만 ~ 3,000만)
+    courtFeeLimit: number;    // 인지대/송달료 한도 (원, 200만 ~ 1,000만)
+    deductibleType: 'fixed' | 'ratio'; // 자기부담금 방식 (10만원 정액 / 10% 비례)
+    suddenAccelerationRider: boolean; // 급발진 분쟁 특약 여부
+    consultationRider: boolean;       // 변호사 1:1 상담 지원 특약 여부
+    isElectronicLitigation: boolean;  // 전자소송 이용 여부 (5% 할인)
+  };
+  savingsGeneral?: {
+    savingType: 'installment' | 'lumpSum'; // 적립식 vs 일시납
+    monthlyPremium: number;               // 월 납입액 (적립식) 또는 납입 총액 (일시납)
+    paymentPeriod: number;                // 납입 기간 (3년, 5년, 7년, 10년, 20년 등)
+    maintenancePeriod: number;            // 유지 기간 (5년, 10년, 12년 등)
+    savingsObjective: 'marriage' | 'housing' | 'retirement' | 'wealth' | 'education'; // 저축 목적
+    hasUniversal: boolean;                // 유니버셜 기능 (추가납입 / 중도인출) 여부
+  };
+  credit?: {
+    loanType: 'mortgage' | 'jeonse' | 'credit' | 'business'; // 대출 종류
+    loanAmount: number;             // 대출 잔액 (원)
+    loanPeriod: number;             // 남은 대출 기간 (년, 1~30)
+    creditBureau: 'nice' | 'kcb';   // 신용 평가사
+    creditScore: number;            // 신용 점수 (0~1000)
+    hasIllnessRider: boolean;       // 3대 중대질병(암/뇌/심장) 진단 시 상환 특약
+    hasDisabilityRider: boolean;    // 50% 이상 장해 시 상환 특약
+    subType?: string;               // 상세 타입 (대출안심형 / 정기보장형)
+  };
 }
 
 export interface AnalysisResult {
@@ -149,6 +184,11 @@ export interface AnalysisResult {
     diet: RecommendationPlan;
     upgrade: RecommendationPlan;
     hybrid: RecommendationPlan;
+  };
+  undiscountedPremiums?: {
+    diet: number;
+    hybrid: number;
+    upgrade: number;
   };
 }
 

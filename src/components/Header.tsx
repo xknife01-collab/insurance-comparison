@@ -13,7 +13,7 @@ import {
 type ViewType =
   | 'home' | 'indemnity' | 'preexisting' | 'dental' | 'surgery'
   | 'cancer' | 'caregiving' | 'dementia' | 'cerebrovascular' | 'heart'
-  | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'annuity' | 'whole' | 'variable';
+  | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'annuity' | 'whole' | 'variable' | 'legal' | 'credit';
 
 interface NavItem { label: string; view: ViewType; desc?: string; }
 interface NavGroup {
@@ -101,9 +101,9 @@ const ALL_GROUPS: NavGroup[] = [
       { label: '연금저축', view: 'annuity', desc: '노후 자금 준비' },
       { label: '종신', view: 'whole', desc: '가격대비 최다보장' },
       { label: '변액, 정기', view: 'variable', desc: '수익형 자산 관리' },
-      { label: '민사/형사', view: 'home', desc: '법률 비용 보전' },
+      { label: '민사/형사', view: 'legal', desc: '법률 비용 보전' },
       { label: '일반 저축', view: 'home', desc: '비과세 목돈 마련 재테크' },
-      { label: '신용보험', view: 'home', desc: '대출금 상환 안심 보장' },
+      { label: '신용보험', view: 'credit', desc: '대출금 상환 안심 보장' },
     ],
   },
 ];

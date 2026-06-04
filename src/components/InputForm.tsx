@@ -41,6 +41,7 @@ const INSURANCE_TYPES = [
   { id: 'home', label: '주택화재', icon: <Home className="w-8 h-8 text-gray-400" /> },
   { id: 'dementia', label: '치매', icon: <Activity className="w-8 h-8 text-gray-400" /> },
   { id: 'variable', label: '변액/변액연금', icon: <TrendingUp className="w-8 h-8 text-gray-400" /> },
+  { id: 'credit', label: '신용보험', icon: <div className="p-3 bg-indigo-100 rounded-2xl text-indigo-600"><ShieldIcon className="w-8 h-8" /></div> },
 ];
 
 interface InputFormProps {
@@ -69,7 +70,16 @@ const InputForm: React.FC<InputFormProps> = ({ onAnalyze }) => {
       cancer: { currentAmount: Number(cancerAmt), targetAmount: 50000000 },
       cerebrovascular: { currentAmount: 10000000, targetAmount: 30000000 },
       cardiovascular: { currentAmount: 10000000, targetAmount: 30000000 },
-      monthlyPremium: Number(premium)
+      monthlyPremium: Number(premium),
+      credit: selectedType === 'credit' ? {
+        loanType: 'mortgage',
+        loanAmount: 100000000,
+        loanPeriod: 10,
+        creditBureau: 'nice',
+        creditScore: 850,
+        hasIllnessRider: true,
+        hasDisabilityRider: true
+      } : undefined
     });
   };
 
@@ -83,7 +93,16 @@ const InputForm: React.FC<InputFormProps> = ({ onAnalyze }) => {
         cancer: { currentAmount: 30000000, targetAmount: 50000000 },
         cerebrovascular: { currentAmount: 10000000, targetAmount: 30000000 },
         cardiovascular: { currentAmount: 10000000, targetAmount: 30000000 },
-        monthlyPremium: 200000
+        monthlyPremium: 200000,
+        credit: selectedType === 'credit' ? {
+          loanType: 'mortgage',
+          loanAmount: 100000000,
+          loanPeriod: 10,
+          creditBureau: 'nice',
+          creditScore: 850,
+          hasIllnessRider: true,
+          hasDisabilityRider: true
+        } : undefined
       });
     }, 1500);
   };

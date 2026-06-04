@@ -32,6 +32,8 @@ import { FireExplanation } from './components/insurance/fire/FireExplanation';
 import { AnnuityExplanation } from './components/insurance/annuity/AnnuityExplanation';
 import { WholeLifeExplanation } from './components/insurance/wholeLife/WholeLifeExplanation';
 import { VariableExplanation } from './components/insurance/variable/VariableExplanation';
+import { LegalExplanation } from './components/insurance/legal/LegalExplanation';
+import { CreditExplanation } from './components/insurance/credit/CreditExplanation';
 
 
 
@@ -43,7 +45,7 @@ import { VariableExplanation } from './components/insurance/variable/VariableExp
 export default function App() {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [currentAnalysis, setCurrentAnalysis] = useState<InsuranceAnalysis | null>(null);
-  const [view, setView] = useState<'home' | 'indemnity' | 'preexisting' | 'dental' | 'caregiving' | 'dementia' | 'surgery' | 'cancer' | 'cerebrovascular' | 'heart' | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'annuity' | 'whole' | 'variable'>('home');
+  const [view, setView] = useState<'home' | 'indemnity' | 'preexisting' | 'dental' | 'caregiving' | 'dementia' | 'surgery' | 'cancer' | 'cerebrovascular' | 'heart' | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'annuity' | 'whole' | 'variable' | 'legal' | 'credit'>('home');
 
   const [calcTarget, setCalcTarget] = useState<string | null>(null);
 
@@ -371,6 +373,27 @@ export default function App() {
     );
   }
 
+  if (view === 'credit') {
+    return (
+      <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-blue-100 selection:text-blue-900 antialiased">
+        <Header setView={setView} />
+        <main className="pt-12 px-4 bg-white">
+           <div className="max-w-7xl mx-auto flex justify-end">
+              <button 
+                onClick={() => { setCalcTarget(null); setView('home'); }}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-blue-600 text-white hover:bg-blue-700 font-black text-xs transition-all mb-6 shadow-lg shadow-blue-500/20 active:scale-95 group"
+              >
+                메인으로 돌아가기
+                <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
+              </button>
+           </div>
+           <CreditExplanation onAction={() => { setCalcTarget('credit'); setView('home'); }} />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   if (view === 'golf') {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-emerald-100 selection:text-emerald-900 antialiased">
@@ -449,6 +472,27 @@ export default function App() {
               </button>
            </div>
            <WholeLifeExplanation onAction={() => { setCalcTarget('whole'); setView('home'); }} />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (view === 'legal') {
+    return (
+      <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-slate-100 selection:text-slate-900 antialiased">
+        <Header setView={setView} />
+        <main className="pt-12 px-4 bg-white">
+           <div className="max-w-7xl mx-auto flex justify-end">
+              <button 
+                onClick={() => { setCalcTarget(null); setView('home'); }}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-slate-800 text-white hover:bg-slate-900 font-black text-xs transition-all mb-6 shadow-lg shadow-slate-500/20 active:scale-95 group"
+              >
+                메인으로 돌아가기
+                <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
+              </button>
+           </div>
+           <LegalExplanation onAction={() => { setCalcTarget('legal'); setView('home'); }} />
         </main>
         <Footer />
       </div>

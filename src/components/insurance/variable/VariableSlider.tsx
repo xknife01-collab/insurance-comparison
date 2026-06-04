@@ -16,7 +16,8 @@ export const VariableSlider: React.FC<{ result: AnalysisResult }> = ({ result })
     isHealthyDiscount: false
   };
 
-  const subType = opts.subType || (result.analysis.selectedDetail === 1 ? 'term' : 'investment');
+  const rawSubType = opts.subType || (result.analysis.selectedDetail === 1 ? 'term' : 'investment');
+  const subType = (rawSubType === 'variable_saving' || rawSubType === 'investment') ? 'investment' : 'term';
   const payYears = opts.paymentPeriod || 10;
   const investmentStyle = opts.investmentStyle || 'balanced';
   const equityRatio = opts.equityRatio !== undefined ? opts.equityRatio : 50;

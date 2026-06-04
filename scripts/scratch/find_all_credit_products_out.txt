@@ -1,0 +1,49 @@
+Total unique credit products: 16
+
+Product: 삼성 인생금융 대출안심보험(2403)(무배당) 1종(담보대출 플랜)
+Occurrences (first 5): [('file_11.xls', 0, 85), ('file_11.xls', 0, 85), ('file_21.xls', 0, 85), ('file_21.xls', 0, 85), ('보장성_상품비교_20260406102527983.xls', 0, 85)]
+
+Product: 삼성 인생금융 대출안심보험(2403)(무배당) 2종(신용대출 플랜)
+Occurrences (first 5): [('file_11.xls', 0, 86), ('file_11.xls', 0, 86), ('file_11.xls', 0, 86), ('file_11.xls', 0, 87), ('file_11.xls', 0, 87)]
+
+Product: 삼성 상생금융 대출안심보험(2403)(무배당) 1종(담보대출 플랜)
+Occurrences (first 5): [('file_11.xls', 0, 88), ('file_11.xls', 0, 88), ('file_21.xls', 0, 88), ('file_21.xls', 0, 88), ('보장성_상품비교_20260406102527983.xls', 0, 88)]
+
+Product: 삼성 상생금융 대출안심보험(2403)(무배당) 2종(신용대출 플랜)
+Occurrences (first 5): [('file_11.xls', 0, 89), ('file_11.xls', 0, 89), ('file_11.xls', 0, 89), ('file_11.xls', 0, 90), ('file_11.xls', 0, 90)]
+
+Product: 무배당 e수술보장 대출상환 신용보험II(3형)
+Occurrences (first 5): [('file_19.xls', 0, 3), ('file_19.xls', 0, 3), ('file_19.xls', 0, 3), ('file_19.xls', 0, 3), ('file_19.xls', 0, 4)]
+
+Product: 무배당 e수술보장 대출상환 신용보험II(2형)
+Occurrences (first 5): [('file_19.xls', 0, 10), ('file_19.xls', 0, 10), ('file_19.xls', 0, 10), ('file_19.xls', 0, 10), ('file_19.xls', 0, 11)]
+
+Product: 무배당 e수술보장 대출상환 신용보험II(1형)
+Occurrences (first 5): [('file_19.xls', 0, 17), ('file_19.xls', 0, 17), ('file_19.xls', 0, 17), ('file_19.xls', 0, 17), ('file_19.xls', 0, 18)]
+
+Product: 신한진심을품은대출안심보장보험(무배당)
+Occurrences (first 5): [('file_19.xls', 0, 29), ('file_19.xls', 0, 29), ('file_19.xls', 0, 30), ('file_19.xls', 0, 30), ('file_29.xls', 0, 29)]
+
+Product: (무)신용보험
+Occurrences (first 5): [('file_19.xls', 0, 34), ('file_19.xls', 0, 34), ('file_19.xls', 0, 35), ('file_19.xls', 0, 35), ('file_19.xls', 0, 36)]
+
+Product: (무) 더세이프 대출안심보험(갱신형)
+Occurrences (first 5): [('file_19.xls', 0, 40), ('file_19.xls', 0, 40), ('file_19.xls', 0, 41), ('file_19.xls', 0, 41), ('file_29.xls', 0, 40)]
+
+Product: 간편가입 대출안심 보장보험 무배당
+Occurrences (first 5): [('file_19.xls', 0, 42), ('file_19.xls', 0, 42), ('file_29.xls', 0, 42), ('file_29.xls', 0, 42), ('보장성_상품비교_20260406102559489.xls', 0, 42)]
+
+Product: 건강하면 더좋은 대출안심 보장보험 무배당
+Occurrences (first 5): [('file_19.xls', 0, 43), ('file_19.xls', 0, 43), ('file_19.xls', 0, 44), ('file_19.xls', 0, 44), ('file_19.xls', 0, 45)]
+
+Product: (무) (e)대출안심 보장보험(플랜선택형)
+Occurrences (first 5): [('file_19.xls', 0, 48), ('file_19.xls', 0, 48), ('file_19.xls', 0, 49), ('file_19.xls', 0, 49), ('file_29.xls', 0, 48)]
+
+Product: (무) 대출안심 정기보험(환급형)
+Occurrences (first 5): [('file_19.xls', 0, 50), ('file_19.xls', 0, 50), ('file_19.xls', 0, 51), ('file_19.xls', 0, 51), ('file_19.xls', 0, 52)]
+
+Product: 무배당 (e)대출안심보장보험
+Occurrences (first 5): [('file_19.xls', 0, 56), ('file_19.xls', 0, 56), ('file_19.xls', 0, 57), ('file_19.xls', 0, 57), ('file_19.xls', 0, 58)]
+
+Product: (무) 더세이프 대출안심보험(비갱신형)
+Occurrences (first 5): [('file_19.xls', 0, 61), ('file_19.xls', 0, 61), ('file_19.xls', 0, 62), ('file_19.xls', 0, 62), ('file_29.xls', 0, 61)]

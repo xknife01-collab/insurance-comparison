@@ -14,6 +14,7 @@ export const CarSlider: React.FC<Props> = ({ result }) => {
   const currentPremium = analysis.monthlyPremium || 80000;
   const dietPremium = result.recommendations?.diet?.estimatedPremium || Math.floor(currentPremium * 0.7);
   const upgradePremium = result.recommendations?.upgrade?.estimatedPremium || Math.floor(currentPremium * 0.95);
+  const undiscountedUpgradePremium = result.undiscountedPremiums?.upgrade || upgradePremium;
 
   const [mileage, setMileage] = useState<number>(8000); // 연간 주행거리 슬라이더
 
@@ -25,7 +26,7 @@ export const CarSlider: React.FC<Props> = ({ result }) => {
     else if (mileage <= 10000) discountRate = 0.18 - ((mileage - 5000) / 5000) * 0.10;
     else if (mileage <= 15000) discountRate = 0.08 - ((mileage - 10000) / 5000) * 0.08;
     
-    const basePremiumAnnual = upgradePremium * 12;
+    const basePremiumAnnual = undiscountedUpgradePremium * 12;
     const finalPremiumAnnual = Math.round(basePremiumAnnual * (1 - discountRate));
     const finalMonthlyPremium = Math.round(finalPremiumAnnual / 12);
     const refundAnnual = Math.round(basePremiumAnnual * discountRate);
@@ -35,11 +36,12 @@ export const CarSlider: React.FC<Props> = ({ result }) => {
 
     return {
       finalMonthlyPremium,
+      finalPremiumAnnual,
       refundAnnual,
       efficiencyIndex,
       percentage: Math.round(discountRate * 100)
     };
-  }, [mileage, upgradePremium]);
+  }, [mileage, undiscountedUpgradePremium]);
 
   return (
     <section className="space-y-16 text-left">
@@ -106,17 +108,17 @@ export const CarSlider: React.FC<Props> = ({ result }) => {
               <div className="flex flex-col gap-1 border-b border-white/10 pb-4">
                 <span className="text-[10px] font-black text-blue-400 tracking-widest uppercase">Expected Mileage Rebate</span>
                 <span className="text-xs text-slate-400">연간 마일리지 예상 캐시백</span>
-                <div className="text-3xl font-black text-blue-400 mt-1">
-                  약 {metrics.refundAnnual.toLocaleString()}원
+                <div className="text-2xl font-black text-blue-400 mt-1">
+                  {upgradePremium === 0 ? '연동 대기 중' : `약 ${metrics.refundAnnual.toLocaleString()}원`}
                 </div>
               </div>
 
               {/* 실질 보험료 */}
               <div className="flex flex-col gap-1 border-b border-white/10 pb-4">
                 <span className="text-[10px] font-black text-emerald-400 tracking-widest uppercase">Net Premium</span>
-                <span className="text-xs text-slate-400">환급 반영 시 실질 월 보험료</span>
-                <div className="text-3xl font-black text-emerald-400 mt-1">
-                  월 {metrics.finalMonthlyPremium.toLocaleString()}원
+                <span className="text-xs text-slate-400">환급 반영 후 실질 연 보험료</span>
+                <div className="text-2xl font-black text-emerald-400 mt-1">
+                  {upgradePremium === 0 ? '연동 대기 중' : `약 ${metrics.finalPremiumAnnual.toLocaleString()}원`}
                 </div>
               </div>
 
@@ -125,8 +127,8 @@ export const CarSlider: React.FC<Props> = ({ result }) => {
                 <span className="text-[10px] font-black text-orange-400 tracking-widest uppercase">Efficiency Index</span>
                 <span className="text-xs text-slate-400">보장 가성비 지수</span>
                 <div className="flex items-baseline gap-2 mt-1">
-                  <span className="text-4xl font-black text-orange-400">{metrics.efficiencyIndex}</span>
-                  <span className="text-sm font-bold text-slate-400">점 / 100점</span>
+                  <span className="text-4xl font-black text-orange-400">{upgradePremium === 0 ? '-' : metrics.efficiencyIndex}</span>
+                  <span className="text-sm font-bold text-slate-400">{upgradePremium === 0 ? '' : '점 / 100점'}</span>
                 </div>
               </div>
             </div>

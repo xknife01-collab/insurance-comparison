@@ -147,6 +147,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   const [name, setName] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [mobile, setMobile] = useState('');
+  const [triggerHyphenModal, setTriggerHyphenModal] = useState(false);
   const [jobClass, setJobClass] = useState(1); // 1: Office, 2: Driver/Field, 3: High Risk
   const [healthStatus, setHealthStatus] = useState<'standard' | 'simple'>('standard');
   const [preExistingType, setPreExistingType] = useState<'3.0.5' | '3.2.5' | '3.3.5' | '3.5.5'>('3.2.5');
@@ -254,6 +255,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   const [carForwardCollision, setCarForwardCollision] = useState(true);
   const [carEngine, setCarEngine] = useState<string>('g2_5');
   const [carTrim, setCarTrim] = useState<string>('premium');
+  const [carNoAccidentYears, setCarNoAccidentYears] = useState<'none' | '1year' | '3years' | '5years'>('3years');
 
   // 운전자보험 states
   const [driverDrivingPurpose, setDriverDrivingPurpose] = useState<'private' | 'commercial'>('private');
@@ -562,7 +564,9 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
           hasLaneSafety: carLaneSafety,
           hasForwardCollision: carForwardCollision,
           engine: carEngine,
-          trim: carTrim
+          trim: carTrim,
+          subType: selectedDetail === 0 ? 'personal' : 'business',
+          noAccidentYears: carNoAccidentYears
         } : undefined,
         driver: selectedId === 'driver' ? {
           drivingPurpose: driverDrivingPurpose,
@@ -793,39 +797,84 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
 
         <div className="pt-20 border-t-[3px] border-dotted border-slate-100">
            <div className="max-w-5xl mx-auto text-center">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-                 <div className="bg-slate-50/40 rounded-[2.2rem] p-7 flex flex-col gap-1 relative overflow-hidden focus-within:bg-white focus-within:shadow-2xl transition-all border-2 border-transparent focus-within:border-orange-100/50">
-                      <label className="text-[0.55rem] font-black text-slate-400 uppercase tracking-widest mb-1 text-left pl-1">성함</label>
-                      <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="김리치" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200" />
-                      <div className="absolute top-[8px] right-[8px] bottom-[8px] w-24 bg-slate-100 rounded-[1.8rem] flex p-1 shadow-inner border border-slate-200/50">
-                        <button onClick={() => setGender('M')} className={`flex-1 rounded-[1.5rem] font-black text-xs transition-all ${gender === 'M' ? 'bg-slate-800 text-white shadow-md' : 'text-slate-400'}`}>남</button>
-                        <button onClick={() => setGender('F')} className={`flex-1 rounded-[1.5rem] font-black text-xs transition-all ${gender === 'F' ? 'bg-orange-500 text-white shadow-md' : 'text-slate-400'}`}>여</button>
-                      </div>
-                 </div>
+              {selectedId === 'car' ? (
+                <>
+                  {/* 자동차 전용 고객 정보 입력 폼 (인증 버튼 없음) */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+                     <div className="bg-slate-50/40 rounded-[2.2rem] p-7 flex flex-col gap-1 relative overflow-hidden focus-within:bg-white focus-within:shadow-2xl transition-all border-2 border-transparent focus-within:border-orange-100/50">
+                          <label className="text-[0.55rem] font-black text-slate-400 uppercase tracking-widest mb-1 text-left pl-1">성함</label>
+                          <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="김리치" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200" />
+                          <div className="absolute top-[8px] right-[8px] bottom-[8px] w-24 bg-slate-100 rounded-[1.8rem] flex p-1 shadow-inner border border-slate-200/50">
+                            <button onClick={() => setGender('M')} className={`flex-1 rounded-[1.5rem] font-black text-xs transition-all ${gender === 'M' ? 'bg-slate-800 text-white shadow-md' : 'text-slate-400'}`}>남</button>
+                            <button onClick={() => setGender('F')} className={`flex-1 rounded-[1.5rem] font-black text-xs transition-all ${gender === 'F' ? 'bg-orange-500 text-white shadow-md' : 'text-slate-400'}`}>여</button>
+                          </div>
+                     </div>
 
-                 <div className="bg-slate-50/40 rounded-[2.2rem] p-7 flex flex-col gap-1 relative focus-within:bg-white focus-within:shadow-2xl transition-all border-2 border-transparent focus-within:border-orange-100/50">
-                      <label className="text-[0.55rem] font-black text-slate-400 uppercase tracking-widest mb-1 text-left pl-1">생년월일</label>
-                      <div className="flex justify-between items-center text-left">
-                         <input type="text" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} maxLength={8} placeholder="예)19770101" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200 w-full" />
-                         <div className={`flex-shrink-0 px-4 py-2 rounded-[1rem] font-black text-[0.65rem] transition-all whitespace-nowrap shadow-sm border
-                           ${calculatedAge 
-                             ? 'bg-orange-500 text-white border-orange-400 animate-in zoom-in-50' 
-                             : 'bg-white text-slate-200 border-slate-100'}`}>
-                            나이 {calculatedAge || '**'}세
-                         </div>
-                      </div>
-                 </div>
+                     <div className="bg-slate-50/40 rounded-[2.2rem] p-7 flex flex-col gap-1 relative focus-within:bg-white focus-within:shadow-2xl transition-all border-2 border-transparent focus-within:border-orange-100/50">
+                          <label className="text-[0.55rem] font-black text-slate-400 uppercase tracking-widest mb-1 text-left pl-1">생년월일</label>
+                          <div className="flex justify-between items-center text-left">
+                             <input type="text" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} maxLength={8} placeholder="예)19770101" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200 w-full" />
+                             <div className={`flex-shrink-0 px-4 py-2 rounded-[1rem] font-black text-[0.65rem] transition-all whitespace-nowrap shadow-sm border
+                               ${calculatedAge 
+                                 ? 'bg-orange-500 text-white border-orange-400 animate-in zoom-in-50' 
+                                 : 'bg-white text-slate-200 border-slate-100'}`}>
+                               나이 {calculatedAge || '**'}세
+                             </div>
+                          </div>
+                     </div>
 
-                 <div className="bg-slate-50/40 rounded-[2.2rem] p-7 flex flex-col gap-1 relative focus-within:bg-white focus-within:shadow-2xl transition-all border-2 border-transparent focus-within:border-orange-100/50">
-                      <label className="text-[0.55rem] font-black text-slate-400 uppercase tracking-widest mb-1 text-left pl-1">연락처 (Mobile)</label>
-                      <div className="flex justify-between items-center pr-2">
-                        <input type="text" value={mobile} onChange={(e) => setMobile(e.target.value)} placeholder="01012345678" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200 w-full" />
-                        <button className="flex-shrink-0 px-5 py-2.5 bg-slate-900 rounded-[1rem] text-white font-black text-[0.6rem] hover:bg-black transition-all shadow-lg active:scale-95 group flex items-center gap-1">
-                           인증
-                        </button>
-                      </div>
-                 </div>
-              </div>
+                     <div className="bg-slate-50/40 rounded-[2.2rem] p-7 flex flex-col gap-1 relative focus-within:bg-white focus-within:shadow-2xl transition-all border-2 border-transparent focus-within:border-orange-100/50">
+                          <label className="text-[0.55rem] font-black text-slate-400 uppercase tracking-widest mb-1 text-left pl-1">연락처 (Mobile)</label>
+                          <input type="text" value={mobile} onChange={(e) => setMobile(e.target.value)} placeholder="01012345678" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200 w-full" />
+                     </div>
+                  </div>
+
+                  {/* 자동차 전용 내차정보 조회하기 큰 버튼 */}
+                  <div className="w-full flex justify-center mb-12 animate-in fade-in slide-in-from-top-2 duration-500">
+                    <button
+                      onClick={() => setTriggerHyphenModal(true)}
+                      className="w-full max-w-xl py-5 bg-gradient-to-r from-orange-600 via-pink-600 to-indigo-600 text-white rounded-[2.2rem] font-black text-lg shadow-[0_12px_35px_rgba(239,68,68,0.25)] hover:shadow-[0_18px_45px_rgba(239,68,68,0.45)] hover:scale-[1.01] transition-all flex items-center justify-center gap-3 active:scale-[0.99] cursor-pointer"
+                    >
+                      <Sparkles className="w-5 h-5 text-yellow-300 animate-pulse" />
+                      내 차량정보 입력으로 실시간 조회하기 (car365 실시간 연동)
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+                   <div className="bg-slate-50/40 rounded-[2.2rem] p-7 flex flex-col gap-1 relative overflow-hidden focus-within:bg-white focus-within:shadow-2xl transition-all border-2 border-transparent focus-within:border-orange-100/50">
+                        <label className="text-[0.55rem] font-black text-slate-400 uppercase tracking-widest mb-1 text-left pl-1">성함</label>
+                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="김리치" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200" />
+                        <div className="absolute top-[8px] right-[8px] bottom-[8px] w-24 bg-slate-100 rounded-[1.8rem] flex p-1 shadow-inner border border-slate-200/50">
+                          <button onClick={() => setGender('M')} className={`flex-1 rounded-[1.5rem] font-black text-xs transition-all ${gender === 'M' ? 'bg-slate-800 text-white shadow-md' : 'text-slate-400'}`}>남</button>
+                          <button onClick={() => setGender('F')} className={`flex-1 rounded-[1.5rem] font-black text-xs transition-all ${gender === 'F' ? 'bg-orange-500 text-white shadow-md' : 'text-slate-400'}`}>여</button>
+                        </div>
+                   </div>
+
+                   <div className="bg-slate-50/40 rounded-[2.2rem] p-7 flex flex-col gap-1 relative focus-within:bg-white focus-within:shadow-2xl transition-all border-2 border-transparent focus-within:border-orange-100/50">
+                        <label className="text-[0.55rem] font-black text-slate-400 uppercase tracking-widest mb-1 text-left pl-1">생년월일</label>
+                        <div className="flex justify-between items-center text-left">
+                           <input type="text" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} maxLength={8} placeholder="예)19770101" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200 w-full" />
+                           <div className={`flex-shrink-0 px-4 py-2 rounded-[1rem] font-black text-[0.65rem] transition-all whitespace-nowrap shadow-sm border
+                             ${calculatedAge 
+                               ? 'bg-orange-500 text-white border-orange-400 animate-in zoom-in-50' 
+                               : 'bg-white text-slate-200 border-slate-100'}`}>
+                              나이 {calculatedAge || '**'}세
+                           </div>
+                        </div>
+                   </div>
+
+                   <div className="bg-slate-50/40 rounded-[2.2rem] p-7 flex flex-col gap-1 relative focus-within:bg-white focus-within:shadow-2xl transition-all border-2 border-transparent focus-within:border-orange-100/50">
+                        <label className="text-[0.55rem] font-black text-slate-400 uppercase tracking-widest mb-1 text-left pl-1">연락처 (Mobile)</label>
+                        <div className="flex justify-between items-center pr-2">
+                          <input type="text" value={mobile} onChange={(e) => setMobile(e.target.value)} placeholder="01012345678" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200 w-full" />
+                          <button className="flex-shrink-0 px-5 py-2.5 bg-slate-900 rounded-[1rem] text-white font-black text-[0.6rem] hover:bg-black transition-all shadow-lg active:scale-95 group flex items-center gap-1">
+                             인증
+                          </button>
+                        </div>
+                   </div>
+                </div>
+              )}
 
               {/* Modular Specialized Field Components */}
               {selectedId === 'care_svc' ? (
@@ -923,6 +972,15 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                   hasForwardCollision={carForwardCollision} setHasForwardCollision={setCarForwardCollision}
                   selectedEngine={carEngine} setSelectedEngine={setCarEngine}
                   selectedTrim={carTrim} setSelectedTrim={setCarTrim}
+                  noAccidentYears={carNoAccidentYears} setNoAccidentYears={setCarNoAccidentYears}
+                  prefilledName={name}
+                  prefilledBirth={birthDate}
+                  prefilledMobile={mobile}
+                  initialUserName={name}
+                  initialBirthDate={birthDate}
+                  initialMobileNo={mobile}
+                  triggerHyphenModal={triggerHyphenModal}
+                  setTriggerHyphenModal={setTriggerHyphenModal}
                 />
               ) : selectedId === 'driver' ? (
                 <DriverFields

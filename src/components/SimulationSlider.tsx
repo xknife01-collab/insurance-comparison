@@ -19,6 +19,12 @@ import { FireSlider } from './insurance/fire/FireSlider';
 import { AnnuitySlider } from './insurance/annuity/AnnuitySlider';
 import { WholeLifeSlider } from './insurance/wholeLife/WholeLifeSlider';
 import { VariableSlider } from './insurance/variable/VariableSlider';
+import { LegalSlider } from './insurance/legal/LegalSlider';
+import { SavingsSlider } from './insurance/savings/SavingsSlider';
+import { SavingsExplanation } from './insurance/savings/SavingsExplanation';
+import { CreditSlider } from './insurance/credit/CreditSlider';
+import { CarSlider } from './insurance/car/CarSlider';
+
 
 interface SimulationSliderProps {
   result: AnalysisResult;
@@ -43,6 +49,13 @@ export const SimulationSlider: React.FC<SimulationSliderProps> = ({ result }) =>
   // 펫보험 지원
   if (category.includes('펫') || category === 'pet') return <PetSlider result={result} />;
 
+  // 자동차보험 지원
+  if (category.includes('자동차') || category === 'car') return <CarSlider result={result} />;
+
+
+  // 신용보험 지원
+  if (category.includes('신용') || category === 'credit' || !!result.analysis.credit) return <CreditSlider result={result} />;
+
   // 골프보험 지원
   if (category.includes('골프') || category === 'golf') return <GolfSlider result={result} />;
 
@@ -64,6 +77,20 @@ export const SimulationSlider: React.FC<SimulationSliderProps> = ({ result }) =>
   // 종신보험 지원
   if (category.includes('종신') || category === 'whole' || !!result.analysis.wholeLife) {
     return <WholeLifeSlider result={result} />;
+  }
+
+  // 법률비용보전보험 지원
+  if (category.includes('법률') || category === 'legal' || !!result.analysis.legal) {
+    return <LegalSlider result={result} />;
+  }
+
+  if (category.includes('일반 저축') || category === 'savings_general' || !!result.analysis.savingsGeneral) {
+    return (
+      <div className="space-y-12">
+        <SavingsSlider result={result} />
+        <SavingsExplanation />
+      </div>
+    );
   }
 
 
