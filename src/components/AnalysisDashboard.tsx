@@ -314,10 +314,10 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
             <Sparkles size={12} className="text-white" /> Remodeling Magic Guide
           </div>
           <h3 className="text-4xl md:text-5xl font-black tracking-tighter leading-none bg-gradient-to-r from-white via-indigo-100 to-purple-200 bg-clip-text text-transparent">
-            당신의 10년 후가 달라지는 마법의 리모델링
+            가계 금융 건강을 위한 맞춤형 보험료 다이어트
           </h3>
           <p className="text-slate-400 font-bold italic text-base">
-            "불필요한 고비용 특약을 정리하고, 숨어 있던 기회비용을 찾아 당신의 소중한 미래 자산으로 돌려드립니다."
+            "불필요한 고비용 특약을 정리하여 가계 고정비 지출을 방어하고 합리적인 재정 지표를 제시해 드립니다."
           </p>
         </div>
 
@@ -349,22 +349,22 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
             </div>
           </div>
 
-          {/* Card 2: 오늘을 위해 쓰면? */}
+          {/* Card 2: 연간 고정비 절감 예측 */}
           <div className="bg-white/5 backdrop-blur-md p-10 rounded-[3rem] border border-white/10 flex flex-col justify-between hover:bg-white/10 transition-all duration-300">
             <div>
               <div className="w-12 h-12 rounded-2xl bg-pink-500/20 flex items-center justify-center mb-6">
                 <Plane className="w-6 h-6 text-pink-400" />
               </div>
-              <h4 className="text-lg font-black text-slate-300 mb-2">오늘을 위해 쓰면?</h4>
+              <h4 className="text-lg font-black text-slate-300 mb-2">연간 누적 절감 효과</h4>
               <p className="text-xs text-slate-400 font-bold leading-relaxed mb-6">
-                리모델링을 통해 아낀 기회비용을 1년간 모으면 누릴 수 있는 특별한 순간입니다.
+                불필요한 고비용 특약을 조율하여 절감할 수 있는 1년간의 누적 보험료 예측치입니다.
               </p>
             </div>
             <div>
               <div className="border-t border-white/5 pt-6">
-                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">매년 가능한 라이프스타일</span>
+                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">연간 지출 비용 절감 예측</span>
                 <p className="text-base font-black text-pink-300 leading-snug">
-                  가족과 함께하는 매년 한 번의 특별한 호캉스가 가능한 돈입니다.
+                  연간 고정비 지출을 효과적으로 방어하여 가계 재정을 효율화할 수 있습니다.
                 </p>
                 <div className="text-[10px] text-slate-400 mt-2">
                   (연간 누적 절감액: <span className="font-bold">{Math.round(showSaving * 12).toLocaleString()}원</span>)
@@ -373,20 +373,20 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
             </div>
           </div>
 
-          {/* Card 3: 내일을 위해 모으면? */}
+          {/* Card 3: 10개년 재정 최적화 예측 */}
           <div className="bg-white/5 backdrop-blur-md p-10 rounded-[3rem] border border-white/10 flex flex-col justify-between hover:bg-white/10 transition-all duration-300">
             <div>
               <div className="w-12 h-12 rounded-2xl bg-amber-500/20 flex items-center justify-center mb-6">
                 <TrendingUp className="w-6 h-6 text-amber-400" />
               </div>
-              <h4 className="text-lg font-black text-slate-300 mb-2">내일을 위해 모으면?</h4>
+              <h4 className="text-lg font-black text-slate-300 mb-2">10개년 재정 최적화 예측</h4>
               <p className="text-xs text-slate-400 font-bold leading-relaxed mb-6">
-                절감된 기회비용을 단 10년간만 꾸준히 적립했을 때 모이는 은퇴 비상금의 가치입니다.
+                리밸런싱을 통해 절감한 기회비용을 10년간 유지 시 절약되는 총 고정 지출비의 누적 규모입니다.
               </p>
             </div>
             <div>
               <div className="border-t border-white/5 pt-6 space-y-2">
-                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block">10년 뒤 목돈 가치</span>
+                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block">10년 총 고정비 절약 예측</span>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-black text-amber-400 tracking-tighter">
                     {Math.round(showSaving * 12 * 10).toLocaleString()}
@@ -394,11 +394,15 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
                   <span className="text-xl font-bold text-slate-300">원</span>
                 </div>
                 <div className="text-[10px] text-slate-400">
-                  든든한 <span className="text-amber-300 font-black">은퇴 비상금</span>으로 돌아옵니다.
+                  10년 동안 가계 자산에서 불필요하게 새어 나가던 누적 지출을 성공적으로 방어하는 가치입니다.
                 </div>
               </div>
             </div>
           </div>
+        </div>
+
+        <div className="text-[10px] text-slate-500 mt-10 text-center relative z-10">
+          * 본 시뮬레이션은 불필요한 보장 리밸런싱을 통한 고정비 절감 효과의 예시이며, 실제 가입/해지 시 개별 요율 및 보장 내용에 따라 실제 적용 효과는 달라질 수 있습니다.
         </div>
       </section>
 
