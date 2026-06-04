@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   Shield, Activity, Clock, Baby, Smile, 
   Stethoscope, Calendar, PiggyBank, 
-  Car, Home, Brain, TrendingUp,
+  Car, Home, Brain, TrendingUp, Navigation,
   Heart, Hospital, Users, Wallet, Flame, Dog, Plane, Target, Scale, Hotel, Sparkles, Plus, Zap, ChevronRight, HelpCircle, HeartHandshake, AlertCircle
 } from 'lucide-react';
 import { HealthFields } from './insurance/health/HealthFields';
