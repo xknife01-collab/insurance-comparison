@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   Shield, Activity, Clock, Baby, Smile, 
   Stethoscope, Calendar, PiggyBank, 
-  Car, Home, Brain, TrendingUp, MessageCircle, Navigation,
+  Car, Home, Brain, TrendingUp,
   Heart, Hospital, Users, Wallet, Flame, Dog, Plane, Target, Scale, Hotel, Sparkles, Plus, Zap, ChevronRight, HelpCircle, HeartHandshake, AlertCircle
 } from 'lucide-react';
 import { HealthFields } from './insurance/health/HealthFields';
@@ -1166,16 +1166,6 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                    <ChevronRight size={28} />
                 </motion.button>
 
-                <div className="flex flex-col sm:flex-row gap-4">
-                   <button className="flex-1 py-5 bg-white rounded-[1.8rem] border border-slate-100 flex items-center justify-center gap-3 font-black text-gray-800 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all active:scale-95">
-                      <MessageCircle size={20} fill="#FEE500" strokeWidth={0} /> 
-                      <span className="text-sm">카카오 간편 계산</span>
-                   </button>
-                   <button className="flex-1 py-5 bg-white rounded-[1.8rem] border border-slate-100 flex items-center justify-center gap-3 font-black text-gray-800 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all active:scale-95">
-                      <Navigation size={20} fill="#03C75A" strokeWidth={0} className="rotate-[225deg]" /> 
-                      <span className="text-sm">네이버 간편 계산</span>
-                   </button>
-                </div>
               </div>
            </div>
         </div>
