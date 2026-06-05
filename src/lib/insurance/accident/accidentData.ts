@@ -1,0 +1,45 @@
+export interface AccidentProduct {
+  company: string;
+  productName: string;
+  basePremium: number;
+}
+
+export const ACCIDENT_PRODUCTS: AccidentProduct[] = [
+  { company: 'KB라이프생명', productName: 'KB 골든라이프 안심보험 무배당(상해보장형) (월납)', basePremium: 177400 },
+  { company: 'ABL생명', productName: '(무)더나은안심보험_2형(상해보장형) (월납)', basePremium: 15400 },
+  { company: 'DB생명', productName: '(무)백년친구 안심보험(2602)(상해보장형) (월납)', basePremium: 36200 },
+  { company: 'NH농협생명', productName: '농업인NH안전보험(무배당) (월납)', basePremium: 10600 },
+  { company: 'NH농협생명', productName: '온라인농업인NH안전보험(무배당) (월납)', basePremium: 8100 },
+  { company: 'iM라이프', productName: 'iM 프리미엄안심보험 무배당 2603 3종(상해보장형) 2형(일반형) (월납)', basePremium: 60200 },
+  { company: '교보라이프플래닛', productName: '(무)교보라플안심보험(상해보장형, 표준형) (월납)', basePremium: 23500 },
+  { company: '교보생명', productName: '교보상해보험 [D](무배당)[만기환급형(100%)] (월납)', basePremium: 7000 },
+  { company: '동양생명', productName: '(무)엔젤안심보험(상해보장형,표준형) (월납)', basePremium: 7600 },
+  { company: '푸본현대생명', productName: '푸본현대 상해보험 안심픽 무배당(A2601) (월납)', basePremium: 471300 },
+  { company: '한화생명', productName: '한화생명 스마트V상해보험 무배당 (월납)', basePremium: 160200 },
+  { company: '흥국생명', productName: '(무)흥국생명 다사랑통합상해보험(갱신형) (월납)', basePremium: 483100 },
+  { company: 'AIG손보', productName: '무배당 AIG 꼭 필요한 상해보험2601(2종) (월납)', basePremium: 8100 },
+  { company: 'AIG손보', productName: '무배당 AIG 꼭 필요한 상해종합보험2601 (월납)', basePremium: 8100 },
+  { company: 'AIG손보', productName: '무배당 AIG 참쉬운상해보험2601 (월납)', basePremium: 8500 },
+  { company: 'DB손보', productName: '(무)New상해안심보험2601((금리연동형)종합플랜) (월납)', basePremium: 12200 },
+  { company: 'DB손보', productName: '(무)만상형통상해보험2601(1종) (월납)', basePremium: 11100 },
+  { company: 'DB손보', productName: '(무)만상형통상해보험2601(2종) (월납)', basePremium: 22400 },
+  { company: 'KB손보', productName: 'KB VIP상해보험(무배당)(26.01) (월납)', basePremium: 35400 },
+  { company: 'KB손보', productName: 'KB 다치면 보장받는 플러스 상해보험(무배당)(26.01)_1종(연만기 자동갱신형) (월납)', basePremium: 17100 },
+  { company: 'KB손보', productName: 'KB 다치면 보장받는 플러스 상해보험(무배당)(26.01)_2종(세만기) (월납)', basePremium: 46600 },
+  { company: '농협손보', productName: '(무) NH위너스상해보험[1종:VIP플랜(금리확정형)]2601 (월납)', basePremium: 6000 },
+  { company: '농협손보', productName: '(무) NH위너스상해보험[2종:VIP플러스플랜(금리확정형)]2601 (월납)', basePremium: 99200 },
+  { company: '농협손보', productName: '(무) NH위너스상해보험[3종:상해플랜(금리연동형)]2601 (월납)', basePremium: 5000 },
+  { company: '농협손보', productName: '(무) 헤아림상해치료보험[1종:일반심사형]2601 (월납)', basePremium: 20200 },
+  { company: '농협손보', productName: '(무) 헤아림상해치료보험[2종:320간편심사형]2601 (월납)', basePremium: 34200 },
+  { company: '롯데손보', productName: '(무) let:care 상해보험(2601) (월납)', basePremium: 16200 },
+  { company: '롯데손보', productName: '(무) let:care 생활상해종합보험(주택플러스)(2602) (월납)', basePremium: 6800 },
+  { company: '롯데손보', productName: '(무) 다쳤을땐 상해보험(2601) (월납)', basePremium: 10300 },
+  { company: '메리츠화재', productName: '(무) 메리츠 상해안심보험2601 (월납)', basePremium: 23400 },
+  { company: '에이스손보', productName: '(무)이젠 나만의 상해보험(갱신형) (월납)', basePremium: 13300 },
+  { company: '하나손보', productName: '무배당 하나더넥스트 상해보험(방카)(2601) (월납)', basePremium: 10100 },
+  { company: '삼성화재', productName: '삼성화재 다이렉트 착한상해보험 (월납)', basePremium: 12000 },
+  { company: '현대해상', productName: '현대해상 다이렉트 든든상해보험 (월납)', basePremium: 13000 },
+  { company: 'DB손보', productName: '프로미라이프 참좋은상해보험 (월납)', basePremium: 12500 },
+  { company: 'KB손보', productName: 'KB 다이렉트 플러스상해보험 (월납)', basePremium: 13500 },
+  { company: '메리츠화재', productName: '메리츠화재 올바른상해보험 (월납)', basePremium: 14000 },
+];

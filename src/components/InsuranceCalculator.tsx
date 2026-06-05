@@ -7,6 +7,7 @@ import {
   Heart, Hospital, Users, Wallet, Flame, Dog, Plane, Target, Scale, Hotel, Sparkles, Plus, Zap, ChevronRight, HelpCircle, HeartHandshake, AlertCircle
 } from 'lucide-react';
 import { HealthFields } from './insurance/health/HealthFields';
+import { HealthGeneralFields } from './insurance/healthGeneral/HealthGeneralFields';
 import { SilsonFields } from './insurance/silson/SilsonFields';
 import { CaregivingFields } from './insurance/caregiving/CaregivingFields';
 import { CaregivingOldFields } from './insurance/caregiving/CaregivingOldFields';
@@ -27,6 +28,7 @@ import { FireFields } from './insurance/fire/FireFields';
 import { AnnuityFields } from './insurance/annuity/AnnuityFields';
 import { WholeLifeFields } from './insurance/wholeLife/WholeLifeFields';
 import { VariableFields } from './insurance/variable/VariableFields';
+import { AccidentFields } from './insurance/accident/AccidentFields';
 
 
 
@@ -304,6 +306,32 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   const [annuityHasIrp, setAnnuityHasIrp] = useState<boolean>(false);
   const [annuityReceivingPeriod, setAnnuityReceivingPeriod] = useState<number>(20);
 
+  // 종합건강보험 states
+  const [healthGeneralCancerLimit, setHealthGeneralCancerLimit] = useState<number>(50000000);
+  const [healthGeneralSimilarCancerLimit, setHealthGeneralSimilarCancerLimit] = useState<number>(10000000);
+  const [healthGeneralBrainLimit, setHealthGeneralBrainLimit] = useState<number>(20000000);
+  const [healthGeneralHeartLimit, setHealthGeneralHeartLimit] = useState<number>(20000000);
+  const [healthGeneralCardioLimit, setHealthGeneralCardioLimit] = useState<number>(10000000);
+  const [healthGeneralHas1to5Surgery, setHealthGeneralHas1to5Surgery] = useState<boolean>(true);
+  const [healthGeneralHasTargetedTherapy, setHealthGeneralHasTargetedTherapy] = useState<boolean>(true);
+  const [healthGeneralHasThrombolysis, setHealthGeneralHasThrombolysis] = useState<boolean>(false);
+  const [healthGeneralHasLiability, setHealthGeneralHasLiability] = useState<boolean>(true);
+  const [healthGeneralPaymentPeriod, setHealthGeneralPaymentPeriod] = useState<number>(20);
+  const [healthGeneralCoveragePeriod, setHealthGeneralCoveragePeriod] = useState<number>(90);
+  const [healthGeneralIsRenewable, setHealthGeneralIsRenewable] = useState<boolean>(false);
+  const [healthGeneralRefundType, setHealthGeneralRefundType] = useState<'standard' | 'low'>('low');
+
+  // 상해보험 states
+  const [accidentDeathLimit, setAccidentDeathLimit] = useState<number>(50000000);
+  const [accidentDisabilityLimit, setAccidentDisabilityLimit] = useState<number>(50000000);
+  const [accidentFractureLimit, setAccidentFractureLimit] = useState<number>(300000);
+  const [accidentCastLimit, setAccidentCastLimit] = useState<number>(100000);
+  const [accidentSurgeryLimit, setAccidentSurgeryLimit] = useState<number>(500000);
+  const [accidentHospitalDailyLimit, setAccidentHospitalDailyLimit] = useState<number>(20000);
+  const [accidentJobClass, setAccidentJobClass] = useState<1 | 2 | 3>(1);
+  const [accidentDrivingType, setAccidentDrivingType] = useState<'none' | 'private' | 'commercial'>('private');
+  const [accidentHasLeisureRider, setAccidentHasLeisureRider] = useState<boolean>(false);
+
   // 종신보험 states
   const [wholeLifeObjective, setWholeLifeObjective] = useState<'family' | 'inheritance' | 'savings'>('family');
   const [wholeLifePaymentPeriod, setWholeLifePaymentPeriod] = useState<number>(10);
@@ -412,6 +440,60 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
     }
   }, [selectedDetail, selectedId, variableSubType]);
 
+
+  // 종합건강보험 기본형/종합형 선택 타입에 따른 상세 조건 동기화
+  React.useEffect(() => {
+    if (selectedId === 'health_general') {
+      if (selectedDetail === 0) {
+        // 기본형 세팅 (3대 진단비 위주, 특약 없음, 실속 설계)
+        setHealthGeneralCancerLimit(30000000);
+        setHealthGeneralSimilarCancerLimit(6000000);
+        setHealthGeneralBrainLimit(20000000);
+        setHealthGeneralHeartLimit(20000000);
+        setHealthGeneralCardioLimit(0);
+        setHealthGeneralHas1to5Surgery(false);
+        setHealthGeneralHasTargetedTherapy(false);
+        setHealthGeneralHasThrombolysis(false);
+        setHealthGeneralHasLiability(false);
+      } else {
+        // 종합형 세팅 (진단비 증액 + 수술비/표적항암 등 풀 패키지)
+        setHealthGeneralCancerLimit(50000000);
+        setHealthGeneralSimilarCancerLimit(10000000);
+        setHealthGeneralBrainLimit(30000000);
+        setHealthGeneralHeartLimit(30000000);
+        setHealthGeneralCardioLimit(10000000);
+        setHealthGeneralHas1to5Surgery(true);
+        setHealthGeneralHasTargetedTherapy(true);
+        setHealthGeneralHasThrombolysis(true);
+        setHealthGeneralHasLiability(true);
+      }
+    }
+  }, [selectedDetail, selectedId]);
+
+  // 상해보험 상세 타입(상해장해형/골절치료형) 선택에 따른 상세 조건 동기화
+  React.useEffect(() => {
+    if (selectedId === 'accident') {
+      if (selectedDetail === 0) {
+        // 상해장해형: 사망/장해 극대화, 치료비 미비
+        setAccidentDeathLimit(150000000);
+        setAccidentDisabilityLimit(150000000);
+        setAccidentFractureLimit(100000);
+        setAccidentCastLimit(0);
+        setAccidentSurgeryLimit(100000);
+        setAccidentHospitalDailyLimit(0);
+        setAccidentHasLeisureRider(false);
+      } else {
+        // 골절/치료형: 일상 치료비 극대화, 사망 최소화
+        setAccidentDeathLimit(10000000);
+        setAccidentDisabilityLimit(10000000);
+        setAccidentFractureLimit(1000000);
+        setAccidentCastLimit(500000);
+        setAccidentSurgeryLimit(1500000);
+        setAccidentHospitalDailyLimit(30000);
+        setAccidentHasLeisureRider(true);
+      }
+    }
+  }, [selectedDetail, selectedId]);
 
   // 주택화재보험 거주 유형 변경 시 상세 탭 및 한도 일괄 동기화 (루프 방지를 위해 occupancyType과 selectedId만 감시)
   React.useEffect(() => {
@@ -632,12 +714,39 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
           deathBenefit: variableDeathBenefit,
           coveragePeriod: variableCoveragePeriod,
           isHealthyDiscount: variableIsHealthyDiscount
+        } : undefined,
+        healthGeneral: selectedId === 'health_general' ? {
+          cancerLimit: healthGeneralCancerLimit,
+          similarCancerLimit: healthGeneralSimilarCancerLimit,
+          brainLimit: healthGeneralBrainLimit,
+          heartLimit: healthGeneralHeartLimit,
+          cardioLimit: healthGeneralCardioLimit,
+          has1to5Surgery: healthGeneralHas1to5Surgery,
+          hasTargetedTherapy: healthGeneralHasTargetedTherapy,
+          hasThrombolysis: healthGeneralHasThrombolysis,
+          hasLiability: healthGeneralHasLiability,
+          paymentPeriod: healthGeneralPaymentPeriod,
+          coveragePeriod: healthGeneralCoveragePeriod,
+          isRenewable: healthGeneralIsRenewable,
+          refundType: healthGeneralRefundType
+        } : undefined,
+        accident: selectedId === 'accident' ? {
+          accidentDeathLimit,
+          accidentDisabilityLimit,
+          fractureLimit: accidentFractureLimit,
+          castLimit: accidentCastLimit,
+          surgeryLimit: accidentSurgeryLimit,
+          hospitalDailyLimit: accidentHospitalDailyLimit,
+          jobClass: accidentJobClass,
+          drivingType: accidentDrivingType,
+          hasLeisureRider: accidentHasLeisureRider,
+          subType: activeItem.subTypes[selectedDetail]
         } : undefined
       });
     }
   };
   return (
-    <section className="w-full max-w-7xl mx-auto py-12 px-4 font-sans">
+    <section id="calculator-section" className="w-full max-w-7xl mx-auto py-12 px-4 font-sans">
       <div className="flex flex-col items-center gap-6 mb-12 animate-in fade-in slide-in-from-top-4 duration-1000">
         <div className="text-[0.7rem] font-black text-slate-400 uppercase tracking-[0.3em] opacity-70 mb-4">
           국내 35개 전 보험사 실시간 통합 비교
@@ -1136,8 +1245,36 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                   currentAmount={selectedHeart}
                   setCurrentAmount={setSelectedHeart}
                 />
+              ) : selectedId === 'health_general' ? (
+                <HealthGeneralFields
+                  cancerLimit={healthGeneralCancerLimit} setCancerLimit={setHealthGeneralCancerLimit}
+                  similarCancerLimit={healthGeneralSimilarCancerLimit} setSimilarCancerLimit={setHealthGeneralSimilarCancerLimit}
+                  brainLimit={healthGeneralBrainLimit} setBrainLimit={setHealthGeneralBrainLimit}
+                  heartLimit={healthGeneralHeartLimit} setHeartLimit={setHealthGeneralHeartLimit}
+                  cardioLimit={healthGeneralCardioLimit} setCardioLimit={setHealthGeneralCardioLimit}
+                  has1to5Surgery={healthGeneralHas1to5Surgery} setHas1to5Surgery={setHealthGeneralHas1to5Surgery}
+                  hasTargetedTherapy={healthGeneralHasTargetedTherapy} setHasTargetedTherapy={setHealthGeneralHasTargetedTherapy}
+                  hasThrombolysis={healthGeneralHasThrombolysis} setHasThrombolysis={setHealthGeneralHasThrombolysis}
+                  hasLiability={healthGeneralHasLiability} setHasLiability={setHealthGeneralHasLiability}
+                  paymentPeriod={healthGeneralPaymentPeriod} setPaymentPeriod={setHealthGeneralPaymentPeriod}
+                  coveragePeriod={healthGeneralCoveragePeriod} setCoveragePeriod={setHealthGeneralCoveragePeriod}
+                  isRenewable={healthGeneralIsRenewable} setIsRenewable={setHealthGeneralIsRenewable}
+                  refundType={healthGeneralRefundType} setRefundType={setHealthGeneralRefundType}
+                />
+              ) : selectedId === 'accident' ? (
+                <AccidentFields
+                  accidentDeathLimit={accidentDeathLimit} setAccidentDeathLimit={setAccidentDeathLimit}
+                  accidentDisabilityLimit={accidentDisabilityLimit} setAccidentDisabilityLimit={setAccidentDisabilityLimit}
+                  fractureLimit={accidentFractureLimit} setFractureLimit={setAccidentFractureLimit}
+                  castLimit={accidentCastLimit} setCastLimit={setAccidentCastLimit}
+                  surgeryLimit={accidentSurgeryLimit} setSurgeryLimit={setAccidentSurgeryLimit}
+                  hospitalDailyLimit={accidentHospitalDailyLimit} setHospitalDailyLimit={setAccidentHospitalDailyLimit}
+                  jobClass={accidentJobClass} setJobClass={setAccidentJobClass}
+                  drivingType={accidentDrivingType} setDrivingType={setAccidentDrivingType}
+                  hasLeisureRider={accidentHasLeisureRider} setHasLeisureRider={setAccidentHasLeisureRider}
+                />
               ) : (majorId === 'disease' || majorId === 'medical' || majorId === 'family') && 
-                  selectedId !== 'silson' && selectedId !== 'fire_simple' && selectedId !== 'brain' && (
+                  selectedId !== 'silson' && selectedId !== 'fire_simple' && selectedId !== 'brain' && selectedId !== 'health_general' && selectedId !== 'accident' && (
                 <HealthFields
                   selectedCancer={selectedCancer} setSelectedCancer={setSelectedCancer}
                   selectedBrain={selectedBrain} setSelectedBrain={setSelectedBrain}

@@ -45,6 +45,10 @@ import { fetchSavingsPremium } from './insurance/savings/savingsLoader';
 import { analyzeSavings } from './insurance/savings/savingsEngine';
 import { fetchCreditPremium } from './insurance/credit/creditLoader';
 import { analyzeCredit } from './insurance/credit/creditEngine';
+import { fetchHealthGeneralPremium } from './insurance/healthGeneral/healthGeneralLoader';
+import { analyzeHealthGeneral } from './insurance/healthGeneral/healthGeneralEngine';
+import { fetchAccidentPremium } from './insurance/accident/accidentLoader';
+import { analyzeAccident } from './insurance/accident/accidentEngine';
 
 
 export const runAnalysis = async (analysis: InsuranceAnalysis): Promise<any> => {
@@ -73,6 +77,8 @@ export const runAnalysis = async (analysis: InsuranceAnalysis): Promise<any> => 
   const isLegal = category.includes('법률') || category === 'legal' || !!analysis.legal;
   const isSavingsGeneral = category.includes('일반 저축') || category === 'savings_general' || !!analysis.savingsGeneral;
   const isCredit = category.includes('신용') || category === 'credit' || !!analysis.credit;
+  const isHealthGeneral = category.includes('종합건강') || category === 'health_general' || !!analysis.healthGeneral;
+  const isAccident = category.includes('상해') || category === 'accident' || !!analysis.accident;
 
   
   const dbData = isDementia
@@ -119,6 +125,10 @@ export const runAnalysis = async (analysis: InsuranceAnalysis): Promise<any> => 
     ? await fetchSavingsPremium(analysis)
     : isCredit
     ? await fetchCreditPremium(analysis)
+    : isHealthGeneral
+    ? await fetchHealthGeneralPremium(analysis)
+    : isAccident
+    ? await fetchAccidentPremium(analysis)
     : await fetchPremiumFromDatabase(analysis);
      
   const realPremium = dbData ? dbData.premium : 0;
@@ -129,7 +139,12 @@ export const runAnalysis = async (analysis: InsuranceAnalysis): Promise<any> => 
     _realDbPremium: realPremium,
     _productName: dbData?.productName || '',
     _companyName: dbData?.companyName || '',
-    _allOptions: (dbData as any)?._allOptions || []
+    _allOptions: (dbData as any)?._allOptions || [],
+    _dietPlan: (dbData as any)?._dietPlan,
+    _upgradePlan: (dbData as any)?._upgradePlan,
+    _hybridPlan: (dbData as any)?._hybridPlan,
+    _upgradePlans: (dbData as any)?._upgradePlans || [],
+    _hybridPlans: (dbData as any)?._hybridPlans || []
   };
 
   // 2. 카테고리에 따른 전용 엔진 실행
@@ -219,6 +234,14 @@ export const runAnalysis = async (analysis: InsuranceAnalysis): Promise<any> => 
 
   if (isCredit) {
     return { analysis: augmentedAnalysis, ...analyzeCredit(augmentedAnalysis as any) };
+  }
+
+  if (isHealthGeneral) {
+    return { analysis: augmentedAnalysis, ...analyzeHealthGeneral(augmentedAnalysis as any) };
+  }
+
+  if (isAccident) {
+    return { analysis: augmentedAnalysis, ...analyzeAccident(augmentedAnalysis as any) };
   }
 
   // 기본적으로 건강보험 엔진 사용

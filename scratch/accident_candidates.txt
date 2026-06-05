@@ -1,0 +1,449 @@
+=== ACCIDENT INSURANCE PRODUCTS FOUND ===
+Product: (무) NH위너스상해보험[1종:VIP플랜(금리확정형)]2601
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: (무) NH위너스상해보험[2종:VIP플러스플랜(금리확정형)]2601
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: (무) NH위너스상해보험[3종:상해플랜(금리연동형)]2601
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: (무) let:care 상해보험(2601)
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: (무) let:care 생활상해종합보험(주택플러스)(2602)
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: (무) 다쳤을땐 상해보험(2601)
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: (무) 메리츠 상해안심보험2601
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: (무) 헤아림상해치료보험[1종:일반심사형]2601
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: (무) 헤아림상해치료보험[2종:320간편심사형]2601
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: (무)AXA간편상해보험2601
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: (무)New상해안심보험2601((금리연동형)고급플랜)
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: (무)New상해안심보험2601((금리연동형)종합플랜)
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: (무)New상해안심보험2601((금리확정형)고급플랜)
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: (무)교보라플안심보험(상해보장형, 표준형)
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: (무)더나은안심보험_2형(상해보장형)
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: (무)만상형통상해보험2601(1종)
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: (무)만상형통상해보험2601(2종)
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: (무)백년친구 안심보험(2602)(상해보장형)
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: (무)엔젤상해보험
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: (무)엔젤안심보험(상해보장형,표준형)
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: (무)우리WON하는mini교통재해보험
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: (무)우리WON하는미니상해보험
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: (무)이젠 나만의 상해보험(갱신형)
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: (무)처음만난흥국생명상해보험
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: (무)현대해상하이퍼스트상해보험(Hi2601)/(무)하이퍼스트상해보험(Hi2601) 1종
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: (무)현대해상하이퍼스트상해보험(Hi2601)/(무)하이퍼스트상해보험(Hi2601) 2종
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: (무)흥국생명 다사랑통합상해보험(갱신형)
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: CEO안심상해보험Ⅱ(무배당)(26.01)_1종
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: CEO안심상해보험Ⅱ(무배당)(26.01)_2종
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: CEO안심상해보험Ⅱ(무배당)(26.01)_3종
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: ESG쏘옥NHe대중교통보험(무배당)
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: KB VIP상해보험(무배당)(26.01)
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: KB 골든라이프 안심보험 무배당(상해보장형)
+  Cycle: 월납
+  Files: file_12.xls, file_22.xls, 보장성_상품비교_20260406102532375.xls
+
+Product: KB 다치면 보장받는 플러스 상해보험(무배당)(26.01)_1종(연만기 자동갱신형)
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: KB 다치면 보장받는 플러스 상해보험(무배당)(26.01)_2종(세만기)
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: KB 지켜주는 교통안심보험 무배당
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: KB 지켜주는 대중교통안심보험 무배당
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: KB든든안심상해보험Ⅱ(무배당)(26.01)_1종
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: KB든든안심상해보험Ⅱ(무배당)(26.01)_2종
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: KB든든안심상해보험Ⅱ(무배당)(26.01)_3종
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: NH모두안심재해보험(무배당)
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: iM 프리미엄안심보험 무배당 2603 3종(상해보장형) 2형(일반형)
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 골절진단보험금
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: 교보e교통안심보험 (무배당)
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 교보e대중교통안심보험 (무배당)
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 교보e상해케어보험 23.11 (무배당)
+  Cycle: 월납
+  Files: file_12.xls, file_22.xls, 보장성_상품비교_20260406102532375.xls
+
+Product: 교보상해보험 [D](무배당)[만기환급형(100%)]
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 교보상해보험 [D](무배당)[순수보장형]
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 교보상해케어보험 23.11 (무배당)
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 농업인NH안전보험(무배당)
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 농작업근로자NH안전보험(무배당)
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 무배당 AIG 꼭 필요한 상해보험2601(1종)
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: 무배당 AIG 꼭 필요한 상해보험2601(2종)
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: 무배당 AIG 꼭 필요한 상해종합보험2601
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: 무배당 AIG 참쉬운상해보험2601
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: 무배당 메트라이프 mini 재해보험
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 무배당 메트라이프 교통재해사망보험
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 무배당 뼈 미니 재해골절보험
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 무배당 뼈대있는깁스보험
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 무배당 재해사망특약I
+  Cycle: 월납
+  Files: file_11.xls, file_21.xls, 보장성_상품비교_20260406102527983.xls
+
+Product: 무배당 재해장해보장특약I
+  Cycle: 월납
+  Files: file_11.xls, file_21.xls, 보장성_상품비교_20260406102527983.xls
+
+Product: 무배당 하나더넥스트 상해보험(방카)(2601)
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: 보험기간 중 교통상해사고로 사망시
+  Cycle: 월납
+  Files: file_42.xls, 장기보장성 비교 공시 (2).xls
+
+Product: 보험기간 중 일반상해사고로 20~100% 후유장해시
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: 보험기간 중 일반상해사고로 20~79% 후유장해시
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: 보험기간 중 일반상해사고로 3~100% 후유장해시
+  Cycle: 월납
+  Files: file_43.xls, file_47.xls, 장기보장성 비교 공시 (3).xls, 장기보장성 비교 공시 (7).xls
+
+Product: 보험기간 중 일반상해사고로 3~79% 후유장해시
+  Cycle: 월납
+  Files: file_43.xls, 장기보장성 비교 공시 (3).xls
+
+Product: 보험기간 중 일반상해사고로 사망시
+  Cycle: 월납
+  Files: file_39.xls, file_40.xls, file_41.xls, file_47.xls, 장기보장성 비교 공시 (10).xls, 장기보장성 비교 공시 (11).xls, 장기보장성 비교 공시 (7).xls
+
+Product: 보험기간 중에 발생한 상해의 직접결과로써 사망시
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: 보험기간 중에 약관에서 정한 교통상해의 직접결과로써 사망시
+  Cycle: 월납
+  Files: file_42.xls, 장기보장성 비교 공시 (2).xls
+
+Product: 보험기간중 상해의 직접결과로써 사망시
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: 보험기간중일반상해사고로20~100%후유장해시
+  Cycle: 월납
+  Files: file_43.xls, 장기보장성 비교 공시 (3).xls
+
+Product: 삼성 s교통상해보험(2501)(무배당)
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 삼성 마음모아 미니상해보험(2403)(무배당)
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 삼성 슬기로운 취미생활 상해보험(2501)(무배당)
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 신한SOL다치면속상해보험 mini(무배당)
+  Cycle: 월납
+  Files: file_19.xls, file_29.xls, 보장성_상품비교_20260406102559489.xls
+
+Product: 신한SOL대중교통보험 mini(무배당)
+  Cycle: 일시납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 심플한NH재해보험(무배당)
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 안심보장플러스 재해사망보험금
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 온라인농업인NH안전보험(무배당)
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 이 특약의 보험기간 중 피보험자가 재해로 인하여 1/2/3/4/5종 재해골절로 진단확정 되었을 때 ※세부 보장담보는 상품 요약서 참조
+  Cycle: 월납
+  Files: file_11.xls, file_21.xls, 보장성_상품비교_20260406102527983.xls
+
+Product: 재해사망보험금
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 재해사망특약 무배당
+  Cycle: 월납
+  Files: file_10.xls, file_20.xls, 보장성_상품비교_20260406102522903.xls
+
+Product: 재해장해보험금
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 재해장해특약 무배당
+  Cycle: 월납
+  Files: file_10.xls, file_20.xls, 보장성_상품비교_20260406102522903.xls
+
+Product: 통원 및 당일 입원 상해수술보험금
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: 특약보험기간 중 피보험자가 「대중교통 이용 중 교통사고」로 인하여 특약보험기간 중 사망하였을 때 * 이외 보장담보는 상품요약서 참조
+  Cycle: 월납
+  Files: file_11.xls, file_21.xls, 보장성_상품비교_20260406102527983.xls
+
+Product: 특약보험기간 중 피보험자가 재해로 인한 그 직접적인 치료를 목적으로 특약보험기간 중 수술을 받았을 때
+  Cycle: 월납
+  Files: file_11.xls, file_21.xls, 보장성_상품비교_20260406102527983.xls
+
+Product: 특약보험기간 중 피보험자가 재해를 원인으로 “재해사고 분류표”에서 정한 “경증재해사고”가 발생하였을 때 (부위별 연간1회한) * 이외 보장담보는 상품요약서 참조
+  Cycle: 월납
+  Files: file_11.xls, file_21.xls, 보장성_상품비교_20260406102527983.xls
+
+Product: 푸본현대 상해보험 안심픽 무배당(A2601)
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 피보험자 보험기간 중 재해 이외의 원인으로 사망시
+  Cycle: 월납
+  Files: file_11.xls, file_21.xls, 보장성_상품비교_20260406102527983.xls
+
+Product: 피보험자가 보험기간 중 보장 개시일 이후에 재해를 원인으 로 사망하였을 때
+  Cycle: 월납
+  Files: file_11.xls, file_21.xls, 보장성_상품비교_20260406102527983.xls
+
+Product: 피보험자가 보험기간 중 보장개시일 이후 재해 이외의 원인으로 사망시
+  Cycle: 월납
+  Files: file_11.xls, file_21.xls, 보장성_상품비교_20260406102527983.xls
+
+Product: 피보험자가 보험기간 중 보장개시일 이후 재해 이외의 원인으로 사망하였을 때
+  Cycle: 월납
+  Files: file_11.xls, file_21.xls, 보장성_상품비교_20260406102527983.xls
+
+Product: 피보험자가 보험기간 중 보장개시일 이후 재해를 원인으로 사망시
+  Cycle: 월납
+  Files: file_11.xls, file_21.xls, 보장성_상품비교_20260406102527983.xls
+
+Product: 피보험자가 보험기간 중 보장개시일 이후 재해를 원인으로 사망하였을 때
+  Cycle: 월납
+  Files: file_11.xls, file_21.xls, 보장성_상품비교_20260406102527983.xls
+
+Product: 피보험자가 보험기간 중 보장개시일 이후에 재해 이외의 원인으로 사망시
+  Cycle: 월납
+  Files: file_11.xls, file_21.xls, 보장성_상품비교_20260406102527983.xls
+
+Product: 피보험자가 보험기간 중 보장개시일 이후에 재해를 원인으로 사망시
+  Cycle: 월납
+  Files: file_11.xls, file_21.xls, 보장성_상품비교_20260406102527983.xls
+
+Product: 피보험자가 보험기간 중 사망하였을 때(2년미만 재해 이외의 원인으로 사망시 50%)
+  Cycle: 월납
+  Files: file_10.xls, file_20.xls, 보장성_상품비교_20260406102522903.xls
+
+Product: 피보험자가 보험기간 중 상해의 직접결과로써 약관에서 정한
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: 피보험자가 보험기간 중 상해의 진단 및 치료를 위해
+  Cycle: 월납
+  Files: file_47.xls, 장기보장성 비교 공시 (7).xls
+
+Product: 피보험자가 보험기간 중 재해를 원인으로 사망시
+  Cycle: 월납
+  Files: file_11.xls, file_21.xls, 보장성_상품비교_20260406102527983.xls
+
+Product: 피보험자가 보험기간중 보장 개시일 이후에 재해 이외의 원인으로 사망하였을 때
+  Cycle: 월납
+  Files: file_11.xls, file_21.xls, 보장성_상품비교_20260406102527983.xls
+
+Product: 피보험자가 보험기간중 보장개시일 이후 재해 이외의 원인으로 사망시
+  Cycle: 월납
+  Files: file_10.xls, file_11.xls, file_20.xls, file_21.xls, 보장성_상품비교_20260406102522903.xls, 보장성_상품비교_20260406102527983.xls
+
+Product: 피보험자가 보험기간중 보장개시일 이후 재해 이외의 원인으로 인하여 사망하였을 때
+  Cycle: 월납
+  Files: file_11.xls, file_21.xls, 보장성_상품비교_20260406102527983.xls
+
+Product: 피보험자가 보험기간중 보장개시일 이후 재해로 인하여 사망하였을 때
+  Cycle: 월납
+  Files: file_11.xls, file_21.xls, 보장성_상품비교_20260406102527983.xls
+
+Product: 피보험자가 보험기간중 보장개시일 이후 재해를 원인으로 사망시
+  Cycle: 월납
+  Files: file_10.xls, file_11.xls, file_20.xls, file_21.xls, 보장성_상품비교_20260406102522903.xls, 보장성_상품비교_20260406102527983.xls
+
+Product: 한화생명 간편가입 포켓골절보험 무배당
+  Cycle: 일시납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 한화생명 스마트H상해보험 무배당
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 한화생명 스마트V상해보험 무배당
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 한화생명 포켓골절보험 무배당
+  Cycle: 일시납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+
+Product: 효밍아웃NH부모님안전보험(무배당)_2404
+  Cycle: 월납
+  Files: file_15.xls, file_25.xls, 보장성_상품비교_20260406102544980.xls
+

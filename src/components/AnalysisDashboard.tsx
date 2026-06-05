@@ -16,6 +16,7 @@ import { PreExistingSummary } from './insurance/preExisting/PreExistingSummary';
 import { NursingSummary } from './insurance/nursing/NursingSummary';
 import { ChildSummary } from './insurance/child/ChildSummary';
 import { CarSummary } from './insurance/car/CarSummary';
+import { AccidentSummary } from './insurance/accident/AccidentSummary';
 
 import { DriverSummary } from './insurance/driver/DriverSummary';
 import { PetSummary } from './insurance/pet/PetSummary';
@@ -24,6 +25,7 @@ import { FireSummary } from './insurance/fire/FireSummary';
 import { AnnuitySummary } from './insurance/annuity/AnnuitySummary';
 import { WholeLifeSummary } from './insurance/wholeLife/WholeLifeSummary';
 import { VariableSummary } from './insurance/variable/VariableSummary';
+import { HealthGeneralSummary } from './insurance/healthGeneral/HealthGeneralSummary';
 
 
 interface AnalysisDashboardProps {
@@ -38,6 +40,7 @@ const InsuranceSummary = ({ result }: { result: AnalysisResult }) => {
   const isSurgeryHospital = analysis.selectedCategory?.includes('수술') || analysis.selectedCategory?.includes('입원');
   const isNursing = analysis.selectedCategory === '재가/시설' || analysis.selectedCategory?.includes('재가') || analysis.selectedCategory?.includes('시설');
   const isChild = analysis.selectedCategory?.includes('어린이') || analysis.selectedCategory?.includes('태아') || analysis.selectedCategory === 'child' || !!analysis.child;
+  const isAccident = analysis.selectedCategory?.includes('상해') || analysis.selectedCategory === 'accident' || !!analysis.accident;
   
   const isDriver = analysis.selectedCategory?.includes('운전자') || analysis.selectedCategory === 'driver' || !!analysis.driver;
   const isPet = analysis.selectedCategory?.includes('펫') || analysis.selectedCategory === 'pet' || !!analysis.pet;
@@ -46,6 +49,7 @@ const InsuranceSummary = ({ result }: { result: AnalysisResult }) => {
   const isAnnuity = analysis.selectedCategory?.includes('연금') || analysis.selectedCategory === 'annuity_savings' || !!analysis.annuity;
   const isWholeLife = analysis.selectedCategory?.includes('종신') || analysis.selectedCategory === 'whole' || !!analysis.wholeLife;
   const isVariable = analysis.selectedCategory?.includes('변액') || analysis.selectedCategory?.includes('정기') || analysis.selectedCategory === 'variable' || analysis.selectedCategory === 'term' || !!analysis.variable;
+  const isHealthGeneral = analysis.selectedCategory?.includes('종합건강') || analysis.selectedCategory === 'health_general' || !!analysis.healthGeneral;
 
 
   const formatAmount = (amt: number) => {
@@ -56,6 +60,7 @@ const InsuranceSummary = ({ result }: { result: AnalysisResult }) => {
 
   if (isDental) return <DentalSummary result={result as any} />;
   if (isSilbi) return <SilsonSummary result={result as any} />;
+  if (isAccident) return <AccidentSummary result={result as any} />;
   if (isCaregiving) return <CaregivingSummary result={result as any} />;
   if (isNursing) return <NursingSummary result={result as any} />;
   if (isChild) return <ChildSummary result={result as any} />;
@@ -72,6 +77,7 @@ const InsuranceSummary = ({ result }: { result: AnalysisResult }) => {
   if (isAnnuity) return <AnnuitySummary result={result as any} />;
   if (isWholeLife) return <WholeLifeSummary result={result as any} />;
   if (isVariable) return <VariableSummary result={result as any} />;
+  if (isHealthGeneral) return <HealthGeneralSummary result={result as any} formatAmount={formatAmount} />;
 
 
   return <HealthSummary result={result as any} formatAmount={formatAmount} />;
@@ -85,6 +91,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
   const isNursing = analysis.selectedCategory === '재가/시설' || analysis.selectedCategory?.includes('재가') || analysis.selectedCategory?.includes('시설');
   const isSurgeryHospital = analysis.selectedCategory?.includes('수술') || analysis.selectedCategory?.includes('입원');
   const isChild = analysis.selectedCategory?.includes('어린이') || analysis.selectedCategory?.includes('태아') || analysis.selectedCategory === 'child' || !!analysis.child;
+  const isAccident = analysis.selectedCategory?.includes('상해') || analysis.selectedCategory === 'accident' || !!analysis.accident;
   const isCar = analysis.selectedCategory?.includes('자동차') || analysis.selectedCategory === 'car';
   const isDriver = analysis.selectedCategory?.includes('운전자') || analysis.selectedCategory === 'driver' || !!analysis.driver;
   const isPet = analysis.selectedCategory?.includes('펫') || analysis.selectedCategory === 'pet' || !!analysis.pet;
@@ -205,6 +212,13 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
     { label: '누수 보장', value: scores.waterLeakScore || 30, target: 75 },
     { label: '배상 책임', value: scores.liabilityScore || 35, target: 75 },
     { label: '가재 도구', value: scores.goodsScore || 60, target: 70 },
+  ] : isAccident ? [
+    { label: '상해사망', value: scores.deathScore || 40, target: 70 },
+    { label: '후유장해', value: scores.disabilityScore || 40, target: 75 },
+    { label: '골절/깁스', value: scores.treatmentScore || 50, target: 70 },
+    { label: '수술비보장', value: (analysis.accident?.surgeryLimit || 0) >= 1000000 ? 90 : 60, target: 70 },
+    { label: '레저특약', value: analysis.accident?.hasLeisureRider ? 95 : 50, target: 60 },
+    { label: '보험료효율', value: Math.round(efficiency), target: 75 },
   ] : [
     { label: '일반암', value: scores.cancerScore || 0, target: avg.c || 50 },
     { label: '뇌혈관', value: scores.cerebrovascularScore || 0, target: avg.b || 50 },
@@ -219,13 +233,11 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
       {/* Insurance Summary Cards (Silson, Caregiving, Dental, etc.) */}
       <InsuranceSummary result={result} />
 
-      {/* 1. Score & Metrics Section with Radar Chart */}
       <section className="bg-white rounded-[4rem] p-10 md:p-20 shadow-[0_40px_120px_-20px_rgba(0,0,0,0.08)] border border-gray-50 flex flex-col lg:flex-row gap-24 items-center relative overflow-hidden">
         <div className="absolute top-0 right-0 p-24 opacity-[0.03] scale-150 transform rotate-12">
            {isDental || isSilbi ? <Stethoscope className="w-96 h-96 text-emerald-500" /> : isCaregiving ? <Hotel className="w-96 h-96 text-purple-500" /> : isNursing ? <Heart className="w-96 h-96 text-pink-500" /> : isChild ? <Baby className="w-96 h-96 text-yellow-500" /> : isPet ? <Dog className="w-96 h-96 text-orange-500" /> : isGolf ? <Target className="w-96 h-96 text-emerald-500" /> : <Zap className="w-96 h-96 text-orange-500" />}
         </div>
 
-        {/* Radar Chart */}
         <div className="flex-shrink-0 relative z-10 w-full lg:w-auto">
           <RadarChart data={radarData} size={350} />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center -mt-6">
@@ -251,6 +263,8 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
                   ? '"방사형 그래프가 원형에 가까울수록 안정적인 재가/시설 보장 상태입니다."'
                   : isChild
                   ? '"방사형 그래프가 원형에 가까울수록 빈틈없는 어린이/태아 보장 상태입니다."'
+                  : isAccident
+                  ? '"방사형 그래프가 원형에 가까울수록 직무 및 일상 리스크에 완벽히 방어된 상태입니다."'
                   : isCar
                   ? '"방사형 그래프가 원형에 가까울수록 안전하고 가성비 높은 자동차 보장 상태입니다."'
                   : isSurgeryHospital

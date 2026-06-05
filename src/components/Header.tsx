@@ -13,7 +13,7 @@ import {
 type ViewType =
   | 'home' | 'indemnity' | 'preexisting' | 'dental' | 'surgery'
   | 'cancer' | 'caregiving' | 'dementia' | 'cerebrovascular' | 'heart'
-  | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'annuity' | 'whole' | 'variable' | 'legal' | 'credit';
+  | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'annuity' | 'whole' | 'variable' | 'legal' | 'credit' | 'health_general' | 'accident';
 
 interface NavItem { label: string; view: ViewType; desc?: string; }
 interface NavGroup {
@@ -38,7 +38,7 @@ const ALL_GROUPS: NavGroup[] = [
       { label: '유병자', view: 'preexisting', desc: '아픈 분도 가입' },
       { label: '수술/입원', view: 'surgery', desc: '수술비 반복 지급' },
       { label: '암보험', view: 'cancer', desc: '진단비 최대 1억' },
-      { label: '종합건강', view: 'home', desc: '하나의 보험으로 빈틈없이 조립' },
+      { label: '종합건강', view: 'health_general', desc: '하나의 보험으로 빈틈없이 조립' },
     ],
   },
   {
@@ -50,7 +50,7 @@ const ALL_GROUPS: NavGroup[] = [
     items: [
       { label: '뇌혈관', view: 'cerebrovascular', desc: '뇌질환 무제한 보장' },
       { label: '심장질환', view: 'heart', desc: '허혈성 심장 집중' },
-      { label: '상해보험', view: 'home', desc: '사고 장해 및 골절 치료 자산' },
+      { label: '상해보험', view: 'accident', desc: '사고 장해 및 골절 치료 자산' },
     ],
   },
   {

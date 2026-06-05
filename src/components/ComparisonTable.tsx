@@ -37,10 +37,11 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
   const isLegal = analysis.selectedCategory?.includes('민사') || analysis.selectedCategory?.includes('형사') || analysis.selectedCategory?.includes('법률') || analysis.selectedCategory === 'legal' || !!analysis.legal;
   const isSavingsGeneral = analysis.selectedCategory?.includes('일반 저축') || analysis.selectedCategory === 'savings_general' || !!analysis.savingsGeneral;
   const isCredit = analysis.selectedCategory?.includes('신용') || analysis.selectedCategory === 'credit' || !!analysis.credit;
+  const isAccident = analysis.selectedCategory?.includes('상해') || analysis.selectedCategory === 'accident' || !!analysis.accident;
 
 
 
-  const benchmark = isSilbi ? 55000 : isDental ? 85000 : isCaregiving ? 45000 : isNursing ? 70000 : isHeart ? 120000 : isChild ? (analysis.child?.maturity === 30 ? 45000 : 95000) : isDriver ? 22000 : isPet ? 42000 : isGolf ? 15000 : isFire ? 12000 : isWholeLife ? 150000 : isVariable ? 150000 : isLegal ? 18000 : isCredit ? 40000 : 180000;
+  const benchmark = isSilbi ? 55000 : isDental ? 85000 : isCaregiving ? 45000 : isNursing ? 70000 : isHeart ? 120000 : isChild ? (analysis.child?.maturity === 30 ? 45000 : 95000) : isDriver ? 22000 : isPet ? 42000 : isGolf ? 15000 : isFire ? 12000 : isWholeLife ? 150000 : isVariable ? 150000 : isLegal ? 18000 : isCredit ? 40000 : isAccident ? 30000 : 180000;
   const dietPremium = recommendation.estimatedPremium;
   const currentPremium = analysis.monthlyPremium;
   
@@ -722,6 +723,46 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     }
   ];
 
+  // 15. 상해보험 (Accident Insurance)
+  const accidentOpts = analysis.accident || {
+    accidentDeathLimit: 50000000,
+    accidentDisabilityLimit: 50000000,
+    fractureLimit: 300000,
+    castLimit: 100000,
+    surgeryLimit: 500000,
+    hospitalDailyLimit: 20000,
+    jobClass: 1,
+    drivingType: 'private',
+    hasLeisureRider: false
+  };
+
+  const accidentRows = [
+    { 
+      label: '상해사망 보장액', 
+      current: formatAmt(accidentOpts.accidentDeathLimit), 
+      recommended: '최대 1억 5,000만 원 ~ 2억 원 (중대 사고 시 유가족을 위한 안심 자원 확보)', 
+      icon: <ShieldCheck className="w-4 h-4 text-red-600" /> 
+    },
+    { 
+      label: '상해후유장해 (3%~100%)', 
+      current: formatAmt(accidentOpts.accidentDisabilityLimit), 
+      recommended: '최대 1억 5,000만 원 (장해 상태 진단 시 장기 대체 소득 마련)', 
+      icon: <TrendingUp className="w-4 h-4 text-red-600" /> 
+    },
+    { 
+      label: '골절 진단비 / 상해 수술비', 
+      current: `골절 ${formatAmt(accidentOpts.fractureLimit)} / 수술 ${formatAmt(accidentOpts.surgeryLimit)}`, 
+      recommended: '골절 최대 100만 원 / 수술 200만 원 (빈번한 생활 상해 치료 실손 보강)', 
+      icon: <HeartPulse className="w-4 h-4 text-red-600" /> 
+    },
+    { 
+      label: '레저스포츠 상해 특약', 
+      current: accidentOpts.hasLeisureRider ? '가입 완료' : '미가입', 
+      recommended: '가입 (등산, 골프, 자전거 등 야외 취미 활동 리스크 집중 대비)', 
+      icon: <Clock className="w-4 h-4 text-red-600" /> 
+    },
+  ];
+
   // 조건 분기를 if-else 문으로 안전하고 깔끔하게 매칭
   let comparisonRows = standardRows;
   if (isChild) {
@@ -764,6 +805,8 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     comparisonRows = savingsRows;
   } else if (isCredit) {
     comparisonRows = creditRows;
+  } else if (isAccident) {
+    comparisonRows = accidentRows;
   }
 
 

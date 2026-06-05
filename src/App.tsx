@@ -34,18 +34,13 @@ import { WholeLifeExplanation } from './components/insurance/wholeLife/WholeLife
 import { VariableExplanation } from './components/insurance/variable/VariableExplanation';
 import { LegalExplanation } from './components/insurance/legal/LegalExplanation';
 import { CreditExplanation } from './components/insurance/credit/CreditExplanation';
-
-
-
-
-
-
-
+import { HealthGeneralExplanation } from './components/insurance/healthGeneral/HealthGeneralExplanation';
+import { AccidentExplanation } from './components/insurance/accident/AccidentExplanation';
 
 export default function App() {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [currentAnalysis, setCurrentAnalysis] = useState<InsuranceAnalysis | null>(null);
-  const [view, setView] = useState<'home' | 'indemnity' | 'preexisting' | 'dental' | 'caregiving' | 'dementia' | 'surgery' | 'cancer' | 'cerebrovascular' | 'heart' | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'annuity' | 'whole' | 'variable' | 'legal' | 'credit'>('home');
+  const [view, setView] = useState<'home' | 'indemnity' | 'preexisting' | 'dental' | 'caregiving' | 'dementia' | 'surgery' | 'cancer' | 'cerebrovascular' | 'heart' | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'annuity' | 'whole' | 'variable' | 'legal' | 'credit' | 'health_general' | 'accident'>('home');
 
   const [calcTarget, setCalcTarget] = useState<string | null>(null);
 
@@ -367,6 +362,48 @@ export default function App() {
               </button>
            </div>
            <PetExplanation onAction={() => { setCalcTarget('pet'); setView('home'); }} />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (view === 'health_general') {
+    return (
+      <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-orange-100 selection:text-orange-900 antialiased">
+        <Header setView={setView} />
+        <main className="pt-12 px-4 bg-white">
+           <div className="max-w-7xl mx-auto flex justify-end">
+              <button 
+                onClick={() => { setCalcTarget(null); setView('home'); }}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-orange-600 text-white hover:bg-orange-700 font-black text-xs transition-all mb-6 shadow-lg shadow-orange-500/20 active:scale-95 group"
+              >
+                메인으로 돌아가기
+                <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
+              </button>
+           </div>
+           <HealthGeneralExplanation onAction={() => { setCalcTarget('health_general'); setView('home'); }} />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (view === 'accident') {
+    return (
+      <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-red-100 selection:text-red-900 antialiased">
+        <Header setView={setView} />
+        <main className="pt-12 px-4 bg-white">
+           <div className="max-w-7xl mx-auto flex justify-end">
+              <button 
+                onClick={() => { setCalcTarget(null); setView('home'); }}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-red-600 text-white hover:bg-red-700 font-black text-xs transition-all mb-6 shadow-lg shadow-red-500/20 active:scale-95 group"
+              >
+                메인으로 돌아가기
+                <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
+              </button>
+           </div>
+           <AccidentExplanation onAction={() => { setCalcTarget('accident'); setView('home'); }} />
         </main>
         <Footer />
       </div>

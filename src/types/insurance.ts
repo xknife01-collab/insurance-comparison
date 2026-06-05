@@ -168,6 +168,33 @@ export interface InsuranceAnalysis {
     hasDisabilityRider: boolean;    // 50% 이상 장해 시 상환 특약
     subType?: string;               // 상세 타입 (대출안심형 / 정기보장형)
   };
+  healthGeneral?: {
+    cancerLimit: number;          // 일반암 진단비 한도 (원)
+    similarCancerLimit: number;   // 유사암 진단비 한도 (원)
+    brainLimit: number;           // 뇌혈관 진단비 한도 (원)
+    heartLimit: number;           // 허혈성 심장 진단비 한도 (원)
+    cardioLimit: number;          // 심혈관 진단비 한도 (원)
+    has1to5Surgery: boolean;      // 1-5종 수술비 특약
+    hasTargetedTherapy: boolean;  // 표적항암 치료비 특약
+    hasThrombolysis: boolean;     // 혈전용해 치료비 특약
+    hasLiability: boolean;        // 가족일상생활배상책임 특약
+    paymentPeriod: number;        // 납입기간 (10, 20, 30)
+    coveragePeriod: number;       // 만기 (80, 90, 100)
+    isRenewable: boolean;         // 갱신 여부
+    refundType: 'standard' | 'low'; // 표준형 vs 무해지(저해지) 환급형
+  };
+  accident?: {                  // 상해보험 전용 필드
+    accidentDeathLimit: number; // 상해사망 한도 (원)
+    accidentDisabilityLimit: number; // 상해후유장해 한도 (원)
+    fractureLimit: number;      // 골절진단비 한도 (원)
+    castLimit: number;          // 깁스치료비 한도 (원)
+    surgeryLimit: number;       // 상해수술비 한도 (원)
+    hospitalDailyLimit: number; // 상해입원일당 한도 (원)
+    jobClass: 1 | 2 | 3;        // 직업급수 (1~3급)
+    drivingType: 'none' | 'private' | 'commercial'; // 운전형태 (비운전 / 자가용 / 영업용)
+    hasLeisureRider: boolean;   // 레저스포츠/취미 상해 특약
+    subType?: string;           // 상세타입 (상해장해형 / 골절치료형)
+  };
 }
 
 export interface AnalysisResult {

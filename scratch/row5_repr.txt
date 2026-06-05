@@ -1,0 +1,11 @@
+Row 5: ['선택', '회사명 ', '상품명 ', '보장내용 및 지급기준', nan, nan, '보험료', nan, '보험가격지수  ', nan]
+Index 0: '선택' (type: <class 'str'>)
+Index 1: '회사명 ' (type: <class 'str'>)
+Index 2: '상품명 ' (type: <class 'str'>)
+Index 3: '보장내용 및 지급기준' (type: <class 'str'>)
+Index 4: nan (type: <class 'float'>)
+Index 5: nan (type: <class 'float'>)
+Index 6: '보험료' (type: <class 'str'>)
+Index 7: nan (type: <class 'float'>)
+Index 8: '보험가격지수  ' (type: <class 'str'>)
+Index 9: nan (type: <class 'float'>)

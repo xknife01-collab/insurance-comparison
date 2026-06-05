@@ -1,0 +1,6 @@
+Total rows in CSV: 1948
+Keyword '연납' count: 0
+Keyword '월납' count: 2121
+Keyword '일시납' count: 1695
+
+Found 0 rows containing '연납'

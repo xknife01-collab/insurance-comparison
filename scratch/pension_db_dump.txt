@@ -1,0 +1,116 @@
+Total unique products: 114
+
+Company: ABL생명 | Product: (무)우리WON인터넷연금저축보험 | Rate: 2.40 % | Channel: CM | Features: 인터넷 CM 전용 최저 수수료(사업비 3.5%) | 안정 보장형 복리 이율 (2.40 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 12
+Company: ABL생명 | Product: 연금저축 나이스플랜연금보험 | Rate: 2.15 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.15 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 14
+Company: ABL생명 | Product: 연금저축체인지업연금보험 | Rate: 2.15 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.15 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 14
+Company: AIA생명 | Product: (무) AIA 글로벌 파워 미국달러 연금보험 1형 | Rate: 5.02 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 업계 최우수 공시이율 (5.02 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 6
+Company: AIA생명 | Product: (무) AIA 글로벌 파워 미국달러 연금보험 2형 | Rate: 5.02 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 업계 최우수 공시이율 (5.02 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 6
+Company: AIA생명 | Product: (무) AIA 글로벌 파워 미국달러 연금보험 3형 | Rate: 5.02 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 업계 최우수 공시이율 (5.02 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 6
+Company: AIA생명 | Product: (무)GOLDEN TIME 연금보험V 1형(기본형, 쿠폰형, 10년 이율확정형) | Rate: 5.21 % | Channel: 방카슈랑스 | Features: 오프라인 대면 밀착 케어 서비스 | 업계 최우수 공시이율 (5.21 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 3
+Company: AIA생명 | Product: (무)GOLDEN TIME 연금보험V 6형(기본형, 거치형, 20년 이율확정형) | Rate: 5.61 % | Channel: 방카슈랑스 | Features: 오프라인 대면 밀착 케어 서비스 | 업계 최우수 공시이율 (5.61 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 4
+Company: AIA생명 | Product: (무)GOLDEN TIME 연금보험V 7형(연금강형, 쿠폰형, 20년 이율확정형) | Rate: 5.61 % | Channel: 방카슈랑스 | Features: 오프라인 대면 밀착 케어 서비스 | 업계 최우수 공시이율 (5.61 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 6
+Company: AIA생명 | Product: (무)GOLDEN TIME 연금보험V 8형(연금강화형, 거치형, 20년 이율확정형) | Rate: 5.61 % | Channel: 방카슈랑스 | Features: 오프라인 대면 밀착 케어 서비스 | 업계 최우수 공시이율 (5.61 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 6
+Company: AIA생명 | Product: 무배당 AIA 달러로 받는 연금보험II 1형 1종 | Rate: 5.31 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 업계 최우수 공시이율 (5.31 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 4
+Company: AIA생명 | Product: 무배당 AIA 달러로 받는 연금보험II 1형 2종 | Rate: 5.31 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 업계 최우수 공시이율 (5.31 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 4
+Company: AIA생명 | Product: 무배당 AIA 달러로 받는 연금보험II 2형 1종 | Rate: 5.31 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 업계 최우수 공시이율 (5.31 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 4
+Company: AIA생명 | Product: 무배당 AIA 달러로 받는 연금보험II 2형 2종 | Rate: 5.31 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 업계 최우수 공시이율 (5.31 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 4
+Company: DB생명 | Product: e원금보장 KDB하이브리드연금저축보험(무) | Rate: 2.30 % | Channel: CM | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.30 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 24
+Company: DB생명 | Product: 연금저축 SmartChange연금보험 | Rate: 2.00 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.00 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 12
+Company: DB손보 | Product: 연금저축손해보험 스마트 계약이전연금보험2601 | Rate:  | Channel:  | Features: 오프라인 대면 밀착 케어 서비스 | 표준 복리 이율 제공 | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 6
+Company: DB손보 | Product: 연금저축손해보험 스마트 계약이전연금보험2601(일시납) | Rate:  | Channel:  | Features: 오프라인 대면 밀착 케어 서비스 | 표준 복리 이율 제공 | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 6
+Company: DB손보 | Product: 연금저축손해보험 스마트 연금보험2601 | Rate:  | Channel:  | Features: 오프라인 대면 밀착 케어 서비스 | 표준 복리 이율 제공 | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 6
+Company: DB손보 | Product: 연금저축손해보험 유배당 다이렉트 연금보험2601(CM) | Rate:  | Channel:  | Features: 인터넷 CM 전용 최저 수수료(사업비 3.5%) | 표준 복리 이율 제공 | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 6
+Company: IBK연금보험 | Product: 무배당 IBK NEW 프리미엄연금보험_2601 | Rate: 2.45 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 1
+Company: IBK연금보험 | Product: 무배당 IBK e-하이브리드 연금저축보험_2601 | Rate: 2.45 % | Channel: 방카슈랑스 | Features: 인터넷 CM 전용 최저 수수료(사업비 3.5%) | 안정 보장형 복리 이율 (2.45 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 14
+Company: IBK연금보험 | Product: 무배당 IBK 다이렉트 순수연금보험_2601 | Rate: 2.45 % | Channel: TM | Features: 인터넷 CM 전용 최저 수수료(사업비 3.5%) | 안정 보장형 복리 이율 (2.45 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 6
+Company: IBK연금보험 | Product: 무배당 IBK 원금보장 연금저축보험_2602 | Rate: 2.45 % | Channel: CM | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 14
+Company: IBK연금보험 | Product: 무배당 IBK 프리미엄연금보험_2601 | Rate: 2.45 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 6
+Company: IBK연금보험 | Product: 무배당 IBK 하이브리드 연금저축보험(BA)_2601 | Rate: 2.45 % | Channel: 방카슈랑스 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 14
+Company: IBK연금보험 | Product: 무배당 IBK 하이브리드 연금저축보험_2601 | Rate: 2.45 % | Channel: 대면채널  TM | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 14
+Company: IBK연금보험 | Product: 연금저축 웰컴투 IBK 연금보험_2404 | Rate: 2.00 % | Channel: CM  기타 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.00 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 14
+Company: IBK연금보험 | Product: 연금저축 웰컴투 IBK 연금보험_2601 | Rate: 2.10 % | Channel: CM  기타 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.10 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 14
+Company: KB라이프생명 | Product: KB 트리플 레벨업 연금보험 무배당(미보증형) | Rate: 2.48 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.48 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 1
+Company: KB라이프생명 | Product: KB 트리플 레벨업 연금보험 무배당(보증형) | Rate: 2.48 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.48 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 6
+Company: KB손보 | Product: 연금저축손해보험 KB 계약이전연금보험(26.01) | Rate:  | Channel:  | Features: 오프라인 대면 밀착 케어 서비스 | 표준 복리 이율 제공 | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 12
+Company: KB손보 | Product: 연금저축손해보험 KB 다이렉트연금보험(26.01) | Rate:  | Channel:  | Features: 인터넷 CM 전용 최저 수수료(사업비 3.5%) | 표준 복리 이율 제공 | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 6
+Company: KB손보 | Product: 연금저축손해보험 KB 멀티플러스연금보험(26.01) | Rate:  | Channel:  | Features: 오프라인 대면 밀착 케어 서비스 | 표준 복리 이율 제공 | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 6
+Company: NH농협생명 | Product: NHe세테크연금저축보험(무배당) | Rate: 2.35 % | Channel: CM | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.35 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 12
+Company: NH농협생명 | Product: e-NH연금저축보험(무배당)_2404 | Rate: 2.35 % | Channel: CM | Features: 인터넷 CM 전용 최저 수수료(사업비 3.5%) | 안정 보장형 복리 이율 (2.35 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 12
+Company: NH농협생명 | Product: 세테크NH연금저축보험(무배당)_2601 | Rate: 2.35 % | Channel: 대면채널  방카슈랑스 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.35 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 7
+Company: NH농협생명 | Product: 연금저축NH좋아연금보험(무배당)_2404 | Rate: 2.35 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.35 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 12
+Company: 교보라이프플래닛 | Product: (무)교보라플 연금저축보험(유니버셜) | Rate: 2.20 % | Channel: CM | Features: 인터넷 CM 전용 최저 수수료(사업비 3.5%) | 안정 보장형 복리 이율 (2.20 %) | 유니버셜 기능 결합 및 안정적 최저보증이율 | Count: 6
+Company: 교보라이프플래닛 | Product: (무)교보라플 연금저축보험(이체계좌용) | Rate: 2.20 % | Channel: CM | Features: 인터넷 CM 전용 최저 수수료(사업비 3.5%) | 안정 보장형 복리 이율 (2.20 %) | 유니버셜 기능 결합 및 안정적 최저보증이율 | Count: 6
+Company: 교보라이프플래닛 | Product: 교보라이프플래닛(무)b연금저축보험 | Rate: 2.20 % | Channel: 방카슈랑스 | Features: 인터넷 CM 전용 최저 수수료(사업비 3.5%) | 안정 보장형 복리 이율 (2.20 %) | 유니버셜 기능 결합 및 안정적 최저보증이율 | Count: 6
+Company: 교보생명 | Product: 교보e연금저축보험 | Rate: 2.20 % | Channel: CM | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.20 %) | 유니버셜 기능 결합 및 안정적 최저보증이율 | Count: 12
+Company: 교보생명 | Product: 연금저축교보First연금보험 | Rate: 2.20 % | Channel: 방카슈랑스 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.20 %) | 유니버셜 기능 결합 및 안정적 최저보증이율 | Count: 12
+Company: 교보생명 | Product: 연금저축교보로연금보험 | Rate: 2.20 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.20 %) | 유니버셜 기능 결합 및 안정적 최저보증이율 | Count: 12
+Company: 교보생명 | Product: 연금저축교보연금보험 | Rate: 2.20 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.20 %) | 유니버셜 기능 결합 및 안정적 최저보증이율 | Count: 12
+Company: 롯데손보 | Product: let:care 연금저축손해보험(계약이전)(2601)_거치형(일시납) | Rate:  | Channel:  | Features: 오프라인 대면 밀착 케어 서비스 | 표준 복리 이율 제공 | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 12
+Company: 롯데손보 | Product: let:care 연금저축손해보험(계약이전)(2601)_적립형(월납) | Rate:  | Channel:  | Features: 오프라인 대면 밀착 케어 서비스 | 표준 복리 이율 제공 | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 12
+Company: 롯데손보 | Product: let:care 연금저축손해보험Ⅰ(2601) | Rate:  | Channel:  | Features: 오프라인 대면 밀착 케어 서비스 | 표준 복리 이율 제공 | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 12
+Company: 롯데손보 | Product: let:care 연금저축손해보험Ⅱ(2601) | Rate:  | Channel:  | Features: 오프라인 대면 밀착 케어 서비스 | 표준 복리 이율 제공 | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 12
+Company: 메리츠화재 | Product: 연금저축손해보험 노후생활지킴이보험2601 | Rate:  | Channel:  | Features: 오프라인 대면 밀착 케어 서비스 | 표준 복리 이율 제공 | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 5
+Company: 메리츠화재 | Product: 연금저축손해보험 메리츠 계약이체연금보험2601 | Rate:  | Channel:  | Features: 오프라인 대면 밀착 케어 서비스 | 표준 복리 이율 제공 | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 10
+Company: 메리츠화재 | Product: 연금저축손해보험 메리츠 연금보험2601 | Rate:  | Channel:  | Features: 오프라인 대면 밀착 케어 서비스 | 표준 복리 이율 제공 | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 10
+Company: 삼성생명 | Product: 삼성 개인연금저축 웰컴연금보험 | Rate: 2.03 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.03 %) | 자산 규모 1위 삼성금융 브랜드의 절대 안정성 | Count: 14
+Company: 삼성생명 | Product: 삼성 돌려받는 연금저축보험[원금보장형](2512)(무배당) | Rate: 2.49 % | Channel: CM | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.49 %) | 자산 규모 1위 삼성금융 브랜드의 절대 안정성 | Count: 14
+Company: 삼성생명 | Product: 삼성 변액연금보험(2601)(무배당) | Rate: 89.40 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 업계 최우수 공시이율 (89.40 %) | 자산 규모 1위 삼성금융 브랜드의 절대 안정성 | Count: 3
+Company: 삼성생명 | Product: 삼성 연금저축골드연금보험(2601)(무배당) | Rate: 2.49 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.49 %) | 자산 규모 1위 삼성금융 브랜드의 절대 안정성 | Count: 14
+Company: 삼성생명 | Product: 삼성 연금저축골드연금보험(B2601)(무배당) | Rate: 2.49 % | Channel: 방카슈랑스 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.49 %) | 자산 규모 1위 삼성금융 브랜드의 절대 안정성 | Count: 14
+Company: 삼성생명 | Product: 삼성 연금저축웰컴연금보험(무배당) | Rate: 2.49 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.49 %) | 자산 규모 1위 삼성금융 브랜드의 절대 안정성 | Count: 14
+Company: 삼성화재 | Product: 개인연금저축손해보험 무배당 삼성화재 계약이전 연금보험(2601.9) | Rate:  | Channel:  | Features: 오프라인 대면 밀착 케어 서비스 | 표준 복리 이율 제공 | 자산 규모 1위 삼성금융 브랜드의 절대 안정성 | Count: 18
+Company: 삼성화재 | Product: 연금저축손해보험 무배당 삼성화재 계약이전 연금보험(2601.10) | Rate:  | Channel:  | Features: 오프라인 대면 밀착 케어 서비스 | 표준 복리 이율 제공 | 자산 규모 1위 삼성금융 브랜드의 절대 안정성 | Count: 14
+Company: 삼성화재 | Product: 연금저축손해보험 삼성화재 다이렉트 연금저축(2601.11) | Rate:  | Channel:  | Features: 인터넷 CM 전용 최저 수수료(사업비 3.5%) | 표준 복리 이율 제공 | 자산 규모 1위 삼성금융 브랜드의 절대 안정성 | Count: 6
+Company: 삼성화재 | Product: 연금저축손해보험 삼성화재 연금보험 아름다운생활Ⅱ(2601.16) | Rate:  | Channel:  | Features: 오프라인 대면 밀착 케어 서비스 | 표준 복리 이율 제공 | 자산 규모 1위 삼성금융 브랜드의 절대 안정성 | Count: 6
+Company: 삼성화재 | Product: 연금저축손해보험 삼성화재 연금보험 직장인단체(2601.17) | Rate:  | Channel:  | Features: 오프라인 대면 밀착 케어 서비스 | 표준 복리 이율 제공 | 자산 규모 1위 삼성금융 브랜드의 절대 안정성 | Count: 6
+Company: 신한라이프 | Product: ONE픽VIP달러연금보험Ⅱ(무배당, 거치형) | Rate: 5.14 % | Channel: 방카슈랑스 | Features: 오프라인 대면 밀착 케어 서비스 | 업계 최우수 공시이율 (5.14 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 4
+Company: 신한라이프 | Product: ONE픽VIP달러연금보험Ⅱ(무배당, 생활자금형) | Rate: 5.14 % | Channel: 방카슈랑스 | Features: 오프라인 대면 밀착 케어 서비스 | 업계 최우수 공시이율 (5.14 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 4
+Company: 신한라이프 | Product: SOL메이트달러연금보험Ⅱ(무배당, 거치형) | Rate: 5.14 % | Channel: 방카슈랑스 | Features: 오프라인 대면 밀착 케어 서비스 | 업계 최우수 공시이율 (5.14 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 4
+Company: 신한라이프 | Product: SOL메이트달러연금보험Ⅱ(무배당, 생활자금형) | Rate: 5.14 % | Channel: 방카슈랑스 | Features: 오프라인 대면 밀착 케어 서비스 | 업계 최우수 공시이율 (5.14 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 4
+Company: 신한라이프 | Product: 신한ONE더라이프연금보험(무배당) | Rate: 2.45 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 6
+Company: 신한라이프 | Product: 신한SOL메이트달러연금보험Ⅱ(무배당, 거치형) | Rate: 5.14 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 업계 최우수 공시이율 (5.14 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 4
+Company: 신한라이프 | Product: 신한SOL메이트달러연금보험Ⅱ(무배당, 생활자금형) | Rate: 5.14 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 업계 최우수 공시이율 (5.14 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 4
+Company: 신한라이프 | Product: 신한The부자만들기연금보험(무배당)(기본형) | Rate: 2.45 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 11
+Company: 신한라이프 | Product: 신한The부자만들기연금보험(무배당)(연금강화형) | Rate: 2.45 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 11
+Company: 신한라이프 | Product: 신한VIP참연금저축보험Ⅲ | Rate: 2.10 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.10 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 12
+Company: 신한라이프 | Product: 신한슈퍼SOL연금보험(무배당)(기본형) | Rate: 2.45 % | Channel: CM | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 6
+Company: 신한라이프 | Product: 신한슈퍼SOL연금보험(무배당)(연금강화형) | Rate: 2.45 % | Channel: CM | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 6
+Company: 신한라이프 | Product: 신한알찬연금저축보험Ⅱ | Rate: 2.10 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.10 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 12
+Company: 신한라이프 | Product: 신한톤틴연금보험(무배당) | Rate: 2.45 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 6
+Company: 신한라이프 | Product: 신한톤틴연금보험[무배당,(사망·해지)일부지급형] | Rate: 2.45 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 6
+Company: 신한라이프 | Product: 프리미어하이브리드연금보험(무배당)(기본형) | Rate: 2.40 % | Channel: 방카슈랑스 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.40 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 3
+Company: 신한라이프 | Product: 프리미어하이브리드연금보험(무배당)(연금강화형) | Rate: 2.40 % | Channel: 방카슈랑스 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.40 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 3
+Company: 푸본현대생명 | Product: MAX UP 연금보험 무배당(연금액강화형)(2404) | Rate: 2.45 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 고객 케어 및 다이렉트 편의성 제공 | Count: 6
+Company: 푸본현대생명 | Product: MAX UP 연금보험 무배당(일반연금형)(2404) | Rate: 2.45 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 고객 케어 및 다이렉트 편의성 제공 | Count: 6
+Company: 푸본현대생명 | Product: MAX 연금보험 e하이브리드 적립형 무배당(B2602) | Rate: 2.45 % | Channel: 방카슈랑스  CM | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 고객 케어 및 다이렉트 편의성 제공 | Count: 6
+Company: 푸본현대생명 | Product: MAX 연금보험 뉴 하이파이브 적립형 1종 무배당(연금액강화형)(B2601) | Rate: 2.30 % | Channel: 방카슈랑스 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.30 %) | 고객 케어 및 다이렉트 편의성 제공 | Count: 6
+Company: 푸본현대생명 | Product: MAX 연금보험 뉴 하이파이브 적립형 1종 무배당(일반연금형)(B2601) | Rate: 2.45 % | Channel: 방카슈랑스 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 고객 케어 및 다이렉트 편의성 제공 | Count: 6
+Company: 푸본현대생명 | Product: MAX 연금보험 뉴 하이파이브 적립형 2종 무배당(연금액강화형)(B2601) | Rate: 2.45 % | Channel: 방카슈랑스  CM | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 고객 케어 및 다이렉트 편의성 제공 | Count: 6
+Company: 푸본현대생명 | Product: MAX 연금보험 뉴 하이파이브 적립형 2종 무배당(일반연금형)(B2601) | Rate: 2.45 % | Channel: 방카슈랑스  CM | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 고객 케어 및 다이렉트 편의성 제공 | Count: 6
+Company: 푸본현대생명 | Product: MAX 연금보험 무배당(2404) | Rate: 2.45 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 고객 케어 및 다이렉트 편의성 제공 | Count: 9
+Company: 푸본현대생명 | Product: MAX 연금보험 무배당(법인)(2404) | Rate: 2.45 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 고객 케어 및 다이렉트 편의성 제공 | Count: 6
+Company: 푸본현대생명 | Product: MAX 연금보험 하이브리드 적립형 무배당(B2602) | Rate: 2.45 % | Channel: 방카슈랑스 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 고객 케어 및 다이렉트 편의성 제공 | Count: 6
+Company: 푸본현대생명 | Product: MAX 연금보험 하이브리드 플러스 적립형 무배당(보증비용미부과형)(B2603) | Rate: 2.45 % | Channel: 방카슈랑스 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 고객 케어 및 다이렉트 편의성 제공 | Count: 6
+Company: 푸본현대생명 | Product: MAX 연금보험 하이브리드 플러스 적립형 무배당(보증비용부과형)(B2603) | Rate: 2.45 % | Channel: 방카슈랑스 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 고객 케어 및 다이렉트 편의성 제공 | Count: 6
+Company: 푸본현대생명 | Product: MAX 연금보험 하이파이브 무배당(A2404) | Rate: 2.45 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 고객 케어 및 다이렉트 편의성 제공 | Count: 9
+Company: 푸본현대생명 | Product: MAX 연금저축보험(법인)(2504) | Rate: 2.08 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.08 %) | 고객 케어 및 다이렉트 편의성 제공 | Count: 12
+Company: 푸본현대생명 | Product: MAX 이전받는 연금저축보험(2504) | Rate: 2.08 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.08 %) | 고객 케어 및 다이렉트 편의성 제공 | Count: 12
+Company: 푸본현대생명 | Product: MAX 직장인 연금보험 무배당(법인)(2404) | Rate: 2.45 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 고객 케어 및 다이렉트 편의성 제공 | Count: 6
+Company: 푸본현대생명 | Product: 푸본현대 연금보험 스피드 무배당(연금액강화형)(2512) | Rate: 2.45 % | Channel: CM | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 고객 케어 및 다이렉트 편의성 제공 | Count: 6
+Company: 푸본현대생명 | Product: 푸본현대 연금보험 스피드 무배당(일반연금형)(2512) | Rate: 2.45 % | Channel: CM | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.45 %) | 고객 케어 및 다이렉트 편의성 제공 | Count: 6
+Company: 하나생명 | Product: (무)THE 든든한 연금보험_간편심사형 | Rate: - | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 표준 복리 이율 제공 | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 7
+Company: 하나생명 | Product: (무)THE 든든한 연금보험_일반심사형 | Rate: - | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 표준 복리 이율 제공 | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 7
+Company: 하나생명 | Product: (무)하나로 연금저축보험 | Rate: 2.50 % | Channel: 기타 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.50 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 12
+Company: 하나생명 | Product: (무)하나원큐연금저축보험 | Rate: 2.50 % | Channel: CM | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.50 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 12
+Company: 한화생명 | Product: 한화생명 e연금저축보험 무배당 | Rate: 2.55 % | Channel: CM | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.55 %) | 자유로운 중도 인출 및 추가 납입 유연성 | Count: 12
+Company: 한화생명 | Product: 한화생명 연금저축 스마트하이드림연금보험 | Rate: 2.10 % | Channel: 방카슈랑스 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.10 %) | 자유로운 중도 인출 및 추가 납입 유연성 | Count: 12
+Company: 한화생명 | Product: 한화생명 연금저축 하이드림연금보험(1종) | Rate: 2.10 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.10 %) | 자유로운 중도 인출 및 추가 납입 유연성 | Count: 12
+Company: 한화생명 | Product: 한화생명 연금저축 하이드림연금보험(2종) | Rate: 2.10 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.10 %) | 자유로운 중도 인출 및 추가 납입 유연성 | Count: 12
+Company: 한화손보 | Product: 연금저축손해보험 골드연금보험2601 | Rate:  | Channel:  | Features: 오프라인 대면 밀착 케어 서비스 | 표준 복리 이율 제공 | 자유로운 중도 인출 및 추가 납입 유연성 | Count: 12
+Company: 현대해상 | Product: 연금저축손해보험 현대해상노후웰스보험(Hi2601) | Rate:  | Channel:  | Features: 오프라인 대면 밀착 케어 서비스 | 표준 복리 이율 제공 | 고객 케어 및 다이렉트 편의성 제공 | Count: 6
+Company: 현대해상 | Product: 연금저축손해보험 현대해상다이렉트연금보험(Hi2601) | Rate:  | Channel:  | Features: 인터넷 CM 전용 최저 수수료(사업비 3.5%) | 표준 복리 이율 제공 | 고객 케어 및 다이렉트 편의성 제공 | Count: 6
+Company: 현대해상 | Product: 연금저축손해보험 현대해상하이로연금보험(Hi2601) | Rate:  | Channel:  | Features: 오프라인 대면 밀착 케어 서비스 | 표준 복리 이율 제공 | 고객 케어 및 다이렉트 편의성 제공 | Count: 12
+Company: 흥국생명 | Product: (무)흥국생명 온라인연금저축보험 | Rate: 2.30 % | Channel: CM | Features: 인터넷 CM 전용 최저 수수료(사업비 3.5%) | 안정 보장형 복리 이율 (2.30 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 12
+Company: 흥국생명 | Product: 연금저축 흥국생명 체인지UP연금보험 | Rate: 2.10 % | Channel: 대면채널 | Features: 오프라인 대면 밀착 케어 서비스 | 안정 보장형 복리 이율 (2.10 %) | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 12
+Company: 흥국화재 | Product: 연금저축손해보험 흥Good 행복디딤돌보험(26.01) | Rate:  | Channel:  | Features: 오프라인 대면 밀착 케어 서비스 | 표준 복리 이율 제공 | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 12
+Company: 흥국화재 | Product: 연금저축손해보험 흥Good연금보험(26.01) | Rate:  | Channel:  | Features: 오프라인 대면 밀착 케어 서비스 | 표준 복리 이율 제공 | 예금자보호법 적용 대상 및 최저보증 안전망 | Count: 24

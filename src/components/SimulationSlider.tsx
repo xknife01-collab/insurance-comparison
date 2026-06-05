@@ -24,6 +24,8 @@ import { SavingsSlider } from './insurance/savings/SavingsSlider';
 import { SavingsExplanation } from './insurance/savings/SavingsExplanation';
 import { CreditSlider } from './insurance/credit/CreditSlider';
 import { CarSlider } from './insurance/car/CarSlider';
+import { HealthGeneralSlider } from './insurance/healthGeneral/HealthGeneralSlider';
+import { AccidentSlider } from './insurance/accident/AccidentSlider';
 
 
 interface SimulationSliderProps {
@@ -33,11 +35,17 @@ interface SimulationSliderProps {
 export const SimulationSlider: React.FC<SimulationSliderProps> = ({ result }) => {
   const category = result.analysis.selectedCategory || '';
 
+  // 종합건강보험 지원
+  if (category.includes('종합건강') || category === 'health_general' || !!result.analysis.healthGeneral) {
+    return <HealthGeneralSlider result={result} />;
+  }
+
   if (category.includes('암') || category === 'cancer') return <CancerSlider result={result} />;
   if (category.includes('뇌혈관') || category === 'cerebrovascular') return <BrainSlider result={result} />;
   if (category.includes('심장')) return <HeartSlider result={result} />;
   if (category.includes('실손') || category.includes('실비')) return <SilsonSlider result={result} />;
   if (category.includes('치아')) return <DentalSlider result={result} />;
+  if (category.includes('상해') || category === 'accident' || !!result.analysis.accident) return <AccidentSlider result={result} />;
   if (category.includes('치매')) return <CaregivingOldSlider result={result} />;
   if (category === 'nursing' || category.includes('재가') || category.includes('시설')) return <NursingSlider result={result} />;
   if (category.includes('간병')) return <CaregivingSlider result={result} />;
