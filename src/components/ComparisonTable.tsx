@@ -17,29 +17,33 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     return `${amt.toLocaleString()}원`;
   };
 
-  const isDental = analysis.selectedCategory?.includes('치아');
-  const isSilbi = analysis.selectedCategory?.includes('실손') || analysis.selectedCategory?.includes('실비');
-  const isCaregiving = analysis.selectedCategory?.includes('간병');
+  const category = analysis.selectedCategory ?? '';
+  const isDental = category.includes('치아');
+  const isSilbi = category.includes('실손') || category.includes('실비');
+  const isCaregiving = category.includes('간병');
   const isDementia = isCaregiving && (analysis.caregiving as any)?.dementiaDiagnosis !== undefined;
   const isGeneralCaregiving = isCaregiving && !isDementia;
-  const isNursing = analysis.selectedCategory === '재가/시설' || analysis.selectedCategory?.includes('재가') || analysis.selectedCategory?.includes('시설');
-  const isBrain = analysis.selectedCategory?.includes('뇌혈관') || analysis.selectedCategory === 'brain';
-  const isHeart = analysis.selectedCategory?.includes('심장') || analysis.selectedCategory === 'heart';
-  const isChild = analysis.selectedCategory?.includes('어린이') || analysis.selectedCategory?.includes('태아') || analysis.selectedCategory === 'child' || analysis.selectedCategory === 'pre_family' || !!analysis.child;
-  const isCar = analysis.selectedCategory?.includes('자동차') || analysis.selectedCategory === 'car';
-  const isDriver = analysis.selectedCategory?.includes('운전자') || analysis.selectedCategory === 'driver';
-  const isPet = analysis.selectedCategory?.includes('펫') || analysis.selectedCategory === 'pet' || !!analysis.pet;
-  const isGolf = analysis.selectedCategory?.includes('골프') || analysis.selectedCategory?.includes('레저') || analysis.selectedCategory === 'golf' || analysis.selectedCategory === 'leisure' || !!analysis.golf;
-  const isProperty = analysis.selectedCategory?.includes('재물') || analysis.selectedCategory === 'property' || !!analysis.property;
-  const isFire = (analysis.selectedCategory?.includes('주택화재') || analysis.selectedCategory?.includes('화재') || analysis.selectedCategory === 'fire_real' || !!analysis.fire) && !isProperty;
-  const isAnnuity = analysis.selectedCategory?.includes('연금') || analysis.selectedCategory === 'annuity_savings' || !!analysis.annuity;
-  const isWholeLife = analysis.selectedCategory?.includes('종신') || analysis.selectedCategory === 'whole' || !!analysis.wholeLife;
-  const isVariable = analysis.selectedCategory?.includes('변액') || analysis.selectedCategory?.includes('정기') || analysis.selectedCategory === 'variable' || analysis.selectedCategory === 'term' || !!analysis.variable;
-  const isLegal = analysis.selectedCategory?.includes('민사') || analysis.selectedCategory?.includes('형사') || analysis.selectedCategory?.includes('법률') || analysis.selectedCategory === 'legal' || !!analysis.legal;
-  const isSavingsGeneral = analysis.selectedCategory?.includes('일반 저축') || analysis.selectedCategory === 'savings_general' || !!analysis.savingsGeneral;
-  const isCredit = analysis.selectedCategory?.includes('신용') || analysis.selectedCategory === 'credit' || !!analysis.credit;
-  const isAccident = analysis.selectedCategory?.includes('상해') || analysis.selectedCategory === 'accident' || !!analysis.accident;
-
+  const isNursing = category === '재가/시설' || category.includes('재가') || category.includes('시설');
+  const isBrain = category.includes('뇌혈관') || category === 'brain';
+  const isHeart = category.includes('심장') || category === 'heart';
+  const isCancer = category.includes('암보험') || category === 'cancer';
+  const isHealthGeneral = category.includes('종합건강') || category === 'health_general';
+  const isPreExisting = category.includes('유병자') || category.includes('간편');
+  const isChild = category.includes('어린이') || category.includes('태아') || category === 'child' || category === 'pre_family';
+  const isCar = category.includes('자동차') || category === 'car';
+  const isDriver = category.includes('운전자') || category === 'driver';
+  const isPet = category.includes('펫') || category === 'pet';
+  const isGolf = category.includes('골프') || category.includes('레저') || category === 'golf' || category === 'leisure';
+  const isProperty = category.includes('재물') || category === 'property';
+  const isFire = (category.includes('주택화재') || category.includes('화재') || category === 'fire_real') && !isProperty;
+  const isAnnuity = category.includes('연금') || category === 'annuity_savings';
+  const isWholeLife = category.includes('종신') || category === 'whole';
+  const isVariable = category.includes('변액') || category.includes('정기') || category === 'variable' || category === 'term';
+  const isLegal = category.includes('민사') || category.includes('형사') || category.includes('법률') || category === 'legal';
+  const isSavingsGeneral = category.includes('일반 저축') || category === 'savings_general';
+  const isCredit = category.includes('신용') || category === 'credit';
+  const isAccident = category.includes('상해') || category === 'accident';
+  const isSurgeryHospital = category.includes('수술') || category.includes('입원');
 
 
   const benchmark = isSilbi ? 55000 : isDental ? 85000 : isCaregiving ? 45000 : isNursing ? 70000 : isHeart ? 120000 : isChild ? (analysis.child?.maturity === 30 ? 45000 : 95000) : isDriver ? 22000 : isPet ? 42000 : isGolf ? 15000 : isFire ? 12000 : isProperty ? 45000 : isWholeLife ? 150000 : isVariable ? 150000 : isLegal ? 18000 : isCredit ? 40000 : isAccident ? 30000 : 180000;
@@ -362,7 +366,41 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     },
   ];
 
-  // 11. 표준/일반 종합보험 기본행 (그 외 카테고리)
+  // 11. 암보험 전용 비교 행
+  const cancerRows = [
+    {
+      label: '일반암 진단비',
+      current: formatAmt(analysis.cancer?.currentAmount ?? 30000000),
+      recommended: `최대 ${formatAmt(analysis.cancer?.currentAmount ?? 50000000)} (진단 즉시 치료비+생활비 일시금 확보)`,
+      icon: <ShieldCheck className="w-4 h-4 text-rose-500" />
+    },
+    {
+      label: '표적항암 치료비',
+      current: analysis.cancer?.targetedTherapy ? '가입 완료' : '미가입',
+      recommended: '최대 5,000만 원 (부작용 없는 정밀 표적항암제 처방비 실손 지원)',
+      icon: <HeartPulse className="w-4 h-4 text-rose-500" />
+    },
+    {
+      label: '비급여 암 주요치료비',
+      current: analysis.cancer?.treatmentCost2025 ? '가입 완료' : '미가입',
+      recommended: '연간 최대 1억 원 × 10년 = 총 10억 원 (매년 쓴 비급여 치료비 정산 지급)',
+      icon: <TrendingUp className="w-4 h-4 text-rose-500" />
+    },
+    {
+      label: '재발/전이암 반복 보장',
+      current: analysis.cancer?.recurrentCancer ? '가입 완료' : '미가입',
+      recommended: '재진단 시 2년마다 반복 지급 (장기 투병 시 핵심 안전망)',
+      icon: <ShieldCheck className="w-4 h-4 text-rose-500" />
+    },
+    {
+      label: '납입/갱신 유형',
+      current: analysis.cancer?.paymentType === 'non-renewable' ? '비갱신형' : '갱신형',
+      recommended: '비갱신형 (보험료 동결 — 나이 들어도 인상 없음)',
+      icon: <Clock className="w-4 h-4 text-rose-500" />
+    },
+  ];
+
+  // 12. 표준/일반 종합보험 기본행 (그 외 카테고리)
   const standardRows = [
     { 
       label: '일반암 진단비', 
@@ -824,9 +862,109 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     },
   ];
 
-  // 조건 분기를 if-else 문으로 안전하고 깔끔하게 매칭
+  // 16. 종합건강보험 전용 비교행
+  const hg = analysis.healthGeneral;
+  const healthGeneralRows = [
+    {
+      label: '일반암 진단비',
+      current: hg?.cancerLimit ? formatAmt(hg.cancerLimit) : '3,000만',
+      recommended: '최대 5,000만 원 (종합건강 핵심 — 암·뇌·심장 동시 선제 확보)',
+      icon: <ShieldCheck className="w-4 h-4 text-violet-600" />
+    },
+    {
+      label: '뇌혈관 + 허혈성 심장 진단비',
+      current: `뇌 ${hg?.brainLimit ? formatAmt(hg.brainLimit) : '1,000만'} / 심 ${hg?.heartLimit ? formatAmt(hg.heartLimit) : '1,000만'}`,
+      recommended: '각 최대 3,000만 원 (2대 급성질환 동시 강화)',
+      icon: <Brain className="w-4 h-4 text-violet-600" />
+    },
+    {
+      label: '표적항암 치료비 특약',
+      current: hg?.hasTargetedTherapy ? '가입 완료' : '미가입',
+      recommended: '가입 (부작용 없는 정밀 표적항암제 처방비 연간 최대 5,000만 원)',
+      icon: <HeartPulse className="w-4 h-4 text-violet-600" />
+    },
+    {
+      label: '납입/갱신 구조',
+      current: hg?.isRenewable ? '갱신형 (나이 들수록 보험료 인상)' : '비갱신형',
+      recommended: `비갱신형 ${hg?.paymentPeriod ? hg.paymentPeriod + '년납' : '20년납'} (보험료 동결 — 완납 후 평생 보장)`,
+      icon: <Clock className="w-4 h-4 text-violet-600" />
+    },
+    {
+      label: '가족 일상생활 배상책임',
+      current: hg?.hasLiability ? '가입 완료' : '미가입',
+      recommended: '가입 (누수·대인·대물 사고 시 자기부담금 20만 원 방어)',
+      icon: <Scale className="w-4 h-4 text-violet-600" />
+    },
+  ];
+
+  // 17. 유병자보험 전용 비교행
+  const preExistingTypeLabel: Record<string, string> = {
+    '3.0.5': '3개월 고지 (경증)',
+    '3.2.5': '1년 고지 (중등)',
+    '3.3.5': '3년 고지 (중증)',
+    '3.5.5': '5년 고지 (최중증)',
+  };
+  const currentPreExType = analysis.preExistingType || '3.3.5';
+  const preExistingRows = [
+    {
+      label: '고지의무 기간 (현재 유형)',
+      current: preExistingTypeLabel[currentPreExType] || '3년 고지',
+      recommended: '3개월 고지형 전환 가능 여부 검토 (병력 기준 완화 시 보험료 최대 35% 절감)',
+      icon: <ShieldCheck className="w-4 h-4 text-amber-600" />
+    },
+    {
+      label: '표준체 대비 보험료 할증',
+      current: currentPreExType === '3.0.5' ? '~15% 할증' : currentPreExType === '3.2.5' ? '~30% 할증' : '~50% 이상 할증',
+      recommended: '할증 최소화 플랜 (동일 보장 유지하면서 보험사별 할증률 최저 구간 선택)',
+      icon: <TrendingDown className="w-4 h-4 text-amber-600" />
+    },
+    {
+      label: '일반암 진단비 보장 한도',
+      current: formatAmt(analysis.cancer?.currentAmount ?? 20000000),
+      recommended: '최대 3,000만 원 (유병자 한도 내 최대치 — 할증 없이 보장 극대화)',
+      icon: <HeartPulse className="w-4 h-4 text-amber-600" />
+    },
+    {
+      label: '뇌혈관 + 심장 진단비',
+      current: formatAmt(analysis.cerebrovascular?.currentAmount ?? 5000000),
+      recommended: '각 최대 1,000만 ~ 2,000만 원 (유병자 전용 한도 내 최적 설계)',
+      icon: <Brain className="w-4 h-4 text-amber-600" />
+    },
+  ];
+
+  // 18. 수술/입원보험 전용 비교행
+  const surgeryHospitalRows = [
+    {
+      label: '1~5종 수술비 보장',
+      current: formatAmt(analysis.surgery?.currentAmount ?? 500000),
+      recommended: '5종 수술 최대 500만 원 (맹장·담낭·자궁 등 빈번한 수술 전액 실손 대비)',
+      icon: <Stethoscope className="w-4 h-4 text-sky-600" />
+    },
+    {
+      label: '질병 입원일당',
+      current: '없음 또는 1~2만 원',
+      recommended: '하루 최대 5만 원 (장기 입원 시 생활비 손실 보전)',
+      icon: <ShieldCheck className="w-4 h-4 text-sky-600" />
+    },
+    {
+      label: '중환자실(ICU) 입원일당',
+      current: '없음',
+      recommended: '하루 최대 10만 원 (일반 병실 대비 5배 비용 — 중증 입원 핵심 방어)',
+      icon: <HeartPulse className="w-4 h-4 text-sky-600" />
+    },
+    {
+      label: '종합병원 이상 입원일당 할증',
+      current: '없음',
+      recommended: '3차 상급 종합병원 이상 입원 시 일당 2배 지급 특약 적용',
+      icon: <TrendingUp className="w-4 h-4 text-sky-600" />
+    },
+  ];
+
+  // 조건 분기 — selectedCategory 기반 단일 진입점 (!!analysis.xxx 폴백 없음)
   let comparisonRows = standardRows;
-  if (isChild) {
+  if (isCancer) {
+    comparisonRows = cancerRows;
+  } else if (isChild) {
     comparisonRows = isPreFamily 
       ? preFamilyRows 
       : (childInfo.targetAgeGroup === 'prenatal' ? prenatalRows : childInfo.targetAgeGroup === 'youth' ? youthRows : childRows);
@@ -870,6 +1008,12 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     comparisonRows = creditRows;
   } else if (isAccident) {
     comparisonRows = accidentRows;
+  } else if (isHealthGeneral) {
+    comparisonRows = healthGeneralRows;
+  } else if (isPreExisting) {
+    comparisonRows = preExistingRows;
+  } else if (isSurgeryHospital) {
+    comparisonRows = surgeryHospitalRows;
   }
 
 

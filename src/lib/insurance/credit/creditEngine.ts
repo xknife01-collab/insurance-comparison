@@ -171,7 +171,7 @@ export const analyzeCredit = (analysis: any): any => {
       cardiovascularScore: riderScore,
       totalScore: totalScore
     },
-    efficiency: totalScore > 0 ? (totalScore * 100000) / dietPremium : 100.0,
+    efficiency: totalScore > 0 ? Math.min(98, Math.max(60, Math.round(totalScore - (dietPremium - 25000) / 1000))) : 80,
     deficiencies,
     recommendations
   };

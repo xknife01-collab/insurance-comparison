@@ -62,31 +62,32 @@ export const runAnalysis = async (analysis: InsuranceAnalysis): Promise<any> => 
   }
 
   // 1. Fetch real premium from the Supabase database
-  const isDementia = category.includes('치매') || category === 'dementia';
-  const isNursing = category === 'nursing' || category.includes('재가') || category.includes('시설');
-  const isBrain = category.includes('뇌혈관') || category === 'brain';
-  const isCancer = category.includes('암') || category === 'cancer';
-  const isSilson = category.includes('실손') || category.includes('실비');
-  const isCaregiving = category.includes('간병') && !isDementia && !isNursing;
-  const isDental = category.includes('치아') || category.includes('dental');
-  const isSurgery = category.includes('수술') || category.includes('입원');
-  const isChild = category.includes('어린이') || category.includes('태아') || category === 'child' || category === 'pre_family' || !!analysis.child;
-  const isPreExisting = category.includes('유병자') && !isChild;
-  const isHeart = category.includes('심장') || category === 'heart';
-  const isCar = category.includes('자동차') || category === 'car';
-  const isDriver = category.includes('운전자') || category === 'driver';
-  const isPet = category.includes('펫') || category === 'pet' || !!analysis.pet;
-  const isGolf = category.includes('골프') || category.includes('레저') || category === 'golf' || category === 'leisure' || !!analysis.golf;
-  const isFire = category.includes('주택화재') || category.includes('화재') || category === 'fire_real' || !!analysis.fire;
-  const isProperty = category.includes('재물') || category === 'property' || category === 'home' || !!analysis.property;
-  const isAnnuity = category.includes('연금') || category === 'annuity_savings' || !!analysis.annuity;
-  const isWholeLife = category.includes('종신') || category === 'whole' || !!analysis.wholeLife;
-  const isVariable = category.includes('변액') || category.includes('정기') || category === 'variable' || !!(analysis as any).variable;
-  const isLegal = category.includes('법률') || category === 'legal' || !!analysis.legal;
-  const isSavingsGeneral = category.includes('일반 저축') || category === 'savings_general' || !!analysis.savingsGeneral;
-  const isCredit = category.includes('신용') || category === 'credit' || !!analysis.credit;
-  const isHealthGeneral = category.includes('종합건강') || category === 'health_general' || !!analysis.healthGeneral;
-  const isAccident = category.includes('상해') || category === 'accident' || !!analysis.accident;
+  // ─── selectedCategory 단일 진입점 — !!analysis.xxx 데이터 폴백 없음 ──────────
+  const isDementia      = category.includes('치매')    || category === 'dementia';
+  const isNursing       = category === 'nursing'       || category.includes('재가') || category.includes('시설');
+  const isBrain         = category.includes('뇌혈관')  || category === 'brain';
+  const isCancer        = category.includes('암')      || category === 'cancer';
+  const isSilson        = category.includes('실손')    || category.includes('실비');
+  const isCaregiving    = category.includes('간병')    && !isDementia && !isNursing;
+  const isDental        = category.includes('치아')    || category.includes('dental');
+  const isSurgery       = category.includes('수술')    || category.includes('입원');
+  const isChild         = category.includes('어린이')  || category.includes('태아') || category === 'child' || category === 'pre_family';
+  const isPreExisting   = category.includes('유병자')  && !isChild;
+  const isHeart         = category.includes('심장')    || category === 'heart';
+  const isCar           = category.includes('자동차')  || category === 'car';
+  const isDriver        = category.includes('운전자')  || category === 'driver';
+  const isPet           = category.includes('펫')      || category === 'pet';
+  const isGolf          = category.includes('골프')    || category.includes('레저') || category === 'golf' || category === 'leisure';
+  const isProperty      = category.includes('재물')    || category === 'property' || category === 'home';
+  const isFire          = (category.includes('주택화재') || category.includes('화재') || category === 'fire_real') && !isProperty;
+  const isAnnuity       = category.includes('연금')    || category === 'annuity_savings';
+  const isWholeLife     = category.includes('종신')    || category === 'whole';
+  const isVariable      = category.includes('변액')    || category.includes('정기') || category === 'variable' || category === 'term';
+  const isLegal         = category.includes('법률')    || category.includes('민사') || category.includes('형사') || category === 'legal';
+  const isSavingsGeneral = category.includes('일반 저축') || category === 'savings_general';
+  const isCredit        = category.includes('신용')    || category === 'credit';
+  const isHealthGeneral = category.includes('종합건강') || category === 'health_general';
+  const isAccident      = category.includes('상해')    || category === 'accident';
 
   
   const dbData = isDementia

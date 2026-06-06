@@ -1447,7 +1447,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                   isHealthyDiscount={variableIsHealthyDiscount}
                   setIsHealthyDiscount={setVariableIsHealthyDiscount}
                 />
-              ) : (selectedId === 'pre' || healthStatus === 'simple') && selectedId !== 'silson' ? (
+              ) : selectedId === 'pre' ? (
                 <PreExistingFields
                   threeMonth={silson3Month} setThreeMonth={setSilson3Month}
                   noAccidentYears={preExistingType.split('.')[1]}

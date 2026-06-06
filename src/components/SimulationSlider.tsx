@@ -33,72 +33,75 @@ interface SimulationSliderProps {
   result: AnalysisResult;
 }
 
+// ─── 슬라이더 컴포넌트 1:1 맵 ─────────────────────────────────────────────
+type SliderComponentType = React.ComponentType<{ result: AnalysisResult }>;
+
+// 정확한 키(exact match) 맵
+const EXACT_SLIDER_MAP: Record<string, SliderComponentType> = {
+  'child':            ChildSlider,
+  'accident':         AccidentSlider,
+  'car':              CarSlider,
+  'driver':           DriverSlider,
+  'pet':              PetSlider,
+  'golf':             GolfSlider,
+  'fire_real':        FireSlider,
+  'annuity_savings':  AnnuitySlider,
+  'whole':            WholeLifeSlider,
+  'variable':         VariableSlider,
+  'term':             VariableSlider,
+  'health_general':   HealthGeneralSlider,
+  'credit':           CreditSlider,
+  'legal':            LegalSlider,
+  'property':         PropertySlider,
+  'home':             PropertySlider,
+  'nursing':          NursingSlider,
+  '재가/시설':         NursingSlider,
+};
+
+// 부분 문자열(includes) 맵 — 순서가 중요: 더 구체적인 것을 먼저
+const PARTIAL_SLIDER_MAP: Array<[string, SliderComponentType | null]> = [
+  ['종합건강',   HealthGeneralSlider],
+  ['암',        CancerSlider],
+  ['뇌혈관',    BrainSlider],
+  ['심장',      HeartSlider],
+  ['실손',      SilsonSlider],
+  ['실비',      SilsonSlider],
+  ['치아',      DentalSlider],
+  ['상해',      AccidentSlider],
+  ['치매',      CaregivingOldSlider],
+  ['재가',      NursingSlider],
+  ['시설',      NursingSlider],
+  ['간병',      CaregivingSlider],
+  ['수술',      SurgerySlider],
+  ['입원',      SurgerySlider],
+  ['운전자',    DriverSlider],
+  ['펫',        PetSlider],
+  ['자동차',    CarSlider],
+  ['신용',      CreditSlider],
+  ['골프',      GolfSlider],
+  ['재물',      PropertySlider],
+  ['주택화재',  FireSlider],
+  ['화재',      FireSlider],
+  ['연금',      AnnuitySlider],
+  ['변액',      VariableSlider],
+  ['정기',      VariableSlider],
+  ['종신',      WholeLifeSlider],
+  ['민사',      LegalSlider],
+  ['형사',      LegalSlider],
+  ['법률',      LegalSlider],
+  ['어린이',    ChildSlider],
+  ['태아',      ChildSlider],
+  ['유병력자',  ChildSlider],
+  ['유병자',    PreExistingSlider],
+  ['간편',      PreExistingSlider],
+  ['일반 저축', null], // 특수 처리 필요
+];
+
 export const SimulationSlider: React.FC<SimulationSliderProps> = ({ result }) => {
-  const category = result.analysis.selectedCategory || '';
+  const category = result.analysis.selectedCategory ?? '';
 
-  // 종합건강보험 지원
-  if (category.includes('종합건강') || category === 'health_general' || !!result.analysis.healthGeneral) {
-    return <HealthGeneralSlider result={result} />;
-  }
-
-  if (category.includes('암') || category === 'cancer') return <CancerSlider result={result} />;
-  if (category.includes('뇌혈관') || category === 'cerebrovascular') return <BrainSlider result={result} />;
-  if (category.includes('심장')) return <HeartSlider result={result} />;
-  if (category.includes('실손') || category.includes('실비')) return <SilsonSlider result={result} />;
-  if (category.includes('치아')) return <DentalSlider result={result} />;
-  if (category.includes('상해') || category === 'accident' || !!result.analysis.accident) return <AccidentSlider result={result} />;
-  if (category.includes('치매')) return <CaregivingOldSlider result={result} />;
-  if (category === 'nursing' || category.includes('재가') || category.includes('시설')) return <NursingSlider result={result} />;
-  if (category.includes('간병')) return <CaregivingSlider result={result} />;
-  if (category.includes('수술') || category.includes('입원')) return <SurgerySlider result={result} />;
-  
-  // 운전자보험 지원
-  if (category.includes('운전자') || category === 'driver' || !!result.analysis.driver) return <DriverSlider result={result} />;
-
-  // 펫보험 지원
-  if (category.includes('펫') || category === 'pet') return <PetSlider result={result} />;
-
-  // 자동차보험 지원
-  if (category.includes('자동차') || category === 'car') return <CarSlider result={result} />;
-
-
-  // 신용보험 지원
-  if (category.includes('신용') || category === 'credit' || !!result.analysis.credit) return <CreditSlider result={result} />;
-
-  // 골프보험 지원
-  if (category.includes('골프') || category === 'golf') return <GolfSlider result={result} />;
-
-  // 재물종합보험 지원
-  if (category.includes('재물') || category === 'property' || !!result.analysis.property) {
-    return <PropertySlider result={result} />;
-  }
-
-  // 주택화재보험 지원
-  if (category.includes('주택화재') || category.includes('화재') || category === 'fire_real') {
-    return <FireSlider result={result} />;
-  }
-
-  // 연금저축보험 지원
-  if (category.includes('연금') || category === 'annuity_savings') {
-    return <AnnuitySlider result={result} />;
-  }
-
-  // 변액/정기보험 지원
-  if (category.includes('변액') || category.includes('정기') || category === 'variable' || category === 'term' || !!result.analysis.variable) {
-    return <VariableSlider result={result} />;
-  }
-
-  // 종신보험 지원
-  if (category.includes('종신') || category === 'whole' || !!result.analysis.wholeLife) {
-    return <WholeLifeSlider result={result} />;
-  }
-
-  // 법률비용보전보험 지원
-  if (category.includes('법률') || category === 'legal' || !!result.analysis.legal) {
-    return <LegalSlider result={result} />;
-  }
-
-  if (category.includes('일반 저축') || category === 'savings_general' || !!result.analysis.savingsGeneral) {
+  // 일반 저축 — SavingsExplanation 추가 필요
+  if (category.includes('일반 저축') || category === 'savings_general') {
     return (
       <div className="space-y-12">
         <SavingsSlider result={result} />
@@ -107,14 +110,20 @@ export const SimulationSlider: React.FC<SimulationSliderProps> = ({ result }) =>
     );
   }
 
+  // 1. 정확한 키 매칭
+  const ExactComponent = EXACT_SLIDER_MAP[category];
+  if (ExactComponent) return <ExactComponent result={result} />;
 
-  // 어린이/태아 유병력자 (pre_family) — 반드시 어른 유병자보다 먼저 체크
-  if (result.analysis.child?.isPreFamily || category.includes('유병력자')) return <ChildSlider result={result} />;
-  if (category.includes('어린이') || category.includes('태아') || category === 'child') return <ChildSlider result={result} />;
-  if (category.includes('유병') || category.includes('간편')) return <PreExistingSlider result={result} />;
+  // 2. 부분 문자열 매칭 (순서 보장)
+  const partialEntry = PARTIAL_SLIDER_MAP.find(([key, comp]) => comp !== null && category.includes(key));
+  if (partialEntry) {
+    const SliderComp = partialEntry[1] as SliderComponentType;
+    return <SliderComp result={result} />;
+  }
 
-  // 기타 보장 자산 및 Fallback
+  // 3. 폴백: 일반 건강
   return <HealthSlider result={result} />;
 };
 
 export default SimulationSlider;
+

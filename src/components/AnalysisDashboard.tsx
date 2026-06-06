@@ -37,88 +37,118 @@ interface AnalysisDashboardProps {
   result: AnalysisResult;
 }
 
+// ─── 보험 타입별 요약 컴포넌트 1:1 맵 ───────────────────────────────────────
+// selectedCategory 문자열을 key로 사용하여 정확한 컴포넌트를 렌더링합니다.
+// !!analysis.xxx 데이터 기반 폴백 조건을 제거하여 뒤집어지는 문제를 근본 해결합니다.
+type SummaryComponentType = React.ComponentType<{ result: any; formatAmount?: (amt: number) => string }>;
+
+const formatAmountUtil = (amt: number): string => {
+  if (amt >= 100000000) return `${(amt / 100000000).toFixed(0)}억 원`;
+  if (amt >= 10000) return `${(amt / 10000).toLocaleString()}만 원`;
+  return `${amt.toLocaleString()}원`;
+};
+
+// 정확한 키(exact match) 맵 — selectedCategory 값과 1:1 대응
+const EXACT_SUMMARY_MAP: Record<string, SummaryComponentType> = {
+  'child':           ChildSummary,
+  'accident':        AccidentSummary,
+  'car':             CarSummary,
+  'driver':          DriverSummary,
+  'pet':             PetSummary,
+  'golf':            GolfSummary,
+  'fire_real':       FireSummary,
+  'annuity_savings': AnnuitySummary,
+  'whole':           WholeLifeSummary,
+  'variable':        VariableSummary,
+  'term':            VariableSummary,
+  'health_general':  HealthGeneralSummary,
+  'credit':          CreditSummary,
+  'legal':           LegalSummary,
+  'property':        PropertySummary,
+  'home':            PropertySummary,
+  'savings_general': SavingsSummary,
+  '재가/시설':        NursingSummary,
+};
+
+// 부분 문자열(includes) 맵 — 순서가 중요: 더 구체적인 것을 먼저
+const PARTIAL_SUMMARY_MAP: Array<[string, SummaryComponentType]> = [
+  ['치아',     DentalSummary],
+  ['실손',     SilsonSummary],
+  ['실비',     SilsonSummary],
+  ['어린이',   ChildSummary],
+  ['태아',     ChildSummary],
+  ['상해',     AccidentSummary],
+  ['간병',     CaregivingSummary],
+  ['재가',     NursingSummary],
+  ['시설',     NursingSummary],
+  ['수술',     SurgeryHospitalSummary],
+  ['입원',     SurgeryHospitalSummary],
+  ['뇌혈관',   BrainSummary],
+  ['암보험',   CancerSummary],
+  ['심장질환', HeartSummary],
+  ['유병자',   PreExistingSummary],
+  ['자동차',   CarSummary],
+  ['운전자',   DriverSummary],
+  ['펫',       PetSummary],
+  ['골프',     GolfSummary],
+  ['주택화재', FireSummary],
+  ['화재',     FireSummary],
+  ['연금',     AnnuitySummary],
+  ['종신',     WholeLifeSummary],
+  ['변액',     VariableSummary],
+  ['정기',     VariableSummary],
+  ['종합건강', HealthGeneralSummary],
+  ['신용',     CreditSummary],
+  ['민사',     LegalSummary],
+  ['형사',     LegalSummary],
+  ['법률',     LegalSummary],
+  ['재물',     PropertySummary],
+  ['일반 저축', SavingsSummary],
+];
+
 const InsuranceSummary = ({ result }: { result: AnalysisResult }) => {
-  const { analysis } = result;
-  const isDental = analysis.selectedCategory?.includes('치아');
-  const isSilbi = analysis.selectedCategory?.includes('실손') || analysis.selectedCategory?.includes('실비');
-  const isCaregiving = analysis.selectedCategory?.includes('간병');
-  const isSurgeryHospital = analysis.selectedCategory?.includes('수술') || analysis.selectedCategory?.includes('입원');
-  const isNursing = analysis.selectedCategory === '재가/시설' || analysis.selectedCategory?.includes('재가') || analysis.selectedCategory?.includes('시설');
-  const isChild = analysis.selectedCategory?.includes('어린이') || analysis.selectedCategory?.includes('태아') || analysis.selectedCategory === 'child' || !!analysis.child;
-  const isAccident = analysis.selectedCategory?.includes('상해') || analysis.selectedCategory === 'accident' || !!analysis.accident;
-  
-  const isDriver = analysis.selectedCategory?.includes('운전자') || analysis.selectedCategory === 'driver' || !!analysis.driver;
-  const isPet = analysis.selectedCategory?.includes('펫') || analysis.selectedCategory === 'pet' || !!analysis.pet;
-  const isGolf = analysis.selectedCategory?.includes('골프') || analysis.selectedCategory === 'golf' || !!analysis.golf;
-  const isFire = analysis.selectedCategory?.includes('주택화재') || analysis.selectedCategory?.includes('화재') || analysis.selectedCategory === 'fire_real' || !!analysis.fire;
-  const isAnnuity = analysis.selectedCategory?.includes('연금') || analysis.selectedCategory === 'annuity_savings' || !!analysis.annuity;
-  const isWholeLife = analysis.selectedCategory?.includes('종신') || analysis.selectedCategory === 'whole' || !!analysis.wholeLife;
-  const isVariable = analysis.selectedCategory?.includes('변액') || analysis.selectedCategory?.includes('정기') || analysis.selectedCategory === 'variable' || analysis.selectedCategory === 'term' || !!analysis.variable;
-  const isHealthGeneral = analysis.selectedCategory?.includes('종합건강') || analysis.selectedCategory === 'health_general' || !!analysis.healthGeneral;
-  const isCredit = analysis.selectedCategory?.includes('신용') || analysis.selectedCategory === 'credit' || !!analysis.credit;
-  const isLegal = analysis.selectedCategory?.includes('법률') || analysis.selectedCategory === 'legal' || !!analysis.legal;
-  const isProperty = analysis.selectedCategory?.includes('재물') || analysis.selectedCategory === 'property' || analysis.selectedCategory === 'home' || !!analysis.property;
-  const isSavingsGeneral = analysis.selectedCategory?.includes('일반 저축') || analysis.selectedCategory === 'savings_general' || !!analysis.savingsGeneral;
+  const category = result.analysis.selectedCategory ?? '';
 
+  // 1. 정확한 키 매칭
+  const ExactComponent = EXACT_SUMMARY_MAP[category];
+  if (ExactComponent) return <ExactComponent result={result as any} formatAmount={formatAmountUtil} />;
 
-  const formatAmount = (amt: number) => {
-    if (amt >= 100000000) return `${(amt / 100000000).toFixed(0)}억 원`;
-    if (amt >= 10000) return `${(amt / 10000).toLocaleString()}만 원`;
-    return `${amt.toLocaleString()}원`;
-  };
+  // 2. 부분 문자열 매칭 (순서 보장)
+  const partialMatch = PARTIAL_SUMMARY_MAP.find(([key]) => category.includes(key));
+  if (partialMatch) {
+    const PartialComponent = partialMatch[1];
+    return <PartialComponent result={result as any} formatAmount={formatAmountUtil} />;
+  }
 
-  if (isDental) return <DentalSummary result={result as any} />;
-  if (isSilbi) return <SilsonSummary result={result as any} />;
-  if (isAccident) return <AccidentSummary result={result as any} />;
-  if (isCaregiving) return <CaregivingSummary result={result as any} />;
-  if (isNursing) return <NursingSummary result={result as any} />;
-  if (isChild) return <ChildSummary result={result as any} />;
-  if (isSurgeryHospital) return <SurgeryHospitalSummary result={result as any} />;
-  if (analysis.selectedCategory?.includes('뇌혈관')) return <BrainSummary result={result as any} formatAmount={formatAmount} />;
-  if (analysis.selectedCategory?.includes('암보험')) return <CancerSummary result={result as any} formatAmount={formatAmount} />;
-  if (analysis.selectedCategory?.includes('심장질환')) return <HeartSummary result={result as any} formatAmount={formatAmount} />;
-  if (analysis.selectedCategory?.includes('유병자')) return <PreExistingSummary result={result as any} formatAmount={formatAmount} />;
-  if (analysis.selectedCategory?.includes('자동차') || analysis.selectedCategory === 'car') return <CarSummary result={result as any} />;
-  if (isDriver) return <DriverSummary result={result as any} />;
-  if (isPet) return <PetSummary result={result as any} />;
-  if (isGolf) return <GolfSummary result={result as any} />;
-  if (isFire) return <FireSummary result={result as any} />;
-  if (isAnnuity) return <AnnuitySummary result={result as any} />;
-  if (isWholeLife) return <WholeLifeSummary result={result as any} />;
-  if (isVariable) return <VariableSummary result={result as any} />;
-  if (isHealthGeneral) return <HealthGeneralSummary result={result as any} formatAmount={formatAmount} />;
-  
-  if (isCredit) return <CreditSummary result={result as any} />;
-  if (isLegal) return <LegalSummary result={result as any} />;
-  if (isProperty) return <PropertySummary result={result as any} />;
-  if (isSavingsGeneral) return <SavingsSummary result={result as any} />;
-
-
-  return <HealthSummary result={result as any} formatAmount={formatAmount} />;
+  // 3. 폴백: 일반 건강보험
+  return <HealthSummary result={result as any} formatAmount={formatAmountUtil} />;
 };
 
 const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
   const { scores, efficiency, deficiencies, analysis } = result;
-  const isDental = analysis.selectedCategory?.includes('치아');
-  const isSilbi = analysis.selectedCategory?.includes('실손') || analysis.selectedCategory?.includes('실비');
-  const isCaregiving = analysis.selectedCategory?.includes('간병');
-  const isNursing = analysis.selectedCategory === '재가/시설' || analysis.selectedCategory?.includes('재가') || analysis.selectedCategory?.includes('시설');
-  const isSurgeryHospital = analysis.selectedCategory?.includes('수술') || analysis.selectedCategory?.includes('입원');
-  const isChild = analysis.selectedCategory?.includes('어린이') || analysis.selectedCategory?.includes('태아') || analysis.selectedCategory === 'child' || !!analysis.child;
-  const isAccident = analysis.selectedCategory?.includes('상해') || analysis.selectedCategory === 'accident' || !!analysis.accident;
-  const isCar = analysis.selectedCategory?.includes('자동차') || analysis.selectedCategory === 'car';
-  const isDriver = analysis.selectedCategory?.includes('운전자') || analysis.selectedCategory === 'driver' || !!analysis.driver;
-  const isPet = analysis.selectedCategory?.includes('펫') || analysis.selectedCategory === 'pet' || !!analysis.pet;
-  const isGolf = analysis.selectedCategory?.includes('골프') || analysis.selectedCategory === 'golf' || !!analysis.golf;
-  const isFire = analysis.selectedCategory?.includes('주택화재') || analysis.selectedCategory?.includes('화재') || analysis.selectedCategory === 'fire_real' || !!analysis.fire;
-  const isAnnuity = analysis.selectedCategory?.includes('연금') || analysis.selectedCategory === 'annuity_savings' || !!analysis.annuity;
-  const isWholeLife = analysis.selectedCategory?.includes('종신') || analysis.selectedCategory === 'whole' || !!analysis.wholeLife;
-  const isVariable = analysis.selectedCategory?.includes('변액') || analysis.selectedCategory?.includes('정기') || analysis.selectedCategory === 'variable' || analysis.selectedCategory === 'term' || !!analysis.variable;
-  const isHealthGeneral = analysis.selectedCategory?.includes('종합건강') || analysis.selectedCategory === 'health_general' || !!analysis.healthGeneral;
-  const isCredit = analysis.selectedCategory?.includes('신용') || analysis.selectedCategory === 'credit' || !!analysis.credit;
-  const isLegal = analysis.selectedCategory?.includes('법률') || analysis.selectedCategory === 'legal' || !!analysis.legal;
-  const isProperty = analysis.selectedCategory?.includes('재물') || analysis.selectedCategory === 'property' || analysis.selectedCategory === 'home' || !!analysis.property;
-  const isSavingsGeneral = analysis.selectedCategory?.includes('일반 저축') || analysis.selectedCategory === 'savings_general' || !!analysis.savingsGeneral;
+  const cat = analysis.selectedCategory ?? '';
+
+  // ─── selectedCategory 단일 기반 — !!analysis.xxx 폴백 없음 ────────────────
+  const isDental        = cat.includes('치아');
+  const isSilbi         = cat.includes('실손')    || cat.includes('실비');
+  const isCaregiving    = cat.includes('간병');
+  const isNursing       = cat === '재가/시설'     || cat.includes('재가') || cat.includes('시설');
+  const isSurgeryHospital = cat.includes('수술')  || cat.includes('입원');
+  const isChild         = cat.includes('어린이')  || cat.includes('태아') || cat === 'child';
+  const isAccident      = cat.includes('상해')    || cat === 'accident';
+  const isCar           = cat.includes('자동차')  || cat === 'car';
+  const isDriver        = cat.includes('운전자')  || cat === 'driver';
+  const isPet           = cat.includes('펫')      || cat === 'pet';
+  const isGolf          = cat.includes('골프')    || cat === 'golf';
+  const isProperty      = cat.includes('재물')    || cat === 'property' || cat === 'home';
+  const isFire          = (cat.includes('주택화재') || cat.includes('화재') || cat === 'fire_real') && !isProperty;
+  const isAnnuity       = cat.includes('연금')    || cat === 'annuity_savings';
+  const isWholeLife     = cat.includes('종신')    || cat === 'whole';
+  const isVariable      = cat.includes('변액')    || cat.includes('정기') || cat === 'variable' || cat === 'term';
+  const isHealthGeneral = cat.includes('종합건강') || cat === 'health_general';
+  const isCredit        = cat.includes('신용')    || cat === 'credit';
+  const isLegal         = cat.includes('법률')    || cat === 'legal';
+  const isSavingsGeneral = cat.includes('일반 저축') || cat === 'savings_general';
 
 
   const [selectedPlan, setSelectedPlan] = React.useState<any>(null);
@@ -244,35 +274,35 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
     { label: '특약구성 종합도', value: scores.cardiovascularScore || 0, target: 75 },
     { label: '보장만기 적절성', value: (analysis.credit?.loanPeriod || 10) >= 10 ? 95 : 55, target: 70 },
     { label: '신용점수 보완성', value: (analysis.credit?.creditScore || 850) >= 800 ? 90 : 60, target: 75 },
-    { label: '보험료 가성비', value: Math.round(efficiency), target: 70 }
+    { label: '보험료 가성비', value: Math.min(100, Math.round(efficiency)), target: 70 }
   ] : isLegal ? [
     { label: '변호사비 한도', value: scores.lawyerScore || 0, target: 75 },
     { label: '인지액/송달료', value: scores.courtFeeScore || 0, target: 70 },
     { label: '추가 특약 수준', value: scores.riderScore || 0, target: 70 },
     { label: '전자소송 할인', value: analysis.legal?.isElectronicLitigation ? 95 : 50, target: 60 },
     { label: '소송유형 적합도', value: analysis.legal?.litigationType === 'civil' ? 90 : 70, target: 75 },
-    { label: '보험료 가성비', value: Math.round(efficiency), target: 70 }
+    { label: '보험료 가성비', value: Math.min(100, Math.round(efficiency)), target: 70 }
   ] : isProperty ? [
     { label: '화재재산한도', value: scores.propertyScore || 0, target: 75 },
     { label: '배상책임특약', value: scores.liabilityScore || 0, target: 80 },
     { label: '비즈니스연속성', value: scores.continuityScore || 0, target: 70 },
     { label: '건물소방안전도', value: analysis.property?.buildingGrade === 'grade_1' ? 95 : analysis.property?.buildingGrade === 'grade_2' ? 75 : 50, target: 75 },
     { label: '누수보장 수준', value: analysis.property?.hasWaterLeak ? 95 : 30, target: 70 },
-    { label: '보험료 가성비', value: Math.round(efficiency), target: 70 }
+    { label: '보험료 가성비', value: Math.min(100, Math.round(efficiency)), target: 70 }
   ] : isSavingsGeneral ? [
     { label: '비과세 혜택', value: scores.cancerScore || 0, target: 80 },
     { label: '이율 안전성', value: scores.cerebrovascularScore || 0, target: 75 },
     { label: '사업비 효율', value: scores.cardiovascularScore || 0, target: 70 },
     { label: '유니버셜기능', value: analysis.savingsGeneral?.hasUniversal ? 95 : 50, target: 65 },
     { label: '목적기여도', value: 90, target: 70 },
-    { label: '보험료 가성비', value: Math.round(efficiency), target: 75 }
+    { label: '보험료 가성비', value: Math.min(100, Math.round(efficiency)), target: 75 }
   ] : isHealthGeneral ? [
     { label: '암 보장', value: (analysis.healthGeneral?.cancerLimit || 0) >= 50000000 ? 95 : (analysis.healthGeneral?.cancerLimit || 0) >= 30000000 ? 75 : 50, target: 80 },
     { label: '뇌혈관 보장', value: (analysis.healthGeneral?.brainLimit || 0) >= 30000000 ? 90 : (analysis.healthGeneral?.brainLimit || 0) >= 20000000 ? 70 : 45, target: 75 },
     { label: '심장 보장', value: (analysis.healthGeneral?.heartLimit || 0) >= 30000000 ? 90 : (analysis.healthGeneral?.heartLimit || 0) >= 20000000 ? 70 : 45, target: 75 },
     { label: '수술비 특약', value: analysis.healthGeneral?.has1to5Surgery ? 95 : 50, target: 80 },
     { label: '표적항암 특약', value: analysis.healthGeneral?.hasTargetedTherapy ? 90 : 40, target: 70 },
-    { label: '보험료 가성비', value: Math.round(efficiency), target: 70 }
+    { label: '보험료 가성비', value: Math.min(100, Math.round(efficiency)), target: 70 }
   ] : [
     { label: '일반암', value: scores.cancerScore || 0, target: avg.c || 50 },
     { label: '뇌혈관', value: scores.cerebrovascularScore || 0, target: avg.b || 50 },
@@ -402,7 +432,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
                   isPet || isProperty ? 'text-orange-600' :
                   isLegal ? 'text-indigo-600' :
                   'text-blue-600'
-                }`}>{efficiency.toFixed(1)}</span>
+                }`}>{Math.min(100, efficiency).toFixed(1)}</span>
                 <span className={`${
                   isDental || isSilbi || isGolf || isCredit || isSavingsGeneral ? 'text-emerald-900' :
                   isCaregiving ? 'text-purple-900' :
@@ -427,7 +457,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
                    isPet || isProperty ? 'bg-orange-500' :
                    isLegal ? 'bg-indigo-500' :
                    'bg-blue-500'
-                 }`} style={{ width: `${Math.min(100, efficiency * 100)}%` }}></div>
+                 }`} style={{ width: `${Math.min(100, efficiency)}%` }}></div>
               </div>
             </div>
 
@@ -929,7 +959,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
                         ) : (
                           <span className="text-xl font-black text-gray-900">{Math.round(opt.premium).toLocaleString()}원</span>
                         )}
-                       {opt.riskPremium !== undefined && !isAnnuity && !isVariable && (
+                       {opt.riskPremium !== undefined && !isAnnuity && !isVariable && !isFire && !isProperty && (
                          <span className="text-[10px] text-gray-400 font-bold mt-1">
                            보장 {opt.riskPremium.toLocaleString()}원 (소멸성 사업비+보장) / 적립 {opt.savingsPremium.toLocaleString()}원 (이자가 복리로 굴러가는 순적립금)
                          </span>
