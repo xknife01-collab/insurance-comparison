@@ -63,10 +63,17 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
   const [emailInput, setEmailInput] = useState('');
 
   useEffect(() => {
-    if (isOpen && initialData) {
-      setUserName(initialData.userName || '');
-      setBirth(initialData.birth || '');
-      setMobileNo(initialData.mobileNo || '');
+    if (isOpen) {
+      setRegStep('init');
+      setError('');
+      setCaptchaInput('');
+      setSmsInput('');
+      setEmailInput('');
+      if (initialData) {
+        setUserName(initialData.userName || '');
+        setBirth(initialData.birth || '');
+        setMobileNo(initialData.mobileNo || '');
+      }
     }
   }, [isOpen, initialData]);
 
@@ -420,7 +427,11 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
                 key={tab.id}
                 onClick={() => {
                   setActiveTab(tab.id as any);
+                  setRegStep('init');
                   setError('');
+                  setCaptchaInput('');
+                  setSmsInput('');
+                  setEmailInput('');
                 }}
                 className={`flex-1 py-4 text-center text-sm font-black rounded-2xl transition-all ${
                   activeTab === tab.id
@@ -454,9 +465,26 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
           ) : (
             <>
               {error && (
-                <div className="mb-6 p-4 bg-rose-50 border border-rose-100 rounded-2xl text-rose-700 text-xs font-bold flex items-center gap-2">
-                  <AlertCircle size={16} className="shrink-0" />
-                  <span>{error}</span>
+                <div className="mb-6 p-4 bg-rose-50 border border-rose-100 rounded-2xl text-rose-700 text-xs font-bold flex flex-col gap-2">
+                  <div className="flex items-center gap-2">
+                    <AlertCircle size={16} className="shrink-0" />
+                    <span>{error}</span>
+                  </div>
+                  {activeTab === 'register' && regStep !== 'init' && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setRegStep('init');
+                        setError('');
+                        setCaptchaInput('');
+                        setSmsInput('');
+                        setEmailInput('');
+                      }}
+                      className="mt-1 px-3 py-1.5 bg-rose-100 hover:bg-rose-200 text-rose-800 text-[10px] font-black rounded-lg transition-all self-start active:scale-95"
+                    >
+                      🔄 처음부터 다시 시도하기
+                    </button>
+                  )}
                 </div>
               )}
 
