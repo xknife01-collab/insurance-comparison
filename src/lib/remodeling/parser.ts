@@ -105,6 +105,7 @@ export async function parsePoliciesToStandardized(
     brain_vascular,
     ischemic_heart,
     caregiver_expense,
-    silson
+    silson,
+    policies
   };
 }
