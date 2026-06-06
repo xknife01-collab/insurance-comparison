@@ -92,8 +92,7 @@ async function callHyphenAPI<T>(endpoint: string, body: any): Promise<HyphenResp
       headers: {
         'Content-Type': 'application/json',
         'User-Id': USER_ID,
-        'Hkey': HKEY,
-        'Hyphen-Gustation': 'Y' // Testbed indicator
+        'Hkey': HKEY
       },
       body: JSON.stringify(body),
     });
