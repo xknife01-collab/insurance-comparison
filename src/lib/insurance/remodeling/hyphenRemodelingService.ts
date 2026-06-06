@@ -173,3 +173,44 @@ export async function checkHyphenIdDuplicate(req: {
 }): Promise<HyphenResponse<any>> {
   return callHyphenAPI<any>('/in0017000779', req);
 }
+
+/**
+ * 6. 아이디 찾기 API (엔드포인트: /in0017000778)
+ */
+export async function findHyphenId(req: {
+  step: 'init' | 'captcha' | 'sms';
+  userName: string;
+  birth: string;
+  gender: string; // M, F or 1, 2, 3, 4
+  mobileCo: string;
+  authType: string;
+  mobileNo?: string;
+  sendMethod?: string;
+  step_data?: string;
+  step_input?: string;
+  proxy?: string;
+}): Promise<HyphenResponse<any>> {
+  return callHyphenAPI<any>('/in0017000778', req);
+}
+
+/**
+ * 7. 비밀번호 찾기 API (엔드포인트: /in0017000780)
+ */
+export async function findHyphenPw(req: {
+  step: 'init' | 'captcha' | 'sms' | 'change';
+  userName: string;
+  birth: string;
+  gender: string; // M, F or 1, 2, 3, 4
+  mobileCo: string;
+  authType: string;
+  mobileNo?: string;
+  userId?: string;
+  sendMethod?: string;
+  tmpPw?: string;
+  userPw?: string;
+  step_data?: string;
+  step_input?: string;
+  proxy?: string;
+}): Promise<HyphenResponse<any>> {
+  return callHyphenAPI<any>('/in0017000780', req);
+}

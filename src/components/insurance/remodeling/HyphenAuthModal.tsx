@@ -7,6 +7,8 @@ import {
   fetchSilsonContract,
   fetchFixedContract,
   checkHyphenIdDuplicate,
+  findHyphenId,
+  findHyphenPw,
   MOCK_REMODELING_DATA
 } from '../../../lib/insurance/remodeling/hyphenRemodelingService';
 import { parsePoliciesToStandardized } from '../../../lib/remodeling/parser';
@@ -67,6 +69,26 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
   // Email step
   const [emailInput, setEmailInput] = useState('');
 
+  // 3. Find ID/PW State
+  const [loginSubMode, setLoginSubMode] = useState<'normal' | 'findId' | 'findPw'>('normal');
+  const [findStep, setFindStep] = useState<'init' | 'captcha' | 'sms' | 'change' | 'success'>('init');
+  const [findUserName, setFindUserName] = useState('');
+  const [findBirth, setFindBirth] = useState('');
+  const [findGender, setFindGender] = useState('1'); // '1' (남), '2' (여) 등 주민번호 뒷자리 첫 글자
+  const [findMobileCo, setFindMobileCo] = useState('SKT');
+  const [findMobileNo, setFindMobileNo] = useState('');
+  const [findAuthType, setFindAuthType] = useState<'mobile' | 'app'>('mobile');
+  const [findCaptchaImg, setFindCaptchaImg] = useState('');
+  const [findCaptchaInput, setFindCaptchaInput] = useState('');
+  const [findSmsInput, setFindSmsInput] = useState('');
+  const [findSendMethod, setFindSendMethod] = useState<'mobile' | 'email'>('mobile');
+  const [findUserId, setFindUserId] = useState('');
+  const [findTmpPw, setFindTmpPw] = useState('');
+  const [findUserPw, setFindUserPw] = useState('');
+  const [findStepData, setFindStepData] = useState('');
+  const [findProxy, setFindProxy] = useState('');
+  const [findResultText, setFindResultText] = useState('');
+
   // 아이디 중복확인 핸들러
   const handleCheckIdDuplicate = async () => {
     if (!newUserId) {
@@ -92,6 +114,27 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
     }
   };
 
+  // 찾기 상태 초기화
+  const resetFindStates = () => {
+    setFindStep('init');
+    setFindUserName('');
+    setFindBirth('');
+    setFindGender('1');
+    setFindMobileCo('SKT');
+    setFindMobileNo('');
+    setFindAuthType('mobile');
+    setFindCaptchaImg('');
+    setFindCaptchaInput('');
+    setFindSmsInput('');
+    setFindSendMethod('mobile');
+    setFindUserId('');
+    setFindTmpPw('');
+    setFindUserPw('');
+    setFindStepData('');
+    setFindProxy('');
+    setFindResultText('');
+  };
+
   useEffect(() => {
     if (isOpen) {
       setRegStep('init');
@@ -101,13 +144,285 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
       setEmailInput('');
       setIsIdChecked(false);
       setIdCheckLoading(false);
+      setLoginSubMode('normal');
+      resetFindStates();
       if (initialData) {
         setUserName(initialData.userName || '');
         setBirth(initialData.birth || '');
         setMobileNo(initialData.mobileNo || '');
+        setFindUserName(initialData.userName || '');
+        setFindBirth(initialData.birth || '');
+        setFindMobileNo(initialData.mobileNo || '');
       }
     }
   }, [isOpen, initialData]);
+
+  // 3-1. 아이디 찾기 핸들러
+  const handleFindIdInit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!findUserName || !findBirth || !findMobileNo) {
+      setError('모든 필수 입력 값을 기재해주세요.');
+      return;
+    }
+    setError('');
+    setLoading(true);
+    setLoadingStatus('보안 문자 요청 중...');
+    try {
+      const res = await findHyphenId({
+        step: 'init',
+        userName: findUserName,
+        birth: findBirth,
+        gender: findGender,
+        mobileCo: findMobileCo,
+        authType: findAuthType,
+        mobileNo: findMobileNo
+      });
+      if (res.common.errYn === 'Y') {
+        setError(res.common.errMsg || '아이디 찾기 개시에 실패했습니다.');
+        setLoading(false);
+        return;
+      }
+      setFindCaptchaImg(convertHexToDataUrl(res.data?.captcha_img || ''));
+      setFindStepData(res.data?.step_data || '');
+      setFindProxy(res.data?.proxy || '');
+      setFindStep('captcha');
+      setLoading(false);
+    } catch (err: any) {
+      setError(err.message || '오류가 발생했습니다.');
+      setLoading(false);
+    }
+  };
+
+  const handleFindIdCaptcha = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!findCaptchaInput) {
+      setError('보안 문자를 입력해주세요.');
+      return;
+    }
+    setError('');
+    setLoading(true);
+    setLoadingStatus('SMS 인증 요청 중...');
+    try {
+      const res = await findHyphenId({
+        step: 'captcha',
+        userName: findUserName,
+        birth: findBirth,
+        gender: findGender,
+        mobileCo: findMobileCo,
+        authType: findAuthType,
+        mobileNo: findMobileNo,
+        step_data: findStepData,
+        step_input: findCaptchaInput,
+        proxy: findProxy
+      });
+      if (res.common.errYn === 'Y') {
+        setError(res.common.errMsg || '보안 문자 인증에 실패했습니다.');
+        setLoading(false);
+        return;
+      }
+      setFindStepData(res.data?.step_data || '');
+      setFindProxy(res.data?.proxy || '');
+      setFindStep('sms');
+      setLoading(false);
+    } catch (err: any) {
+      setError(err.message || '오류가 발생했습니다.');
+      setLoading(false);
+    }
+  };
+
+  const handleFindIdSms = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!findSmsInput) {
+      setError('인증번호를 입력해주세요.');
+      return;
+    }
+    setError('');
+    setLoading(true);
+    setLoadingStatus('인증 완료 및 아이디 조회 중...');
+    try {
+      const res = await findHyphenId({
+        step: 'sms',
+        userName: findUserName,
+        birth: findBirth,
+        gender: findGender,
+        mobileCo: findMobileCo,
+        authType: findAuthType,
+        mobileNo: findMobileNo,
+        sendMethod: findSendMethod,
+        step_data: findStepData,
+        step_input: findSmsInput,
+        proxy: findProxy
+      });
+      if (res.common.errYn === 'Y') {
+        setError(res.common.errMsg || '인증에 실패했습니다.');
+        setLoading(false);
+        return;
+      }
+      const foundId = res.data?.userId || res.data?.id || '';
+      if (foundId) {
+        setFindResultText(`조회된 아이디: ${foundId}`);
+      } else {
+        setFindResultText('아이디 찾기 성공! 가입하신 정보로 아이디가 발송되었습니다.');
+      }
+      setFindStep('success');
+      setLoading(false);
+    } catch (err: any) {
+      setError(err.message || '오류가 발생했습니다.');
+      setLoading(false);
+    }
+  };
+
+  // 3-2. 비밀번호 찾기 핸들러
+  const handleFindPwInit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!findUserName || !findBirth || !findMobileNo) {
+      setError('모든 필수 입력 값을 기재해주세요.');
+      return;
+    }
+    setError('');
+    setLoading(true);
+    setLoadingStatus('보안 문자 요청 중...');
+    try {
+      const res = await findHyphenPw({
+        step: 'init',
+        userName: findUserName,
+        birth: findBirth,
+        gender: findGender,
+        mobileCo: findMobileCo,
+        authType: findAuthType,
+        mobileNo: findMobileNo
+      });
+      if (res.common.errYn === 'Y') {
+        setError(res.common.errMsg || '비밀번호 찾기 개시에 실패했습니다.');
+        setLoading(false);
+        return;
+      }
+      setFindCaptchaImg(convertHexToDataUrl(res.data?.captcha_img || ''));
+      setFindStepData(res.data?.step_data || '');
+      setFindProxy(res.data?.proxy || '');
+      setFindStep('captcha');
+      setLoading(false);
+    } catch (err: any) {
+      setError(err.message || '오류가 발생했습니다.');
+      setLoading(false);
+    }
+  };
+
+  const handleFindPwCaptcha = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!findCaptchaInput) {
+      setError('보안 문자를 입력해주세요.');
+      return;
+    }
+    setError('');
+    setLoading(true);
+    setLoadingStatus('SMS 인증 요청 중...');
+    try {
+      const res = await findHyphenPw({
+        step: 'captcha',
+        userName: findUserName,
+        birth: findBirth,
+        gender: findGender,
+        mobileCo: findMobileCo,
+        authType: findAuthType,
+        mobileNo: findMobileNo,
+        step_data: findStepData,
+        step_input: findCaptchaInput,
+        proxy: findProxy
+      });
+      if (res.common.errYn === 'Y') {
+        setError(res.common.errMsg || '보안 문자 인증에 실패했습니다.');
+        setLoading(false);
+        return;
+      }
+      setFindStepData(res.data?.step_data || '');
+      setFindProxy(res.data?.proxy || '');
+      setFindStep('sms');
+      setLoading(false);
+    } catch (err: any) {
+      setError(err.message || '오류가 발생했습니다.');
+      setLoading(false);
+    }
+  };
+
+  const handleFindPwSms = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!findSmsInput || !findUserId) {
+      setError('인증번호와 사용자 ID를 입력해주세요.');
+      return;
+    }
+    setError('');
+    setLoading(true);
+    setLoadingStatus('본인인증 검증 중...');
+    try {
+      const res = await findHyphenPw({
+        step: 'sms',
+        userName: findUserName,
+        birth: findBirth,
+        gender: findGender,
+        mobileCo: findMobileCo,
+        authType: findAuthType,
+        mobileNo: findMobileNo,
+        userId: findUserId,
+        sendMethod: findSendMethod,
+        step_data: findStepData,
+        step_input: findSmsInput,
+        proxy: findProxy
+      });
+      if (res.common.errYn === 'Y') {
+        setError(res.common.errMsg || '인증에 실패했습니다.');
+        setLoading(false);
+        return;
+      }
+      setFindStepData(res.data?.step_data || '');
+      setFindProxy(res.data?.proxy || '');
+      setFindStep('change');
+      setLoading(false);
+    } catch (err: any) {
+      setError(err.message || '오류가 발생했습니다.');
+      setLoading(false);
+    }
+  };
+
+  const handleFindPwChange = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!findTmpPw || !findUserPw) {
+      setError('임시 비밀번호와 새로 변경할 비밀번호를 입력해주세요.');
+      return;
+    }
+    setError('');
+    setLoading(true);
+    setLoadingStatus('비밀번호 변경 처리 중...');
+    try {
+      const res = await findHyphenPw({
+        step: 'change',
+        userName: findUserName,
+        birth: findBirth,
+        gender: findGender,
+        mobileCo: findMobileCo,
+        authType: findAuthType,
+        mobileNo: findMobileNo,
+        userId: findUserId,
+        sendMethod: findSendMethod,
+        tmpPw: findTmpPw,
+        userPw: findUserPw,
+        step_data: findStepData,
+        step_input: findTmpPw,
+        proxy: findProxy
+      });
+      if (res.common.errYn === 'Y') {
+        setError(res.common.errMsg || '비밀번호 변경에 실패했습니다.');
+        setLoading(false);
+        return;
+      }
+      setFindResultText('비밀번호가 정상적으로 변경되었습니다! 로그인 페이지로 이동하여 로그인해 주세요.');
+      setFindStep('success');
+      setLoading(false);
+    } catch (err: any) {
+      setError(err.message || '오류가 발생했습니다.');
+      setLoading(false);
+    }
+  };
 
   const runAnalysisAnimation = async (coverage: StandardizedCoverage) => {
     setLoading(true);
@@ -583,45 +898,317 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
                 </div>
               )}
 
-              {/* TAB 2: LOGIN */}
+              {/* TAB 2: LOGIN & CREDENTIAL RECOVERY */}
               {activeTab === 'login' && (
-                <form onSubmit={handleLoginSubmit} className="space-y-6">
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <label className="text-[11px] font-black text-slate-400 pl-2">내보험다보여 아이디</label>
-                      <div className="relative">
-                        <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                        <input
-                          type="text"
-                          placeholder="신용정보원 아이디 입력"
-                          value={loginId}
-                          onChange={(e) => setLoginId(e.target.value)}
-                          className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-4 pl-12 pr-4 text-sm font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
-                        />
+                <div className="space-y-6">
+                  {loginSubMode === 'normal' ? (
+                    <form onSubmit={handleLoginSubmit} className="space-y-6">
+                      <div className="space-y-4">
+                        <div className="space-y-2">
+                          <label className="text-[11px] font-black text-slate-400 pl-2">내보험다보여 아이디</label>
+                          <div className="relative">
+                            <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                            <input
+                              type="text"
+                              placeholder="신용정보원 아이디 입력"
+                              value={loginId}
+                              onChange={(e) => setLoginId(e.target.value)}
+                              className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-4 pl-12 pr-4 text-sm font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
+                            />
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-[11px] font-black text-slate-400 pl-2">비밀번호</label>
+                          <div className="relative">
+                            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                            <input
+                              type="password"
+                              placeholder="비밀번호 입력"
+                              value={loginPw}
+                              onChange={(e) => setLoginPw(e.target.value)}
+                              className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-4 pl-12 pr-4 text-sm font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
+                            />
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[11px] font-black text-slate-400 pl-2">비밀번호</label>
-                      <div className="relative">
-                        <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                        <input
-                          type="password"
-                          placeholder="비밀번호 입력"
-                          value={loginPw}
-                          onChange={(e) => setLoginPw(e.target.value)}
-                          className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-4 pl-12 pr-4 text-sm font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
-                        />
-                      </div>
-                    </div>
-                  </div>
 
-                  <button
-                    type="submit"
-                    className="w-full bg-slate-900 text-white font-black py-4 rounded-2xl text-sm hover:bg-black transition-all"
-                  >
-                    로그인 및 보험 조회하기
-                  </button>
-                </form>
+                      <button
+                        type="submit"
+                        className="w-full bg-slate-900 text-white font-black py-4 rounded-2xl text-sm hover:bg-black transition-all"
+                      >
+                        로그인 및 보험 조회하기
+                      </button>
+
+                      {/* 아이디/비밀번호 찾기 버튼 링크 */}
+                      <div className="flex justify-center gap-4 text-xs font-black text-slate-400 mt-4 border-t border-slate-50 pt-4">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setLoginSubMode('findId');
+                            resetFindStates();
+                            setError('');
+                          }}
+                          className="hover:text-slate-800 transition-colors"
+                        >
+                          🔍 아이디 찾기
+                        </button>
+                        <span className="text-gray-200">|</span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setLoginSubMode('findPw');
+                            resetFindStates();
+                            setError('');
+                          }}
+                          className="hover:text-slate-800 transition-colors"
+                        >
+                          🔑 비밀번호 찾기
+                        </button>
+                      </div>
+                    </form>
+                  ) : (
+                    /* 아이디 찾기 및 비밀번호 찾기 프로세스 */
+                    <div className="space-y-4">
+                      {/* 뒤로가기 헤더 */}
+                      <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setLoginSubMode('normal');
+                            resetFindStates();
+                            setError('');
+                          }}
+                          className="text-xs font-black text-slate-500 hover:text-slate-950 flex items-center gap-1 active:scale-95 transition-all"
+                        >
+                          ← 로그인으로 돌아가기
+                        </button>
+                        <span className="text-xs font-black text-orange-500 uppercase tracking-widest">
+                          {loginSubMode === 'findId' ? 'ID RECOVERY' : 'PW RECOVERY'}
+                        </span>
+                      </div>
+
+                      {/* 1. INIT STEP */}
+                      {findStep === 'init' && (
+                        <form
+                          onSubmit={loginSubMode === 'findId' ? handleFindIdInit : handleFindPwInit}
+                          className="space-y-4"
+                        >
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-1">
+                              <label className="text-[11px] font-black text-slate-400 pl-2">성명</label>
+                              <input
+                                type="text"
+                                placeholder="성명"
+                                value={findUserName}
+                                onChange={(e) => setFindUserName(e.target.value)}
+                                className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-3 px-4 text-xs font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
+                              />
+                            </div>
+                            <div className="space-y-1">
+                              <label className="text-[11px] font-black text-slate-400 pl-2">생년월일 (8자리)</label>
+                              <input
+                                type="text"
+                                placeholder="예: 19880101"
+                                value={findBirth}
+                                onChange={(e) => setFindBirth(e.target.value)}
+                                className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-3 px-4 text-xs font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
+                              />
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-1">
+                              <label className="text-[11px] font-black text-slate-400 pl-2">성별 구분 (1자리)</label>
+                              <select
+                                value={findGender}
+                                onChange={(e) => setFindGender(e.target.value)}
+                                className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-3 px-4 text-xs font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
+                              >
+                                <option value="1">1 (남성 - 2000년 이전 출생)</option>
+                                <option value="2">2 (여성 - 2000년 이전 출생)</option>
+                                <option value="3">3 (남성 - 2000년 이후 출생)</option>
+                                <option value="4">4 (여성 - 2000년 이후 출생)</option>
+                              </select>
+                            </div>
+                            <div className="space-y-1">
+                              <label className="text-[11px] font-black text-slate-400 pl-2">통신사</label>
+                              <select
+                                value={findMobileCo}
+                                onChange={(e) => setFindMobileCo(e.target.value)}
+                                className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-3 px-4 text-xs font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
+                              >
+                                <option value="SKT">SKT</option>
+                                <option value="KTF">KT</option>
+                                <option value="LGT">LGU+</option>
+                                <option value="SKM">알뜰폰 (SKT)</option>
+                                <option value="KTM">알뜰폰 (KT)</option>
+                                <option value="LGM">알뜰폰 (LGU+)</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div className="space-y-1">
+                            <label className="text-[11px] font-black text-slate-400 pl-2">휴대폰 번호</label>
+                            <input
+                              type="text"
+                              placeholder="숫자만 입력"
+                              value={findMobileNo}
+                              onChange={(e) => setFindMobileNo(e.target.value)}
+                              className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-3 px-4 text-xs font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
+                            />
+                          </div>
+
+                          <button
+                            type="submit"
+                            className="w-full bg-slate-900 text-white font-black py-4 rounded-2xl text-sm hover:bg-black transition-all mt-4"
+                          >
+                            본인인증 및 캡차 요청
+                          </button>
+                        </form>
+                      )}
+
+                      {/* 2. CAPTCHA STEP */}
+                      {findStep === 'captcha' && (
+                        <form
+                          onSubmit={loginSubMode === 'findId' ? handleFindIdCaptcha : handleFindPwCaptcha}
+                          className="space-y-4 text-center"
+                        >
+                          <p className="text-xs font-bold text-gray-500">아래 보안 문자를 입력해 주세요.</p>
+                          {findCaptchaImg && (
+                            <div className="flex justify-center my-4">
+                              <img
+                                src={findCaptchaImg}
+                                alt="Captcha"
+                                className="border border-gray-200 rounded-xl max-h-20"
+                              />
+                            </div>
+                          )}
+                          <input
+                            type="text"
+                            placeholder="보안 문자 입력"
+                            value={findCaptchaInput}
+                            onChange={(e) => setFindCaptchaInput(e.target.value)}
+                            className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-3 px-4 text-center text-lg font-black focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
+                          />
+                          <button
+                            type="submit"
+                            className="w-full bg-slate-900 text-white font-black py-4 rounded-2xl text-sm hover:bg-black transition-all"
+                          >
+                            보안문자 검증 및 SMS 발송
+                          </button>
+                        </form>
+                      )}
+
+                      {/* 3. SMS STEP */}
+                      {findStep === 'sms' && (
+                        <form
+                          onSubmit={loginSubMode === 'findId' ? handleFindIdSms : handleFindPwSms}
+                          className="space-y-4"
+                        >
+                          <div className="space-y-1">
+                            <label className="text-[11px] font-black text-slate-400 pl-2">SMS 인증번호 입력</label>
+                            <input
+                              type="text"
+                              placeholder="인증번호 6자리"
+                              value={findSmsInput}
+                              onChange={(e) => setFindSmsInput(e.target.value)}
+                              className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-3 px-4 text-xs font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
+                            />
+                          </div>
+
+                          {loginSubMode === 'findPw' && (
+                            <div className="space-y-1">
+                              <label className="text-[11px] font-black text-slate-400 pl-2">가입 아이디(ID)</label>
+                              <input
+                                type="text"
+                                placeholder="비밀번호를 찾을 아이디 입력"
+                                value={findUserId}
+                                onChange={(e) => setFindUserId(e.target.value)}
+                                className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-3 px-4 text-xs font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
+                              />
+                            </div>
+                          )}
+
+                          <div className="space-y-1">
+                            <label className="text-[11px] font-black text-slate-400 pl-2">발송 방법</label>
+                            <select
+                              value={findSendMethod}
+                              onChange={(e) => setFindSendMethod(e.target.value as any)}
+                              className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-3 px-4 text-xs font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
+                            >
+                              <option value="mobile">휴대폰 SMS로 받기</option>
+                              <option value="email">이메일로 받기</option>
+                            </select>
+                          </div>
+
+                          <button
+                            type="submit"
+                            className="w-full bg-slate-900 text-white font-black py-4 rounded-2xl text-sm hover:bg-black transition-all"
+                          >
+                            {loginSubMode === 'findId' ? '아이디 찾기 완료' : '본인인증 완료 및 임시비밀번호 발송'}
+                          </button>
+                        </form>
+                      )}
+
+                      {/* 4. PW CHANGE STEP */}
+                      {findStep === 'change' && (
+                        <form onSubmit={handleFindPwChange} className="space-y-4">
+                          <div className="space-y-1">
+                            <label className="text-[11px] font-black text-slate-400 pl-2">수신된 임시 비밀번호</label>
+                            <input
+                              type="password"
+                              placeholder="임시 비밀번호 입력"
+                              value={findTmpPw}
+                              onChange={(e) => setFindTmpPw(e.target.value)}
+                              className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-3 px-4 text-xs font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
+                            />
+                          </div>
+
+                          <div className="space-y-1">
+                            <label className="text-[11px] font-black text-slate-400 pl-2">변경할 새 비밀번호</label>
+                            <input
+                              type="password"
+                              placeholder="새 비밀번호 입력"
+                              value={findUserPw}
+                              onChange={(e) => setFindUserPw(e.target.value)}
+                              className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-3 px-4 text-xs font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
+                            />
+                          </div>
+
+                          <button
+                            type="submit"
+                            className="w-full bg-slate-900 text-white font-black py-4 rounded-2xl text-sm hover:bg-black transition-all"
+                          >
+                            비밀번호 최종 변경하기
+                          </button>
+                        </form>
+                      )}
+
+                      {/* 5. SUCCESS STEP */}
+                      {findStep === 'success' && (
+                        <div className="text-center py-6 space-y-4">
+                          <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto">
+                            <CheckCircle className="text-emerald-600" size={24} />
+                          </div>
+                          <p className="text-sm font-black text-slate-800 leading-relaxed whitespace-pre-line">
+                            {findResultText}
+                          </p>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setLoginSubMode('normal');
+                              resetFindStates();
+                              setError('');
+                            }}
+                            className="px-6 py-2.5 bg-slate-900 hover:bg-black text-white text-xs font-black rounded-xl transition-all"
+                          >
+                            로그인하러 가기
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
               )}
 
               {/* TAB 3: REGISTER */}
