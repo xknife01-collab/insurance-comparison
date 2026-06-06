@@ -959,7 +959,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
                         ) : (
                           <span className="text-xl font-black text-gray-900">{Math.round(opt.premium).toLocaleString()}원</span>
                         )}
-                       {opt.riskPremium !== undefined && !isAnnuity && !isVariable && !isFire && !isProperty && (
+                       {opt.riskPremium !== undefined && !isAnnuity && !isVariable && !isFire && !isProperty && !isSavingsGeneral && (
                          <span className="text-[10px] text-gray-400 font-bold mt-1">
                            보장 {opt.riskPremium.toLocaleString()}원 (소멸성 사업비+보장) / 적립 {opt.savingsPremium.toLocaleString()}원 (이자가 복리로 굴러가는 순적립금)
                          </span>

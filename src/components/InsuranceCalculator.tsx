@@ -595,6 +595,8 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
     const finalGender = overrides?.gender !== undefined ? overrides.gender : gender;
     const finalAge = overrides?.age !== undefined ? overrides.age : (calculatedAge || 40);
 
+    const isHealthCategory = ['cancer', 'brain', 'heart', 'surgery', 'health_general', 'pre', 'pre_family', 'silson', 'care_svc', 'care_old', 'nursing', 'dental', 'accident'].includes(selectedId);
+
     if (onCalculate) {
       onCalculate({
         name: finalName,
@@ -627,7 +629,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
         ),
         selectedCategory: activeItem.label,
         // Treat selected options as "Current Coverage" being analyzed
-        cancer: { 
+        cancer: isHealthCategory ? { 
           currentAmount: selectedId === 'cancer' ? cancerDiagnosisAmount : selectedCancer, 
           targetAmount: 50000000,
           targetedTherapy: cancerTargetedTherapy,
@@ -635,23 +637,23 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
           paymentType: cancerPaymentType,
           recurrentCancer: cancerRecurrentCancer,
           familyHistory: cancerFamilyHistory
-        },
-        cerebrovascular: { 
+        } : undefined,
+        cerebrovascular: isHealthCategory ? { 
           currentAmount: selectedBrain, 
           targetAmount: 30000000,
           selectedType: selectedId === 'brain' ? activeItem.subTypes[selectedDetail] : undefined,
           surgeryBenefit: brainSurgeryBenefit,
           paymentType: brainPaymentType,
           coveragePeriod: brainCoveragePeriod
-        },
-        cardiovascular: selectedId === 'heart' ? {
+        } : undefined,
+        cardiovascular: isHealthCategory && selectedId === 'heart' ? {
           currentAmount: 0,
           targetAmount: selectedHeart || 30000000,
           selectedType: selectedDetail === 0 ? '급성 심근경색' : '통합(급성+허혈성)',
         } : undefined,
-        surgery: { currentAmount: selectedSurgery, targetAmount: 1000000 },
-        postDisability: { currentAmount: selectedDisability, targetAmount: 30000000 },
-        paymentExemption: selectedExemption,
+        surgery: isHealthCategory ? { currentAmount: selectedSurgery, targetAmount: 1000000 } : undefined,
+        postDisability: isHealthCategory ? { currentAmount: selectedDisability, targetAmount: 30000000 } : undefined,
+        paymentExemption: isHealthCategory ? selectedExemption : undefined,
 
         // Dental specific fields
         dental: selectedId === 'dental' ? {
