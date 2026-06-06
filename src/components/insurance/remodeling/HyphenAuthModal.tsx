@@ -177,6 +177,30 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
     });
   };
 
+  // Hex 문자열을 Data URL (base64) 형태로 변환하는 헬퍼 함수
+  const convertHexToDataUrl = (hex: string): string => {
+    if (!hex) return '';
+    const cleanHex = hex.replace(/[^0-9a-fA-F]/g, '');
+    const bytes = new Uint8Array(cleanHex.length / 2);
+    for (let i = 0; i < cleanHex.length; i += 2) {
+      bytes[i / 2] = parseInt(cleanHex.substring(i, i + 2), 16);
+    }
+    let binary = '';
+    for (let i = 0; i < bytes.length; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    const base64 = window.btoa(binary);
+    
+    // MIME 타입 판별 (기본값 png)
+    const header = cleanHex.slice(0, 8).toLowerCase();
+    let mime = 'image/png';
+    if (header.startsWith('89504e47')) mime = 'image/png';
+    else if (header.startsWith('ffd8ff')) mime = 'image/jpeg';
+    else if (header.startsWith('47494638')) mime = 'image/gif';
+    
+    return `data:${mime};base64,${base64}`;
+  };
+
   const handleRegisterInit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!userName || !birth || !ssnBack || !mobileNo) {
@@ -204,7 +228,7 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
         return;
       }
 
-      setCaptchaImg(res.data?.captcha_img || '');
+      setCaptchaImg(convertHexToDataUrl(res.data?.captcha_img || ''));
       setStepData(res.data?.step_data || '');
       setRegStep('captcha');
       setLoading(false);
@@ -613,7 +637,7 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
                       {captchaImg && (
                         <div className="flex justify-center my-4">
                           <img
-                            src={`data:image/png;base64,${captchaImg}`}
+                            src={captchaImg}
                             alt="Captcha"
                             className="border border-gray-200 rounded-xl max-h-20"
                           />
