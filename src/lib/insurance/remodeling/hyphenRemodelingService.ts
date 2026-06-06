@@ -141,6 +141,10 @@ export async function requestHyphenRegister(req: {
 export async function fetchContractStatus(req: {
   userId: string;
   userPw: string;
+  step?: string;
+  step_input?: string;
+  step_data?: string;
+  proxy?: string;
 }): Promise<HyphenResponse<any>> {
   return callHyphenAPI<any>('/in0017000047', req);
 }
@@ -151,6 +155,10 @@ export async function fetchContractStatus(req: {
 export async function fetchSilsonContract(req: {
   userId: string;
   userPw: string;
+  step?: string;
+  step_input?: string;
+  step_data?: string;
+  proxy?: string;
 }): Promise<HyphenResponse<any>> {
   return callHyphenAPI<any>('/in0017000050', req);
 }
@@ -161,6 +169,10 @@ export async function fetchSilsonContract(req: {
 export async function fetchFixedContract(req: {
   userId: string;
   userPw: string;
+  step?: string;
+  step_input?: string;
+  step_data?: string;
+  proxy?: string;
 }): Promise<HyphenResponse<any>> {
   return callHyphenAPI<any>('/in0017000048', req);
 }

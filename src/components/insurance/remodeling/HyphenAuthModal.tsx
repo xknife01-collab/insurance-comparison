@@ -41,6 +41,11 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
   // 1. Login State
   const [loginId, setLoginId] = useState('');
   const [loginPw, setLoginPw] = useState('');
+  const [loginStep, setLoginStep] = useState<'init' | 'captcha'>('init');
+  const [loginCaptchaImg, setLoginCaptchaImg] = useState('');
+  const [loginCaptchaInput, setLoginCaptchaInput] = useState('');
+  const [loginStepData, setLoginStepData] = useState('');
+  const [loginProxy, setLoginProxy] = useState('');
 
   // 2. Register State
   const [regStep, setRegStep] = useState<'init' | 'captcha' | 'sms' | 'email'>('init');
@@ -135,6 +140,15 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
     setFindResultText('');
   };
 
+  // 로그인 상태 초기화
+  const resetLoginStates = () => {
+    setLoginStep('init');
+    setLoginCaptchaImg('');
+    setLoginCaptchaInput('');
+    setLoginStepData('');
+    setLoginProxy('');
+  };
+
   useEffect(() => {
     if (isOpen) {
       setRegStep('init');
@@ -145,6 +159,7 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
       setIsIdChecked(false);
       setIdCheckLoading(false);
       setLoginSubMode('normal');
+      resetLoginStates();
       resetFindStates();
       if (initialData) {
         setUserName(initialData.userName || '');
@@ -452,32 +467,106 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
       setError('아이디와 비밀번호를 입력해주세요.');
       return;
     }
+    if (loginStep === 'captcha' && !loginCaptchaInput) {
+      setError('보안문자(캡차)를 입력해주세요.');
+      return;
+    }
     setError('');
     setLoading(true);
     setLoadingStatus('내보험다보여 로그인 진행 중...');
 
     try {
-      // Fetch Contract Status, Silson and Fixed contracts in parallel
-      const [statusRes, silsonRes, fixedRes] = await Promise.all([
-        fetchContractStatus({ userId: loginId, userPw: loginPw }),
-        fetchSilsonContract({ userId: loginId, userPw: loginPw }),
-        fetchFixedContract({ userId: loginId, userPw: loginPw })
-      ]);
+      if (loginStep === 'init') {
+        const statusRes = await fetchContractStatus({
+          userId: loginId,
+          userPw: loginPw,
+          step: 'init'
+        });
 
-      if (statusRes.common.errYn === 'Y') {
-        setError(statusRes.common.errMsg || '인증에 실패했습니다. 아이디와 비밀번호를 확인해주세요.');
-        setLoading(false);
-        return;
+        // 캡차 이미지 추가 요구 시
+        if (
+          statusRes.common.errYn === 'Y' &&
+          (statusRes.common.errCd === 'NeedCaptcha' ||
+            statusRes.data?.captcha_img ||
+            (statusRes.common.errMsg && statusRes.common.errMsg.includes('보안문자')))
+        ) {
+          setLoginCaptchaImg(convertHexToDataUrl(statusRes.data?.captcha_img || ''));
+          setLoginStepData(statusRes.data?.step_data || '');
+          setLoginProxy(statusRes.data?.proxy || '');
+          setLoginStep('captcha');
+          setLoading(false);
+          return;
+        }
+
+        if (statusRes.common.errYn === 'Y') {
+          setError(statusRes.common.errMsg || '인증에 실패했습니다. 아이디와 비밀번호를 확인해주세요.');
+          setLoading(false);
+          return;
+        }
+
+        // 바로 조회가 완료되었을 때
+        setLoadingStatus('실시간 계약 및 담보 수집 중...');
+        const [silsonRes, fixedRes] = await Promise.all([
+          fetchSilsonContract({ userId: loginId, userPw: loginPw }),
+          fetchFixedContract({ userId: loginId, userPw: loginPw })
+        ]);
+
+        const rawPolicies = parseApiListToPolicies(statusRes, silsonRes, fixedRes);
+        const finalAge = initialData?.age || 40;
+        const finalGender = initialData?.gender || 'M';
+        const standardized = await parsePoliciesToStandardized(finalAge, finalGender, rawPolicies);
+        await runAnalysisAnimation(standardized);
+      } else {
+        // captcha 제출 단계
+        setLoadingStatus('보안문자 검증 및 보험 계약 조회 중...');
+        const statusRes = await fetchContractStatus({
+          userId: loginId,
+          userPw: loginPw,
+          step: 'captcha',
+          step_input: loginCaptchaInput,
+          step_data: loginStepData,
+          proxy: loginProxy
+        });
+
+        if (statusRes.common.errYn === 'Y') {
+          setError(statusRes.common.errMsg || '보안문자 인증에 실패했습니다. 다시 시도해 주세요.');
+          if (statusRes.data?.captcha_img) {
+            setLoginCaptchaImg(convertHexToDataUrl(statusRes.data.captcha_img));
+            setLoginStepData(statusRes.data.step_data || '');
+            setLoginProxy(statusRes.data.proxy || '');
+          } else {
+            resetLoginStates();
+          }
+          setLoading(false);
+          return;
+        }
+
+        // 캡차가 성공한 경우 실손형과 정액형을 마저 조회
+        const [silsonRes, fixedRes] = await Promise.all([
+          fetchSilsonContract({
+            userId: loginId,
+            userPw: loginPw,
+            step: 'captcha',
+            step_input: loginCaptchaInput,
+            step_data: loginStepData,
+            proxy: loginProxy
+          }),
+          fetchFixedContract({
+            userId: loginId,
+            userPw: loginPw,
+            step: 'captcha',
+            step_input: loginCaptchaInput,
+            step_data: loginStepData,
+            proxy: loginProxy
+          })
+        ]);
+
+        const rawPolicies = parseApiListToPolicies(statusRes, silsonRes, fixedRes);
+        const finalAge = initialData?.age || 40;
+        const finalGender = initialData?.gender || 'M';
+        const standardized = await parsePoliciesToStandardized(finalAge, finalGender, rawPolicies);
+        await runAnalysisAnimation(standardized);
       }
-
-      // Convert response into RawInsurancePolicy array (or parse directly)
-      // In case of real API response, we parse. For this integration, we parse properly:
-      const rawPolicies = parseApiListToPolicies(statusRes, silsonRes, fixedRes);
-      
-      const finalAge = initialData?.age || 40;
-      const finalGender = initialData?.gender || 'M';
-      const standardized = await parsePoliciesToStandardized(finalAge, finalGender, rawPolicies);
-      await runAnalysisAnimation(standardized);
     } catch (err: any) {
       setError(err.message || '로그인 중 오류가 발생했습니다.');
       setLoading(false);
@@ -788,6 +877,9 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
                   setCaptchaInput('');
                   setSmsInput('');
                   setEmailInput('');
+                  setLoginSubMode('normal');
+                  resetLoginStates();
+                  resetFindStates();
                 }}
                 className={`flex-1 py-4 text-center text-sm font-black rounded-2xl transition-all ${
                   activeTab === tab.id
@@ -903,40 +995,77 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
                 <div className="space-y-6">
                   {loginSubMode === 'normal' ? (
                     <form onSubmit={handleLoginSubmit} className="space-y-6">
-                      <div className="space-y-4">
-                        <div className="space-y-2">
-                          <label className="text-[11px] font-black text-slate-400 pl-2">내보험다보여 아이디</label>
-                          <div className="relative">
-                            <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                      {loginStep === 'init' ? (
+                        <div className="space-y-4">
+                          <div className="space-y-2">
+                            <label className="text-[11px] font-black text-slate-400 pl-2">내보험다보여 아이디</label>
+                            <div className="relative">
+                              <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                              <input
+                                type="text"
+                                placeholder="신용정보원 아이디 입력"
+                                value={loginId}
+                                onChange={(e) => setLoginId(e.target.value)}
+                                className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-4 pl-12 pr-4 text-sm font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
+                              />
+                            </div>
+                          </div>
+                          <div className="space-y-2">
+                            <label className="text-[11px] font-black text-slate-400 pl-2">비밀번호</label>
+                            <div className="relative">
+                              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                              <input
+                                type="password"
+                                placeholder="비밀번호 입력"
+                                value={loginPw}
+                                onChange={(e) => setLoginPw(e.target.value)}
+                                className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-4 pl-12 pr-4 text-sm font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="space-y-4 text-center">
+                          <p className="text-xs font-bold text-gray-500">
+                            로그인을 완료하기 위해 아래 보안 문자를 입력해 주세요.
+                          </p>
+                          {loginCaptchaImg && (
+                            <div className="flex justify-center my-4">
+                              <img
+                                src={loginCaptchaImg}
+                                alt="Captcha"
+                                className="border border-gray-200 rounded-xl max-h-20"
+                              />
+                            </div>
+                          )}
+                          <div className="space-y-2 text-left">
+                            <label className="text-[11px] font-black text-slate-400 pl-2">보안 문자</label>
                             <input
                               type="text"
-                              placeholder="신용정보원 아이디 입력"
-                              value={loginId}
-                              onChange={(e) => setLoginId(e.target.value)}
-                              className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-4 pl-12 pr-4 text-sm font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
+                              placeholder="보안 문자 입력"
+                              value={loginCaptchaInput}
+                              onChange={(e) => setLoginCaptchaInput(e.target.value)}
+                              className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-4 text-center text-lg font-black focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
                             />
                           </div>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              resetLoginStates();
+                              setError('');
+                            }}
+                            className="text-xs text-slate-400 hover:text-slate-600 font-bold transition-all"
+                          >
+                            🔄 다른 아이디로 로그인하기
+                          </button>
                         </div>
-                        <div className="space-y-2">
-                          <label className="text-[11px] font-black text-slate-400 pl-2">비밀번호</label>
-                          <div className="relative">
-                            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                            <input
-                              type="password"
-                              placeholder="비밀번호 입력"
-                              value={loginPw}
-                              onChange={(e) => setLoginPw(e.target.value)}
-                              className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-4 pl-12 pr-4 text-sm font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
-                            />
-                          </div>
-                        </div>
-                      </div>
+                      )}
 
                       <button
                         type="submit"
                         className="w-full bg-slate-900 text-white font-black py-4 rounded-2xl text-sm hover:bg-black transition-all"
                       >
-                        로그인 및 보험 조회하기
+                        {loginStep === 'init' ? '로그인 및 보험 조회하기' : '보안문자 검증 및 조회 완료'}
                       </button>
 
                       {/* 아이디/비밀번호 찾기 버튼 링크 */}
