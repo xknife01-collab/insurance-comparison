@@ -164,3 +164,12 @@ export async function fetchFixedContract(req: {
 }): Promise<HyphenResponse<any>> {
   return callHyphenAPI<any>('/in0017000048', req);
 }
+
+/**
+ * 5. 아이디 중복체크 API (엔드포인트: /in0017000779)
+ */
+export async function checkHyphenIdDuplicate(req: {
+  userId: string;
+}): Promise<HyphenResponse<any>> {
+  return callHyphenAPI<any>('/in0017000779', req);
+}

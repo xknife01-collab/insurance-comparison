@@ -6,6 +6,7 @@ import {
   fetchContractStatus,
   fetchSilsonContract,
   fetchFixedContract,
+  checkHyphenIdDuplicate,
   MOCK_REMODELING_DATA
 } from '../../../lib/insurance/remodeling/hyphenRemodelingService';
 import { parsePoliciesToStandardized } from '../../../lib/remodeling/parser';
@@ -59,8 +60,37 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
   const [newUserPw, setNewUserPw] = useState('');
   const [email, setEmail] = useState('');
 
+  // ID 중복체크 상태
+  const [isIdChecked, setIsIdChecked] = useState(false);
+  const [idCheckLoading, setIdCheckLoading] = useState(false);
+
   // Email step
   const [emailInput, setEmailInput] = useState('');
+
+  // 아이디 중복확인 핸들러
+  const handleCheckIdDuplicate = async () => {
+    if (!newUserId) {
+      setError('중복확인할 아이디를 입력해주세요.');
+      return;
+    }
+    setError('');
+    setIdCheckLoading(true);
+    try {
+      const res = await checkHyphenIdDuplicate({ userId: newUserId });
+      if (res.common.errYn === 'Y') {
+        setError(res.common.errMsg || '이미 사용 중이거나 유효하지 않은 아이디입니다.');
+        setIsIdChecked(false);
+      } else {
+        setIsIdChecked(true);
+        setError('');
+      }
+    } catch (err: any) {
+      setError(err.message || '아이디 중복확인 중 오류가 발생했습니다.');
+      setIsIdChecked(false);
+    } finally {
+      setIdCheckLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (isOpen) {
@@ -69,6 +99,8 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
       setCaptchaInput('');
       setSmsInput('');
       setEmailInput('');
+      setIsIdChecked(false);
+      setIdCheckLoading(false);
       if (initialData) {
         setUserName(initialData.userName || '');
         setBirth(initialData.birth || '');
@@ -287,6 +319,10 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
     e.preventDefault();
     if (!smsInput || !newUserId || !newUserPw || !email) {
       setError('인증번호, 신규 계정 정보, 그리고 이메일 주소를 입력해주세요.');
+      return;
+    }
+    if (!isIdChecked) {
+      setError('아이디 중복확인을 완료해주세요.');
       return;
     }
     setError('');
@@ -700,17 +736,38 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
                         />
                       </div>
 
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-1">
-                          <label className="text-[11px] font-black text-slate-400 pl-2">신규 내보험다보여 ID</label>
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-black text-slate-400 pl-2">신규 내보험다보여 ID</label>
+                        <div className="flex gap-2">
                           <input
                             type="text"
                             placeholder="사용할 ID 입력"
                             value={newUserId}
-                            onChange={(e) => setNewUserId(e.target.value)}
-                            className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-3 px-4 text-xs font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
+                            onChange={(e) => {
+                              setNewUserId(e.target.value);
+                              setIsIdChecked(false);
+                            }}
+                            className="flex-1 bg-gray-50 border border-gray-100 rounded-2xl py-3 px-4 text-xs font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
                           />
+                          <button
+                            type="button"
+                            disabled={idCheckLoading}
+                            onClick={handleCheckIdDuplicate}
+                            className={`px-5 py-3 rounded-2xl font-black text-xs transition-all active:scale-95 whitespace-nowrap ${
+                              isIdChecked 
+                                ? 'bg-emerald-500 text-white hover:bg-emerald-600' 
+                                : 'bg-slate-900 text-white hover:bg-black'
+                            }`}
+                          >
+                            {idCheckLoading ? '확인 중...' : isIdChecked ? '✓ 확인완료' : '중복확인'}
+                          </button>
                         </div>
+                        {isIdChecked && (
+                          <p className="text-[10px] text-emerald-600 font-bold pl-2 mt-1">✓ 사용 가능한 아이디입니다.</p>
+                        )}
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-1">
                           <label className="text-[11px] font-black text-slate-400 pl-2">신규 비밀번호</label>
                           <input
@@ -721,17 +778,16 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
                             className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-3 px-4 text-xs font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
                           />
                         </div>
-                      </div>
-
-                      <div className="space-y-1">
-                        <label className="text-[11px] font-black text-slate-400 pl-2">이메일 주소</label>
-                        <input
-                          type="email"
-                          placeholder="이메일 입력"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-3 px-4 text-xs font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
-                        />
+                        <div className="space-y-1">
+                          <label className="text-[11px] font-black text-slate-400 pl-2">이메일 주소</label>
+                          <input
+                            type="email"
+                            placeholder="이메일 입력"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-3 px-4 text-xs font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
+                          />
+                        </div>
                       </div>
 
                       <button
