@@ -4,8 +4,6 @@ import { Shield, Lock, User, RefreshCw, CheckCircle, Info, Flame, AlertCircle, S
 import {
   requestHyphenRegister,
   fetchContractStatus,
-  fetchSilsonContract,
-  fetchFixedContract,
   checkHyphenIdDuplicate,
   findHyphenId,
   findHyphenPw,
@@ -505,13 +503,8 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
         }
 
         // 바로 조회가 완료되었을 때
-        setLoadingStatus('실시간 계약 및 담보 수집 중...');
-        const [silsonRes, fixedRes] = await Promise.all([
-          fetchSilsonContract({ userId: loginId, userPw: loginPw }),
-          fetchFixedContract({ userId: loginId, userPw: loginPw })
-        ]);
-
-        const rawPolicies = parseApiListToPolicies(statusRes, silsonRes, fixedRes);
+        setLoadingStatus('실시간 계약 수집 중...');
+        const rawPolicies = parseApiListToPolicies(statusRes, { data: { list: [] } }, { data: { list: [] } });
         const finalAge = initialData?.age || 40;
         const finalGender = initialData?.gender || 'M';
         const standardized = await parsePoliciesToStandardized(finalAge, finalGender, rawPolicies);
@@ -541,27 +534,7 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
           return;
         }
 
-        // 캡차가 성공한 경우 실손형과 정액형을 마저 조회
-        const [silsonRes, fixedRes] = await Promise.all([
-          fetchSilsonContract({
-            userId: loginId,
-            userPw: loginPw,
-            step: 'captcha',
-            step_input: loginCaptchaInput,
-            step_data: loginStepData,
-            proxy: loginProxy
-          }),
-          fetchFixedContract({
-            userId: loginId,
-            userPw: loginPw,
-            step: 'captcha',
-            step_input: loginCaptchaInput,
-            step_data: loginStepData,
-            proxy: loginProxy
-          })
-        ]);
-
-        const rawPolicies = parseApiListToPolicies(statusRes, silsonRes, fixedRes);
+        const rawPolicies = parseApiListToPolicies(statusRes, { data: { list: [] } }, { data: { list: [] } });
         const finalAge = initialData?.age || 40;
         const finalGender = initialData?.gender || 'M';
         const standardized = await parsePoliciesToStandardized(finalAge, finalGender, rawPolicies);
@@ -792,11 +765,7 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
 
       // Automatically query with the newly created credentials
       setLoadingStatus('가입 계정으로 실시간 보험 계약 조회 중...');
-      const [statusRes, silsonRes, fixedRes] = await Promise.all([
-        fetchContractStatus({ userId: newUserId, userPw: newUserPw }),
-        fetchSilsonContract({ userId: newUserId, userPw: newUserPw }),
-        fetchFixedContract({ userId: newUserId, userPw: newUserPw })
-      ]);
+      const statusRes = await fetchContractStatus({ userId: newUserId, userPw: newUserPw });
 
       if (statusRes.common.errYn === 'Y') {
         const rawErr = statusRes.common.errMsg || '';
@@ -809,7 +778,7 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
         return;
       }
 
-      const rawPolicies = parseApiListToPolicies(statusRes, silsonRes, fixedRes);
+      const rawPolicies = parseApiListToPolicies(statusRes, { data: { list: [] } }, { data: { list: [] } });
       const finalAge = initialData?.age || 40;
       const finalGender = initialData?.gender || 'M';
       const standardized = await parsePoliciesToStandardized(finalAge, finalGender, rawPolicies);
