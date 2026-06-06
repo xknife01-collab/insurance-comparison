@@ -18,6 +18,7 @@ export interface InsuranceAnalysis {
   _productName?: string;
   _companyName?: string;
   _allOptions?: any[];
+  _remodelingCoverage?: any;
   cancer: CoverageItem;      // 일반암
   cerebrovascular: CoverageItem; // 뇌혈관
   cardiovascular: CoverageItem;  // 심혈관
@@ -194,6 +195,20 @@ export interface InsuranceAnalysis {
     drivingType: 'none' | 'private' | 'commercial'; // 운전형태 (비운전 / 자가용 / 영업용)
     hasLeisureRider: boolean;   // 레저스포츠/취미 상해 특약
     subType?: string;           // 상세타입 (상해장해형 / 골절치료형)
+  };
+  property?: {
+    businessType: 'office' | 'retail' | 'restaurant' | 'academy' | 'factory' | 'warehouse'; // 업종 유형
+    buildingGrade: 'grade_1' | 'grade_2' | 'grade_3'; // 건물 구조 등급 (1급: 콘크리트 / 2급: 벽돌 / 3급: 판넬)
+    buildingLimit: number; // 건물 가입금액 (원)
+    interiorLimit: number; // 시설/인테리어 가입금액 (원)
+    equipmentLimit: number; // 집기비품 가입금액 (원)
+    inventoryLimit: number; // 재고자산 가입금액 (원)
+    hasWaterLeak: boolean; // 급배수시설누출손해 특약 여부 (누수)
+    hasPremisesLiability: boolean; // 시설소유자배상책임 특약 여부
+    hasBusinessInterruption: boolean; // 점포휴업손해 특약 여부
+    hasFoodLiability: boolean; // 음식물배상책임 특약 여부 (식중독/이물 등)
+    hasMachineryBreakdown: boolean; // 기계고장/전기적손해 특약 여부
+    subType?: string; // 상세 타입 ('상가 화재형' | '화재배상책임형')
   };
 }
 

@@ -33,7 +33,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 통계 배너 ── */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
         {[
           { num: '무제한 보존치료', label: '크라운/레진 연간 무제한 보장', sub: '자연치아 보존 치료 한도 최적화' },
           { num: '임플란트 150만', label: '상해/질병 보철비 고액 지원', sub: '브릿지, 틀니 등 보철 전격 커버' },
@@ -75,11 +75,11 @@ export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
               { title: '보철치료 (인공치)', label: '치아 상실 시 다리 역할을 하는 대체 이식 보장', color: 'bg-emerald-50/50 border-emerald-100', badge: 'text-emerald-700 bg-emerald-100', desc: '잇몸뼈에 심는 임플란트(영구치 발치 기준), 양옆 치아에 거는 브릿지, 전체/부분 틀니 보장' },
               { title: '진단형 사전 가입', label: '가입 즉시 감액 없이 100% 보장 혜택', color: 'bg-amber-50/50 border-amber-100', badge: 'text-amber-700 bg-amber-100', desc: '치과 사전 정밀 검진 통과 시 90일 면책기간 및 1~2년 이내 50% 지급 감액 조항 완전 삭제 특권' },
             ].map((item, i) => (
-              <div key={i} className={`flex items-center gap-4 p-5 rounded-3xl border ${item.color}`}>
-                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 ${item.badge} w-24 text-center`}>{item.title}</div>
+              <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-5 rounded-3xl border ${item.color}`}>
+                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-black text-slate-800 text-sm">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold">{item.desc}</p>
+                  <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -161,14 +161,14 @@ export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
               { title: '진단형 (건강 심사형)', desc: '치과 방문 사전 구강 검진 통과 후 무제한 승인', info: '당일 즉시 100% 한도 보장' },
               { title: '연령대별 보장 비중 최적화', desc: '2030 크라운 무제한 ➔ 4050 고액 임플란트 결합형', info: '나이별 맞춤 특약 배분 설계' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center justify-between p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
+              <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
                     {item.title}
                   </p>
                   <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.desc}</p>
                 </div>
-                <p className="font-black text-teal-400 text-sm shrink-0 ml-4">{item.info}</p>
+                <p className="font-black text-teal-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.info}</p>
               </div>
             ))}
           </div>
@@ -188,10 +188,10 @@ export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
               { step: '03. 감액/대기 일정 역산', desc: '임플란트 및 고액 크라운 수술이 필요할 경우, 90일 면책 및 1~2년 50% 감액기간의 종료 일정을 계산한 예약 설계' },
               { step: '04. 틀니 착용 여부 체크', desc: '현재 부분 틀니 또는 전체 틀니를 착용하고 계신지 확인하여 보철치료 가입 승인 한도 사전 심사 검토' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-5 p-5 bg-teal-50/30 rounded-3xl border border-teal-100/50 hover:border-teal-200 transition-colors">
-                <div className="shrink-0 font-black text-teal-700 text-sm w-32">{item.step}</div>
+              <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-teal-50/30 rounded-3xl border border-teal-100/50 hover:border-teal-200 transition-colors">
+                <div className="shrink-0 font-black text-teal-700 text-sm w-full sm:w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}

@@ -32,20 +32,20 @@ export const CaregivingFields: React.FC<Props> = ({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
         <div className="space-y-4">
            <p className="text-[0.65rem] font-black text-slate-400 pl-1 uppercase tracking-widest mb-2">간병인 매칭 방식</p>
-           <div className="flex bg-white rounded-2xl p-1.5 shadow-sm border border-purple-100">
-             {[
-               { l: '현금 일당 지급(사용형)', v: 'expense' },
-               { l: '보험사 직접 파견(지원형)', v: 'support' }
-             ].map((opt, i) => (
-               <button
-                 key={i}
-                 onClick={() => setCareType(opt.v as any)}
-                 className={`flex-1 py-3 rounded-xl text-xs font-black transition-all ${careType === opt.v ? 'bg-purple-600 text-white shadow-lg' : 'text-slate-300'}`}
-               >
-                 {opt.l}
-               </button>
-             ))}
-           </div>
+            <div className="flex flex-col sm:flex-row bg-white rounded-2xl p-1.5 shadow-sm border border-purple-100 gap-1.5 sm:gap-0">
+              {[
+                { l: '현금 일당 지급(사용형)', v: 'expense' },
+                { l: '보험사 직접 파견(지원형)', v: 'support' }
+              ].map((opt, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCareType(opt.v as any)}
+                  className={`flex-1 py-3 rounded-xl text-xs font-black transition-all ${careType === opt.v ? 'bg-purple-600 text-white shadow-lg' : 'text-slate-300 hover:text-slate-500'}`}
+                >
+                  {opt.l}
+                </button>
+              ))}
+            </div>
         </div>
         
         <div className="space-y-8">

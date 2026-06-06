@@ -82,13 +82,13 @@ export const PreExistingFields: React.FC<Props> = ({
         </div>
       </div>
 
-      <div className={`mt-8 p-8 rounded-[2.5rem] flex items-center justify-between shadow-2xl overflow-hidden relative transition-all duration-500 ${
+      <div className={`mt-8 p-8 rounded-[2.5rem] flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-2xl overflow-hidden relative transition-all duration-500 ${
         (threeMonth === 'yes' || fiveYearMajor === 'yes') 
           ? 'bg-slate-800' 
           : 'bg-indigo-900'
       }`}>
          <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-32 -mt-32 blur-3xl font-black"></div>
-         <div className="flex flex-col gap-1.5 z-10">
+         <div className="flex flex-col gap-1.5 z-10 text-left">
             <div className="flex items-center gap-2">
               <span className="text-[0.6rem] font-black text-indigo-300 uppercase tracking-[0.2em]">현재 건강 등급 분석 결과</span>
               {(threeMonth === 'yes' || fiveYearMajor === 'yes') && (
@@ -110,10 +110,10 @@ export const PreExistingFields: React.FC<Props> = ({
                 </div>
             </div>
          </div>
-         <div className="text-right z-10">
-            <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-[1.8rem] border border-white/10">
+         <div className="text-left sm:text-right z-10 w-full sm:w-auto">
+            <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-[1.8rem] border border-white/10 inline-block w-full sm:w-auto">
               <p className="text-[0.65rem] text-indigo-200 font-black mb-1">예상 보험료 할인율</p>
-              <div className="flex items-baseline justify-end gap-1">
+              <div className="flex items-baseline justify-start sm:justify-end gap-1">
                 <span className="text-3xl font-black text-orange-400">
                   {threeMonth === 'yes' || fiveYearMajor === 'yes' ? '0' : 
                    noAccidentYears === '5' ? '40' : 

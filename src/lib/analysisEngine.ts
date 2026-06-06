@@ -33,6 +33,8 @@ import { fetchGolfPremium } from './insurance/golf/golfLoader';
 import { analyzeGolf } from './insurance/golf/golfEngine';
 import { fetchFirePremium } from './insurance/fire/fireLoader';
 import { analyzeFire } from './insurance/fire/fireEngine';
+import { fetchPropertyPremium } from './insurance/property/propertyLoader';
+import { analyzeProperty } from './insurance/property/propertyEngine';
 import { fetchAnnuityPremium } from './insurance/annuity/annuityLoader';
 import { analyzeAnnuity } from './insurance/annuity/annuityEngine';
 import { fetchWholeLifePremium } from './insurance/wholeLife/wholeLifeLoader';
@@ -54,6 +56,11 @@ import { analyzeAccident } from './insurance/accident/accidentEngine';
 export const runAnalysis = async (analysis: InsuranceAnalysis): Promise<any> => {
   const category = analysis.selectedCategory || '';
   
+  if (category === 'remodeling' || analysis._remodelingCoverage) {
+    const { analyzeRemodeling } = await import('./remodeling/remodelingEngine');
+    return analyzeRemodeling(analysis);
+  }
+
   // 1. Fetch real premium from the Supabase database
   const isDementia = category.includes('치매') || category === 'dementia';
   const isNursing = category === 'nursing' || category.includes('재가') || category.includes('시설');
@@ -71,6 +78,7 @@ export const runAnalysis = async (analysis: InsuranceAnalysis): Promise<any> => 
   const isPet = category.includes('펫') || category === 'pet' || !!analysis.pet;
   const isGolf = category.includes('골프') || category.includes('레저') || category === 'golf' || category === 'leisure' || !!analysis.golf;
   const isFire = category.includes('주택화재') || category.includes('화재') || category === 'fire_real' || !!analysis.fire;
+  const isProperty = category.includes('재물') || category === 'property' || category === 'home' || !!analysis.property;
   const isAnnuity = category.includes('연금') || category === 'annuity_savings' || !!analysis.annuity;
   const isWholeLife = category.includes('종신') || category === 'whole' || !!analysis.wholeLife;
   const isVariable = category.includes('변액') || category.includes('정기') || category === 'variable' || !!(analysis as any).variable;
@@ -113,6 +121,8 @@ export const runAnalysis = async (analysis: InsuranceAnalysis): Promise<any> => 
     ? await fetchGolfPremium(analysis)
     : isFire
     ? await fetchFirePremium(analysis)
+    : isProperty
+    ? await fetchPropertyPremium(analysis)
     : isAnnuity
     ? await fetchAnnuityPremium(analysis)
     : isWholeLife
@@ -206,6 +216,10 @@ export const runAnalysis = async (analysis: InsuranceAnalysis): Promise<any> => 
 
   if (isGolf) {
     return { analysis: augmentedAnalysis, ...analyzeGolf(augmentedAnalysis as any) };
+  }
+
+  if (isProperty) {
+    return { analysis: augmentedAnalysis, ...analyzeProperty(augmentedAnalysis as any) };
   }
 
   if (isFire) {

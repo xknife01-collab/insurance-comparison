@@ -63,9 +63,9 @@ export const DentalFields: React.FC<Props> = (props) => {
              { title: '5년 내 잇몸 질환 상실', subtitle: '풍치/치주염으로 인한 발치', state: last5Years, setter: setLast5Years, icon: AlertCircle },
              { title: '현재 틀니(가철성) 사용', subtitle: '부분 틀니 포함', state: dentures, setter: setDentures, icon: Info },
            ].map((q, i) => (
-             <div key={i} className={`flex items-center justify-between p-5 bg-white rounded-[2rem] border transition-all duration-300 ${q.state === 'yes' ? 'border-orange-200 shadow-lg shadow-orange-50' : 'border-slate-50 shadow-sm'}`}>
+             <div key={i} className={`flex flex-col sm:flex-row sm:items-center justify-between p-5 bg-white rounded-[2rem] border transition-all duration-300 gap-4 sm:gap-6 ${q.state === 'yes' ? 'border-orange-200 shadow-lg shadow-orange-50' : 'border-slate-50 shadow-sm'}`}>
                 <div className="flex items-center gap-4">
-                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${q.state === 'yes' ? 'bg-orange-100 text-orange-600' : 'bg-slate-50 text-slate-300'}`}>
+                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${q.state === 'yes' ? 'bg-orange-100 text-orange-600' : 'bg-slate-50 text-slate-300'}`}>
                       <q.icon size={20} />
                    </div>
                    <div className="flex flex-col">
@@ -73,9 +73,9 @@ export const DentalFields: React.FC<Props> = (props) => {
                       <p className="text-[0.65rem] font-bold text-slate-400 mt-0.5">{q.subtitle}</p>
                    </div>
                 </div>
-                <div className="flex gap-2 bg-slate-50 p-1.5 rounded-2xl border border-slate-100 shrink-0 ml-4">
-                  <button onClick={() => q.setter('yes')} className={`px-6 py-2 rounded-xl text-[0.75rem] font-black transition-all ${q.state === 'yes' ? 'bg-orange-500 text-white shadow-md' : 'text-slate-300 hover:text-slate-500'}`}>예</button>
-                  <button onClick={() => q.setter('no')} className={`px-6 py-2 rounded-xl text-[0.75rem] font-black transition-all ${q.state === 'no' ? 'bg-slate-900 text-white shadow-md' : 'text-slate-300 hover:text-slate-500'}`}>아니오</button>
+                <div className="flex gap-2 bg-slate-50 p-1.5 rounded-2xl border border-slate-100 shrink-0 w-full sm:w-auto justify-between sm:justify-start">
+                  <button onClick={() => q.setter('yes')} className={`flex-1 sm:flex-initial px-6 py-2 rounded-xl text-[0.75rem] font-black transition-all ${q.state === 'yes' ? 'bg-orange-500 text-white shadow-md' : 'text-slate-300 hover:text-slate-500'}`}>예</button>
+                  <button onClick={() => q.setter('no')} className={`flex-1 sm:flex-initial px-6 py-2 rounded-xl text-[0.75rem] font-black transition-all ${q.state === 'no' ? 'bg-slate-900 text-white shadow-md' : 'text-slate-300 hover:text-slate-500'}`}>아니오</button>
                 </div>
              </div>
            ))}

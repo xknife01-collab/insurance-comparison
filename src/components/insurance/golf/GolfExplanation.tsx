@@ -34,7 +34,7 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
       </div>
 
       {/* ── 통계 배너 ── */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
         {[
           { num: '4인 동반 할인', label: '1팀 패키지 가입 시 즉시 적용', sub: '5% 보험료 추가 할인 혜택' },
           { num: '홀인원 축하금', label: '최대 200만 원 실손 보장', sub: '증빙 영수증 1~3개월 내 청구 필수' },
@@ -76,11 +76,11 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
               { title: '스윙 배상책임', label: '필드 안에서 유일한 법적 안심 보장', color: 'bg-amber-50/50 border-amber-100', badge: 'text-amber-700 bg-amber-100', desc: '슬라이스/훅 타구 사고로 동반자나 캐디에게 가한 신해상해 및 재물 손해 보장(벌금 미포함)' },
               { title: '골프용품 파손', label: '값비싼 드라이버/아이언 파손 실비 보상', color: 'bg-yellow-50 border-yellow-100', badge: 'text-yellow-700 bg-yellow-100', desc: '스윙 중 클럽 샤프트 부러짐, 드라이버 헤드 깨짐, 골프 가방 도난 등 실손 의료비와 유사하게 실제 수리비 지급' },
             ].map((item, i) => (
-              <div key={i} className={`flex items-center gap-4 p-5 rounded-3xl border ${item.color}`}>
-                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 ${item.badge}`}>{item.title}</div>
+              <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-5 rounded-3xl border ${item.color}`}>
+                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-black text-slate-800 text-sm">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold">{item.desc}</p>
+                  <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -166,7 +166,7 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
               { company: '원스톱 모바일 증빙', product: '종이 서류 없는 모바일 청구 확대', limit: '인증서 및 카드 결제 캡처 청구', note: '동반 라운딩 비용 결제 카드사의 승인 명세 캡처만으로 증빙 대체' },
               { company: '용품 보장 범위 확대', product: '클럽 파손 전용 즉각 수리 지원', limit: '제조사 공식 수리비 영수증 지원', note: '피팅샵 수리뿐만 아니라 정식 AS 센터 견적서 접수 즉시 실손 보상' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center justify-between p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
+              <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
                     {item.company}{' '}
@@ -174,7 +174,7 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
                   </p>
                   <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.note}</p>
                 </div>
-                <p className="font-black text-emerald-400 text-sm shrink-0 ml-4">{item.limit}</p>
+                <p className="font-black text-emerald-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.limit}</p>
               </div>
             ))}
           </div>
@@ -194,10 +194,10 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
               { step: '03. 영수증 유효기간', desc: '홀인원 달성 당일로부터 보통 1개월 또는 최대 3개월 이내에 사용한 카드 지출 내역만 인정' },
               { step: '04. 경기 자격 확인', desc: 'KPGA, KLPGA 프로 등 등록 선수나 강사 경력 여부에 따른 가입 적격 심사 적용 여부 사전 검토' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-5 p-5 bg-emerald-50/30 rounded-3xl border border-emerald-100/50 hover:border-emerald-200 transition-colors">
-                <div className="shrink-0 font-black text-emerald-700 text-sm w-32">{item.step}</div>
+              <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-emerald-50/30 rounded-3xl border border-emerald-100/50 hover:border-emerald-200 transition-colors">
+                <div className="shrink-0 font-black text-emerald-700 text-sm w-full sm:w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}

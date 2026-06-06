@@ -30,7 +30,8 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
   const isDriver = analysis.selectedCategory?.includes('운전자') || analysis.selectedCategory === 'driver';
   const isPet = analysis.selectedCategory?.includes('펫') || analysis.selectedCategory === 'pet' || !!analysis.pet;
   const isGolf = analysis.selectedCategory?.includes('골프') || analysis.selectedCategory?.includes('레저') || analysis.selectedCategory === 'golf' || analysis.selectedCategory === 'leisure' || !!analysis.golf;
-  const isFire = analysis.selectedCategory?.includes('주택화재') || analysis.selectedCategory?.includes('화재') || analysis.selectedCategory === 'fire_real' || !!analysis.fire;
+  const isProperty = analysis.selectedCategory?.includes('재물') || analysis.selectedCategory === 'property' || !!analysis.property;
+  const isFire = (analysis.selectedCategory?.includes('주택화재') || analysis.selectedCategory?.includes('화재') || analysis.selectedCategory === 'fire_real' || !!analysis.fire) && !isProperty;
   const isAnnuity = analysis.selectedCategory?.includes('연금') || analysis.selectedCategory === 'annuity_savings' || !!analysis.annuity;
   const isWholeLife = analysis.selectedCategory?.includes('종신') || analysis.selectedCategory === 'whole' || !!analysis.wholeLife;
   const isVariable = analysis.selectedCategory?.includes('변액') || analysis.selectedCategory?.includes('정기') || analysis.selectedCategory === 'variable' || analysis.selectedCategory === 'term' || !!analysis.variable;
@@ -41,7 +42,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
 
 
 
-  const benchmark = isSilbi ? 55000 : isDental ? 85000 : isCaregiving ? 45000 : isNursing ? 70000 : isHeart ? 120000 : isChild ? (analysis.child?.maturity === 30 ? 45000 : 95000) : isDriver ? 22000 : isPet ? 42000 : isGolf ? 15000 : isFire ? 12000 : isWholeLife ? 150000 : isVariable ? 150000 : isLegal ? 18000 : isCredit ? 40000 : isAccident ? 30000 : 180000;
+  const benchmark = isSilbi ? 55000 : isDental ? 85000 : isCaregiving ? 45000 : isNursing ? 70000 : isHeart ? 120000 : isChild ? (analysis.child?.maturity === 30 ? 45000 : 95000) : isDriver ? 22000 : isPet ? 42000 : isGolf ? 15000 : isFire ? 12000 : isProperty ? 45000 : isWholeLife ? 150000 : isVariable ? 150000 : isLegal ? 18000 : isCredit ? 40000 : isAccident ? 30000 : 180000;
   const dietPremium = recommendation.estimatedPremium;
   const currentPremium = analysis.monthlyPremium;
   
@@ -365,15 +366,21 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
   const standardRows = [
     { 
       label: '일반암 진단비', 
-      current: formatAmt(30000000), 
+      current: formatAmt(analysis.cancer?.currentAmount ?? 30000000), 
       recommended: '최대 5,000만 원 (가장 빈번한 고액 질병 치료비 선제 확보)', 
       icon: <ShieldCheck className="w-4 h-4 text-orange-500" /> 
     },
     { 
-      label: '유사암 진단비 (갑상선/경계성 등)', 
-      current: formatAmt(6000000), 
-      recommended: '최대 1,000만 원 (일반암 진단비의 20% 법정 최고 한도 업셀링)', 
-      icon: <HeartPulse className="w-4 h-4 text-orange-500" /> 
+      label: '뇌혈관질환 진단비', 
+      current: formatAmt(analysis.cerebrovascular?.currentAmount ?? 10000000), 
+      recommended: '최대 3,000만 원 (뇌졸중/뇌동맥류 완벽 보강)', 
+      icon: <Brain className="w-4 h-4 text-indigo-500" /> 
+    },
+    { 
+      label: '허혈성 심장질환 진단비', 
+      current: formatAmt(analysis.cardiovascular?.currentAmount ?? 10000000), 
+      recommended: '최대 3,000만 원 (협심증 및 급성심근경색 완벽 보장)', 
+      icon: <Heart className="w-4 h-4 text-red-500" /> 
     },
     { 
       label: '가족 일상생활 배상책임', 
@@ -480,6 +487,60 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
       icon: <Clock className="w-4 h-4 text-red-600" /> 
     },
   ];
+
+  const propertyOpts = analysis.property || {
+    businessType: 'restaurant',
+    buildingGrade: 'grade_1',
+    buildingLimit: 200000000,
+    interiorLimit: 50000000,
+    equipmentLimit: 30000000,
+    inventoryLimit: 20000000,
+    hasWaterLeak: true,
+    hasPremisesLiability: true,
+    hasBusinessInterruption: false,
+    hasFoodLiability: true,
+    hasMachineryBreakdown: false,
+  };
+
+  const propertyRows = [
+    { 
+      label: '건물 화재실손 보장한도', 
+      current: propertyOpts.buildingLimit ? formatAmt(propertyOpts.buildingLimit) + '원' : '2억 원', 
+      recommended: `${formatAmt(propertyOpts.buildingLimit || 200000000)}원 (과소 가입 시 비례보상 방지를 위한 실손 한도 설정)`, 
+      icon: <ShieldCheck className="w-4 h-4 text-orange-500" /> 
+    },
+    { 
+      label: '시설 및 인테리어 보장', 
+      current: propertyOpts.interiorLimit ? formatAmt(propertyOpts.interiorLimit) + '원' : '5천만 원', 
+      recommended: `${formatAmt(propertyOpts.interiorLimit || 50000000)}원 (매장 인테리어 침수/화재 시 원상 복구 비용 전액 지원)`, 
+      icon: <TrendingUp className="w-4 h-4 text-orange-500" /> 
+    },
+    { 
+      label: '급배수시설누출손해 (누수 보장)', 
+      current: propertyOpts.hasWaterLeak ? '가입 완료' : '미보장', 
+      recommended: '가입 (배관 파손으로 인한 매장 인테리어 침수 피해 보장)', 
+      icon: <HeartPulse className="w-4 h-4 text-orange-500" /> 
+    },
+    { 
+      label: '점포 휴업손해 (영업중단 보상)', 
+      current: propertyOpts.hasBusinessInterruption ? '가입 완료' : '미보장', 
+      recommended: '가입 (화재 사고 복구 기간 중 매일 고정 임차료 등 손실 지원)', 
+      icon: <Clock className="w-4 h-4 text-orange-500" /> 
+    },
+    { 
+      label: '시설소유자 및 업종 배상책임', 
+      current: propertyOpts.hasPremisesLiability ? '가입 완료' : '미보장', 
+      recommended: '가입 (매장 내 고객 미끄러짐 및 식중독 등 법적 배상책임 완벽 보장)', 
+      icon: <Scale className="w-4 h-4 text-orange-500" /> 
+    },
+    { 
+      label: '최저보험료 기준 적립금 전환', 
+      current: '최저보험료 미달 (소멸)', 
+      recommended: '실 납입 월 10,000원 (최저보험료 차액은 만기 시 적립보험료로 자동 환급)', 
+      icon: <Coins className="w-4 h-4 text-orange-500" /> 
+    },
+  ];
+
   const annuityOpts = analysis.annuity || {
     annuityType: 'savings',
     monthlyPremium: 300000,
@@ -793,6 +854,8 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     comparisonRows = golfRows;
   } else if (isFire) {
     comparisonRows = fireRows;
+  } else if (isProperty) {
+    comparisonRows = propertyRows;
   } else if (isAnnuity) {
     comparisonRows = annuityRows;
   } else if (isWholeLife) {
@@ -847,7 +910,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
           </div>
         )}
 
-        <div className="grid grid-cols-12 gap-1 px-4 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-1">
+        <div className="hidden sm:grid grid-cols-12 gap-1 px-4 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-1">
            <div className="col-span-4">보장 항목</div>
            <div className="col-span-4 text-center">기존 보험 유지 시 (Stay)</div>
            <div className="col-span-4 text-right">교체 제안 (Switch)</div>
@@ -860,23 +923,28 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.05 * i }}
-              className={`grid grid-cols-12 items-center p-6 rounded-[2rem] transition-all border ${
+              className={`flex flex-col sm:grid sm:grid-cols-12 gap-4 sm:gap-2 items-start sm:items-center p-5 sm:p-6 rounded-[2rem] transition-all border ${
                 i % 2 === 0 ? 'bg-gray-50/30 border-gray-100/50' : 'bg-white border-transparent'
               } hover:bg-orange-50/50 hover:shadow-xl hover:border-orange-100 group`}
             >
-              <div className="col-span-4 flex items-center gap-4">
+              <div className="w-full sm:col-span-4 flex items-center gap-3 sm:gap-4">
                  <div className="p-3 bg-white rounded-2xl shadow-sm border border-gray-100 transition-transform group-hover:rotate-12 group-hover:scale-110">
                    {row.icon}
                  </div>
-                 <span className="text-sm font-black text-gray-900">{row.label}</span>
+                 <span className="text-sm font-black text-gray-900 break-keep">{row.label}</span>
               </div>
-              <div className="col-span-4 text-center font-black text-gray-300 text-lg">
-                {row.current}
-              </div>
-              <div className="col-span-4 text-right">
-                <span className="bg-slate-900 text-white px-6 py-2 rounded-2xl font-black text-lg shadow-lg inline-block transform transition-all group-hover:-translate-x-2">
-                  {row.recommended}
-                </span>
+              
+              <div className="w-full flex sm:grid sm:col-span-8 sm:grid-cols-8 items-center justify-between gap-4 sm:gap-0 mt-2 sm:mt-0 pt-3 sm:pt-0 border-t border-gray-100/30 sm:border-t-0">
+                <div className="flex-1 sm:col-span-4 text-left sm:text-center flex flex-col sm:block gap-1">
+                  <span className="text-[9px] font-black text-gray-400 sm:hidden">기존 (Stay)</span>
+                  <span className="font-black text-gray-400 sm:text-gray-300 text-sm sm:text-lg break-keep">{row.current}</span>
+                </div>
+                <div className="flex-1 sm:col-span-4 text-right flex flex-col sm:block gap-1 items-end">
+                  <span className="text-[9px] font-black text-blue-500 sm:hidden">제안 (Switch)</span>
+                  <span className="bg-slate-900 text-white px-4 py-2 sm:px-6 sm:py-2.5 rounded-2xl font-black text-xs sm:text-sm md:text-base lg:text-lg shadow-lg inline-block transform transition-all group-hover:-translate-x-2 break-keep text-center">
+                    {row.recommended}
+                  </span>
+                </div>
               </div>
             </motion.div>
           ))}

@@ -13,7 +13,7 @@ import {
 type ViewType =
   | 'home' | 'indemnity' | 'preexisting' | 'dental' | 'surgery'
   | 'cancer' | 'caregiving' | 'dementia' | 'cerebrovascular' | 'heart'
-  | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'annuity' | 'whole' | 'variable' | 'legal' | 'credit' | 'health_general' | 'accident';
+  | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'property' | 'annuity' | 'whole' | 'variable' | 'legal' | 'credit' | 'health_general' | 'accident' | 'savings_general';
 
 interface NavItem { label: string; view: ViewType; desc?: string; }
 interface NavGroup {
@@ -88,7 +88,7 @@ const ALL_GROUPS: NavGroup[] = [
       { label: '펫 보험', view: 'pet', desc: '우리 아이 병원비' },
       { label: '골프 / 레저', view: 'golf', desc: '취미 생활 보호' },
       { label: '주택화재', view: 'fire_real', desc: '재산 피해 보호' },
-      { label: '재물종합', view: 'home', desc: '상가 화재 및 소상공인 자산 보호' },
+      { label: '재물종합', view: 'property', desc: '상가 화재 및 소상공인 자산 보호' },
     ],
   },
   {
@@ -102,7 +102,7 @@ const ALL_GROUPS: NavGroup[] = [
       { label: '종신', view: 'whole', desc: '가격대비 최다보장' },
       { label: '변액, 정기', view: 'variable', desc: '수익형 자산 관리' },
       { label: '민사/형사', view: 'legal', desc: '법률 비용 보전' },
-      { label: '일반 저축', view: 'home', desc: '비과세 목돈 마련 재테크' },
+      { label: '일반 저축', view: 'savings_general', desc: '비과세 목돈 마련 재테크' },
       { label: '신용보험', view: 'credit', desc: '대출금 상환 안심 보장' },
     ],
   },
@@ -139,7 +139,7 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
               className="flex items-center gap-2 cursor-pointer transition-transform hover:scale-105 active:scale-95 shrink-0"
               onClick={() => navigate('home')}
             >
-              <img src="/logo.png" alt="Incar" className="h-12 w-auto object-contain" />
+              <img src="/logo.png" alt="Incar" className="h-[52px] w-auto object-contain" />
             </div>
 
             <div className="hidden md:flex flex-1 max-w-sm mx-6">

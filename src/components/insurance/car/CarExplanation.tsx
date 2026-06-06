@@ -33,7 +33,7 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 통계 배너 ── */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
         {[
           { num: 'KIDI 차종요율', label: '수리비 등급 현실적 반영', sub: '국산/수입 브랜드별 특화 요율' },
           { num: '운전자 범위', label: '1인/부부/가족/누구나 한정', sub: '할증률 최소화 범위 매칭' },
@@ -75,11 +75,11 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
               { title: '대물배상', label: '최소 5억 원 ~ 10억 원 한도 권장', color: 'bg-indigo-50/50 border-indigo-100', badge: 'text-indigo-700 bg-indigo-100', desc: '도로 위 고가 수입차 및 고전압 전기차(배터리 전손) 급증 환경 대비' },
               { title: '자동차상해', label: '자기신체사고 대신 무조건 선택', color: 'bg-emerald-50 border-emerald-100', badge: 'text-emerald-700 bg-emerald-100', desc: '치료비 급수 제한 없음! 치료비 전액 + 위자료 + 일 못한 기간 휴업손해 100% 보장' },
             ].map((item, i) => (
-              <div key={i} className={`flex items-center gap-4 p-5 rounded-3xl border ${item.color}`}>
-                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 ${item.badge}`}>{item.title}</div>
+              <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-5 rounded-3xl border ${item.color}`}>
+                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-black text-slate-800 text-sm">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold">{item.desc}</p>
+                  <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -173,7 +173,7 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
               { company: '전기차 / 테슬라', product: 'Model Y, 아이오닉 6 등', limit: '자차 요율 2.25% 선 반영', note: '하부 배터리팩 손상 시 전손 처리 위험 반영' },
               { company: '수입 프리미엄 브랜드', product: 'BMW 5시리즈, Benz E클래스 등', limit: '자차 요율 2.35% 선 반영', note: '외제차 고가 순정 부품대 및 고액 공임비 반영' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center justify-between p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
+              <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
                     {item.company}{' '}
@@ -181,7 +181,7 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
                   </p>
                   <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.note}</p>
                 </div>
-                <p className="font-black text-blue-400 text-sm shrink-0 ml-4">{item.limit}</p>
+                <p className="font-black text-blue-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.limit}</p>
               </div>
             ))}
           </div>
@@ -201,10 +201,10 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
               { step: '03. 자동차상해 특약 전환', desc: '단순 보장 한도 제한이 있는 자기신체사고(자손) 약관을 빼고 자동차상해(자상)로 상향 선택' },
               { step: '04. 운전자 한정 할인 대조', desc: '배우자나 가족 운전 시 실질적 범위를 초과하지 않도록 1인/부부 등 최적 운전자 특약 검토' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-5 p-5 bg-blue-50/30 rounded-3xl border border-blue-100/50 hover:border-blue-200 transition-colors">
-                <div className="shrink-0 font-black text-blue-700 text-sm w-32">{item.step}</div>
+              <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-blue-50/30 rounded-3xl border border-blue-100/50 hover:border-blue-200 transition-colors">
+                <div className="shrink-0 font-black text-blue-700 text-sm w-full sm:w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}

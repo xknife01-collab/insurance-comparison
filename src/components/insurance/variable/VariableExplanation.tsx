@@ -33,7 +33,7 @@ export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 핵심 통계 배너 ── */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
         {[
           { num: '평균 85% 절감', label: '종신보험 대비 보험료 절감율', sub: '사망보장은 동일 설계하고 월간 고정 지출 대폭 단축' },
           { num: '최대 18% 할인', label: '정기보험 우량체 특별 요율', sub: '비흡연, 정상혈압, 정상 BMI 만족 시 즉시 혜택' },
@@ -75,10 +75,10 @@ export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
               { title: '수익금 전액 비과세', label: '10년 이상 유지 요건 충족 시 면제', color: 'bg-sky-50 border-sky-100', badge: 'text-sky-700 bg-sky-100', desc: '수익금 한도 제한 없이 금융소득종합과세나 이자소득세(15.4%)가 부과되지 않아 거액의 은퇴 자산 축적에 최적화되어 있습니다.' },
             ].map((item, i) => (
               <div key={i} className={`flex items-start gap-4 p-5 rounded-3xl border ${item.color}`}>
-                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 ${item.badge}`}>{item.title}</div>
+                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-black text-slate-800 text-sm">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold">{item.desc}</p>
+                  <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -160,12 +160,12 @@ export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
               { title: '사망보험금 최저 보증(GMDB)', val: '사망 시 기납입 보험료 최저 한도', note: '가입 기간 중 예기치 못한 사망 사고 시 최소 원금 이상의 지급 보장' },
               { title: '연금저축 이전 및 관리 스마트폰 앱', val: '언제든 실시간 펀드 비중 조절', note: '시장 주기에 맞추어 채권형과 주식형 비중을 스마트폰으로 자유 변경 가능' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center justify-between p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
+              <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm text-left">{item.title}</p>
                   <p className="text-[11px] text-slate-400 font-bold mt-0.5 text-left">{item.note}</p>
                 </div>
-                <p className="font-black text-indigo-400 text-sm shrink-0 ml-4">{item.val}</p>
+                <p className="font-black text-indigo-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.val}</p>
               </div>
             ))}
           </div>
@@ -185,10 +185,10 @@ export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
               { step: '03. 정기보험 우량체 할인', desc: '비흡연, 정상 BMI(18.5~25.0), 혈압(수축기 120mmHg 미만) 만족 시 보험사에서 제공하는 12~18% 수준의 우량체 특별 요율 적용' },
               { step: '04. 최저보증제도 탑재', desc: '장기 하락장 및 원금 손실 리스크 방지를 위해 연금 개시 시점 기납입 보험료의 100% 이상을 확정 보증(GMAB)하는 옵션 체크' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-5 p-5 bg-indigo-50/30 rounded-3xl border border-indigo-100/50 hover:border-indigo-200 transition-colors">
-                <div className="shrink-0 font-black text-indigo-700 text-sm w-32">{item.step}</div>
+              <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-indigo-50/30 rounded-3xl border border-indigo-100/50 hover:border-indigo-200 transition-colors">
+                <div className="shrink-0 font-black text-indigo-700 text-sm w-full sm:w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}

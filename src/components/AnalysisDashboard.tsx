@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { AlertCircle, ShieldCheck, Zap, Calculator, Target, Brain, Heart, Stethoscope, Clock, Hotel, Baby, Sparkles, TrendingUp, Plane, Gift, Dog, Cat } from 'lucide-react';
+import { AlertCircle, ShieldCheck, Zap, Calculator, Target, Brain, Heart, Stethoscope, Clock, Hotel, Baby, Sparkles, TrendingUp, Plane, Gift, Dog, Cat, Scale, Building, PiggyBank, Coins } from 'lucide-react';
 import { AnalysisResult } from '../types/insurance';
 import RadarChart from './RadarChart';
 import ComparisonTable from './ComparisonTable';
@@ -27,6 +27,11 @@ import { WholeLifeSummary } from './insurance/wholeLife/WholeLifeSummary';
 import { VariableSummary } from './insurance/variable/VariableSummary';
 import { HealthGeneralSummary } from './insurance/healthGeneral/HealthGeneralSummary';
 
+import { CreditSummary } from './insurance/credit/CreditSummary';
+import { LegalSummary } from './insurance/legal/LegalSummary';
+import { PropertySummary } from './insurance/property/PropertySummary';
+import { SavingsSummary } from './insurance/savings/SavingsSummary';
+
 
 interface AnalysisDashboardProps {
   result: AnalysisResult;
@@ -50,6 +55,10 @@ const InsuranceSummary = ({ result }: { result: AnalysisResult }) => {
   const isWholeLife = analysis.selectedCategory?.includes('종신') || analysis.selectedCategory === 'whole' || !!analysis.wholeLife;
   const isVariable = analysis.selectedCategory?.includes('변액') || analysis.selectedCategory?.includes('정기') || analysis.selectedCategory === 'variable' || analysis.selectedCategory === 'term' || !!analysis.variable;
   const isHealthGeneral = analysis.selectedCategory?.includes('종합건강') || analysis.selectedCategory === 'health_general' || !!analysis.healthGeneral;
+  const isCredit = analysis.selectedCategory?.includes('신용') || analysis.selectedCategory === 'credit' || !!analysis.credit;
+  const isLegal = analysis.selectedCategory?.includes('법률') || analysis.selectedCategory === 'legal' || !!analysis.legal;
+  const isProperty = analysis.selectedCategory?.includes('재물') || analysis.selectedCategory === 'property' || analysis.selectedCategory === 'home' || !!analysis.property;
+  const isSavingsGeneral = analysis.selectedCategory?.includes('일반 저축') || analysis.selectedCategory === 'savings_general' || !!analysis.savingsGeneral;
 
 
   const formatAmount = (amt: number) => {
@@ -78,6 +87,11 @@ const InsuranceSummary = ({ result }: { result: AnalysisResult }) => {
   if (isWholeLife) return <WholeLifeSummary result={result as any} />;
   if (isVariable) return <VariableSummary result={result as any} />;
   if (isHealthGeneral) return <HealthGeneralSummary result={result as any} formatAmount={formatAmount} />;
+  
+  if (isCredit) return <CreditSummary result={result as any} />;
+  if (isLegal) return <LegalSummary result={result as any} />;
+  if (isProperty) return <PropertySummary result={result as any} />;
+  if (isSavingsGeneral) return <SavingsSummary result={result as any} />;
 
 
   return <HealthSummary result={result as any} formatAmount={formatAmount} />;
@@ -100,6 +114,11 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
   const isAnnuity = analysis.selectedCategory?.includes('연금') || analysis.selectedCategory === 'annuity_savings' || !!analysis.annuity;
   const isWholeLife = analysis.selectedCategory?.includes('종신') || analysis.selectedCategory === 'whole' || !!analysis.wholeLife;
   const isVariable = analysis.selectedCategory?.includes('변액') || analysis.selectedCategory?.includes('정기') || analysis.selectedCategory === 'variable' || analysis.selectedCategory === 'term' || !!analysis.variable;
+  const isHealthGeneral = analysis.selectedCategory?.includes('종합건강') || analysis.selectedCategory === 'health_general' || !!analysis.healthGeneral;
+  const isCredit = analysis.selectedCategory?.includes('신용') || analysis.selectedCategory === 'credit' || !!analysis.credit;
+  const isLegal = analysis.selectedCategory?.includes('법률') || analysis.selectedCategory === 'legal' || !!analysis.legal;
+  const isProperty = analysis.selectedCategory?.includes('재물') || analysis.selectedCategory === 'property' || analysis.selectedCategory === 'home' || !!analysis.property;
+  const isSavingsGeneral = analysis.selectedCategory?.includes('일반 저축') || analysis.selectedCategory === 'savings_general' || !!analysis.savingsGeneral;
 
 
   const [selectedPlan, setSelectedPlan] = React.useState<any>(null);
@@ -219,6 +238,41 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
     { label: '수술비보장', value: (analysis.accident?.surgeryLimit || 0) >= 1000000 ? 90 : 60, target: 70 },
     { label: '레저특약', value: analysis.accident?.hasLeisureRider ? 95 : 50, target: 60 },
     { label: '보험료효율', value: Math.round(efficiency), target: 75 },
+  ] : isCredit ? [
+    { label: '대출상환 안전성', value: scores.cancerScore || 0, target: 80 },
+    { label: '신용할인 최적도', value: scores.cerebrovascularScore || 0, target: 70 },
+    { label: '특약구성 종합도', value: scores.cardiovascularScore || 0, target: 75 },
+    { label: '보장만기 적절성', value: (analysis.credit?.loanPeriod || 10) >= 10 ? 95 : 55, target: 70 },
+    { label: '신용점수 보완성', value: (analysis.credit?.creditScore || 850) >= 800 ? 90 : 60, target: 75 },
+    { label: '보험료 가성비', value: Math.round(efficiency), target: 70 }
+  ] : isLegal ? [
+    { label: '변호사비 한도', value: scores.lawyerScore || 0, target: 75 },
+    { label: '인지액/송달료', value: scores.courtFeeScore || 0, target: 70 },
+    { label: '추가 특약 수준', value: scores.riderScore || 0, target: 70 },
+    { label: '전자소송 할인', value: analysis.legal?.isElectronicLitigation ? 95 : 50, target: 60 },
+    { label: '소송유형 적합도', value: analysis.legal?.litigationType === 'civil' ? 90 : 70, target: 75 },
+    { label: '보험료 가성비', value: Math.round(efficiency), target: 70 }
+  ] : isProperty ? [
+    { label: '화재재산한도', value: scores.propertyScore || 0, target: 75 },
+    { label: '배상책임특약', value: scores.liabilityScore || 0, target: 80 },
+    { label: '비즈니스연속성', value: scores.continuityScore || 0, target: 70 },
+    { label: '건물소방안전도', value: analysis.property?.buildingGrade === 'grade_1' ? 95 : analysis.property?.buildingGrade === 'grade_2' ? 75 : 50, target: 75 },
+    { label: '누수보장 수준', value: analysis.property?.hasWaterLeak ? 95 : 30, target: 70 },
+    { label: '보험료 가성비', value: Math.round(efficiency), target: 70 }
+  ] : isSavingsGeneral ? [
+    { label: '비과세 혜택', value: scores.cancerScore || 0, target: 80 },
+    { label: '이율 안전성', value: scores.cerebrovascularScore || 0, target: 75 },
+    { label: '사업비 효율', value: scores.cardiovascularScore || 0, target: 70 },
+    { label: '유니버셜기능', value: analysis.savingsGeneral?.hasUniversal ? 95 : 50, target: 65 },
+    { label: '목적기여도', value: 90, target: 70 },
+    { label: '보험료 가성비', value: Math.round(efficiency), target: 75 }
+  ] : isHealthGeneral ? [
+    { label: '암 보장', value: (analysis.healthGeneral?.cancerLimit || 0) >= 50000000 ? 95 : (analysis.healthGeneral?.cancerLimit || 0) >= 30000000 ? 75 : 50, target: 80 },
+    { label: '뇌혈관 보장', value: (analysis.healthGeneral?.brainLimit || 0) >= 30000000 ? 90 : (analysis.healthGeneral?.brainLimit || 0) >= 20000000 ? 70 : 45, target: 75 },
+    { label: '심장 보장', value: (analysis.healthGeneral?.heartLimit || 0) >= 30000000 ? 90 : (analysis.healthGeneral?.heartLimit || 0) >= 20000000 ? 70 : 45, target: 75 },
+    { label: '수술비 특약', value: analysis.healthGeneral?.has1to5Surgery ? 95 : 50, target: 80 },
+    { label: '표적항암 특약', value: analysis.healthGeneral?.hasTargetedTherapy ? 90 : 40, target: 70 },
+    { label: '보험료 가성비', value: Math.round(efficiency), target: 70 }
   ] : [
     { label: '일반암', value: scores.cancerScore || 0, target: avg.c || 50 },
     { label: '뇌혈관', value: scores.cerebrovascularScore || 0, target: avg.b || 50 },
@@ -235,7 +289,18 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
 
       <section className="bg-white rounded-[4rem] p-10 md:p-20 shadow-[0_40px_120px_-20px_rgba(0,0,0,0.08)] border border-gray-50 flex flex-col lg:flex-row gap-24 items-center relative overflow-hidden">
         <div className="absolute top-0 right-0 p-24 opacity-[0.03] scale-150 transform rotate-12">
-           {isDental || isSilbi ? <Stethoscope className="w-96 h-96 text-emerald-500" /> : isCaregiving ? <Hotel className="w-96 h-96 text-purple-500" /> : isNursing ? <Heart className="w-96 h-96 text-pink-500" /> : isChild ? <Baby className="w-96 h-96 text-yellow-500" /> : isPet ? <Dog className="w-96 h-96 text-orange-500" /> : isGolf ? <Target className="w-96 h-96 text-emerald-500" /> : <Zap className="w-96 h-96 text-orange-500" />}
+           {isDental || isSilbi ? <Stethoscope className="w-96 h-96 text-emerald-500" /> :
+            isCaregiving ? <Hotel className="w-96 h-96 text-purple-500" /> :
+            isNursing ? <Heart className="w-96 h-96 text-pink-500" /> :
+            isChild ? <Baby className="w-96 h-96 text-yellow-500" /> :
+            isPet ? <Dog className="w-96 h-96 text-orange-500" /> :
+            isGolf ? <Target className="w-96 h-96 text-emerald-500" /> :
+            isCredit ? <Coins className="w-96 h-96 text-emerald-500" /> :
+            isLegal ? <Scale className="w-96 h-96 text-indigo-500" /> :
+            isProperty ? <Building className="w-96 h-96 text-orange-500" /> :
+            isSavingsGeneral ? <PiggyBank className="w-96 h-96 text-emerald-500" /> :
+            isHealthGeneral ? <Stethoscope className="w-96 h-96 text-orange-500" /> :
+            <Zap className="w-96 h-96 text-orange-500" />}
         </div>
 
         <div className="flex-shrink-0 relative z-10 w-full lg:w-auto">
@@ -250,7 +315,21 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
         <div className="flex-1 space-y-12 relative z-10">
           <div className="space-y-4">
              <h3 className="text-3xl font-black text-gray-900 tracking-tighter">
-               {isDental ? '당신의 치아 보장 상태를 분석했습니다.' : isSilbi ? '당신의 실손 의료비 상담 리포트입니다.' : isCaregiving ? '당신의 간병 대비 준비 상태를 분석했습니다.' : isNursing ? '당신의 요양(재가/시설) 준비 상태를 분석했습니다.' : isChild ? '당신의 자녀/태아 보장 준비 상태를 분석했습니다.' : isCar ? '당신의 자동차보험 가입 상태를 분석했습니다.' : isDriver ? '운전자보험 상품 및 가격을 분석했습니다.' : isPet ? '당신의 펫보험 보장 상태를 분석했습니다.' : isGolf ? '당신의 골프보험 가입 상태를 분석했습니다.' : isVariable ? '변액 투자 및 정기 사망보장 상태를 분석했습니다.' : '당신의 보장 상태를 분석했습니다.'}
+               {isDental ? '당신의 치아 보장 상태를 분석했습니다.' :
+                isSilbi ? '당신의 실손 의료비 상담 리포트입니다.' :
+                isCaregiving ? '당신의 간병 대비 준비 상태를 분석했습니다.' :
+                isNursing ? '당신의 요양(재가/시설) 준비 상태를 분석했습니다.' :
+                isChild ? '당신의 자녀/태아 보장 준비 상태를 분석했습니다.' :
+                isCar ? '당신의 자동차보험 가입 상태를 분석했습니다.' :
+                isDriver ? '운전자보험 상품 및 가격을 분석했습니다.' :
+                isPet ? '당신의 펫보험 보장 상태를 분석했습니다.' :
+                isGolf ? '당신의 골프보험 가입 상태를 분석했습니다.' :
+                isVariable ? '변액 투자 및 정기 사망보장 상태를 분석했습니다.' :
+                isCredit ? '당신의 대출상환 안심 보장 상태를 분석했습니다.' :
+                isLegal ? '당신의 법률비용 보장 준비 상태를 분석했습니다.' :
+                isProperty ? '당신의 재물종합 자산 보장 상태를 분석했습니다.' :
+                isSavingsGeneral ? '당신의 저축보험 자산 준비 상태를 분석했습니다.' :
+                '당신의 보장 상태를 분석했습니다.'}
              </h3>
              <p className="text-gray-500 font-bold italic">
                {isDental 
@@ -271,23 +350,84 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
                   ? '"뇌/심장/암 등 주요 질환과 수술/입원 담보를 집중 분석했습니다."'
                   : isPet
                   ? '"방사형 그래프가 6각형 모양에 가까울수록 아이를 위한 펫보험 보장이 완벽한 상태입니다."'
-                  : isGolf ? '"방사형 그래프가 6각형 모양에 가까울수록 홀인원 및 필드 사고 배상책임 보장이 완벽한 상태입니다."' : '"방사형 그래프가 원형에 가까울수록 안전한 보장 상태입니다."'
+                  : isGolf
+                  ? '"방사형 그래프가 6각형 모양에 가까울수록 홀인원 및 필드 사고 배상책임 보장이 완벽한 상태입니다."'
+                  : isCredit
+                  ? '"방사형 그래프가 육각형에 가까울수록 가계 대출 채무 불이행 위험으로부터 안전한 상태입니다."'
+                  : isLegal
+                  ? '"방사형 그래프가 육각형에 가까울수록 일상 법률 분쟁 및 송사 비용 리스크를 완벽하게 방어한 상태입니다."'
+                  : isProperty
+                  ? '"방사형 그래프가 육각형에 가까울수록 매장 및 사업장의 자산 손실과 화재 배상 리스크로부터 안전한 상태입니다."'
+                  : isSavingsGeneral
+                  ? '"방사형 그래프가 육각형에 가까울수록 이자소득 비과세 및 적립 복리 효율이 극대화된 자산 상태입니다."'
+                  : '"방사형 그래프가 원형에 가까울수록 안전한 보장 상태입니다."'
                }
              </p>
           </div>
 
           <div className="flex flex-col md:flex-row gap-6">
-            <div className={`flex-1 p-8 rounded-[2rem] border group hover:scale-105 transition-all ${isDental || isSilbi || isGolf ? 'bg-emerald-50/50 border-emerald-100/50' : isCaregiving ? 'bg-purple-50/50 border-purple-100/50' : isNursing ? 'bg-pink-50/50 border-pink-100/50' : isChild ? 'bg-yellow-50/50 border-yellow-100/50' : isPet ? 'bg-orange-50/50 border-orange-100/50' : 'bg-blue-50/50 border-blue-100/50'}`}>
-              <div className={`flex items-center gap-2 mb-6 ${isDental || isSilbi || isGolf ? 'text-emerald-600' : isCaregiving ? 'text-purple-600' : isNursing ? 'text-pink-600' : isChild ? 'text-yellow-600' : isPet ? 'text-orange-600' : 'text-blue-600'}`}>
+            <div className={`flex-1 p-8 rounded-[2rem] border group hover:scale-105 transition-all ${
+              isDental || isSilbi || isGolf || isCredit || isSavingsGeneral ? 'bg-emerald-50/50 border-emerald-100/50' :
+              isCaregiving ? 'bg-purple-50/50 border-purple-100/50' :
+              isNursing ? 'bg-pink-50/50 border-pink-100/50' :
+              isChild ? 'bg-yellow-50/50 border-yellow-100/50' :
+              isPet || isProperty ? 'bg-orange-50/50 border-orange-100/50' :
+              isLegal ? 'bg-indigo-50/50 border-indigo-100/50' :
+              'bg-blue-50/50 border-blue-100/50'
+            }`}>
+              <div className={`flex items-center gap-2 mb-6 ${
+                isDental || isSilbi || isGolf || isCredit || isSavingsGeneral ? 'text-emerald-600' :
+                isCaregiving ? 'text-purple-600' :
+                isNursing ? 'text-pink-600' :
+                isChild ? 'text-yellow-600' :
+                isPet || isProperty ? 'text-orange-600' :
+                isLegal ? 'text-indigo-600' :
+                'text-blue-600'
+              }`}>
                  <Calculator className="w-5 h-5" />
-                 <span className="text-sm font-black uppercase tracking-widest">{isDental || isSilbi ? '실손 보험 가성비' : '보험료 효율성'}</span>
+                 <span className="text-sm font-black uppercase tracking-widest">
+                   {isDental || isSilbi ? '실손 보험 가성비' :
+                    isSavingsGeneral ? '적립 복리 효율성' :
+                    isCredit ? '대출 상환 안전도' :
+                    isProperty ? '자산 보호 효율성' :
+                    isLegal ? '법률 방어 효율성' :
+                    '보험료 효율성'}
+                 </span>
               </div>
               <div className="flex items-baseline gap-1">
-                <span className={`text-5xl font-black leading-none ${isDental || isSilbi || isGolf ? 'text-emerald-600' : isCaregiving ? 'text-purple-600' : isNursing ? 'text-pink-600' : isPet ? 'text-orange-600' : 'text-blue-600'}`}>{efficiency.toFixed(1)}</span>
-                <span className={`${isDental || isSilbi || isGolf ? 'text-emerald-900' : isCaregiving ? 'text-purple-900' : isNursing ? 'text-pink-900' : isPet ? 'text-orange-900' : 'text-blue-900'} font-bold`}>점</span>
+                <span className={`text-5xl font-black leading-none ${
+                  isDental || isSilbi || isGolf || isCredit || isSavingsGeneral ? 'text-emerald-600' :
+                  isCaregiving ? 'text-purple-600' :
+                  isNursing ? 'text-pink-600' :
+                  isPet || isProperty ? 'text-orange-600' :
+                  isLegal ? 'text-indigo-600' :
+                  'text-blue-600'
+                }`}>{efficiency.toFixed(1)}</span>
+                <span className={`${
+                  isDental || isSilbi || isGolf || isCredit || isSavingsGeneral ? 'text-emerald-900' :
+                  isCaregiving ? 'text-purple-900' :
+                  isNursing ? 'text-pink-900' :
+                  isPet || isProperty ? 'text-orange-900' :
+                  isLegal ? 'text-indigo-900' :
+                  'text-blue-900'
+                } font-bold`}>점</span>
               </div>
-              <div className={`w-full h-1.5 rounded-full mt-6 overflow-hidden ${isDental || isSilbi || isGolf ? 'bg-emerald-100' : isCaregiving ? 'bg-purple-100' : isNursing ? 'bg-pink-100' : isPet ? 'bg-orange-100' : 'bg-blue-100'}`}>
-                 <div className={`h-full ${isDental || isSilbi || isGolf ? 'bg-emerald-500' : isCaregiving ? 'bg-purple-500' : isNursing ? 'bg-pink-500' : isPet ? 'bg-orange-500' : 'bg-blue-500'}`} style={{ width: `${Math.min(100, efficiency * 100)}%` }}></div>
+              <div className={`w-full h-1.5 rounded-full mt-6 overflow-hidden ${
+                isDental || isSilbi || isGolf || isCredit || isSavingsGeneral ? 'bg-emerald-100' :
+                isCaregiving ? 'bg-purple-100' :
+                isNursing ? 'bg-pink-100' :
+                isPet || isProperty ? 'bg-orange-100' :
+                isLegal ? 'bg-indigo-100' :
+                'bg-blue-100'
+              }`}>
+                 <div className={`h-full ${
+                   isDental || isSilbi || isGolf || isCredit || isSavingsGeneral ? 'bg-emerald-500' :
+                   isCaregiving ? 'bg-purple-500' :
+                   isNursing ? 'bg-pink-500' :
+                   isPet || isProperty ? 'bg-orange-500' :
+                   isLegal ? 'bg-indigo-500' :
+                   'bg-blue-500'
+                 }`} style={{ width: `${Math.min(100, efficiency * 100)}%` }}></div>
               </div>
             </div>
 
@@ -628,15 +768,45 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
           <p className="text-gray-500 font-bold italic">"대한민국 모든 보험사의 DB를 전수 조사한 결과입니다."</p>
         </div>
 
-        {result.recommendations.diet.isFire && (
+        {(result.recommendations.diet.isFire || isProperty) && (
           <div className="p-6 bg-orange-50/80 rounded-2xl border border-orange-100 flex items-start gap-4 max-w-2xl mx-auto text-left shadow-sm backdrop-blur-sm animate-in fade-in slide-in-from-bottom-2 duration-300">
             <span className="text-2xl mt-0.5">💡</span>
             <div className="space-y-1">
-              <h5 className="text-sm font-black text-orange-950">화재보험 의무 최저보험료(10,000원) 안내</h5>
+              <h5 className="text-sm font-black text-orange-950">{isProperty ? '재물종합보험 자산 보호 및 실손 보상 안내' : '화재보험 의무 최저보험료(10,000원) 안내'}</h5>
               <p className="text-xs font-bold text-orange-800 leading-relaxed">
-                주택화재보험은 금융 규정상 **월 최소 납입 보험료가 10,000원**으로 고정되어 있습니다. 
-                보장 한도 대비 계산된 실제 화재 보장비(소멸성)를 제외한 차액은 만기 시 돌려받을 수 있는 
-                **'적립 보험료(환급형)'**로 자동 적립되어 안전하게 보관됩니다.
+                {isProperty ? (
+                  '재물종합보험/화재보험은 건물의 실제 가치 대비 가입 한도가 부족하면 비례보상이 적용되어 손해액의 일부만 지급받게 됩니다. 따라서 실손보상 특약을 탑재하거나 자산 가치를 정확히 평가해 가입해야 안전합니다. 또한 다중이용업소의 경우 화재배상책임이 의무적으로 가입되어야 합니다.'
+                ) : (
+                  '주택화재보험은 금융 규정상 월 최소 납입 보험료가 10,000원으로 고정되어 있습니다. 보장 한도 대비 계산된 실제 화재 보장비(소멸성)를 제외한 차액은 만기 시 돌려받을 수 있는 \'적립 보험료(환급형)\'로 자동 적립되어 안전하게 보관됩니다.'
+                )}
+              </p>
+            </div>
+          </div>
+        )}
+
+        {isCredit && (
+          <div className="p-6 bg-emerald-50/80 rounded-2xl border border-emerald-100 flex items-start gap-4 max-w-2xl mx-auto text-left shadow-sm backdrop-blur-sm animate-in fade-in slide-in-from-bottom-2 duration-300">
+            <span className="text-2xl mt-0.5">💡</span>
+            <div className="space-y-1">
+              <h5 className="text-sm font-black text-emerald-950">대출상환보장보험(신용생명보험) 가입 팁</h5>
+              <p className="text-xs font-bold text-emerald-800 leading-relaxed">
+                신용생명보험은 일반 사망보험과 달리 **대출금 상환을 우선 목적**으로 설계되어, 사고 발생 시 
+                보험금이 은행으로 즉시 지급되어 대출을 완납하므로 유가족에게 채무 상속 부담을 지우지 않습니다. 
+                또한 가입 후 신용점수가 상승하면 **보험료 할인 혜택**을 추가로 신청할 수 있습니다.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {isLegal && (
+          <div className="p-6 bg-indigo-50/80 rounded-2xl border border-indigo-100 flex items-start gap-4 max-w-2xl mx-auto text-left shadow-sm backdrop-blur-sm animate-in fade-in slide-in-from-bottom-2 duration-300">
+            <span className="text-2xl mt-0.5">💡</span>
+            <div className="space-y-1">
+              <h5 className="text-sm font-black text-indigo-950">법률비용보험 소송 리스크 및 공제 금액 안내</h5>
+              <p className="text-xs font-bold text-indigo-800 leading-relaxed">
+                법률비용보험은 민사, 행정 소송 등의 변호사 선임비와 인지대/송달료를 실손 보장합니다. 
+                다만, 소송 비용 산정 기준법에 규정된 대법원 규칙 한도 내에서만 지급되며, 
+                선택한 자부담 조건(정액 10만원 또는 비례 10%)에 따라 일부 본인 부담금이 발생할 수 있음을 유의해 주세요.
               </p>
             </div>
           </div>

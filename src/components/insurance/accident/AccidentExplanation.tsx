@@ -33,7 +33,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 통계 배너 ── */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
         {[
           { num: '비운전자 할인', label: '차량 미운전 시 즉시 적용', sub: '5% ~ 10% 보험료 추가 감면 혜택' },
           { num: '치아파절 기본보장', label: '골절진단비 내 치아 포함', sub: '가입 전 약관의 제외 조항 확인 필수' },
@@ -75,11 +75,11 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
               { title: '골절/깁스 치료', label: '일상 낙상, 미끄러짐 및 골절 치료비 보강', color: 'bg-rose-50/50 border-rose-100', badge: 'text-rose-700 bg-rose-100', desc: '뼈가 깨지거나 금이 간 경우 지급되며, 통깁스치료 외에 최근 반깁스까지 보장하는 최신 특약 조건 확인 권장' },
               { title: '상해수술/입원', label: '사고로 인한 수술 및 입원 치료비 반복 지급', color: 'bg-orange-50 border-orange-100', badge: 'text-orange-700 bg-orange-100', desc: '상해 사고로 수술 시 회당 정액 지급되며, 첫날부터 보장되는 상해입원일당을 추가하여 치료 기간 보장' },
             ].map((item, i) => (
-              <div key={i} className={`flex items-center gap-4 p-5 rounded-3xl border ${item.color}`}>
-                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 ${item.badge}`}>{item.title}</div>
+              <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-5 rounded-3xl border ${item.color}`}>
+                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-black text-slate-800 text-sm">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold">{item.desc}</p>
+                  <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -170,7 +170,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
               { company: '주말 상해 고액 보장', product: '휴일 교통/재해 특약', limit: '사망/장해 시 최고 2배 지급', note: '주말 야외 나들이 차량 통행 중 돌발 재해에 특화 설계' },
               { company: '비운전자 할인 특약', product: '대중교통 이용자 요율 혜택', limit: '최대 10% 상시 보험료 감면', note: '소유 차량 유무와 무관하게 실질 운전을 하지 않는 피보험자 우대' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center justify-between p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
+              <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
                     {item.company}{' '}
@@ -178,7 +178,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
                   </p>
                   <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.note}</p>
                 </div>
-                <p className="font-black text-red-400 text-sm shrink-0 ml-4">{item.limit}</p>
+                <p className="font-black text-red-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.limit}</p>
               </div>
             ))}
           </div>
@@ -198,10 +198,10 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
               { step: '03. 후유장해 3% 이상', desc: '80% 이상 고도장해 조건은 혜택을 받기 극히 어려우므로 3% 이상 전 구간 장해 보강 필수' },
               { step: '04. 레저/주말 특약 추가', desc: '레저 취미 생활을 즐기는 경우 1~2천 원짜리 주말/특정 상해 추가로 한도 중복 확대 적용' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-5 p-5 bg-red-50/30 rounded-3xl border border-red-100/50 hover:border-red-200 transition-colors">
-                <div className="shrink-0 font-black text-red-700 text-sm w-32">{item.step}</div>
+              <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-red-50/30 rounded-3xl border border-red-100/50 hover:border-red-200 transition-colors">
+                <div className="shrink-0 font-black text-red-700 text-sm w-full sm:w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}

@@ -124,7 +124,7 @@ export const FireFields: React.FC<Props> = ({
           {/* 거주 유형 (소유자 vs 세입자) */}
           <div className="space-y-4">
             <label className="text-xs font-black text-slate-400">거주 유형 (가입 목적)</label>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <button
                 onClick={() => setOccupancyType('owner')}
                 type="button"
@@ -201,7 +201,7 @@ export const FireFields: React.FC<Props> = ({
               <Layers className="w-4 h-4 text-red-500" />
               건물 구조 등급
             </label>
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
               {[
                 { grade: 1, label: '1급 (기본)', desc: '철근콘크리트' },
                 { grade: 2, label: '2급', desc: '벽돌조 / 블록조' },
@@ -329,29 +329,31 @@ export const FireFields: React.FC<Props> = ({
                 </span>
               </div>
               
-              <div className="flex gap-2 items-center">
-                <input
-                  ref={buildingInputRef}
-                  type="number"
-                  min={0.1}
-                  max={100}
-                  step={0.1}
-                  value={localBuildingText}
-                  onChange={(e) => {
-                    const text = e.target.value;
-                    setLocalBuildingText(text);
-                    const val = Number(text);
-                    if (!isNaN(val) && val >= 0.1 && val <= 100) {
-                      setBuildingLimit(val * 100000000);
-                    }
-                  }}
-                  onBlur={() => {
-                    setLocalBuildingText((buildingLimit / 100000000).toString());
-                  }}
-                  placeholder="예: 7 (7억)"
-                  className="w-28 px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 font-bold text-xs outline-none focus:border-red-500 focus:bg-white transition-all text-right"
-                />
-                <span className="text-[10px] font-black text-slate-400 whitespace-nowrap">억 원 단위</span>
+              <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
+                <div className="flex gap-2 items-center shrink-0">
+                  <input
+                    ref={buildingInputRef}
+                    type="number"
+                    min={0.1}
+                    max={100}
+                    step={0.1}
+                    value={localBuildingText}
+                    onChange={(e) => {
+                      const text = e.target.value;
+                      setLocalBuildingText(text);
+                      const val = Number(text);
+                      if (!isNaN(val) && val >= 0.1 && val <= 100) {
+                        setBuildingLimit(val * 100000000);
+                      }
+                    }}
+                    onBlur={() => {
+                      setLocalBuildingText((buildingLimit / 100000000).toString());
+                    }}
+                    placeholder="예: 7 (7억)"
+                    className="w-28 px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 font-bold text-xs outline-none focus:border-red-500 focus:bg-white transition-all text-right"
+                  />
+                  <span className="text-[10px] font-black text-slate-400 whitespace-nowrap">억 원 단위</span>
+                </div>
                 
                 <div className="flex-1 flex flex-wrap gap-1">
                   {[50000000, 100000000, 500000000, 1000000000, 3000000000, 10000000000].map((amt) => (
@@ -407,29 +409,31 @@ export const FireFields: React.FC<Props> = ({
                 </span>
               </div>
               
-              <div className="flex gap-2 items-center">
-                <input
-                  ref={goodsInputRef}
-                  type="number"
-                  min={0.1}
-                  max={10}
-                  step={0.1}
-                  value={localGoodsText}
-                  onChange={(e) => {
-                    const text = e.target.value;
-                    setLocalGoodsText(text);
-                    const val = Number(text);
-                    if (!isNaN(val) && val >= 0.1 && val <= 10) {
-                      setHouseholdGoodsLimit(val * 100000000);
-                    }
-                  }}
-                  onBlur={() => {
-                    setLocalGoodsText((householdGoodsLimit / 100000000).toString());
-                  }}
-                  placeholder="예: 0.3 (3천만)"
-                  className="w-28 px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 font-bold text-xs outline-none focus:border-red-500 focus:bg-white transition-all text-right"
-                />
-                <span className="text-[10px] font-black text-slate-400 whitespace-nowrap">억 원 단위</span>
+              <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
+                <div className="flex gap-2 items-center shrink-0">
+                  <input
+                    ref={goodsInputRef}
+                    type="number"
+                    min={0.1}
+                    max={10}
+                    step={0.1}
+                    value={localGoodsText}
+                    onChange={(e) => {
+                      const text = e.target.value;
+                      setLocalGoodsText(text);
+                      const val = Number(text);
+                      if (!isNaN(val) && val >= 0.1 && val <= 10) {
+                        setHouseholdGoodsLimit(val * 100000000);
+                      }
+                    }}
+                    onBlur={() => {
+                      setLocalGoodsText((householdGoodsLimit / 100000000).toString());
+                    }}
+                    placeholder="예: 0.3 (3천만)"
+                    className="w-28 px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 font-bold text-xs outline-none focus:border-red-500 focus:bg-white transition-all text-right"
+                  />
+                  <span className="text-[10px] font-black text-slate-400 whitespace-nowrap">억 원 단위</span>
+                </div>
                 
                 <div className="flex-1 flex gap-1">
                   {[10000000, 20000000, 30000000, 50000000].map((amt) => (

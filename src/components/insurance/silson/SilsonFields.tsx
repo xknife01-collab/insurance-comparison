@@ -38,14 +38,14 @@ export const SilsonFields: React.FC<Props> = ({
          <div className="space-y-4">
             <p className="text-[0.65rem] font-black text-slate-400 pl-1 uppercase tracking-widest mb-2">필수 확인 사항</p>
             <div className="flex flex-col gap-3">
-              <div className="flex items-center justify-between p-4 bg-white rounded-2xl border border-blue-50 shadow-sm">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-white rounded-2xl border border-blue-50 shadow-sm gap-3">
                 <div className="flex flex-col">
                   <span className="text-sm font-black text-slate-700">기존 실손보험 가입 이력</span>
                   <span className="text-[0.65rem] text-slate-400 font-bold">실비는 비례보상으로 중복 가입이 불가능합니다.</span>
                 </div>
-                <div className="flex gap-2 bg-slate-50 p-1 rounded-xl border border-slate-100 shrink-0 ml-4">
-                  <button onClick={() => setHasCurrent('yes')} className={`px-4 py-1.5 rounded-lg text-xs font-black transition-all ${hasCurrent === 'yes' ? 'bg-orange-500 text-white shadow-md' : 'text-slate-300'}`}>가입중</button>
-                  <button onClick={() => setHasCurrent('no')} className={`px-4 py-1.5 rounded-lg text-xs font-black transition-all ${hasCurrent === 'no' ? 'bg-slate-900 text-white shadow-md' : 'text-slate-300'}`}>없음</button>
+                <div className="flex gap-2 bg-slate-50 p-1 rounded-xl border border-slate-100 shrink-0 w-full sm:w-auto justify-between sm:justify-start">
+                  <button onClick={() => setHasCurrent('yes')} className={`flex-1 sm:flex-initial px-4 py-1.5 rounded-lg text-xs font-black transition-all ${hasCurrent === 'yes' ? 'bg-orange-500 text-white shadow-md' : 'text-slate-300'}`}>가입중</button>
+                  <button onClick={() => setHasCurrent('no')} className={`flex-1 sm:flex-initial px-4 py-1.5 rounded-lg text-xs font-black transition-all ${hasCurrent === 'no' ? 'bg-slate-900 text-white shadow-md' : 'text-slate-300'}`}>없음</button>
                 </div>
               </div>
 
@@ -72,18 +72,18 @@ export const SilsonFields: React.FC<Props> = ({
         
         <div className="space-y-4">
            <p className="text-[0.65rem] font-black text-slate-400 pl-1 uppercase tracking-widest mb-2">최근 병력 고지 (필수)</p>
-           {healthQuestions.map((q, i) => (
-             <div key={i} className="flex items-center justify-between p-4 bg-white rounded-2xl border border-blue-50 shadow-sm">
+            {healthQuestions.map((q, i) => (
+             <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-white rounded-2xl border border-blue-50 shadow-sm gap-3">
                 <div className="flex flex-col">
                   <span className="text-sm font-black text-slate-700">{q.title}</span>
                   <span className="text-[0.65rem] text-slate-400 font-bold">{q.desc}</span>
                 </div>
-                <div className="flex gap-2 bg-slate-50 p-1 rounded-xl border border-slate-100 shrink-0 ml-4">
-                  <button onClick={() => q.setter('yes')} className={`px-4 py-1.5 rounded-lg text-xs font-black transition-all ${q.state === 'yes' ? 'bg-orange-500 text-white shadow-md' : 'text-slate-300'}`}>예</button>
-                  <button onClick={() => q.setter('no')} className={`px-4 py-1.5 rounded-lg text-xs font-black transition-all ${q.state === 'no' ? 'bg-slate-900 text-white shadow-md' : 'text-slate-300'}`}>아니오</button>
+                <div className="flex gap-2 bg-slate-50 p-1 rounded-xl border border-slate-100 shrink-0 w-full sm:w-auto justify-between sm:justify-start">
+                  <button onClick={() => q.setter('yes')} className={`flex-1 sm:flex-initial px-4 py-1.5 rounded-lg text-xs font-black transition-all ${q.state === 'yes' ? 'bg-orange-500 text-white shadow-md' : 'text-slate-300'}`}>예</button>
+                  <button onClick={() => q.setter('no')} className={`flex-1 sm:flex-initial px-4 py-1.5 rounded-lg text-xs font-black transition-all ${q.state === 'no' ? 'bg-slate-900 text-white shadow-md' : 'text-slate-300'}`}>아니오</button>
                 </div>
              </div>
-           ))}
+            ))}
         </div>
 
         <div className="md:col-span-2 mt-8">

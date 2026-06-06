@@ -36,24 +36,35 @@ import { LegalExplanation } from './components/insurance/legal/LegalExplanation'
 import { CreditExplanation } from './components/insurance/credit/CreditExplanation';
 import { HealthGeneralExplanation } from './components/insurance/healthGeneral/HealthGeneralExplanation';
 import { AccidentExplanation } from './components/insurance/accident/AccidentExplanation';
+import { SavingsExplanation } from './components/insurance/savings/SavingsExplanation';
+import { PropertyExplanation } from './components/insurance/property/PropertyExplanation';
 
 export default function App() {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
+  const [remodelingResult, setRemodelingResult] = useState<AnalysisResult | null>(null);
   const [currentAnalysis, setCurrentAnalysis] = useState<InsuranceAnalysis | null>(null);
-  const [view, setView] = useState<'home' | 'indemnity' | 'preexisting' | 'dental' | 'caregiving' | 'dementia' | 'surgery' | 'cancer' | 'cerebrovascular' | 'heart' | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'annuity' | 'whole' | 'variable' | 'legal' | 'credit' | 'health_general' | 'accident'>('home');
+  const [view, setView] = useState<'home' | 'indemnity' | 'preexisting' | 'dental' | 'caregiving' | 'dementia' | 'surgery' | 'cancer' | 'cerebrovascular' | 'heart' | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'property' | 'annuity' | 'whole' | 'variable' | 'legal' | 'credit' | 'health_general' | 'accident' | 'savings_general'>('home');
 
   const [calcTarget, setCalcTarget] = useState<string | null>(null);
 
   const handleAnalyze = async (analysis: InsuranceAnalysis) => {
-    setCurrentAnalysis(analysis);
-    const result = await runAnalysis(analysis);
-    setAnalysisResult(result);
-    setView('home'); // Ensure we are on home to see results
-    
-    // Scroll to results after a short delay
-    setTimeout(() => {
-      document.getElementById('results-section')?.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
+    if (analysis.selectedCategory === 'remodeling') {
+      const result = await runAnalysis(analysis);
+      setRemodelingResult(result);
+      setTimeout(() => {
+        document.getElementById('remodeling-results-section')?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      setCurrentAnalysis(analysis);
+      const result = await runAnalysis(analysis);
+      setAnalysisResult(result);
+      setView('home'); // Ensure we are on home to see results
+      
+      // Scroll to results after a short delay
+      setTimeout(() => {
+        document.getElementById('results-section')?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
   };
 
   if (view === 'indemnity') {
@@ -473,6 +484,27 @@ export default function App() {
     );
   }
 
+  if (view === 'property') {
+    return (
+      <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-blue-100 selection:text-blue-900 antialiased">
+        <Header setView={setView} />
+        <main className="pt-12 px-4 bg-white">
+           <div className="max-w-7xl mx-auto flex justify-end">
+              <button 
+                onClick={() => { setCalcTarget(null); setView('home'); }}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-blue-600 text-white hover:bg-blue-700 font-black text-xs transition-all mb-6 shadow-lg shadow-blue-500/20 active:scale-95 group"
+              >
+                메인으로 돌아가기
+                <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
+              </button>
+           </div>
+           <PropertyExplanation onAction={() => { setCalcTarget('property'); setView('home'); }} />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   if (view === 'annuity') {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-blue-100 selection:text-blue-900 antialiased">
@@ -557,6 +589,27 @@ export default function App() {
     );
   }
 
+  if (view === 'savings_general') {
+    return (
+      <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-emerald-100 selection:text-emerald-900 antialiased">
+        <Header setView={setView} />
+        <main className="pt-12 px-4 bg-white">
+           <div className="max-w-7xl mx-auto flex justify-end">
+              <button 
+                onClick={() => { setCalcTarget(null); setView('home'); }}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-emerald-600 text-white hover:bg-emerald-700 font-black text-xs transition-all mb-6 shadow-lg shadow-emerald-500/20 active:scale-95 group"
+              >
+                메인으로 돌아가기
+                <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
+              </button>
+           </div>
+           <SavingsExplanation onAction={() => { setCalcTarget('savings_general'); setView('home'); }} />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
 
   return (
     <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-orange-100 selection:text-orange-900 antialiased">
@@ -612,6 +665,28 @@ export default function App() {
            {/* Section 2: My Insurance Analysis */}
            <AnalysisSection onAnalyze={handleAnalyze} />
         </div>
+
+        <AnimatePresence>
+          {remodelingResult && (
+            <motion.section 
+              id="remodeling-results-section"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 50 }}
+              className="max-w-7xl mx-auto px-4 py-32 border-t border-gray-100"
+            >
+              <div className="text-center max-w-3xl mx-auto space-y-6 mb-20">
+                <div className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full text-[0.65rem] font-black uppercase tracking-[0.3em] shadow-lg text-white">
+                  ✨ Real-time Remodeling Report
+                </div>
+                <h2 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tighter">
+                  내 보험 정밀 리모델링 결과
+                </h2>
+              </div>
+              <AnalysisDashboard result={remodelingResult} />
+            </motion.section>
+          )}
+        </AnimatePresence>
 
         <ProblemSection />
         

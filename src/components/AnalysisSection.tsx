@@ -5,47 +5,57 @@
 
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { MessageCircle, Zap, ChevronRight, Calculator } from 'lucide-react';
+import { Zap, ChevronRight } from 'lucide-react';
 import { InsuranceAnalysis } from '../types/insurance';
+import { HyphenAuthModal } from './insurance/remodeling/HyphenAuthModal';
+import { StandardizedCoverage } from '../types/remodeling';
 
 interface AnalysisSectionProps {
   onAnalyze: (analysis: InsuranceAnalysis) => void;
 }
 
 const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
-  const [premium, setPremium] = useState('200000');
-  const [cancerAmt, setCancerAmt] = useState('30000000');
-  const [age, setAge] = useState('40');
-  const [gender, setGender] = useState<'M' | 'F'>('M');
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onAnalyze({
-      age: Number(age),
-      gender: gender,
-      jobClass: 1,
-      cancer: { currentAmount: Number(cancerAmt), targetAmount: 50000000 },
-      cerebrovascular: { currentAmount: 10000000, targetAmount: 30000000 },
-      cardiovascular: { currentAmount: 10000000, targetAmount: 30000000 },
-      surgery: { currentAmount: 0, targetAmount: 10000000 },
-      postDisability: { currentAmount: 0, targetAmount: 30000000 },
-      paymentExemption: 'standard',
-      monthlyPremium: Number(premium)
-    });
+  // Form states
+  const [userName, setUserName] = useState('');
+  const [gender, setGender] = useState<'M' | 'F'>('M');
+  const [birth, setBirth] = useState('');
+  const [age, setAge] = useState(''); // 2026 - 1977 + 1 = 50
+  const [mobileNo, setMobileNo] = useState('');
+
+  // Handle auto-calculating age based on birth date (8 digits)
+  const handleBirthChange = (val: string) => {
+    setBirth(val);
+    if (val.length === 8) {
+      const birthYear = parseInt(val.substring(0, 4));
+      if (!isNaN(birthYear)) {
+        const currentYear = new Date().getFullYear(); // 2026
+        setAge(String(currentYear - birthYear + 1));
+      }
+    }
   };
 
-  const handleSocialFetch = () => {
+  const handleStartAnalysis = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsAuthModalOpen(true);
+  };
+
+  const handleAuthSuccess = (coverage: StandardizedCoverage) => {
     onAnalyze({
-      age: Number(age),
-      gender: gender,
+      age: coverage.age,
+      gender: coverage.gender,
       jobClass: 1,
-      cancer: { currentAmount: Number(cancerAmt), targetAmount: 50000000 },
-      cerebrovascular: { currentAmount: 10000000, targetAmount: 30000000 },
-      cardiovascular: { currentAmount: 10000000, targetAmount: 30000000 },
+      selectedCategory: 'remodeling',
+      cancer: { currentAmount: coverage.cancer_diagnosis, targetAmount: 50000000 },
+      cerebrovascular: { currentAmount: coverage.brain_vascular, targetAmount: 30000000 },
+      cardiovascular: { currentAmount: coverage.ischemic_heart, targetAmount: 30000000 },
       surgery: { currentAmount: 0, targetAmount: 10000000 },
       postDisability: { currentAmount: 0, targetAmount: 30000000 },
       paymentExemption: 'standard',
-      monthlyPremium: Number(premium)
+      healthStatus: 'standard',
+      monthlyPremium: coverage.current_total_premium,
+      _remodelingCoverage: coverage
     });
   };
 
@@ -59,143 +69,126 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
         <p className="text-xl text-gray-500 font-bold italic">"내가 이미 가입한 보험, 제대로 가입한 게 맞을까요?"</p>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-12 items-stretch">
-        {/* Left: One-click Fetch */}
-        <div className="bg-slate-900 rounded-[4rem] p-12 md:p-20 shadow-[0_60px_120px_-30px_rgba(0,0,0,0.4)] flex flex-col justify-center relative overflow-hidden group">
+      <div className="max-w-3xl mx-auto w-full">
+        <div className="bg-slate-900 rounded-[4rem] p-8 md:p-16 shadow-[0_60px_120px_-30px_rgba(0,0,0,0.4)] flex flex-col justify-center relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-24 opacity-5 scale-150 transform group-hover:scale-125 transition-transform duration-1000 rotate-12">
              <Zap className="w-96 h-96 text-white" />
           </div>
-          <div className="relative z-10 space-y-12">
-            <div className="space-y-6">
+          <div className="relative z-10 space-y-10">
+            <div className="space-y-4 text-center">
                <h3 className="text-3xl md:text-4xl font-black text-white leading-tight">
                  원클릭 내 보험 분석
                </h3>
-               <p className="text-lg text-slate-400 font-bold leading-relaxed max-w-sm">
-                 따로 입력할 필요 없이 본인 인증 한 번으로<br/>
-                 모든 가입 내역을 실시간으로 불러옵니다.
+               <p className="text-sm md:text-base text-slate-400 font-bold leading-relaxed">
+                 따로 입력할 필요 없이 본인 인증 정보 입력 후 실시간으로 정보를 조회합니다.
                </p>
             </div>
-            
-            <div className="flex flex-col gap-4">
-              <motion.button 
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={handleSocialFetch}
-                className="w-full bg-[#FEE500] text-black py-7 rounded-[2.2rem] font-black text-xl shadow-xl hover:brightness-105 transition-all flex items-center justify-center gap-3"
-              >
-                <div className="w-8 h-8 bg-black/5 rounded-xl flex items-center justify-center">
-                  <MessageCircle className="w-5 h-5 fill-current" />
-                </div>
-                카카오로 계산
-              </motion.button>
-              <motion.button 
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={handleSocialFetch}
-                className="w-full bg-[#03C75A] text-white py-7 rounded-[2.2rem] font-black text-xl shadow-xl hover:brightness-105 transition-all flex items-center justify-center gap-4"
-              >
-                <span className="font-serif italic text-3xl leading-none">N</span> 
-                네이버로 계산
-              </motion.button>
-            </div>
-          </div>
-        </div>
 
-        {/* Right: Direct Input */}
-        <div className="bg-white rounded-[4rem] p-12 md:p-20 border border-gray-100 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.06)] flex flex-col">
-          <div className="mb-16">
-            <h3 className="text-3xl font-black text-gray-900 mb-4 flex items-center gap-4">
-               직접 입력 분석
-            </h3>
-            <p className="text-lg text-gray-500 font-bold italic">정확한 요율 계산을 위해 정보를 알려주세요.</p>
-          </div>
-          
-          <form onSubmit={handleSubmit} className="space-y-8 flex-1">
-            {/* Age & Gender Group */}
-            <div className="grid grid-cols-2 gap-6">
-              <div className="space-y-3">
-                <label className="text-[0.6rem] font-black text-gray-400 uppercase tracking-[0.3em] pl-4">나이</label>
-                <div className="relative">
-                  <input 
-                    type="number" 
-                    value={age}
-                    onChange={(e) => setAge(e.target.value)}
-                    className="w-full bg-gray-50 border-2 border-transparent rounded-[2rem] py-7 px-8 text-2xl font-black focus:outline-none focus:bg-white focus:border-orange-100 focus:ring-4 focus:ring-orange-500/5 transition-all"
+            <form onSubmit={handleStartAnalysis} className="space-y-6 max-w-xl mx-auto w-full">
+              {/* Row 1: Name and Gender */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-2">성함</label>
+                  <input
+                    type="text"
+                    placeholder="홍길동"
+                    value={userName}
+                    onChange={(e) => setUserName(e.target.value)}
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-sm font-bold text-white focus:outline-none focus:bg-white/10 focus:border-orange-500/50 focus:ring-4 focus:ring-orange-500/10 transition-all"
+                    required
                   />
-                  <span className="absolute right-8 top-1/2 -translate-y-1/2 font-black text-gray-300 text-2xl">세</span>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-2">성별</label>
+                  <div className="flex bg-white/5 p-1 rounded-2xl h-[54px] gap-1 border border-white/10">
+                    <button
+                      type="button"
+                      onClick={() => setGender('M')}
+                      className={`flex-1 rounded-xl font-black text-xs transition-all ${gender === 'M' ? 'bg-white text-slate-900 shadow-lg' : 'text-slate-400 hover:text-slate-200'}`}
+                    >
+                      남성
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setGender('F')}
+                      className={`flex-1 rounded-xl font-black text-xs transition-all ${gender === 'F' ? 'bg-orange-500 text-white shadow-lg' : 'text-slate-400 hover:text-slate-200'}`}
+                    >
+                      여성
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div className="space-y-3">
-                <label className="text-[0.6rem] font-black text-gray-400 uppercase tracking-[0.3em] pl-4">성별</label>
-                <div className="flex bg-gray-50 p-2 rounded-[2rem] h-[88px] gap-2">
-                  <button 
-                    type="button"
-                    onClick={() => setGender('M')}
-                    className={`flex-1 rounded-2xl font-black text-xl transition-all ${gender === 'M' ? 'bg-white shadow-lg text-slate-900' : 'text-gray-400 hover:text-gray-600'}`}
-                  >
-                    남성
-                  </button>
-                  <button 
-                    type="button"
-                    onClick={() => setGender('F')}
-                    className={`flex-1 rounded-2xl font-black text-xl transition-all ${gender === 'F' ? 'bg-orange-500 shadow-lg text-white' : 'text-gray-400 hover:text-gray-600'}`}
-                  >
-                    여성
-                  </button>
-                </div>
-              </div>
-            </div>
 
-            <div className="space-y-3">
-              <label className="text-[0.6rem] font-black text-gray-400 uppercase tracking-[0.3em] pl-4">현재 총 월 보험료</label>
-              <div className="relative">
-                <input 
-                  type="number" 
-                  value={premium}
-                  onChange={(e) => setPremium(e.target.value)}
-                  className="w-full bg-gray-50 border-2 border-transparent rounded-[2rem] py-7 px-8 text-2xl font-black focus:outline-none focus:bg-white focus:border-orange-100 focus:ring-4 focus:ring-orange-500/5 transition-all"
+              {/* Row 2: Birthdate and Age */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-2">생년월일 (8자리)</label>
+                  <input
+                    type="text"
+                    placeholder="예) 19770101"
+                    maxLength={8}
+                    value={birth}
+                    onChange={(e) => handleBirthChange(e.target.value)}
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-sm font-bold text-white focus:outline-none focus:bg-white/10 focus:border-orange-500/50 focus:ring-4 focus:ring-orange-500/10 transition-all"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-2">나이</label>
+                  <div className="relative">
+                    <input
+                      type="number"
+                      placeholder="예) 50"
+                      value={age}
+                      onChange={(e) => setAge(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-sm font-bold text-white focus:outline-none focus:bg-white/10 focus:border-orange-500/50 focus:ring-4 focus:ring-orange-500/10 transition-all"
+                      required
+                    />
+                    <span className="absolute right-5 top-1/2 -translate-y-1/2 font-black text-slate-500 text-sm">세</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Row 3: Mobile No */}
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-2">연락처 (Mobile)</label>
+                <input
+                  type="text"
+                  placeholder="예) 01012345678"
+                  value={mobileNo}
+                  onChange={(e) => setMobileNo(e.target.value)}
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-sm font-bold text-white focus:outline-none focus:bg-white/10 focus:border-orange-500/50 focus:ring-4 focus:ring-orange-500/10 transition-all"
+                  required
                 />
-                <span className="absolute right-8 top-1/2 -translate-y-1/2 font-black text-gray-300 text-2xl">원</span>
               </div>
-            </div>
 
-            <div className="space-y-3">
-              <label className="text-[0.6rem] font-black text-gray-400 uppercase tracking-[0.3em] pl-4">현재 일반암 진단비</label>
-              <div className="relative">
-                <input 
-                  type="number" 
-                  value={cancerAmt}
-                  onChange={(e) => setCancerAmt(e.target.value)}
-                  className="w-full bg-gray-50 border-2 border-transparent rounded-[2rem] py-7 px-8 text-2xl font-black focus:outline-none focus:bg-white focus:border-orange-100 focus:ring-4 focus:ring-orange-500/5 transition-all"
-                />
-                <span className="absolute right-8 top-1/2 -translate-y-1/2 font-black text-gray-300 text-2xl">원</span>
-              </div>
-            </div>
-
-            <motion.button 
-              whileHover={{ scale: 1.02, y: -5 }}
-              whileTap={{ scale: 0.98 }}
-              type="submit"
-              className="w-full bg-gradient-to-r from-orange-600 to-orange-400 text-white font-black py-8 rounded-[2.5rem] shadow-[0_30px_60px_-15px_rgba(255,107,0,0.4)] transition-all mt-10 text-2xl flex items-center justify-center gap-4"
-            >
-              내 보험 다이어트 시작하기 (1분)
-              <ChevronRight className="w-8 h-8" />
-            </motion.button>
-
-            <div className="grid grid-cols-2 gap-4 pt-12 border-t border-gray-50 mt-12">
-              <button type="button" className="flex items-center justify-center gap-3 bg-white text-slate-900 py-6 rounded-2xl text-base font-black shadow-sm border border-gray-100 hover:bg-gray-50 transition-all">
-                <div className="w-8 h-8 bg-orange-50 rounded-lg flex items-center justify-center">
-                  <MessageCircle className="w-4 h-4 text-orange-500 fill-current" />
-                </div>
-                카톡 문의
-              </button>
-              <button type="button" className="flex items-center justify-center gap-3 bg-white text-slate-900 py-6 rounded-2xl text-base font-black shadow-sm border border-gray-100 hover:bg-gray-50 transition-all">
-                상담 예약
-              </button>
-            </div>
-          </form>
+              {/* Submit Button */}
+              <motion.button
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                type="submit"
+                className="w-full bg-gradient-to-r from-orange-500 to-orange-400 text-white font-black py-5 rounded-2xl text-base shadow-[0_20px_40px_-10px_rgba(249,115,22,0.4)] transition-all flex items-center justify-center gap-3 mt-6"
+              >
+                내 보험 정밀 분석 시작하기
+                <ChevronRight size={18} />
+              </motion.button>
+            </form>
+          </div>
         </div>
       </div>
+
+      <HyphenAuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        onSuccess={handleAuthSuccess}
+        initialData={{
+          userName,
+          gender,
+          birth,
+          mobileNo,
+          age: Number(age)
+        }}
+      />
     </section>
   );
 };

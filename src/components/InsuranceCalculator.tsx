@@ -25,10 +25,14 @@ import { DriverFields } from './insurance/driver/DriverFields';
 import { PetFields } from './insurance/pet/PetFields';
 import { GolfFields } from './insurance/golf/GolfFields';
 import { FireFields } from './insurance/fire/FireFields';
+import { PropertyFields } from './insurance/property/PropertyFields';
 import { AnnuityFields } from './insurance/annuity/AnnuityFields';
 import { WholeLifeFields } from './insurance/wholeLife/WholeLifeFields';
 import { VariableFields } from './insurance/variable/VariableFields';
 import { AccidentFields } from './insurance/accident/AccidentFields';
+import { SavingsFields } from './insurance/savings/SavingsFields';
+import { CreditFields } from './insurance/credit/CreditFields';
+import { LegalFields } from './insurance/legal/LegalFields';
 
 
 
@@ -136,6 +140,24 @@ interface InsuranceCalculatorProps {
 
 export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalculate, initialTarget }) => {
   const [selectedId, setSelectedId] = useState(initialTarget || 'cancer');
+  const formSectionRef = React.useRef<HTMLDivElement>(null);
+
+  const handleCategorySelect = (id: string) => {
+    setSelectedId(id);
+    setSelectedDetail(0);
+    setTimeout(() => {
+      if (formSectionRef.current) {
+        const elementRect = formSectionRef.current.getBoundingClientRect();
+        const absoluteElementTop = elementRect.top + window.scrollY;
+        // 120px offset to account for the sticky header
+        const scrollPosition = absoluteElementTop - 120;
+        window.scrollTo({
+          top: scrollPosition,
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
+  };
 
   React.useEffect(() => {
     if (initialTarget) {
@@ -144,6 +166,9 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   }, [initialTarget]);
   const [selectedDetail, setSelectedDetail] = useState(0);
   const [gender, setGender] = useState<'M' | 'F'>('M');
+  const [socialLoading, setSocialLoading] = useState<'naver' | 'kakao' | null>(null);
+  const [authModal, setAuthModal] = useState<'naver' | 'kakao' | null>(null);
+  const [agreedTerms, setAgreedTerms] = useState(false);
   
   // Input states
   const [name, setName] = useState('');
@@ -350,6 +375,45 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   const [variableCoveragePeriod, setVariableCoveragePeriod] = useState<number>(70);
   const [variableIsHealthyDiscount, setVariableIsHealthyDiscount] = useState<boolean>(false);
 
+  // 일반저축보험 states
+  const [savingsSavingType, setSavingsSavingType] = useState<'installment' | 'lumpSum'>('installment');
+  const [savingsMonthlyPremium, setSavingsMonthlyPremium] = useState<number>(300000);
+  const [savingsPaymentPeriod, setSavingsPaymentPeriod] = useState<number>(5);
+  const [savingsMaintenancePeriod, setSavingsMaintenancePeriod] = useState<number>(10);
+  const [savingsObjective, setSavingsObjective] = useState<'marriage' | 'housing' | 'retirement' | 'wealth' | 'education'>('wealth');
+  const [savingsHasUniversal, setSavingsHasUniversal] = useState<boolean>(true);
+
+  // 재물종합보험 states
+  const [propertyBusinessType, setPropertyBusinessType] = useState<'office' | 'retail' | 'restaurant' | 'academy' | 'factory' | 'warehouse'>('restaurant');
+  const [propertyBuildingGrade, setPropertyBuildingGrade] = useState<'grade_1' | 'grade_2' | 'grade_3'>('grade_1');
+  const [propertyBuildingLimit, setPropertyBuildingLimit] = useState<number>(200000000);
+  const [propertyInteriorLimit, setPropertyInteriorLimit] = useState<number>(50000000);
+  const [propertyEquipmentLimit, setPropertyEquipmentLimit] = useState<number>(30000000);
+  const [propertyInventoryLimit, setPropertyInventoryLimit] = useState<number>(20000000);
+  const [propertyHasWaterLeak, setPropertyHasWaterLeak] = useState<boolean>(true);
+  const [propertyHasPremisesLiability, setPropertyHasPremisesLiability] = useState<boolean>(true);
+  const [propertyHasBusinessInterruption, setPropertyHasBusinessInterruption] = useState<boolean>(false);
+  const [propertyHasFoodLiability, setPropertyHasFoodLiability] = useState<boolean>(true);
+  const [propertyHasMachineryBreakdown, setPropertyHasMachineryBreakdown] = useState<boolean>(false);
+
+  // 신용보험 states
+  const [creditLoanType, setCreditLoanType] = useState<'mortgage' | 'jeonse' | 'credit' | 'business'>('mortgage');
+  const [creditLoanAmount, setCreditLoanAmount] = useState<number>(100000000);
+  const [creditLoanPeriod, setCreditLoanPeriod] = useState<number>(10);
+  const [creditBureau, setCreditBureau] = useState<'nice' | 'kcb'>('nice');
+  const [creditScore, setCreditScore] = useState<number>(850);
+  const [creditHasIllnessRider, setCreditHasIllnessRider] = useState<boolean>(true);
+  const [creditHasDisabilityRider, setCreditHasDisabilityRider] = useState<boolean>(true);
+
+  // 법률보험 states
+  const [legalLitigationType, setLegalLitigationType] = useState<'civil' | 'criminal' | 'administrative'>('civil');
+  const [legalLawyerLimit, setLegalLawyerLimit] = useState<number>(10000000);
+  const [legalCourtFeeLimit, setLegalCourtFeeLimit] = useState<number>(5000000);
+  const [legalDeductibleType, setLegalDeductibleType] = useState<'fixed' | 'ratio'>('fixed');
+  const [legalSuddenAccelerationRider, setLegalSuddenAccelerationRider] = useState<boolean>(true);
+  const [legalConsultationRider, setLegalConsultationRider] = useState<boolean>(true);
+  const [legalIsElectronicLitigation, setLegalIsElectronicLitigation] = useState<boolean>(true);
+
 
 
 
@@ -509,14 +573,33 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fireOccupancyType, selectedId]);
 
-  const handleCalculate = () => {
-    const effectiveAge = calculatedAge || 40;
+  // 재물종합보험 선택 타입에 따른 상세 조건 동기화
+  React.useEffect(() => {
+    if (selectedId === 'property') {
+      if (selectedDetail === 0) {
+        // 상가 화재형: 건물/시설 한도 높게, 기본 배상책임
+        setPropertyBuildingLimit(200000000);
+        setPropertyInteriorLimit(50000000);
+        setPropertyHasPremisesLiability(true);
+      } else {
+        // 화재배상책임형: 배상한도 극대화, 건물 한도 낮춤
+        setPropertyBuildingLimit(100000000);
+        setPropertyInteriorLimit(30000000);
+        setPropertyHasPremisesLiability(true);
+      }
+    }
+  }, [selectedDetail, selectedId]);
+
+  const handleCalculate = (overrides?: { name?: string; age?: number; gender?: 'M' | 'F'; mobile?: string }) => {
+    const finalName = overrides?.name !== undefined ? overrides.name : name;
+    const finalGender = overrides?.gender !== undefined ? overrides.gender : gender;
+    const finalAge = overrides?.age !== undefined ? overrides.age : (calculatedAge || 40);
 
     if (onCalculate) {
       onCalculate({
-        name,
-        age: effectiveAge, 
-        gender,
+        name: finalName,
+        age: finalAge,
+        gender: finalGender,
         jobClass,
         healthStatus,
         preExistingType: healthStatus === 'simple' ? preExistingType : undefined,
@@ -526,7 +609,11 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
           selectedId === 'nursing' ? 70000 :
           selectedId === 'pet' ? 35000 : 
           selectedId === 'fire_real' ? 12000 :
+          selectedId === 'property' ? 45000 :
           selectedId === 'pension' ? annuityMonthlyPremium :
+          selectedId === 'savings_general' ? savingsMonthlyPremium :
+          selectedId === 'credit' ? 35000 :
+          selectedId === 'legal' ? 29000 :
           selectedId === 'variable' ? (
             (variableSubType === 'variable_saving' || variableSubType === 'investment') ? variableMonthlyPremium :
             variableSubType === 'term_ceo' ? 450000 :
@@ -741,10 +828,81 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
           drivingType: accidentDrivingType,
           hasLeisureRider: accidentHasLeisureRider,
           subType: activeItem.subTypes[selectedDetail]
+        } : undefined,
+        property: selectedId === 'property' ? {
+          businessType: propertyBusinessType,
+          buildingGrade: propertyBuildingGrade,
+          buildingLimit: propertyBuildingLimit,
+          interiorLimit: propertyInteriorLimit,
+          equipmentLimit: propertyEquipmentLimit,
+          inventoryLimit: propertyInventoryLimit,
+          hasWaterLeak: propertyHasWaterLeak,
+          hasPremisesLiability: propertyHasPremisesLiability,
+          hasBusinessInterruption: propertyHasBusinessInterruption,
+          hasFoodLiability: propertyHasFoodLiability,
+          hasMachineryBreakdown: propertyHasMachineryBreakdown,
+          subType: activeItem.subTypes[selectedDetail]
+        } : undefined,
+        savingsGeneral: selectedId === 'savings_general' ? {
+          savingType: savingsSavingType,
+          monthlyPremium: savingsMonthlyPremium,
+          paymentPeriod: savingsPaymentPeriod,
+          maintenancePeriod: savingsMaintenancePeriod,
+          savingsObjective: savingsObjective,
+          hasUniversal: savingsHasUniversal
+        } : undefined,
+        credit: selectedId === 'credit' ? {
+          loanType: creditLoanType,
+          loanAmount: creditLoanAmount,
+          loanPeriod: creditLoanPeriod,
+          creditBureau: creditBureau,
+          creditScore: creditScore,
+          hasIllnessRider: creditHasIllnessRider,
+          hasDisabilityRider: creditHasDisabilityRider,
+          subType: activeItem.subTypes[selectedDetail]
+        } : undefined,
+        legal: selectedId === 'legal' ? {
+          litigationType: legalLitigationType,
+          lawyerLimit: legalLawyerLimit,
+          courtFeeLimit: legalCourtFeeLimit,
+          deductibleType: legalDeductibleType,
+          suddenAccelerationRider: legalSuddenAccelerationRider,
+          consultationRider: legalConsultationRider,
+          isElectronicLitigation: legalIsElectronicLitigation,
+          subType: activeItem.subTypes[selectedDetail]
         } : undefined
       });
     }
   };
+
+  const handleSocialCalculate = (provider: 'naver' | 'kakao') => {
+    setAuthModal(null);
+    setSocialLoading(provider);
+    setAgreedTerms(true);
+    
+    const socialName = provider === 'naver' ? '김네이버' : '김카카오';
+    const socialBirth = provider === 'naver' ? '19880808' : '19900909';
+    const socialMobile = provider === 'naver' ? '01088888888' : '01099999999';
+    const socialGender: 'M' | 'F' = provider === 'naver' ? 'M' : 'F';
+    const socialAge = provider === 'naver' ? 38 : 36;
+
+    // Set the inputs visually
+    setName(socialName);
+    setBirthDate(socialBirth);
+    setMobile(socialMobile);
+    setGender(socialGender);
+
+    setTimeout(() => {
+      setSocialLoading(null);
+      handleCalculate({
+        name: socialName,
+        age: socialAge,
+        gender: socialGender,
+        mobile: socialMobile
+      });
+    }, 1200);
+  };
+
   return (
     <section id="calculator-section" className="w-full max-w-7xl mx-auto py-12 px-4 font-sans">
       <div className="flex flex-col items-center gap-6 mb-12 animate-in fade-in slide-in-from-top-4 duration-1000">
@@ -801,10 +959,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                     return (
                       <motion.button
                         key={item.id}
-                        onClick={() => {
-                          setSelectedId(item.id);
-                          setSelectedDetail(0);
-                        }}
+                        onClick={() => handleCategorySelect(item.id)}
                         whileHover={{ y: -5, shadow: "0 20px 40px -10px rgba(0,0,0,0.1)" }}
                         whileTap={{ scale: 0.98 }}
                         className={`relative flex items-center gap-2 sm:gap-4 p-3.5 sm:p-5 rounded-[1.5rem] sm:rounded-[2.2rem] transition-all duration-500
@@ -833,7 +988,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
             ))}
           </div>
 
-          <div className="bg-slate-50/50 rounded-[3.5rem] p-12 text-center border-2 border-dashed border-slate-100">
+          <div ref={formSectionRef} className="bg-slate-50/50 rounded-[3.5rem] p-12 text-center border-2 border-dashed border-slate-100 scroll-mt-32">
              <h3 className="text-2xl md:text-3xl font-black text-slate-900 mb-8 tracking-tight">상세타입을 선택해 보세요</h3>
              <div className="flex flex-wrap justify-center gap-4">
                 {activeItem?.subTypes?.map((sub, idx) => (
@@ -912,7 +1067,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
                      <div className="bg-slate-50/40 rounded-[2.2rem] p-7 flex flex-col gap-1 relative overflow-hidden focus-within:bg-white focus-within:shadow-2xl transition-all border-2 border-transparent focus-within:border-orange-100/50">
                           <label className="text-[0.55rem] font-black text-slate-400 uppercase tracking-widest mb-1 text-left pl-1">성함</label>
-                          <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="김리치" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200" />
+                          <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="홍길동" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200" />
                           <div className="absolute top-[8px] right-[8px] bottom-[8px] w-24 bg-slate-100 rounded-[1.8rem] flex p-1 shadow-inner border border-slate-200/50">
                             <button onClick={() => setGender('M')} className={`flex-1 rounded-[1.5rem] font-black text-xs transition-all ${gender === 'M' ? 'bg-slate-800 text-white shadow-md' : 'text-slate-400'}`}>남</button>
                             <button onClick={() => setGender('F')} className={`flex-1 rounded-[1.5rem] font-black text-xs transition-all ${gender === 'F' ? 'bg-orange-500 text-white shadow-md' : 'text-slate-400'}`}>여</button>
@@ -953,7 +1108,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
                    <div className="bg-slate-50/40 rounded-[2.2rem] p-7 flex flex-col gap-1 relative overflow-hidden focus-within:bg-white focus-within:shadow-2xl transition-all border-2 border-transparent focus-within:border-orange-100/50">
                         <label className="text-[0.55rem] font-black text-slate-400 uppercase tracking-widest mb-1 text-left pl-1">성함</label>
-                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="김리치" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200" />
+                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="홍길동" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200" />
                         <div className="absolute top-[8px] right-[8px] bottom-[8px] w-24 bg-slate-100 rounded-[1.8rem] flex p-1 shadow-inner border border-slate-200/50">
                           <button onClick={() => setGender('M')} className={`flex-1 rounded-[1.5rem] font-black text-xs transition-all ${gender === 'M' ? 'bg-slate-800 text-white shadow-md' : 'text-slate-400'}`}>남</button>
                           <button onClick={() => setGender('F')} className={`flex-1 rounded-[1.5rem] font-black text-xs transition-all ${gender === 'F' ? 'bg-orange-500 text-white shadow-md' : 'text-slate-400'}`}>여</button>
@@ -1164,6 +1319,80 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                   buildingLimit={fireBuildingLimit}
                   setBuildingLimit={setFireBuildingLimit}
                 />
+              ) : selectedId === 'property' ? (
+                <PropertyFields
+                  businessType={propertyBusinessType}
+                  setBusinessType={setPropertyBusinessType}
+                  buildingGrade={propertyBuildingGrade}
+                  setBuildingGrade={setPropertyBuildingGrade}
+                  buildingLimit={propertyBuildingLimit}
+                  setBuildingLimit={setPropertyBuildingLimit}
+                  interiorLimit={propertyInteriorLimit}
+                  setInteriorLimit={setPropertyInteriorLimit}
+                  equipmentLimit={propertyEquipmentLimit}
+                  setEquipmentLimit={setPropertyEquipmentLimit}
+                  inventoryLimit={propertyInventoryLimit}
+                  setInventoryLimit={setPropertyInventoryLimit}
+                  hasWaterLeak={propertyHasWaterLeak}
+                  setHasWaterLeak={setPropertyHasWaterLeak}
+                  hasPremisesLiability={propertyHasPremisesLiability}
+                  setHasPremisesLiability={setPropertyHasPremisesLiability}
+                  hasBusinessInterruption={propertyHasBusinessInterruption}
+                  setHasBusinessInterruption={setPropertyHasBusinessInterruption}
+                  hasFoodLiability={propertyHasFoodLiability}
+                  setHasFoodLiability={setPropertyHasFoodLiability}
+                  hasMachineryBreakdown={propertyHasMachineryBreakdown}
+                  setHasMachineryBreakdown={setPropertyHasMachineryBreakdown}
+                />
+              ) : selectedId === 'savings_general' ? (
+                <SavingsFields
+                  savingType={savingsSavingType}
+                  setSavingType={setSavingsSavingType}
+                  monthlyPremium={savingsMonthlyPremium}
+                  setMonthlyPremium={setSavingsMonthlyPremium}
+                  paymentPeriod={savingsPaymentPeriod}
+                  setPaymentPeriod={setSavingsPaymentPeriod}
+                  maintenancePeriod={savingsMaintenancePeriod}
+                  setMaintenancePeriod={setSavingsMaintenancePeriod}
+                  savingsObjective={savingsObjective}
+                  setSavingsObjective={setSavingsObjective}
+                  hasUniversal={savingsHasUniversal}
+                  setHasUniversal={setSavingsHasUniversal}
+                />
+              ) : selectedId === 'credit' ? (
+                <CreditFields
+                  loanType={creditLoanType}
+                  setLoanType={setCreditLoanType}
+                  loanAmount={creditLoanAmount}
+                  setLoanAmount={setCreditLoanAmount}
+                  loanPeriod={creditLoanPeriod}
+                  setLoanPeriod={setCreditLoanPeriod}
+                  creditBureau={creditBureau}
+                  setCreditBureau={setCreditBureau}
+                  creditScore={creditScore}
+                  setCreditScore={setCreditScore}
+                  hasIllnessRider={creditHasIllnessRider}
+                  setHasIllnessRider={setCreditHasIllnessRider}
+                  hasDisabilityRider={creditHasDisabilityRider}
+                  setHasDisabilityRider={setCreditHasDisabilityRider}
+                />
+              ) : selectedId === 'legal' ? (
+                <LegalFields
+                  litigationType={legalLitigationType}
+                  setLitigationType={setLegalLitigationType}
+                  lawyerLimit={legalLawyerLimit}
+                  setLawyerLimit={setLegalLawyerLimit}
+                  courtFeeLimit={legalCourtFeeLimit}
+                  setCourtFeeLimit={setLegalCourtFeeLimit}
+                  deductibleType={legalDeductibleType}
+                  setDeductibleType={setLegalDeductibleType}
+                  suddenAccelerationRider={legalSuddenAccelerationRider}
+                  setSuddenAccelerationRider={setLegalSuddenAccelerationRider}
+                  consultationRider={legalConsultationRider}
+                  setConsultationRider={setLegalConsultationRider}
+                  isElectronicLitigation={legalIsElectronicLitigation}
+                  setIsElectronicLitigation={setLegalIsElectronicLitigation}
+                />
               ) : selectedId === 'pension' ? (
                 <AnnuityFields
                   annuityType={annuityType}
@@ -1286,7 +1515,13 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
               )}
 
               <div className="flex items-center justify-center gap-4 mb-10">
-                 <input type="checkbox" id="terms" className="w-5 h-5 rounded-lg accent-orange-500" />
+                 <input 
+                   type="checkbox" 
+                   id="terms" 
+                   checked={agreedTerms}
+                   onChange={(e) => setAgreedTerms(e.target.checked)}
+                   className="w-5 h-5 rounded-lg accent-orange-500" 
+                 />
                  <label htmlFor="terms" className="text-[0.7rem] font-bold text-slate-400 cursor-pointer">
                     개인정보수집 및 활용동의 <span className="underline ml-1 font-black opacity-40">자세히 보기</span>
                  </label>
@@ -1294,7 +1529,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
 
               <div className="max-w-2xl mx-auto space-y-6">
                 <motion.button 
-                   onClick={handleCalculate}
+                   onClick={() => handleCalculate()}
                    whileHover={{ scale: 1.02, y: -5 }}
                    whileTap={{ scale: 0.98 }}
                    className="w-full py-8 bg-gradient-to-r from-orange-600 to-orange-400 rounded-[2.5rem] text-white text-3xl font-black shadow-[0_30px_70px_-20px_rgba(255,107,0,0.4)] transition-all flex items-center justify-center gap-4 group"
@@ -1303,6 +1538,31 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                    <ChevronRight size={28} />
                 </motion.button>
 
+                {/* Social Calculation Buttons */}
+                <div className="grid grid-cols-2 gap-4">
+                  <motion.button 
+                     onClick={() => setAuthModal('naver')}
+                     whileHover={{ scale: 1.02, y: -3 }}
+                     whileTap={{ scale: 0.98 }}
+                     className="py-5 bg-[#03C75A] text-white rounded-[2rem] text-lg font-black shadow-[0_20px_40px_-10px_rgba(3,199,90,0.25)] transition-all flex items-center justify-center gap-2 hover:brightness-95"
+                  >
+                     <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                       <path d="M16.2 3H21v18h-4.8l-7.4-11.2V21H4V3h4.8l7.4 11.2V3z"/>
+                     </svg>
+                     네이버로 계산
+                  </motion.button>
+                  <motion.button 
+                     onClick={() => setAuthModal('kakao')}
+                     whileHover={{ scale: 1.02, y: -3 }}
+                     whileTap={{ scale: 0.98 }}
+                     className="py-5 bg-[#FEE500] text-black rounded-[2rem] text-lg font-black shadow-[0_20px_40px_-10px_rgba(254,229,0,0.25)] transition-all flex items-center justify-center gap-2 hover:brightness-95"
+                  >
+                     <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                       <path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.553 1.706 4.8 4.315 6.065l-1.096 4.025c-.078.286.088.58.37.66.082.023.167.03.25.022.186-.017.35-.11.44-.275l2.67-4.437c.338.03.682.046 1.05.046 4.97 0 9-3.186 9-7.116C21 6.185 16.97 3 12 3z"/>
+                     </svg>
+                     카카오로 계산
+                  </motion.button>
+                </div>
               </div>
            </div>
         </div>
@@ -1367,6 +1627,221 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
               </button>
             </motion.div>
           </div>
+        )}
+      </AnimatePresence>
+
+      {/* Social Auth Consent Popup Modal */}
+      <AnimatePresence>
+        {authModal && (
+          <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
+            {/* Backdrop */}
+            <motion.div 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }} 
+              exit={{ opacity: 0 }} 
+              onClick={() => setAuthModal(null)} 
+              className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm" 
+            />
+
+            {/* Modal Dialog */}
+            <motion.div 
+              initial={{ scale: 0.95, opacity: 0, y: 15 }} 
+              animate={{ scale: 1, opacity: 1, y: 0 }} 
+              exit={{ scale: 0.95, opacity: 0, y: 15 }} 
+              className="relative w-full max-w-[420px] bg-white rounded-[2rem] shadow-2xl overflow-hidden border border-slate-200 text-slate-800 flex flex-col font-sans"
+            >
+              {/* Fake Window Header bar */}
+              <div className="bg-slate-100 px-6 py-3 border-b border-slate-200 flex items-center justify-between text-xs text-slate-500 font-bold">
+                <span className="flex items-center gap-1.5">
+                  <span className={`w-2 h-2 rounded-full ${authModal === 'naver' ? 'bg-[#03C75A]' : 'bg-[#FEE500]'}`} />
+                  {authModal === 'naver' ? '네이버 로그인 연동' : '카카오 로그인 연동'}
+                </span>
+                <button 
+                  onClick={() => setAuthModal(null)}
+                  className="w-5 h-5 rounded-full hover:bg-slate-200 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors"
+                >
+                  ✕
+                </button>
+              </div>
+
+              {authModal === 'kakao' ? (
+                // --- KAKAO CONSENT VIEW ---
+                <div className="p-8 flex flex-col">
+                  {/* Brand Logo */}
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-12 h-12 rounded-xl bg-[#FEE500] flex items-center justify-center text-black shadow-md">
+                      <svg className="w-7 h-7 fill-current" viewBox="0 0 24 24">
+                        <path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.553 1.706 4.8 4.315 6.065l-1.096 4.025c-.078.286.088.58.37.66.082.023.167.03.25.022.186-.017.35-.11.44-.275l2.67-4.437c.338.03.682.046 1.05.046 4.97 0 9-3.186 9-7.116C21 6.185 16.97 3 12 3z"/>
+                      </svg>
+                    </div>
+                    <div className="text-left">
+                      <h4 className="text-lg font-black text-slate-900 leading-tight">카카오 간편 로그인</h4>
+                      <p className="text-xs font-bold text-slate-400">인슈리밸런스 연동</p>
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 text-left mb-6 space-y-1">
+                    <p className="text-xs font-bold text-slate-500">연동 요청 앱</p>
+                    <p className="text-sm font-black text-slate-800">인슈리밸런스 (InsurRebalance)</p>
+                    <div className="h-px bg-slate-200/60 my-2" />
+                    <p className="text-xs font-bold text-slate-500">로그인 계정</p>
+                    <p className="text-sm font-black text-slate-800">rich_kim@kakao.com</p>
+                  </div>
+
+                  {/* Consents List */}
+                  <div className="space-y-4 mb-8 text-left">
+                    <p className="text-xs font-black text-slate-400 uppercase tracking-wider">제공 항목 및 동의사항</p>
+                    
+                    <div className="space-y-3">
+                      <label className="flex items-start gap-3 p-3.5 rounded-xl bg-amber-50/50 border border-amber-100 cursor-pointer">
+                        <input type="checkbox" checked readOnly className="w-4 h-4 mt-0.5 accent-yellow-600 rounded" />
+                        <span className="text-xs text-slate-700 leading-relaxed font-bold">
+                          <span className="text-amber-600 font-extrabold mr-1">[필수]</span>
+                          사용자 프로필 정보 (이름, 닉네임, 프로필 사진)
+                        </span>
+                      </label>
+
+                      <label className="flex items-start gap-3 p-3.5 rounded-xl bg-amber-50/50 border border-amber-100 cursor-pointer">
+                        <input type="checkbox" checked readOnly className="w-4 h-4 mt-0.5 accent-yellow-600 rounded" />
+                        <span className="text-xs text-slate-700 leading-relaxed font-bold">
+                          <span className="text-amber-600 font-extrabold mr-1">[필수]</span>
+                          개인 식별 정보 (생년월일, 성별, 휴대전화번호)
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex flex-col gap-2.5">
+                    <button 
+                      onClick={() => handleSocialCalculate('kakao')}
+                      className="w-full py-4.5 bg-[#FEE500] hover:bg-[#FAD600] text-black font-black rounded-2xl shadow-lg shadow-yellow-100/50 transition-all text-sm active:scale-[0.98]"
+                    >
+                      동의하고 계속하기
+                    </button>
+                    <button 
+                      onClick={() => setAuthModal(null)}
+                      className="w-full py-4 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-2xl transition-all text-xs active:scale-[0.98]"
+                    >
+                      취소
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                // --- NAVER CONSENT VIEW ---
+                <div className="p-8 flex flex-col">
+                  {/* Brand Logo */}
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-12 h-12 rounded-xl bg-[#03C75A] flex items-center justify-center text-white shadow-md font-black text-xl">
+                      N
+                    </div>
+                    <div className="text-left">
+                      <h4 className="text-lg font-black text-slate-900 leading-tight">네이버 아이디 로그인</h4>
+                      <p className="text-xs font-bold text-slate-400">인슈리밸런스 연동</p>
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 text-left mb-6 space-y-1">
+                    <p className="text-xs font-bold text-slate-500">연동 요청 앱</p>
+                    <p className="text-sm font-black text-slate-800">인슈리밸런스 (InsurRebalance)</p>
+                    <div className="h-px bg-slate-200/60 my-2" />
+                    <p className="text-xs font-bold text-slate-500">로그인 계정</p>
+                    <p className="text-sm font-black text-slate-800">naver_user@naver.com</p>
+                  </div>
+
+                  {/* Consents List */}
+                  <div className="space-y-4 mb-8 text-left">
+                    <p className="text-xs font-black text-slate-400 uppercase tracking-wider">제공 항목 및 동의사항</p>
+                    
+                    <div className="space-y-3">
+                      <label className="flex items-start gap-3 p-3.5 rounded-xl bg-emerald-50/50 border border-emerald-100 cursor-pointer">
+                        <input type="checkbox" checked readOnly className="w-4 h-4 mt-0.5 accent-emerald-600 rounded" />
+                        <span className="text-xs text-slate-700 leading-relaxed font-bold">
+                          <span className="text-emerald-600 font-extrabold mr-1">[필수]</span>
+                          사용자 정보 제공 동의 (이름, 이메일 주소)
+                        </span>
+                      </label>
+
+                      <label className="flex items-start gap-3 p-3.5 rounded-xl bg-emerald-50/50 border border-emerald-100 cursor-pointer">
+                        <input type="checkbox" checked readOnly className="w-4 h-4 mt-0.5 accent-emerald-600 rounded" />
+                        <span className="text-xs text-slate-700 leading-relaxed font-bold">
+                          <span className="text-emerald-600 font-extrabold mr-1">[필수]</span>
+                          상세 개인 정보 제공 동의 (생년월일, 성별, 휴대전화번호)
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex flex-col gap-2.5">
+                    <button 
+                      onClick={() => handleSocialCalculate('naver')}
+                      className="w-full py-4.5 bg-[#03C75A] hover:bg-[#02b34f] text-white font-black rounded-2xl shadow-lg shadow-emerald-100/50 transition-all text-sm active:scale-[0.98]"
+                    >
+                      동의하고 계속하기
+                    </button>
+                    <button 
+                      onClick={() => setAuthModal(null)}
+                      className="w-full py-4 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-2xl transition-all text-xs active:scale-[0.98]"
+                    >
+                      취소
+                    </button>
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Social Loading Overlay */}
+      <AnimatePresence>
+        {socialLoading && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[150] flex flex-col items-center justify-center p-6 bg-slate-950/80 backdrop-blur-md"
+          >
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-[3rem] p-10 max-w-md w-full shadow-2xl border border-slate-100 text-center flex flex-col items-center gap-6"
+            >
+              <div className="relative">
+                <div className={`w-24 h-24 rounded-full flex items-center justify-center text-white text-3xl font-black shadow-xl animate-pulse
+                  ${socialLoading === 'naver' ? 'bg-[#03C75A]' : 'bg-[#FEE500] text-black'}
+                `}>
+                  {socialLoading === 'naver' ? 'N' : (
+                    <svg className="w-12 h-12 fill-current" viewBox="0 0 24 24">
+                      <path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.553 1.706 4.8 4.315 6.065l-1.096 4.025c-.078.286.088.58.37.66.082.023.167.03.25.022.186-.017.35-.11.44-.275l2.67-4.437c.338.03.682.046 1.05.046 4.97 0 9-3.186 9-7.116C21 6.185 16.97 3 12 3z"/>
+                    </svg>
+                  )}
+                </div>
+                <div className="absolute -inset-2 rounded-full border-4 border-dashed border-orange-500 animate-spin duration-[4000ms] opacity-50" />
+              </div>
+
+              <div className="space-y-3">
+                <h4 className="text-2xl font-black text-slate-900 tracking-tight">
+                  0.1초 만에 {socialLoading === 'naver' ? '네이버' : '카카오'} 연동 완료!
+                </h4>
+                <p className="text-sm font-bold text-slate-500 leading-relaxed">
+                  대한민국 35개 전 보험사의 방대한 DB를<br/>
+                  <span className="text-orange-500 font-extrabold">웅장하게 전수 조사</span>하는 중입니다...
+                </p>
+              </div>
+
+              <div className="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden mt-2">
+                <motion.div 
+                  initial={{ width: "0%" }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 1.1, ease: "easeInOut" }}
+                  className="h-full bg-gradient-to-r from-orange-600 to-orange-400 rounded-full"
+                />
+              </div>
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
     </section>

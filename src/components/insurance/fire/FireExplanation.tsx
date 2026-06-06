@@ -30,7 +30,7 @@ export const FireExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 핵심 지표 ── */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
         {[
           { num: '실손 보상 설계', label: '가입 한도 내 실제 손해 전액', sub: '비례 보상이 아닌 실손 비례 여부 대조' },
           { num: '급배수 시설 누수', label: '누수로 젖은 마루/벽지 교체', sub: '누수 배관 자체 수리비는 제외됨에 유의' },
@@ -71,11 +71,11 @@ export const FireExplanation: React.FC<Props> = ({ onAction }) => (
               { title: '세입자 (임차인)', label: '집주인에 대한 원상 복구 책임 및 가재도구', color: 'bg-amber-50/50 border-amber-100', badge: 'text-amber-700 bg-amber-100', desc: '내 과실로 불이 났을 때 건물주에게 갚아야 하는 임차자배상책임 및 내 고가 가전/의류 보장 필수' },
               { title: '구상권 리스크', label: '건물주가 가입했어도 세입자 책임 시 청구', color: 'bg-yellow-50 border-yellow-100', badge: 'text-yellow-700 bg-yellow-100', desc: '집주인이 화재보험을 들어놨더라도 세입자 잘못이면 보험사는 건물 복구 후 세입자에게 소송(구상)을 걸어 환수합니다.' },
             ].map((item, i) => (
-              <div key={i} className={`flex items-center gap-4 p-5 rounded-3xl border ${item.color}`}>
-                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 ${item.badge}`}>{item.title}</div>
+              <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-5 rounded-3xl border ${item.color}`}>
+                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-black text-slate-800 text-sm">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold">{item.desc}</p>
+                  <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -157,7 +157,7 @@ export const FireExplanation: React.FC<Props> = ({ onAction }) => (
               { company: '임시 거주비 신속 지급', product: '화재 직후 숙식 거주 정산', limit: '1일 최대 10만 원 (90일 한도)', note: '숙박업소 이용 영수증 및 식대 비용 실비 청구 프로세스 지원' },
               { company: '붕괴 및 침강 손해', product: '주변 공사로 인한 균열 대책', limit: '건물 가입금액 한도 실손 보장', note: '단독주택 등 주변 토목공사 영향으로 건물 균열/붕괴 시 보장' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center justify-between p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
+              <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
                     {item.company}{' '}
@@ -165,7 +165,7 @@ export const FireExplanation: React.FC<Props> = ({ onAction }) => (
                   </p>
                   <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.note}</p>
                 </div>
-                <p className="font-black text-red-400 text-sm shrink-0 ml-4">{item.limit}</p>
+                <p className="font-black text-red-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.limit}</p>
               </div>
             ))}
           </div>
@@ -185,10 +185,10 @@ export const FireExplanation: React.FC<Props> = ({ onAction }) => (
               { step: '03. 이사 시 주소 등록', desc: '주택화재보험은 부동산에 종속되므로 이사 후 보험사에 주소지 승인을 거치지 않으면 사고 시 보장 거절' },
               { step: '04. 세입자 구상권 방어', desc: '전세/월세 입주자는 계약 종료 시 원상복구 의무가 있으므로 임차자배상책임 한도를 확실히 확보' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-5 p-5 bg-red-50/30 rounded-3xl border border-red-100/50 hover:border-red-200 transition-colors">
-                <div className="shrink-0 font-black text-red-700 text-sm w-32">{item.step}</div>
+              <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-red-50/30 rounded-3xl border border-red-100/50 hover:border-red-200 transition-colors">
+                <div className="shrink-0 font-black text-red-700 text-sm w-full sm:w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}

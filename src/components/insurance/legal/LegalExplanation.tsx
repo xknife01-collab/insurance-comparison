@@ -32,7 +32,7 @@ export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 통계 배너 ── */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
         {[
           { num: '전자소송 할인', label: '인터넷 소송 진행 동의 시 적용', sub: '5% 월 보험료 평생 우대 감면 혜택' },
           { num: '급발진 분쟁 보장', label: '최신 급발진 대응 전용 특약', sub: 'EDR 해석 및 기술 검증 비용 지원' },
@@ -74,11 +74,11 @@ export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
               { title: '공적 법원비용', label: '소송 개시 시 납부하는 인지대 및 송달용 우편료', color: 'bg-slate-50/50 border-slate-100', badge: 'text-slate-700 bg-slate-100', desc: '소가(소송금액)가 커질수록 법원 인지액도 눈덩이처럼 불어나므로 인지대 실비 한도가 최소 500만 원 이상 설계되어야 안전' },
               { title: '사전 대면 상담', label: '분쟁 촉발 시 소송 제기 전 변호사 자문료 지원', color: 'bg-blue-50/50 border-blue-100', badge: 'text-blue-700 bg-blue-100', desc: '소송을 제기하기 전에 내용증명 발송이나 가처분 신청 등 변호사와의 사전 상담 수수료를 실손 보전해주는 상담 특약 강점' },
             ].map((item, i) => (
-              <div key={i} className={`flex items-center gap-4 p-5 rounded-3xl border ${item.color}`}>
-                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 ${item.badge}`}>{item.title}</div>
+              <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-5 rounded-3xl border ${item.color}`}>
+                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-black text-slate-800 text-sm">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold">{item.desc}</p>
+                  <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -160,7 +160,7 @@ export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
               { company: '급발진(EDR) 분쟁 특약', product: '급발진 의심 소송 비용 한도 증액', limit: '사고당 최고 2,000만원 한도', note: '제조사 상대 소송 시 분석 및 기술 검증 변호 비용 지원' },
               { company: '법률 상담 바우처 제공', product: '1:1 대면 및 유선 법률 상담 연동', note: '소송 전 내용증명 및 약정서 작성 지원 전담 변호사 상담 보조' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center justify-between p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
+              <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
                     {item.company}{' '}
@@ -168,7 +168,7 @@ export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
                   </p>
                   <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.note}</p>
                 </div>
-                <p className="font-black text-indigo-400 text-sm shrink-0 ml-4">{item.limit}</p>
+                <p className="font-black text-indigo-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.limit}</p>
               </div>
             ))}
           </div>
@@ -191,7 +191,7 @@ export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
               <div key={i} className="flex items-center gap-5 p-5 bg-indigo-50/20 rounded-3xl border border-indigo-100/30 hover:border-indigo-200/50 transition-colors">
                 <div className="shrink-0 font-black text-indigo-800 text-sm w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}

@@ -158,14 +158,14 @@ export const LegalFields: React.FC<Props> = ({
           <label className="text-xs font-black text-slate-400 block">
             소송비용 발생 시 피보험자가 공제(자부담)하는 방식
           </label>
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
             <button
               type="button"
               onClick={() => setDeductibleType('fixed')}
               className={`flex-1 py-4 px-6 rounded-2xl border text-left transition-all ${
                 deductibleType === 'fixed'
-                  ? 'border-indigo-600 bg-indigo-50/30'
-                  : 'border-slate-100 bg-white hover:border-slate-200'
+                  ? 'border-indigo-600 bg-indigo-50/30 font-black shadow-sm'
+                  : 'border-slate-100 bg-white text-slate-500 hover:border-slate-200'
               }`}
             >
               <div className="flex items-center justify-between mb-1">
@@ -184,8 +184,8 @@ export const LegalFields: React.FC<Props> = ({
               onClick={() => setDeductibleType('ratio')}
               className={`flex-1 py-4 px-6 rounded-2xl border text-left transition-all ${
                 deductibleType === 'ratio'
-                  ? 'border-indigo-600 bg-indigo-50/30'
-                  : 'border-slate-100 bg-white hover:border-slate-200'
+                  ? 'border-indigo-600 bg-indigo-50/30 font-black shadow-sm'
+                  : 'border-slate-100 bg-white text-slate-500 hover:border-slate-200'
               }`}
             >
               <div className="flex items-center justify-between mb-1">

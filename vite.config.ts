@@ -20,6 +20,10 @@ export default defineConfig(({mode}) => {
         '/in0112001211': {
           target: 'https://api.hyphen.im',
           changeOrigin: true,
+        },
+        '^/in0017': {
+          target: 'https://api.hyphen.im',
+          changeOrigin: true,
         }
       },
       // HMR is disabled in AI Studio via DISABLE_HMR env var.

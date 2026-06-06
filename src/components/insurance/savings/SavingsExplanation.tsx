@@ -33,7 +33,7 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 통계 배너 ── */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
         {[
           { num: '이자소득세 0%', label: '10년 유지 시 소득세 면제', sub: '일반 은행 이자소득세 15.4% 전액 비과세' },
           { num: '월 복리 부리', label: '단리 예적금 대비 자산 가속화', sub: '원금과 이자 전체에 다시 복리 이자 누적' },
@@ -75,10 +75,10 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction }) => (
               { title: '일시납 거치 요건', label: '10년 이상 유지 + 총 납입액 1억 원 이하', color: 'bg-cyan-50 border-cyan-100', badge: 'text-cyan-700 bg-cyan-100', desc: '목돈을 한 번에 거치해 놓는 일시납의 경우, 10년 이상 유지하면 총 원금 1억 원 이하 한도 내에서 이자소득세가 전액 비과세 처리됩니다.' },
             ].map((item, i) => (
               <div key={i} className={`flex items-start gap-4 p-5 rounded-3xl border ${item.color}`}>
-                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 ${item.badge}`}>{item.title}</div>
+                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-black text-slate-800 text-sm">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold">{item.desc}</p>
+                  <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -153,10 +153,10 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction }) => (
               { step: '03. 중도인출 및 납입 유예 확인', desc: '유동성 위기가 올 때 해지 대신 중도인출이나 일시 납입 유예(Universal) 기능이 포함된 상품인지 점검' },
               { step: '04. 최저보증이율 구간 확인', desc: '장기 유지 상품이므로 금리가 0%대로 폭락했을 때 보험사가 보증해 주는 최저이율이 얼마인지 비교 검토' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-5 p-5 bg-emerald-50/30 rounded-3xl border border-emerald-100/50 hover:border-emerald-200 transition-colors">
+              <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-emerald-50/30 rounded-3xl border border-emerald-100/50 hover:border-emerald-200 transition-colors">
                 <div className="shrink-0 font-black text-emerald-700 text-sm w-32 text-left">{item.step}</div>
                 <div className="flex-1 text-left">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}

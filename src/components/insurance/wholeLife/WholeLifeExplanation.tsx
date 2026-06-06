@@ -34,7 +34,7 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 핵심 배너 ── */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
         {[
           { num: '단기 완납 트렌드', label: '5년/7년/10년 단기 납입', sub: '경제 활동기 집중 불입 완료 구조' },
           { num: '저해지 18% 즉시할인', label: '일반형 대비 보험료 절감', sub: '중도 해지 금지 및 완납 보너스 매칭' },
@@ -76,11 +76,11 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
               { title: '체증형 옵션', label: '물가상승 시 보장 실질 가치를 늘려 지킴', color: 'bg-emerald-50/50 border-emerald-100', badge: 'text-emerald-700 bg-emerald-100', desc: '일반 정액형은 20년 뒤 가치가 반토막 납니다. 만 60세부터 연 5%씩 20년간 사망금이 체증하는 상품을 우대합니다.' },
               { title: '상속세 재원', label: '부동산/비유동 자산 보유 시 유가족 세금 방어', color: 'bg-blue-50/50 border-blue-100', badge: 'text-blue-700 bg-blue-100', desc: '상속세는 9개월 이내 현금 납부 의무가 있어, 사망보험금을 즉각적인 세금 세원 및 유가족 안심 생활비로 활용합니다.' },
             ].map((item, i) => (
-              <div key={i} className={`flex items-center gap-4 p-5 rounded-3xl border ${item.color}`}>
-                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 ${item.badge}`}>{item.title}</div>
+              <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-5 rounded-3xl border ${item.color}`}>
+                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-black text-slate-800 text-sm">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold">{item.desc}</p>
+                  <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -162,7 +162,7 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
               { company: '연금 전환 연동형', product: '해약환급금 기반 연금 수령 전환', limit: '노후 평생 연금액 분할 환산', note: '자녀 독립 등으로 사망보장 필요성 상실 시 노후 연금 재원으로 일괄 피팅' },
               { company: '완납 보너스 적립형', product: '납입 기간 완료 시 가산 보너스', limit: '원금 대비 120%대 환급률 형성', note: '해약 보장과 장기 고복리 저축의 장점을 조화시킨 1석 2조 하이브리드' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center justify-between p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
+              <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
                     {item.company}{' '}
@@ -170,7 +170,7 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
                   </p>
                   <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.note}</p>
                 </div>
-                <p className="font-black text-indigo-400 text-sm shrink-0 ml-4">{item.limit}</p>
+                <p className="font-black text-indigo-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.limit}</p>
               </div>
             ))}
           </div>
@@ -190,10 +190,10 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
               { step: '03. 세무 리스크 크로스체크', desc: '상속세 비과세 요건을 채우기 위한 자녀 계좌 실 납입 소득출처와 증여 자진신고 상태 사전 대조' },
               { step: '04. 연금 전환 조건 비교', desc: '전환 시점에 적용되는 경험생명표가 가입 시점 기준인지, 아니면 전환 시점 기준인지 세밀히 체크' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-5 p-5 bg-indigo-50/30 rounded-3xl border border-indigo-100/50 hover:border-indigo-200 transition-colors">
-                <div className="shrink-0 font-black text-indigo-700 text-sm w-32">{item.step}</div>
+              <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-indigo-50/30 rounded-3xl border border-indigo-100/50 hover:border-indigo-200 transition-colors">
+                <div className="shrink-0 font-black text-indigo-700 text-sm w-full sm:w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}

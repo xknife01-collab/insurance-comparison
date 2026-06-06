@@ -33,7 +33,7 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 통계 배너 ── */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
         {[
           { num: '4세대 착한실손', label: '보험료 최대 70% 다이어트', sub: '기존 1~3세대 대비 월등히 저렴' },
           { num: '급여 통원/입원', label: '의료비 본인부담 80% 보장', sub: '건강보험 적용 항목 실손 환급' },
@@ -75,11 +75,11 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
               { title: '비급여 특약 보장', label: '건강보험 비적용 고액 비급여 치료의 70% 지원', color: 'bg-indigo-50/50 border-indigo-100', badge: 'text-indigo-700 bg-indigo-100', desc: '비급여 도수치료·체외충격파·증식치료(연간 350만 한도), 비급여 주사제, 비급여 MRI/MRA 완벽 케어' },
               { title: '비급여 차등 할인', label: '안 쓰면 깎아주고, 많이 쓰면 할증되는 구조', color: 'bg-amber-50/50 border-amber-100', badge: 'text-amber-700 bg-amber-100', desc: '직전 1년간 비급여 보험금 수령액이 없는 경우 차기년도 비급여 보험료 최대 10% 추가 할인 혜택 제공' },
             ].map((item, i) => (
-              <div key={i} className={`flex items-center gap-4 p-5 rounded-3xl border ${item.color}`}>
-                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 ${item.badge} w-24 text-center`}>{item.title}</div>
+              <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-5 rounded-3xl border ${item.color}`}>
+                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-black text-slate-800 text-sm">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold">{item.desc}</p>
+                  <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -161,14 +161,14 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
               { title: '비급여 미청구 시 10% 자동 할인', desc: '직전년도 보험금 미수령자 대상 매년 추가 보험료 인하', info: '의료 쇼핑 없는 실속 가입자 우대 제도 작동' },
               { title: '무심사 4세대 간편 계약 전환권', desc: '기존 가입 보험사 내에서는 복잡한 신규 인수심사 없이 다이렉트 전환', info: '병력이 생긴 고연령층도 무심사 전환 가능' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center justify-between p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
+              <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
                     {item.title}
                   </p>
                   <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.desc}</p>
                 </div>
-                <p className="font-black text-blue-400 text-sm shrink-0 ml-4">{item.info}</p>
+                <p className="font-black text-blue-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.info}</p>
               </div>
             ))}
           </div>
@@ -188,10 +188,10 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
               { step: '03. 전환 무심사 여부 검토', desc: '질병 치료 중이거나 약을 복용 중이라도 기존 가입사 계약전환권을 활용해 무심사로 전환 가능한지 체크' },
               { step: '04. 중대 질병 진단비 보완', desc: '실손 단독 설계 시 발생할 수 있는 중대 수술비 공백을 비갱신형 3대 진단비(암, 뇌, 심장)와 병행 결합' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-5 p-5 bg-blue-50/30 rounded-3xl border border-blue-100/50 hover:border-blue-200 transition-colors">
-                <div className="shrink-0 font-black text-blue-700 text-sm w-32">{item.step}</div>
+              <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-blue-50/30 rounded-3xl border border-blue-100/50 hover:border-blue-200 transition-colors">
+                <div className="shrink-0 font-black text-blue-700 text-sm w-full sm:w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}

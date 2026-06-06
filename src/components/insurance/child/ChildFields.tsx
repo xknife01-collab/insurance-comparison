@@ -34,7 +34,7 @@ export const ChildFields: React.FC<ChildFieldsProps> = ({
         <h4 className="text-xl font-black text-slate-800 mb-6 flex items-center gap-2">
           <Baby className="text-yellow-500 w-6 h-6" /> 가입 대상을 선택해 주세요
         </h4>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
             { id: 'prenatal', label: '태아 / 임산부', desc: '출생 전 태아특약 설계' },
             { id: 'child', label: '어린이 (0~15세)', desc: '성장기 집중 안심 보장' },
@@ -136,7 +136,7 @@ export const ChildFields: React.FC<ChildFieldsProps> = ({
         <h4 className="text-xl font-black text-slate-800 mb-6 flex items-center gap-2">
           <Calendar className="text-yellow-500 w-6 h-6" /> 보장 기간 (만기)을 결정해 주세요
         </h4>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <button
             onClick={() => setMaturity(30)}
             className={`p-6 rounded-[2rem] border-2 text-left transition-all duration-300 flex flex-col justify-between gap-4
@@ -180,7 +180,7 @@ export const ChildFields: React.FC<ChildFieldsProps> = ({
         <h4 className="text-xl font-black text-slate-800 mb-6 flex items-center gap-2">
           <Star className="text-yellow-500 w-6 h-6" fill="currentColor" /> 보장 집중도를 선택해 주세요
         </h4>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <button
             onClick={() => setFocusArea('majorDisease')}
             className={`p-5 rounded-[1.8rem] border-2 text-center transition-all duration-300

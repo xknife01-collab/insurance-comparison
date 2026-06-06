@@ -33,7 +33,7 @@ export const CreditExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 통계 배너 ── */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
         {[
           { num: '신용점수 연계 할인', label: 'NICE/KCB 등급별 자동 감면', sub: '3% ~ 최대 10% 보험료 영구 할인' },
           { num: '대출금 한도 일치', label: '실제 잔액 한도 매칭 가입', sub: '부정 수급 목적의 초과 가입 원천 차단' },
@@ -169,7 +169,7 @@ export const CreditExplanation: React.FC<Props> = ({ onAction }) => (
               { company: '무이자 분할 청약제도', product: '대출 분납 주기 매칭 청구', limit: '보험료 대출금에 일시 가산/분납', note: '가입 시 월납 방식 외에 대출 이자와 함께 납부하도록 설정 가능' },
               { company: '비대면 다이렉트 가입', product: '복잡한 건강 진단 전면 생략', limit: '대출 계약번호 확인 시 즉시 승인', note: '대출이 이미 승인된 고객의 경우 가입 문턱을 대폭 완화하여 신속 보장' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center justify-between p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
+              <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
                     {item.company}{' '}
@@ -177,7 +177,7 @@ export const CreditExplanation: React.FC<Props> = ({ onAction }) => (
                   </p>
                   <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.note}</p>
                 </div>
-                <p className="font-black text-blue-400 text-sm shrink-0 ml-4">{item.limit}</p>
+                <p className="font-black text-blue-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.limit}</p>
               </div>
             ))}
           </div>
@@ -197,10 +197,10 @@ export const CreditExplanation: React.FC<Props> = ({ onAction }) => (
               { step: '03. 중대질병 보장 추가', desc: '단순 사망 외에 암/뇌/심장 투병으로 발생할 수 있는 대출 상환 마비 사태 방지 특약 검토' },
               { step: '04. 신용생명지수 재확인', desc: '매년 신용 점수를 갱신하여 점수가 상승했을 때 보험사에 할인율 재지정 신청' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-5 p-5 bg-blue-50/30 rounded-3xl border border-blue-100/50 hover:border-blue-200 transition-colors">
-                <div className="shrink-0 font-black text-blue-700 text-sm w-32">{item.step}</div>
+              <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-blue-50/30 rounded-3xl border border-blue-100/50 hover:border-blue-200 transition-colors">
+                <div className="shrink-0 font-black text-blue-700 text-sm w-full sm:w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}

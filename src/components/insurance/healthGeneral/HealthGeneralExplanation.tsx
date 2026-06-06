@@ -37,7 +37,7 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 핵심 통계 배너 ── */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
         {[
           { num: '비갱신형 가치', label: '평생 인상 걱정 없는 동일 요율', sub: '은퇴 전 납입 완료로 노후 경제적 부담 방어' },
           { num: '3대 핵심 진단비', label: '암·뇌·심혈관 보장 공백 Zero', sub: '뇌경색/심장 협심증 등 광범위한 진단비 매칭' },
@@ -79,11 +79,11 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
               { title: '뇌질환 보장 범위', label: '뇌출혈/뇌졸중 ❌ 뇌혈관질환 ⭕', color: 'bg-amber-50/50 border-amber-100', badge: 'text-amber-700 bg-amber-100', desc: '뇌출혈(전체 뇌질환 중 9%만 보장)보다 뇌경색과 협착증을 모두 포함하는 전체 뇌혈관질환 특약으로 빈틈없이 충족' },
               { title: '심장질환 범위', label: '급성심근경색 ❌ 허혈성/심혈관 ⭕', color: 'bg-yellow-50 border-yellow-100', badge: 'text-yellow-700 bg-yellow-100', desc: '가장 빈번한 협심증(허혈성)과 부정맥, 심부전 등 넓은 심혈관질환 진단 특약을 조합하여 완벽한 방어선 구축' },
             ].map((item, i) => (
-              <div key={i} className={`flex items-center gap-4 p-5 rounded-3xl border ${item.color}`}>
-                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 ${item.badge}`}>{item.title}</div>
+              <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-5 rounded-3xl border ${item.color}`}>
+                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-black text-slate-800 text-sm">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold">{item.desc}</p>
+                  <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -180,7 +180,7 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
               { title: '표적항암 약물허가 치료비', feature: '부작용 없는 최신 치료법 지원', limit: '최대 5,000만 원 보장 매칭', note: '실손 의료비 한도를 초과하는 2.5세대 암 표적 치료 수수료 대응' },
               { title: '가족일상생활 배상책임', feature: '생활 중 타인 물건/대인 피해', limit: '최대 1억 원 대물 보상 가능', note: '누수 사고, 반려견 물림 사고 등 일상 속 대인/대물 배상 완벽 대처' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center justify-between p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
+              <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
                     {item.title}{' '}
@@ -188,7 +188,7 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
                   </p>
                   <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.note}</p>
                 </div>
-                <p className="font-black text-orange-400 text-sm shrink-0 ml-4">{item.limit}</p>
+                <p className="font-black text-orange-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.limit}</p>
               </div>
             ))}
           </div>
@@ -208,10 +208,10 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
               { step: '03. 납입/만기 기간 조율', desc: '생산 가능 연령에 맞추어 20년납 세팅 및 위험률이 폭증하는 90세 만기로 설계 조립' },
               { step: '04. 중복 보장 가입 제거', desc: '배상책임 특약 등 중복 가입 시 비례 보상되는 특약들은 1개 상품에만 유지하여 낭비 차단' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-5 p-5 bg-orange-50/30 rounded-3xl border border-orange-100/50 hover:border-orange-200 transition-colors">
-                <div className="shrink-0 font-black text-orange-700 text-sm w-32">{item.step}</div>
+              <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-orange-50/30 rounded-3xl border border-orange-100/50 hover:border-orange-200 transition-colors">
+                <div className="shrink-0 font-black text-orange-700 text-sm w-full sm:w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}

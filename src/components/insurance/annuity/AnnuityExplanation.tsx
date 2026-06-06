@@ -33,7 +33,7 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 통계 배너 ── */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
         {[
           { num: '최대 16.5%', label: '소득 수준별 환급율 차등', sub: '총급여 5,500만 원 이하는 최고이율 공제' },
           { num: '연 600만 원', label: '연금저축 단독 납입 한도', sub: 'IRP 결합 시 최대 연 900만 원 공제 가능' },
@@ -75,10 +75,10 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction }) => (
               { title: '연금소득세 절세', label: '수령 시점에 따라 적용되는 3.3%~5.5% 세율', color: 'bg-sky-50 border-sky-100', badge: 'text-sky-700 bg-sky-100', desc: '만 55~69세 개시 시 5.5%, 만 70~79세 개시 시 4.4%, 만 80세 이상 수령 시 3.3%로 개시 연령을 늦출수록 연금 세액이 절감됩니다.' },
             ].map((item, i) => (
               <div key={i} className={`flex items-start gap-4 p-5 rounded-3xl border ${item.color}`}>
-                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 ${item.badge}`}>{item.title}</div>
+                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-black text-slate-800 text-sm">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold">{item.desc}</p>
+                  <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -160,14 +160,14 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction }) => (
               { title: 'IRP 퇴직연금 합산', val: '연간 공제한도 최대 900만 원', note: '연금저축 600만 원 + IRP 300만 원 세팅 시 연말정산 최적 절세 조합 완성' },
               { title: '종신 수령 보장형 옵션', val: '평생 동안 노후 연금 확보 보장', note: '확정기간형이 끝나 사망 전까지 매달 생존연금을 지급해 노후 장수 리스크 방지' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center justify-between p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
+              <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm text-left">
                     {item.title}{' '}
                   </p>
                   <p className="text-[11px] text-slate-400 font-bold mt-0.5 text-left">{item.note}</p>
                 </div>
-                <p className="font-black text-blue-400 text-sm shrink-0 ml-4">{item.val}</p>
+                <p className="font-black text-blue-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.val}</p>
               </div>
             ))}
           </div>
@@ -187,10 +187,10 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction }) => (
               { step: '03. 사업비와 차감액 비율', desc: '가입 초기 원금 회복 기간을 단축하기 위해 모집 수수료가 적게 차감되는 다이렉트형 가입 우대' },
               { step: '04. 연금 계좌이전 가능여부', desc: '향후 운용 전략 변경을 대비해 세금 불이익 없이 금융기관 간 양도가 자유로운지 확인' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-5 p-5 bg-blue-50/30 rounded-3xl border border-blue-100/50 hover:border-blue-200 transition-colors">
+              <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-blue-50/30 rounded-3xl border border-blue-100/50 hover:border-blue-200 transition-colors">
                 <div className="shrink-0 font-black text-blue-700 text-sm w-32 text-left">{item.step}</div>
                 <div className="flex-1 text-left">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}

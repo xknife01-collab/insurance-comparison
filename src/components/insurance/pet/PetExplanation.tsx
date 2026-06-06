@@ -33,7 +33,7 @@ export const PetExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 통계 배너 ── */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
         {[
           { num: '동물등록 할인', label: '등록번호 확인 시 즉시 적용', sub: '2% ~ 5% 보험료 추가 할인 혜택' },
           { num: '슬개골 기본/특약', label: '소형견 다발 질환 보장', sub: '대기기간 1년 여부 반드시 확인 필요' },
@@ -75,11 +75,11 @@ export const PetExplanation: React.FC<Props> = ({ onAction }) => (
               { title: '피부/귓병 보장', label: '만성으로 발전하기 쉬운 잦은 염증 질환', color: 'bg-amber-50/50 border-amber-100', badge: 'text-amber-700 bg-amber-100', desc: '아토피, 귓병, 지루성 피부염 등 한 번 발생 시 치료가 장기화되므로 통원 일수 한도가 넉넉한 상품 선택 우대' },
               { title: '구강/치과 보장', label: '노령견 진입 시 가장 수술 비용이 큰 치아', color: 'bg-yellow-50 border-yellow-100', badge: 'text-yellow-700 bg-yellow-100', desc: '스케일링 및 단순 치과 보장은 제외되는 경우가 대다수이나, 최근 일부 사에서 발치 및 치주질환 수술 특약 확대 추세' },
             ].map((item, i) => (
-              <div key={i} className={`flex items-center gap-4 p-5 rounded-3xl border ${item.color}`}>
-                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 ${item.badge}`}>{item.title}</div>
+              <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-5 rounded-3xl border ${item.color}`}>
+                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-black text-slate-800 text-sm">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold">{item.desc}</p>
+                  <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -161,7 +161,7 @@ export const PetExplanation: React.FC<Props> = ({ onAction }) => (
               { company: '원스톱 현장 청구', product: '보험금 현장 간편 접수 서비스', limit: '제휴 서류 생략 모바일 연동', note: '제휴 병원에서 진료 후 원무과에서 팩스/앱 없이 직접 전송 가능' },
               { company: '노령견 안심 가입 연령', product: '신규 가입 상한선 연장 트렌드', limit: '최대 만 10세까지 첫 가입 가능', note: '과거 만 8세 한도에서 확대되어 노령 반려동물도 초기 진입 개방' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center justify-between p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
+              <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
                     {item.company}{' '}
@@ -169,7 +169,7 @@ export const PetExplanation: React.FC<Props> = ({ onAction }) => (
                   </p>
                   <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.note}</p>
                 </div>
-                <p className="font-black text-orange-400 text-sm shrink-0 ml-4">{item.limit}</p>
+                <p className="font-black text-orange-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.limit}</p>
               </div>
             ))}
           </div>
@@ -189,10 +189,10 @@ export const PetExplanation: React.FC<Props> = ({ onAction }) => (
               { step: '03. 다가구 다견 할인', desc: '동일 가정 내 2마리 이상의 반려견/반려묘 가입 시 가구당 추가 5~10% 패키지 할인 유무 확인' },
               { step: '04. 보장비율 조절 팁', desc: '월 부담액을 낮추기 위해 보장 비율을 80%에서 70%로 낮추고 자기부담금을 적절히 상향 세팅' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-5 p-5 bg-orange-50/30 rounded-3xl border border-orange-100/50 hover:border-orange-200 transition-colors">
-                <div className="shrink-0 font-black text-orange-700 text-sm w-32">{item.step}</div>
+              <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-orange-50/30 rounded-3xl border border-orange-100/50 hover:border-orange-200 transition-colors">
+                <div className="shrink-0 font-black text-orange-700 text-sm w-full sm:w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}

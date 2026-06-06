@@ -33,7 +33,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 통계 배너 ── */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
         {[
           { num: '경찰조사 변호사비', label: '경찰조사 개시 시점 지원', sub: '불기소/약식기소 포함 선지원 가능' },
           { num: '교사처 형사합의금', label: '피해자 중상해 시 최대 2억', sub: '형사합의금 실손 한도 대폭 보강' },
@@ -75,11 +75,11 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
               { title: '변호사 선임비용', label: '경찰조사 단계부터 선지원 탑재 필수', color: 'bg-indigo-50/50 border-indigo-100', badge: 'text-indigo-700 bg-indigo-100', desc: '과거 약식기소 후에만 나오던 담보에서 개선되어, 경찰 첫 출석(조사) 단계부터 5천만 원 즉각 지원' },
               { title: '대인/대물 벌금', label: '스쿨존 민식이법 3천만 원 한도 최고치 설계', color: 'bg-emerald-50 border-emerald-100', badge: 'text-emerald-700 bg-emerald-100', desc: '어린이보호구역 벌금 인상안 완벽 대비 및 도로 시설물 훼손 벌금 최대 500만 원 보장' },
             ].map((item, i) => (
-              <div key={i} className={`flex items-center gap-4 p-5 rounded-3xl border ${item.color}`}>
-                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 ${item.badge}`}>{item.title}</div>
+              <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-5 rounded-3xl border ${item.color}`}>
+                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-black text-slate-800 text-sm">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold">{item.desc}</p>
+                  <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -163,7 +163,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
               { company: '교통사고처리지원금', product: '피해자 중상해(1~3급) 특별 약정', limit: '최대 2억 원 한도 실손 보장', note: '검찰 기소 전 형사합의금 신속 지급 체계 탑재 여부' },
               { company: '자동차사고부상치료비', product: '14급 단순 타박/염좌 청구', limit: '등급별 최대 30만 원 정액 보장', note: '경상환자 도덕적 해이 방지를 위한 진료기록부 검증 필터 적용' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center justify-between p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
+              <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
                     {item.company}{' '}
@@ -171,7 +171,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
                   </p>
                   <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.note}</p>
                 </div>
-                <p className="font-black text-purple-400 text-sm shrink-0 ml-4">{item.limit}</p>
+                <p className="font-black text-purple-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.limit}</p>
               </div>
             ))}
           </div>
@@ -191,10 +191,10 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
               { step: '03. 일배책 중복 배제 확인', desc: '일상생활배상책임 특약 중복 가입으로 비례보상되어 보험료가 낭비되는지 증권 점검' },
               { step: '04. 직업 등급 고지 준수', desc: '운전직, 현장직 등 직업 등급 변경 고지를 빠뜨려 사고 발생 시 보장이 거절되는 리스크 차단' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-5 p-5 bg-purple-50/30 rounded-3xl border border-purple-100/50 hover:border-purple-200 transition-colors">
-                <div className="shrink-0 font-black text-purple-700 text-sm w-32">{item.step}</div>
+              <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-purple-50/30 rounded-3xl border border-purple-100/50 hover:border-purple-200 transition-colors">
+                <div className="shrink-0 font-black text-purple-700 text-sm w-full sm:w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
                 </div>
               </div>
             ))}

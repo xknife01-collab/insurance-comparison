@@ -16,6 +16,7 @@ import { DriverSlider } from './insurance/driver/DriverSlider';
 import { PetSlider } from './insurance/pet/PetSlider';
 import { GolfSlider } from './insurance/golf/GolfSlider';
 import { FireSlider } from './insurance/fire/FireSlider';
+import { PropertySlider } from './insurance/property/PropertySlider';
 import { AnnuitySlider } from './insurance/annuity/AnnuitySlider';
 import { WholeLifeSlider } from './insurance/wholeLife/WholeLifeSlider';
 import { VariableSlider } from './insurance/variable/VariableSlider';
@@ -66,6 +67,11 @@ export const SimulationSlider: React.FC<SimulationSliderProps> = ({ result }) =>
 
   // 골프보험 지원
   if (category.includes('골프') || category === 'golf') return <GolfSlider result={result} />;
+
+  // 재물종합보험 지원
+  if (category.includes('재물') || category === 'property' || !!result.analysis.property) {
+    return <PropertySlider result={result} />;
+  }
 
   // 주택화재보험 지원
   if (category.includes('주택화재') || category.includes('화재') || category === 'fire_real') {
