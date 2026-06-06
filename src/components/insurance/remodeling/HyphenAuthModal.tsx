@@ -602,21 +602,15 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
         };
       });
 
-      // If no riders were found but this is a mock or sandbox run, we inject realistic fallback riders
-      // so the user's dashboard isn't completely empty if the test account has empty details.
-      const hasNoRiders = riders.length === 0;
-      const finalRiders = hasNoRiders ? [
-        { rider_name: '일반암진단비특별약관', coverage_amount: 20000000 },
-        { rider_name: '뇌혈관질환진단비특약', coverage_amount: 10000000 },
-        { rider_name: '허혈성심장질환진단비특약', coverage_amount: 10000000 }
-      ] : riders;
-
       return {
         insurance_company: item.coCdNm || item.pticCoNm || '알수없음',
-        product_name: item.goodsNm || '종합건강보험',
-        monthly_premium: Number(item.rcvInsamt || item.insAmt || 80000),
-        riders: finalRiders
+        product_name: item.goodsNm || '알수없는 상품',
+        monthly_premium: Number(item.rcvInsamt || item.insAmt || 0),
+        riders: riders
       };
+    }).filter((policy: any) => {
+      // 상품명이 유효하고 월 보험료가 0원보다 크거나 유효한 특약이 매칭된 계약만 유지
+      return policy.product_name !== '알수없는 상품' && policy.monthly_premium > 0;
     });
   };
 
