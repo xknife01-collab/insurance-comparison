@@ -317,6 +317,78 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
       {/* Insurance Summary Cards (Silson, Caregiving, Dental, etc.) */}
       <InsuranceSummary result={result} />
 
+      {/* 실시간 수집된 가입 보험 내역 섹션 */}
+      {analysis._remodelingCoverage?.policies && analysis._remodelingCoverage.policies.length > 0 && (
+        <section className="bg-slate-50/50 border border-slate-100 rounded-[3rem] p-8 md:p-12 space-y-8 text-left max-w-5xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-slate-200/60 pb-6">
+            <div className="space-y-1">
+              <span className="px-3 py-1 bg-orange-500/10 text-orange-600 rounded-lg text-[10px] font-black uppercase tracking-widest">
+                🛡️ Verified Holdings
+              </span>
+              <h4 className="text-2xl font-black text-slate-800">
+                실시간 조회된 나의 가입 보험 내역
+              </h4>
+            </div>
+            <div className="bg-white border border-slate-100 px-6 py-4 rounded-2xl shadow-sm flex items-center gap-6 self-start md:self-auto">
+              <div>
+                <span className="text-[10px] font-black text-slate-400 block uppercase">총 가입 건수</span>
+                <span className="text-xl font-black text-slate-800">{analysis._remodelingCoverage.policies.length}건</span>
+              </div>
+              <div className="h-8 w-px bg-slate-100" />
+              <div>
+                <span className="text-[10px] font-black text-slate-400 block uppercase">월 총 납입료</span>
+                <span className="text-xl font-black text-orange-600">
+                  {(analysis._remodelingCoverage.current_total_premium || 
+                    analysis._remodelingCoverage.policies.reduce((sum: number, p: any) => sum + (p.monthly_premium || 0), 0)
+                  ).toLocaleString()}원
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {analysis._remodelingCoverage.policies.map((policy: any, pIdx: number) => (
+              <div key={pIdx} className="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
+                <div className="space-y-4">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="space-y-1">
+                      <span className="inline-block px-2.5 py-1 bg-slate-100 text-slate-600 rounded-lg text-[10px] font-black">
+                        {policy.insurance_company}
+                      </span>
+                      <h5 className="text-base font-bold text-slate-800 group-hover:text-orange-600 transition-colors">
+                        {policy.product_name}
+                      </h5>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <span className="text-[9px] font-black text-slate-400 block uppercase">월 보험료</span>
+                      <span className="text-lg font-black text-slate-800">{policy.monthly_premium?.toLocaleString()}원</span>
+                    </div>
+                  </div>
+
+                  {policy.riders && policy.riders.length > 0 && (
+                    <div className="bg-slate-50/50 rounded-2xl p-4 border border-slate-100/50 space-y-2">
+                      <span className="text-[9px] font-black text-slate-400 block uppercase mb-1">가입 특약 내역</span>
+                      <div className="grid grid-cols-1 gap-1.5 max-h-40 overflow-y-auto pr-1">
+                        {policy.riders.map((rider: any, rIdx: number) => (
+                          <div key={rIdx} className="flex justify-between items-center text-xs font-bold text-slate-600 py-0.5 border-b border-dashed border-slate-100 last:border-0">
+                            <span className="truncate max-w-[180px]">{rider.rider_name}</span>
+                            <span className="text-slate-900 shrink-0">
+                              {rider.coverage_amount >= 100000000 
+                                ? `${(rider.coverage_amount / 100000000).toFixed(0)}억원`
+                                : `${(rider.coverage_amount / 10000).toLocaleString()}만원`}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       <section className="bg-white rounded-[4rem] p-10 md:p-20 shadow-[0_40px_120px_-20px_rgba(0,0,0,0.08)] border border-gray-50 flex flex-col lg:flex-row gap-24 items-center relative overflow-hidden">
         <div className="absolute top-0 right-0 p-24 opacity-[0.03] scale-150 transform rotate-12">
            {isDental || isSilbi ? <Stethoscope className="w-96 h-96 text-emerald-500" /> :
