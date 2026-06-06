@@ -401,7 +401,12 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
       ]);
 
       if (statusRes.common.errYn === 'Y') {
-        setError(statusRes.common.errMsg || '회원가입은 완료되었으나 보험 데이터 조회에 실패했습니다. 내보험다보여 로그인을 통해 다시 시도해 주세요.');
+        const rawErr = statusRes.common.errMsg || '';
+        if (rawErr.includes('B0001-002') || rawErr.includes('조회에 실패')) {
+          setError('🎉 내보험다보여 회원가입이 완료되었습니다! 다만, 신용정보원 시스템의 신규 계정 정보 반영에 약 1분 정도의 시간이 소요될 수 있습니다. 잠시 후 [내보험다보여 로그인] 탭에서 가입하신 아이디/비밀번호로 다시 조회해 주시면 0.1초 만에 웅장한 포트폴리오를 제공해 드립니다.');
+        } else {
+          setError(`회원가입은 완료되었으나 보험 데이터 조회에 실패했습니다. (${rawErr}) 내보험다보여 로그인을 통해 다시 시도해 주세요.`);
+        }
         setLoading(false);
         return;
       }
