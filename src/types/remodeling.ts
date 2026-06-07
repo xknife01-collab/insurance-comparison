@@ -19,6 +19,8 @@ export interface StandardizedCoverage {
   ischemic_heart: number;    // 허혈성 심장 진단비
   caregiver_expense: number; // 간병인 일당/지원비
   silson: boolean;           // 실손보험 가입 여부
+  surgery_amount?: number;   // 수술비
+  post_disability_amount?: number; // 질병후유장해
   policies?: RawInsurancePolicy[];
 }
 

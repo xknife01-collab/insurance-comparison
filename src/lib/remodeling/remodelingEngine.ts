@@ -16,7 +16,9 @@ export async function analyzeRemodeling(
       brain_vascular: analysis.cerebrovascular?.currentAmount || 0,
       ischemic_heart: analysis.cardiovascular?.currentAmount || 0,
       caregiver_expense: 0,
-      silson: false
+      silson: false,
+      surgery_amount: analysis.surgery?.currentAmount || 0,
+      post_disability_amount: analysis.postDisability?.currentAmount || 0
     };
   }
 

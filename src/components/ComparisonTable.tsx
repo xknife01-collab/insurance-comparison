@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { TrendingDown, TrendingUp, ShieldCheck, HeartPulse, Brain, Heart, Stethoscope, Clock, Scale, Dog, Cat, Coins, Calendar, PiggyBank } from 'lucide-react';
 import { InsuranceAnalysis, RecommendationPlan } from '../types/insurance';
@@ -44,6 +44,10 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
   const isCredit = category.includes('신용') || category === 'credit';
   const isAccident = category.includes('상해') || category === 'accident';
   const isSurgeryHospital = category.includes('수술') || category.includes('입원');
+  const isRemodeling = category === 'remodeling';
+  const hasLiabilityRider = (analysis as any)._remodelingCoverage?.policies?.some((p: any) =>
+    p.riders?.some((r: any) => /배상책임/.test(r.rider_name))
+  ) || false;
 
 
   const benchmark = isSilbi ? 55000 : isDental ? 85000 : isCaregiving ? 45000 : isNursing ? 70000 : isHeart ? 120000 : isChild ? (analysis.child?.maturity === 30 ? 45000 : 95000) : isDriver ? 22000 : isPet ? 42000 : isGolf ? 15000 : isFire ? 12000 : isProperty ? 45000 : isWholeLife ? 150000 : isVariable ? 150000 : isLegal ? 18000 : isCredit ? 40000 : isAccident ? 30000 : 180000;
@@ -405,25 +409,33 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     { 
       label: '일반암 진단비', 
       current: formatAmt(analysis.cancer?.currentAmount ?? 30000000), 
-      recommended: '최대 5,000만 원 (가장 빈번한 고액 질병 치료비 선제 확보)', 
+      recommended: isRemodeling 
+        ? `${formatAmt(analysis.cancer?.currentAmount ?? 30000000)} (동일 보장 유지 및 보험료 절감)` 
+        : '최대 5,000만 원 (가장 빈번한 고액 질병 치료비 선제 확보)', 
       icon: <ShieldCheck className="w-4 h-4 text-orange-500" /> 
     },
     { 
       label: '뇌혈관질환 진단비', 
       current: formatAmt(analysis.cerebrovascular?.currentAmount ?? 10000000), 
-      recommended: '최대 3,000만 원 (뇌졸중/뇌동맥류 완벽 보강)', 
+      recommended: isRemodeling 
+        ? `${formatAmt(analysis.cerebrovascular?.currentAmount ?? 10000000)} (동일 보장 유지 및 보험료 절감)` 
+        : '최대 3,000만 원 (뇌졸중/뇌동맥류 완벽 보강)', 
       icon: <Brain className="w-4 h-4 text-indigo-500" /> 
     },
     { 
       label: '허혈성 심장질환 진단비', 
       current: formatAmt(analysis.cardiovascular?.currentAmount ?? 10000000), 
-      recommended: '최대 3,000만 원 (협심증 및 급성심근경색 완벽 보장)', 
+      recommended: isRemodeling 
+        ? `${formatAmt(analysis.cardiovascular?.currentAmount ?? 10000000)} (동일 보장 유지 및 보험료 절감)` 
+        : '최대 3,000만 원 (협심증 및 급성심근경색 완벽 보장)', 
       icon: <Heart className="w-4 h-4 text-red-500" /> 
     },
     { 
       label: '가족 일상생활 배상책임', 
-      current: '미가입', 
-      recommended: '가입 (대인/대물 과실 누수 사고 시 자기부담금 20만 원 방어)', 
+      current: hasLiabilityRider ? '가입' : '미가입', 
+      recommended: hasLiabilityRider 
+        ? '가입 유지' 
+        : '가입 (대인/대물 과실 누수 사고 시 자기부담금 20만 원 방어)', 
       icon: <TrendingDown className="w-4 h-4 text-orange-500" /> 
     },
   ];
@@ -1102,6 +1114,8 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
             }
           </p>
         </div>
+
+
       </div>
     </div>
   );

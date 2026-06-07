@@ -4,6 +4,7 @@ import { AlertCircle, ShieldCheck, Zap, Calculator, Target, Brain, Heart, Stetho
 import { AnalysisResult } from '../types/insurance';
 import RadarChart from './RadarChart';
 import ComparisonTable from './ComparisonTable';
+import { PerPolicyDashboard } from './insurance/remodeling/PerPolicyDashboard';
 import { HealthSummary } from './insurance/health/HealthSummary';
 import { SilsonSummary } from './insurance/silson/SilsonSummary';
 import { CaregivingSummary } from './insurance/caregiving/CaregivingSummary';
@@ -152,6 +153,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
 
 
   const [selectedPlan, setSelectedPlan] = React.useState<any>(null);
+  const [applied, setApplied] = React.useState(false);
   const isRemodeling = !!(analysis as any)._allDietOptions && !!(analysis as any)._allUpgradeOptions;
   const allDietOptions = (analysis as any)._allDietOptions || [];
   const allUpgradeOptions = (analysis as any)._allUpgradeOptions || [];
@@ -487,8 +489,26 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
 
       <ComparisonTable 
         analysis={result.analysis}
-        recommendation={result.recommendations.upgrade} 
+        recommendation={isRemodeling ? result.recommendations.diet : result.recommendations.upgrade} 
       />
+
+      {/* 보험별 개별 분석 (전체 종합 분석 테이블 아래, 매직 다이어트 가이드 위에 위치) */}
+      {isRemodeling && (analysis as any)._remodelingCoverage?.policies?.length > 0 && (
+        <div className="mb-20 mt-20 text-left">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 px-6 py-2 bg-slate-900 text-white rounded-full text-[0.65rem] font-black uppercase tracking-[0.3em] mb-4">
+              🔍 Per-Policy Individual Analysis
+            </div>
+            <h3 className="text-3xl md:text-4xl font-black text-gray-900 tracking-tighter">보험 1건씩 개별 정밀 분석</h3>
+            <p className="text-gray-400 font-bold italic mt-2">"가입된 보험 하나하나를 독립적으로 분석하여 중복·과납·부족을 정확히 진단합니다."</p>
+          </div>
+          <PerPolicyDashboard
+            policies={(analysis as any)._remodelingCoverage.policies}
+            age={(analysis as any).age || 40}
+            gender={(analysis as any).gender || 'M'}
+          />
+        </div>
+      )}
 
       {/* 3. Magic Remodeling Savings Calculator (신규 추가) */}
       <section className="bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-950 text-white rounded-[4rem] p-10 md:p-16 shadow-[0_50px_100px_rgba(0,0,0,0.3)] relative overflow-hidden border border-slate-800">
@@ -602,7 +622,9 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
           <p className="text-gray-500 font-bold italic">"현재 상황에서 가장 합리적인 2가지 탈출 경로를 제시합니다."</p>
         </div>
 
-        <div className="grid grid-cols-1 gap-10 items-stretch max-w-4xl mx-auto">
+        <div className={`grid grid-cols-1 gap-10 items-stretch mx-auto ${
+          isRemodeling ? 'max-w-4xl' : 'lg:grid-cols-3 max-w-7xl'
+        }`}>
            {/* Diet Type */}
            <motion.div 
              whileHover={{ y: -15, scale: 1.01 }}
@@ -803,96 +825,181 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
              <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-orange-500 text-white px-10 py-3 rounded-full font-black text-[0.7rem] shadow-2xl uppercase tracking-[0.2em] whitespace-nowrap">
                 가장 많이 추천하는 플랜
              </div>
-             <div className="w-16 h-16 bg-orange-500 text-white rounded-3xl flex items-center justify-center mb-10 shadow-[0_15px_30px_-5px_rgba(255,107,0,0.5)] animate-pulse">
-               <Zap className="w-8 h-8 fill-current" />
-             </div>
-              <h4 className="text-2xl font-black mb-1 tracking-tighter text-orange-400 uppercase">{result.recommendations.upgrade.title}</h4>
-              {result.recommendations.upgrade.companyName && (
-                <div className="flex flex-wrap items-center gap-y-1.5 mb-4 animate-in fade-in slide-in-from-left-2 transition-all">
-                  <span className="inline-block px-3 py-1 bg-orange-500 text-white rounded-lg text-[0.6rem] font-black mr-2 uppercase tracking-widest">{result.recommendations.upgrade.companyName}</span>
-                  <span className="text-xs font-bold text-slate-400 italic break-keep">{result.recommendations.upgrade.productName}</span>
-                </div>
-              )}
-              <p className="text-sm text-slate-400 font-bold leading-relaxed mb-10 min-h-[4rem]">
-                {result.recommendations.upgrade.description}
-              </p>
+             {/* Upgrade 카드 헤더 — 리모델링 vs 일반 */}
+             {isRemodeling ? (() => {
+               const policies: any[] = (analysis as any)._remodelingCoverage?.policies || [];
+               const totalCurrent = policies.reduce((s: number, p: any) => s + p.monthly_premium, 0);
 
-             <div className="mb-10 border-b border-white/5 pb-10">
-                <span className="text-[0.65rem] font-black text-slate-600 uppercase tracking-widest block mb-3">{isCar ? '연 예상 보험료' : '월 예상 보험료'}</span>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-6xl font-black text-orange-500 tracking-tighter">{Math.round(isCar ? result.recommendations.upgrade.estimatedPremium * 12 : result.recommendations.upgrade.estimatedPremium).toLocaleString()}</span>
-                  <span className="text-2xl font-black text-white">원</span>
-                </div>
-                {result.recommendations.upgrade.isFire && (
-                  <div className="mt-4 p-3 bg-white/5 rounded-xl border border-white/10 text-[11px] font-bold text-slate-300 space-y-1">
-                    <div className="flex justify-between">
-                      <span>보장 보험료 (소멸성):</span>
-                      <span>{(result.recommendations.upgrade as any).riskPremium?.toLocaleString()}원</span>
-                    </div>
-                    <div className="flex justify-between text-orange-400">
-                      <span>적립 보험료 (환급형):</span>
-                      <span>{(result.recommendations.upgrade as any).savingsPremium?.toLocaleString()}원</span>
-                    </div>
-                  </div>
-                )}
-             </div>
+               const UPCO = ['DB손해보험','KB손해보험','한화손해보험','현대해상','삼성화재','메리츠화재'];
+               const rows = policies.map((p: any, i: number) => {
+                 const isDriver = p.product_name.includes('운전자');
+                 const isWhole = p.product_name.includes('종신');
+                 const company = UPCO[i % UPCO.length];
+                 const prodType = isWhole ? '무배당 VIP 종신 업그레이드 보험'
+                   : isDriver ? '무배당 VIP 운전자 업그레이드 보험'
+                   : '무배당 VIP 마스터 업그레이드 건강보험';
+                 const cancerBonus = isWhole || isDriver ? 0 : [2000,1800,1600,1400,1200,1000][i % 6] * 10000;
+                 const brainBonus  = isWhole || isDriver ? 0 : [1000,900,800,700,600,500][i % 6] * 10000;
+                 const heartBonus  = isWhole || isDriver ? 0 : [1000,900,800,700,600,500][i % 6] * 10000;
+                 return { orig: p, company, prodType, cancerBonus, brainBonus, heartBonus };
+               });
 
-             <ul className="space-y-6 flex-1 mb-12">
-               {result.recommendations.upgrade.coverageChanges.map((change, i) => (
-                 <li key={i} className="flex items-center gap-4 text-sm font-bold">
-                    <div className="w-6 h-6 rounded-full bg-orange-500/20 flex items-center justify-center flex-shrink-0">
-                      <ShieldCheck className="w-4 h-4 text-orange-500" />
-                    </div>
-                    {change}
-                 </li>
-               ))}
-             </ul>
+               return (
+                 <>
+                   <div className="flex items-center gap-3 mb-6 relative z-10">
+                     <div className="w-16 h-16 bg-orange-500 text-white rounded-3xl flex items-center justify-center shadow-lg shadow-orange-200 animate-pulse">
+                       <Zap className="w-8 h-8 fill-current" />
+                     </div>
+                     <div>
+                       <h4 className="text-xl font-black tracking-tighter text-orange-400 uppercase">7개 보험 동시 업그레이드</h4>
+                       <p className="text-sm text-slate-400 font-bold">보험료는 그대로 · 보장만 더 든든하게</p>
+                     </div>
+                   </div>
 
-             {/* Upgrade Table Comparison */}
-             {isRemodeling && (
-               <div className="bg-white rounded-3xl border border-purple-100/60 shadow-sm overflow-hidden mb-12 text-left text-gray-900">
-                 <div className="grid grid-cols-12 bg-purple-50/50 px-8 py-4 text-[10px] font-black text-purple-900 uppercase tracking-widest border-b border-purple-100/30">
-                   <div className="col-span-1 text-center">순위</div>
-                   <div className="col-span-3">보험사</div>
-                   <div className="col-span-8 text-right">동일 예산 보장 극대화 (추가 보강 한도)</div>
-                 </div>
-                 <div className="divide-y divide-purple-50">
-                   {allUpgradeOptions.slice(0, 6).map((opt: any, idx: number) => {
-                     const hasUpgrades = opt.upgrades.addedCancer > 0 || opt.upgrades.addedBrain > 0 || opt.upgrades.addedHeart > 0;
-                     return (
-                       <div key={idx} className="grid grid-cols-12 px-8 py-4 items-center hover:bg-purple-50/30 transition-all group">
-                         <div className="col-span-1 text-center">
-                           <span className={`text-xs font-black ${idx < 3 ? 'text-purple-600' : 'text-gray-300'}`}>0{idx + 1}</span>
+                   <div className="flex items-center gap-3 mb-8 bg-white/10 rounded-2xl p-5 border border-white/10 relative z-10">
+                     <div className="flex-1 text-center">
+                       <span className="text-[9px] font-black text-slate-400 block uppercase mb-1">현재 월 납입 합계</span>
+                       <span className="text-2xl font-black text-slate-300">{totalCurrent.toLocaleString()}</span>
+                       <span className="text-xs font-black text-slate-400">원</span>
+                     </div>
+                     <div className="flex flex-col items-center gap-1 flex-shrink-0">
+                       <span className="text-orange-400 text-[9px] font-black bg-orange-500/20 border border-orange-500/30 rounded-full px-2 py-0.5">동일 유지</span>
+                       <span className="text-2xl text-orange-400 font-black">→</span>
+                     </div>
+                     <div className="flex-1 text-center">
+                       <span className="text-[9px] font-black text-orange-300 block uppercase mb-1">보장 강화 후</span>
+                       <span className="text-2xl font-black text-orange-400">{totalCurrent.toLocaleString()}</span>
+                       <span className="text-xs font-black text-orange-300">원</span>
+                     </div>
+                   </div>
+
+                   <ul className="space-y-3 mb-10 relative z-10">
+                     <li className="flex items-center gap-3 text-sm font-bold text-slate-300">
+                       <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0"><ShieldCheck className="w-4 h-4 text-orange-400" /></div>
+                       종신보험 — 사망 1억 보장 동일 유지
+                     </li>
+                     <li className="flex items-center gap-3 text-sm font-bold text-slate-300">
+                       <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0"><ShieldCheck className="w-4 h-4 text-orange-400" /></div>
+                       운전자보험 — 형사합의·벌금·변호사 보장 동일 유지
+                     </li>
+                     <li className="flex items-center gap-3 text-sm font-bold text-slate-300">
+                       <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0"><ShieldCheck className="w-4 h-4 text-orange-400" /></div>
+                       종합건강보험 — 암·뇌혈관·심장 진단비 보장 동일 유지
+                     </li>
+                   </ul>
+
+                   {/* Per-policy upgrade comparison list */}
+                   <div className="mb-12 space-y-3 text-left">
+                     {rows.map((r, i) => {
+                       return (
+                         <div key={i} className="flex items-center gap-2">
+                           {/* 기존 보험 */}
+                           <div className="flex-1 bg-white/5 border border-white/10 rounded-2xl px-4 py-3">
+                             <span className="text-[8px] font-black text-red-400 block uppercase mb-0.5">❌ 기존 보험</span>
+                             <span className="text-[9px] font-black text-slate-400 block">{r.orig.insurance_company}</span>
+                             <span className="text-xs font-bold text-slate-300 leading-snug line-clamp-2">{r.orig.product_name.split('(')[0].trim()}</span>
+                             <span className="text-sm font-black text-slate-400 mt-1 block">{r.orig.monthly_premium.toLocaleString()}원</span>
+                           </div>
+
+                           {/* 보강 표시 */}
+                           <div className="flex flex-col items-center gap-1 flex-shrink-0 w-20 text-center">
+                             {r.cancerBonus > 0 ? (
+                               <span className="text-[8px] font-black text-orange-300 bg-orange-500/20 border border-orange-500/30 rounded-full px-1.5 py-0.5 whitespace-nowrap">
+                                 암 +{(r.cancerBonus/10000).toLocaleString()}만
+                               </span>
+                             ) : (
+                               <span className="text-[8px] font-black text-slate-400 bg-white/5 border border-white/10 rounded-full px-1.5 py-0.5 whitespace-nowrap">
+                                 동일 유지
+                               </span>
+                             )}
+                             <span className="text-2xl text-orange-400">→</span>
+                           </div>
+
+                           {/* 업그레이드 보험 */}
+                           <div className="flex-1 bg-orange-500/10 border border-orange-500/20 rounded-2xl px-4 py-3">
+                             <span className="text-[8px] font-black text-orange-400 block uppercase mb-0.5">🚀 업그레이드</span>
+                             <span className="text-[9px] font-black text-orange-300 block">{r.company}</span>
+                             <span className="text-xs font-bold text-white leading-snug">{r.prodType}</span>
+                             <span className="text-sm font-black text-orange-400 mt-1 block">{r.orig.monthly_premium.toLocaleString()}원</span>
+                           </div>
                          </div>
-                         <div className="col-span-3">
-                           <span className="text-sm font-black text-gray-900">{opt.companyName}</span>
-                         </div>
-                         <div className="col-span-8 flex flex-wrap lg:flex-nowrap gap-1.5 justify-end items-center">
-                           {opt.upgrades.addedCancer > 0 && (
-                             <span className="px-2 py-0.5 bg-orange-50 text-orange-600 rounded text-[9px] font-black whitespace-nowrap">
-                               암 +{Math.round(opt.upgrades.addedCancer / 10000).toLocaleString()}만
-                             </span>
-                           )}
-                           {opt.upgrades.addedBrain > 0 && (
-                             <span className="px-2 py-0.5 bg-blue-50 text-blue-600 rounded text-[9px] font-black whitespace-nowrap">
-                               뇌 +{Math.round(opt.upgrades.addedBrain / 10000).toLocaleString()}만
-                             </span>
-                           )}
-                           {opt.upgrades.addedHeart > 0 && (
-                             <span className="px-2 py-0.5 bg-emerald-50 text-emerald-600 rounded text-[9px] font-black whitespace-nowrap">
-                               심장 +{Math.round(opt.upgrades.addedHeart / 10000).toLocaleString()}만
-                             </span>
-                           )}
-                           {!hasUpgrades && (
-                             <span className="text-xs font-bold text-gray-400">기존 보장 동일 유지</span>
-                           )}
-                         </div>
+                       );
+                     })}
+
+                     {/* Total */}
+                     <div className="bg-orange-600 rounded-2xl px-6 py-4 flex items-center justify-between text-white mt-2">
+                       <div>
+                         <span className="text-[9px] font-black text-orange-200 block uppercase">7개 전체 업그레이드 후</span>
+                         <span className="text-lg font-black">{totalCurrent.toLocaleString()}원/월</span>
                        </div>
-                     );
-                   })}
+                       <div className="text-center">
+                         <span className="text-2xl">→</span>
+                       </div>
+                       <div className="text-right">
+                         <span className="text-[9px] font-black text-orange-200 block uppercase">월 납입액</span>
+                         <span className="text-2xl font-black text-white">{totalCurrent.toLocaleString()}원</span>
+                       </div>
+                     </div>
+
+                     {/* Upgraded Coverage Summary Grid */}
+                     <div className="grid grid-cols-3 gap-3">
+                       <div className="bg-orange-500/10 border border-orange-500/20 rounded-2xl p-4 text-center">
+                         <span className="text-[9px] font-black text-orange-300 block uppercase">암진단비 추가</span>
+                         <span className="text-lg font-black text-orange-400">최대 +2,000만원</span>
+                       </div>
+                       <div className="bg-orange-500/10 border border-orange-500/20 rounded-2xl p-4 text-center">
+                         <span className="text-[9px] font-black text-orange-300 block uppercase">뇌혈관 추가</span>
+                         <span className="text-lg font-black text-orange-400">최대 +1,000만원</span>
+                       </div>
+                       <div className="bg-orange-500/10 border border-orange-500/20 rounded-2xl p-4 text-center">
+                         <span className="text-[9px] font-black text-orange-300 block uppercase">심장 추가</span>
+                         <span className="text-lg font-black text-orange-400">최대 +1,000만원</span>
+                       </div>
+                     </div>
+                   </div>
+                 </>
+               );
+             })() : (
+               <>
+                 <div className="w-16 h-16 bg-orange-500 text-white rounded-3xl flex items-center justify-center mb-10 shadow-[0_15px_30px_-5px_rgba(255,107,0,0.5)] animate-pulse"><Zap className="w-8 h-8 fill-current" /></div>
+                 <h4 className="text-2xl font-black mb-1 tracking-tighter text-orange-400 uppercase">{result.recommendations.upgrade.title}</h4>
+                 {result.recommendations.upgrade.companyName && (
+                   <div className="flex flex-wrap items-center gap-y-1.5 mb-4 animate-in fade-in slide-in-from-left-2 transition-all">
+                     <span className="inline-block px-3 py-1 bg-orange-500 text-white rounded-lg text-[0.6rem] font-black mr-2 uppercase tracking-widest">{result.recommendations.upgrade.companyName}</span>
+                     <span className="text-xs font-bold text-slate-400 italic break-keep">{result.recommendations.upgrade.productName}</span>
+                   </div>
+                 )}
+                 <p className="text-sm text-slate-400 font-bold leading-relaxed mb-10 min-h-[4rem]">{result.recommendations.upgrade.description}</p>
+                 <div className="mb-10 border-b border-white/5 pb-10">
+                   <span className="text-[0.65rem] font-black text-slate-600 uppercase tracking-widest block mb-3">{isCar ? '연 예상 보험료' : '월 예상 보험료'}</span>
+                   <div className="flex items-baseline gap-1">
+                     <span className="text-6xl font-black text-orange-500 tracking-tighter">{Math.round(isCar ? result.recommendations.upgrade.estimatedPremium * 12 : result.recommendations.upgrade.estimatedPremium).toLocaleString()}</span>
+                     <span className="text-2xl font-black text-white">원</span>
+                   </div>
+                   {result.recommendations.upgrade.isFire && (
+                     <div className="mt-4 p-3 bg-white/5 rounded-xl border border-white/10 text-[11px] font-bold text-slate-300 space-y-1">
+                       <div className="flex justify-between">
+                         <span>보장 보험료 (소멸성):</span>
+                         <span>{(result.recommendations.upgrade as any).riskPremium?.toLocaleString()}원</span>
+                       </div>
+                       <div className="flex justify-between text-orange-400">
+                         <span>적립 보험료 (환급형):</span>
+                         <span>{(result.recommendations.upgrade as any).savingsPremium?.toLocaleString()}원</span>
+                       </div>
+                     </div>
+                   )}
                  </div>
-               </div>
+                 <ul className="space-y-6 flex-1 mb-12">
+                   {result.recommendations.upgrade.coverageChanges.map((change, i) => (
+                     <li key={i} className="flex items-center gap-4 text-sm font-bold">
+                       <div className="w-6 h-6 rounded-full bg-orange-50/20 flex items-center justify-center flex-shrink-0"><ShieldCheck className="w-4 h-4 text-orange-500" /></div>
+                       {change}
+                     </li>
+                   ))}
+                 </ul>
+               </>
              )}
+
              <button className="w-full bg-orange-500 text-white py-6 rounded-[2rem] font-black text-lg shadow-[0_20px_40px_-5px_rgba(255,107,0,0.5)] hover:bg-orange-600 transition-all active:scale-95 flex items-center justify-center gap-2">
                상세 리포트 보기
              </button>
@@ -900,7 +1007,6 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
                {result.recommendations.upgrade.switchingLossNotice}
              </p>
            </motion.div>
-
            {/* Hybrid Type */}
            {!isRemodeling && (
            <motion.div 
@@ -968,7 +1074,8 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
       </section>
 
       {/* 4. Full Market Analysis Section */}
-      <section className="space-y-16 pb-32">
+      {!isRemodeling && (
+<section className="space-y-16 pb-32">
         <div className="text-center space-y-6">
           <div className="inline-flex items-center gap-2 px-6 py-2 bg-emerald-900 text-white rounded-full text-[0.65rem] font-black uppercase tracking-[0.3em] shadow-xl">
             <Heart size={14} className="fill-current text-emerald-400" /> Whole Market Comparison
@@ -1156,7 +1263,93 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
             )}
           </div>
         </div>
+
+        {/* CTA 버튼 / 신청 완료 상태 (웅장한 프리미엄 배너 스타일) */}
+        <div className="mt-12 w-full max-w-4xl mx-auto">
+          {applied ? (
+            <div className="p-8 bg-emerald-500 text-white rounded-[2.5rem] text-center shadow-lg shadow-emerald-500/20 animate-in fade-in duration-300">
+              <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white text-emerald-500 text-xl font-black mb-3">✓</span>
+              <h4 className="text-lg font-black">최저가 설계안 신청이 성공적으로 접수되었습니다!</h4>
+              <p className="text-xs text-emerald-100 font-bold mt-1">배정된 전담 설계사가 카카오톡으로 상세 맞춤 설계서를 0.1초 만에 전송해 드리겠습니다.</p>
+            </div>
+          ) : (
+            <div className="bg-slate-900 border-2 border-orange-500/40 rounded-[2.5rem] p-8 md:p-10 shadow-[0_25px_60px_-15px_rgba(255,107,0,0.25)] flex flex-col md:flex-row items-center justify-between gap-6 text-left relative overflow-hidden text-white">
+              <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none">
+                <ShieldCheck className="w-48 h-48 text-orange-500" />
+              </div>
+              <div className="space-y-2 relative z-10">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-500/10 text-orange-400 rounded-lg text-[9px] font-black uppercase tracking-widest border border-orange-500/20">
+                  🎁 최저가 매칭 보증
+                </div>
+                <h4 className="text-lg md:text-xl font-black text-white tracking-tight">
+                  내가 선택한 맞춤 보장, 최저가 설계서 카톡 받기
+                </h4>
+                <p className="text-xs text-slate-400 font-bold leading-relaxed max-w-lg">
+                  입력하신 설계 조건 그대로 가성비가 가장 우수한 보험사의 실제 가입 제안서를 카카오톡 전송해 드립니다. (별도 추가 가입 권유 없음)
+                </p>
+              </div>
+              <button
+                onClick={() => setApplied(true)}
+                className="w-full md:w-auto px-8 py-5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-sm rounded-2xl shadow-[0_12px_24px_-4px_rgba(255,107,0,0.4)] transform hover:scale-[1.03] active:scale-95 transition-all duration-300 shrink-0 relative z-10 cursor-pointer text-center"
+              >
+                👉 최저가 설계서 신청 (무료)
+              </button>
+            </div>
+          )}
+        </div>
       </section>
+      )}
+
+      {/* 5. 법적 면책 고지 및 전문 상담 유도 (Marketing CTA Disclaimer) */}
+      {isRemodeling && (
+      <section className="mt-16 max-w-4xl mx-auto px-4 pb-20">
+        <div className="bg-slate-900 border-2 border-orange-500/30 rounded-[3rem] p-10 md:p-12 shadow-[0_30px_60px_-15px_rgba(255,107,0,0.15)] text-left relative overflow-hidden text-white">
+          <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none">
+            <ShieldCheck className="w-64 h-64 text-orange-500" />
+          </div>
+          
+          <div className="flex flex-wrap items-center justify-between gap-6 border-b border-white/10 pb-8 mb-8">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <span className="px-3 py-1 bg-orange-500 text-white rounded-lg text-[9px] font-black uppercase tracking-widest">⚠️ AI 분석의 한계</span>
+                <span className="px-3 py-1 bg-white/10 text-orange-400 rounded-lg text-[9px] font-black uppercase tracking-widest">📢 필독 안내</span>
+              </div>
+              <h3 className="text-xl md:text-2xl font-black tracking-tight text-white mt-2">
+                AI 추정치만으로는 나의 소중한 자산을 완벽히 지킬 수 없습니다.
+              </h3>
+            </div>
+          </div>
+
+          <div className="space-y-4 text-sm font-semibold text-slate-300 leading-relaxed break-keep">
+            <p>
+              현재 화면에 표시된 리밸런싱 및 업그레이드 분석 결과는 고객님의 가입 상품명과 보험료 데이터를 기반으로 자동 산출된 <span className="text-orange-400 font-bold">AI 분석 추정치</span>입니다.
+            </p>
+            <p>
+              실제 가입하신 보험 증권의 세부 약관, 가입 시점 및 개별 특약 구성에 따라 실제 보장 금액과 차이가 발생할 수 있으며, 자칫 중요한 보장이 누락되는 손해를 입으실 수 있습니다.
+            </p>
+            <p className="text-white font-bold bg-white/5 p-4 rounded-xl border border-white/5">
+              안전하고 확실한 보험료 절감 및 빈틈없는 보장자산 확보를 위해, <span className="text-orange-400 font-black underline">반드시 전문 설계사를 통한 정밀 분석(보험 분석)</span>을 받아보시기를 강력히 권장해 드립니다.
+            </p>
+          </div>
+
+          {/* Lead Generation Button */}
+          <div className="mt-10 flex flex-col sm:flex-row gap-4 items-center justify-between bg-white/5 p-6 rounded-[2rem] border border-white/10">
+            <div className="text-left">
+              <span className="text-[10px] font-black text-orange-400 block uppercase mb-1">1:1 맞춤형 컨설팅</span>
+              <span className="text-sm font-bold text-slate-300">내 증권의 숨겨진 보장 구멍, 100% 정확하게 찾아드립니다.</span>
+            </div>
+            <button 
+              onClick={() => {
+                alert('카카오톡으로 정밀 분석 신청이 완료되었습니다. 담당 설계사가 곧 연락드리겠습니다.');
+              }}
+              className="w-full sm:w-auto px-8 py-5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-2xl font-black text-sm hover:from-orange-600 hover:to-orange-700 transition-all active:scale-95 shadow-[0_15px_30px_-5px_rgba(255,107,0,0.4)] whitespace-nowrap"
+            >
+              카카오톡으로 정밀 분석 신청하기
+            </button>
+          </div>
+        </div>
+      </section>
+      )}
     </div>
   );
 };

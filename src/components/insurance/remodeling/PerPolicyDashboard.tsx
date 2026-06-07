@@ -98,7 +98,7 @@ function findDups(policies: Policy[]): Set<number> {
 }
 
 function PolicyCard({policy,index,isDup,totalCount}:{policy:Policy;index:number;isDup:boolean;totalCount:number}) {
-  const [open,setOpen]=useState(false);
+  const [open,setOpen]=useState(index === 0);
   const t=detectType(policy.product_name);
   const cov=extractCov(policy.riders);
   const p=policy.monthly_premium;
@@ -148,6 +148,18 @@ function PolicyCard({policy,index,isDup,totalCount}:{policy:Policy;index:number;
   const scoreColor=score>=70?'text-emerald-600':score>=50?'text-amber-600':'text-red-500';
   const borderColor=isDup?'border-amber-200':'border-slate-100';
 
+  // Badges to show on card header
+  const badges: { text: string; bg: string; textCol: string }[] = [];
+  if (isDup) {
+    badges.push({ text: '📉 다이어트 1순위', bg: 'bg-red-50 border border-red-100/65', textCol: 'text-red-600' });
+  } else if (t === 'whole') {
+    badges.push({ text: '⚠️ 주계약 비용 과다', bg: 'bg-orange-50 border border-orange-100/65', textCol: 'text-orange-600' });
+  } else if (score >= 80) {
+    badges.push({ text: '✅ 유지 권장', bg: 'bg-emerald-50 border border-emerald-100/65', textCol: 'text-emerald-600' });
+  } else if (score < 50) {
+    badges.push({ text: '🚀 보강 필요', bg: 'bg-indigo-50 border border-indigo-100/65', textCol: 'text-indigo-600' });
+  }
+
   return (
     <div className={`bg-white rounded-[2rem] border ${borderColor} shadow-sm overflow-hidden`}>
       {/* Header */}
@@ -161,6 +173,11 @@ function PolicyCard({policy,index,isDup,totalCount}:{policy:Policy;index:number;
               <span className="px-2 py-0.5 bg-slate-100 text-slate-600 rounded-md text-[10px] font-black">{policy.insurance_company}</span>
               <span className={`px-2 py-0.5 rounded-md text-[10px] font-black text-white ${typeColor[t]}`}>{typeLabel[t]}</span>
               {isDup&&<span className="px-2 py-0.5 bg-amber-100 text-amber-700 rounded-md text-[10px] font-black">⚠️ 중복</span>}
+              {badges.map((b, idx) => (
+                <span key={idx} className={`px-2 py-0.5 rounded-md text-[10px] font-black ${b.bg} ${b.textCol}`}>
+                  {b.text}
+                </span>
+              ))}
             </div>
             <p className="text-sm font-black text-slate-800 leading-snug group-hover:text-orange-600 transition-colors line-clamp-2">{policy.product_name}</p>
             <div className="flex items-center gap-3 mt-2">
@@ -175,7 +192,13 @@ function PolicyCard({policy,index,isDup,totalCount}:{policy:Policy;index:number;
             <span className="text-[9px] font-black text-slate-400 block uppercase">보장점수</span>
             <span className={`text-2xl font-black ${scoreColor}`}>{score}</span>
           </div>
-          {open?<ChevronUp className="w-5 h-5 text-slate-400"/>:<ChevronDown className="w-5 h-5 text-slate-400"/>}
+          <div className={`p-2 rounded-full transition-all flex items-center justify-center ${
+            open 
+              ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20 rotate-0' 
+              : 'bg-slate-100 text-slate-600 border border-slate-200 group-hover:bg-orange-50 group-hover:text-orange-600 group-hover:border-orange-200 group-hover:scale-110'
+          }`}>
+            {open ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+          </div>
         </div>
       </button>
 

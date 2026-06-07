@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -16,7 +16,7 @@ import SimulationSlider from './components/SimulationSlider';
 import { ProblemSection, PreExistingSection, CaregivingSection, CaregivingOldSection, NursingSection, SurgerySection, CancerSection, CerebrovascularSection, HeartSection, PhilosophySection, Footer, ChildPrenatalSection, ChildSickSection } from './components/Sections';
 import { InsuranceAnalysis, AnalysisResult } from './types/insurance';
 import { runAnalysis } from './lib/analysisEngine';
-import { Sparkles, ChevronRight } from 'lucide-react';
+import { Sparkles, ChevronRight, ShieldCheck } from 'lucide-react';
 import { CarExplanation } from './components/insurance/car/CarExplanation';
 import { DriverExplanation } from './components/insurance/driver/DriverExplanation';
 import { PetExplanation } from './components/insurance/pet/PetExplanation';
@@ -47,26 +47,48 @@ export default function App() {
   const [view, setView] = useState<'home' | 'indemnity' | 'preexisting' | 'dental' | 'caregiving' | 'dementia' | 'surgery' | 'cancer' | 'cerebrovascular' | 'heart' | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'property' | 'annuity' | 'whole' | 'variable' | 'legal' | 'credit' | 'health_general' | 'accident' | 'savings_general'>('home');
 
   const [calcTarget, setCalcTarget] = useState<string | null>(null);
+  const [remodelingApplied, setRemodelingApplied] = useState(false);
 
   const handleAnalyze = async (analysis: InsuranceAnalysis) => {
     if (analysis.selectedCategory === 'remodeling') {
+      setRemodelingApplied(false);
       const result = await runAnalysis(analysis);
       setRemodelingResult(result);
-      setTimeout(() => {
-        document.getElementById('remodeling-results-section')?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
     } else {
       setCurrentAnalysis(analysis);
       const result = await runAnalysis(analysis);
       setAnalysisResult(result);
       setView('home'); // Ensure we are on home to see results
-      
-      // Scroll to results after a short delay
-      setTimeout(() => {
-        document.getElementById('results-section')?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
     }
   };
+
+  useEffect(() => {
+    if (remodelingResult) {
+      const timer = setTimeout(() => {
+        const element = document.getElementById('remodeling-results-section');
+        if (element) {
+          const yOffset = -100;
+          const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }, 350);
+      return () => clearTimeout(timer);
+    }
+  }, [remodelingResult]);
+
+  useEffect(() => {
+    if (analysisResult) {
+      const timer = setTimeout(() => {
+        const element = document.getElementById('results-section');
+        if (element) {
+          const yOffset = -100;
+          const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }, 350);
+      return () => clearTimeout(timer);
+    }
+  }, [analysisResult]);
 
   if (view === 'indemnity') {
     return (
@@ -685,6 +707,83 @@ export default function App() {
                 </h2>
               </div>
 
+              {/* AI Executive Summary 코멘트 카드 */}
+              {(() => {
+                const coverage = (remodelingResult.analysis as any)._remodelingCoverage;
+                const totalPremium = remodelingResult.analysis.monthlyPremium || 0;
+                const cheapestPremium = remodelingResult.recommendations.diet?.estimatedPremium || 0;
+                const savingAmount = totalPremium - cheapestPremium;
+                const policies = coverage?.policies || [];
+                
+                // 중복 가입 건수 계산
+                const dups = new Set<number>();
+                for (let i = 0; i < policies.length; i++) {
+                  for (let j = i + 1; j < policies.length; j++) {
+                    const a = policies[i].product_name.replace(/\(보장종료 \d+\)/g, '').trim();
+                    const b = policies[j].product_name.replace(/\(보장종료 \d+\)/g, '').trim();
+                    if (a === b || (a.length > 10 && (b.includes(a.slice(0, 12)) || a.includes(b.slice(0, 12))))) {
+                      dups.add(i); dups.add(j);
+                    }
+                  }
+                }
+
+                return (
+                  <div className="max-w-5xl mx-auto mb-12 bg-orange-50/50 border border-orange-100/60 rounded-[3rem] p-8 md:p-12 shadow-sm flex flex-col md:flex-row gap-8 items-center text-left">
+                    <div className="w-16 h-16 rounded-3xl bg-orange-500 text-white flex items-center justify-center shrink-0 shadow-lg shadow-orange-500/20">
+                      <Sparkles size={28} className="animate-pulse" />
+                    </div>
+                    <div className="space-y-4 flex-1">
+                      <div className="space-y-2">
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-[10px] font-black">
+                          📢 AI 종합 분석 리포트 요약
+                        </div>
+                        <h4 className="text-xl md:text-2xl font-black text-slate-800 tracking-tight">
+                          매달 불필요하게 낭비되는 보험료 <span className="text-orange-500 underline underline-offset-4 font-black">{savingAmount.toLocaleString()}원</span>을 찾아냈습니다!
+                        </h4>
+                        <p className="text-sm text-slate-500 font-bold leading-relaxed break-keep">
+                          고객님은 현재 총 <span className="text-slate-800 font-extrabold">{policies.length}건</span>의 보험을 유지 중이시며, 이 중 <span className="text-red-500 font-extrabold">{dups.size}건의 중복 가입 상품</span>이 확인되었습니다. 
+                          불필요한 과납 보장과 사망 위주의 주계약 비용을 최적화하면, 기존 핵심 보장은 100% 동일하게 지키면서 매월 총 <span className="text-orange-500 font-extrabold">{savingAmount.toLocaleString()}원</span>의 기회 자산을 확보하실 수 있습니다.
+                        </p>
+                      </div>
+
+                      {/* CTA 버튼 / 신청 완료 상태 (웅장하고 눈에 띄는 다크 배너 박스) */}
+                      <div className="pt-6 border-t border-orange-200/40">
+                        {remodelingApplied ? (
+                          <div className="p-6 bg-emerald-500 text-white rounded-3xl text-center shadow-lg shadow-emerald-500/20 animate-in fade-in duration-300">
+                            <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white text-emerald-500 text-xs font-black mb-2">✓</span>
+                            <p className="text-sm font-black">100점 보완 및 절감 설계안 신청이 완료되었습니다!</p>
+                            <p className="text-xs text-emerald-100 font-bold mt-1">전담 설계사가 분석된 고객 DB 정보를 확인하여 카카오톡으로 상세 설계안을 0.1초 만에 발송해 드립니다.</p>
+                          </div>
+                        ) : (
+                          <div className="bg-slate-900 border border-orange-500/30 rounded-3xl p-6 shadow-[0_15px_40px_-10px_rgba(0,0,0,0.15)] flex flex-col md:flex-row md:items-center justify-between gap-6 text-white text-left relative overflow-hidden">
+                            <div className="absolute top-0 right-0 p-4 opacity-[0.02] pointer-events-none">
+                              <ShieldCheck className="w-32 h-32 text-orange-500" />
+                            </div>
+                            <div className="space-y-1.5 relative z-10 flex-1">
+                              <div className="inline-flex items-center gap-1 px-2 py-0.5 bg-orange-500/10 text-orange-400 rounded-md text-[8px] font-black uppercase tracking-widest border border-orange-500/20">
+                                🔥 보완설계 & 보험료 절감
+                              </div>
+                              <h5 className="text-sm font-black text-white">
+                                분석 점수 65점 ➡️ 100점으로 올리는 맞춤 보완 설계안 신청
+                              </h5>
+                              <p className="text-[11px] text-slate-400 font-bold leading-normal">
+                                월 {savingAmount.toLocaleString()}원을 즉시 아낄 수 있는 리모델링 상세 계획서 및 카카오톡 무료 상담을 신청하시겠습니까?
+                              </p>
+                            </div>
+                            <button
+                              onClick={() => setRemodelingApplied(true)}
+                              className="px-6 py-4.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black rounded-xl text-xs shrink-0 shadow-[0_10px_20px_-4px_rgba(255,107,0,0.4)] transform transition-all hover:scale-105 active:scale-95 cursor-pointer text-center relative z-10"
+                            >
+                              👉 카톡으로 설계안 무료 신청
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
+
               {/* 실시간 조회된 나의 가입 보험 내역 — 리모델링 결과 최상단 */}
               {(remodelingResult.analysis as any)._remodelingCoverage?.policies?.length > 0 && (() => {
                 const coverage = (remodelingResult.analysis as any)._remodelingCoverage;
@@ -760,32 +859,19 @@ export default function App() {
                 );
               })()}
 
-              {/* 보험별 개별 분석 */}
-              {(remodelingResult.analysis as any)._remodelingCoverage?.policies?.length > 0 && (
-                <div className="mb-12">
-                  <div className="text-center mb-10">
-                    <div className="inline-flex items-center gap-2 px-6 py-2 bg-slate-900 text-white rounded-full text-[0.65rem] font-black uppercase tracking-[0.3em] mb-4">
-                      🔍 Per-Policy Individual Analysis
-                    </div>
-                    <h3 className="text-3xl md:text-4xl font-black text-gray-900 tracking-tighter">보험 1건씩 개별 정밀 분석</h3>
-                    <p className="text-gray-400 font-bold italic mt-2">"가입된 보험 하나하나를 독립적으로 분석하여 중복·과납·부족을 정확히 진단합니다."</p>
-                  </div>
-                  <PerPolicyDashboard
-                    policies={(remodelingResult.analysis as any)._remodelingCoverage.policies}
-                    age={(remodelingResult.analysis as any).age || 40}
-                    gender={(remodelingResult.analysis as any).gender || 'M'}
-                  />
-                </div>
-              )}
-
               {/* 종합 리모델링 결과 */}
-              <div className="text-center mb-10">
+              <div className="text-center mb-10 mt-16">
                 <div className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full text-[0.65rem] font-black uppercase tracking-[0.3em] text-white mb-4">
                   📊 Comprehensive Remodeling Result
                 </div>
                 <h3 className="text-3xl md:text-4xl font-black text-gray-900 tracking-tighter">전체 보험 포트폴리오 종합 분석</h3>
+                <p className="max-w-2xl mx-auto text-xs md:text-sm text-slate-500 font-semibold mt-3 px-4 leading-relaxed break-keep">
+                  💡 본 분석은 한국신용정보원의 상품명과 월 납입 보험료 정보를 기반으로, AI가 표준 보험 요율에 맞춰 가입 특약 및 보장 금액을 정교하게 역산한 추정치입니다. 실제 가입하신 보험 증권의 세부 구성에 따라 차이가 있을 수 있으므로 정확한 진단은 전문 설계사의 정밀 상담을 권장합니다.
+                </p>
               </div>
               <AnalysisDashboard result={remodelingResult} />
+
+
             </motion.section>
           )}
         </AnimatePresence>

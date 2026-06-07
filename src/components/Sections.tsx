@@ -45,9 +45,21 @@ const REVIEWS = [
 ];
 
 const ReviewMarquee = () => {
+  const [isPaused, setIsPaused] = React.useState(false);
+  
   return (
-    <div className="mt-40 overflow-hidden relative py-20 bg-white">
-      <div className="flex animate-marquee gap-12 items-center hover:[animation-play-state:paused]">
+    <div className="mt-20 md:mt-40 overflow-hidden relative py-10 md:py-20 bg-white">
+      <div 
+        className="flex w-max animate-marquee gap-6 md:gap-12 items-center"
+        style={{ animationPlayState: isPaused ? 'paused' : 'running' }}
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        onTouchStart={() => setIsPaused(true)}
+        onTouchEnd={() => {
+          setTimeout(() => setIsPaused(false), 800);
+        }}
+        onClick={() => setIsPaused(true)}
+      >
         {[...REVIEWS, ...REVIEWS].map((review, i) => {
           const idx = review.avatarIdx;
           
@@ -84,36 +96,36 @@ const ReviewMarquee = () => {
           return (
             <div 
               key={i} 
-              className="flex-shrink-0 w-[640px] h-[480px] min-w-[640px] bg-white p-16 rounded-[4rem] border border-gray-100 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.1)] whitespace-normal group hover:border-orange-200 hover:-translate-y-6 hover:shadow-[0_80px_150px_-40px_rgba(255,107,0,0.22)] transition-all duration-1000 ease-out relative"
+              className="flex-shrink-0 w-[310px] h-[400px] min-w-[310px] md:w-[640px] md:h-[480px] md:min-w-[640px] bg-white p-6 md:p-10 rounded-[2.5rem] md:rounded-[4rem] border border-gray-100 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.1)] whitespace-normal group hover:border-orange-200 hover:-translate-y-6 hover:shadow-[0_80px_150px_-40px_rgba(255,107,0,0.22)] transition-all duration-1000 ease-out relative"
             >
               <div className="h-full flex flex-col justify-between">
                 <div className="flex justify-between items-start">
-                  <div className="flex gap-2 text-orange-400">
-                    {[1,2,3,4,5].map(star => <Star key={star} size={18} fill="currentColor" />)}
+                  <div className="flex gap-1 md:gap-2 text-orange-400">
+                    {[1,2,3,4,5].map(star => <Star key={star} className="w-3.5 h-3.5 md:w-[18px] md:h-[18px]" fill="currentColor" />)}
                   </div>
-                  <div className="w-16 h-16 bg-orange-50 rounded-[1.5rem] flex items-center justify-center text-orange-200 group-hover:text-orange-400 transition-all duration-700 transform group-hover:rotate-12 group-hover:scale-110 shadow-inner">
-                    <Quote size={32} />
+                  <div className="w-10 h-10 md:w-14 md:h-14 bg-orange-50 rounded-[1rem] md:rounded-[1.2rem] flex items-center justify-center text-orange-200 group-hover:text-orange-400 transition-all duration-700 transform group-hover:rotate-12 group-hover:scale-110 shadow-inner">
+                    <Quote className="w-5 h-5 md:w-7 md:h-7" />
                   </div>
                 </div>
                 
-                <div className="flex-1 flex items-center py-6">
-                  <p className="text-gray-900 font-bold leading-[1.8] text-lg tracking-tight opacity-90 group-hover:opacity-100 transition-opacity">
+                <div className="flex-1 flex items-center py-2 md:py-4 overflow-hidden">
+                  <p className="text-gray-900 font-bold leading-[1.6] md:leading-[1.8] text-xs sm:text-sm md:text-lg tracking-tight opacity-90 group-hover:opacity-100 transition-opacity">
                     "{review.content}"
                   </p>
                 </div>
                 
-                <div className="flex items-center gap-8 pt-10 border-t border-gray-100/80">
-                  <div className="w-24 h-24 rounded-[1.5rem] shadow-[inset_0_2px_4px_rgba(0,0,0,0.1)] overflow-hidden border-2 border-gray-100 group-hover:border-orange-100 transition-colors">
+                <div className="flex items-center gap-4 md:gap-6 pt-4 md:pt-6 border-t border-gray-100/80">
+                  <div className="w-12 h-12 md:w-18 md:h-18 rounded-[1rem] md:rounded-[1.2rem] shadow-[inset_0_2px_4px_rgba(0,0,0,0.1)] overflow-hidden border-2 border-gray-100 group-hover:border-orange-100 transition-colors">
                      <div 
                        className="w-full h-full scale-110 group-hover:scale-125 transition-transform duration-700"
                        style={avatarStyle}
                      />
                   </div>
-                  <div className="flex flex-col gap-2">
-                    <p className="text-2xl font-black text-gray-900 leading-none">{review.name}</p>
-                    <div className="flex items-center gap-4">
-                       <span className="text-[0.85rem] font-black text-orange-500 bg-orange-50 px-4 py-1.5 rounded-2xl border border-orange-100/50 shadow-sm">{review.age}세</span>
-                       <span className="text-[0.85rem] font-bold text-gray-400 tracking-widest bg-gray-50 px-4 py-1.5 rounded-2xl border border-gray-100/50">{review.job}</span>
+                  <div className="flex flex-col gap-1 md:gap-1.5">
+                    <p className="text-base md:text-xl font-black text-gray-900 leading-none">{review.name}</p>
+                    <div className="flex items-center gap-2 md:gap-3">
+                       <span className="text-[0.65rem] md:text-[0.8rem] font-black text-orange-500 bg-orange-50 px-2.5 py-1 md:px-3 md:py-1 rounded-2xl border border-orange-100/50 shadow-sm">{review.age}세</span>
+                       <span className="text-[0.65rem] md:text-[0.8rem] font-bold text-gray-400 tracking-widest bg-gray-50 px-2.5 py-1 md:px-3 md:py-1 rounded-2xl border border-gray-100/50">{review.job}</span>
                     </div>
                   </div>
                 </div>
@@ -132,10 +144,12 @@ const ReviewMarquee = () => {
           100% { transform: translateX(-50%); }
         }
         .animate-marquee {
-          animation: marquee 35s linear infinite;
+          animation: marquee 450s linear infinite;
         }
-        .animate-marquee:hover {
-          animation-play-state: paused;
+        @media (min-width: 768px) {
+          .animate-marquee {
+            animation: marquee 600s linear infinite;
+          }
         }
       `}</style>
     </div>
