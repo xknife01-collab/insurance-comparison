@@ -28,28 +28,91 @@ export const MOCK_REMODELING_DATA: Record<'overpaying' | 'underinsured' | 'optim
   policies: RawInsurancePolicy[];
 }> = {
   overpaying: {
-    age: 42,
+    age: 40,
     gender: 'M',
     policies: [
       {
-        insurance_company: 'A생명',
-        product_name: '무배당 VIP 평생종합 건강보험',
-        monthly_premium: 180000,
+        insurance_company: '메트라이프생명보험',
+        product_name: '무배당 백만인을 위한 달러종신보험Plus(저해약환급금형)',
+        monthly_premium: 122290,
         riders: [
-          { rider_name: '일반암진단비특별약관', coverage_amount: 20000000 },
-          { rider_name: '뇌출혈진단비특약', coverage_amount: 10000000 },
-          { rider_name: '급성심근경색증진단비특약', coverage_amount: 10000000 }
+          { rider_name: '사망보험금', coverage_amount: 100000000 },
+          { rider_name: '재해사망특약', coverage_amount: 100000000 },
         ]
       },
       {
-        insurance_company: 'B손해',
-        product_name: '무배당 든든가족 실손의료보험',
-        monthly_premium: 100000,
+        insurance_company: '흥국생명보험',
+        product_name: '(무)흥국생명다(多)사랑통합보험V2(해약환급금미지급형V2)(3대질환)',
+        monthly_premium: 41413,
         riders: [
-          { rider_name: '질병입원의료비', coverage_amount: 50000000 },
-          { rider_name: '상해통원의료비', coverage_amount: 300000 }
+          { rider_name: '일반암진단비', coverage_amount: 30000000 },
+          { rider_name: '뇌혈관질환진단비', coverage_amount: 20000000 },
+          { rider_name: '허혈성심장질환진단비', coverage_amount: 20000000 },
+          { rider_name: '수술비특약', coverage_amount: 1000000 },
         ]
-      }
+      },
+      {
+        insurance_company: '신한라이프생명보험',
+        product_name: '신한통합건강보험 슈퍼원(ONE)(무배당, 해약환급금 미지급형)',
+        monthly_premium: 39271,
+        riders: [
+          { rider_name: '일반암진단비', coverage_amount: 30000000 },
+          { rider_name: '뇌혈관질환진단비', coverage_amount: 20000000 },
+          { rider_name: '허혈성심장질환진단비', coverage_amount: 20000000 },
+          { rider_name: '입원일당', coverage_amount: 30000 },
+          { rider_name: '수술비', coverage_amount: 1000000 },
+        ]
+      },
+      {
+        insurance_company: '메리츠화재보험',
+        product_name: '(무) 메리츠 운전자 상해 종합보험2509',
+        monthly_premium: 21870,
+        riders: [
+          { rider_name: '교통상해사망', coverage_amount: 100000000 },
+          { rider_name: '형사합의지원금', coverage_amount: 30000000 },
+          { rider_name: '벌금특약', coverage_amount: 3000000 },
+          { rider_name: '변호사선임비용', coverage_amount: 5000000 },
+        ]
+      },
+      {
+        insurance_company: 'KB손해보험',
+        product_name: 'KB 5.10.10 금쪽같은 건강보험(무배당)(25.08)_세만기 해약환급금 미지급형 (보장종료 2102)',
+        monthly_premium: 87689,
+        riders: [
+          { rider_name: '일반암진단비', coverage_amount: 50000000 },
+          { rider_name: '뇌혈관질환진단비', coverage_amount: 30000000 },
+          { rider_name: '허혈성심장질환진단비', coverage_amount: 30000000 },
+          { rider_name: '간병인사용일당', coverage_amount: 100000 },
+          { rider_name: '입원일당', coverage_amount: 30000 },
+          { rider_name: '수술비(1~5종)', coverage_amount: 3000000 },
+        ]
+      },
+      {
+        insurance_company: 'KB손해보험',
+        product_name: 'KB 5.10.10 금쪽같은 건강보험(무배당)(25.08)_세만기 해약환급금 미지급형 (보장종료 2108)',
+        monthly_premium: 92106,
+        riders: [
+          { rider_name: '일반암진단비', coverage_amount: 50000000 },
+          { rider_name: '뇌혈관질환진단비', coverage_amount: 30000000 },
+          { rider_name: '허혈성심장질환진단비', coverage_amount: 30000000 },
+          { rider_name: '간병인사용일당', coverage_amount: 100000 },
+          { rider_name: '입원일당', coverage_amount: 30000 },
+          { rider_name: '수술비(1~5종)', coverage_amount: 3000000 },
+        ]
+      },
+      {
+        insurance_company: '한화손해보험',
+        product_name: '무배당 마이라이프 굿밸런스종합보험(연만기 갱신형)2208',
+        monthly_premium: 102135,
+        riders: [
+          { rider_name: '일반암진단비', coverage_amount: 30000000 },
+          { rider_name: '뇌혈관질환진단비', coverage_amount: 20000000 },
+          { rider_name: '허혈성심장질환진단비', coverage_amount: 20000000 },
+          { rider_name: '실손의료비', coverage_amount: 1 },
+          { rider_name: '입원일당', coverage_amount: 50000 },
+          { rider_name: '수술비', coverage_amount: 1000000 },
+        ]
+      },
     ]
   },
   underinsured: {

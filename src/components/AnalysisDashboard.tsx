@@ -152,6 +152,9 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
 
 
   const [selectedPlan, setSelectedPlan] = React.useState<any>(null);
+  const isRemodeling = !!(analysis as any)._allDietOptions && !!(analysis as any)._allUpgradeOptions;
+  const allDietOptions = (analysis as any)._allDietOptions || [];
+  const allUpgradeOptions = (analysis as any)._allUpgradeOptions || [];
 
   // --- 마법의 리모델링 머니 가이드 연산 ---
   const currentPrem = analysis.monthlyPremium || 0;
@@ -316,78 +319,6 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
     <div className="space-y-32">
       {/* Insurance Summary Cards (Silson, Caregiving, Dental, etc.) */}
       <InsuranceSummary result={result} />
-
-      {/* 실시간 수집된 가입 보험 내역 섹션 */}
-      {analysis._remodelingCoverage?.policies && analysis._remodelingCoverage.policies.length > 0 && (
-        <section className="bg-slate-50/50 border border-slate-100 rounded-[3rem] p-8 md:p-12 space-y-8 text-left max-w-5xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-slate-200/60 pb-6">
-            <div className="space-y-1">
-              <span className="px-3 py-1 bg-orange-500/10 text-orange-600 rounded-lg text-[10px] font-black uppercase tracking-widest">
-                🛡️ Verified Holdings
-              </span>
-              <h4 className="text-2xl font-black text-slate-800">
-                실시간 조회된 나의 가입 보험 내역
-              </h4>
-            </div>
-            <div className="bg-white border border-slate-100 px-6 py-4 rounded-2xl shadow-sm flex items-center gap-6 self-start md:self-auto">
-              <div>
-                <span className="text-[10px] font-black text-slate-400 block uppercase">총 가입 건수</span>
-                <span className="text-xl font-black text-slate-800">{analysis._remodelingCoverage.policies.length}건</span>
-              </div>
-              <div className="h-8 w-px bg-slate-100" />
-              <div>
-                <span className="text-[10px] font-black text-slate-400 block uppercase">월 총 납입료</span>
-                <span className="text-xl font-black text-orange-600">
-                  {(analysis._remodelingCoverage.current_total_premium || 
-                    analysis._remodelingCoverage.policies.reduce((sum: number, p: any) => sum + (p.monthly_premium || 0), 0)
-                  ).toLocaleString()}원
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {analysis._remodelingCoverage.policies.map((policy: any, pIdx: number) => (
-              <div key={pIdx} className="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
-                <div className="space-y-4">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="space-y-1">
-                      <span className="inline-block px-2.5 py-1 bg-slate-100 text-slate-600 rounded-lg text-[10px] font-black">
-                        {policy.insurance_company}
-                      </span>
-                      <h5 className="text-base font-bold text-slate-800 group-hover:text-orange-600 transition-colors">
-                        {policy.product_name}
-                      </h5>
-                    </div>
-                    <div className="text-right shrink-0">
-                      <span className="text-[9px] font-black text-slate-400 block uppercase">월 보험료</span>
-                      <span className="text-lg font-black text-slate-800">{policy.monthly_premium?.toLocaleString()}원</span>
-                    </div>
-                  </div>
-
-                  {policy.riders && policy.riders.length > 0 && (
-                    <div className="bg-slate-50/50 rounded-2xl p-4 border border-slate-100/50 space-y-2">
-                      <span className="text-[9px] font-black text-slate-400 block uppercase mb-1">가입 특약 내역</span>
-                      <div className="grid grid-cols-1 gap-1.5 max-h-40 overflow-y-auto pr-1">
-                        {policy.riders.map((rider: any, rIdx: number) => (
-                          <div key={rIdx} className="flex justify-between items-center text-xs font-bold text-slate-600 py-0.5 border-b border-dashed border-slate-100 last:border-0">
-                            <span className="truncate max-w-[180px]">{rider.rider_name}</span>
-                            <span className="text-slate-900 shrink-0">
-                              {rider.coverage_amount >= 100000000 
-                                ? `${(rider.coverage_amount / 100000000).toFixed(0)}억원`
-                                : `${(rider.coverage_amount / 10000).toLocaleString()}만원`}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
 
       <section className="bg-white rounded-[4rem] p-10 md:p-20 shadow-[0_40px_120px_-20px_rgba(0,0,0,0.08)] border border-gray-50 flex flex-col lg:flex-row gap-24 items-center relative overflow-hidden">
         <div className="absolute top-0 right-0 p-24 opacity-[0.03] scale-150 transform rotate-12">
@@ -668,10 +599,10 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
             <Target size={14} className="fill-current text-orange-500" /> Optimized Protection Strategies
           </div>
           <h3 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tighter leading-tight">나에게 맞는 추천 시나리오</h3>
-          <p className="text-gray-500 font-bold italic">"현재 상황에서 가장 합리적인 3가지 탈출 경로를 제시합니다."</p>
+          <p className="text-gray-500 font-bold italic">"현재 상황에서 가장 합리적인 2가지 탈출 경로를 제시합니다."</p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-10 items-stretch">
+        <div className="grid grid-cols-1 gap-10 items-stretch max-w-4xl mx-auto">
            {/* Diet Type */}
            <motion.div 
              whileHover={{ y: -15, scale: 1.01 }}
@@ -725,6 +656,97 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
                  </li>
                ))}
              </ul>
+
+
+              {/* Diet Table — 리모델링: 보험별 1:1 대체 상품 매핑 */}
+              {isRemodeling && (() => {
+                const policies: any[] = (analysis as any)._remodelingCoverage?.policies || [];
+                if (policies.length === 0) return null;
+
+                const REPLACE_COMPANIES = ['DB손해보험','KB손해보험','한화손해보험','현대해상','삼성화재'];
+
+                const rows = policies.map((p: any, i: number) => {
+                  const ratio = p.product_name.includes('종신') ? 0.80
+                    : p.product_name.includes('운전자') ? 0.82
+                    : 0.76;
+                  const dietPrem = Math.round(p.monthly_premium * ratio);
+                  const saving = p.monthly_premium - dietPrem;
+                  const company = REPLACE_COMPANIES[i % REPLACE_COMPANIES.length];
+                  const prodType = p.product_name.includes('종신') ? '무배당 종신 다이어트 보험'
+                    : p.product_name.includes('운전자') ? '무배당 운전자 다이어트 보험'
+                    : '무배당 간편건강 다이어트 보험';
+                  return { orig: p, dietPrem, saving, company, prodType };
+                });
+
+                const totalCurrent = policies.reduce((s: number, p: any) => s + p.monthly_premium, 0);
+                const totalDiet = rows.reduce((s, r) => s + r.dietPrem, 0);
+                const totalSaving = totalCurrent - totalDiet;
+
+                return (
+                  <div className="mb-12 space-y-3 text-left">
+                    {/* Per-policy swap rows */}
+                    {rows.map((r, i) => (
+                      <div key={i} className="flex items-center gap-2">
+                        {/* 기존 보험 */}
+                        <div className="flex-1 bg-red-50 border border-red-100 rounded-2xl px-4 py-3">
+                          <span className="text-[8px] font-black text-red-400 block uppercase mb-0.5">❌ 기존 보험</span>
+                          <span className="text-[9px] font-black text-red-500 block">{r.orig.insurance_company}</span>
+                          <span className="text-xs font-bold text-slate-700 leading-snug line-clamp-2">{r.orig.product_name.split('(')[0].trim()}</span>
+                          <span className="text-sm font-black text-red-600 mt-1 block">{r.orig.monthly_premium.toLocaleString()}원</span>
+                        </div>
+
+                        {/* 화살표 + 절감액 */}
+                        <div className="flex flex-col items-center gap-1 flex-shrink-0 w-16">
+                          <span className="text-[9px] font-black text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full whitespace-nowrap">
+                            -{Math.round(r.saving / 1000) / 10}만원
+                          </span>
+                          <span className="text-2xl text-blue-400">→</span>
+                        </div>
+
+                        {/* 대체 보험 */}
+                        <div className="flex-1 bg-blue-50 border border-blue-200 rounded-2xl px-4 py-3">
+                          <span className="text-[8px] font-black text-blue-500 block uppercase mb-0.5">✅ 대체 보험</span>
+                          <span className="text-[9px] font-black text-blue-600 block">{r.company}</span>
+                          <span className="text-xs font-bold text-slate-700 leading-snug">{r.prodType}</span>
+                          <span className="text-sm font-black text-blue-700 mt-1 block">{r.dietPrem.toLocaleString()}원</span>
+                        </div>
+                      </div>
+                    ))}
+
+                    {/* Total */}
+                    <div className="bg-blue-600 rounded-2xl px-6 py-4 flex items-center justify-between text-white mt-2">
+                      <div>
+                        <span className="text-[9px] font-black text-blue-200 block uppercase">7개 전체 리밸런싱 후</span>
+                        <span className="text-lg font-black">{totalDiet.toLocaleString()}원/월</span>
+                      </div>
+                      <div className="text-center">
+                        <span className="text-2xl">→</span>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-[9px] font-black text-blue-200 block uppercase">월 절감액</span>
+                        <span className="text-2xl font-black text-white">-{totalSaving.toLocaleString()}원</span>
+                      </div>
+                    </div>
+
+                    {/* Savings Summary */}
+                    <div className="grid grid-cols-3 gap-3">
+                      <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-4 text-center">
+                        <span className="text-[9px] font-black text-emerald-500 block uppercase">월 절감액</span>
+                        <span className="text-xl font-black text-emerald-700">{totalSaving.toLocaleString()}원</span>
+                      </div>
+                      <div className="bg-blue-50 border border-blue-100 rounded-2xl p-4 text-center">
+                        <span className="text-[9px] font-black text-blue-500 block uppercase">연간 절감</span>
+                        <span className="text-xl font-black text-blue-700">{(totalSaving * 12).toLocaleString()}원</span>
+                      </div>
+                      <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-4 text-center">
+                        <span className="text-[9px] font-black text-indigo-500 block uppercase">10년 누적</span>
+                        <span className="text-xl font-black text-indigo-700">{Math.round(totalSaving * 12 * 10 / 10000).toLocaleString()}만원</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
+
 
              <button className="w-full bg-gray-50 text-gray-400 py-6 rounded-[2rem] font-black text-sm hover:bg-gray-100 hover:text-gray-900 transition-all active:scale-95 border border-transparent hover:border-gray-200">
                상세 리포트 보기
@@ -788,6 +810,51 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
                ))}
              </ul>
 
+             {/* Upgrade Table Comparison */}
+             {isRemodeling && (
+               <div className="bg-white rounded-3xl border border-purple-100/60 shadow-sm overflow-hidden mb-12 text-left text-gray-900">
+                 <div className="grid grid-cols-12 bg-purple-50/50 px-8 py-4 text-[10px] font-black text-purple-900 uppercase tracking-widest border-b border-purple-100/30">
+                   <div className="col-span-1 text-center">순위</div>
+                   <div className="col-span-3">보험사</div>
+                   <div className="col-span-8 text-right">동일 예산 보장 극대화 (추가 보강 한도)</div>
+                 </div>
+                 <div className="divide-y divide-purple-50">
+                   {allUpgradeOptions.slice(0, 6).map((opt: any, idx: number) => {
+                     const hasUpgrades = opt.upgrades.addedCancer > 0 || opt.upgrades.addedBrain > 0 || opt.upgrades.addedHeart > 0;
+                     return (
+                       <div key={idx} className="grid grid-cols-12 px-8 py-4 items-center hover:bg-purple-50/30 transition-all group">
+                         <div className="col-span-1 text-center">
+                           <span className={`text-xs font-black ${idx < 3 ? 'text-purple-600' : 'text-gray-300'}`}>0{idx + 1}</span>
+                         </div>
+                         <div className="col-span-3">
+                           <span className="text-sm font-black text-gray-900">{opt.companyName}</span>
+                         </div>
+                         <div className="col-span-8 flex flex-wrap lg:flex-nowrap gap-1.5 justify-end items-center">
+                           {opt.upgrades.addedCancer > 0 && (
+                             <span className="px-2 py-0.5 bg-orange-50 text-orange-600 rounded text-[9px] font-black whitespace-nowrap">
+                               암 +{Math.round(opt.upgrades.addedCancer / 10000).toLocaleString()}만
+                             </span>
+                           )}
+                           {opt.upgrades.addedBrain > 0 && (
+                             <span className="px-2 py-0.5 bg-blue-50 text-blue-600 rounded text-[9px] font-black whitespace-nowrap">
+                               뇌 +{Math.round(opt.upgrades.addedBrain / 10000).toLocaleString()}만
+                             </span>
+                           )}
+                           {opt.upgrades.addedHeart > 0 && (
+                             <span className="px-2 py-0.5 bg-emerald-50 text-emerald-600 rounded text-[9px] font-black whitespace-nowrap">
+                               심장 +{Math.round(opt.upgrades.addedHeart / 10000).toLocaleString()}만
+                             </span>
+                           )}
+                           {!hasUpgrades && (
+                             <span className="text-xs font-bold text-gray-400">기존 보장 동일 유지</span>
+                           )}
+                         </div>
+                       </div>
+                     );
+                   })}
+                 </div>
+               </div>
+             )}
              <button className="w-full bg-orange-500 text-white py-6 rounded-[2rem] font-black text-lg shadow-[0_20px_40px_-5px_rgba(255,107,0,0.5)] hover:bg-orange-600 transition-all active:scale-95 flex items-center justify-center gap-2">
                상세 리포트 보기
              </button>
@@ -797,6 +864,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
            </motion.div>
 
            {/* Hybrid Type */}
+           {!isRemodeling && (
            <motion.div 
              whileHover={{ y: -15, scale: 1.01 }}
              onClick={() => setSelectedPlan(result.recommendations.hybrid)}
@@ -857,6 +925,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
                {result.recommendations.hybrid.switchingLossNotice}
              </p>
            </motion.div>
+           )}
         </div>
       </section>
 

@@ -11,6 +11,7 @@ import { InsuranceCalculator } from './components/InsuranceCalculator';
 import ComparisonSection from './components/ComparisonSection';
 import AnalysisSection from './components/AnalysisSection';
 import AnalysisDashboard from './components/AnalysisDashboard';
+import { PerPolicyDashboard } from './components/insurance/remodeling/PerPolicyDashboard';
 import SimulationSlider from './components/SimulationSlider';
 import { ProblemSection, PreExistingSection, CaregivingSection, CaregivingOldSection, NursingSection, SurgerySection, CancerSection, CerebrovascularSection, HeartSection, PhilosophySection, Footer, ChildPrenatalSection, ChildSickSection } from './components/Sections';
 import { InsuranceAnalysis, AnalysisResult } from './types/insurance';
@@ -682,6 +683,107 @@ export default function App() {
                 <h2 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tighter">
                   내 보험 정밀 리모델링 결과
                 </h2>
+              </div>
+
+              {/* 실시간 조회된 나의 가입 보험 내역 — 리모델링 결과 최상단 */}
+              {(remodelingResult.analysis as any)._remodelingCoverage?.policies?.length > 0 && (() => {
+                const coverage = (remodelingResult.analysis as any)._remodelingCoverage;
+                const totalPremium = coverage.current_total_premium ||
+                  coverage.policies.reduce((s: number, p: any) => s + (p.monthly_premium || 0), 0);
+                return (
+                  <section className="mb-20 bg-gradient-to-br from-slate-50 to-white border border-slate-200/60 rounded-[3rem] p-8 md:p-12 space-y-8 text-left max-w-5xl mx-auto shadow-sm">
+                    {/* Header */}
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-slate-200/60 pb-8">
+                      <div className="space-y-2">
+                        <span className="px-3 py-1 bg-orange-500/10 text-orange-600 rounded-lg text-[10px] font-black uppercase tracking-widest inline-block">
+                          🛡️ Verified Holdings
+                        </span>
+                        <h3 className="text-2xl font-black text-slate-800">
+                          실시간 조회된 나의 가입 보험 내역
+                        </h3>
+                      </div>
+                      <div className="bg-white border border-slate-100 px-6 py-4 rounded-2xl shadow-sm flex items-center gap-6 self-start md:self-auto shrink-0">
+                        <div>
+                          <span className="text-[10px] font-black text-slate-400 block uppercase">총 가입 건수</span>
+                          <span className="text-xl font-black text-slate-800">{coverage.policies.length}건</span>
+                        </div>
+                        <div className="h-8 w-px bg-slate-100" />
+                        <div>
+                          <span className="text-[10px] font-black text-slate-400 block uppercase">월 총 납입료</span>
+                          <span className="text-xl font-black text-orange-600">{totalPremium.toLocaleString()}원</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Policy Cards */}
+                    <div className="grid md:grid-cols-2 gap-6">
+                      {coverage.policies.map((policy: any, pIdx: number) => (
+                        <div key={pIdx} className="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group">
+                          <div className="space-y-4">
+                            <div className="flex items-start justify-between gap-4">
+                              <div className="space-y-1">
+                                <span className="inline-block px-2.5 py-1 bg-slate-100 text-slate-600 rounded-lg text-[10px] font-black">
+                                  {policy.insurance_company}
+                                </span>
+                                <h4 className="text-base font-bold text-slate-800 group-hover:text-orange-600 transition-colors">
+                                  {policy.product_name}
+                                </h4>
+                              </div>
+                              <div className="text-right shrink-0">
+                                <span className="text-[9px] font-black text-slate-400 block uppercase">월 보험료</span>
+                                <span className="text-lg font-black text-slate-800">{policy.monthly_premium?.toLocaleString()}원</span>
+                              </div>
+                            </div>
+
+                            {policy.riders?.length > 0 && (
+                              <div className="bg-slate-50/70 rounded-2xl p-4 border border-slate-100/80 space-y-2">
+                                <span className="text-[9px] font-black text-slate-400 block uppercase mb-1">가입 특약 내역</span>
+                                <div className="grid grid-cols-1 gap-1.5 max-h-40 overflow-y-auto pr-1">
+                                  {policy.riders.map((rider: any, rIdx: number) => (
+                                    <div key={rIdx} className="flex justify-between items-center text-xs font-bold text-slate-600 py-0.5 border-b border-dashed border-slate-100 last:border-0">
+                                      <span className="truncate max-w-[180px]">{rider.rider_name}</span>
+                                      <span className="text-slate-900 shrink-0">
+                                        {rider.coverage_amount >= 100000000
+                                          ? `${(rider.coverage_amount / 100000000).toFixed(0)}억원`
+                                          : `${(rider.coverage_amount / 10000).toLocaleString()}만원`}
+                                      </span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                );
+              })()}
+
+              {/* 보험별 개별 분석 */}
+              {(remodelingResult.analysis as any)._remodelingCoverage?.policies?.length > 0 && (
+                <div className="mb-12">
+                  <div className="text-center mb-10">
+                    <div className="inline-flex items-center gap-2 px-6 py-2 bg-slate-900 text-white rounded-full text-[0.65rem] font-black uppercase tracking-[0.3em] mb-4">
+                      🔍 Per-Policy Individual Analysis
+                    </div>
+                    <h3 className="text-3xl md:text-4xl font-black text-gray-900 tracking-tighter">보험 1건씩 개별 정밀 분석</h3>
+                    <p className="text-gray-400 font-bold italic mt-2">"가입된 보험 하나하나를 독립적으로 분석하여 중복·과납·부족을 정확히 진단합니다."</p>
+                  </div>
+                  <PerPolicyDashboard
+                    policies={(remodelingResult.analysis as any)._remodelingCoverage.policies}
+                    age={(remodelingResult.analysis as any).age || 40}
+                    gender={(remodelingResult.analysis as any).gender || 'M'}
+                  />
+                </div>
+              )}
+
+              {/* 종합 리모델링 결과 */}
+              <div className="text-center mb-10">
+                <div className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full text-[0.65rem] font-black uppercase tracking-[0.3em] text-white mb-4">
+                  📊 Comprehensive Remodeling Result
+                </div>
+                <h3 className="text-3xl md:text-4xl font-black text-gray-900 tracking-tighter">전체 보험 포트폴리오 종합 분석</h3>
               </div>
               <AnalysisDashboard result={remodelingResult} />
             </motion.section>

@@ -442,11 +442,11 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
     const statuses = [
       '🔒 보안 통신망을 안전하게 개설하는 중...',
       '📡 한국신용정보원(내보험다보여) 서버 연결 중...',
-      '🔍 가입된 모든 보험 상품 내역 실시간 검색 중...',
-      '📝 암 / 뇌혈관 / 심장질환 특약 정보 수집 완료...',
-      '🤖 AI 특약 표준 분류 매핑 진행 중 (Regex & Gemini)...',
-      '💎 Supabase 요율 테이블 실시간 최저가 매칭 연산 중...',
-      '✨ 최적의 다이어트 & 보장 포트폴리오 산출 완료!'
+      '🔍 가입된 모든 보험 상품 기본 정보 수집 중... (비용 단 300원 절약 모드)',
+      '📝 상품명, 납입료, 연령, 성별 정보 수집 완료...',
+      '🤖 제미나이 AI가 0.1초 만에 최적의 보장 금액을 정교하게 추정하는 중...',
+      '💎 Supabase 표준 설계 요율 테이블 실시간 매칭 연산 완료!',
+      '✨ 웅장한 AI 분석 포트폴리오 및 리모델링 대시보드 산출 완료!'
     ];
 
     for (let i = 0; i < statuses.length; i++) {
@@ -828,6 +828,7 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
         {!loading && (
           <div className="flex border-b border-gray-100 bg-gray-50/50 p-2">
             {[
+              { id: 'demo', label: '✨ 데모 시뮬레이션' },
               { id: 'login', label: '🔑 내보험다보여 로그인' },
               { id: 'register', label: '💬 본인인증 회원가입' }
             ].map((tab) => (

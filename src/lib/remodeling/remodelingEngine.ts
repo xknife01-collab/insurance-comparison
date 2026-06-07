@@ -27,7 +27,7 @@ export async function analyzeRemodeling(
 
   // 3. Construct Recommendation Plans
   const dietPlan: RecommendationPlan = {
-    title: '보험 다이어트 플랜 💸',
+    title: '📉 가격은 낮추고 보장은 동일하게',
     description: `기존 보장 수준을 100% 동일하게 유지하면서 월 납입 보험료를 ${Math.round((coverage.current_total_premium - dietResult.total_premium) / 10000)}만원 줄일 수 있습니다.`,
     estimatedPremium: dietResult.total_premium,
     coverageChanges: [
@@ -42,7 +42,7 @@ export async function analyzeRemodeling(
   };
 
   const upgradePlan: RecommendationPlan = {
-    title: '보장 업그레이드 플랜 🚀',
+    title: '🚀 가격은 그대로 보장은 더 든든하게',
     description: '기존에 납부하던 월 예산을 유지하면서, 미비했던 핵심 진단비를 추가 보강하는 플랜입니다.',
     estimatedPremium: upgradeResult.total_premium,
     coverageChanges: [
