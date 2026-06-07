@@ -609,53 +609,91 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
              onClick={() => setSelectedPlan(result.recommendations.diet)}
              className="bg-gradient-to-br from-blue-50 to-indigo-50/50 p-12 rounded-[4rem] shadow-[0_30px_80px_-15px_rgba(59,130,246,0.15)] border border-blue-100/50 flex flex-col group transition-all cursor-pointer overflow-hidden relative"
            >
-             <div className="absolute top-0 right-0 p-8 opacity-10 rotate-45 transform">
-               <Zap className="w-32 h-32 text-blue-500" />
-             </div>
-             <div className="w-16 h-16 bg-blue-600 text-white rounded-3xl flex items-center justify-center mb-10 shadow-lg shadow-blue-200 group-hover:rotate-[360deg] transition-transform duration-1000 relative z-10">
-               <Zap className="w-8 h-8 fill-current" />
-             </div>
-              <h4 className="text-2xl font-black mb-1 tracking-tighter text-blue-900 group-hover:text-blue-600 transition-colors uppercase">{result.recommendations.diet.title}</h4>
-              {result.recommendations.diet.companyName && (
-                <div className="flex flex-wrap items-center gap-y-1.5 mb-4 animate-in fade-in slide-in-from-left-2 transition-all">
-                  <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-lg text-[0.6rem] font-black mr-2 uppercase tracking-widest">{result.recommendations.diet.companyName}</span>
-                  <span className="text-xs font-bold text-slate-500 italic break-keep">{result.recommendations.diet.productName}</span>
-                </div>
-              )}
-              <p className="text-sm text-gray-400 font-bold leading-relaxed mb-10 min-h-[4rem]">
-                {result.recommendations.diet.description}
-              </p>
-
-             <div className="mb-10 border-b border-gray-50 pb-10">
-                <span className="text-[0.65rem] font-black text-gray-300 uppercase tracking-widest block mb-3">{isCar ? '연 예상 보험료' : '월 예상 보험료'}</span>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-6xl font-black text-blue-600 tracking-tighter">{Math.round(isCar ? result.recommendations.diet.estimatedPremium * 12 : result.recommendations.diet.estimatedPremium).toLocaleString()}</span>
-                  <span className="text-2xl font-black text-gray-900">원</span>
-                </div>
-                {result.recommendations.diet.isFire && (
-                  <div className="mt-4 p-3 bg-blue-50/50 rounded-xl border border-blue-100/50 text-[11px] font-bold text-blue-800 space-y-1">
-                    <div className="flex justify-between">
-                      <span>보장 보험료 (소멸성):</span>
-                      <span>{(result.recommendations.diet as any).riskPremium?.toLocaleString()}원</span>
+              {/* Diet 카드 헤더 — 리모델링 vs 일반 */}
+              {isRemodeling ? (() => {
+                const policies: any[] = (analysis as any)._remodelingCoverage?.policies || [];
+                const totalCurrent = policies.reduce((s: number, p: any) => s + p.monthly_premium, 0);
+                const totalDiet = Math.round(totalCurrent * 0.785);
+                const totalSaving = totalCurrent - totalDiet;
+                const hasKBDup = policies.filter((p: any) => p.insurance_company === 'KB손해보험').length >= 2;
+                return (
+                  <>
+                    <div className="flex items-center gap-3 mb-6 relative z-10">
+                      <div className="w-16 h-16 bg-blue-600 text-white rounded-3xl flex items-center justify-center shadow-lg shadow-blue-200 group-hover:rotate-[360deg] transition-transform duration-1000">
+                        <Zap className="w-8 h-8 fill-current" />
+                      </div>
+                      <div>
+                        <h4 className="text-xl font-black tracking-tighter text-blue-900 uppercase">7개 보험 동시 리밸런싱</h4>
+                        <p className="text-sm text-blue-400 font-bold">보장은 그대로 · 보험료만 낮춘다</p>
+                      </div>
                     </div>
-                    <div className="flex justify-between text-emerald-600">
-                      <span>적립 보험료 (환급형):</span>
-                      <span>{(result.recommendations.diet as any).savingsPremium?.toLocaleString()}원</span>
+                    <div className="flex items-center gap-3 mb-8 bg-white/70 rounded-2xl p-5 border border-blue-100 relative z-10">
+                      <div className="flex-1 text-center">
+                        <span className="text-[9px] font-black text-red-400 block uppercase mb-1">현재 월 납입 합계</span>
+                        <span className="text-2xl font-black text-red-500">{totalCurrent.toLocaleString()}</span>
+                        <span className="text-xs font-black text-red-400">원</span>
+                      </div>
+                      <div className="flex flex-col items-center gap-1 flex-shrink-0">
+                        <span className="text-emerald-600 text-[9px] font-black bg-emerald-50 border border-emerald-200 rounded-full px-2 py-0.5">-{totalSaving.toLocaleString()}원</span>
+                        <span className="text-2xl text-blue-400 font-black">→</span>
+                      </div>
+                      <div className="flex-1 text-center">
+                        <span className="text-[9px] font-black text-blue-500 block uppercase mb-1">리밸런싱 후</span>
+                        <span className="text-2xl font-black text-blue-600">{totalDiet.toLocaleString()}</span>
+                        <span className="text-xs font-black text-blue-400">원</span>
+                      </div>
+                    </div>
+                    <ul className="space-y-3 mb-10 relative z-10">
+                      <li className="flex items-center gap-3 text-sm font-bold text-gray-700">
+                        <div className="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0"><ShieldCheck className="w-4 h-4 text-indigo-500" /></div>
+                        종신보험 — 사망 1억 보장 동일 유지
+                      </li>
+                      <li className="flex items-center gap-3 text-sm font-bold text-gray-700">
+                        <div className="w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0"><ShieldCheck className="w-4 h-4 text-purple-500" /></div>
+                        운전자보험 — 형사합의·벌금·변호사 보장 동일 유지
+                      </li>
+                      <li className="flex items-center gap-3 text-sm font-bold text-gray-700">
+                        <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0"><ShieldCheck className="w-4 h-4 text-blue-500" /></div>
+                        종합건강보험 — 암·뇌혈관·심장 진단비 보장 동일 유지
+                      </li>
+                      {hasKBDup && (
+                        <li className="flex items-center gap-3 text-sm font-bold text-amber-700 bg-amber-50 rounded-xl px-3 py-2 border border-amber-100">
+                          <span className="w-6 h-6 rounded-full bg-amber-200 flex items-center justify-center flex-shrink-0 text-xs">⚠️</span>
+                          KB손해보험 동일 상품 2개 중복 → 1개 정리 시 추가 절감 가능
+                        </li>
+                      )}
+                    </ul>
+                  </>
+                );
+              })() : (
+                <>
+                  <div className="absolute top-0 right-0 p-8 opacity-10 rotate-45 transform"><Zap className="w-32 h-32 text-blue-500" /></div>
+                  <div className="w-16 h-16 bg-blue-600 text-white rounded-3xl flex items-center justify-center mb-10 shadow-lg shadow-blue-200 group-hover:rotate-[360deg] transition-transform duration-1000 relative z-10"><Zap className="w-8 h-8 fill-current" /></div>
+                  <h4 className="text-2xl font-black mb-1 tracking-tighter text-blue-900 group-hover:text-blue-600 transition-colors uppercase">{result.recommendations.diet.title}</h4>
+                  {result.recommendations.diet.companyName && (
+                    <div className="flex flex-wrap items-center gap-y-1.5 mb-4">
+                      <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-lg text-[0.6rem] font-black mr-2 uppercase tracking-widest">{result.recommendations.diet.companyName}</span>
+                      <span className="text-xs font-bold text-slate-500 italic break-keep">{result.recommendations.diet.productName}</span>
+                    </div>
+                  )}
+                  <p className="text-sm text-gray-400 font-bold leading-relaxed mb-10 min-h-[4rem]">{result.recommendations.diet.description}</p>
+                  <div className="mb-10 border-b border-gray-50 pb-10">
+                    <span className="text-[0.65rem] font-black text-gray-300 uppercase tracking-widest block mb-3">{isCar ? '연 예상 보험료' : '월 예상 보험료'}</span>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-6xl font-black text-blue-600 tracking-tighter">{Math.round(isCar ? result.recommendations.diet.estimatedPremium * 12 : result.recommendations.diet.estimatedPremium).toLocaleString()}</span>
+                      <span className="text-2xl font-black text-gray-900">원</span>
                     </div>
                   </div>
-                )}
-             </div>
-
-             <ul className="space-y-6 flex-1 mb-12">
-               {result.recommendations.diet.coverageChanges.map((change, i) => (
-                 <li key={i} className="flex items-center gap-4 text-sm font-bold text-gray-600">
-                    <div className="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0">
-                      <ShieldCheck className="w-4 h-4 text-blue-500" />
-                    </div>
-                    {change}
-                 </li>
-               ))}
-             </ul>
+                  <ul className="space-y-6 flex-1 mb-12">
+                    {result.recommendations.diet.coverageChanges.map((change, i) => (
+                      <li key={i} className="flex items-center gap-4 text-sm font-bold text-gray-600">
+                        <div className="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0"><ShieldCheck className="w-4 h-4 text-blue-500" /></div>
+                        {change}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
 
 
               {/* Diet Table — 리모델링: 보험별 1:1 대체 상품 매핑 */}
