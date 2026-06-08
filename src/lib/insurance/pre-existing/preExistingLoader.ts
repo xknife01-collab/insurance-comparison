@@ -35,8 +35,7 @@ export async function fetchPreExistingPremium(analysis: InsuranceAnalysis) {
       const basePremium = r.rates?.[rateKey] || 0;
       if (!basePremium || basePremium <= 0) return null;
 
-      // 유병자 기본 할증 적용 (표준체 대비 약 1.3배)
-      const finalPremium = Math.round(basePremium * ageRatio * 1.3);
+      const finalPremium = Math.round(basePremium * ageRatio);
 
       return {
         premium: finalPremium,

@@ -16,7 +16,7 @@ STANDARD_HEADERS = [
 # 모든 보험 카테고리 정의 (순서대로 분류)
 CATEGORIES = [
     {"path": "5_savings/whole_life", "keywords": ["종신"]},
-    {"path": "0_popular/silson", "keywords": ["실손", "의료비", "의료실비"]},
+    {"path": "0_popular/silson", "keywords": ["실손", "의료비", "의료실비"], "exclude": ["유병력자", "유병자", "반려견", "반려묘", "펫", "동물", "강아지", "고양이"]},
     {"path": "0_popular/cancer", "keywords": ["암", "표적항암"], "exclude": ["종신", "연금"]},
     {"path": "0_popular/dental", "keywords": ["치아", "치과"]},
     {"path": "5_savings/pension", "keywords": ["연금"]},

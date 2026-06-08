@@ -14,7 +14,9 @@ export async function fetchSilsonPremium(analysis: InsuranceAnalysis) {
     const targetAge = analysis.age || 40;
 
     const subType = (analysis.silson as any)?.subType || '4세대 실손';
-    const dbCategory = subType === '노후 실손' ? '노후_의료실비' : '실속_의료실비';
+    const dbCategory = 
+      subType === '노후 실손' ? '노후_의료실비' :
+      subType === '5세대 실손' ? '5세대_의료실비' : '실속_의료실비';
 
     const { data: silsonRates } = await supabase
       .from('medical_silson_rates')
@@ -32,7 +34,9 @@ export async function fetchSilsonPremium(analysis: InsuranceAnalysis) {
         const product = prodMap.get(r.product_code);
         if (!product) return null;
 
-        const basePremium = r.rate_data.premium;
+        // 공시가(비교공시 기준) → 설계사 채널 시장가 환산 (사업비 포함 계수 1.35)
+        const CHANNEL_LOADING = 1.35;
+        const basePremium = Math.round(r.rate_data.premium * CHANNEL_LOADING);
         const sourceAge = r.age || 40;
         
         const getAgeIndex = (a: number): number => {
@@ -42,7 +46,7 @@ export async function fetchSilsonPremium(analysis: InsuranceAnalysis) {
         const ageRatio = getAgeIndex(targetAge) / getAgeIndex(sourceAge);
         const ageCorrectedPremium = Math.round(basePremium * ageRatio);
 
-        // 비급여 차등제 적용
+        // 비급여 차등제 적용 (4세대 vs 5세대 분리)
         const usageType = (analysis.silson as any)?.nonReimbursableUsage || 'under100';
         const getUsageMultiplier = (type: string): number => {
           switch (type) {
@@ -52,9 +56,19 @@ export async function fetchSilsonPremium(analysis: InsuranceAnalysis) {
           }
         };
 
-        const benefitPart = ageCorrectedPremium * 0.6;
-        const nonBenefitPart = ageCorrectedPremium * 0.4 * getUsageMultiplier(usageType);
-        const finalPremium = Math.round(benefitPart + nonBenefitPart);
+        let finalPremium = ageCorrectedPremium;
+        if (subType === '5세대 실손') {
+          // 5세대: 급여(60%), 중증 비급여(20%, 고정), 비중증 비급여(20%, 차등제 적용)
+          const benefitPart = ageCorrectedPremium * 0.6;
+          const severeNonBenefitPart = ageCorrectedPremium * 0.2;
+          const nonSevereNonBenefitPart = ageCorrectedPremium * 0.2 * getUsageMultiplier(usageType);
+          finalPremium = Math.round(benefitPart + severeNonBenefitPart + nonSevereNonBenefitPart);
+        } else {
+          // 4세대: 급여(60%), 비급여 전체(40%, 차등제 적용)
+          const benefitPart = ageCorrectedPremium * 0.6;
+          const nonBenefitPart = ageCorrectedPremium * 0.4 * getUsageMultiplier(usageType);
+          finalPremium = Math.round(benefitPart + nonBenefitPart);
+        }
 
         return {
           premium: finalPremium,

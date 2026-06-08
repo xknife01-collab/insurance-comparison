@@ -97,7 +97,7 @@ function findDups(policies: Policy[]): Set<number> {
   return dups;
 }
 
-function PolicyCard({policy,index,isDup,totalCount}:{policy:Policy;index:number;isDup:boolean;totalCount:number}) {
+function PolicyCard({policy,index,isDup,totalCount}:{policy:Policy;index:number;isDup:boolean;totalCount:number;key?:any}) {
   const [open,setOpen]=useState(index === 0);
   const t=detectType(policy.product_name);
   const cov=extractCov(policy.riders);

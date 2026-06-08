@@ -35,9 +35,9 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
       {/* ── 통계 배너 ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
         {[
-          { num: '4세대 착한실손', label: '보험료 최대 70% 다이어트', sub: '기존 1~3세대 대비 월등히 저렴' },
+          { num: '4/5세대 실손', label: '보험료 최대 70~75% 다이어트', sub: '기존 1~3세대 대비 월등히 저렴' },
           { num: '급여 통원/입원', label: '의료비 본인부담 80% 보장', sub: '건강보험 적용 항목 실손 환급' },
-          { num: '비급여 주사/도수', label: '비급여 치료비 70% 보장', sub: '도수치료, 주사제, MRI 집중 케어' },
+          { num: '비급여 주사/도수', label: '비급여 치료비 50~70% 보장', sub: '도수치료, 주사제, MRI 집중 케어' },
           { num: '보험료 차등제', label: '비급여 미청구 시 추가 할인', sub: '합리적인 이용량 기반 할인/할증' },
         ].map((s, i) => (
           <div key={i} className="bg-white border border-blue-100 rounded-[3rem] p-8 text-center shadow-sm hover:shadow-xl hover:border-blue-200 transition-all group">
@@ -86,9 +86,9 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
           </div>
 
           <div className="mt-8 p-6 bg-blue-50 rounded-3xl border border-blue-100">
-            <p className="text-blue-700 font-black text-xs mb-1">⚠️ 4세대 실손보험 보험금 청구 팁</p>
+            <p className="text-blue-700 font-black text-xs mb-1">⚠️ 4/5세대 실손보험 보험금 청구 및 전환 팁</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
-              급여 항목(본인부담금 20%)과 비급여 항목(본인부담금 30%)의 공제 금액 기준(의원 1만 원, 상급/종합병원 2만 원 / 비급여 3만 원 중 큰 금액)을 미리 확인하세요. 소액 영수증도 **모바일 앱 청구**를 통해 1~2분 만에 신속하게 처리할 수 있습니다.
+              급여 항목(본인부담금 20%)과 비급여 항목(4세대 30% / 5세대 비중증 비급여 50%)의 공제 기준을 미리 대조해 보세요. 특히 5세대 실손으로 전환 가입한 뒤에도 6개월 이내에 청구한 보험금이 없다면 기존 이전 세대 보험으로 복귀할 수 있어 부담 없이 검토 가능합니다.
             </p>
           </div>
         </div>
@@ -125,7 +125,7 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
                   ⚖️ 세대별 가입 시기 및 자기부담금 비율
                 </p>
                 <p className="text-xs opacity-75 font-bold leading-relaxed mb-2">
-                  1세대(~2009년 9월, 본인부담 거의 없음), 2세대(2009년 10월~2017년 3월, 본인부담 10~20%), 3세대(2017년 4월~2021년 6월, 비급여 특약형), 4세대(2021년 7월~현재, 급여 20%/비급여 30%). 갱신 주기와 본인의 통원 횟수를 고려한 리모델링이 필요합니다.
+                  1세대(~2009년 9월, 본인부담 거의 없음), 2세대(2009년 10월~2017년 3월, 본인부담 10~20%), 3세대(2017년 4월~2021년 6월, 비급여 특약형), 4세대(2021년 7월~2026년 4월, 급여 20%/비급여 30%), 5세대(2026년 5월~현재, 급여 20%/중증비급여 30%/비중증비급여 50%). 갱신 주기와 본인의 통원 횟수를 고려한 리모델링이 필요합니다.
                 </p>
               </div>
             </div>
@@ -150,16 +150,16 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
             <div className="inline-flex items-center gap-2 bg-blue-500/20 text-blue-300 px-4 py-2 rounded-full text-xs font-black mb-6 border border-blue-400/30">
               <Sparkles className="w-3 h-3" /> 최근 실손보험 전환 트렌드
             </div>
-            <h3 className="text-3xl font-black mb-4 tracking-tight">가파르게 오르는 갱신 보험료 절감, 4세대 실손 대세</h3>
+            <h3 className="text-3xl font-black mb-4 tracking-tight">가파르게 오르는 갱신 보험료 절감, 4/5세대 실손 대세</h3>
             <p className="text-sm opacity-70 font-bold leading-relaxed">
-              매년 또는 3~5년마다 지나치게 급증하는 1~3세대 실손 보험료가 부담스러우신 분들을 중심으로 '4세대 착한 실손' 계약 전환이 본격화되고 있습니다. 평소 병원 통원 횟수가 매우 적고, 연간 고정적인 고정지출 보험료를 대폭 다이어트하여 현금을 확보하려는 스마트한 실속형 고객님들에게 최고의 선택이 됩니다.
+              매년 또는 3~5년마다 지나치게 급증하는 1~3세대 실손 보험료가 부담스러우신 분들을 중심으로 '4/5세대 실손' 계약 전환이 본격화되고 있습니다. 2026년 5월 출시된 5세대 실손은 과잉 의료 항목인 비중증 비급여 보장을 합리적으로 줄여 보험료를 더욱 인하함과 동시에, 기존에는 보장하지 않았던 임신·출산 및 소아 발달장애 급여 진료비를 신규 보장하여 가입자 혜택을 넓혔습니다.
             </p>
           </div>
           <div className="space-y-4">
             {[
-              { title: '기본 보험료 50%~70% 절약', desc: '1~3세대 대비 대폭 저렴한 초저가 기본 요율 설계', info: '기존 월 6~8만원 대 실비 ➔ 월 1~2만원 대로 다이어트' },
+              { title: '기본 보험료 50%~75% 절약', desc: '1~3세대 대비 대폭 저렴한 초저가 기본 요율 설계', info: '기존 월 6~8만원 대 실비 ➔ 월 1~2만원 대로 다이어트' },
               { title: '비급여 미청구 시 10% 자동 할인', desc: '직전년도 보험금 미수령자 대상 매년 추가 보험료 인하', info: '의료 쇼핑 없는 실속 가입자 우대 제도 작동' },
-              { title: '무심사 4세대 간편 계약 전환권', desc: '기존 가입 보험사 내에서는 복잡한 신규 인수심사 없이 다이렉트 전환', info: '병력이 생긴 고연령층도 무심사 전환 가능' },
+              { title: '무심사 4/5세대 간편 계약 전환권', desc: '기존 가입 보험사 내에서는 복잡한 신규 인수심사 없이 다이렉트 전환', info: '병력이 생긴 고연령층도 무심사 전환 가능' },
             ].map((item, i) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
@@ -183,8 +183,8 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
           </h3>
           <div className="space-y-3">
             {[
-              { step: '01. 연간 비급여 치료액', desc: '과거 도수치료, 비급여 주사 등의 연간 이용 횟수와 실지출 총액을 파악하여 할인/할증 구간 판단' },
-              { step: '02. 연령별 인상폭 예측', desc: '50대 이상 고연령층의 경우 기존 실손보험의 만기 시점 갱신 예상액과 4세대 격차 시뮬레이션 대조' },
+              { step: '01. 연간 비급여 치료액', desc: '도수치료, 비급여 주사 등의 연간 이용 빈도를 파악하여 할인/할증 등급 및 5세대 비중증 비급여 자부담 상향(50%) 유불리 판단' },
+              { step: '02. 연령별 인상폭 예측', desc: '50대 이상 고연령층의 경우 기존 실손보험의 만기 시점 갱신 예상액과 4/5세대 격차 시뮬레이션 대조' },
               { step: '03. 전환 무심사 여부 검토', desc: '질병 치료 중이거나 약을 복용 중이라도 기존 가입사 계약전환권을 활용해 무심사로 전환 가능한지 체크' },
               { step: '04. 중대 질병 진단비 보완', desc: '실손 단독 설계 시 발생할 수 있는 중대 수술비 공백을 비갱신형 3대 진단비(암, 뇌, 심장)와 병행 결합' },
             ].map((item, i) => (
@@ -202,11 +202,11 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
           <div className="bg-blue-600 text-white rounded-[3.5rem] p-10 shadow-xl">
             <h4 className="text-xl font-black mb-4">실손보험 스마트 팁 TOP 5</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
-              ① 4세대 전환 시 1년간 보험료 50% 추가 혜택 체크<br />
-              ② 소액 외래 통원 치료비는 모바일 실시간 즉각 청구<br />
-              ③ 질병 이력이 있어도 3가지 유병자 실손 승인 검토<br />
-              ④ 실비의 공제 금액 기준(의원/상급병원/비급여) 파악<br />
-              ⑤ 중복 가입 하더라도 실손은 이중 지급 안 됨 숙지
+              ① 4/5세대 전환 시 계약전환 할인(최대 3년간 50% 할인) 혜택 체크<br />
+              ② 5세대 실손 신규 보장(임신·출산, 발달장애 급여) 적용 대상 여부 확인<br />
+              ③ 소액 외래 통원 치료비는 모바일 실시간 즉각 청구 가능<br />
+              ④ 실비의 공제 금액 기준(급여 20% / 5세대 비중증 비급여 50%) 파악<br />
+              ⑤ 중복 가입 하더라도 실손은 비례보상(이중 지급 불가) 됨을 숙지
             </p>
           </div>
           <div className="bg-white border border-blue-100 rounded-[3.5rem] p-10 shadow-sm hover:shadow-xl transition-all">

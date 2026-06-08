@@ -14,13 +14,54 @@ export const SilsonSummary: React.FC<Props> = ({ result }) => {
   const savings = currentPremium - recommendedPremium;
   const isSwitchBeneficial = savings > 10000;
 
+  const subType = analysis.silson?.subType || '4세대 실손';
+
+  const getGenerationLabel = (type: string) => {
+    if (type === '5세대 실손') return '5세대';
+    if (type === '노후 실손') return '노후실손';
+    return '4세대';
+  };
+
+  const getCoinsuranceLabel = (type: string) => {
+    if (type === '5세대 실손') return '급여 20%/중증 30%/비중증 50%';
+    if (type === '노후 실손') return '자기부담 30만/통원 3만';
+    return '급여 20% / 비급여 30%';
+  };
+
+  const getCoverageLimitLabel = (type: string) => {
+    if (type === '5세대 실손') return '연간 1,000만 한도';
+    if (type === '노후 실손') return '미보장/제한';
+    return '연간 300~350만';
+  };
+
+  const getRenewalCycleLabel = (type: string) => {
+    if (type === '5세대 실손') return '5년';
+    if (type === '노후 실손') return '3년';
+    return '5년';
+  };
+
+  const getDifferentialStatus = () => {
+    const usage = analysis.silson?.nonReimbursableUsage || 'under100';
+    if (usage === 'none') return '1단계(할인)';
+    if (usage === 'under100') return '2단계(정상)';
+    if (usage === '100to150') return '3단계(100% 할증)';
+    if (usage === '150to300') return '4단계(200% 할증)';
+    return '5단계(300% 할증)';
+  };
+
+  const getExplanationCopy = (type: string) => {
+    if (type === '5세대 실손') return `"${type} 전환 시 보험료를 최대 75%까지 절감할 수 있는지 분석했습니다."`;
+    if (type === '노후 실손') return `"${type} 전환 시 보험료 지출을 합리적으로 절감할 수 있는지 분석했습니다."`;
+    return `"${type} 전환 시 보험료를 최대 70%까지 절감할 수 있는지 분석했습니다."`;
+  };
+
   const analysisItems = [
-    { label: '실손 의료비 세대', val: '4세대', status: '정상', icon: Activity },
-    { label: '자기부담금 비율', val: '20~30%', status: '정상', icon: Scale },
-    { label: '3대 비급여 한도', val: '특약 가입', status: '정상', icon: Shield },
-    { label: '도수/MRI 보장', val: '연간 300~350만', status: '정상', icon: Activity },
-    { label: '보험료 차등제', val: analysis.silson?.nonReimbursableUsage === 'none' ? '1단계(할인)' : '2단계(정상)', status: '정상', icon: TrendingDown },
-    { label: '재가입 주기', val: '5년', status: '정상', icon: Clock },
+    { label: '실손 의료비 세대', val: getGenerationLabel(subType), status: '정상', icon: Activity },
+    { label: '자기부담금 비율', val: getCoinsuranceLabel(subType), status: '정상', icon: Scale },
+    { label: '3대 비급여 한도', val: subType === '노후 실손' ? '미보장/제한' : '특약 가입', status: '정상', icon: Shield },
+    { label: '도수/MRI 보장', val: getCoverageLimitLabel(subType), status: '정상', icon: Activity },
+    { label: '보험료 차등제', val: subType === '노후 실손' ? '해당없음' : getDifferentialStatus(), status: '정상', icon: TrendingDown },
+    { label: '재가입 주기', val: getRenewalCycleLabel(subType), status: '정상', icon: Clock },
   ];
 
   return (
@@ -63,7 +104,7 @@ export const SilsonSummary: React.FC<Props> = ({ result }) => {
               <span className="text-emerald-400">상담 리포트</span>입니다.
             </h2>
             <p className="text-slate-400 text-sm font-medium leading-relaxed">
-              "4세대 전환 시 보험료를 최대 70%까지 절감할 수 있는지 분석했습니다."
+              {getExplanationCopy(subType)}
             </p>
           </div>
 
@@ -83,10 +124,10 @@ export const SilsonSummary: React.FC<Props> = ({ result }) => {
               </div>
               <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
                 <motion.div 
-                  initial={{ width: 0 }}
-                  animate={{ width: '95%' }}
-                  transition={{ duration: 1.5, ease: "easeOut" }}
-                  className="h-full bg-emerald-500"
+                   initial={{ width: 0 }}
+                   animate={{ width: '95%' }}
+                   transition={{ duration: 1.5, ease: "easeOut" }}
+                   className="h-full bg-emerald-500"
                 />
               </div>
               <p className="text-[0.7rem] text-slate-400 font-bold mt-4 flex items-center gap-2">
@@ -133,6 +174,38 @@ export const SilsonSummary: React.FC<Props> = ({ result }) => {
           </div>
         </div>
       </div>
+
+      {subType === '5세대 실손' && (
+        <div className="grid grid-cols-1 gap-6">
+          {analysis.silson?.pregnancyCover === 'yes' && (
+            <div className="bg-blue-50 border border-blue-100 rounded-[3rem] p-10 flex items-start gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-blue-500 text-white flex items-center justify-center shadow-lg shrink-0">
+                <Shield size={24} />
+              </div>
+              <div>
+                <p className="text-sm font-black text-slate-800 mb-1">임신·출산 및 발달장애 보장 추가 매칭</p>
+                <p className="text-xs font-bold text-slate-500 leading-relaxed">
+                  5세대 실손은 기존 실손에서 보장되지 않던 임신성 빈혈, 분만 비용 등 **임신·출산 급여 의료비**와 소아 **발달장애 급여 의료비**를 새로이 보장합니다. 요청하신 보장 니즈에 맞춰 최적으로 매칭되었습니다.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {analysis.silson?.frequentNonSevere === 'yes' && (
+            <div className="bg-amber-50 border border-amber-100 rounded-[3rem] p-10 flex items-start gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center shadow-lg shrink-0">
+                <AlertCircle size={24} />
+              </div>
+              <div>
+                <p className="text-sm font-black text-amber-800 mb-1">⚠️ 비중증 비급여(도수치료/비급여 주사 등) 자주 이용 시 주의</p>
+                <p className="text-xs font-bold text-slate-600 leading-relaxed">
+                  도수치료, 비급여 주사, MRI 등 비중증 비급여 이용이 빈번한 경우, 5세대 실손은 이들의 **자기부담률이 50%로 설정**되고 연간 한도가 **1,000만 원으로 제한**되므로, 기존 실손(4세대 30% 등)을 유지하는 것이 더 이득일 수 있습니다. 전환 시 면밀히 대조하시길 권장합니다.
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

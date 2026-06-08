@@ -30,14 +30,22 @@ export const analyzeSilson = (analysis: any): any => {
     case 'over300': multiplier = 4.0; break;
   }
 
+  const isDbData = options.length > 0;
+  const p1 = isDbData ? opt1.premium : opt1.premium * multiplier;
+  const p2 = isDbData ? opt2.premium : opt2.premium * multiplier;
+  const p3 = isDbData ? opt3.premium : opt3.premium * multiplier;
+
+  const subType = analysis.silson?.subType || '4세대 실손';
+  const is5th = subType === '5세대 실손';
+
   const diet: RecommendationPlan = {
     title: `[${opt1.companyName}] 가성비 최우선 플랜`,
     description: `${opt1.productName}을 활용한 시장 최저가 수준의 실손 전환 프로젝트입니다.`,
-    estimatedPremium: Math.round((opt1.premium * multiplier) / 10) * 10,
+    estimatedPremium: Math.round(p1 / 10) * 10,
     coverageChanges: [
       '업계 최저 수준 보험료',
-      '자기부담금 상향(20~30%)', 
-      '비급여 차등제 적용'
+      is5th ? '비중증 비급여 자기부담 50%' : '자기부담금 상향(20~30%)', 
+      is5th ? '임신·출산 및 발달장애 급여 보장 포함' : '비급여 차등제 적용'
     ],
     switchingLossNotice: '보장 범위가 좁아질 수 있으니 신중히 결정하세요.'
   };
@@ -52,14 +60,14 @@ export const analyzeSilson = (analysis: any): any => {
       upgrade: {
         title: `[${opt2.companyName}] 가장 많이 추천하는 플랜`,
         description: `많은 고객들이 선택하는 ${opt2.companyName}의 표준 실손 결합형 업그레이드입니다.`,
-        estimatedPremium: Math.round((opt2.premium * multiplier) / 10) * 10,
-        coverageChanges: ['가장 높은 가입 만족도', '4세대 전환으로 비용 절약', '3대 진단비 보완'],
+        estimatedPremium: Math.round(p2 / 10) * 10,
+        coverageChanges: ['가장 높은 가입 만족도', `${is5th ? '5세대' : '4세대'} 전환으로 비용 절약`, is5th ? '6개월 내 무실적 전환 철회 가능' : '3대 진단비 보완'],
         switchingLossNotice: '기존 실손의 가입 시기에 따라 혜택이 다릅니다.'
       },
       hybrid: {
         title: `[${opt3.companyName}] 보장 강화형 플랜`,
         description: `보험료보다는 탄탄한 보장과 브랜드 신뢰도를 중시하는 프리미엄 선택지입니다.`,
-        estimatedPremium: Math.round((opt3.premium * multiplier) / 10) * 10,
+        estimatedPremium: Math.round(p3 / 10) * 10,
         coverageChanges: ['브랜드 인지도 1위 기업', '부수 특약 선택 가용성', '신속한 보상 프로세스'],
         switchingLossNotice: '단독 가입이 어려운 회사가 있을 수 있습니다.'
       }

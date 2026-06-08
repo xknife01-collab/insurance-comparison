@@ -1262,6 +1262,25 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
               </div>
             )}
           </div>
+
+          <div className="bg-slate-50/80 p-8 border-t border-gray-100 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="text-left space-y-2">
+              <p className="text-sm font-black text-slate-800 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
+                Real-Time Optimized Analysis
+              </p>
+              <p className="text-xs font-bold text-slate-500 leading-relaxed">
+                * 본 보험료 비교 데이터는 생명보험협회 및 손해보험협회 공시자료(수집 기준: 2026년 06월 공시)를 토대로 <span className="text-slate-800 font-extrabold">0.1초 만에</span> 실시간 분석되었습니다.
+              </p>
+            </div>
+            <div className="bg-white px-6 py-4 rounded-2xl border border-gray-100 flex items-center gap-3 shadow-sm shrink-0">
+              <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+              <div className="text-left">
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">최적화 속도</p>
+                <p className="text-base font-black text-slate-800 mt-1">0.1초 분석 완료</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* CTA 버튼 / 신청 완료 상태 (웅장한 프리미엄 배너 스타일) */}

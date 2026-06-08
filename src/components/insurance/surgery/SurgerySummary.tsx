@@ -1,138 +1,204 @@
 import React from 'react';
-import { ShieldCheck, Activity, Users, Bed, Zap, CheckCircle2, Info, Star, Shield, Stethoscope, Hospital } from 'lucide-react';
+import { motion } from 'motion/react';
+import { Zap, CheckCircle2, AlertCircle, Star, Activity, Bed, Users, ShieldCheck, Syringe } from 'lucide-react';
 import { AnalysisResult } from '../../../types/insurance';
 
 export const SurgerySummary = ({ result }: { result: AnalysisResult }) => {
   const { analysis } = result;
-  
+
+  const config = (analysis as any)?.surgery_hospital || {
+    focus: 'wide',
+    hospitalAmount: 30000,
+    caregiverOption: 'none',
+    tertiaryHospital: false,
+  };
+
+  const focus           = config.focus || 'wide';
+  const hospitalAmount  = config.hospitalAmount || 0;
+  const caregiverOpt    = config.caregiverOption || 'none';
+  const tertiaryHosp    = config.tertiaryHospital || false;
+
+  // ── 보장 항목 정의 ──────────────────────────────────────────
+  const coverageItems = [
+    {
+      label: '질병/상해 수술비',
+      icon: Activity,
+      covered: focus === 'wide',
+      partial: focus === 'named' || focus === 'major',
+      status: focus === 'wide' ? '광범위 보장' : focus === 'named' ? '1-5종 한정' : '중증 한정',
+      score: focus === 'wide' ? 95 : 60,
+    },
+    {
+      label: '1~5종 종별 수술비',
+      icon: Syringe,
+      covered: focus === 'named',
+      partial: focus === 'wide',
+      status: focus === 'named' ? '정밀 보장' : focus === 'wide' ? '기본 포함' : '미포함',
+      score: focus === 'named' ? 95 : focus === 'wide' ? 70 : 30,
+    },
+    {
+      label: '입원일당',
+      icon: Bed,
+      covered: hospitalAmount >= 30000,
+      partial: hospitalAmount > 0 && hospitalAmount < 30000,
+      status: hospitalAmount === 0 ? '미보장' : `${hospitalAmount.toLocaleString()}원/일`,
+      score: hospitalAmount === 0 ? 0 : Math.min(95, (hospitalAmount / 150000) * 100 + 40),
+    },
+    {
+      label: '간병인 서비스',
+      icon: Users,
+      covered: caregiverOpt !== 'none',
+      partial: false,
+      status: caregiverOpt === 'none' ? '미선택' : caregiverOpt === 'use' ? '사용 일당' : '간병인 지원',
+      score: caregiverOpt === 'none' ? 0 : caregiverOpt === 'support' ? 95 : 70,
+    },
+    {
+      label: '상급종합병원',
+      icon: ShieldCheck,
+      covered: tertiaryHosp,
+      partial: false,
+      status: tertiaryHosp ? '집중 보장' : '미선택',
+      score: tertiaryHosp ? 95 : 40,
+    },
+  ];
+
+  // ── Coverage Score 계산 ─────────────────────────────────────
+  const totalScore = Math.round(coverageItems.reduce((s, i) => s + i.score, 0) / coverageItems.length);
+
+  // ── 보장 공백 진단 ──────────────────────────────────────────
+  const deficiencies: string[] = [];
+  if (hospitalAmount === 0)       deficiencies.push('입원일당 미가입 — 장기 입원 시 생활비 공백 발생 위험');
+  if (hospitalAmount < 30000 && hospitalAmount > 0) deficiencies.push(`입원일당 ${hospitalAmount.toLocaleString()}원 — 시장 평균(3만원/일) 미달`);
+  if (caregiverOpt === 'none')    deficiencies.push('간병인 서비스 미선택 — 중증 수술 후 간병비 전액 본인 부담');
+  if (!tertiaryHosp)              deficiencies.push('상급종합병원 미보장 — 대학병원 입원 시 추가 비용 발생');
+  if (focus === 'major')          deficiencies.push('1~5종 수술비 미포함 — 일상 수술(백내장·탈장 등) 보장 공백');
+
+  const getScoreColor = (score: number) =>
+    score >= 85 ? 'text-emerald-500 bg-emerald-500/10 border-emerald-500/20'
+    : score >= 65 ? 'text-orange-500 bg-orange-500/10 border-orange-500/20'
+    : 'text-rose-500 bg-rose-500/10 border-rose-500/20';
+
+  const getBarColor = (score: number) =>
+    score >= 85 ? 'bg-emerald-500' : score >= 65 ? 'bg-orange-500' : 'bg-rose-400';
+
+  const getStatusColor = (item: typeof coverageItems[0]) =>
+    item.covered
+      ? 'text-emerald-700 bg-emerald-50 border-emerald-100'
+      : item.partial
+        ? 'text-orange-700 bg-orange-50 border-orange-100'
+        : 'text-rose-600 bg-rose-50 border-rose-100';
+
+  const focusLabel = focus === 'wide' ? '광범위 질병/상해형' : focus === 'named' ? '1-5종 정밀 요율형' : '중증 집중 보장형';
+
   return (
-    <div className="space-y-20 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-orange-600 to-orange-400 rounded-[4.5rem] p-12 md:p-24 text-white relative overflow-hidden shadow-[0_50px_100px_-20px_rgba(255,107,0,0.3)]">
-        <div className="absolute top-0 right-0 p-24 opacity-10 rotate-12 scale-150">
-          <Activity size={350} />
-        </div>
-        <div className="relative z-10 space-y-10">
-          <div className="inline-flex items-center gap-2 px-8 py-3 bg-white/20 backdrop-blur-xl rounded-full text-[0.75rem] font-black uppercase tracking-[0.4em] shadow-lg">
-            제 2의 건강보험, 수술·입원 완벽 가이드
-          </div>
-          <div className="space-y-4">
-             <h2 className="text-5xl md:text-7xl font-black tracking-tighter leading-[1.05]">
-                수술비의 모든 것,<br/><span className="text-orange-900/30">한눈에 분석해 드립니다.</span>
-             </h2>
-          </div>
-          <p className="text-xl md:text-2xl font-bold opacity-90 leading-relaxed max-w-3xl">
-            대한민국 4,000만 명이 가입한 국민 보험 실손의 완벽한 파트너.<br/>
-            복잡한 종별 수술 분류와 간병 옵션 뒤에 숨겨진 <span className="underline underline-offset-8 decoration-white/30 decoration-4">진짜 혜택</span>을 전문가가 직접 정리했습니다.
-          </p>
-          <div className="pt-6 flex flex-wrap gap-4">
-             <div className="px-6 py-3 bg-black/20 rounded-2xl flex items-center gap-3">
-                <CheckCircle2 size={20} className="text-orange-200" />
-                <span className="text-sm font-black italic">전 보험사 최신 요율 반영 완료</span>
-             </div>
-          </div>
-        </div>
-      </section>
+    <div className="space-y-12">
 
-      {/* CONTENT 01: 핵심 보장 */}
-      <div className="grid lg:grid-cols-2 gap-12">
-        <div className="bg-white rounded-[4rem] p-16 border border-slate-100 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.05)] transition-all hover:shadow-[0_40px_80px_-20px_rgba(255,107,0,0.1)] group">
-          <div className="flex items-center gap-6 mb-12">
-            <div className="w-20 h-20 bg-orange-100 rounded-[2rem] flex items-center justify-center text-orange-600 group-hover:rotate-[360deg] transition-all duration-1000 shadow-xl shadow-orange-50">
-              <Activity size={36} />
-            </div>
-            <div>
-              <p className="text-[0.7rem] font-black text-orange-400 tracking-[0.3em] uppercase mb-1.5 opacity-60">CONTENT 01</p>
-              <h4 className="text-3xl font-black text-slate-800 tracking-tight italic">수술비 핵심 보장</h4>
-            </div>
-          </div>
-          <div className="space-y-10">
-            <div className="p-8 bg-slate-50/50 rounded-[2.5rem] border border-slate-100 relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4 opacity-[0.03]">
-                 <Hospital size={80} />
-              </div>
-              <p className="font-black text-xl text-slate-800 mb-4 flex items-center gap-3">
-                 <span className="w-1.5 h-6 bg-orange-500 rounded-full inline-block"></span> 🏥 급여 (공통 치료)
-              </p>
-              <p className="text-base font-bold text-slate-500 leading-relaxed pl-4">
-                국민건강보험이 적용되는 항목으로, 실제 병원비에서 자기부담금을 제외한 금액을 보상합니다. (입원, 외래, 처방조제 포함)
-              </p>
-            </div>
-            <div className="p-8 bg-orange-50/30 rounded-[2.5rem] border border-orange-100/50 relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4 opacity-[0.05]">
-                 <Star size={80} />
-              </div>
-              <p className="font-black text-xl text-orange-600 mb-4 flex items-center gap-3">
-                 <span className="w-1.5 h-6 bg-orange-600 rounded-full inline-block"></span> ⭐ 비급여 (특화 치료)
-              </p>
-              <p className="text-base font-bold text-slate-600 leading-relaxed pl-4">
-                건강보험이 적용되지 않아 부담이 큰 도수치료, 비급여 주사료, MRI/MRA 등을 중점 보장합니다. 수술 가입의 핵심입니다.
-              </p>
-            </div>
-          </div>
-        </div>
+      {/* ── 상단: 보장 현황 카드 + Coverage Score ── */}
+      <div className="grid lg:grid-cols-3 gap-8">
 
-        {/* CONTENT 02: 필수 체크 용어 */}
-        <div className="bg-slate-900 rounded-[4rem] p-16 text-white relative overflow-hidden group shadow-2xl">
-          <div className="absolute bottom-0 right-0 p-12 opacity-5 scale-125">
-            <Bed size={200} />
+        {/* 좌측: 보장 현황 카드 */}
+        <div className="lg:col-span-2 bg-white rounded-[3.5rem] p-10 md:p-12 border border-slate-100 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.08)] relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-16 opacity-[0.025] group-hover:scale-110 transition-transform duration-700">
+            <Activity size={200} className="text-orange-500" />
           </div>
-          <div className="relative z-10">
-            <p className="text-[0.7rem] font-black text-orange-400 tracking-[0.3em] uppercase mb-1.5 opacity-60">CONTENT 02</p>
-            <h4 className="text-3xl font-black mb-12 tracking-tight italic">3대 필수 체크 용어</h4>
-            <div className="space-y-8">
-              {[
-                { n: '1', t: '자기부담금 (Deductible)', d: '치료비 전액이 아닌, 본인이 부담해야 하는 20~30%의 최소 비율입니다.' },
-                { n: '2', t: '갱신 및 재가입 주기', d: '가 수술비 담보는 100% 갱신형이며, 가입 시기에 따라 1~5년 주기로 조건이 변경됩니다.' },
-                { n: '3', t: '고지의무 (계약 전 알릴 의무)', d: '5년 내 큰 질환이나 1년 내 추가 검사 소견 등을 정확히 밝혀야 보장이 취소되지 않습니다.' },
-              ].map((p, idx) => (
-                <div key={idx} className="flex gap-8 p-6 hover:bg-white/5 rounded-[2rem] transition-all border border-transparent hover:border-white/10 group/item">
-                  <span className="text-5xl font-black text-orange-500/20 group-hover/item:text-orange-500 transition-colors duration-500">{p.n}</span>
-                  <div>
-                    <p className="text-xl font-black text-orange-400 mb-2">{p.t}</p>
-                    <p className="text-base font-bold opacity-50 leading-relaxed">{p.d}</p>
+
+          <div className="relative z-10 space-y-8">
+            {/* 헤더 */}
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 bg-orange-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-orange-500/20">
+                <Activity size={28} />
+              </div>
+              <div>
+                <h3 className="text-2xl font-black text-slate-800 tracking-tight">
+                  고객님의 수술·입원 보장 현황
+                </h3>
+                <p className="text-xs font-bold text-slate-400">
+                  보장 스타일: {focusLabel}
+                </p>
+              </div>
+            </div>
+
+            {/* 설계 요약 안내 배너 */}
+            <div className="p-5 rounded-2xl bg-orange-50/50 border border-orange-100/50 flex gap-3 items-start">
+              <AlertCircle className="w-5 h-5 text-orange-500 shrink-0 mt-0.5" />
+              <div className="space-y-1">
+                <p className="text-xs font-black text-orange-800">수술비 보장 설계 분석 완료</p>
+                <p className="text-[11px] text-slate-500 font-bold leading-relaxed">
+                  수술 난이도별 종별 분류(1~5종), 관혈·비관혈 수술 구분, 입원일당 한도를 기준으로
+                  <span className="text-orange-600 font-black"> 현재 보장 공백과 최적 설계 방향</span>을 분석했습니다.
+                </p>
+              </div>
+            </div>
+
+            {/* 보장 항목별 현황 */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 pt-2">
+              {coverageItems.map((item, i) => (
+                <div key={i} className="space-y-2">
+                  <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest flex items-center gap-1">
+                    <item.icon size={10} className="text-slate-300" />
+                    {item.label}
+                  </p>
+                  <p className={`text-xs font-black px-2 py-1 rounded-lg border inline-block ${getStatusColor(item)}`}>
+                    {item.status}
+                  </p>
+                  <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${item.score}%` }}
+                      transition={{ duration: 0.8, delay: i * 0.1 }}
+                      className={`h-full ${getBarColor(item.score)}`}
+                    />
                   </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
+
+        {/* 우측: Coverage Score 카드 */}
+        <div className="bg-orange-500 rounded-[3.5rem] p-12 text-white shadow-[0_30px_70px_-20px_rgba(249,115,22,0.35)] flex flex-col justify-between relative overflow-hidden group">
+          <div className="absolute -bottom-10 -right-10 opacity-10 group-hover:scale-125 transition-transform duration-1000">
+            <Zap size={200} fill="currentColor" />
+          </div>
+          <div className="relative z-10">
+            <p className="text-orange-100 font-black text-[0.65rem] uppercase tracking-[0.3em] mb-4">Coverage Score</p>
+            <div className="flex items-baseline gap-2">
+              <span className="text-7xl font-black tracking-tighter">{totalScore}</span>
+              <span className="text-2xl font-bold opacity-80">점</span>
+            </div>
+          </div>
+          <div className="relative z-10 pt-8">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full backdrop-blur-sm border border-white/10">
+              <CheckCircle2 size={16} className="text-orange-200" />
+              <span className="text-xs font-bold">
+                {totalScore >= 85
+                  ? '수술·입원 보장이 탄탄합니다!'
+                  : totalScore >= 65
+                    ? '일부 보장 공백이 있습니다.'
+                    : '보장 보강이 시급합니다.'}
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Expert Tip Area */}
-      <div className="p-16 bg-white rounded-[4.5rem] border border-orange-100 shadow-[0_50px_100px_-30px_rgba(255,107,0,0.15)] flex flex-col md:flex-row items-center gap-12 relative overflow-hidden group">
-        <div className="absolute top-0 left-0 w-2 h-full bg-orange-500"></div>
-        <div className="w-24 h-24 bg-orange-500 rounded-full flex items-center justify-center text-white flex-shrink-0 animate-bounce shadow-2xl shadow-orange-200">
-           <Zap size={44} fill="white" />
-        </div>
-        <div className="space-y-4">
-           <p className="text-2xl font-black text-slate-800 tracking-tight">💡 전문가의 핵심 팁</p>
-           <p className="text-xl md:text-2xl font-bold text-slate-500 italic leading-relaxed">
-             "실물 카드가 아닌 <span className="text-slate-900 underline underline-offset-4 decoration-orange-500/30 decoration-4">'모바일 앱'</span> 청구가 가능한지 확인하세요. 소액 통원비는 그때그때 청구하는 것이 보장을 가장 똑똑하게 활용하는 방법입니다."
-           </p>
-        </div>
-      </div>
-
-      {/* Market Segments Section */}
-      <div className="grid md:grid-cols-3 gap-10">
-         {[
-           { t: '대형 보험사 (S사, H사)', d: '전국적인 서비스망과 빠른 보험금 지급 심사가 최대 강점입니다. 갱신 연령이 높아져도 자금력이 풍부해 안정적인 운영이 가능합니다.', icon: Shield },
-           { t: '다이렉트 전용 (D사, M사)', d: '설계사 수수료가 빠져 있어 동일 보장 대비 월 보험료가 15~20% 저렴합니다. 합리적인 소비를 지향하는 젊은 층에 적합합니다.', icon: Zap },
-           { t: '4세대 착한 통합보장', d: '가장 최신 트렌드로, 병원을 자주 안 가면 보험료를 깎아주고 병원 방문이 매우 잦으면 할증되는 합리적인 구조입니다.', icon: Stethoscope },
-         ].map((m, i) => (
-           <div key={i} className="p-10 bg-slate-50 rounded-[3rem] border border-slate-100 hover:bg-white hover:shadow-2xl transition-all duration-500 group">
-              <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-slate-400 mb-6 group-hover:bg-slate-900 group-hover:text-white transition-all shadow-sm">
-                 <m.icon size={24} />
+      {/* ── 하단: 보장 공백 진단 ── */}
+      {deficiencies.length > 0 && (
+        <div className="bg-rose-50/50 border border-rose-100 rounded-[2.5rem] p-8 md:p-10 space-y-4">
+          <h4 className="text-base font-black text-rose-800 flex items-center gap-2">
+            <Star className="w-5 h-5 text-rose-500 fill-rose-500" />
+            진단된 보장 공백 ({deficiencies.length}건)
+          </h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {deficiencies.map((def, idx) => (
+              <div key={idx} className="flex items-center gap-3 bg-white p-4 rounded-xl border border-rose-100/50">
+                <span className="w-2 h-2 bg-rose-500 rounded-full shrink-0" />
+                <span className="text-xs font-bold text-slate-700">{def}</span>
               </div>
-              <h5 className="text-xl font-black text-slate-800 mb-4">{m.t}</h5>
-              <p className="text-sm font-bold text-slate-500 leading-relaxed">{m.d}</p>
-           </div>
-         ))}
-      </div>
-
-      <div className="text-center py-10">
-         <p className="text-3xl font-black text-slate-200 tracking-tighter italic">"보장은 건강할 때 준비해야 하는 진입장벽이 가장 높은 자산입니다."</p>
-      </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -62,7 +62,7 @@ const ALL_CATEGORIES: MajorCategory[] = [
     icon: Hospital,
     accentColor: '#FF6B00',
     items: [
-      { id: 'silson', label: '의료실비', description: '병원비 90% 보장', icon: Shield, color: '#00D7C4', bgColor: '#F0FDFA', subTypes: ['4세대 실손', '노후 실손'] },
+      { id: 'silson', label: '의료실비', description: '병원비 90% 보장', icon: Shield, color: '#00D7C4', bgColor: '#F0FDFA', subTypes: ['4세대 실손', '5세대 실손', '노후 실손'] },
       { id: 'dental', label: '치아보험', description: '임플란트/크라운', icon: Smile, color: '#10B981', bgColor: '#F0FDF4', subTypes: ['진단형', '무진단형'] },
       { id: 'pre', label: '유병자', description: '아픈 분도 가입', icon: Stethoscope, color: '#2563EB', bgColor: '#EFF6FF', subTypes: ['간편 고지형', '무심사형'] },
       { id: 'surgery', label: '수술/입원', description: '수술비 반복 지급', icon: Activity, color: '#F59E0B', bgColor: '#FFFBEB', subTypes: ['1-5종 수술비', 'N대 수술비', '상해 수술비'] },
@@ -201,6 +201,8 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   const [silson1Year, setSilson1Year] = useState<'yes' | 'no'>('no');
   const [silson5Year, setSilson5Year] = useState<'yes' | 'no'>('no');
   const [silsonNonReimbursable, setSilsonNonReimbursable] = useState('under100'); // 기본값: 100만원 미만 (유지)
+  const [silsonPregnancyCover, setSilsonPregnancyCover] = useState<'yes' | 'no'>('no');
+  const [silsonFrequentNonSevere, setSilsonFrequentNonSevere] = useState<'yes' | 'no'>('no');
   
   // Surgery & Hospitalization specific states
   const [surgeryFocus, setSurgeryFocus] = useState<'wide' | 'named' | 'major'>('wide');
@@ -458,9 +460,9 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   React.useEffect(() => {
     if (selectedId === 'silson' && calculatedAge) {
       if (calculatedAge < 50) {
-        setSelectedDetail(0); // 4세대 실손 고정
+        setSelectedDetail(1); // 5세대 실손 추천
       } else if (calculatedAge >= 60) {
-        setSelectedDetail(1); // 노후 실손 추천
+        setSelectedDetail(2); // 노후 실손 추천
       }
     }
   }, [selectedId, calculatedAge]);
@@ -694,7 +696,9 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
           oneYearExam: silson1Year,
           fiveYearTreatment: silson5Year,
           subType: activeItem.subTypes[selectedDetail],
-          nonReimbursableUsage: silsonNonReimbursable // 비급여 이용량 추가
+          nonReimbursableUsage: silsonNonReimbursable, // 비급여 이용량 추가
+          pregnancyCover: silsonPregnancyCover,
+          frequentNonSevere: silsonFrequentNonSevere
         } : undefined,
         surgery_hospital: selectedId === 'surgery' ? {
           focus: surgeryFocus,
@@ -1189,6 +1193,9 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                   oneYear={silson1Year} setOneYear={setSilson1Year}
                   fiveYear={silson5Year} setFiveYear={setSilson5Year}
                   nonReimbursableUsage={silsonNonReimbursable} setNonReimbursableUsage={setSilsonNonReimbursable}
+                  subType={activeItem.subTypes[selectedDetail]}
+                  pregnancyCover={silsonPregnancyCover} setPregnancyCover={setSilsonPregnancyCover}
+                  frequentNonSevere={silsonFrequentNonSevere} setFrequentNonSevere={setSilsonFrequentNonSevere}
                 />
               ) : selectedId === 'surgery' ? (
                 <SurgeryHospitalFields
