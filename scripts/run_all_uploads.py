@@ -43,6 +43,7 @@ UPLOAD_SCRIPTS = [
     ("python", "scripts/upload_child_sick_rates.py"),
     ("python", "scripts/upload_consolidated_heart.py"),
     ("python", "scripts/upload_fire_rates.py"),
+    ("python", "scripts/scraper/upload_brain_final.py"),
     ("python", "scripts/upload_health_general_rates.py"),
     ("python", "scripts/upload_home_facility_rates.py"),
     ("python", "scripts/upload_legal_data_http.py"),

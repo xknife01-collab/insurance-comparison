@@ -1,14 +1,17 @@
+# -*- coding: utf-8 -*-
 import sys
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 import pandas as pd
 import io, os, re
+import requests
 from dotenv import load_dotenv
 from supabase import create_client
 
 # ─────────────────────────────────────────────
-# 설정
+# 설정 및 환경 변수 로드
 # ─────────────────────────────────────────────
 XLS_DIR = r'c:\Users\zkfnt\Desktop\insurance-comparison-main'
+TABLE_NAME = "insurance_yu_byung_ja"
 
 load_dotenv('.env')
 load_dotenv('.env.local')
@@ -16,17 +19,14 @@ SUPABASE_URL = os.getenv("VITE_SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-DENTAL_KEYWORDS = ['치아', '덴탈', 'Dental']
-EXCLUDE_PRODUCT_KEYWORDS = ['종합', '종신', '건강보험', '건강보장', '암', '상해', '운전자', '화재',
-                            '어린이', '자녀', '태아', '영유아']
-MAX_MONTHLY_PREMIUM = 99999999  # 필터 없음 - 모든 상품 포함
+# 유병자 매칭을 위한 핵심 키워드
+UBJ_KEYWORDS = ['간편심사', '간편고지', '유병자', '유병장수', '355', '3.5.5', '3.10.10', '3N', '325', '통합간편']
 
-DENTAL_PRODUCT_TABLE = 'dental_products'
-DENTAL_RATE_TABLE = 'dental_rates'
-
+# 다른 카테고리로 넘어가야 하거나 불필요한 상품 제외 키워드
+JUNK_KEYWORDS = ['치아', '펫', '반려', '어린이', '자녀', '운전자', '자동차', '재물', '저축', '연금', '변액', '종신', '태아']
 
 # ─────────────────────────────────────────────
-# 유틸
+# 데이터 정제 및 파싱 헬퍼 함수
 # ─────────────────────────────────────────────
 def clean_num(val):
     if not val: return 0
@@ -42,14 +42,16 @@ def clean_val(v):
 
 def clean_company(comp):
     comp = comp.strip()
+    if '삼성생명' in comp: return '삼성생명'
+    if '삼성화재' in comp: return '삼성화재'
     if '메리츠' in comp: return '메리츠화재'
     if '롯데' in comp:   return '롯데손보'
     if 'KB' in comp:     return 'KB손보'
     if 'DB' in comp:     return 'DB손보'
     if '흥국' in comp:   return '흥국화재'
-    if '한화' in comp:   return '한화손보'
+    if '한화생명' in comp: return '한화생명'
+    if '한화손보' in comp: return '한화손보'
     if '현대해상' in comp: return '현대해상'
-    if '삼성화재' in comp: return '삼성화재'
     if 'NH' in comp or '농협' in comp: return 'NH농협손보'
     if '라이나' in comp: return '라이나생명'
     if '교보' in comp:   return '교보생명'
@@ -68,34 +70,37 @@ def clean_product(name):
     n = re.sub(r'\s+', ' ', n).strip().strip('-_ ')
     return n
 
-def is_dental_product(prod_name):
-    """상품명 자체에 치아 키워드가 있어야 함 (종합보험/종신보험 제외)"""
-    if not any(k in prod_name for k in DENTAL_KEYWORDS):
+def is_preexisting_product(prod_name):
+    # 유병자 간편심사 관련 키워드가 있어야 함
+    if not any(k in prod_name for k in UBJ_KEYWORDS):
         return False
-    if any(k in prod_name for k in EXCLUDE_PRODUCT_KEYWORDS):
+    # 치아, 저축, 연금, 태아 등 제외 키워드가 걸리면 탈락
+    if any(k in prod_name for k in JUNK_KEYWORDS):
         return False
     return True
-
 
 # ─────────────────────────────────────────────
 # XLS 파서
 # ─────────────────────────────────────────────
-def parse_dental_xls(filepath, source_file):
+def parse_preexisting_xls(filepath, source_file):
     df = None
     try:
         df = pd.read_excel(filepath, engine='xlrd', header=None)
     except Exception:
-        raw = open(filepath, 'rb').read()
-        for enc in ['cp949', 'euc-kr', 'utf-8']:
-            try:
-                text = raw.decode(enc)
-                if '<table' in text.lower():
-                    frames = pd.read_html(io.StringIO(text), flavor='bs4')
-                    if frames:
-                        df = frames[0]
-                        break
-            except Exception:
-                continue
+        try:
+            raw = open(filepath, 'rb').read()
+            for enc in ['cp949', 'euc-kr', 'utf-8']:
+                try:
+                    text = raw.decode(enc)
+                    if '<table' in text.lower():
+                        frames = pd.read_html(io.StringIO(text), flavor='bs4')
+                        if frames:
+                            df = frames[0]
+                            break
+                except Exception:
+                    continue
+        except Exception as e:
+            print(f"  [ERROR] 파일 읽기 예외: {source_file} - {e}")
 
     if df is None:
         print(f"  [SKIP] 읽기 실패: {source_file}")
@@ -112,6 +117,18 @@ def parse_dental_xls(filepath, source_file):
             m_col = male_cols[0]
             f_col = female_cols[0]
             break
+
+    if header_row_idx == -1:
+        # 가끔 남자/여자 문구가 10~15 라인 너머에 있는 특이 케이스 대응을 위한 범위 넓히기
+        for i in range(len(df)):
+            row = [clean_val(v) for v in df.iloc[i].tolist()]
+            male_cols   = [j for j, v in enumerate(row) if v.strip() in ['남자', '남자 ']]
+            female_cols = [j for j, v in enumerate(row) if v.strip() in ['여자', '여자 ']]
+            if male_cols and female_cols:
+                header_row_idx = i
+                m_col = male_cols[0]
+                f_col = female_cols[0]
+                break
 
     if header_row_idx == -1:
         print(f"  [SKIP] 헤더 인식 실패: {source_file}")
@@ -137,8 +154,8 @@ def parse_dental_xls(filepath, source_file):
         if not cur_company or not cur_product:
             continue
 
-        # 상품명 기준으로 치아보험 여부 판단
-        if not is_dental_product(cur_product):
+        # 상품명 기준으로 유병자 건강보험 여부 판단
+        if not is_preexisting_product(cur_product):
             continue
 
         # 보험료가 있는 행만 처리 (모든 담보 합산)
@@ -159,116 +176,117 @@ def parse_dental_xls(filepath, source_file):
         if key not in products:
             products[key] = {
                 'company_name': comp,
-                'display_name': prod,
-                'product_code': f"DENT_{re.sub(r'[^a-zA-Z0-9가-힣]', '_', key)[:48]}",
-                'category': '치아_보험',
+                'product_name': prod,
+                'category': '건강보험',
+                'review_type': '간편심사',
+                'is_renewable': '갱신형' in cur_product,
                 'm_prem': 0,
                 'f_prem': 0,
                 'source': source_file
             }
-        # 담보별 보험료 누적 합산
+        
+        # 담보별 보험료 합산 누적
         products[key]['m_prem'] += m_prem
         products[key]['f_prem'] += f_prem
 
-    # 합산 후 시장가 범위 필터 (1만원 미만 or 10만원 초과 제거)
-    products = {
+    # 합산 후 40세 최저가 임계치 필터 적용 (35,000원 이상 상품만 수용)
+    filtered_products = {
         k: v for k, v in products.items()
-        if 10000 <= v['m_prem'] <= 100000
+        if v['m_prem'] >= 35000 and v['m_prem'] <= 150000
     }
-    return products
-
+    return filtered_products
 
 # ─────────────────────────────────────────────
-# 메인 파이프라인
+# 메인 실행 파이프라인
 # ─────────────────────────────────────────────
-def run_dental_pipeline():
+def run_preexisting_pipeline():
     print("=" * 60)
-    print("[치아보험 자동 파이프라인] 시작")
+    print("[유병자보험 엑셀 자동 파이프라인] 시작")
     print("=" * 60)
 
-    # 장기보장성 XLS 파일 스캔
+    # 장기보장성 및 보장성 XLS 파일 스캔
     xls_files = [
         f for f in os.listdir(XLS_DIR)
-        if f.endswith('.xls') and '장기보장성' in f
+        if f.endswith('.xls') and ('장기보장성' in f or '보장성_상품비교' in f)
     ]
     if not xls_files:
-        print(f"[!] 장기보장성 XLS 파일 없음")
+        print(f"[!] 공시 XLS 파일 없음")
         return
 
-    print(f"[*] 발견된 장기보장성 XLS: {len(xls_files)}개")
+    print(f"[*] 발견된 공시 XLS: {len(xls_files)}개")
 
     all_products = {}
     for fname in xls_files:
         fpath = os.path.join(XLS_DIR, fname)
         print(f"\n[*] 파싱 중: {fname}")
-        prods = parse_dental_xls(fpath, fname)
-        dental_count = len(prods)
-        if dental_count:
-            print(f"    → 치아보험 {dental_count}개 상품 추출")
+        prods = parse_preexisting_xls(fpath, fname)
+        count = len(prods)
+        if count:
+            print(f"    → 유병자 건강보험 {count}개 상품 추출")
             all_products.update(prods)
         else:
-            print(f"    → 치아보험 없음")
+            print(f"    → 유병자 상품 매칭 없음")
 
     if not all_products:
-        print("\n[!] 추출된 치아보험 상품 없음")
+        print("\n[!] 추출된 유병자 상품 없음")
         return
 
-    print(f"\n[*] 총 {len(all_products)}개 치아보험 상품 추출")
+    print(f"\n[*] 총 {len(all_products)}개 유병자 건강보험 상품 추출 완료")
 
-    # 보험료 검증 출력
-    print("\n[*] 적재 예정 목록 (40세 기준):")
-    print(f"{'회사':<12} {'상품명':<35} {'남자':>8} {'여자':>8}")
-    print("-" * 70)
-    for key, p in sorted(all_products.items()):
-        print(f"{p['company_name']:<12} {p['display_name'][:33]:<35} "
-              f"{p['m_prem']:>8,} {p['f_prem']:>8,}")
+    # Supabase 기존 유병자 데이터 초기화
+    print("\n[*] Supabase 기존 유병자 데이터 삭제 중...")
+    try:
+        supabase.table(TABLE_NAME).delete().neq('id', -1).execute()
+        print("  [+] 삭제 성공!")
+    except Exception as e:
+        print(f"  [!] 삭제 실패 또는 예외 발생: {e}")
 
-    # 시장가 범위 체크
-    prems = [p['m_prem'] for p in all_products.values() if p['m_prem'] > 0]
-    if prems:
-        avg = sum(prems) // len(prems)
-        print(f"\n[*] 보험료 범위: {min(prems):,}~{max(prems):,}원 (평균 {avg:,}원)")
-        if avg > 60000:
-            print("[!] 평균이 6만원 이상 → 장기보장성 XLS 치아보험 고가 상품 위주")
-            print("    시장가(30,000~45,000원)와 차이 있음. 기존 하드코딩 데이터 유지 권장")
-            return
-
-    # Supabase 적재
-    print("\n[*] Supabase 기존 데이터 삭제...")
-    supabase.table(DENTAL_RATE_TABLE).delete().neq('id', -1).execute()
-    supabase.table(DENTAL_PRODUCT_TABLE).delete().neq('id', -1).execute()
-
-    prod_inserts = []
-    rate_inserts = []
-
+    # 데이터 적재 준비
+    inserts = []
     for key, p in all_products.items():
-        prod_inserts.append({
-            'product_code': p['product_code'],
-            'company_name': p['company_name'],
-            'display_name': p['display_name'],
-            'category': p['category']
-        })
-        rate_inserts.append({
-            'product_code': p['product_code'],
-            'gender': 'M', 'age': 40,
-            'rate_data': {'premium': p['m_prem'], 'basis': 'XLS 비교공시'}
-        })
-        rate_inserts.append({
-            'product_code': p['product_code'],
-            'gender': 'F', 'age': 40,
-            'rate_data': {'premium': p['f_prem'], 'basis': 'XLS 비교공시'}
+        m_prem = p['m_prem']
+        f_prem = p['f_prem'] if p['f_prem'] > 0 else int(m_prem * 0.85)
+
+        # [핵심] 모든 연령대 키에 40대 원천 합산 요율을 세팅하여 프론트엔드 이중계산 오류 예방
+        rates = {
+            "premium_M_30": m_prem,
+            "premium_M_40": m_prem,
+            "premium_M_50": m_prem,
+            "premium_M_60": m_prem,
+            "premium_M_70": m_prem,
+            "premium_M_80": m_prem,
+            "premium_F_30": f_prem,
+            "premium_F_40": f_prem,
+            "premium_F_50": f_prem,
+            "premium_F_60": f_prem,
+            "premium_F_70": f_prem,
+            "premium_F_80": f_prem
+        }
+
+        inserts.append({
+            "company_name": p['company_name'],
+            "product_name": p['product_name'],
+            "category": p['category'],
+            "review_type": p['review_type'],
+            "is_renewable": p['is_renewable'],
+            "rates": rates
         })
 
-    if prod_inserts:
-        for i in range(0, len(prod_inserts), 100):
-            supabase.table(DENTAL_PRODUCT_TABLE).insert(prod_inserts[i:i+100]).execute()
-    if rate_inserts:
-        for i in range(0, len(rate_inserts), 100):
-            supabase.table(DENTAL_RATE_TABLE).insert(rate_inserts[i:i+100]).execute()
+    # Supabase 일괄 Insert (50개씩 청크 분할 적재)
+    total_loaded = 0
+    if inserts:
+        print(f"\n[*] Supabase 일괄 적재 시작 (총 {len(inserts)}건)...")
+        for i in range(0, len(inserts), 50):
+            batch = inserts[i:i+50]
+            try:
+                supabase.table(TABLE_NAME).insert(batch).execute()
+                total_loaded += len(batch)
+                print(f"  [+] {total_loaded}건 적재 완료...")
+            except Exception as e:
+                print(f"  [!] 적재 예외 발생 청크 {i}~{i+50}: {e}")
 
-    print(f"\n[완료] 상품 {len(prod_inserts)}개 / 요율 {len(rate_inserts)}건 적재 완료")
+    print(f"\n[완료] 유병자 건강보험 {total_loaded}개 상품 최종 적재 완료")
     print("=" * 60)
 
-
 if __name__ == "__main__":
-    run_dental_pipeline()
+    run_preexisting_pipeline()

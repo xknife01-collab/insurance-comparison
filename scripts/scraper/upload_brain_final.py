@@ -44,6 +44,9 @@ def upload_data():
     # Filter out '소방관'
     df = df[~df['상품명'].str.contains('소방관', na=False)]
     
+    # Filter out '종합' (종합보험 제외)
+    df = df[~df['상품명'].str.contains('종합', na=False)]
+    
     print(f"[*] Reading {len(df)} rows from Excel after filtering...", flush=True)
 
     # 1. Clear tables
