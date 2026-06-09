@@ -46,6 +46,12 @@ def upload_data():
     
     # Filter out '종합' (종합보험 제외)
     df = df[~df['상품명'].str.contains('종합', na=False)]
+
+    # 담보명(급부명) 정밀 필터링: '뇌혈관/뇌졸중/뇌'를 보장하며 '진단'을 포함하는 순수 진단비 특약만 선택
+    # 납입면제, 수술비, 치료비 등 종합 패키지용 무거운 요율들은 제외하여 요율 정합성 확보
+    df = df[df['담보명(급부명)'].str.contains('뇌혈관|뇌졸중|뇌', na=False)]
+    df = df[df['담보명(급부명)'].str.contains('진단', na=False)]
+    df = df[~df['담보명(급부명)'].str.contains('납입면제|수술|치료비', na=False)]
     
     print(f"[*] Reading {len(df)} rows from Excel after filtering...", flush=True)
 
