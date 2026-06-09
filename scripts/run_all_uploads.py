@@ -23,6 +23,7 @@ EXTRACTION_SCRIPTS = [
     "scripts/extract_golf_data.py",
     "scripts/extract_health_general_data.py",
     "scripts/extract_heart_insurance.py",
+    "scripts/consolidate_heart_data.py",
     "scripts/extract_home_facility_data.py",
     "scripts/extract_home_fire_data.py",
     "scripts/extract_legal_data.py",

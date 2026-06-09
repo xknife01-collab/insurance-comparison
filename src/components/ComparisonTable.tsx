@@ -1146,32 +1146,6 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
           </p>
         </div>
 
-        {/* 웅장한 디자인의 공시 기준일 & 실시간 분석 고지 배너 */}
-        <div className="relative mt-8 overflow-hidden rounded-[2rem] bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-6 sm:p-8 shadow-2xl border border-white/10 group">
-          {/* Animated Background Glow */}
-          <div className="absolute -inset-x-40 -inset-y-40 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.15)_0,transparent_60%)] blur-3xl pointer-events-none group-hover:scale-110 transition-transform duration-700" />
-          
-          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div className="space-y-2">
-              <div className="flex items-center gap-3">
-                <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[9px] font-black text-indigo-300 uppercase tracking-[0.25em]">Real-Time Optimized Analysis</span>
-              </div>
-              <p className="text-white text-xs font-semibold break-keep leading-relaxed opacity-95">
-                * 본 보험료 비교 데이터는 생명보험협회 및 손해보험협회 공시자료(수집 기준: <span className="text-indigo-300 font-extrabold underline decoration-wavy decoration-indigo-400/60">{getDisclosureDate()}</span>)를 토대로 <span className="text-orange-400 font-extrabold">0.1초 만에</span> 실시간 분석되었습니다.
-              </p>
-            </div>
-            
-            <div className="flex items-center gap-4 shrink-0 bg-white/5 backdrop-blur-md px-5 py-3.5 rounded-2xl border border-white/10 shadow-inner">
-              <Clock className="w-5 h-5 text-indigo-400" />
-              <div className="text-left">
-                <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">최적화 속도</p>
-                <p className="text-xs font-black text-white">0.1초 분석 완료</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
   );

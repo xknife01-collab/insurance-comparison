@@ -649,8 +649,8 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
           coveragePeriod: brainCoveragePeriod
         } : undefined,
         cardiovascular: isHealthCategory && selectedId === 'heart' ? {
-          currentAmount: 0,
-          targetAmount: selectedHeart || 30000000,
+          currentAmount: selectedHeart,
+          targetAmount: 30000000,
           selectedType: selectedDetail === 0 ? '급성 심근경색' : '통합(급성+허혈성)',
         } : undefined,
         surgery: isHealthCategory ? { currentAmount: selectedSurgery, targetAmount: 1000000 } : undefined,
@@ -1482,6 +1482,12 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                   setCoverageLevel={setHeartCoverageLevel}
                   currentAmount={selectedHeart}
                   setCurrentAmount={setSelectedHeart}
+                  selectedSurgery={selectedSurgery}
+                  setSelectedSurgery={setSelectedSurgery}
+                  selectedDisability={selectedDisability}
+                  setSelectedDisability={setSelectedDisability}
+                  selectedExemption={selectedExemption}
+                  setSelectedExemption={setSelectedExemption}
                 />
               ) : selectedId === 'health_general' ? (
                 <HealthGeneralFields

@@ -32,6 +32,16 @@ export async function fetchHeartPremium(analysis: InsuranceAnalysis) {
       coverageLevelMultiplier = 1.55;
     }
 
+    // 부가 상세 보장 설정에 따른 요율 가산 금액 및 할증 적용
+    const surgeryAmount = analysis.surgery?.currentAmount || 300000;
+    const surgeryAddon = surgeryAmount >= 1000000 ? 2000 : 0;
+
+    const disabilityAmount = analysis.postDisability?.currentAmount || 10000000;
+    const disabilityAddon = disabilityAmount >= 30000000 ? 3500 : 0;
+
+    const paymentExemption = analysis.paymentExemption || 'standard';
+    const exemptionMultiplier = paymentExemption === 'premium' ? 1.03 : 1.00;
+
     // 심장질환 연령 보정 계수 (일반적인 통계 기반)
     const getAgeIndex = (age: number, male: boolean): number => {
       if (male) {
@@ -66,13 +76,18 @@ export async function fetchHeartPremium(analysis: InsuranceAnalysis) {
       // 실제 계리 방식 적용: 주계약(기본 의무가입) 고정비 약 2,500원을 제외한 '순수 진단비'에만 배수 적용
       const baseContractFee = 2500;
       let finalPremium;
+
+      // 수술비 & 후유장해 증액 가산금 적용 (연령 계수 반영)
+      const addonPremium = Math.round((surgeryAddon + disabilityAddon) * ageRatio);
       
       if (basePremium <= baseContractFee) {
         // 보험료가 너무 낮으면 예외 처리
-        finalPremium = Math.round(basePremium * ageRatio * coverageMultiplier * coverageLevelMultiplier);
+        const mainPremium = Math.round(basePremium * ageRatio * coverageMultiplier * coverageLevelMultiplier);
+        finalPremium = Math.round((mainPremium + addonPremium) * exemptionMultiplier);
       } else {
         const pureRiderPremium = basePremium - baseContractFee;
-        finalPremium = Math.round((pureRiderPremium * coverageMultiplier + baseContractFee) * ageRatio * coverageLevelMultiplier);
+        const mainPremium = Math.round((pureRiderPremium * coverageMultiplier + baseContractFee) * ageRatio * coverageLevelMultiplier);
+        finalPremium = Math.round((mainPremium + addonPremium) * exemptionMultiplier);
       }
 
       return {
@@ -82,6 +97,35 @@ export async function fetchHeartPremium(analysis: InsuranceAnalysis) {
         category: plan.category,
         coverageName: plan.coverage_name || ''
       };
+    })
+    .filter(p => {
+      // 1. 보장 타입(급성 vs 통합) 필터링
+      if (isIntegrated) {
+        // 통합: '허혈성'이나 '통합'이라는 단어가 엑셀 담보/상품명에 반드시 있어야 함
+        const hasIntegrated = p.coverageName.includes('허혈성') || p.productName.includes('허혈성') || p.coverageName.includes('통합') || p.productName.includes('통합');
+        if (!hasIntegrated) return false;
+      } else {
+        // 급성: '급성'은 있고, '허혈성'이나 '통합'은 절대 없어야 함
+        const hasAcute = p.coverageName.includes('급성') || p.productName.includes('급성');
+        const hasIntegrated = p.coverageName.includes('허혈성') || p.productName.includes('허혈성') || p.coverageName.includes('통합');
+        if (!hasAcute || hasIntegrated) return false;
+      }
+
+      // 2. 심장 전문보험이 아닌 상품 제외 (암, 종합, 당뇨, 대출, 유병자 필터 적용)
+      const name = p.productName;
+      const isMixed = 
+        name.includes('암') || 
+        name.includes('종합') || 
+        name.includes('통합건강') || 
+        name.includes('당뇨') || 
+        name.includes('CEO') ||
+        name.includes('대출') ||
+        name.includes('간편') ||
+        name.includes('유병자') ||
+        name.includes('355') || name.includes('325') || name.includes('335') || name.includes('345') || name.includes('315') || name.includes('310');
+      if (isMixed) return false;
+
+      return true;
     })
     .filter(p => p.premium >= 10000)
     .sort((a, b) => a.premium - b.premium);

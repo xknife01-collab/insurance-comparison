@@ -40,6 +40,12 @@ def upload_consolidated():
     # 3. 데이터 매핑
     upload_list = []
     for idx, row in df.iterrows():
+        base_date_val = str(row.get('기준일자', '')).strip() if pd.notna(row.get('기준일자')) else None
+        if base_date_val:
+            base_date_val = base_date_val.replace('.', '-')
+            if not re.match(r'^\d{4}-\d{2}-\d{2}$', base_date_val):
+                base_date_val = None
+
         item = {
             "company": str(row.get('보험회사', '')),
             "product_name": str(row.get('상품명', '')),
@@ -49,7 +55,7 @@ def upload_consolidated():
             "details": str(row.get('상세안내', '')),
             "channel": str(row.get('판매채널', '')),
             "contact": str(row.get('연락처', '')),
-            "base_date": str(row.get('기준일자', '')) if pd.notna(row.get('기준일자')) else None
+            "base_date": base_date_val
         }
         upload_list.append(item)
 

@@ -24,7 +24,7 @@ def consolidate_data():
     df = pd.read_excel(SOURCE_FILE).astype(object)
     
     # 1. 키워드 필터링 (종신, 어린이, 쥬니어, 암)
-    exclude_kws = ["종신", "어린이", "쥬니어", "암", "유니버설", "CI", "GI", "변액", "연금"]
+    exclude_kws = ["종신", "어린이", "쥬니어", "암", "유니버설", "CI", "GI", "변액", "연금", "대출", "간편", "유병자", "355", "325", "335", "345", "315", "310"]
     def is_target(name):
         name_str = str(name)
         return not any(kw in name_str for kw in exclude_kws)
@@ -33,8 +33,8 @@ def consolidate_data():
     print(f"  [+] 키워드 필터링 완료. (남은 행 수: {len(df)})")
 
     # 2. 보험료 숫자 변환
-    df['m_val'] = df['남성보험료'].apply(clean_money)
-    df['f_val'] = df['여성보험료'].apply(clean_money)
+    df['m_val'] = df['기준보험료'].apply(clean_money)
+    df['f_val'] = df['가입보험료'].apply(clean_money)
     
     # 3. 상품별 통합 (보험회사 + 상품명 기준)
     # 0:보험회사, 1:상품명, 2:구분

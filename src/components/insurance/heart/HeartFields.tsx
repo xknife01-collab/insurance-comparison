@@ -12,6 +12,12 @@ interface HeartFieldsProps {
   setCoverageLevel: (level: 'basic' | 'standard' | 'premium') => void;
   currentAmount: number;
   setCurrentAmount: (amount: number) => void;
+  selectedSurgery: number;
+  setSelectedSurgery: (v: number) => void;
+  selectedDisability: number;
+  setSelectedDisability: (v: number) => void;
+  selectedExemption: 'standard' | 'premium';
+  setSelectedExemption: (v: 'standard' | 'premium') => void;
 }
 
 const HeartFields: React.FC<HeartFieldsProps> = ({
@@ -25,7 +31,19 @@ const HeartFields: React.FC<HeartFieldsProps> = ({
   setCoverageLevel,
   currentAmount,
   setCurrentAmount,
+  selectedSurgery,
+  setSelectedSurgery,
+  selectedDisability,
+  setSelectedDisability,
+  selectedExemption,
+  setSelectedExemption,
 }) => {
+  const fields = [
+    { label: '수술비(질병/상해)', state: selectedSurgery, setter: setSelectedSurgery, options: [{l:'30만',v:300000}, {l:'100만',v:1000000}] },
+    { label: '질병후유장해(3%~)', state: selectedDisability, setter: setSelectedDisability, options: [{l:'1,000만',v:10000000}, {l:'3,000만',v:30000000}] },
+    { label: '납입면제 범위', state: selectedExemption, setter: setSelectedExemption, options: [{l:'표준형',v:'standard'}, {l:'고급형',v:'premium'}] },
+  ];
+
   return (
     <div className="bg-slate-50/50 rounded-[3rem] p-8 md:p-10 border-2 border-slate-100 mb-10 animate-in fade-in slide-in-from-bottom-4">
       <div className="flex items-center gap-3 mb-8">
@@ -38,7 +56,7 @@ const HeartFields: React.FC<HeartFieldsProps> = ({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-8">
         <div className="space-y-8">
           {/* 건강 상태 선택 */}
           <div>
@@ -147,18 +165,48 @@ const HeartFields: React.FC<HeartFieldsProps> = ({
           </div>
 
           <div className="bg-white rounded-[2.5rem] p-8 shadow-inner border border-slate-100 flex flex-col justify-center items-center text-center">
-          <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-6">
-            <div className="w-12 h-12 bg-red-500 rounded-full animate-ping absolute opacity-20"></div>
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-6">
+              <div className="w-12 h-12 bg-red-500 rounded-full animate-ping absolute opacity-20"></div>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <h4 className="text-lg font-black text-slate-800 mb-2">심장질환 집중 분석 중</h4>
+            <p className="text-xs font-bold text-slate-400 leading-relaxed max-w-[200px]">
+              선택하신 {coverageLevel === 'premium' ? 'VIP' : coverageLevel === 'standard' ? '표준' : '실속'} 보장 범위에 맞춰<br/>전사 비교를 진행합니다.
+            </p>
           </div>
-          <h4 className="text-lg font-black text-slate-800 mb-2">심장질환 집중 분석 중</h4>
-          <p className="text-xs font-bold text-slate-400 leading-relaxed max-w-[200px]">
-            선택하신 {coverageLevel === 'premium' ? 'VIP' : coverageLevel === 'standard' ? '표준' : '실속'} 보장 범위에 맞춰<br/>전사 비교를 진행합니다.
-          </p>
+        </div>
+      </div>
+
+      {/* 수술비, 질병후유장해, 납입면제 세부 설정 그리드 */}
+      <div className="border-t border-slate-200/60 pt-8 mt-8">
+        <div className="flex items-center gap-2 mb-6">
+          <div className="w-1.5 h-4 bg-red-500 rounded-full"></div>
+          <h4 className="text-sm font-black text-slate-700 tracking-tight">심장 부가 상세 보장 설정</h4>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {fields.map((item, i) => (
+            <div key={i} className="space-y-3">
+              <p className="text-[0.65rem] font-black text-slate-400 pl-1 uppercase tracking-widest">{item.label}</p>
+              <div className="flex bg-white rounded-2xl p-1.5 shadow-sm border border-slate-100">
+                {item.options.map((opt, oi) => (
+                  <button
+                    key={oi}
+                    onClick={() => item.setter(opt.v as any)}
+                    className={`flex-1 py-3 rounded-xl text-xs font-black transition-all ${
+                      item.state === opt.v 
+                        ? 'bg-slate-900 text-white shadow-lg scale-102' 
+                        : 'text-slate-300 hover:text-slate-500'
+                    }`}
+                  >
+                    {opt.l}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
-  </div>
   );
 };
 
