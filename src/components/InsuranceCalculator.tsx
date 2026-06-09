@@ -252,8 +252,8 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   // Brain specific states for refined component
   const [brainPaymentType, setBrainPaymentType] = useState<'non-renewable' | 'renewable'>('non-renewable');
   const [brainScreeningType, setBrainScreeningType] = useState<'standard' | '3.5.5' | '3.10.5'>('standard');
-  const [brainSurgeryBenefit, setBrainSurgeryBenefit] = useState(true);
-  const [brainCoveragePeriod, setBrainCoveragePeriod] = useState(90);
+  const [brainSurgeryBenefit, setBrainSurgeryBenefit] = useState(false);
+  const [brainCoveragePeriod, setBrainCoveragePeriod] = useState(80);
 
   // Child / Prenatal specific states
   const [childAgeGroup, setChildAgeGroup] = useState<'prenatal' | 'child' | 'youth'>('child');

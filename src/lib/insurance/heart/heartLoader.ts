@@ -23,6 +23,15 @@ export async function fetchHeartPremium(analysis: InsuranceAnalysis) {
     const targetAge = analysis.age || 40;
     const isMale = dbGender === 'M';
 
+    // 심장질환 플랜(실속/표준/VIP)에 따른 할증 배수 적용
+    const coverageLevel = (analysis as any).heartCoverageLevel || 'standard';
+    let coverageLevelMultiplier = 1.0;
+    if (coverageLevel === 'standard') {
+      coverageLevelMultiplier = 1.25;
+    } else if (coverageLevel === 'premium') {
+      coverageLevelMultiplier = 1.55;
+    }
+
     // 심장질환 연령 보정 계수 (일반적인 통계 기반)
     const getAgeIndex = (age: number, male: boolean): number => {
       if (male) {
@@ -60,35 +69,21 @@ export async function fetchHeartPremium(analysis: InsuranceAnalysis) {
       
       if (basePremium <= baseContractFee) {
         // 보험료가 너무 낮으면 예외 처리
-        finalPremium = Math.round(basePremium * ageRatio * coverageMultiplier);
+        finalPremium = Math.round(basePremium * ageRatio * coverageMultiplier * coverageLevelMultiplier);
       } else {
         const pureRiderPremium = basePremium - baseContractFee;
-        finalPremium = Math.round((pureRiderPremium * coverageMultiplier + baseContractFee) * ageRatio);
+        finalPremium = Math.round((pureRiderPremium * coverageMultiplier + baseContractFee) * ageRatio * coverageLevelMultiplier);
       }
 
       return {
-        premium: finalPremium,
+        premium: finalPremium < 10000 ? 10000 : finalPremium,
         productName: plan.product_name,
         companyName: plan.company,
         category: plan.category,
         coverageName: plan.coverage_name || ''
       };
     })
-    .filter(p => {
-      // 1. 보장 타입(급성 vs 통합) 필터링
-      if (isIntegrated) {
-        // 통합: '허혈성'이나 '통합'이라는 단어가 엑셀 담보/상품명에 반드시 있어야 함
-        const hasIntegrated = p.coverageName.includes('허혈성') || p.productName.includes('허혈성') || p.coverageName.includes('통합') || p.productName.includes('통합');
-        if (!hasIntegrated) return false;
-      } else {
-        // 급성: '급성'은 있고, '허혈성'이나 '통합'은 절대 없어야 함
-        const hasAcute = p.coverageName.includes('급성') || p.productName.includes('급성');
-        const hasIntegrated = p.coverageName.includes('허혈성') || p.productName.includes('허혈성') || p.coverageName.includes('통합');
-        if (!hasAcute || hasIntegrated) return false;
-      }
-      return true; // 일단 모든 상품을 가져온 뒤 엔진에서 분류
-    })
-    .filter(p => p.premium > 5000)
+    .filter(p => p.premium >= 10000)
     .sort((a, b) => a.premium - b.premium);
 
     if (heartOptions.length > 0) {

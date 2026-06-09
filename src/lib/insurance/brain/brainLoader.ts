@@ -43,15 +43,25 @@ export async function fetchBrainPremium(analysis: InsuranceAnalysis) {
         const baseSurg = raw.surg_premium || Math.round(baseDiag * 0.25);
         const info = productInfoMap.get(r.product_name);
         
-        // 연령 보정
+        // 40세 기준 요율을 바탕으로 연령대별 선형 보간 (Linear Interpolation) 적용
         const getAgeIndex = (a: number): number => {
           if (a <= 20) return 0.38;
-          if (a <= 30) return 0.58;
-          if (a <= 40) return 1.00;
-          if (a <= 50) return 1.75;
-          if (a <= 60) return 3.20;
-          if (a <= 70) return 5.50;
-          return 7.00;
+          if (a <= 30) {
+            return 0.38 + (0.58 - 0.38) * ((a - 20) / 10);
+          }
+          if (a <= 40) {
+            return 0.58 + (1.00 - 0.58) * ((a - 30) / 10);
+          }
+          if (a <= 50) {
+            return 1.00 + (1.75 - 1.00) * ((a - 40) / 10);
+          }
+          if (a <= 60) {
+            return 1.75 + (3.20 - 1.75) * ((a - 50) / 10);
+          }
+          if (a <= 70) {
+            return 3.20 + (5.50 - 3.20) * ((a - 60) / 10);
+          }
+          return 5.50 * Math.pow(1.03, a - 70);
         };
         const ageRatio = getAgeIndex(targetAge) / getAgeIndex(40);
         
