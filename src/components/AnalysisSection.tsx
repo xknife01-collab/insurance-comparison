@@ -43,6 +43,8 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
 
   const handleAuthSuccess = (coverage: StandardizedCoverage) => {
     onAnalyze({
+      name: userName,
+      mobile: mobileNo,
       age: coverage.age,
       gender: coverage.gender,
       jobClass: 1,

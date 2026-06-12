@@ -1366,9 +1366,9 @@ export default function AdminDashboard() {
     const clean = phone.replace(/[^0-9]/g, '');
     if (clean.length < 10) return phone;
     if (clean.length === 11) {
-      return `${clean.slice(0, 3)}-${clean.slice(3, 7)}-${clean.slice(7, 8)}XX${clean.slice(10)}`;
+      return `${clean.slice(0, 3)}-${clean.slice(3, 5)}XX-${clean.slice(7)}`;
     } else if (clean.length === 10) {
-      return `${clean.slice(0, 3)}-${clean.slice(3, 6)}-${clean.slice(6, 7)}XX${clean.slice(9)}`;
+      return `${clean.slice(0, 3)}-${clean.slice(3, 4)}XX-${clean.slice(6)}`;
     }
     return phone;
   };
