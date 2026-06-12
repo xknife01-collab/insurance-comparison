@@ -1370,6 +1370,41 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
             )}
           </div>
 
+          {/* 과거 병력 가입 사전 심사 신청 (비교표 하단 통합 섹션) */}
+          <div className="relative mt-8 overflow-hidden rounded-[2rem] bg-gradient-to-br from-slate-900 via-slate-900/95 to-slate-950 p-6 sm:p-8 shadow-lg border-2 border-orange-500/40 text-white flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="absolute -inset-x-40 -inset-y-40 bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.1)_0,transparent_60%)] blur-3xl pointer-events-none" />
+            
+            <div className="relative z-10 space-y-2.5 text-left">
+              <div className="flex items-center gap-2.5">
+                <span className="flex h-2.5 w-2.5 rounded-full bg-orange-500 animate-pulse" />
+                <span className="text-[10.5px] font-black text-orange-400 uppercase tracking-[0.2em]">🔍 가입 가능 여부 사전 필터링</span>
+              </div>
+              
+              <div className="space-y-2">
+                <h4 className="text-sm sm:text-base font-extrabold text-white leading-normal">
+                  잠깐! 이 가격으로 실제 가입이 가능할까요?
+                </h4>
+                <p className="text-xs md:text-sm text-slate-400 font-bold leading-relaxed max-w-xl break-keep">
+                  과거 병력(수술/입원/약 복용 등)에 따른 가입 승인 여부를 무료로 사전 심사 받아보세요.
+                </p>
+                <p className="text-[11px] md:text-xs text-emerald-400 font-black flex items-center gap-1 mt-1 break-keep">
+                  <span>🛡️</span> 본 심사는 신용도나 개인정보 오남용 우려가 전혀 없는 안심 사전 필터링 서비스입니다.
+                </p>
+              </div>
+            </div>
+            
+            <button
+              onClick={() => {
+                if (result.analysis.name) setUwName(result.analysis.name);
+                if (result.analysis.mobile) setUwPhone(result.analysis.mobile);
+                setIsUnderwritingOpen(true);
+              }}
+              className="relative z-10 px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xs md:text-sm rounded-xl shadow-[0_8px_16px_rgba(255,107,0,0.3)] transform hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer whitespace-nowrap self-stretch md:self-auto text-center font-extrabold"
+            >
+              사전 심사 신청하기
+            </button>
+          </div>
+
           <div className="relative mt-8 overflow-hidden rounded-[2rem] bg-gradient-to-br from-orange-50/60 via-amber-50/40 to-white p-6 sm:p-8 shadow-lg border-2 border-orange-500/40 group">
             {/* Soft Warm Radial Glow */}
             <div className="absolute -inset-x-40 -inset-y-40 bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.08)_0,transparent_60%)] blur-3xl pointer-events-none" />
@@ -1415,36 +1450,8 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
               <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none">
                 <ShieldCheck className="w-48 h-48 text-orange-500" />
               </div>
-
-              {/* 과거 병력 가입 사전 심사 신청 (CTA 통합 섹션) */}
-              <div className="w-full bg-slate-800/40 border border-slate-850 p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-5 relative z-10">
-                <div className="space-y-2.5 text-left">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-500/10 text-orange-400 border border-orange-500/20 rounded-md text-[10.5px] font-black uppercase tracking-wider">
-                    🔍 가입 가능 여부 사전 필터링
-                  </div>
-                  <p className="text-sm md:text-base font-extrabold text-white leading-normal">
-                    잠깐! 이 가격으로 실제 가입이 가능할까요?
-                  </p>
-                  <p className="text-xs md:text-sm text-slate-400 font-bold leading-relaxed max-w-xl break-keep">
-                    과거 병력(수술/입원/약 복용 등)에 따른 가입 승인 여부를 무료로 사전 심사 받아보세요.
-                  </p>
-                  <p className="text-[11px] md:text-xs text-emerald-400 font-black flex items-center gap-1 mt-1 break-keep">
-                    <span>🛡️</span> 본 심사는 신용도나 개인정보 오남용 우려가 전혀 없는 안심 사전 필터링 서비스입니다.
-                  </p>
-                </div>
-                <button
-                  onClick={() => {
-                    if (result.analysis.name) setUwName(result.analysis.name);
-                    if (result.analysis.mobile) setUwPhone(result.analysis.mobile);
-                    setIsUnderwritingOpen(true);
-                  }}
-                  className="px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xs md:text-sm rounded-xl shadow-[0_8px_16px_rgba(255,107,0,0.3)] transform hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer whitespace-nowrap self-stretch md:self-auto text-center font-extrabold"
-                >
-                  사전 심사 신청하기
-                </button>
-              </div>
               
-              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pt-4 border-t border-white/5 relative z-10">
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
                 <div className="space-y-2">
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-500/10 text-orange-400 rounded-lg text-[9px] font-black uppercase tracking-widest border border-orange-500/20">
                     🎁 최저가 매칭 보증
