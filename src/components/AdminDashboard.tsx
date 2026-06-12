@@ -301,7 +301,12 @@ const formatValue = (key: string, val: any) => {
 };
 
 const getInsuranceTypeName = (type: string) => {
-  const cleanType = type.endsWith('_consult') ? type.slice(0, -8) : type;
+  const isUnderwriting = type.endsWith('_underwriting');
+  const cleanType = type.endsWith('_consult') 
+    ? type.slice(0, -8) 
+    : type.endsWith('_underwriting')
+    ? type.slice(0, -13)
+    : type;
 
   const map: Record<string, { label: string; bgClass: string; textClass: string }> = {
     'remodeling': { label: '내 보험 다이어트 💸', bgClass: 'bg-emerald-500/10 border-emerald-500/25', textClass: 'text-emerald-400' },
@@ -334,6 +339,10 @@ const getInsuranceTypeName = (type: string) => {
       badge.label = `${badge.label.replace(' 비교분석', '')} 카톡요청 💬`;
       badge.bgClass = 'bg-amber-500/10 border-amber-500/25';
       badge.textClass = 'text-amber-400';
+    } else if (isUnderwriting) {
+      badge.label = `🔍 사전심사 [${badge.label.replace(' 비교분석', '').replace(' 다이어트', '')}]`;
+      badge.bgClass = 'bg-orange-500/10 border-orange-500/25';
+      badge.textClass = 'text-orange-400';
     }
     return badge;
   }
@@ -374,6 +383,13 @@ const getInsuranceTypeName = (type: string) => {
       label: `${koreanName} 카톡요청 💬`,
       bgClass: 'bg-amber-500/10 border-amber-500/25',
       textClass: 'text-amber-400'
+    };
+  }
+  if (isUnderwriting) {
+    return {
+      label: `🔍 사전심사 [${koreanName}]`,
+      bgClass: 'bg-orange-500/10 border-orange-500/25',
+      textClass: 'text-orange-400'
     };
   }
 
@@ -4458,6 +4474,46 @@ export default function AdminDashboard() {
                 </div>
               );
             })()}
+
+            {/* 과거 병력 사전 심사 고지 내역 */}
+            {selectedLead.insurance_type?.endsWith('_underwriting') && (
+              <div className="space-y-3">
+                <h4 className="font-extrabold text-sm text-white border-l-3 border-orange-500 pl-2">🔍 과거 병력 사전 심사 고지 내역</h4>
+                <div className="bg-slate-950/80 border border-slate-850 rounded-2xl p-5 text-xs font-semibold text-slate-300 space-y-4">
+                  {(() => {
+                    const underwriting = selectedLead.raw_payload?.underwriting || 
+                                         selectedLead.analysis_result?.underwriting || 
+                                         selectedLead.analysis_result?.underwriting_questions;
+                                         
+                    const questions = Array.isArray(underwriting) ? underwriting : [
+                      { question: "최근 5년 이내 수술 이력", answer: underwriting?.hasSurgery ? "있음 ⚠️" : "없음 ✓" },
+                      { question: "최근 5년 이내 입원 이력", answer: underwriting?.hasHospitalization ? "있음 ⚠️" : "없음 ✓" },
+                      { question: "최근 3개월 이내 의사 처방 및 약 복용 이력", answer: underwriting?.hasMedication ? "있음 ⚠️" : "없음 ✓" }
+                    ];
+                    
+                    return (
+                      <div className="grid gap-3">
+                        {questions.map((q: any, idx: number) => {
+                          const hasIssue = q.answer?.includes("있음") || q.answer?.includes("⚠️");
+                          return (
+                            <div key={idx} className="flex justify-between items-center py-2 px-3 bg-slate-900/40 rounded-xl border border-slate-850/50">
+                              <span className="text-slate-400 font-bold">{q.question || q.name}</span>
+                              <span className={`px-2.5 py-1 rounded-lg text-[10px] font-black ${
+                                hasIssue 
+                                  ? "bg-rose-500/10 text-rose-400 border border-rose-500/20" 
+                                  : "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                              }`}>
+                                {q.answer || "없음 ✓"}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    );
+                  })()}
+                </div>
+              </div>
+            )}
 
             {/* Coverage details */}
             {selectedLead.analysis_result?.deficiencies && (

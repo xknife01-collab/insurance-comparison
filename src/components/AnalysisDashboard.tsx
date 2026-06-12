@@ -207,6 +207,54 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
 
   const [selectedPlan, setSelectedPlan] = React.useState<any>(null);
   const [applied, setApplied] = React.useState(false);
+  const [isUnderwritingOpen, setIsUnderwritingOpen] = React.useState(false);
+  const [uwName, setUwName] = React.useState('');
+  const [uwPhone, setUwPhone] = React.useState('');
+  const [uwSurgery, setUwSurgery] = React.useState(false);
+  const [uwHospitalization, setUwHospitalization] = React.useState(false);
+  const [uwMedication, setUwMedication] = React.useState(false);
+  const [uwNone, setUwNone] = React.useState(false);
+  const [uwSubmitting, setUwSubmitting] = React.useState(false);
+
+  const handleUnderwritingSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (uwSubmitting) return;
+    setUwSubmitting(true);
+    try {
+      const category = result.analysis.selectedCategory || 'general';
+      
+      if (onSubmitLead) {
+        const customAnalysis = {
+          ...result.analysis,
+          name: uwName,
+          mobile: uwPhone
+        };
+        const customPayload = {
+          ...result,
+          underwriting: {
+            hasSurgery: uwSurgery,
+            hasHospitalization: uwHospitalization,
+            hasMedication: uwMedication,
+            hasNone: uwNone
+          }
+        };
+        await onSubmitLead(
+          customAnalysis, 
+          `${category}_underwriting`, 
+          customPayload, 
+          'regular'
+        );
+      }
+      
+      alert("사전 심사 신청이 성공적으로 완료되었습니다!\n설계사가 5년 이내 과거 병력 고지 사항을 검토하여 0.1초 만에 실제 인수 동의 및 할증 금액 심사 결과를 안내해 드립니다.");
+      setIsUnderwritingOpen(false);
+    } catch (err) {
+      console.error(err);
+      alert("신청 중 오류가 발생했습니다. 다시 시도해 주세요.");
+    } finally {
+      setUwSubmitting(false);
+    }
+  };
   const isRemodeling = !!(analysis as any)._allDietOptions && !!(analysis as any)._allUpgradeOptions;
   const allDietOptions = (analysis as any)._allDietOptions || [];
   const allUpgradeOptions = (analysis as any)._allUpgradeOptions || [];
@@ -1367,9 +1415,37 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
               <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none">
                 <ShieldCheck className="w-48 h-48 text-orange-500" />
               </div>
+
+              {/* 과거 병력 가입 사전 심사 신청 (CTA 통합 섹션) */}
+              <div className="w-full bg-slate-800/40 border border-slate-850 p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-5 relative z-10">
+                <div className="space-y-2.5 text-left">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-500/10 text-orange-400 border border-orange-500/20 rounded-md text-[10.5px] font-black uppercase tracking-wider">
+                    🔍 가입 가능 여부 사전 필터링
+                  </div>
+                  <p className="text-sm md:text-base font-extrabold text-white leading-normal">
+                    잠깐! 이 가격으로 실제 가입이 가능할까요?
+                  </p>
+                  <p className="text-xs md:text-sm text-slate-400 font-bold leading-relaxed max-w-xl break-keep">
+                    과거 병력(수술/입원/약 복용 등)에 따른 가입 승인 여부를 무료로 사전 심사 받아보세요.
+                  </p>
+                  <p className="text-[11px] md:text-xs text-emerald-400 font-black flex items-center gap-1 mt-1 break-keep">
+                    <span>🛡️</span> 본 심사는 신용도나 개인정보 오남용 우려가 전혀 없는 안심 사전 필터링 서비스입니다.
+                  </p>
+                </div>
+                <button
+                  onClick={() => {
+                    if (result.analysis.name) setUwName(result.analysis.name);
+                    if (result.analysis.mobile) setUwPhone(result.analysis.mobile);
+                    setIsUnderwritingOpen(true);
+                  }}
+                  className="px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xs md:text-sm rounded-xl shadow-[0_8px_16px_rgba(255,107,0,0.3)] transform hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer whitespace-nowrap self-stretch md:self-auto text-center font-extrabold"
+                >
+                  사전 심사 신청하기
+                </button>
+              </div>
               
-              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-                <div className="space-y-2 relative z-10">
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pt-4 border-t border-white/5 relative z-10">
+                <div className="space-y-2">
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-500/10 text-orange-400 rounded-lg text-[9px] font-black uppercase tracking-widest border border-orange-500/20">
                     🎁 최저가 매칭 보증
                   </div>
@@ -1547,6 +1623,135 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
           </div>
         </div>
       </section>
+      )}
+      {isUnderwritingOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+          <div className="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-[2.5rem] p-6 md:p-8 space-y-6 shadow-2xl relative animate-in zoom-in-95 duration-200 text-left text-white">
+            <button 
+              onClick={() => setIsUnderwritingOpen(false)}
+              className="absolute top-6 right-6 text-slate-400 hover:text-white cursor-pointer transition-colors text-base font-extrabold"
+            >
+              ✕
+            </button>
+            <div className="space-y-1.5">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-orange-500/10 text-orange-400 rounded-lg text-[9px] font-black uppercase border border-orange-500/20">
+                🔍 가입 승인 사전 심사
+              </span>
+              <h3 className="text-base md:text-lg font-black text-white">사전 심사 신청하기</h3>
+              <p className="text-[11px] text-slate-400 font-bold leading-relaxed break-keep">
+                과거 병력(수술/입원/약 복용 등)에 따른 가입 승인 여부를 무료로 사전 심사 요청합니다.
+              </p>
+            </div>
+
+            <form onSubmit={handleUnderwritingSubmit} className="space-y-4">
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">고객 이름</label>
+                <input 
+                  type="text" 
+                  required
+                  placeholder="홍길동"
+                  value={uwName}
+                  onChange={(e) => setUwName(e.target.value)}
+                  className="w-full bg-slate-950 border border-slate-850 rounded-xl px-4 py-3.5 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">연락처 (휴대폰 번호)</label>
+                <input 
+                  type="tel" 
+                  required
+                  placeholder="010-1234-5678"
+                  value={uwPhone}
+                  onChange={(e) => setUwPhone(e.target.value)}
+                  className="w-full bg-slate-950 border border-slate-850 rounded-xl px-4 py-3.5 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors"
+                />
+              </div>
+
+              <div className="space-y-3 pt-2">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">최근 5년 내 병력 사항 고지 (단순 체크)</label>
+                <div className="space-y-2 bg-slate-950/40 p-4 rounded-xl border border-slate-850/60">
+                  <label className="flex items-start gap-2.5 cursor-pointer text-xs font-bold text-slate-350 hover:text-white select-none">
+                    <input 
+                      type="checkbox"
+                      checked={uwSurgery}
+                      onChange={(e) => {
+                        const checked = e.target.checked;
+                        setUwSurgery(checked);
+                        if (checked) setUwNone(false);
+                      }}
+                      className="mt-0.5 rounded border-slate-800 text-orange-500 focus:ring-0 focus:ring-offset-0 bg-slate-950 cursor-pointer"
+                    />
+                    <span className="leading-tight break-keep">최근 5년 이내 수술 이력이 있습니다.</span>
+                  </label>
+                  <label className="flex items-start gap-2.5 cursor-pointer text-xs font-bold text-slate-350 hover:text-white select-none">
+                    <input 
+                      type="checkbox"
+                      checked={uwHospitalization}
+                      onChange={(e) => {
+                        const checked = e.target.checked;
+                        setUwHospitalization(checked);
+                        if (checked) setUwNone(false);
+                      }}
+                      className="mt-0.5 rounded border-slate-800 text-orange-500 focus:ring-0 focus:ring-offset-0 bg-slate-950 cursor-pointer"
+                    />
+                    <span className="leading-tight break-keep">최근 5년 이내 입원 이력이 있습니다.</span>
+                  </label>
+                  <label className="flex items-start gap-2.5 cursor-pointer text-xs font-bold text-slate-350 hover:text-white select-none">
+                    <input 
+                      type="checkbox"
+                      checked={uwMedication}
+                      onChange={(e) => {
+                        const checked = e.target.checked;
+                        setUwMedication(checked);
+                        if (checked) setUwNone(false);
+                      }}
+                      className="mt-0.5 rounded border-slate-800 text-orange-500 focus:ring-0 focus:ring-offset-0 bg-slate-950 cursor-pointer"
+                    />
+                    <span className="leading-tight break-keep">최근 3개월 이내 의사 처방 및 약 복용 이력이 있습니다.</span>
+                  </label>
+                  
+                  <div className="w-full h-px bg-slate-850/60 my-2" />
+                  
+                  <label className="flex items-start gap-2.5 cursor-pointer text-xs font-bold text-slate-350 hover:text-white select-none">
+                    <input 
+                      type="checkbox"
+                      checked={uwNone}
+                      onChange={(e) => {
+                        const checked = e.target.checked;
+                        setUwNone(checked);
+                        if (checked) {
+                          setUwSurgery(false);
+                          setUwHospitalization(false);
+                          setUwMedication(false);
+                        }
+                      }}
+                      className="mt-0.5 rounded border-slate-800 text-orange-500 focus:ring-0 focus:ring-offset-0 bg-slate-950 cursor-pointer"
+                    />
+                    <span className="text-emerald-400 font-extrabold leading-tight break-keep">해당 사항 없음 (건강함)</span>
+                  </label>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-slate-800 flex justify-between gap-3">
+                <button 
+                  type="button"
+                  onClick={() => setIsUnderwritingOpen(false)}
+                  className="flex-1 px-4 py-3.5 bg-slate-800 hover:bg-slate-750 text-white font-black text-xs rounded-xl border border-white/5 cursor-pointer text-center font-extrabold"
+                >
+                  취소
+                </button>
+                <button 
+                  type="submit"
+                  disabled={uwSubmitting}
+                  className="flex-1 px-4 py-3.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:opacity-50 text-white font-black text-xs rounded-xl shadow-[0_8px_16px_rgba(255,107,0,0.3)] cursor-pointer text-center font-extrabold"
+                >
+                  {uwSubmitting ? "신청 중..." : "사전 심사 신청 완료"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       )}
     </div>
   );
