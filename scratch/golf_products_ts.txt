@@ -1,8 +1,0 @@
-export const GOLF_PRODUCTS: GolfProduct[] = [
-  { company: '하나생명', productName: '(무)Top3 CEO안심보험(일반형)', basePremium: 2288400 },
-  { company: '흥국생명', productName: '(무)처음만난흥국생명상해보험', basePremium: 3000 },
-  { company: 'DB생명', productName: '(무)백년친구 생활보험(2602)(1종:종합보장형)', basePremium: 24900 },
-  { company: 'DB생명', productName: '(무)백년친구 생활보험(2602)(3종:레저보장형)', basePremium: 10100 },
-  { company: 'DB손보', productName: '(무)다이렉트 오잘공 골프보험2601(CM)', basePremium: 5520 },
-  { company: '한화손보', productName: '한화 다이렉트 홀인원보험 (무)2601', basePremium: 6011 },
-];

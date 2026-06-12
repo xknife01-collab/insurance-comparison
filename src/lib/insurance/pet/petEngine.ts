@@ -75,43 +75,43 @@ export const analyzePet = (analysis: any): any => {
   }
 
   // 4. 세 가지 시나리오별 추천안 설계
-  // Diet: 50% 보장비율, 자기부담금 5만 원, 핵심 특약 1~2개 제외하여 보험료 절약
-  const dietPremium = Math.round((opt1.premium * 0.6) / 100) * 100;
+  // Diet: 데이터베이스의 가장 저렴한 상품의 실가격 노출
+  const dietPremium = opt1.premium;
   const diet: RecommendationPlan = {
     title: `[${opt1.companyName}] 실속 가성비 플랜`,
-    description: `${petOpts.petName}의 필수 일상 의료비(통원/입원)만 최저 비용으로 지켜주는 다이어트 플랜입니다.`,
+    description: `${petOpts.petName}의 필수 일상 의료비(통원/입원)만 최저 비용으로 지켜주는 최적가 플랜입니다.`,
     estimatedPremium: dietPremium,
     coverageChanges: [
-      '자기부담금 상향 (5만 원 설정)',
-      '보장비율 50% 실속 세팅',
+      '자기부담금 3만 원 기본 설정',
+      '보장비율 70% 알뜰 세팅',
       '동물등록 5% 즉시 할인 적용'
     ],
-    switchingLossNotice: '보장비율이 낮아 수술 등 고액 진료비 발생 시 보호자 자부담이 커집니다.'
+    switchingLossNotice: '상세 설계 조건에 따라 자기부담금 및 보장 비율을 유연하게 조정할 수 있습니다.'
   };
 
-  // Upgrade: 80% 보장비율, 자기부담금 3만 원, 필수 슬개골/피부 특약 탑재
-  const upgradePremium = Math.round((opt2.premium * 1.1) / 100) * 100;
+  // Upgrade: 데이터베이스의 두 번째 상품의 실가격 노출
+  const upgradePremium = opt2.premium;
   const upgrade: RecommendationPlan = {
     title: `[${opt2.companyName}] 안심 밸런스 플랜`,
-    description: `보장 비율을 80%로 확대하고, ${petOpts.breed} 취약 질환인 '${vulnerability.split(',')[0]}' 보장을 추가한 추천 밸런스 상품입니다.`,
+    description: `보장 비율을 확대하고, ${petOpts.breed} 취약 질환인 '${vulnerability.split(',')[0]}' 보장을 추가한 추천 밸런스 상품입니다.`,
     estimatedPremium: upgradePremium,
     coverageChanges: [
-      '보장 비율 80%로 확대',
+      '보장 비율 70% ~ 80% 구성',
       '슬개골/피부질환 주요 특약 탑재',
       '자기부담금 3만 원 최적화'
     ],
     switchingLossNotice: '가입 후 1년간은 슬개골 탈구 등 일부 유전 질환의 면책 기간이 적용됩니다.'
   };
 
-  // Hybrid: 90% 보장비율, 자기부담금 1만 원, 치과/슬개골/피부 풀패키지 특약 탑재
-  const hybridPremium = Math.round((opt3.premium * 1.35) / 100) * 100;
+  // Hybrid: 데이터베이스의 세 번째 상품의 실가격 노출
+  const hybridPremium = opt3.premium;
   const hybrid: RecommendationPlan = {
     title: `[${opt3.companyName}] 프리미엄 마스터 플랜`,
-    description: `자기부담금을 1만 원으로 최소화하고, 수술비 한도 증액 및 구강/스케일링 특약까지 모두 포함한 최고급 케어 플랜입니다.`,
+    description: `수술비 한도 증액 및 구강/스케일링 특약까지 모두 포함하여 든든하게 보장받는 최고급 케어 플랜입니다.`,
     estimatedPremium: hybridPremium,
     coverageChanges: [
-      '자기부담금 최소화 (1만 원 설정)',
-      '수술 회당 한도 250만 원 업계 최고 수준',
+      '보장 비율 최대 80% ~ 90% 세팅',
+      '수술 회당 한도 업계 최고 수준',
       '슬개골 + 피부 + 치과 전담 특약 풀패키지'
     ],
     switchingLossNotice: '보장이 큰 만큼 월 보험료가 높게 책정되므로 납입 여력을 확인하세요.'

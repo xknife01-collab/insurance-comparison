@@ -51,6 +51,7 @@ UPLOAD_SCRIPTS = [
     ("python", "scripts/upload_pet_rates.py"),
     ("python", "scripts/upload_property_rates.py"),
     ("python", "scripts/upload_savings_rates_new.py"),
+    ("python", "scripts/upload_credit_rates_http.py"),
     ("python", "scripts/scraper/ingest_silson_v6_api.py"),
     ("python", "scripts/scraper/load_driver_to_supabase_api.py"),
     

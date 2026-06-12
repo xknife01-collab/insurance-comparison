@@ -26,39 +26,97 @@ def clean_val(v):
     return val_str
 
 def find_header_mapping(df):
-    mapping = {}
-    header_row_idx = -1
+    header_rows = []
     
-    for i in range(min(20, len(df))):
-        row = [clean_val(v) for v in df.iloc[i].tolist()]
-        if any("상품명" in val or "보험사" in val or "회사명" in val for val in row):
-            header_row_idx = i
-            for col_idx, val in enumerate(row):
-                v = val.replace(" ", "").replace("\n", "")
-                if not v:
-                    continue
-                if any(k in v for k in ["보험회사", "보험사", "회사명"]): mapping["보험회사"] = col_idx
-                elif "상품명" in v: mapping["상품명"] = col_idx
-                elif any(k in v for k in ["구분", "주계약", "특약구분"]): mapping["구분"] = col_idx
-                elif any(k in v for k in ["급부명", "담보명", "특약명", "보장명", "보장내용"]): mapping["담보명(급부명)"] = col_idx
-                elif any(k in v for k in ["지급사유", "보장사유"]): mapping["지급사유"] = col_idx
-                elif any(k in v for k in ["지급금액", "지급액"]): mapping["지급금액"] = col_idx
-                elif "가입금액" in v: mapping["가입금액"] = col_idx
-                elif any(k in v for k in ["기준보험료", "월보험료", "보장보험료", "표준보험료"]): mapping["기준보험료"] = col_idx
-                elif any(k in v for k in ["가입보험료", "실제보험료", "합계보험료", "월납보험료", "합계월보험료"]): mapping["가입보험료"] = col_idx
-                elif "이율" in v: mapping["적용이율"] = col_idx
-                elif "갱신" in v: mapping["갱신구분"] = col_idx
-                elif "채널" in v: mapping["판매채널"] = col_idx
-                elif any(k in v for k in ["일자", "기준일"]): mapping["기준일자"] = col_idx
-                elif any(k in v for k in ["상세", "비고", "안내", "특이"]): mapping["상세안내"] = col_idx
-                elif any(k in v for k in ["연락처", "전화", "콜센터"]): mapping["연락처"] = col_idx
-            break
+    # 1. Check if df columns are MultiIndex or string headers
+    if isinstance(df.columns, pd.MultiIndex):
+        nlevels = df.columns.nlevels
+        rows_to_prepend = []
+        for level in range(nlevels):
+            rows_to_prepend.append(list(df.columns.get_level_values(level)))
+        header_df = pd.DataFrame(rows_to_prepend)
+        df.columns = range(df.shape[1])
+        df = pd.concat([header_df, df], ignore_index=True)
+        # Header rows are the prepended levels
+        header_rows = list(range(nlevels))
+    elif not all(isinstance(c, int) for c in df.columns):
+        header_row = list(df.columns)
+        df.columns = range(df.shape[1])
+        df = pd.concat([pd.DataFrame([header_row]), df], ignore_index=True)
+        # Header row is just the prepended row 0
+        header_rows = [0]
+    else:
+        # Standard binary Excel: find the first row containing header keywords
+        first_header_idx = -1
+        for i in range(min(10, len(df))):
+            row = [clean_val(v) for v in df.iloc[i].tolist()]
+            if any("상품명" in val or "보험사" in val or "회사명" in val for val in row):
+                first_header_idx = i
+                break
+        if first_header_idx != -1:
+            header_rows = [first_header_idx]
+            for offset in [1, 2]:
+                idx = first_header_idx + offset
+                if idx < len(df):
+                    r_val = [clean_val(v) for v in df.iloc[idx].tolist()]
+                    num_count = sum(1 for v in r_val if v.replace(" ", "").replace(",", "").isdigit())
+                    if num_count < 3:
+                        header_rows.append(idx)
+        else:
+            header_rows = [0]
+
+    # Now, ONLY scan the identified header_rows to build the mapping
+    mapping = {}
+    for idx in header_rows:
+        row = [clean_val(v) for v in df.iloc[idx].tolist()]
+        for col_idx, val in enumerate(row):
+            v = val.replace(" ", "").replace("\n", "")
+            if not v:
+                continue
             
+            # Check for 상세안내 first (which can be long)
+            if any(k in v for k in ["상세", "비고", "안내", "특이"]):
+                if "상세안내" not in mapping:
+                    mapping["상세안내"] = col_idx
+                continue
+                
+            # Restrict keyword matching cell length (< 15) to prevent mapping notes
+            if len(v) < 15:
+                if any(k in v for k in ["보험회사", "보험사", "회사명"]):
+                    if "보험회사" not in mapping: mapping["보험회사"] = col_idx
+                elif "상품명" in v:
+                    if "상품명" not in mapping: mapping["상품명"] = col_idx
+                elif v == "주계약" or "구분" in v or "특약구분" in v:
+                    if "구분" not in mapping: mapping["구분"] = col_idx
+                elif any(k in v for k in ["급부명", "담보명", "특약명", "보장명", "보장내용"]):
+                    if "담보명(급부명)" not in mapping: mapping["담보명(급부명)"] = col_idx
+                elif any(k in v for k in ["지급사유", "보장사유"]):
+                    if "지급사유" not in mapping: mapping["지급사유"] = col_idx
+                elif any(k in v for k in ["지급금액", "지급액"]):
+                    if "지급금액" not in mapping: mapping["지급금액"] = col_idx
+                elif "가입금액" in v:
+                    if "가입금액" not in mapping: mapping["가입금액"] = col_idx
+                elif any(k in v for k in ["기준보험료", "월보험료", "보장보험료", "표준보험료", "남자"]):
+                    if "기준보험료" not in mapping: mapping["기준보험료"] = col_idx
+                elif any(k in v for k in ["가입보험료", "실제보험료", "합계보험료", "월납보험료", "합계월보험료", "여자"]):
+                    if "가입보험료" not in mapping: mapping["가입보험료"] = col_idx
+                elif "이율" in v:
+                    if "적용이율" not in mapping: mapping["적용이율"] = col_idx
+                elif "갱신" in v:
+                    if "갱신구분" not in mapping: mapping["갱신구분"] = col_idx
+                elif "채널" in v:
+                    if "판매채널" not in mapping: mapping["판매채널"] = col_idx
+                elif any(k in v for k in ["일자", "기준일"]):
+                    if "기준일자" not in mapping: mapping["기준일자"] = col_idx
+                elif any(k in v for k in ["연락처", "전화", "콜센터"]):
+                    if "연락처" not in mapping: mapping["연락처"] = col_idx
+                    
     defaults = {"보험회사":0, "상품명":1, "구분":2, "담보명(급부명)":3, "지급사유":4, "지급금액":5, "가입금액":6, "기준보험료":7, "가입보험료":8}
     for k, v in defaults.items():
         if k not in mapping: mapping[k] = v
         
-    return mapping, header_row_idx
+    data_start_idx = header_rows[-1]
+    return mapping, data_start_idx, df
 
 def load_df(filepath):
     # 1. Try reading with xlrd
@@ -71,7 +129,7 @@ def load_df(filepath):
     try:
         with open(filepath, 'rb') as f:
             raw_bytes = f.read()
-        for enc in ['cp949', 'euc-kr', 'utf-8']:
+        for enc in ['utf-8', 'cp949', 'euc-kr']:
             try:
                 raw_text = raw_bytes.decode(enc)
                 if '<table' in raw_text.lower():
@@ -99,7 +157,7 @@ def process_files():
             print(f"[!] Read failed (Skipped): {filename}")
             continue
             
-        mapping, header_idx = find_header_mapping(df)
+        mapping, header_idx, df = find_header_mapping(df)
         prod_col = mapping.get("상품명", 1)
         
         file_rows_count = 0

@@ -15,6 +15,8 @@ URL = os.getenv("VITE_SUPABASE_URL")
 KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
 TABLE = "insurance_yu_byung_ja"
 RAW_DIR = r"c:\Users\zkfnt\Desktop\insurance-comparison-main\insurance-comparison-main\scripts\scraper\raw_data"
+if not os.path.exists(RAW_DIR) or len([f for f in os.listdir(RAW_DIR) if f.endswith('.xls')]) == 0:
+    RAW_DIR = r"c:\Users\zkfnt\Desktop\insurance-comparison-main"
 
 # 전수 조사에서 보물이 확인된 정예 25필지
 TARGET_FILES = [

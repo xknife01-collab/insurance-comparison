@@ -3,6 +3,7 @@ import { InsuranceAnalysis } from '../../../types/insurance';
 
 export interface CreditProduct {
   company: string;
+  companyName: string;
   productName: string;
   businessFee: number;
   hasUniversal: boolean;
@@ -90,6 +91,7 @@ export const fetchCreditPremium = async (analysis: InsuranceAnalysis): Promise<a
 
       return {
         company: p.company_name,
+        companyName: p.company_name,
         productName: p.product_name,
         businessFee: p.product_name.includes('카디프') ? 1.5 : 1.8,
         hasUniversal: false,
@@ -166,6 +168,7 @@ function getMockFallback(analysis: InsuranceAnalysis) {
 
     return {
       company: c.name,
+      companyName: c.name,
       productName: c.prod,
       businessFee: c.fee,
       hasUniversal: false,

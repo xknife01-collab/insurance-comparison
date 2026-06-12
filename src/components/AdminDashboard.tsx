@@ -1773,7 +1773,7 @@ export default function AdminDashboard() {
   const renderLeadsTable = (leadsList: Lead[]) => {
     return (
       <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse">
+        <table className="w-full min-w-[900px] text-left border-collapse">
           <thead>
             <tr className="border-b border-slate-800 text-[10px] text-slate-400 font-bold uppercase tracking-wider">
               <th className="py-3 px-4">고객 정보</th>
@@ -2068,7 +2068,7 @@ export default function AdminDashboard() {
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse text-xs text-left">
+              <table className="w-full min-w-[800px] border-collapse text-xs text-left">
                 <thead>
                   <tr className="border-b border-slate-800 text-slate-500 font-bold uppercase tracking-wider text-[10px]">
                     <th className="py-3 px-4 w-1/4">구분</th>
@@ -2569,7 +2569,7 @@ export default function AdminDashboard() {
       ) : (
         
         /* ── LOGGED IN DASHBOARD VIEW ── */
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="w-full max-w-full xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-10">
           
           {invitedAgencyId && (
             <div className="bg-amber-500/10 border border-amber-500/20 rounded-2xl p-4 mb-8 text-left flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-in slide-in-from-top-4 duration-300">
@@ -2644,10 +2644,10 @@ export default function AdminDashboard() {
           <div className="grid lg:grid-cols-5 gap-8">
             
             {/* Left Nav Menu */}
-            <div className="lg:col-span-1 flex flex-col gap-1">
+            <div className="lg:col-span-1 flex flex-row lg:flex-col overflow-x-auto lg:overflow-x-visible pb-3 lg:pb-0 gap-2 lg:gap-1 scrollbar-none shrink-0">
               <button 
                 onClick={() => setActiveTab('leads')}
-                className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-xl text-left font-bold text-xs transition-all cursor-pointer ${activeTab === 'leads' ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/10' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}
+                className={`w-auto lg:w-full whitespace-nowrap flex-shrink-0 flex items-center gap-2.5 px-4 py-3 rounded-xl text-left font-bold text-xs transition-all cursor-pointer ${activeTab === 'leads' ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/10' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}
               >
                 <FileText className="w-4 h-4" />
                 고객 리드 수집 현황
@@ -2655,7 +2655,7 @@ export default function AdminDashboard() {
 
               <button 
                 onClick={() => setActiveTab('marketing')}
-                className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-xl text-left font-bold text-xs transition-all cursor-pointer ${activeTab === 'marketing' ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/10' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}
+                className={`w-auto lg:w-full whitespace-nowrap flex-shrink-0 flex items-center gap-2.5 px-4 py-3 rounded-xl text-left font-bold text-xs transition-all cursor-pointer ${activeTab === 'marketing' ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/10' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}
               >
                 <BarChart2 className="w-4 h-4" />
                 광고 / 유입 분석
@@ -2663,7 +2663,7 @@ export default function AdminDashboard() {
 
               <button 
                 onClick={() => setActiveTab('playbook')}
-                className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-xl text-left font-bold text-xs transition-all cursor-pointer ${activeTab === 'playbook' ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/10' : 'text-orange-400 bg-orange-500/5 border border-orange-500/10 hover:bg-orange-500/10 hover:text-orange-300'}`}
+                className={`w-auto lg:w-full whitespace-nowrap flex-shrink-0 flex items-center gap-2.5 px-4 py-3 rounded-xl text-left font-bold text-xs transition-all cursor-pointer ${activeTab === 'playbook' ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/10' : 'text-orange-400 bg-orange-500/5 border border-orange-500/10 hover:bg-orange-500/10 hover:text-orange-300'}`}
               >
                 <BookOpen className="w-4 h-4" />
                 실전 마케팅 비법서
@@ -2671,7 +2671,7 @@ export default function AdminDashboard() {
 
               <button 
                 onClick={() => setActiveTab('ad_campaign')}
-                className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-xl text-left font-bold text-xs transition-all cursor-pointer ${activeTab === 'ad_campaign' ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/10' : 'text-orange-400 bg-orange-500/5 border border-orange-500/10 hover:bg-orange-500/10 hover:text-orange-300'}`}
+                className={`w-auto lg:w-full whitespace-nowrap flex-shrink-0 flex items-center gap-2.5 px-4 py-3 rounded-xl text-left font-bold text-xs transition-all cursor-pointer ${activeTab === 'ad_campaign' ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/10' : 'text-orange-400 bg-orange-500/5 border border-orange-500/10 hover:bg-orange-500/10 hover:text-orange-300'}`}
               >
                 <Briefcase className="w-4 h-4" />
                 광고 대행 요청
@@ -2681,7 +2681,7 @@ export default function AdminDashboard() {
               {(currentUser.role === 'agency' || currentUser.role === 'super') && (
                 <button 
                   onClick={() => setActiveTab('planners')}
-                  className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-xl text-left font-bold text-xs transition-all cursor-pointer ${activeTab === 'planners' ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/10' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}
+                  className={`w-auto lg:w-full whitespace-nowrap flex-shrink-0 flex items-center gap-2.5 px-4 py-3 rounded-xl text-left font-bold text-xs transition-all cursor-pointer ${activeTab === 'planners' ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/10' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}
                 >
                   <Users className="w-4 h-4" />
                   {currentUser.role === 'super' ? '전체 설계사 관리' : '소속 설계사 관리'}
@@ -2692,7 +2692,7 @@ export default function AdminDashboard() {
               {currentUser.role === 'super' && (
                 <button 
                   onClick={() => setActiveTab('agencies')}
-                  className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-xl text-left font-bold text-xs transition-all cursor-pointer ${activeTab === 'agencies' ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/10' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}
+                  className={`w-auto lg:w-full whitespace-nowrap flex-shrink-0 flex items-center gap-2.5 px-4 py-3 rounded-xl text-left font-bold text-xs transition-all cursor-pointer ${activeTab === 'agencies' ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/10' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}
                 >
                   <Building className="w-4 h-4" />
                   전체 대리점 관리
@@ -2703,7 +2703,7 @@ export default function AdminDashboard() {
               {currentUser.role === 'agency' && (
                 <button 
                   onClick={() => setActiveTab('settings')}
-                  className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-xl text-left font-bold text-xs transition-all cursor-pointer ${activeTab === 'settings' ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/10' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}
+                  className={`w-auto lg:w-full whitespace-nowrap flex-shrink-0 flex items-center gap-2.5 px-4 py-3 rounded-xl text-left font-bold text-xs transition-all cursor-pointer ${activeTab === 'settings' ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/10' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}
                 >
                   <Settings className="w-4 h-4" />
                   대리점 분배 정책 설정
@@ -2712,7 +2712,7 @@ export default function AdminDashboard() {
 
               <button 
                 onClick={() => setActiveTab('billing')}
-                className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-xl text-left font-bold text-xs transition-all cursor-pointer ${activeTab === 'billing' ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/10' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}
+                className={`w-auto lg:w-full whitespace-nowrap flex-shrink-0 flex items-center gap-2.5 px-4 py-3 rounded-xl text-left font-bold text-xs transition-all cursor-pointer ${activeTab === 'billing' ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/10' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}
               >
                 <CreditCard className="w-4 h-4" />
                 구독 결제 관리
@@ -2721,7 +2721,7 @@ export default function AdminDashboard() {
               {(currentUser.role === 'agency' || currentUser.role === 'planner') && (
                 <button 
                   onClick={() => setActiveTab('profile')}
-                  className={`w-full flex items-center gap-2.5 px-4 py-3 rounded-xl text-left font-bold text-xs transition-all cursor-pointer ${activeTab === 'profile' ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/10' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}
+                  className={`w-auto lg:w-full whitespace-nowrap flex-shrink-0 flex items-center gap-2.5 px-4 py-3 rounded-xl text-left font-bold text-xs transition-all cursor-pointer ${activeTab === 'profile' ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/10' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}
                 >
                   <User className="w-4 h-4" />
                   개인 프로필/랜딩 설정
@@ -2730,7 +2730,7 @@ export default function AdminDashboard() {
             </div>
 
             {/* Right main panel */}
-            <div className="lg:col-span-4 bg-slate-900/60 border border-slate-800/80 rounded-3xl p-6 min-h-[500px]">
+            <div className="lg:col-span-4 min-w-0 bg-slate-900/60 border border-slate-800/80 rounded-3xl p-6 min-h-[500px]">
               
               {/* Tab 1: Leads view */}
               {activeTab === 'leads' && (
@@ -3313,7 +3313,7 @@ export default function AdminDashboard() {
                             총관리자 권한으로 대리점별 크레딧 잔액을 실시간으로 확인하고 충전/차감 조정을 수행합니다.
                           </p>
                           <div className="overflow-x-auto border border-slate-800 rounded-xl bg-slate-950">
-                            <table className="w-full text-xs font-bold text-slate-350">
+                            <table className="w-full min-w-[800px] text-xs font-bold text-slate-350">
                               <thead>
                                 <tr className="border-b border-slate-800 bg-slate-900 text-[10px] text-slate-450">
                                   <th className="py-3 px-4 text-left">대리점명</th>
@@ -3442,7 +3442,7 @@ export default function AdminDashboard() {
                         <p className="text-xs text-slate-450 font-medium">소속 설계사의 무분별한 크레딧 남용을 방지하기 위해 개별 월간 할당량을 부여할 수 있습니다. (-1은 제한 없음)</p>
                       </div>
                       <div className="overflow-x-auto border border-slate-800 rounded-xl bg-slate-950">
-                        <table className="w-full text-xs font-bold text-slate-300">
+                        <table className="w-full min-w-[800px] text-xs font-bold text-slate-300">
                           <thead>
                             <tr className="border-b border-slate-800 bg-slate-900 text-[10px] text-slate-450">
                               <th className="py-3 px-4 text-left">설계사명</th>
@@ -3518,7 +3518,7 @@ export default function AdminDashboard() {
 
                       {/* Log Table */}
                       <div className="overflow-x-auto border border-slate-800 rounded-xl bg-slate-950">
-                        <table className="w-full text-xs font-bold text-slate-350">
+                        <table className="w-full min-w-[800px] text-xs font-bold text-slate-350">
                           <thead>
                             <tr className="border-b border-slate-800 bg-slate-900 text-[10px] text-slate-450">
                               <th className="py-3 px-4 text-left">일시</th>
@@ -3813,7 +3813,7 @@ export default function AdminDashboard() {
                         👤 설계사별 리드 배정 및 계약 실적 현황
                       </h3>
                       <div className="overflow-x-auto">
-                        <table className="w-full text-xs text-left border-collapse">
+                        <table className="w-full min-w-[800px] text-xs text-left border-collapse">
                           <thead>
                             <tr className="border-b border-slate-800 text-slate-500 font-black">
                               <th className="pb-3 pr-2">설계사명</th>
@@ -4378,6 +4378,86 @@ export default function AdminDashboard() {
                 </p>
               </div>
             </div>
+
+            {/* Real-time Remodeling Active Insurance Policy List */}
+            {(() => {
+              const coverage = selectedLead.analysis_result?.analysis?._remodelingCoverage || 
+                               selectedLead.raw_payload?.analysisInputs?._remodelingCoverage;
+              if (!coverage || !coverage.policies || coverage.policies.length === 0) return null;
+              
+              const totalPremium = coverage.current_total_premium ||
+                coverage.policies.reduce((s: number, p: any) => s + (p.monthly_premium || 0), 0);
+                
+              return (
+                <div className="space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-l-3 border-orange-500 pl-2">
+                    <h4 className="font-extrabold text-sm text-white flex items-center gap-2">
+                      🛡️ 실시간 조회된 나의 가입 보험 내역
+                    </h4>
+                    <div className="flex items-center gap-3 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-850 self-start sm:self-auto text-[10px] font-bold">
+                      <div>
+                        <span className="text-slate-500 mr-1">총 가입 건수</span>
+                        <span className="text-white font-extrabold">{coverage.policies.length}건</span>
+                      </div>
+                      <div className="w-px h-3 bg-slate-850" />
+                      <div>
+                        <span className="text-slate-500 mr-1">월 총 납입료</span>
+                        <span className="text-orange-400 font-extrabold">{totalPremium.toLocaleString()}원</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 설계사 안내 문구 배너 */}
+                  <div className="bg-slate-950/80 border border-slate-850 p-4 rounded-2xl text-left">
+                    <p className="text-[10px] text-orange-400 font-extrabold flex items-center gap-1.5 mb-1.5">
+                      <span>💡</span> 설계사 가이드 (데이터 출처 안내)
+                    </p>
+                    <p className="text-[10.5px] text-slate-400 font-bold leading-relaxed break-keep">
+                      본 리스트의 <span className="text-white font-extrabold">보험회사, 상품명, 월 납입 보험료</span>는 한국신용정보원 본인정보 열람서비스(내보험다보여)를 통해 실시간으로 수집된 실제 가입 정보입니다. 다만, <span className="text-white font-extrabold">가입 특약 및 세부 보장 금액</span>은 AI 엔진이 표준 요율을 기반으로 역산하여 추정한 분석값이므로, 실제 가입 증권과 한도 차이가 있을 수 있습니다. 계약 체결 전 반드시 고객의 실제 증권을 다시 한번 확인하시기 바랍니다.
+                    </p>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-4 max-h-[400px] overflow-y-auto pr-1">
+                    {coverage.policies.map((policy: any, pIdx: number) => (
+                      <div key={pIdx} className="bg-slate-950/80 border border-slate-850 rounded-2xl p-4.5 space-y-4 text-xs">
+                        <div className="flex justify-between items-start gap-3">
+                          <div className="space-y-1">
+                            <span className="inline-block px-2 py-0.5 bg-orange-500/10 text-orange-400 border border-orange-500/20 rounded text-[9px] font-extrabold">
+                              {policy.insurance_company}
+                            </span>
+                            <h5 className="font-extrabold text-white text-xs leading-normal">
+                              {policy.product_name}
+                            </h5>
+                          </div>
+                          <div className="text-right shrink-0">
+                            <span className="text-slate-500 text-[9px] block uppercase font-bold">월 보험료</span>
+                            <span className="font-extrabold text-white text-xs">{policy.monthly_premium?.toLocaleString()}원</span>
+                          </div>
+                        </div>
+
+                        {policy.riders?.length > 0 && (
+                          <div className="bg-slate-900/40 rounded-xl p-3 border border-slate-850/60 space-y-2">
+                            <span className="text-slate-500 text-[9px] block uppercase font-bold">가입 특약 내역</span>
+                            <div className="grid grid-cols-1 gap-1.5 max-h-32 overflow-y-auto pr-1">
+                              {policy.riders.map((rider: any, rIdx: number) => (
+                                <div key={rIdx} className="flex justify-between items-center text-[11px] font-bold text-slate-400 py-0.5 border-b border-dashed border-slate-900 last:border-0">
+                                  <span className="truncate max-w-[180px]">{rider.rider_name}</span>
+                                  <span className="text-slate-200 shrink-0 font-extrabold">
+                                    {rider.coverage_amount >= 100000000
+                                      ? `${(rider.coverage_amount / 100000000).toFixed(0)}억원`
+                                      : `${(rider.coverage_amount / 10000).toLocaleString()}만원`}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
 
             {/* Coverage details */}
             {selectedLead.analysis_result?.deficiencies && (

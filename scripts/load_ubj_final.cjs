@@ -41,7 +41,13 @@ function parseXlsToTable(filepath) {
 }
 
 async function startInvestigation() {
-  const root = 'scripts/scraper/raw_data';
+  let root = 'scripts/scraper/raw_data';
+  if (!fs.existsSync(root) || fs.readdirSync(root).filter(f => f.endsWith('.xls')).length === 0) {
+    root = 'C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main';
+  }
+  if (!fs.existsSync(root) || fs.readdirSync(root).filter(f => f.endsWith('.xls')).length === 0) {
+    root = '.';
+  }
   const files = fs.readdirSync(root).filter(f => f.endsWith('.xls'));
   console.log(`[*] 전수 조사 시작: 총 ${files.length}개 파일 스캔 중...`);
 

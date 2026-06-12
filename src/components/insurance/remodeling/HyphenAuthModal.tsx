@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Shield, Lock, User, RefreshCw, CheckCircle, Info, Flame, AlertCircle, Sparkles } from 'lucide-react';
+import { useB2BBranding } from '../../../hooks/useB2BBranding';
+import { checkAndDeductCredits } from '../../../utils/creditService';
 import {
   requestHyphenRegister,
   fetchContractStatus,
@@ -31,6 +33,8 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
   onSuccess,
   initialData
 }) => {
+  const { branding } = useB2BBranding();
+  const [limitExceeded, setLimitExceeded] = useState(false);
   const [activeTab, setActiveTab] = useState<'login' | 'register' | 'demo'>('login');
   const [loading, setLoading] = useState(false);
   const [loadingStatus, setLoadingStatus] = useState<string>('');
@@ -437,7 +441,28 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
     }
   };
 
-  const runAnalysisAnimation = async (coverage: StandardizedCoverage) => {
+  const runAnalysisAnimation = async (coverage: StandardizedCoverage, isDemo = false) => {
+    setLoading(true);
+    
+    if (!isDemo) {
+      setLoadingStatus('💳 대리점 API 크레딧 검증 중...');
+      const activeAgencyId = branding.agencyId || '88888888-8888-4888-a888-888888888888';
+      const customerName = initialData?.userName || '고객 미입력';
+      const deduction = await checkAndDeductCredits(
+        activeAgencyId,
+        400,
+        branding.plannerId || undefined,
+        'remodeling',
+        `고객 [${customerName}] 내보험 비교분석`
+      );
+      if (!deduction.success) {
+        setLoading(false);
+        setLimitExceeded(true);
+        setError(deduction.message);
+        return;
+      }
+    }
+    
     setLoading(true);
     const statuses = [
       '🔒 보안 통신망을 안전하게 개설하는 중...',
@@ -795,7 +820,7 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
     const finalAge = (initialData?.age && initialData.age > 0) ? initialData.age : mock.age;
     const finalGender = initialData?.gender || mock.gender;
     const standardized = await parsePoliciesToStandardized(finalAge, finalGender, mock.policies);
-    await runAnalysisAnimation(standardized);
+    await runAnalysisAnimation(standardized, true);
   };
 
   if (!isOpen) return null;
@@ -829,7 +854,8 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
           <div className="flex border-b border-gray-100 bg-gray-50/50 p-2">
             {[
               { id: 'login', label: '🔑 내보험다보여 로그인' },
-              { id: 'register', label: '💬 본인인증 회원가입' }
+              { id: 'register', label: '💬 본인인증 회원가입' },
+              { id: 'demo', label: '🧪 데모 체험 모드' }
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -1460,10 +1486,97 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
                   )}
                 </div>
               )}
+
+              {/* TAB 4: DEMO MODE */}
+              {activeTab === 'demo' && (
+                <div className="space-y-6 py-2">
+                  <div className="text-center space-y-1">
+                    <h4 className="text-base font-black text-slate-800">시뮬레이션 데모 케이스 선택</h4>
+                    <p className="text-xs text-slate-400 font-bold">
+                      실시간 하이픈 가입 정보 수집 완료 후 동작하는 리밸런싱 포트폴리오를 즉시 체험할 수 있습니다.
+                    </p>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 gap-4">
+                    {[
+                      {
+                        type: 'overpaying',
+                        title: '📉 과다납입형 (Overpaying)',
+                        desc: '불필요한 종신보험 및 중복 상해/종합 특약으로 매달 무리한 보험료가 지출되는 비효율적 포트폴리오',
+                        specs: '40세 남성 · 월 50.8만 원 · 7개 상품 가입',
+                        accent: 'border-rose-100 hover:border-rose-300 bg-rose-50/20 text-rose-600',
+                        badge: '🚨 보험료 다이어트 시급'
+                      },
+                      {
+                        type: 'underinsured',
+                        title: '🚨 보장부족형 (Underinsured)',
+                        desc: '보험료는 낮으나 실질적인 중증 질환(일반암/뇌/심장) 진단비가 부족하여 치료비 공백 우려가 매우 큰 포트폴리오',
+                        specs: '35세 여성 · 월 6.0만 원 · 1개 상품 가입',
+                        accent: 'border-amber-100 hover:border-amber-300 bg-amber-50/20 text-amber-600',
+                        badge: '⚠️ 보장 범위 보강 시급'
+                      },
+                      {
+                        type: 'optimal',
+                        title: '✨ 최적 설계형 (Optimal)',
+                        desc: '3대 질환 진단비가 넉넉히 설계되어 있으며 불필요한 적립금이 최소화된 완벽한 건강/가성비 밸런스 포트폴리오',
+                        specs: '38세 남성 · 월 12.0만 원 · 1개 상품 가입',
+                        accent: 'border-emerald-100 hover:border-emerald-300 bg-emerald-50/20 text-emerald-600',
+                        badge: '✓ 유지 추천 (최적)'
+                      }
+                    ].map((item) => (
+                      <button
+                        key={item.type}
+                        type="button"
+                        onClick={() => handleDemoStart(item.type as any)}
+                        className={`w-full text-left p-5 border-2 rounded-[2rem] transition-all duration-300 hover:scale-[1.01] hover:shadow-lg flex flex-col justify-between cursor-pointer ${item.accent}`}
+                      >
+                        <div className="flex justify-between items-center w-full mb-2">
+                          <span className="text-sm font-black text-slate-800">{item.title}</span>
+                          <span className="text-[10px] font-black px-2.5 py-1 rounded-full bg-white border border-slate-100 shadow-sm">{item.badge}</span>
+                        </div>
+                        <p className="text-xs text-slate-500 font-bold mb-3 leading-relaxed">{item.desc}</p>
+                        <div className="text-[10px] font-black text-slate-400 bg-slate-50 px-3 py-1.5 rounded-xl self-start">
+                          {item.specs}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </>
           )}
         </div>
       </motion.div>
+
+      {limitExceeded && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="w-full max-w-md bg-white rounded-[2.5rem] shadow-2xl p-8 border border-slate-100 text-center space-y-6"
+          >
+            <div className="inline-flex p-4 bg-rose-50 text-rose-600 rounded-full">
+              <AlertCircle className="w-12 h-12 animate-bounce text-rose-500" />
+            </div>
+            <div className="space-y-2">
+              <h3 className="text-xl font-black text-slate-800">API 이용 한도 초과</h3>
+              <p className="text-sm text-slate-500 leading-relaxed">
+                대리점의 API 이용 한도가 초과되었습니다.<br />
+                담당 설계사에게 문의하세요.
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                setLimitExceeded(false);
+                onClose();
+              }}
+              className="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all active:scale-[0.98]"
+            >
+              확인
+            </button>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 };

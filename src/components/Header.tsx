@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useRef, useCallback, ReactNode } from 'react';
+import { B2BBranding, useB2BBranding } from '../hooks/useB2BBranding';
 import {
   Search, Phone, X, ChevronRight,
   Shield, Activity, Baby, Car, Wallet, HeartPulse,
@@ -11,7 +12,7 @@ import {
 } from 'lucide-react';
 
 type ViewType =
-  | 'home' | 'indemnity' | 'preexisting' | 'dental' | 'surgery'
+  | 'admin' | 'home' | 'indemnity' | 'preexisting' | 'dental' | 'surgery'
   | 'cancer' | 'caregiving' | 'dementia' | 'cerebrovascular' | 'heart'
   | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'property' | 'annuity' | 'whole' | 'variable' | 'legal' | 'credit' | 'health_general' | 'accident' | 'savings_general';
 
@@ -109,6 +110,7 @@ const ALL_GROUPS: NavGroup[] = [
 ];
 
 const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
+  const { branding } = useB2BBranding();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -139,7 +141,7 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
               className="flex items-center gap-2 cursor-pointer transition-transform hover:scale-105 active:scale-95 shrink-0"
               onClick={() => navigate('home')}
             >
-              <img src="/logo.png" alt="Incar" className="h-[52px] w-auto object-contain" />
+              <img src={branding?.logoUrl || "/logo.png"} alt="Incar" className="h-[52px] w-auto object-contain" />
             </div>
 
             <div className="hidden md:flex flex-1 max-w-sm mx-6">
@@ -156,10 +158,16 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
             <div className="hidden lg:flex items-center gap-4">
               <div className="flex items-center gap-2 text-gray-600">
                 <Phone className="w-4 h-4" />
-                <span className="font-bold text-sm">080.808.1088</span>
+                <span className="font-bold text-sm">{branding?.customPhone || "080.808.1088"}</span>
               </div>
               <button className="bg-white border border-gray-300 text-gray-700 px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors">
                 나의 라이프 플래너
+              </button>
+              <button 
+                onClick={() => navigate('admin')}
+                className="bg-slate-900 border border-slate-800 text-white hover:bg-black px-4 py-1.5 rounded-lg text-sm font-bold shadow-sm transition-all cursor-pointer"
+              >
+                설계사 파트너 어드민
               </button>
             </div>
 
@@ -263,7 +271,7 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
           <div className="absolute right-0 top-0 h-full w-[85vw] max-w-sm bg-white shadow-2xl flex flex-col overflow-y-auto">
 
             <div className="flex items-center justify-between p-5 border-b border-gray-100 sticky top-0 bg-white z-10">
-              <img src="/logo.png" alt="Incar" className="h-10 w-auto object-contain" />
+              <img src={branding?.logoUrl || "/logo.png"} alt="Incar" className="h-10 w-auto object-contain" />
               <button onClick={() => setMobileOpen(false)} className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors">
                 <X className="w-5 h-5 text-gray-600" />
               </button>
@@ -307,10 +315,16 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
             <div className="p-4 border-t border-gray-100 bg-gray-50 space-y-3">
               <div className="flex items-center gap-2 text-gray-600 justify-center">
                 <Phone className="w-4 h-4" />
-                <span className="font-bold">080.808.1088</span>
+                <span className="font-bold">{branding?.customPhone || "080.808.1088"}</span>
               </div>
               <button className="w-full bg-orange-500 text-white py-3 rounded-2xl font-black text-sm hover:bg-orange-600 transition-colors">
                 나의 라이프 플래너
+              </button>
+              <button 
+                onClick={() => navigate('admin')}
+                className="w-full bg-slate-900 text-white py-3 rounded-2xl font-black text-sm hover:bg-black transition-colors cursor-pointer"
+              >
+                설계사 파트너 어드민
               </button>
             </div>
           </div>

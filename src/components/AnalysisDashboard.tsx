@@ -32,10 +32,14 @@ import { CreditSummary } from './insurance/credit/CreditSummary';
 import { LegalSummary } from './insurance/legal/LegalSummary';
 import { PropertySummary } from './insurance/property/PropertySummary';
 import { SavingsSummary } from './insurance/savings/SavingsSummary';
+import disclosureDates from '../lib/insurance/disclosure_dates.json';
+import { AIPremiumReport } from './AIPremiumReport';
 
 
 interface AnalysisDashboardProps {
   result: AnalysisResult;
+  onSubmitLead?: (analysis: any, category: string, resultData: any, consultType?: 'anonymous' | 'regular') => Promise<any> | void;
+  branding?: any;
 }
 
 // ─── 보험 타입별 요약 컴포넌트 1:1 맵 ───────────────────────────────────────
@@ -52,6 +56,9 @@ const formatAmountUtil = (amt: number): string => {
 // 정확한 키(exact match) 맵 — selectedCategory 값과 1:1 대응
 const EXACT_SUMMARY_MAP: Record<string, SummaryComponentType> = {
   'child':           ChildSummary,
+  'pre_family':      ChildSummary,
+  'child_sick':      ChildSummary,
+  '유병력자 전용':    ChildSummary,
   'accident':        AccidentSummary,
   'car':             CarSummary,
   'driver':          DriverSummary,
@@ -78,6 +85,7 @@ const PARTIAL_SUMMARY_MAP: Array<[string, SummaryComponentType]> = [
   ['실비',     SilsonSummary],
   ['어린이',   ChildSummary],
   ['태아',     ChildSummary],
+  ['유병력자', ChildSummary],
   ['상해',     AccidentSummary],
   ['간병',     CaregivingSummary],
   ['재가',     NursingSummary],
@@ -125,9 +133,30 @@ const InsuranceSummary = ({ result }: { result: AnalysisResult }) => {
   return <HealthSummary result={result as any} formatAmount={formatAmountUtil} />;
 };
 
-const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
+const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitLead, branding }) => {
   const { scores, efficiency, deficiencies, analysis } = result;
   const cat = analysis.selectedCategory ?? '';
+
+  const copyToClipboard = (text: string) => {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).catch(err => {
+        console.error('Clipboard copy failed:', err);
+      });
+    } else {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+      } catch (err) {
+        console.error('Fallback clipboard copy failed:', err);
+      }
+      document.body.removeChild(textArea);
+    }
+  };
 
   // ─── selectedCategory 단일 기반 — !!analysis.xxx 폴백 없음 ────────────────
   const isDental        = cat.includes('치아');
@@ -135,7 +164,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
   const isCaregiving    = cat.includes('간병');
   const isNursing       = cat === '재가/시설'     || cat.includes('재가') || cat.includes('시설');
   const isSurgeryHospital = cat.includes('수술')  || cat.includes('입원');
-  const isChild         = cat.includes('어린이')  || cat.includes('태아') || cat === 'child';
+  const isChild         = cat.includes('어린이')  || cat.includes('태아') || cat === 'child' || cat === 'pre_family' || cat === 'child_sick' || cat.includes('유병력자');
   const isAccident      = cat.includes('상해')    || cat === 'accident';
   const isCar           = cat.includes('자동차')  || cat === 'car';
   const isDriver        = cat.includes('운전자')  || cat === 'driver';
@@ -150,6 +179,30 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
   const isCredit        = cat.includes('신용')    || cat === 'credit';
   const isLegal         = cat.includes('법률')    || cat === 'legal';
   const isSavingsGeneral = cat.includes('일반 저축') || cat === 'savings_general';
+
+  const getDisclosureDate = () => {
+    if (isDental) return disclosureDates.dental;
+    if (isSilbi) return disclosureDates.silson;
+    if (isCaregiving) return disclosureDates.caregiving;
+    if (isNursing) return disclosureDates.nursing;
+    if (isSurgeryHospital) return disclosureDates.surgery_hospital;
+    if (isChild) return disclosureDates.child;
+    if (isAccident) return disclosureDates.accident;
+    if (isCar) return disclosureDates.car;
+    if (isDriver) return disclosureDates.driver;
+    if (isPet) return disclosureDates.pet;
+    if (isGolf) return disclosureDates.golf;
+    if (isProperty) return disclosureDates.property;
+    if (isFire) return disclosureDates.fire;
+    if (isAnnuity) return disclosureDates.annuity;
+    if (isWholeLife) return disclosureDates.whole_life;
+    if (isVariable) return disclosureDates.variable;
+    if (isHealthGeneral) return disclosureDates.health_general;
+    if (isCredit) return disclosureDates.credit;
+    if (isLegal) return disclosureDates.legal;
+    if (isSavingsGeneral) return disclosureDates.savings_general;
+    return "2026년 06월 공시";
+  };
 
 
   const [selectedPlan, setSelectedPlan] = React.useState<any>(null);
@@ -487,6 +540,12 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
         </div>
       </section>
 
+      <AIPremiumReport 
+        analysis={result.analysis} 
+        deficiencies={deficiencies} 
+        scores={scores} 
+      />
+
       <ComparisonTable 
         analysis={result.analysis}
         recommendation={isRemodeling ? result.recommendations.diet : result.recommendations.upgrade} 
@@ -629,7 +688,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
            <motion.div 
              whileHover={{ y: -15, scale: 1.01 }}
              onClick={() => setSelectedPlan(result.recommendations.diet)}
-             className="bg-gradient-to-br from-blue-50 to-indigo-50/50 p-12 rounded-[4rem] shadow-[0_30px_80px_-15px_rgba(59,130,246,0.15)] border border-blue-100/50 flex flex-col group transition-all cursor-pointer overflow-hidden relative"
+             className="bg-gradient-to-br from-blue-100/40 via-indigo-50/70 to-purple-100/30 p-12 rounded-[4rem] shadow-[0_30px_80px_-10px_rgba(59,130,246,0.22)] border border-blue-200/60 flex flex-col group transition-all cursor-pointer overflow-hidden relative"
            >
               {/* Diet 카드 헤더 — 리모델링 vs 일반 */}
               {isRemodeling ? (() => {
@@ -1263,21 +1322,33 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
             )}
           </div>
 
-          <div className="bg-slate-50/80 p-8 border-t border-gray-100 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-left space-y-2">
-              <p className="text-sm font-black text-slate-800 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
-                Real-Time Optimized Analysis
-              </p>
-              <p className="text-xs font-bold text-slate-500 leading-relaxed">
-                * 본 보험료 비교 데이터는 생명보험협회 및 손해보험협회 공시자료(수집 기준: 2026년 06월 공시)를 토대로 <span className="text-slate-800 font-extrabold">0.1초 만에</span> 실시간 분석되었습니다.
-              </p>
-            </div>
-            <div className="bg-white px-6 py-4 rounded-2xl border border-gray-100 flex items-center gap-3 shadow-sm shrink-0">
-              <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
-              <div className="text-left">
-                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">최적화 속도</p>
-                <p className="text-base font-black text-slate-800 mt-1">0.1초 분석 완료</p>
+          <div className="relative mt-8 overflow-hidden rounded-[2rem] bg-gradient-to-br from-orange-50/60 via-amber-50/40 to-white p-6 sm:p-8 shadow-lg border-2 border-orange-500/40 group">
+            {/* Soft Warm Radial Glow */}
+            <div className="absolute -inset-x-40 -inset-y-40 bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.08)_0,transparent_60%)] blur-3xl pointer-events-none" />
+            
+            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              <div className="space-y-3 max-w-2xl text-left">
+                <div className="flex items-center gap-2.5">
+                  <span className="flex h-2.5 w-2.5 rounded-full bg-orange-500 animate-pulse" />
+                  <span className="text-[10px] font-black text-orange-600 uppercase tracking-[0.2em]">Real-Time Optimized Analysis</span>
+                </div>
+                
+                <div className="space-y-2">
+                  <p className="text-slate-800 text-xs sm:text-sm font-bold leading-relaxed">
+                    * 본 보험료 비교 데이터는 생명보험협회 및 손해보험협회 공시자료(수집 기준: <span className="text-orange-600 font-extrabold underline decoration-orange-500/30 decoration-2 underline-offset-2">{getDisclosureDate()}</span>)를 토대로 <span className="bg-orange-500 text-white px-1.5 py-0.5 rounded-md font-black mx-0.5">0.1초 만에</span> 실시간 최적화 분석되었습니다.
+                  </p>
+                  <p className="text-slate-500 text-[11px] sm:text-xs font-semibold leading-relaxed border-t border-orange-100 pt-2">
+                    💡 <span className="text-orange-600 font-bold">다만,</span> 가입자의 개별 조건(직업, 건강 상태 등)에 따라 실제 보험료 및 가입 가능 여부는 변동될 수 있으므로, 상세한 내용은 전문 상담사와의 맞춤 설계를 통해 확인하시기 바랍니다.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-4 shrink-0 bg-gradient-to-br from-orange-500 to-amber-600 px-6 py-4 rounded-2xl shadow-md border border-orange-400/20">
+                <Clock className="w-6 h-6 text-white animate-bounce" />
+                <div className="text-left">
+                  <p className="text-[9px] font-bold text-orange-100 uppercase tracking-widest leading-none">최적화 처리속도</p>
+                  <p className="text-sm sm:text-base font-black text-white mt-1">0.1초 분석 완료</p>
+                </div>
               </div>
             </div>
           </div>
@@ -1292,27 +1363,82 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
               <p className="text-xs text-emerald-100 font-bold mt-1">배정된 전담 설계사가 카카오톡으로 상세 맞춤 설계서를 0.1초 만에 전송해 드리겠습니다.</p>
             </div>
           ) : (
-            <div className="bg-slate-900 border-2 border-orange-500/40 rounded-[2.5rem] p-8 md:p-10 shadow-[0_25px_60px_-15px_rgba(255,107,0,0.25)] flex flex-col md:flex-row items-center justify-between gap-6 text-left relative overflow-hidden text-white">
+            <div className="bg-slate-900 border-2 border-orange-500/40 rounded-[2.5rem] p-8 md:p-10 shadow-[0_25px_60px_-15px_rgba(255,107,0,0.25)] flex flex-col gap-6 text-left relative overflow-hidden text-white">
               <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none">
                 <ShieldCheck className="w-48 h-48 text-orange-500" />
               </div>
-              <div className="space-y-2 relative z-10">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-500/10 text-orange-400 rounded-lg text-[9px] font-black uppercase tracking-widest border border-orange-500/20">
-                  🎁 최저가 매칭 보증
+              
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                <div className="space-y-2 relative z-10">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-500/10 text-orange-400 rounded-lg text-[9px] font-black uppercase tracking-widest border border-orange-500/20">
+                    🎁 최저가 매칭 보증
+                  </div>
+                  <h4 className="text-lg md:text-xl font-black text-white tracking-tight">
+                    내가 선택한 맞춤 보장, 최저가 설계서 카톡 받기
+                  </h4>
+                  <p className="text-xs text-slate-400 font-bold leading-relaxed max-w-lg">
+                    입력하신 설계 조건 그대로 가성비가 가장 우수한 보험사의 실제 가입 제안서를 카카오톡 전송해 드립니다. (별도 추가 가입 권유 없음)
+                  </p>
                 </div>
-                <h4 className="text-lg md:text-xl font-black text-white tracking-tight">
-                  내가 선택한 맞춤 보장, 최저가 설계서 카톡 받기
-                </h4>
-                <p className="text-xs text-slate-400 font-bold leading-relaxed max-w-lg">
-                  입력하신 설계 조건 그대로 가성비가 가장 우수한 보험사의 실제 가입 제안서를 카카오톡 전송해 드립니다. (별도 추가 가입 권유 없음)
-                </p>
+                
+                {/* 3대 안심 약속 미니 배너 */}
+                <div className="w-full md:max-w-xs bg-slate-800/80 border border-slate-700/50 rounded-2xl p-4 text-left space-y-2 relative z-10">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <span className="text-sm">🛡️</span>
+                    <span className="text-[10px] font-black text-slate-300">고객 안심 3대 약속</span>
+                    <span className="px-1.5 py-0.5 bg-orange-500/20 text-orange-400 rounded-md text-[7px] font-black uppercase tracking-wider border border-orange-500/20">Verified</span>
+                  </div>
+                  <div className="space-y-1.5 text-[9px] font-bold text-slate-400">
+                    <p className="flex items-center gap-1"><span className="text-orange-500">✓</span> 동의 없는 무단 전화 일절 금지</p>
+                    <p className="flex items-center gap-1"><span className="text-orange-500">✓</span> 자가진단시 연락처 완벽 마스킹</p>
+                    <p className="flex items-center gap-1"><span className="text-orange-500">✓</span> 코드를 통한 1:1 카톡 익명 상담 가능</p>
+                  </div>
+                </div>
               </div>
-              <button
-                onClick={() => setApplied(true)}
-                className="w-full md:w-auto px-8 py-5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-sm rounded-2xl shadow-[0_12px_24px_-4px_rgba(255,107,0,0.4)] transform hover:scale-[1.03] active:scale-95 transition-all duration-300 shrink-0 relative z-10 cursor-pointer text-center"
-              >
-                👉 최저가 설계서 신청 (무료)
-              </button>
+
+              {/* 가로 분할 2 버튼 */}
+              <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10 pt-4 border-t border-white/5">
+                <button
+                  onClick={async () => {
+                    setApplied(true);
+                    const simCode = (result as any).simulation_code || '';
+                    if (onSubmitLead) {
+                      await onSubmitLead(result.analysis, `${result.analysis.selectedCategory || 'general'}_consult`, result, 'anonymous');
+                    }
+                    
+                    const clipboardMsg = `안녕하세요! [ ${simCode} ] 설계안으로 익명 상담 신청합니다. (보험 종류: ${result.analysis.selectedCategory || '일반'})`;
+                    copyToClipboard(clipboardMsg);
+                    alert(`[익명] 최저가 설계서 상담 신청이 완료되었습니다!\n설계 코드 [ ${simCode} ]가 클립보드에 자동 복사되었습니다. 카카오톡 채팅창에 붙여넣기(Ctrl+V)하여 안전하게 상담해 주세요.`);
+
+                    if (branding?.kakaoLink) {
+                      window.open(branding.kakaoLink, '_blank', 'noopener,noreferrer');
+                    }
+                  }}
+                  className="w-full px-6 py-4.5 bg-slate-800 hover:bg-slate-700 text-white font-black text-xs rounded-xl border border-white/10 shadow-md transform hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer text-center"
+                >
+                  💬 익명 카톡 상담 신청 (무료)
+                </button>
+                <button
+                  onClick={async () => {
+                    setApplied(true);
+                    const simCode = (result as any).simulation_code || '';
+                    if (onSubmitLead) {
+                      await onSubmitLead(result.analysis, `${result.analysis.selectedCategory || 'general'}_consult`, result, 'regular');
+                    }
+                    
+                    const clipboardMsg = `안녕하세요! [ ${simCode} ] 설계안으로 정식 상담 신청합니다. (보험 종류: ${result.analysis.selectedCategory || '일반'})`;
+                    copyToClipboard(clipboardMsg);
+                    alert(`[정식] 최저가 설계서 상담 신청이 완료되었습니다!\n설계 코드 [ ${simCode} ]가 클립보드에 자동 복사되었습니다. 카카오톡 채팅창에 붙여넣기(Ctrl+V)하시면 더 신속한 맞춤 상담을 안내해 드립니다.`);
+
+                    if (branding?.kakaoLink) {
+                      window.open(branding.kakaoLink, '_blank', 'noopener,noreferrer');
+                    }
+                  }}
+                  className="w-full px-6 py-4.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xs rounded-xl shadow-[0_12px_24px_-4px_rgba(255,107,0,0.4)] transform hover:scale-[1.03] active:scale-95 transition-all duration-300 cursor-pointer text-center"
+                >
+                  🚀 정식 카톡 상담 신청 (무료)
+                </button>
+              </div>
             </div>
           )}
         </div>
@@ -1351,20 +1477,73 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result }) => {
             </p>
           </div>
 
-          {/* Lead Generation Button */}
-          <div className="mt-10 flex flex-col sm:flex-row gap-4 items-center justify-between bg-white/5 p-6 rounded-[2rem] border border-white/10">
-            <div className="text-left">
-              <span className="text-[10px] font-black text-orange-400 block uppercase mb-1">1:1 맞춤형 컨설팅</span>
-              <span className="text-sm font-bold text-slate-300">내 증권의 숨겨진 보장 구멍, 100% 정확하게 찾아드립니다.</span>
+          {/* Lead Generation Box with Reassurance and Dual Buttons */}
+          <div className="mt-10 bg-white/5 p-8 rounded-[2rem] border border-white/10 space-y-6">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+              <div className="text-left space-y-1">
+                <span className="text-[10px] font-black text-orange-400 block uppercase tracking-widest">1:1 맞춤형 컨설팅</span>
+                <h4 className="text-base font-bold text-white">내 증권의 숨겨진 보장 구멍, 100% 정확하게 찾아드립니다.</h4>
+                <p className="text-xs text-slate-400 font-semibold leading-relaxed">
+                  전문 분석 솔루션을 통해 고객님의 증권을 대조하여 최적화 및 보장 공백 보완 설계를 0.1초 만에 도와드립니다.
+                </p>
+              </div>
+
+              {/* 3대 안심 약속 미니 배너 */}
+              <div className="w-full lg:max-w-xs bg-slate-800/80 border border-slate-700/50 rounded-2xl p-4 text-left space-y-2">
+                <div className="flex items-center gap-1.5 mb-1">
+                  <span className="text-sm">🛡️</span>
+                  <span className="text-[10px] font-black text-slate-300">고객 안심 3대 약속</span>
+                  <span className="px-1.5 py-0.5 bg-orange-500/20 text-orange-400 rounded-md text-[7px] font-black uppercase tracking-wider border border-orange-500/20">Verified</span>
+                </div>
+                <div className="space-y-1.5 text-[9px] font-bold text-slate-400">
+                  <p className="flex items-center gap-1"><span className="text-orange-500">✓</span> 동의 없는 무단 전화 일절 금지</p>
+                  <p className="flex items-center gap-1"><span className="text-orange-500">✓</span> 자가진단시 연락처 완벽 마스킹</p>
+                  <p className="flex items-center gap-1"><span className="text-orange-500">✓</span> 코드를 통한 1:1 카톡 익명 상담 가능</p>
+                </div>
+              </div>
             </div>
-            <button 
-              onClick={() => {
-                alert('카카오톡으로 정밀 분석 신청이 완료되었습니다. 담당 설계사가 곧 연락드리겠습니다.');
-              }}
-              className="w-full sm:w-auto px-8 py-5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-2xl font-black text-sm hover:from-orange-600 hover:to-orange-700 transition-all active:scale-95 shadow-[0_15px_30px_-5px_rgba(255,107,0,0.4)] whitespace-nowrap"
-            >
-              카카오톡으로 정밀 분석 신청하기
-            </button>
+
+            {/* 가로 분할 2 버튼 */}
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/5">
+              <button
+                onClick={async () => {
+                  const simCode = (result as any).simulation_code || '';
+                  if (onSubmitLead) {
+                    await onSubmitLead(result.analysis, 'remodeling_consult', result, 'anonymous');
+                  }
+
+                  const clipboardMsg = `안녕하세요! [ ${simCode} ] 설계안으로 정밀 분석 익명 상담 신청합니다. (보험 종류: ${result.analysis.selectedCategory || '일반'})`;
+                  copyToClipboard(clipboardMsg);
+                  alert(`[익명] 정밀 분석 신청이 완료되었습니다!\n설계 코드 [ ${simCode} ]가 클립보드에 자동 복사되었습니다. 카카오톡 채팅창에 붙여넣기(Ctrl+V)하여 안전하게 상담해 주세요.`);
+
+                  if (branding?.kakaoLink) {
+                    window.open(branding.kakaoLink, '_blank', 'noopener,noreferrer');
+                  }
+                }}
+                className="w-full px-6 py-4.5 bg-slate-800 hover:bg-slate-700 text-white font-black text-xs rounded-xl border border-white/10 shadow-md transform hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer text-center"
+              >
+                💬 익명 정밀 분석 신청 (무료)
+              </button>
+              <button
+                onClick={async () => {
+                  const simCode = (result as any).simulation_code || '';
+                  if (onSubmitLead) {
+                    await onSubmitLead(result.analysis, 'remodeling_consult', result, 'regular');
+                  }
+
+                  const clipboardMsg = `안녕하세요! [ ${simCode} ] 설계안으로 정밀 분석 정식 상담 신청합니다. (보험 종류: ${result.analysis.selectedCategory || '일반'})`;
+                  copyToClipboard(clipboardMsg);
+                  alert(`[정식] 정밀 분석 신청이 완료되었습니다!\n설계 코드 [ ${simCode} ]가 클립보드에 자동 복사되었습니다. 카카오톡 채팅창에 붙여넣기(Ctrl+V)하시면 설계사가 바로 조회하여 신속한 맞춤 상담을 안내해 드립니다.`);
+
+                  if (branding?.kakaoLink) {
+                    window.open(branding.kakaoLink, '_blank', 'noopener,noreferrer');
+                  }
+                }}
+                className="w-full px-6 py-4.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xs rounded-xl shadow-[0_12px_24px_-4px_rgba(255,107,0,0.4)] transform hover:scale-[1.03] active:scale-95 transition-all duration-300 cursor-pointer text-center"
+              >
+                🚀 정식 정밀 분석 신청 (무료)
+              </button>
+            </div>
           </div>
         </div>
       </section>

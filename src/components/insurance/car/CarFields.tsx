@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { motion } from 'motion/react';
 import { Car, Compass, Navigation, HelpCircle, Shield, AlertTriangle, Users, Search, X, Sparkles, Smartphone, Key, RefreshCw, Lock, ShieldCheck, Check } from 'lucide-react';
+import { useB2BBranding } from '../../../hooks/useB2BBranding';
+import { checkAndDeductCredits } from '../../../utils/creditService';
 import { CAR_DATABASE, FLAT_CAR_MODELS, CAR_MODEL_MAP } from '../../../data/carDatabase';
 import { getEngineOptions, getTrimOptions } from '../../../lib/insurance/car/carSpecHelpers';
 import { requestHyphenInit, requestHyphenCaptcha, requestHyphenSms } from '../../../lib/insurance/car/hyphenService';
@@ -88,6 +90,8 @@ export const CarFields: React.FC<CarFieldsProps> = ({
   triggerHyphenModal,
   setTriggerHyphenModal
 }) => {
+  const { branding } = useB2BBranding();
+  const [limitExceeded, setLimitExceeded] = useState(false);
   const getSsnFrontFromBirthDate = (birth: string) => {
     if (!birth) return '';
     const clean = birth.replace(/[^0-9]/g, '');
@@ -313,6 +317,24 @@ export const CarFields: React.FC<CarFieldsProps> = ({
       if (res.common.errYn === 'Y') {
         setHyphenError(res.common.errMsg || '인증번호 또는 차량번호가 올바르지 않습니다.');
       } else if (res.data && res.data.CARINFOLIST && res.data.CARINFOLIST.length > 0) {
+        // --- ADD CREDIT DEDUCTION GATE ---
+        const activeAgencyId = branding.agencyId || '88888888-8888-4888-a888-888888888888';
+        const targetUser = userName || '고객 미입력';
+        const targetVhrno = vhrno || '차량번호 미입력';
+        const deduction = await checkAndDeductCredits(
+          activeAgencyId,
+          300,
+          branding.plannerId || undefined,
+          'car',
+          `고객 [${targetUser}] 차량 [${targetVhrno}] 실시간 자동차 비교`
+        );
+        if (!deduction.success) {
+          setHyphenError(deduction.message);
+          setLimitExceeded(true);
+          setHyphenLoading(false);
+          return;
+        }
+
         const carInfo = res.data.CARINFOLIST[0];
         setRetrievedCarInfo(carInfo);
         if (res.data.INSRNCHISTLIST) {
@@ -1645,6 +1667,32 @@ export const CarFields: React.FC<CarFieldsProps> = ({
                 </button>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {limitExceeded && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+          <div className="w-full max-w-md bg-white rounded-[2.5rem] shadow-2xl p-8 border border-slate-100 text-center space-y-6">
+            <div className="inline-flex p-4 bg-rose-50 text-rose-600 rounded-full">
+              <AlertTriangle className="w-12 h-12 animate-bounce text-rose-500" />
+            </div>
+            <div className="space-y-2">
+              <h3 className="text-xl font-black text-slate-800">API 이용 한도 초과</h3>
+              <p className="text-sm text-slate-500 leading-relaxed text-center">
+                대리점의 API 이용 한도가 초과되었습니다.<br />
+                담당 설계사에게 문의하세요.
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                setLimitExceeded(false);
+                setIsHyphenModalOpen(false);
+              }}
+              className="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all active:scale-[0.98]"
+            >
+              확인
+            </button>
           </div>
         </div>
       )}

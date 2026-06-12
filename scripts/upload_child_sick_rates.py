@@ -52,8 +52,8 @@ def upload_child_sick_data():
         
     records = []
     for _, row in df.iterrows():
-        pm = clean_premium(row.get('기준보험료', ''))
-        pf = clean_premium(row.get('가입보험료', ''))
+        pm = clean_premium(row.get('남성보험료', row.get('기준보험료', '')))
+        pf = clean_premium(row.get('여성보험료', row.get('가입보험료', '')))
         
         # 적용이율이 없으면 기본 2.75% 할당
         rate_str = str(row.get('적용이율', '')) if pd.notna(row.get('적용이율')) else ""

@@ -83,7 +83,12 @@ export const analyzeCancer = (analysis: any): any => {
     estimatedPremium: Math.round(opt1.premium / 10) * 10,
     efficiency: (hasFamilyHistory && currentDiagnosis < 50000000) ? 75 : 98,
     deficiencies,
-    scores: { totalScore: Math.min(100, Math.max(0, totalScore)) },
+    scores: {
+      totalScore: Math.min(100, Math.max(0, totalScore)),
+      cancerScore: Math.min(100, Math.max(0, totalScore)),
+      cerebrovascularScore: 70,
+      cardiovascularScore: 70
+    },
     recommendations: {
       diet,
       upgrade: {

@@ -84,6 +84,38 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
                </p>
             </div>
 
+            {/* 고객과의 안심 3대 약속 배너 */}
+            <div className="max-w-xl mx-auto bg-gradient-to-r from-orange-50/90 via-amber-50/70 to-orange-50/50 border-2 border-orange-200/80 rounded-[2.5rem] p-6 text-left shadow-md">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-xl">🛡️</span>
+                <h4 className="text-sm font-black text-slate-800 tracking-tight">고객과의 안심 3대 약속</h4>
+                <span className="px-2 py-0.5 bg-orange-500 text-white rounded-full text-[8px] font-black uppercase tracking-wider">Verified</span>
+              </div>
+              <div className="grid grid-cols-1 gap-2.5">
+                <div className="bg-white p-3.5 rounded-2xl border border-orange-100 flex flex-col gap-0.5 shadow-sm">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[9px] font-black text-orange-500 uppercase tracking-widest">Promise 1</span>
+                    <span className="text-xs font-black text-slate-800 leading-tight">동의 없는 전화 금지</span>
+                  </div>
+                  <p className="text-[10.5px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">상담 동의가 없는 한, 광고성 무단 전화를 일절 유도하지 않습니다.</p>
+                </div>
+                <div className="bg-white p-3.5 rounded-2xl border border-orange-100 flex flex-col gap-0.5 shadow-sm">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[9px] font-black text-orange-500 uppercase tracking-widest">Promise 2</span>
+                    <span className="text-xs font-black text-slate-800 leading-tight">개인정보 암호화</span>
+                  </div>
+                  <p className="text-[10.5px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">자가진단 단계에서는 연락처가 완벽히 마스킹 보호 처리됩니다.</p>
+                </div>
+                <div className="bg-white p-3.5 rounded-2xl border border-orange-100 flex flex-col gap-0.5 shadow-sm">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[9px] font-black text-orange-500 uppercase tracking-widest">Promise 3</span>
+                    <span className="text-xs font-black text-slate-800 leading-tight">카톡 1:1 익명 상담</span>
+                  </div>
+                  <p className="text-[10.5px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">고객이 원할 때만 코드를 활용한 익명 상담으로 매칭됩니다.</p>
+                </div>
+              </div>
+            </div>
+
             <form onSubmit={handleStartAnalysis} className="space-y-6 max-w-xl mx-auto w-full">
               {/* Row 1: Name and Gender */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -58,28 +58,43 @@ function cleanRate(val: string): number {
   return isNaN(num) ? 0 : num;
 }
 
-function getNormalizationFactor(amountStr: string): number {
+function getNormalizationFactor(amountStr: string, isRider: boolean): number {
   if (!amountStr) return 1.0;
-  const clean = amountStr.replace(/\s+/g, '');
-  if (clean.includes('1,000만원') || clean.includes('1000만원')) {
-    // 1,000만원 -> Multiply by 10 to normalize to 1억원 (10,000만원)
-    return 10.0;
+  
+  const clean = amountStr.replace(/\s+/g, '').replace(/,/g, '');
+  const numMatch = clean.match(/^[0-9.]+/);
+  if (!numMatch) return 1.0;
+  
+  const numVal = parseFloat(numMatch[0]);
+  if (numVal <= 0) return 1.0;
+  
+  if (isRider) {
+    // "특약이 천만원대면 10을 곱할것"
+    if (clean.includes('천만원') || (clean.includes('만원') && numVal === 1000)) {
+      return 10.0;
+    }
+    return 1.0;
+  } else {
+    // For main contract: normalize to 1억원
+    if (clean.includes('억')) {
+      return 1.0 / numVal; 
+    }
+    if (clean.includes('만원') || clean.includes('만')) {
+      return 10000.0 / numVal;
+    }
+    return 100000.0 / numVal;
   }
-  if (clean.includes('10만달러') || clean.includes('달러') || clean.includes('USD')) {
-    // 10만달러 USD -> Multiply by 1,000 to convert USD to KRW and normalize to 1억원 KRW equivalent
-    return 1000.0;
-  }
-  return 1.0;
 }
-
 
 interface GroupedProduct {
   company: string;
   product_name: string;
   sub_type: 'term_pure' | 'term_ceo' | 'variable_term' | 'variable_saving';
   file_type: string;
-  male_premiums: number[];
-  female_premiums: number[];
+  main_m: number[];
+  main_f: number[];
+  riders_m: number[];
+  riders_f: number[];
   declared_rates: number[];
   business_fees: number[];
   male_yields: number[];
@@ -113,8 +128,8 @@ async function run() {
   const amountIdx = headers.indexOf("가입금액");
   const subTypeIdx = headers.indexOf("sub_type");
   const fileTypeIdx = headers.indexOf("file_type");
+  const renewalIdx = headers.indexOf("갱신구분");
 
-  // Helper for finding index of raw columns
   const raw13Idx = headers.indexOf("원본_열_13");
   const raw5Idx = headers.indexOf("원본_열_5");
   const raw8Idx = headers.indexOf("원본_열_8");
@@ -128,9 +143,21 @@ async function run() {
     const productName = row[productIdx] || "";
     if (!company || !productName) return;
 
-    // Detect sub_type and file_type from newly injected CSV columns
     const sub_type = subTypeIdx !== -1 ? (row[subTypeIdx] as any) : 'term_pure';
     const file_type = fileTypeIdx !== -1 ? row[fileTypeIdx] : 'binary';
+
+    // Exclude renewable products for term insurance
+    const isTermProduct = sub_type === 'term_pure' || sub_type === 'term_ceo' || sub_type === 'variable_term';
+    if (isTermProduct) {
+      const renewalVal = renewalIdx !== -1 ? (row[renewalIdx] || "").trim() : "";
+      if (renewalVal === "갱신형") {
+        return; 
+      }
+      const cleanName = productName.replace(/\s+/g, "");
+      if (cleanName.includes("갱신") && !cleanName.includes("비갱신")) {
+        return; 
+      }
+    }
 
     const key = `${company}||${productName}`;
     if (!productGroups[key]) {
@@ -139,8 +166,10 @@ async function run() {
         product_name: productName,
         sub_type,
         file_type,
-        male_premiums: [],
-        female_premiums: [],
+        main_m: [],
+        main_f: [],
+        riders_m: [],
+        riders_f: [],
         declared_rates: [],
         business_fees: [],
         male_yields: [],
@@ -151,30 +180,24 @@ async function run() {
     const group = productGroups[key];
     const gubunVal = (row[gubunIdx] || "").replace(/\.0/g, '').replace(/년/g, '').trim();
 
-    const isTermProduct = sub_type === 'term_pure' || sub_type === 'term_ceo' || sub_type === 'variable_term';
     if (isTermProduct) {
+      const amountStr = amountIdx !== -1 ? row[amountIdx] : "";
+      const isRider = gubunVal === '특약';
+      const normFactor = getNormalizationFactor(amountStr, isRider);
+      
+      let m_prem = cleanNum(row[mPremiumIdx]) * normFactor;
+      let f_prem = cleanNum(row[fPremiumIdx]) * normFactor;
+      const rate = cleanRate(row[appliedRateIdx]);
+      
       if (gubunVal === '주계약') {
-        const amountStr = amountIdx !== -1 ? row[amountIdx] : "";
-        const normFactor = getNormalizationFactor(amountStr);
-        
-        const rowStr = row.join(" ");
-        const isAnnual = rowStr.includes("연납");
-
-        let m_prem = cleanNum(row[mPremiumIdx]) * normFactor;
-        let f_prem = cleanNum(row[fPremiumIdx]) * normFactor;
-        const rate = cleanRate(row[appliedRateIdx]);
-        
-        if (isAnnual) {
-          m_prem = Math.round(m_prem / 12);
-          f_prem = Math.round(f_prem / 12);
-        }
-        
-        if (m_prem > 0) group.male_premiums.push(m_prem);
-        if (f_prem > 0) group.female_premiums.push(f_prem);
+        if (m_prem > 0) group.main_m.push(m_prem);
+        if (f_prem > 0) group.main_f.push(f_prem);
         if (rate > 0) group.declared_rates.push(rate);
+      } else if (gubunVal === '특약') {
+        if (m_prem > 0) group.riders_m.push(m_prem);
+        if (f_prem > 0) group.riders_f.push(f_prem);
       }
     } else {
-      // For investment products, we look at the 10-year holding period
       if (gubunVal === '10') {
         const fee = raw13Idx !== -1 ? cleanRate(row[raw13Idx]) : 0;
         const male_yield = raw5Idx !== -1 ? cleanRate(row[raw5Idx]) : 0;
@@ -189,7 +212,6 @@ async function run() {
 
   const records: any[] = [];
 
-  // Group default assumed yields for variable/investment products by company
   const companyYields: { [key: string]: number } = {
     "미래에셋생명": 6.8,
     "메트라이프생명": 6.2,
@@ -212,36 +234,35 @@ async function run() {
     
     let male_premium_40 = 0;
     let female_premium_40 = 0;
-    let declared_rate = 2.5; // default for term applying rate
-    let business_fee = 12.0; // default for term business fee
+    let declared_rate = 2.5; 
+    let business_fee = 12.0; 
     let features = "";
 
     if (isTerm) {
-      if (group.male_premiums.length > 0) {
-        male_premium_40 = Math.min(...group.male_premiums);
-      }
-      if (group.female_premiums.length > 0) {
-        female_premium_40 = Math.min(...group.female_premiums);
-      }
+      const baseMainM = group.main_m.length > 0 ? Math.min(...group.main_m) : 0;
+      const baseMainF = group.main_f.length > 0 ? Math.min(...group.main_f) : 0;
       
-      // If we don't have premiums at all, skip or set standard fallback
-      if (male_premium_40 === 0 && female_premium_40 === 0) {
-        return; // Skip term products with no parsed premiums
+      if (baseMainM === 0 && baseMainF === 0) {
+        return; 
       }
+
+      const totalRidersM = group.riders_m.reduce((a, b) => a + b, 0);
+      const totalRidersF = group.riders_f.reduce((a, b) => a + b, 0);
+
+      male_premium_40 = baseMainM;
+      female_premium_40 = baseMainF;
 
       if (group.declared_rates.length > 0) {
         declared_rate = group.declared_rates[0];
       }
-      features = "사망보장금 1억원 기준 | 납입기간별 보험료 차등 적용 | 비흡연/건강체 최대 15% 할인 가능";
+      features = `MAIN_M:${baseMainM}|RIDER_M:${totalRidersM}|MAIN_F:${baseMainF}|RIDER_F:${totalRidersF}|사망보장금 1억원 기준 (주계약 + 특약 합산) | 납입기간별 보험료 차등 적용 | 비흡연/건강체 최대 15% 할인 가능`;
     } else {
-      // For investment products
-      // Set expected yield based on company
       declared_rate = companyYields[group.company] || 5.5;
 
       if (group.business_fees.length > 0) {
         business_fee = group.business_fees[0];
       } else {
-        business_fee = 6.5; // fallback business fee
+        business_fee = 6.5; 
       }
 
       const m_yield = group.male_yields.length > 0 ? group.male_yields[0] : 0;
@@ -268,7 +289,6 @@ async function run() {
 
   console.log(`[*] Grouped into ${records.length} unique products. Clearing old records...`);
 
-  // Clear existing records
   const { error: deleteError } = await supabase
     .from('variable_products')
     .delete()
@@ -281,7 +301,6 @@ async function run() {
   
   console.log("[+] Table cleared. Uploading new records...");
 
-  // Bulk insert
   const batchSize = 50;
   for (let i = 0; i < records.length; i += batchSize) {
     const batch = records.slice(i, i + batchSize);

@@ -41,25 +41,38 @@ def upload_child_data():
             for col in df.columns:
                 if '원본_열' in col:
                     val = str(row[col])
-                    if '%' in val and re.search(r'\d+\.?\d*\s*%', val):
+                    if '%' in val and len(val.strip()) < 10 and re.match(r'^\s*\d+(\.\d+)?\s*%\s*$', val):
                         rate_val = val.strip()
                         break
         
         rate_str = str(rate_val) if pd.notna(rate_val) else ""
         
+        prod_name = str(row['상품명'])
+        if len(prod_name) > 50:
+            prod_name = prod_name[:50]
+            
+        benefit_amt = str(row['지급금액']) if pd.notna(row['지급금액']) else ""
+        if len(benefit_amt) > 100:
+            benefit_amt = benefit_amt[:100]
+            
+        ins_amt = str(row['가입금액']) if pd.notna(row['가입금액']) else ""
+        if len(ins_amt) > 50:
+            ins_amt = ins_amt[:50]
+            
         records.append({
             "company_name": str(row['보험회사']),
-            "product_name": str(row['상품명']),
+            "product_name": prod_name,
             "division": str(row['구분']) if pd.notna(row['구분']) else "",
             "benefit_name": str(row['담보명(급부명)']) if pd.notna(row['담보명(급부명)']) else "",
             "benefit_reason": str(row['지급사유']) if pd.notna(row['지급사유']) else "",
-            "benefit_amount": str(row['지급금액']) if pd.notna(row['지급금액']) else "",
-            "insured_amount": str(row['가입금액']) if pd.notna(row['가입금액']) else "",
+            "benefit_amount": benefit_amt,
+            "insured_amount": ins_amt,
             "premium_male": pm,
             "premium_female": pf,
             "applied_rate": rate_str,
             "payment_type": "월납(주계약+특약종합)",
-            "source_file": str(row['source_file']) if pd.notna(row['source_file']) else ""
+            "source_file": str(row['source_file']) if pd.notna(row['source_file']) else "",
+            "category": str(row.get('category_target')) if pd.notna(row.get('category_target')) else "child"
         })
         
     print(f"[*] Clearing insurance_child_rates table...")

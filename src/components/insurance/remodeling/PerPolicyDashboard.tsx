@@ -146,7 +146,6 @@ function PolicyCard({policy,index,isDup,totalCount}:{policy:Policy;index:number;
   }
 
   const scoreColor=score>=70?'text-emerald-600':score>=50?'text-amber-600':'text-red-500';
-  const borderColor=isDup?'border-amber-200':'border-slate-100';
 
   // Badges to show on card header
   const badges: { text: string; bg: string; textCol: string }[] = [];
@@ -160,13 +159,25 @@ function PolicyCard({policy,index,isDup,totalCount}:{policy:Policy;index:number;
     badges.push({ text: '🚀 보강 필요', bg: 'bg-indigo-50 border border-indigo-100/65', textCol: 'text-indigo-600' });
   }
 
+  // Dynamic card styling based on diagnostic status (Solid color for maximum contrast)
+  let cardStyle = 'bg-slate-50 border-slate-200 hover:bg-slate-100/50';
+  if (isDup) {
+    cardStyle = 'bg-rose-50 border-rose-200 hover:bg-rose-100/40';
+  } else if (t === 'whole') {
+    cardStyle = 'bg-amber-50 border-amber-200 hover:bg-amber-100/40';
+  } else if (score >= 80) {
+    cardStyle = 'bg-emerald-50 border-emerald-200 hover:bg-emerald-100/40';
+  } else if (score < 50) {
+    cardStyle = 'bg-indigo-50 border-indigo-200 hover:bg-indigo-100/40';
+  }
+
   return (
-    <div className={`bg-white rounded-[2rem] border ${borderColor} shadow-sm overflow-hidden`}>
+    <div className={`${cardStyle} rounded-[2rem] border shadow-sm overflow-hidden transition-all duration-300`}>
       {/* Header */}
-      <button onClick={()=>setOpen(!open)} className="w-full text-left p-6 md:p-8 flex items-start justify-between gap-4 hover:bg-slate-50/40 transition-colors group">
+      <button onClick={()=>setOpen(!open)} className="w-full text-left p-6 md:p-8 flex items-start justify-between gap-4 bg-transparent hover:bg-black/[0.02] transition-colors group">
         <div className="flex items-start gap-4 flex-1 min-w-0">
           <div className={`w-11 h-11 rounded-2xl flex items-center justify-center flex-shrink-0 text-sm font-black text-white ${isDup?'bg-amber-500':typeColor[t]}`}>
-            {String(index+1).padStart(2,'0')}
+             {String(index+1).padStart(2,'0')}
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex flex-wrap items-center gap-1.5 mb-1.5">
@@ -201,26 +212,26 @@ function PolicyCard({policy,index,isDup,totalCount}:{policy:Policy;index:number;
           </div>
         </div>
       </button>
-
+ 
       {/* Expanded */}
       <AnimatePresence>
         {open&&(
           <motion.div initial={{height:0,opacity:0}} animate={{height:'auto',opacity:1}} exit={{height:0,opacity:0}} transition={{duration:0.3}} className="overflow-hidden">
             <div className="border-t border-slate-100 px-6 md:px-8 pb-8 space-y-8 pt-6">
-
+ 
               {/* Rider List */}
               <div>
                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">가입 특약 내역</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {policy.riders.map((r,i)=>(
-                    <div key={i} className="flex justify-between items-center bg-slate-50 rounded-xl px-4 py-2.5 text-sm">
+                    <div key={i} className="flex justify-between items-center bg-white border border-slate-100 rounded-xl px-4 py-2.5 text-sm">
                       <span className="font-bold text-slate-700 truncate pr-2">{r.rider_name}</span>
                       <span className="font-black text-slate-900 shrink-0">{fmt(r.coverage_amount)}</span>
                     </div>
                   ))}
                 </div>
               </div>
-
+ 
               {/* Coverage Status */}
               {(t==='health'||t==='cancer'||t==='silson')&&(
                 <div>
@@ -235,9 +246,9 @@ function PolicyCard({policy,index,isDup,totalCount}:{policy:Policy;index:number;
                   </div>
                 </div>
               )}
-
+ 
               {/* Radar + Score */}
-              <div className="flex flex-col md:flex-row gap-8 items-center bg-slate-50/50 rounded-2xl p-6 border border-slate-100">
+              <div className="flex flex-col md:flex-row gap-8 items-center bg-white rounded-2xl p-6 border border-slate-200/60">
                 <div className="relative flex-shrink-0">
                   <RadarChart data={radar} size={260}/>
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center -mt-4">
@@ -346,20 +357,20 @@ export const PerPolicyDashboard: React.FC<Props> = ({ policies, age, gender }) =
   return (
     <div className="space-y-6 max-w-5xl mx-auto">
       {/* Summary Bar */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white border border-slate-100 rounded-2xl px-6 py-4 shadow-sm">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 shadow-sm">
         <div className="flex items-center gap-6">
           <div>
             <span className="text-[10px] font-black text-slate-400 block uppercase">총 가입 건수</span>
             <span className="text-xl font-black text-slate-800">{policies.length}건</span>
           </div>
-          <div className="h-8 w-px bg-slate-100"/>
+          <div className="h-8 w-px bg-slate-200"/>
           <div>
             <span className="text-[10px] font-black text-slate-400 block uppercase">월 총 납입료</span>
             <span className="text-xl font-black text-orange-600">{total.toLocaleString()}원</span>
           </div>
           {hasDups&&(
             <>
-              <div className="h-8 w-px bg-slate-100"/>
+              <div className="h-8 w-px bg-slate-200"/>
               <div>
                 <span className="text-[10px] font-black text-amber-500 block uppercase">⚠️ 중복 감지</span>
                 <span className="text-xl font-black text-amber-600">{dups.size}건</span>

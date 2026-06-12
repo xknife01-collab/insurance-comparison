@@ -47,8 +47,76 @@ def parse_premium(val):
         return f"{int(cleaned):,} 원"
     return str(val)
 
+def map_and_copy_fire_files(source_dir, dest_dir):
+    import shutil
+    import warnings
+    warnings.filterwarnings('ignore')
+    
+    files = [f for f in os.listdir(source_dir) if f.endswith(".xls")]
+    
+    file_50_found = None
+    file_47_found = None
+    file_38_found = None
+    
+    for filename in sorted(files):
+        if filename in ["file_50.xls", "file_47.xls", "file_38.xls"]:
+            continue
+            
+        filepath = os.path.join(source_dir, filename)
+        df = load_df(filepath)
+        if df is None:
+            continue
+            
+        flat_vals = []
+        try:
+            for col in df.columns:
+                flat_vals.extend(df[col].dropna().astype(str).tolist())
+        except Exception:
+            continue
+        all_text = " ".join(flat_vals)
+        
+        # Check for file_50
+        try:
+            val_7 = str(df.iloc[7, 2])
+            val_12 = str(df.iloc[12, 2])
+            if "우리집" in val_7 or "119주택" in val_12 or "My리치하우스" in str(df.iloc[79, 2]):
+                file_50_found = filepath
+        except Exception:
+            pass
+            
+        # Check for file_47
+        if "H주택화재" in all_text or "Hi2601" in all_text or "현대해상다이렉트H" in all_text:
+            if df.shape[0] > 1000:
+                file_47_found = filepath
+                
+        # Check for file_38
+        try:
+            val_7 = str(df.iloc[7, 1])
+            val_20 = str(df.iloc[20, 1])
+            val_31 = str(df.iloc[31, 1])
+            val_42 = str(df.iloc[42, 1])
+            if "메리츠" in val_7 and "한화" in val_20 and "롯데" in val_31 and "흥국" in val_42:
+                file_38_found = filepath
+        except Exception:
+            pass
+
+    # Copy files
+    if file_50_found:
+        shutil.copy2(file_50_found, os.path.join(dest_dir, "file_50.xls"))
+        print(f"[+] Mapped -> file_50.xls (from {os.path.basename(file_50_found)})")
+    if file_47_found:
+        shutil.copy2(file_47_found, os.path.join(dest_dir, "file_47.xls"))
+        print(f"[+] Mapped -> file_47.xls (from {os.path.basename(file_47_found)})")
+    if file_38_found:
+        shutil.copy2(file_38_found, os.path.join(dest_dir, "file_38.xls"))
+        print(f"[+] Mapped -> file_38.xls (from {os.path.basename(file_38_found)})")
+
 def extract_home_fire_data():
     os.makedirs(TARGET_DIR, exist_ok=True)
+    
+    # Auto-map raw files in SOURCE_DIR
+    map_and_copy_fire_files(SOURCE_DIR, SOURCE_DIR)
+    
     extracted_rows = []
     
     # 1. Load file_50.xls (Home Fire Insurance products)
@@ -101,8 +169,21 @@ def extract_home_fire_data():
     df47 = load_df(f47_path)
     if df47 is not None:
         print(f"Loaded file_47.xls (Shape: {df47.shape})")
-        start_idx = 1533
-        end_idx = 1538
+        
+        # Dynamically find the row for H주택화재상해보험
+        start_idx = 1533  # fallback default
+        for r_idx in range(len(df47)):
+            try:
+                val = str(df47.iloc[r_idx, 2]).replace(" ", "")
+                if "H주택화재" in val or "Hi2601" in val:
+                    start_idx = r_idx
+                    break
+            except Exception:
+                continue
+                
+        end_idx = start_idx + 5
+        print(f"Detected start_idx for Hyundai Marine: {start_idx} (end_idx: {end_idx})")
+        
         company_name = "현대해상"
         product_name = clean_val(df47.iloc[start_idx, 2])
         

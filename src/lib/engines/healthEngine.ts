@@ -16,9 +16,9 @@ export const analyzeHealth = (analysis: HealthAnalysis): HealthAnalysisResult =>
   // 만약 DB 프리미엄이 있으면 그것을 기준점으로 사용합니다.
   const basePrice = dbPremium || analysis.monthlyPremium;
 
-  const cancerScore = Math.min(100, (analysis.cancer.currentAmount / TARGET_COVERAGE.cancer) * 100);
-  const cerebrovascularScore = Math.min(100, (analysis.cerebrovascular.currentAmount / TARGET_COVERAGE.cerebrovascular) * 100);
-  const cardiovascularScore = Math.min(100, (analysis.cardiovascular.currentAmount / TARGET_COVERAGE.cardiovascular) * 100);
+  const cancerScore = Math.min(100, ((analysis.cancer?.currentAmount || 0) / TARGET_COVERAGE.cancer) * 100);
+  const cerebrovascularScore = Math.min(100, ((analysis.cerebrovascular?.currentAmount || 0) / TARGET_COVERAGE.cerebrovascular) * 100);
+  const cardiovascularScore = Math.min(100, ((analysis.cardiovascular?.currentAmount || 0) / TARGET_COVERAGE.cardiovascular) * 100);
 
   const totalScore = (cancerScore + cerebrovascularScore + cardiovascularScore) / 3;
 

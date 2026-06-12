@@ -120,7 +120,7 @@ export const analyzeWholeLife = (analysis: any): any => {
 
   // 6. 세 가지 추천 시나리오 설계
   // Diet: 실속형 사망보장 (사망 5천만 원 고정, 20년납, 저해지형으로 월 납입 부담 최소화)
-  const dietPremium = Math.round((monthlyPremium * 0.5) / 1000) * 1000;
+  const dietPremium = opt1.premium;
   const diet: RecommendationPlan = {
     title: `[${opt1.companyName}] 실속형 사망보장 다이어트 플랜`,
     description: `불필요한 사업비를 덜어내고 핵심 사망보험금 5,000만 원만 집중하여 고정 지출을 절반으로 다이어트하는 플랜입니다.`,
@@ -128,7 +128,7 @@ export const analyzeWholeLife = (analysis: any): any => {
     companyName: opt1.companyName,
     productName: opt1.productName,
     coverageChanges: [
-      `월 보험료 ${(dietPremium).toLocaleString()}원으로 50% 절감`,
+      `월 보험료 ${(dietPremium).toLocaleString()}원으로 맞춤 설계`,
       `사망 보장금 5,000만 원 (기본형 고정)`,
       `저해지 환급형 적용으로 일반 상품 대비 15% 추가 할인`
     ],
@@ -137,14 +137,15 @@ export const analyzeWholeLife = (analysis: any): any => {
   } as any;
 
   // Upgrade: 7년 단기납 체증형 플랜 (사망 1억 원, 60세부터 매년 5% 체증, 7년납, 저해지형)
-  const upgradePremium = Math.round((monthlyPremium * 1.1) / 1000) * 1000;
+  const upgradePremium = opt2.premium;
   const upgrade: RecommendationPlan = {
     title: `[${opt2.companyName}] 7년완납 체증형 자산보존 플랜`,
     description: `7년 단기완납으로 은퇴 전 보험료 납입을 종료하고, 물가상승에 비례해 사망보험금이 매년 5%씩 불어나는 프리미엄 설계입니다.`,
     estimatedPremium: upgradePremium,
     companyName: opt2.companyName,
-    productName: '체증형 단기납 종신보험 (무배당)',
+    productName: opt2.productName,
     coverageChanges: [
+      `월 보험료 ${(upgradePremium).toLocaleString()}원으로 맞춤 설계`,
       `사망 보장 기본 1억 원 ➡️ 매년 5%씩 체증식 증액`,
       `7년 단기납 적용으로 조기 완납 및 연간 복리 환급률 극대화`,
       `저해지 환급형 설계로 납입 완료 시점 환급률 120% 돌파`
@@ -154,7 +155,7 @@ export const analyzeWholeLife = (analysis: any): any => {
   } as any;
 
   // Hybrid: 10년납 목적자금 하이브리드 플랜 (사망 7천만 원, 10년납, 저해지형, 완납 후 비과세 저축 연계)
-  const hybridPremium = Math.round((monthlyPremium * 0.8) / 1000) * 1000;
+  const hybridPremium = opt3.premium;
   const hybrid: RecommendationPlan = {
     title: `[${opt3.companyName}] 10년납 목돈마련 하이브리드 플랜`,
     description: `사망 보장과 목돈 저축 기능을 최적으로 배분하여, 10년 완납 후 해약하여 연금으로 전환하거나 목적자금으로 쓸 수 있는 실용형 모델입니다.`,
@@ -162,6 +163,7 @@ export const analyzeWholeLife = (analysis: any): any => {
     companyName: opt3.companyName,
     productName: opt3.productName,
     coverageChanges: [
+      `월 보험료 ${(hybridPremium).toLocaleString()}원으로 맞춤 설계`,
       `사망 보장 기본 7,000만 원 안심 설계`,
       `10년납으로 월 부담 완화 및 10년 시점 비과세 혜택 100% 매칭`,
       `완납 후 연금 전환 특약 또는 적립금 중도인출 기능 무료 탑재`

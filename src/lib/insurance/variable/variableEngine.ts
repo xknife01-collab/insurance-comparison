@@ -54,7 +54,7 @@ export const analyzeVariable = (analysis: any): any => {
   let efficiency = 85;
   const deficiencies: string[] = [];
 
-  if (subType === 'investment') {
+  if (subType === 'investment' || subType === 'variable_saving') {
     // -------------------------------------------------------------
     // 1. 변액 적립식 투자 분석
     // -------------------------------------------------------------
@@ -212,56 +212,151 @@ export const analyzeVariable = (analysis: any): any => {
     // -------------------------------------------------------------
     // 추천 플랜 (보장형 / 정기보험)
     // -------------------------------------------------------------
-     // Diet: 가성비 실속 정기보험 (사망 1억, 60세 만기, 우량체 할인 결합)
+    let diet: RecommendationPlan;
+    let upgrade: RecommendationPlan;
+    let hybrid: RecommendationPlan;
+
     const dietPremium = opt1.premium;
-    const diet: RecommendationPlan = {
-      title: `[${opt1.companyName}] 초가성비 실속 정기 플랜`,
-      description: `종신보험 대비 보험료를 85% 이상 다이어트! 자녀 독립 시점인 60세까지 핵심 사망 1억 원을 완벽히 보호하는 초실속 플랜입니다.`,
-      estimatedPremium: dietPremium,
-      companyName: opt1.companyName,
-      productName: opt1.productName,
-      coverageChanges: [
-        `사망 보장금 1억 원 확보 (경제 활동기 집중 케어)`,
-        `종신보험 대비 매월 평균 150,000원 이상의 지출 다이어트`,
-        `우량체 할인 선반영으로 월 보험료 ${dietPremium.toLocaleString()}원 실현`
-      ],
-      switchingLossNotice: '순수 보장형 상품이므로 보장 기간 만기 시 해약환급금은 0원이 됩니다.',
-      isFire: false
-    } as any;
-
-    // Upgrade: 프리미엄 가장 보호 플랜 (사망 3억, 70세 만기)
     const upgradePremium = opt2.premium;
-    const upgrade: RecommendationPlan = {
-      title: `[${opt2.companyName}] 든든 유가족 자산 보존 플랜`,
-      description: `사망 보장 한도를 3억 원으로 증액하여, 가장 부재 시 상속세 세원 확보 및 유가족이 최소 5년간 안정적인 품격을 유지할 수 있는 프리미엄 세팅입니다.`,
-      estimatedPremium: upgradePremium,
-      companyName: opt2.companyName,
-      productName: opt2.productName,
-      coverageChanges: [
-        `사망 보장 3억 원 세팅 (상속 및 안심 생활자금)`,
-        `만기 70세 보장으로 대학 등록금 및 자녀 자립 시점까지 커버`,
-        `비흡연 우량체 특별 추가 할인율 적용`
-      ],
-      switchingLossNotice: '비우량체(흡연 또는 혈압 기준 초과) 판정 시 표준 요율이 적용되어 안내된 보험료보다 10~15% 상승할 수 있습니다.',
-      isFire: false
-    } as any;
-
-    // Hybrid: 정기/종신 결합 믹스 매치 플랜 (정기 2억 + 종신 5천만원 결합)
     const hybridPremium = opt3.premium;
-    const hybrid: RecommendationPlan = {
-      title: `[${opt3.companyName}] 정기 + 종신 믹스 매치 결합 플랜`,
-      description: `평생 상속 자산(종신보험 5천만 원)과 경제활동기 집중 사망 자산(정기보험 2억 원)을 결합하여, 보장 공백은 차단하고 전체 지출 포트폴리오를 슬림하게 완성한 똑똑한 결합안입니다.`,
-      estimatedPremium: hybridPremium,
-      companyName: opt3.companyName,
-      productName: opt3.productName,
-      coverageChanges: [
-        `자녀 독립 전 사망 보장 총 2억 5,000만 원 확보`,
-        `자녀 독립 후에도 평생 사망 장례금 및 기본 상속세 세원 5,000만 원 영구 유지`,
-        `단일 종신보험 가입 대비 보험료 효율성 58% 개선`
-      ],
-      switchingLossNotice: '두 개의 계약을 동시 관리하므로, 각각의 납입 만기 및 청구 프로세스를 확인해 두어야 합니다.',
-      isFire: false
-    } as any;
+
+    if (subType === 'term_ceo') {
+      diet = {
+        title: `[${opt1.companyName}] CEO 절세형 표준 정기플랜`,
+        description: `법인세 절감 및 경영진 유고 리스크를 효율적으로 관리하기 위한 표준 손비처리 플랜입니다.`,
+        estimatedPremium: dietPremium,
+        companyName: opt1.companyName,
+        productName: opt1.productName,
+        coverageChanges: [
+          `사망 보장 및 유가족/법인 위로금 확보`,
+          `납입 보험료 전액 손비 인정을 통한 법인세 절세 효과`,
+          `은퇴 시점 환급금을 법인세 최소화 조건으로 퇴직금 재원 전환`
+        ],
+        switchingLossNotice: '법인세법상 절세 혜택은 세무 기준 및 손비 처리 방식에 따라 상이할 수 있으므로 담당 세무사 검토가 필요합니다.',
+        isFire: false
+      } as any;
+
+      upgrade = {
+        title: `[${opt2.companyName}] CEO 체증형 안심 보호플랜`,
+        description: `매년 사망보장금과 환급액이 증가하는 체증형 구조로, 기업 성장세에 맞추어 CEO 자산 가치를 극대화하는 프리미엄 플랜입니다.`,
+        estimatedPremium: upgradePremium,
+        companyName: opt2.companyName,
+        productName: opt2.productName,
+        coverageChanges: [
+          `사망 보장 매년 5%~10% 체증 적용 (기업 가치 상승 대응)`,
+          `최대 환급률 시점(10~15년) 은퇴 퇴직금 일시 지급 최적화`,
+          `법인 자산의 합법적 개인 자산화 플랜 연계`
+        ],
+        switchingLossNotice: '체증형 상품은 초기 보험료가 다소 높게 책정되므로 법인 유동성 상태를 사전 고려해야 합니다.',
+        isFire: false
+      } as any;
+
+      hybrid = {
+        title: `[${opt3.companyName}] CEO 맞춤 포트폴리오 믹스플랜`,
+        description: `단기 납입 완료 후 장기 비과세 혜택을 누리는 고환급형과 단기 절세형을 결합한 기업 맞춤형 자산 설계안입니다.`,
+        estimatedPremium: hybridPremium,
+        companyName: opt3.companyName,
+        productName: opt3.productName,
+        coverageChanges: [
+          `단기(5/7년납) 완납으로 법인 유동성 리스크 최소화`,
+          `목적 자산 환급률 최고 125% 이상 도달 가능 설계`,
+          `법인세 감면과 은퇴 자금 마련의 최적 밸런스 실현`
+        ],
+        switchingLossNotice: '단기납 상품의 경우 완납 이전 해지 시 환급률이 극히 저조하므로 주의해야 합니다.',
+        isFire: false
+      } as any;
+    } else if (subType === 'variable_term') {
+      diet = {
+        title: `[${opt1.companyName}] 변액 정기 실속 플랜`,
+        description: `사망 보장과 펀드 투자를 결합하여, 인플레이션을 방어하면서도 합리적인 요율로 사망 자산을 준비하는 변액 정기 플랜입니다.`,
+        estimatedPremium: dietPremium,
+        companyName: opt1.companyName,
+        productName: opt1.productName,
+        coverageChanges: [
+          `사망 보장금 1억 원 확보 (실적 배당에 따른 증액 가능)`,
+          `펀드 운용 성과에 따라 해약환급금 상승 기회 확보`,
+          `동일 보장 종신보험 대비 월 납입 부담 최소화`
+        ],
+        switchingLossNotice: '투자 성과에 따라 사망보장금 및 해약환급금이 변동하며 원금 손실이 발생할 수 있습니다.',
+        isFire: false
+      } as any;
+
+      upgrade = {
+        title: `[${opt2.companyName}] 변액 정기 글로벌 자산배분 플랜`,
+        description: `글로벌 우량 자산 및 주식형 펀드 투입 비중을 높여, 사망 보장 금액의 실질 가치 하락을 적극적으로 방어하는 프리미엄 투자 보장 플랜입니다.`,
+        estimatedPremium: upgradePremium,
+        companyName: opt2.companyName,
+        productName: opt2.productName,
+        coverageChanges: [
+          `사망 보장금 증액 옵션 (글로벌 펀드 성과 연동)`,
+          `미국 주식 및 인프라 펀드 비율 70% 매칭`,
+          `비흡연 및 우량체 통과 시 추가 요율 할인 혜택`
+        ],
+        switchingLossNotice: '글로벌 시장 급변 시 주식형 특별 계정의 평가 금액 하락으로 환급금이 대폭 줄어들 수 있습니다.',
+        isFire: false
+      } as any;
+
+      hybrid = {
+        title: `[${opt3.companyName}] 변액 정기+적립 하이브리드 플랜`,
+        description: `가장 활동기 사망 보장과 노후 연금/적립 자산 전환 기능을 결합하여, 생애 주기별 자산 관리 효율을 극대화한 스마트 믹스 플랜입니다.`,
+        estimatedPremium: hybridPremium,
+        companyName: opt3.companyName,
+        productName: opt3.productName,
+        coverageChanges: [
+          `사망 보장 기간 만료 전 적립형/연금 전환 가능 옵션`,
+          `펀드 리밸런싱 수수료 무제한 면제 혜택`,
+          `10년 이상 유지 시 투자 수익 비과세 혜택 완비`
+        ],
+        switchingLossNotice: '전환 옵션 실행 시 해지 환급금 수준 및 세부 전환 조건이 적용되므로 사전에 약관을 확인하셔야 합니다.',
+        isFire: false
+      } as any;
+    } else {
+      // term_pure or term
+      diet = {
+        title: `[${opt1.companyName}] 초가성비 실속 정기 플랜`,
+        description: `종신보험 대비 보험료를 85% 이상 다이어트! 자녀 독립 시점인 60세까지 핵심 사망 1억 원을 완벽히 보호하는 초실속 플랜입니다.`,
+        estimatedPremium: dietPremium,
+        companyName: opt1.companyName,
+        productName: opt1.productName,
+        coverageChanges: [
+          `사망 보장금 1억 원 확보 (경제 활동기 집중 케어)`,
+          `종신보험 대비 매월 평균 150,000원 이상의 지출 다이어트`,
+          `우량체 할인 선반영으로 월 보험료 ${dietPremium.toLocaleString()}원 실현`
+        ],
+        switchingLossNotice: '순수 보장형 상품이므로 보장 기간 만기 시 해약환급금은 0원이 됩니다.',
+        isFire: false
+      } as any;
+
+      upgrade = {
+        title: `[${opt2.companyName}] 든든 유가족 자산 보존 플랜`,
+        description: `사망 보장 한도를 3억 원으로 증액하여, 가장 부재 시 상속세 세원 확보 및 유가족이 최소 5년간 안정적인 품격을 유지할 수 있는 프리미엄 세팅입니다.`,
+        estimatedPremium: upgradePremium,
+        companyName: opt2.companyName,
+        productName: opt2.productName,
+        coverageChanges: [
+          `사망 보장 3억 원 세팅 (상속 및 안심 생활자금)`,
+          `만기 70세 보장으로 대학 등록금 및 자녀 자립 시점까지 커버`,
+          `비흡연 우량체 특별 추가 할인율 적용`
+        ],
+        switchingLossNotice: '비우량체(흡연 또는 혈압 기준 초과) 판정 시 표준 요율이 적용되어 안내된 보험료보다 10~15% 상승할 수 있습니다.',
+        isFire: false
+      } as any;
+
+      hybrid = {
+        title: `[${opt3.companyName}] 정기 + 종신 믹스 매치 결합 플랜`,
+        description: `평생 상속 자산(종신보험 5천만 원)과 경제활동기 집중 사망 자산(정기보험 2억 원)을 결합하여, 보장 공백은 차단하고 전체 지출 포트폴리오를 슬림하게 완성한 똑똑한 결합안입니다.`,
+        estimatedPremium: hybridPremium,
+        companyName: opt3.companyName,
+        productName: opt3.productName,
+        coverageChanges: [
+          `자녀 독립 전 사망 보장 총 2억 5,000만 원 확보`,
+          `자녀 독립 후에도 평생 사망 장례금 및 기본 상속세 세원 5,000만 원 영구 유지`,
+          `단일 종신보험 가입 대비 보험료 효율성 58% 개선`
+        ],
+        switchingLossNotice: '두 개의 계약을 동시 관리하므로, 각각의 납입 만기 및 청구 프로세스를 확인해 두어야 합니다.',
+        isFire: false
+      } as any;
+    }
 
     return {
       estimatedPremium: upgradePremium,

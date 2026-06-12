@@ -30,7 +30,20 @@ def load_df(filepath):
         try:
             return pd.read_excel(filepath, engine='xlrd', header=None)
         except Exception:
-            pass
+            try:
+                with open(filepath, 'rb') as f:
+                    raw_bytes = f.read()
+                for enc in ['cp949', 'euc-kr', 'utf-8']:
+                    try:
+                        raw_text = raw_bytes.decode(enc)
+                        if '<table' in raw_text.lower():
+                            frames = pd.read_html(io.StringIO(raw_text), flavor='bs4')
+                            if frames:
+                                return frames[0]
+                    except Exception:
+                        continue
+            except Exception:
+                pass
     return None
 
 def clean_val(v):
@@ -56,8 +69,55 @@ def parse_premium(val):
         return f"{int(cleaned):,} 원"
     return val_str
 
+def map_and_copy_property_files(source_dir, dest_dir):
+    import shutil
+    import warnings
+    warnings.filterwarnings('ignore')
+    
+    files = [f for f in os.listdir(source_dir) if f.endswith(".xls")]
+    
+    file_38_found = None
+    
+    for filename in sorted(files):
+        if filename == "file_38.xls":
+            continue
+            
+        filepath = os.path.join(source_dir, filename)
+        df = load_df(filepath)
+        if df is None:
+            continue
+            
+        flat_vals = []
+        try:
+            for col in df.columns:
+                flat_vals.extend(df[col].dropna().astype(str).tolist())
+        except Exception:
+            continue
+        all_text = " ".join(flat_vals)
+        
+        # Check for file_38 (Commercial property)
+        try:
+            val_7 = str(df.iloc[7, 1])
+            val_20 = str(df.iloc[20, 1])
+            val_31 = str(df.iloc[31, 1])
+            val_42 = str(df.iloc[42, 1])
+            if "메리츠" in val_7 and "한화" in val_20 and "롯데" in val_31 and "흥국" in val_42:
+                file_38_found = filepath
+                break
+        except Exception:
+            pass
+
+    # Copy files
+    if file_38_found:
+        shutil.copy2(file_38_found, os.path.join(dest_dir, "file_38.xls"))
+        print(f"[+] Mapped -> file_38.xls (from {os.path.basename(file_38_found)})")
+
 def main():
     os.makedirs(TARGET_DIR, exist_ok=True)
+    
+    # Auto-map raw file_38.xls in SOURCE_DIR
+    map_and_copy_property_files(SOURCE_DIR, SOURCE_DIR)
+    
     extracted_rows = []
     
     f38_path = os.path.join(SOURCE_DIR, "file_38.xls")

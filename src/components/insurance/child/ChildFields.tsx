@@ -13,6 +13,8 @@ interface ChildFieldsProps {
   setHasPrenatalRider: (has: boolean) => void;
   weeksPregnancy: number;
   setWeeksPregnancy: (weeks: number) => void;
+  childBirthDate: string;
+  setChildBirthDate: (birth: string) => void;
 }
 
 export const ChildFields: React.FC<ChildFieldsProps> = ({
@@ -25,7 +27,9 @@ export const ChildFields: React.FC<ChildFieldsProps> = ({
   hasPrenatalRider,
   setHasPrenatalRider,
   weeksPregnancy,
-  setWeeksPregnancy
+  setWeeksPregnancy,
+  childBirthDate,
+  setChildBirthDate
 }) => {
   return (
     <div className="space-y-10 text-left max-w-4xl mx-auto py-8">
@@ -53,6 +57,33 @@ export const ChildFields: React.FC<ChildFieldsProps> = ({
             </button>
           ))}
         </div>
+
+        {targetAgeGroup !== 'prenatal' && (
+          <div className="mt-8 pt-6 border-t border-slate-100/80 space-y-3">
+            <label className="text-sm font-black text-slate-700 flex items-center gap-1.5">
+              <Calendar className="text-yellow-500 w-4 h-4" /> 
+              {targetAgeGroup === 'child' ? '우리아이 생년월일 (8자리)' : '가입 대상자 생년월일 (8자리)'}
+            </label>
+            <div className="max-w-xs flex items-center gap-3 bg-slate-50 border border-slate-200 hover:border-yellow-500/50 rounded-2xl p-4 transition-all duration-300">
+              <input
+                type="text"
+                maxLength={8}
+                value={childBirthDate}
+                onChange={(e) => setChildBirthDate(e.target.value.replace(/[^0-9]/g, ''))}
+                placeholder="예) 20180515"
+                className="bg-transparent border-none outline-none font-black text-slate-800 placeholder:text-slate-300 w-full text-base"
+              />
+              {childBirthDate.length === 8 && (
+                <span className="text-xs font-black text-yellow-600 bg-yellow-100/60 px-2.5 py-1 rounded-full whitespace-nowrap">
+                  만 {new Date().getFullYear() - parseInt(childBirthDate.substring(0, 4))}세
+                </span>
+              )}
+            </div>
+            <p className="text-[10px] text-slate-400 font-bold">
+              * 정확한 가입 연령대별 보험료 비교 분석을 위해 실제 가입 대상(자녀)의 생년월일을 적어주세요.
+            </p>
+          </div>
+        )}
       </div>
 
       {/* 2. 태아 전용 상세 정보 (태아 선택 시에만 노출) */}

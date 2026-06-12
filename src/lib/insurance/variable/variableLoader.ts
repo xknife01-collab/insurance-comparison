@@ -151,7 +151,25 @@ export const fetchVariablePremium = async (analysis: InsuranceAnalysis): Promise
     } else {
       // For Term Life, premium scales by age, gender, healthy discount, and death benefit amount.
       // Base premium is for 40-year old for 100,000,000 KRW death benefit.
-      const basePremium = prod.baseRateOrYield;
+      let mainPremium = prod.baseRateOrYield;
+      let riderPremium = 0;
+
+      // Extract main and rider premiums from features if present
+      const isFemale = gender === 'F' || (gender as string) === 'female';
+      if (prod.features && prod.features.includes('MAIN_M:')) {
+        const parts = prod.features.split('|');
+        const mainPart = parts.find(p => p.trim().startsWith(isFemale ? 'MAIN_F:' : 'MAIN_M:'));
+        const riderPart = parts.find(p => p.trim().startsWith(isFemale ? 'RIDER_F:' : 'RIDER_M:'));
+        
+        if (mainPart) {
+          const val = parseFloat(mainPart.split(':')[1]);
+          if (!isNaN(val)) mainPremium = val;
+        }
+        if (riderPart) {
+          const val = parseFloat(riderPart.split(':')[1]);
+          if (!isNaN(val)) riderPremium = val;
+        }
+      }
       
       // Age scale factor: relative to age 40 (Exponential Gompertz-Makeham Law: ~8% annual risk growth)
       const ageFactor = Math.max(0.2, Math.min(15.0, Math.pow(1.08, age - 40)));
@@ -159,13 +177,25 @@ export const fetchVariablePremium = async (analysis: InsuranceAnalysis): Promise
       // Death benefit factor: relative to 100,000,000 KRW
       const amountFactor = (varOpts.deathBenefit || 100000000) / 100000000;
 
-      premium = Math.round((basePremium * ageFactor * amountFactor) / 100) * 100;
+      // Calculate scaled main contract premium and clamp to 10,000 KRW floor
+      const scaledMain = mainPremium * ageFactor * amountFactor;
+      const clampedMain = Math.max(10000, scaledMain);
 
-      // Apply Healthy Discount
+      // Calculate scaled rider premiums
+      const scaledRiders = riderPremium * ageFactor * amountFactor;
+
+      // Sum and apply 1.35x fee multiplier
+      let basePrem = clampedMain + scaledRiders;
+      let premiumVal = basePrem * 1.35;
+
+      // Apply Healthy Discount if active
       if (varOpts.isHealthyDiscount) {
         const discountPercent = parseInt(prod.feeOrDiscount.replace(/[^0-9]/g, '')) || 15;
-        premium = Math.round((premium * (1 - discountPercent / 100)) / 100) * 100;
+        premiumVal = premiumVal * (1 - discountPercent / 100);
       }
+
+      // Round to nearest 100 KRW
+      premium = Math.round(premiumVal / 100) * 100;
     }
 
     return {

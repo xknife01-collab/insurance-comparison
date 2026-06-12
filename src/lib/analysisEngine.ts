@@ -71,7 +71,7 @@ export const runAnalysis = async (analysis: InsuranceAnalysis): Promise<any> => 
   const isCaregiving    = category.includes('간병')    && !isDementia && !isNursing;
   const isDental        = category === 'dental' || category.includes('치아');
   const isSurgery       = category.includes('수술')    || category.includes('입원');
-  const isChild         = category === 'child' || category === 'pre_family' || (category.includes('어린이') || category.includes('태아')) && !category.includes('유병자');
+  const isChild         = category === 'child' || category === 'pre_family' || category === 'child_sick' || category.includes('유병력자') || ((category.includes('어린이') || category.includes('태아')) && !category.includes('유병자'));
   const isPreExisting   = category === 'pre' || (category.includes('유병자') && !isChild);
   const isHeart         = category === 'heart' || category.includes('심장');
   const isCar           = category === 'car' || category.includes('자동차');

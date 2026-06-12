@@ -27,8 +27,41 @@ driver_coverage_keys = ["운전자용", "운전중", "교통사고처리지원",
                         "벌금(대물)", "벌금Ⅱ", "부상치료비", "자부상", "교통상해사망", "교통상해후유장해"]
 exclude_kws = ["치아", "치매", "간병", "뇌혈관", "허혈성", "암진단", "심장질환", "보철", "임플란트", "틀니", "치주", "잇몸"]
 
+def is_valid_product_name(v):
+    if not isinstance(v, str):
+        return False
+    v_clean = v.replace(" ", "")
+    # Exclude if it's too short or too long
+    if not (8 < len(v) <= 50):
+        return False
+    # Must contain '보험'
+    if '보험' not in v:
+        return False
+    # Exclude if it's just a company name with suffixes
+    company_suffixes = ["", "지점", "본사", "보험", "화재", "해상", "손해", "손해보험", "화재보험", "해상보험", "해상화재보험", "주식회사"]
+    for c in companies:
+        c_clean = c.replace(" ", "")
+        for suff in company_suffixes:
+            if v_clean == c_clean + suff or v_clean == suff + c_clean:
+                return False
+    # Exclude typical clause/rider/condition/limit keywords
+    exclude_keywords = [
+        '조회', '회사', '상품', '담보', '지급', '구속', '피해자', '치료', '진단', 
+        '한도', '실제로', '보상', '경우', '공소', '약관', '가입금액', '납입', '이율',
+        '사망', '보험기간', '기준', '피보험자'
+    ]
+    if any(k in v for k in exclude_keywords):
+        return False
+    # Must contain at least one driver insurance product indicator
+    driver_indicators = ['운전자', '운전', 'drive', '바이크', '라이더', '교통', '카카오']
+    if not any(k in v.lower() for k in driver_indicators):
+        return False
+    return True
+
 
 def is_driver_row(row_list, current_product):
+    if not current_product or not is_valid_product_name(current_product):
+        return False
     row_str = " ".join([str(v) for v in row_list])
     if any(ek in row_str for ek in exclude_kws):
         return False
@@ -166,8 +199,7 @@ def parse_html_file(filepath):
                         last_company = c
                         break
             for v in row_list:
-                if len(v) > 8 and '보험' in v and not any(x in v for x in companies) and \
-                        not any(x in v for x in ['조회', '회사', '상품', '담보', '지급']):
+                if is_valid_product_name(v):
                     last_product = v
                     break
             if is_driver_row(row_list, last_product):
@@ -198,8 +230,7 @@ def parse_excel_file(filepath):
                             last_company = c
                             break
                 for v in row_list:
-                    if len(v) > 8 and '보험' in v and not any(x in v for x in companies) and \
-                            not any(x in v for x in ['조회', '회사', '상품', '담보', '지급']):
+                    if is_valid_product_name(v):
                         last_product = v
                         break
                 if is_driver_row(row_list, last_product):

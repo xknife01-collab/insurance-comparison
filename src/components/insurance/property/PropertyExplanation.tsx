@@ -261,7 +261,7 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction }) => (
           </div>
           <p className="text-2xl font-black text-slate-900 tracking-tight leading-tight">
             "가게와 공장의 미래를 안전하게 보존하는 길,<br />
-            <span className="text-orange-500">인슈리밸런스의 명확한 자산 분석과 비즈니스 밸런스 설계로 함께합니다.</span>"
+            <span className="text-orange-500">보험리밸런스의 명확한 자산 분석과 비즈니스 밸런스 설계로 함께합니다.</span>"
           </p>
         </div>
         {onAction && (

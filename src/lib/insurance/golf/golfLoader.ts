@@ -1,4 +1,5 @@
 import { InsuranceAnalysis } from '../../../types/insurance';
+import { createClient } from '../../../utils/supabase/client';
 
 export interface GolfProduct {
   company: string;
@@ -10,10 +11,21 @@ export const GOLF_PRODUCTS: GolfProduct[] = [
   { company: '흥국생명', productName: '(무)처음만난흥국생명상해보험', basePremium: 3000 },
   { company: 'DB손보', productName: '(무)다이렉트 오잘공 골프보험2601(CM)', basePremium: 5520 },
   { company: '한화손보', productName: '한화 다이렉트 홀인원보험 (무)2601', basePremium: 6011 },
+  { company: '한화생명', productName: '한화생명 포켓레저보험 무배당', basePremium: 4376 },
+  { company: '한화생명', productName: '한화생명 간편가입 포켓레저보험 무배당', basePremium: 7666 },
   { company: 'DB생명', productName: '(무)백년친구 생활보험(2602)(3종:레저보장형)', basePremium: 10100 },
   { company: '삼성화재', productName: '삼성화재 다이렉트 착한골프보험', basePremium: 9500 },
   { company: '현대해상', productName: '현대해상 다이렉트 골프보험', basePremium: 10800 },
 ];
+
+const normalizeName = (name: string): string => {
+  return name
+    .replace(/\s+/g, '')
+    .replace(/[()]/g, '')
+    .replace(/\d+/g, '')
+    .replace(/무배당|무/g, '')
+    .replace(/\[.*?\]/g, '');
+};
 
 export const fetchGolfPremium = async (analysis: InsuranceAnalysis): Promise<any> => {
   const golfOpts = analysis.golf || {
@@ -28,11 +40,9 @@ export const fetchGolfPremium = async (analysis: InsuranceAnalysis): Promise<any
   };
 
   // 1. 경기 유형 (gameType) 보정
-  // 프로/지도자는 골프 중 사고 리스크가 높아 요율이 높으나(1.5배), 홀인원/용품 보장은 제외 또는 축소되므로 특약 추가금이 0원으로 설계됨.
   const gameMultiplier = golfOpts.gameType === 'professional' ? 1.5 : 1.0;
 
   // 2. 가입 유형 (planType) 및 기간 일수 보정
-  // 원데이(1일)는 1년형에 비해 하루 보험료가 높지만 절대 금액은 매우 저렴(1년형의 약 20% 수준)
   let planMultiplier = 1.0;
   if (golfOpts.planType === 'one_day') {
     planMultiplier = 0.20; // 약 2,000원 ~ 2,500원대
@@ -52,7 +62,6 @@ export const fetchGolfPremium = async (analysis: InsuranceAnalysis): Promise<any
   const genderMultiplier = golfOpts.planType === 'one_day' ? 1.0 : (analysis.gender === 'F' ? 0.90 : 1.0);
 
   // 5. 특약 가중 비용 누적
-  // 프로 선수는 특약 가입이 불가능하거나 비용이 청구되지 않음
   let riderCost = 0;
   if (golfOpts.gameType === 'amateur') {
     if (golfOpts.hasHoleInOneRider) riderCost += 3000;
@@ -66,25 +75,81 @@ export const fetchGolfPremium = async (analysis: InsuranceAnalysis): Promise<any
   // 최종 요율 계수 곱
   const combinedMultiplier = gameMultiplier * planMultiplier * ageMultiplier * genderMultiplier * groupDiscount;
 
+  // Query actual rates from Supabase
+  let realRates: any[] = [];
+  try {
+    const supabase = createClient();
+    const { data, error } = await supabase
+      .from('golf_insurance_rates')
+      .select('*')
+      .eq('age', 40)
+      .eq('gender', analysis.gender || 'M');
+    if (!error && data) {
+      realRates = data;
+    }
+  } catch (err) {
+    console.error('Failed to fetch golf insurance rates from Supabase:', err);
+  }
+
   // 각 보험사별로 최종 가상 보험료 계산
   const results = GOLF_PRODUCTS.map(p => {
-    const rawPremium = p.basePremium * combinedMultiplier + riderCost;
+    // Find matching rate in database
+    const pNorm = normalizeName(p.productName);
+    const rate = realRates.find(r => normalizeName(r.product_name) === pNorm);
+    
+    let basePremium = p.basePremium;
+    let limitHoleInOne = '회당 100~200만 원 실비';
+    let limitLiability = '사고당 2,000만 원 (자부담 2만)';
+    let limitEquipment = '세트당 100만 원 한도';
+    
+    if (rate) {
+      const detailsJson = rate.details || {};
+      const genderKey = analysis.gender === 'F' ? 'original_premium_female' : 'original_premium_male';
+      
+      let dbPrem = detailsJson[genderKey] !== undefined ? detailsJson[genderKey] : rate.premium;
+      const cycle = detailsJson.payment_cycle || '연납';
+      
+      // Convert monthly to annual
+      if (cycle === '월납') {
+        dbPrem = dbPrem * 12;
+      }
+      
+      if (dbPrem > 0) {
+        basePremium = dbPrem;
+      }
+      
+      if (rate.coverage_limit_hole_in_one) {
+        limitHoleInOne = rate.coverage_limit_hole_in_one;
+      }
+      if (rate.coverage_limit_liability) {
+        limitLiability = rate.coverage_limit_liability;
+      }
+      if (rate.coverage_limit_equipment) {
+        limitEquipment = rate.coverage_limit_equipment;
+      }
+    }
+
+    // 최소 가입 기준(최저 보증 보험료)을 고려하여 기본 보험료(주계약) 하한선을 10,000원으로 조정
+    basePremium = Math.max(10000, basePremium);
+
+    const rawPremium = basePremium * combinedMultiplier + riderCost;
     const finalPremium = Math.round(rawPremium / 100) * 100; // 100원 단위 절사
 
     // 특약 한도 매핑 정보
     let details: Record<string, string> = {
-      '홀인원 비용': golfOpts.gameType === 'professional' ? '보장 제외(가입불가)' : (golfOpts.hasHoleInOneRider ? '회당 100~200만 원 실비' : '미보장'),
-      '배상책임 한도': golfOpts.hasLiabilityRider ? '사고당 2,000만 원 (자부담 2만)' : '미보장',
-      '골프용품 손해': golfOpts.gameType === 'professional' ? '보장 제외(가입불가)' : (golfOpts.hasEquipmentRider ? '세트당 100만 원 한도' : '미보장'),
+      '홀인원 비용': golfOpts.gameType === 'professional' ? '보장 제외(가입불가)' : (golfOpts.hasHoleInOneRider ? limitHoleInOne : '미보장'),
+      '배상책임 한도': golfOpts.hasLiabilityRider ? limitLiability : '미보장',
+      '골프용품 손해': golfOpts.gameType === 'professional' ? '보장 제외(가입불가)' : (golfOpts.hasEquipmentRider ? limitEquipment : '미보장'),
       '골프 중 상해사망': '최대 1억 원 보장',
     };
 
     return {
       premium: finalPremium,
-      productName: p.productName,
+      productName: rate ? rate.product_name : p.productName,
       companyName: p.company,
       planLevel: golfOpts.planType === 'one_day' ? '원데이형' : '연간회원형',
-      details
+      details,
+      basePremium
     };
   });
 

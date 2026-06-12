@@ -112,7 +112,7 @@ const ALL_CATEGORIES: MajorCategory[] = [
       { id: 'car', label: '자동차 보험', description: '전사 가격 자동 비교', icon: Car, color: '#334155', bgColor: '#F8FAFC', subTypes: ['개인용 차', '업무용 차'] },
       { id: 'driver', label: '운전자 보험', description: '벌금 및 민사 보장', icon: Navigation, color: '#4F46E5', bgColor: '#EEF2FF', subTypes: ['교통 사고 처리', '변호사 비용'] },
       { id: 'pet', label: '펫 보험', description: '우리 아이 병원비', icon: Dog, color: '#D97706', bgColor: '#FEF3C7', subTypes: ['슬개골 탈구', '피부 질환'] },
-      { id: 'golf', label: '골프 / 레저', description: '취미 생활 보호', icon: Target, color: '#16A34A', bgColor: '#F0FDF4', subTypes: ['홀인원 축합', '필드 사고'] },
+      { id: 'golf', label: '골프 / 레저', description: '취미 생활 보호', icon: Target, color: '#16A34A', bgColor: '#F0FDF4', subTypes: ['홀인원 축하', '필드 사고'] },
       { id: 'fire_real', label: '주택화재', description: '재산 피해 보호', icon: Home, color: '#EF4444', bgColor: '#FEF2F2', subTypes: ['건물 소실', '가재 도구'] },
       { id: 'property', label: '재물종합', description: '상가 화재 및 소상공인 자산 보호', icon: Home, color: '#3B82F6', bgColor: '#EFF6FF', subTypes: ['상가 화재형', '화재배상책임형'] },
     ]
@@ -266,6 +266,10 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   const [preFamilyIllnessType, setPreFamilyIllnessType] = useState<string>('development');
   const [preFamilyNoAccidentYears, setPreFamilyNoAccidentYears] = useState<'0' | '2' | '3' | '5'>('5');
   const [preFamilyMaturity, setPreFamilyMaturity] = useState<30 | 100>(30);
+
+  // Child birth date states
+  const [childBirthDate, setChildBirthDate] = useState('');
+  const [preFamilyBirthDate, setPreFamilyBirthDate] = useState('');
 
   // Car specific states
   const [carMileage, setCarMileage] = useState<'under_3k' | 'under_5k' | 'under_10k' | 'over_15k'>('under_5k');
@@ -432,6 +436,17 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
     return null;
   }, [birthDate]);
 
+  const calculatedChildAge = useMemo(() => {
+    const targetBirth = selectedId === 'child' ? childBirthDate : preFamilyBirthDate;
+    if (targetBirth && targetBirth.length === 8) {
+      const year = parseInt(targetBirth.substring(0, 4));
+      const currentYear = new Date().getFullYear();
+      const age = currentYear - year;
+      return age >= 0 && age < 35 ? age : 5;
+    }
+    return 5;
+  }, [selectedId, childBirthDate, preFamilyBirthDate]);
+
   const { activeItem, majorId } = useMemo(() => {
     for (const group of ALL_CATEGORIES) {
       const item = group.items.find(i => i.id === selectedId);
@@ -595,7 +610,16 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   const handleCalculate = (overrides?: { name?: string; age?: number; gender?: 'M' | 'F'; mobile?: string }) => {
     const finalName = overrides?.name !== undefined ? overrides.name : name;
     const finalGender = overrides?.gender !== undefined ? overrides.gender : gender;
-    const finalAge = overrides?.age !== undefined ? overrides.age : (calculatedAge || 40);
+    
+    const isChildProduct = selectedId === 'child' || selectedId === 'pre_family';
+    let finalAge = overrides?.age !== undefined ? overrides.age : (calculatedAge || 40);
+    if (isChildProduct) {
+      if (selectedId === 'child' && childAgeGroup === 'prenatal') {
+        finalAge = 0;
+      } else {
+        finalAge = calculatedChildAge;
+      }
+    }
 
     const isHealthCategory = ['cancer', 'brain', 'heart', 'surgery', 'health_general', 'pre', 'pre_family', 'silson', 'care_svc', 'care_old', 'nursing', 'dental', 'accident'].includes(selectedId);
 
@@ -604,6 +628,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
         name: finalName,
         age: finalAge,
         gender: finalGender,
+        mobile: overrides?.mobile !== undefined ? overrides.mobile : mobile,
         jobClass,
         healthStatus,
         preExistingType: healthStatus === 'simple' ? preExistingType : undefined,
@@ -712,7 +737,8 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
           maturity: childMaturity,
           focusArea: childFocusArea,
           hasPrenatalRider: childHasPrenatalRider,
-          weeksPregnancy: childWeeksPregnancy
+          weeksPregnancy: childWeeksPregnancy,
+          childBirthDate: childBirthDate
         } : selectedId === 'pre_family' ? {
           targetAgeGroup: 'child',
           maturity: preFamilyMaturity,
@@ -721,7 +747,8 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
           weeksPregnancy: 12,
           isPreFamily: true,
           illnessType: preFamilyIllnessType,
-          noAccidentYears: preFamilyNoAccidentYears
+          noAccidentYears: preFamilyNoAccidentYears,
+          childBirthDate: preFamilyBirthDate
         } : undefined,
         car: selectedId === 'car' ? {
           annualMileage: carMileage,
@@ -1038,6 +1065,17 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                           setFireBuildingLimit(0);
                         }
                       }
+                      if (selectedId === 'golf') {
+                        if (idx === 0) {
+                          setGolfHasHoleInOneRider(true);
+                          setGolfHasLiabilityRider(true);
+                          setGolfHasEquipmentRider(true);
+                        } else {
+                          setGolfHasHoleInOneRider(false);
+                          setGolfHasLiabilityRider(true);
+                          setGolfHasEquipmentRider(false);
+                        }
+                      }
                     }}
                     className={`px-12 py-5 rounded-[2.2rem] text-xl font-black transition-all duration-300 border-2
                       ${selectedDetail === idx 
@@ -1067,6 +1105,32 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
 
         <div className="pt-20 border-t-[3px] border-dotted border-slate-100">
            <div className="max-w-5xl mx-auto text-center">
+              {/* 고객과의 안심 3대 약속 배너 */}
+              <div className="max-w-4xl mx-auto mb-10 bg-gradient-to-r from-orange-50/90 via-amber-50/70 to-orange-50/50 border-2 border-orange-200/80 rounded-[2.5rem] p-8 text-left shadow-md animate-in fade-in slide-in-from-top-4 duration-500">
+                <div className="flex items-center gap-2.5 mb-4">
+                  <span className="text-2xl">🛡️</span>
+                  <h4 className="text-base font-black text-slate-800 tracking-tight">고객과의 안심 3대 약속</h4>
+                  <span className="px-2.5 py-0.5 bg-orange-500 text-white rounded-full text-[9px] font-black uppercase tracking-wider">Verified Promise</span>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="bg-white p-5 rounded-3xl border border-orange-100 flex flex-col gap-1.5 shadow-sm hover:shadow-md transition-all duration-300">
+                    <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest">Promise 1</span>
+                    <span className="text-sm font-black text-slate-800 leading-tight">동의 없는 전화 금지</span>
+                    <p className="text-[11px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">상담 동의가 없는 한, 광고성 무단 전화를 일절 유도하지 않습니다.</p>
+                  </div>
+                  <div className="bg-white p-5 rounded-3xl border border-orange-100 flex flex-col gap-1.5 shadow-sm hover:shadow-md transition-all duration-300">
+                    <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest">Promise 2</span>
+                    <span className="text-sm font-black text-slate-800 leading-tight">개인정보 암호화</span>
+                    <p className="text-[11px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">자가진단 단계에서는 연락처가 완벽히 마스킹 보호 처리됩니다.</p>
+                  </div>
+                  <div className="bg-white p-5 rounded-3xl border border-orange-100 flex flex-col gap-1.5 shadow-sm hover:shadow-md transition-all duration-300">
+                    <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest">Promise 3</span>
+                    <span className="text-sm font-black text-slate-800 leading-tight">카톡 1:1 익명 상담</span>
+                    <p className="text-[11px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">고객이 원할 때만 코드를 활용한 익명 상담으로 매칭됩니다.</p>
+                  </div>
+                </div>
+              </div>
+
               {selectedId === 'car' ? (
                 <>
                   {/* 자동차 전용 고객 정보 입력 폼 (인증 버튼 없음) */}
@@ -1220,12 +1284,16 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                   focusArea={childFocusArea} setFocusArea={setChildFocusArea}
                   hasPrenatalRider={childHasPrenatalRider} setHasPrenatalRider={setChildHasPrenatalRider}
                   weeksPregnancy={childWeeksPregnancy} setWeeksPregnancy={setChildWeeksPregnancy}
+                  childBirthDate={childBirthDate}
+                  setChildBirthDate={setChildBirthDate}
                 />
               ) : selectedId === 'pre_family' ? (
                 <PreFamilyFields
                   illnessType={preFamilyIllnessType} setIllnessType={setPreFamilyIllnessType}
                   noAccidentYears={preFamilyNoAccidentYears} setNoAccidentYears={setPreFamilyNoAccidentYears}
                   maturity={preFamilyMaturity} setMaturity={setPreFamilyMaturity}
+                  childBirthDate={preFamilyBirthDate}
+                  setChildBirthDate={setPreFamilyBirthDate}
                 />
               ) : selectedId === 'car' ? (
                 <CarFields
@@ -1547,7 +1615,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                    onClick={() => handleCalculate()}
                    whileHover={{ scale: 1.02, y: -5 }}
                    whileTap={{ scale: 0.98 }}
-                   className="w-full py-8 bg-gradient-to-r from-orange-600 to-orange-400 rounded-[2.5rem] text-white text-3xl font-black shadow-[0_30px_70px_-20px_rgba(255,107,0,0.4)] transition-all flex items-center justify-center gap-4 group"
+                   className="w-full py-8 bg-gradient-to-r from-orange-600 to-orange-400 rounded-[2.5rem] text-white text-3xl font-black shadow-[0_30px_70px_-20px_rgba(255,107,0,0.4)] transition-all flex items-center justify-center gap-4 group animate-in fade-in zoom-in-95 duration-300"
                 >
                    무료로 비교 분석하기
                    <ChevronRight size={28} />
@@ -1691,13 +1759,13 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                     </div>
                     <div className="text-left">
                       <h4 className="text-lg font-black text-slate-900 leading-tight">카카오 간편 로그인</h4>
-                      <p className="text-xs font-bold text-slate-400">인슈리밸런스 연동</p>
+                      <p className="text-xs font-bold text-slate-400">보험리밸런스 연동</p>
                     </div>
                   </div>
 
                   <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 text-left mb-6 space-y-1">
                     <p className="text-xs font-bold text-slate-500">연동 요청 앱</p>
-                    <p className="text-sm font-black text-slate-800">인슈리밸런스 (InsurRebalance)</p>
+                    <p className="text-sm font-black text-slate-800">보험리밸런스 (InsurRebalance)</p>
                     <div className="h-px bg-slate-200/60 my-2" />
                     <p className="text-xs font-bold text-slate-500">로그인 계정</p>
                     <p className="text-sm font-black text-slate-800">rich_kim@kakao.com</p>
@@ -1752,13 +1820,13 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                     </div>
                     <div className="text-left">
                       <h4 className="text-lg font-black text-slate-900 leading-tight">네이버 아이디 로그인</h4>
-                      <p className="text-xs font-bold text-slate-400">인슈리밸런스 연동</p>
+                      <p className="text-xs font-bold text-slate-400">보험리밸런스 연동</p>
                     </div>
                   </div>
 
                   <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 text-left mb-6 space-y-1">
                     <p className="text-xs font-bold text-slate-500">연동 요청 앱</p>
-                    <p className="text-sm font-black text-slate-800">인슈리밸런스 (InsurRebalance)</p>
+                    <p className="text-sm font-black text-slate-800">보험리밸런스 (InsurRebalance)</p>
                     <div className="h-px bg-slate-200/60 my-2" />
                     <p className="text-xs font-bold text-slate-500">로그인 계정</p>
                     <p className="text-sm font-black text-slate-800">naver_user@naver.com</p>

@@ -29,8 +29,8 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
   const isHeart = category.includes('심장') || category === 'heart';
   const isCancer = category.includes('암보험') || category === 'cancer';
   const isHealthGeneral = category.includes('종합건강') || category === 'health_general';
-  const isPreExisting = category.includes('유병자') || category.includes('간편');
-  const isChild = category.includes('어린이') || category.includes('태아') || category === 'child' || category === 'pre_family';
+  const isChild = category.includes('어린이') || category.includes('태아') || category === 'child' || category === 'pre_family' || category === 'child_sick' || category.includes('유병력자');
+  const isPreExisting = (category.includes('유병자') || category.includes('간편')) && !isChild;
   const isCar = category.includes('자동차') || category === 'car';
   const isDriver = category.includes('운전자') || category === 'driver';
   const isPet = category.includes('펫') || category === 'pet';
@@ -315,7 +315,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
 
   // 10. 어린이보험
   const childInfo = analysis.child || { targetAgeGroup: 'youth', maturity: 100 };
-  const isPreFamily = analysis.selectedCategory === 'pre_family';
+  const isPreFamily = category === 'pre_family' || category === 'child_sick' || category.includes('유병력자') || !!analysis.child?.isPreFamily;
 
   const preFamilyRows = [
     { 

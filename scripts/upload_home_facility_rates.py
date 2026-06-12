@@ -45,7 +45,7 @@ def upload_home_facility_data():
         print(f"[-] File not found: {csv_path}")
         return
         
-    df = pd.read_csv(csv_path)
+    df = pd.read_csv(csv_path, encoding='utf-8-sig')
     print(f"[*] Loaded CSV: {len(df)} rows")
     
     records = []

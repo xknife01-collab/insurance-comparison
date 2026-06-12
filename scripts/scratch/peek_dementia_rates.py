@@ -8,6 +8,10 @@ if os.path.exists(env_path):
 else:
     load_dotenv()
 
+import sys
+# Force UTF-8 stdout
+sys.stdout.reconfigure(encoding='utf-8')
+
 SUPABASE_URL = os.getenv("VITE_SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
 

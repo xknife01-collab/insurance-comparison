@@ -79,6 +79,23 @@ def find_header_mapping(df):
     defaults = {"보험회사":0, "상품명":1, "구분":2, "담보명(급부명)":3, "지급사유":4, "지급금액":5, "가입금액":6, "기준보험료":7, "가입보험료":8}
     for k, v in defaults.items():
         if k not in mapping: mapping[k] = v
+        
+    # Dynamic description column scan if 상세안내 is missing or points to empty
+    desc_col = -1
+    for r in range(min(20, len(df))):
+        for c in range(df.shape[1]):
+            val = str(df.iloc[r, c])
+            if any(k in val for k in ["가입나이", "보험료 예시", "보험료 기준", "가격지수 기준"]):
+                desc_col = c
+                break
+        if desc_col != -1:
+            break
+    if desc_col != -1:
+        mapping["상세안내"] = desc_col
+    else:
+        if "상세안내" not in mapping:
+            mapping["상세안내"] = 15
+            
     return mapping, header_row_idx
 
 def extract_dementia_data():

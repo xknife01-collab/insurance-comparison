@@ -104,49 +104,49 @@ export async function fetchDementiaPremium(analysis: InsuranceAnalysis) {
     // 3. Calculate premium for each product based on sliders and underwriting
     const results: any[] = [];
 
-    // Age correction multiplier (base 40) - smoothly interpolated for every age
+    // ★ 공시 보험료는 40세 기준으로 산출됨. 다른 나이대는 ageRatio로 보정 필수.
     const getAgeMultiplier = (age: number): number => {
+      if (age <= 20) return 0.3;
       if (age <= 30) {
-        const base = 0.3;
-        const diff = 0.2;
-        const pct = Math.max(0, (age - 20) / 10);
-        return base + diff * pct;
+        const pct = (age - 20) / 10;
+        return 0.3 + 0.3 * pct; // 20세: 0.3 → 30세: 0.6
       }
       if (age <= 40) {
         const pct = (age - 30) / 10;
-        return 0.5 + 0.5 * pct;
+        return 0.6 + 0.4 * pct; // 30세: 0.6 → 40세: 1.0
       }
       if (age <= 50) {
         const pct = (age - 40) / 10;
-        return 1.0 + 0.6 * pct;
+        return 1.0 + 0.6 * pct; // 40세: 1.0 → 50세: 1.6
       }
       if (age <= 60) {
         const pct = (age - 50) / 10;
-        return 1.6 + 1.2 * pct;
+        return 1.6 + 1.2 * pct; // 50세: 1.6 → 60세: 2.8
       }
       if (age <= 70) {
         const pct = (age - 60) / 10;
-        return 2.8 + 2.0 * pct;
+        return 2.8 + 2.0 * pct; // 60세: 2.8 → 70세: 4.8
       }
       if (age <= 80) {
         const pct = (age - 70) / 10;
-        return 4.8 + 1.7 * pct;
+        return 4.8 + 1.7 * pct; // 70세: 4.8 → 80세: 6.5
       }
       return 6.5;
     };
     const ageRatio = getAgeMultiplier(targetAge);
 
-    // Underwriting factor (Simple / Pre-existing loading)
+    // 유연사 할증 보정 (치매 병력/LTC등급 보유 시)
     let underwritingMultiplier = 1.0;
-    if (hasHistory) underwritingMultiplier *= 1.35; // 치매 병력 시 유병자 요율 적용 (35% 할증)
-    if (hasLtc) underwritingMultiplier *= 1.50; // 등급 보유자 요율 적용 (50% 할증)
+    if (hasHistory) underwritingMultiplier *= 1.35;
+    if (hasLtc) underwritingMultiplier *= 1.50;
 
     productGroups.forEach((group) => {
       let totalPremium = 0;
       const includedRiders: string[] = [];
 
       // Resolve product-level diagnosis base payout first
-      let productDiagPayout = 10000000; // default 1,000만원
+      // ★ 업로드 시 모든 프리미엄이 1,000만원 기준으로 정규화됐으므로 기본값을 10,000,000으로 고정
+      let productDiagPayout = 10_000_000; // 1,000만원 기준 고정
       let hasSevereDiag = false;
       let groupHasDiagnosis = false;
 
@@ -174,21 +174,7 @@ export async function fetchDementiaPremium(analysis: InsuranceAnalysis) {
 
         if (isDiagnosis) {
           groupHasDiagnosis = true;
-          const isSevere = name.includes('중증') && (name.includes('진단') || name.includes('치매') || name.includes('간병비'));
-          const isGeneral = name.includes('진단') || name.includes('경도') || name.includes('중증') || name.includes('치매');
-          
-          if (isSevere && amtVal >= 1000000) {
-            if (!hasSevereDiag) {
-              productDiagPayout = amtVal;
-              hasSevereDiag = true;
-            } else {
-              productDiagPayout = Math.max(productDiagPayout, amtVal);
-            }
-          } else if (isGeneral && amtVal >= 1000000) {
-            if (!hasSevereDiag) {
-              productDiagPayout = Math.max(productDiagPayout, amtVal);
-            }
-          }
+          // ★ 이미 1,000만원 기준 정규화됐으므로 10,000,000 고정값 사용
         }
       });
 
@@ -312,22 +298,32 @@ export async function fetchDementiaPremium(analysis: InsuranceAnalysis) {
           maxScale = allowanceScale;
         }
 
-        let riderPremium = Math.round(basePremium * maxScale);
-
-        // Apply age and underwriting corrections
-        riderPremium = Math.round(riderPremium * ageRatio * underwritingMultiplier);
+        // ★ 공시 보험료(40세 기준) × 보장금액 스케일 × 나이 보정 × 유연사 할증
+        let riderPremium = Math.round(basePremium * maxScale * ageRatio * underwritingMultiplier);
 
         totalPremium += riderPremium;
       });
 
-      if (totalPremium > 0) {
-        results.push({
-          premium: totalPremium,
-          productName: group.productName,
-          companyName: group.companyName,
-          appliedRate: group.appliedRate,
-          ridersCount: includedRiders.length
+      // ★ 치매 진단비 담보가 전혀 없는 상품은 결과 제외
+      // (납입면제/만기연장불가/체증불가 전용 종은 비교 대상 아님)
+      const hasMeaningfulDiag = groupHasDiagnosis || 
+        group.riders.some(r => {
+          const n = (r.benefit_name || '').toLowerCase();
+          return n.includes('치매') || n.includes('진단') || n.includes('경도') || n.includes('중증') || n.includes('간병');
         });
+      
+      if (totalPremium > 0 && hasMeaningfulDiag) {
+        // ★ 최소 보험료 필터: 시장 기준 4만원대 미만 부분 라이더 제외
+        const MIN_PREMIUM = 35_000;
+        if (totalPremium >= MIN_PREMIUM) {
+          results.push({
+            premium: totalPremium,
+            productName: group.productName,
+            companyName: group.companyName,
+            appliedRate: group.appliedRate,
+            ridersCount: includedRiders.length
+          });
+        }
       }
     });
 

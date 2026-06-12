@@ -9,6 +9,8 @@ interface PreFamilyFieldsProps {
   setNoAccidentYears: (years: '0' | '2' | '3' | '5') => void;
   maturity: 30 | 100;
   setMaturity: (maturity: 30 | 100) => void;
+  childBirthDate: string;
+  setChildBirthDate: (birth: string) => void;
 }
 
 export const PreFamilyFields: React.FC<PreFamilyFieldsProps> = ({
@@ -17,7 +19,9 @@ export const PreFamilyFields: React.FC<PreFamilyFieldsProps> = ({
   noAccidentYears,
   setNoAccidentYears,
   maturity,
-  setMaturity
+  setMaturity,
+  childBirthDate,
+  setChildBirthDate
 }) => {
   const illnessTips: Record<string, { title: string; text: string; badge: string }> = {
     adhd: {
@@ -55,6 +59,31 @@ export const PreFamilyFields: React.FC<PreFamilyFieldsProps> = ({
   return (
     <div className="space-y-10 text-left max-w-4xl mx-auto py-8">
       
+      {/* 우리아이 생년월일 입력 */}
+      <div className="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm space-y-4">
+        <h4 className="text-xl font-black text-slate-800 flex items-center gap-2">
+          <Calendar className="text-blue-500 w-6 h-6" /> 우리아이 생년월일을 적어주세요
+        </h4>
+        <div className="max-w-xs flex items-center gap-3 bg-slate-50 border border-slate-200 hover:border-blue-500/50 rounded-2xl p-4 transition-all duration-300">
+          <input
+            type="text"
+            maxLength={8}
+            value={childBirthDate}
+            onChange={(e) => setChildBirthDate(e.target.value.replace(/[^0-9]/g, ''))}
+            placeholder="예) 20180515"
+            className="bg-transparent border-none outline-none font-black text-slate-800 placeholder:text-slate-300 w-full text-base"
+          />
+          {childBirthDate.length === 8 && (
+            <span className="text-xs font-black text-blue-600 bg-blue-100/60 px-2.5 py-1 rounded-full whitespace-nowrap">
+              만 {new Date().getFullYear() - parseInt(childBirthDate.substring(0, 4))}세
+            </span>
+          )}
+        </div>
+        <p className="text-[10px] text-slate-400 font-bold">
+          * 정확한 유병력자 어린이/청소년 전용 보험료 비교 분석을 위해 실제 가입 대상의 생년월일을 기입해 주세요.
+        </p>
+      </div>
+
       {/* 1. 우리아이 병력 유형 선택 */}
       <div className="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm">
         <h4 className="text-xl font-black text-slate-800 mb-2 flex items-center gap-2">

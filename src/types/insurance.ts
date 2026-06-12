@@ -11,6 +11,8 @@ export interface CoverageItem {
 export interface InsuranceAnalysis {
   age: number;               // 연령
   gender: 'M' | 'F';        // 성별
+  name?: string;             // 이름
+  mobile?: string;           // 연락처
   jobClass?: number;         // 직업급수 (1~3)
   selectedCategory?: string; // 선택된 보험 카테고리
   subType?: string;          // 상세 타입 (예: 대출안심형, 정기보장형 등)

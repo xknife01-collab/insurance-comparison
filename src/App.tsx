@@ -8,6 +8,9 @@ import { AnimatePresence, motion } from 'motion/react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import { InsuranceCalculator } from './components/InsuranceCalculator';
+import { useB2BBranding } from './hooks/useB2BBranding';
+import PlannerWidget from './components/PlannerWidget';
+import { createClient } from './utils/supabase/client';
 import ComparisonSection from './components/ComparisonSection';
 import AnalysisSection from './components/AnalysisSection';
 import AnalysisDashboard from './components/AnalysisDashboard';
@@ -39,26 +42,191 @@ import { HealthGeneralExplanation } from './components/insurance/healthGeneral/H
 import { AccidentExplanation } from './components/insurance/accident/AccidentExplanation';
 import { SavingsExplanation } from './components/insurance/savings/SavingsExplanation';
 import { PropertyExplanation } from './components/insurance/property/PropertyExplanation';
+import AdminDashboard from './components/AdminDashboard';
 
 export default function App() {
+  const { branding } = useB2BBranding();
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [remodelingResult, setRemodelingResult] = useState<AnalysisResult | null>(null);
   const [currentAnalysis, setCurrentAnalysis] = useState<InsuranceAnalysis | null>(null);
-  const [view, setView] = useState<'home' | 'indemnity' | 'preexisting' | 'dental' | 'caregiving' | 'dementia' | 'surgery' | 'cancer' | 'cerebrovascular' | 'heart' | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'property' | 'annuity' | 'whole' | 'variable' | 'legal' | 'credit' | 'health_general' | 'accident' | 'savings_general'>('home');
+  const [view, setView] = useState<'admin' | 'home' | 'indemnity' | 'preexisting' | 'dental' | 'caregiving' | 'dementia' | 'surgery' | 'cancer' | 'cerebrovascular' | 'heart' | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'property' | 'annuity' | 'whole' | 'variable' | 'legal' | 'credit' | 'health_general' | 'accident' | 'savings_general'>(() => {
+    if (window.location.pathname === '/admin') return 'admin';
+    return 'home';
+  });
 
   const [calcTarget, setCalcTarget] = useState<string | null>(null);
   const [remodelingApplied, setRemodelingApplied] = useState(false);
+  const [submittedLeads, setSubmittedLeads] = useState<string[]>([]);
+  const [lastSubmittedLeadId, setLastSubmittedLeadId] = useState<number | null>(null);
+  const [currentSimulationCode, setCurrentSimulationCode] = useState<string>('');
+
+  const generateSimulationCode = () => {
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const alphaNum = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    
+    // Generate 2 random letters for prefix (e.g., RA, RB, RZ...)
+    let prefixLetters = '';
+    for (let i = 0; i < 2; i++) {
+      prefixLetters += letters[Math.floor(Math.random() * letters.length)];
+    }
+    
+    // Generate 6 random alphanumeric characters
+    let codeBody = '';
+    for (let i = 0; i < 6; i++) {
+      codeBody += alphaNum[Math.floor(Math.random() * alphaNum.length)];
+    }
+    
+    return `R${prefixLetters}-${codeBody}`; // e.g. RXY-8K29P7
+  };
+
+  const logKakaoClick = async (leadId: number, type?: 'anonymous' | 'regular') => {
+    try {
+      const supabase = createClient();
+      const { data: lead } = await supabase
+        .from('customer_leads')
+        .select('raw_payload')
+        .eq('id', leadId)
+        .single();
+      
+      if (lead) {
+        const currentPayload = lead.raw_payload || {};
+        const currentTimeline = currentPayload.timeline || [];
+        
+        // Avoid duplicate log clicks within 5 seconds
+        const now = new Date();
+        const fiveSecondsAgo = new Date(now.getTime() - 5000);
+        const hasRecentClick = currentTimeline.some((t: any) => 
+          t.type === 'kakao_click' && new Date(t.created_at) > fiveSecondsAgo
+        );
+        if (hasRecentClick) return;
+
+        const typeLabel = type === 'anonymous' ? '익명' : type === 'regular' ? '정식' : '일반';
+        const newEvent = {
+          id: `kakao-${Date.now()}`,
+          type: 'kakao_click',
+          author: '고객',
+          detail: `고객이 전담 설계사 카카오톡 1:1 [${typeLabel} 상담] 버튼을 클릭하여 채팅을 시작했습니다.`,
+          created_at: now.toISOString()
+        };
+
+        const updatedPayload = {
+          ...currentPayload,
+          timeline: [newEvent, ...currentTimeline]
+        };
+
+        await supabase
+          .from('customer_leads')
+          .update({ raw_payload: updatedPayload })
+          .eq('id', leadId);
+      }
+    } catch (err) {
+      console.error('Failed to log KakaoTalk click:', err);
+    }
+  };
+
+  const handlePlannerWidgetKakaoClick = (type: 'anonymous' | 'regular') => {
+    if (lastSubmittedLeadId) {
+      logKakaoClick(lastSubmittedLeadId, type);
+    }
+  };
+
+  const submitLead = async (analysis: InsuranceAnalysis, category: string, resultData: any, consultType?: 'anonymous' | 'regular') => {
+    const leadKey = `${analysis.name || '무명고객'}_${analysis.mobile || '010-0000-0000'}_${category}`;
+    if (submittedLeads.includes(leadKey)) {
+      console.log('Lead already submitted in this session:', leadKey);
+      return null;
+    }
+    setSubmittedLeads(prev => [...prev, leadKey]);
+
+    const supabase = createClient();
+    let leadSource: 'direct' | 'distribute' | 'organic' = 'organic';
+    if (branding.type === 'planner') {
+      leadSource = 'direct';
+    } else if (branding.type === 'agency') {
+      leadSource = 'distribute';
+    }
+
+    // Determine simulation code
+    const simulationCode = resultData?.simulation_code || currentSimulationCode || generateSimulationCode();
+    if (!currentSimulationCode) {
+      setCurrentSimulationCode(simulationCode);
+    }
+
+    const initialTimeline = [];
+    const isConsult = category.endsWith('_consult') || category === 'remodeling_consult';
+    if (isConsult) {
+      const typeLabel = consultType === 'anonymous' ? '익명' : consultType === 'regular' ? '정식' : '일반';
+      initialTimeline.push({
+        id: `kakao-${Date.now()}`,
+        type: 'kakao_click',
+        author: '고객',
+        detail: `고객이 전담 설계사 카카오톡 1:1 [${typeLabel} 상담] 버튼을 클릭하여 채팅을 시작했습니다.`,
+        created_at: new Date().toISOString()
+      });
+    }
+
+    const payload = {
+      planner_id: branding.plannerId,
+      agency_id: branding.agencyId,
+      name: analysis.name || '무명고객',
+      phone: analysis.mobile || '010-0000-0000',
+      age: analysis.age || 40,
+      insurance_type: category,
+      analysis_result: resultData,
+      monthly_premium: resultData?.efficiency?.totalPremium || 0,
+      raw_payload: { 
+        gender: analysis.gender, 
+        jobClass: analysis.jobClass, 
+        category,
+        consult_type: consultType || 'regular',
+        utm_source: sessionStorage.getItem('ins_utm_source') || 'organic',
+        analysisInputs: analysis,
+        timeline: initialTimeline,
+        simulation_code: simulationCode
+      },
+      lead_source: leadSource,
+      status: 'new',
+    };
+
+    try {
+      const { data, error } = await supabase
+        .from('customer_leads')
+        .insert(payload)
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Supabase lead submit error:', error);
+      }
+      if (data && data.id) {
+        setLastSubmittedLeadId(data.id);
+      }
+      return data;
+    } catch (err) {
+      console.error('Failed to submit lead to Supabase:', err);
+    }
+  };
 
   const handleAnalyze = async (analysis: InsuranceAnalysis) => {
+    // Generate simulation code for this calculation run
+    const simulationCode = generateSimulationCode();
+    setCurrentSimulationCode(simulationCode);
+
     if (analysis.selectedCategory === 'remodeling') {
       setRemodelingApplied(false);
       const result = await runAnalysis(analysis);
+      result.simulation_code = simulationCode; // attach code
       setRemodelingResult(result);
+      // Automatically save lead upon analysis completion
+      submitLead(analysis, 'remodeling', result);
     } else {
       setCurrentAnalysis(analysis);
       const result = await runAnalysis(analysis);
+      result.simulation_code = simulationCode; // attach code
       setAnalysisResult(result);
       setView('home'); // Ensure we are on home to see results
+      // Automatically save lead upon analysis completion
+      submitLead(analysis, analysis.selectedCategory || 'general', result);
     }
   };
 
@@ -89,6 +257,21 @@ export default function App() {
       return () => clearTimeout(timer);
     }
   }, [analysisResult]);
+  useEffect(() => {
+    if (view === 'admin') {
+      if (window.location.pathname !== '/admin') {
+        window.history.pushState({}, '', '/admin');
+      }
+    } else {
+      if (window.location.pathname === '/admin') {
+        window.history.pushState({}, '', '/');
+      }
+    }
+  }, [view]);
+
+  if (view === 'admin') {
+    return <AdminDashboard />;
+  }
 
   if (view === 'indemnity') {
     return (
@@ -669,7 +852,7 @@ export default function App() {
 
                 return (
                   <>
-                    <AnalysisDashboard result={analysisResult} />
+                    <AnalysisDashboard result={analysisResult} onSubmitLead={submitLead} branding={branding} />
 
                     {currentAnalysis && (
                       <div className="mt-40">
@@ -771,7 +954,12 @@ export default function App() {
                               </p>
                             </div>
                             <button
-                              onClick={() => setRemodelingApplied(true)}
+                              onClick={() => {
+                                setRemodelingApplied(true);
+                                if (remodelingResult) {
+                                  submitLead(remodelingResult.analysis, 'remodeling_consult', remodelingResult);
+                                }
+                              }}
                               className="px-6 py-4.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black rounded-xl text-xs shrink-0 shadow-[0_10px_20px_-4px_rgba(255,107,0,0.4)] transform transition-all hover:scale-105 active:scale-95 cursor-pointer text-center relative z-10"
                             >
                               👉 카톡으로 설계안 무료 신청
@@ -812,6 +1000,16 @@ export default function App() {
                           <span className="text-xl font-black text-orange-600">{totalPremium.toLocaleString()}원</span>
                         </div>
                       </div>
+                    </div>
+
+                    {/* 고객 안내 사항 배너 */}
+                    <div className="bg-orange-50/50 border border-orange-100/60 p-5 rounded-2xl text-left">
+                      <p className="text-xs text-orange-600 font-extrabold flex items-center gap-1.5 mb-1.5">
+                        <span>💡</span> 고객 안내 사항 (데이터 출처 안내)
+                      </p>
+                      <p className="text-xs text-slate-600 font-semibold leading-relaxed break-keep">
+                        본 리스트의 <span className="text-slate-800 font-extrabold">보험 회사, 상품명, 월 납입 보험료</span>는 한국신용정보원 본인정보 열람서비스(내보험다보여)를 통해 실시간으로 수집된 실제 가입 정보입니다. 다만, <span className="text-slate-800 font-extrabold">가입 특약 및 세부 보장 금액</span>은 AI 엔진이 표준 요율을 기반으로 역산하여 추정한 분석값이므로, 실제 가입 증권과 차이가 있을 수 있습니다. 계약 체결 전 반드시 고객의 실제 증권을 다시 한번 확인하시기 바랍니다.
+                      </p>
                     </div>
 
                     {/* Policy Cards */}
@@ -869,7 +1067,7 @@ export default function App() {
                   💡 본 분석은 한국신용정보원의 상품명과 월 납입 보험료 정보를 기반으로, AI가 표준 보험 요율에 맞춰 가입 특약 및 보장 금액을 정교하게 역산한 추정치입니다. 실제 가입하신 보험 증권의 세부 구성에 따라 차이가 있을 수 있으므로 정확한 진단은 전문 설계사의 정밀 상담을 권장합니다.
                 </p>
               </div>
-              <AnalysisDashboard result={remodelingResult} />
+              <AnalysisDashboard result={remodelingResult} onSubmitLead={submitLead} branding={branding} />
 
 
             </motion.section>
@@ -892,6 +1090,7 @@ export default function App() {
       </div>
 
       <Footer />
+      <PlannerWidget branding={branding} onKakaoClick={handlePlannerWidgetKakaoClick} />
     </div>
   );
 }
