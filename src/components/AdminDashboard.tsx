@@ -462,7 +462,7 @@ export default function AdminDashboard() {
   const [marketingPeriod, setMarketingPeriod] = useState<'today' | '7days' | 'all'>('all');
   const [statsSubTab, setStatsSubTab] = useState<'marketing' | 'sales'>('marketing');
   const [leadsPeriod, setLeadsPeriod] = useState<'today' | '7days' | 'all'>('all');
-  const [leadsCategoryFilter, setLeadsCategoryFilter] = useState<'all' | 'remodeling' | 'compare'>('all');
+  const [leadsCategoryFilter, setLeadsCategoryFilter] = useState<'all' | 'remodeling' | 'compare' | 'underwriting'>('all');
   const [consultCategoryFilter, setConsultCategoryFilter] = useState<'all' | 'remodeling' | 'compare'>('all');
   
   // Credit Billing Ecosystem states
@@ -1431,7 +1431,8 @@ export default function AdminDashboard() {
         l.name || '미기입',
         (() => {
           const isConsult = l.insurance_type?.endsWith('_consult') || l.insurance_type === 'remodeling_consult';
-          return isConsult ? (l.phone || '미기입') : maskPhoneNumber(l.phone);
+          const isUnderwriting = l.insurance_type?.includes('_underwriting');
+          return (isConsult || isUnderwriting) ? (l.phone || '미기입') : maskPhoneNumber(l.phone);
         })(),
         l.age ? `${l.age}세` : '미기입',
         (() => {
@@ -1753,7 +1754,10 @@ export default function AdminDashboard() {
       if (leadsCategoryFilter === 'all') return true;
       if (leadsCategoryFilter === 'remodeling') return lead.insurance_type === 'remodeling';
       if (leadsCategoryFilter === 'compare') {
-        return lead.insurance_type !== 'remodeling';
+        return lead.insurance_type !== 'remodeling' && !lead.insurance_type?.includes('_underwriting');
+      }
+      if (leadsCategoryFilter === 'underwriting') {
+        return lead.insurance_type?.includes('_underwriting');
       }
       return true;
     });
@@ -1816,7 +1820,8 @@ export default function AdminDashboard() {
                   <p className="text-[10px] text-slate-400 font-bold">
                     {(() => {
                       const isConsult = lead.insurance_type?.endsWith('_consult') || lead.insurance_type === 'remodeling_consult';
-                      return isConsult ? lead.phone : maskPhoneNumber(lead.phone);
+                      const isUnderwriting = lead.insurance_type?.includes('_underwriting');
+                      return (isConsult || isUnderwriting) ? lead.phone : maskPhoneNumber(lead.phone);
                     })()} • {lead.age}세
                   </p>
                   <p className="text-[9px] text-slate-500 font-black">
@@ -2855,7 +2860,14 @@ export default function AdminDashboard() {
                             onClick={() => setLeadsCategoryFilter('compare')}
                             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${leadsCategoryFilter === 'compare' ? 'bg-sky-500 text-white shadow shadow-sky-500/10' : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-850'}`}
                           >
-                            📊 보험 비교분석 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && !l.insurance_type?.endsWith('_consult') && l.insurance_type !== 'remodeling_consult' && l.insurance_type !== 'remodeling').length}건)
+                            📊 보험 비교분석 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && !l.insurance_type?.endsWith('_consult') && l.insurance_type !== 'remodeling_consult' && l.insurance_type !== 'remodeling' && !l.insurance_type?.includes('_underwriting')).length}건)
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setLeadsCategoryFilter('underwriting')}
+                            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${leadsCategoryFilter === 'underwriting' ? 'bg-amber-500 text-white shadow shadow-amber-500/10' : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-850'}`}
+                          >
+                            🔍 사전심사 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && !l.insurance_type?.endsWith('_consult') && l.insurance_type !== 'remodeling_consult' && l.insurance_type?.includes('_underwriting')).length}건)
                           </button>
                         </div>
                       </div>
@@ -4313,7 +4325,8 @@ export default function AdminDashboard() {
                   <p className="font-extrabold text-slate-300">
                     연락처: {(() => {
                       const isConsult = selectedLead.insurance_type?.endsWith('_consult') || selectedLead.insurance_type === 'remodeling_consult';
-                      return isConsult ? selectedLead.phone : maskPhoneNumber(selectedLead.phone);
+                      const isUnderwriting = selectedLead.insurance_type?.includes('_underwriting');
+                      return (isConsult || isUnderwriting) ? selectedLead.phone : maskPhoneNumber(selectedLead.phone);
                     })()}
                   </p>
                   <p className="font-extrabold text-slate-300">성별: {selectedLead.raw_payload?.gender === 'M' ? '남성' : selectedLead.raw_payload?.gender === 'F' ? '여성' : '미확인'}</p>
@@ -4327,7 +4340,8 @@ export default function AdminDashboard() {
                   )}
                   {(() => {
                     const isConsult = selectedLead.insurance_type?.endsWith('_consult') || selectedLead.insurance_type === 'remodeling_consult';
-                    if (isConsult) {
+                    const isUnderwriting = selectedLead.insurance_type?.includes('_underwriting');
+                    if (isConsult || isUnderwriting) {
                       const consultType = selectedLead.raw_payload?.consult_type;
                       if (consultType === 'anonymous') {
                         return (
@@ -4348,7 +4362,8 @@ export default function AdminDashboard() {
                 <div className="flex gap-2 pt-2 border-t border-slate-900">
                   {(() => {
                     const isConsult = selectedLead.insurance_type?.endsWith('_consult') || selectedLead.insurance_type === 'remodeling_consult';
-                    if (isConsult) {
+                    const isUnderwriting = selectedLead.insurance_type?.includes('_underwriting');
+                    if (isConsult || isUnderwriting) {
                       return (
                         <>
                           <button
