@@ -2832,11 +2832,9 @@ export default function AdminDashboard() {
                         실시간 보험 분석 & 다이어트 시도 목록
                       </h3>
                       <p className="text-[10px] text-slate-400 font-bold">고객이 홈페이지에서 자가 보장 진단 및 보험 분석을 수행하여 이탈 방지용으로 자동 수집된 DB입니다.</p>
-                      {leadsCategoryFilter === 'underwriting' && (
-                        <div className="mt-3 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-[10px] text-emerald-400 font-extrabold leading-relaxed break-keep animate-in fade-in duration-300">
-                          🟢 [사전 심사 요청 고객 대응 가이드] 본 고객은 과거 병력을 기반으로 가입 가능 여부를 심사받기 위해 사전 심사를 직접 신청한 고객입니다. 빠른 가입 여부 피드백 및 심사 진행을 위해 즉시 전화 통화 또는 카카오톡으로 연락하여 병력 보완 사항을 확인하고 상담을 진행하시기 바랍니다.
-                        </div>
-                      )}
+                      <div className="mt-3 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-[10px] text-emerald-400 font-extrabold leading-relaxed break-keep">
+                        🟢 [사전 심사 요청 고객 대응 가이드] 본 고객은 과거 병력을 기반으로 가입 가능 여부를 심사받기 위해 사전 심사를 직접 신청한 고객입니다. 빠른 가입 여부 피드백 및 심사 진행을 위해 즉시 전화 통화 또는 카카오톡으로 연락하여 병력 보완 사항을 확인하고 상담을 진행하시기 바랍니다.
+                      </div>
                     </div>
 
                     {/* Upper Category Filter Tabs */}
