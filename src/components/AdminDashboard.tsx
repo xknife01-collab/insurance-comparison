@@ -4341,7 +4341,16 @@ export default function AdminDashboard() {
                   {(() => {
                     const isConsult = selectedLead.insurance_type?.endsWith('_consult') || selectedLead.insurance_type === 'remodeling_consult';
                     const isUnderwriting = selectedLead.insurance_type?.includes('_underwriting');
-                    if (isConsult || isUnderwriting) {
+                    
+                    if (isUnderwriting) {
+                      return (
+                        <div className="mt-2.5 p-3 bg-emerald-500/10 border-2 border-emerald-500/30 rounded-xl text-[9.5px] text-emerald-400 font-extrabold leading-relaxed break-keep">
+                          🟢 [사전 심사 요청 고객 대응 가이드] 본 고객은 과거 병력을 기반으로 가입 가능 여부를 심사받기 위해 사전 심사를 직접 신청한 고객입니다. 빠른 가입 여부 피드백 및 심사 진행을 위해 <span className="text-white bg-emerald-600 px-1 py-0.5 rounded mx-0.5">즉시 전화 통화 또는 카카오톡</span>으로 연락하여 병력 보완 사항을 확인하고 상담을 진행하시기 바랍니다.
+                        </div>
+                      );
+                    }
+                    
+                    if (isConsult) {
                       const consultType = selectedLead.raw_payload?.consult_type;
                       if (consultType === 'anonymous') {
                         return (
