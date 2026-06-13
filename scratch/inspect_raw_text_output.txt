@@ -1,4 +1,0 @@
-Company: 카카오페이손해보험
-Product: (무)펫보험(강아지)
-Coverage: 반려견 무지개다리위로금(갱신형)
-Description: 보장개시일 이후 반려견이 사망한 경우
