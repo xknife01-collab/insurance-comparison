@@ -47,6 +47,7 @@ import { CustomerSupportSection } from './components/CustomerSupportSection';
 
 export default function App() {
   const { branding, loading, showInAppGuide, setShowInAppGuide, isIOS, isInAppBrowser, isStandalone, updateBranding } = useB2BBranding();
+  const [heroImageLoaded, setHeroImageLoaded] = useState(false);
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [remodelingResult, setRemodelingResult] = useState<AnalysisResult | null>(null);
   const [currentAnalysis, setCurrentAnalysis] = useState<InsuranceAnalysis | null>(null);
@@ -383,8 +384,17 @@ export default function App() {
     }
   }, [view]);
 
-  // Render splash screen while loading B2B branding to prevent logo/UI pop-in flickering
-  if (loading) {
+  // Preload the large hero background image to prevent pop-in flickering
+  useEffect(() => {
+    if (view === 'admin') return;
+    const img = new Image();
+    img.src = '/hero.jpg';
+    img.onload = () => setHeroImageLoaded(true);
+    img.onerror = () => setHeroImageLoaded(true); // Prevent infinite loading if image fails
+  }, [view]);
+
+  // Render splash screen while loading B2B branding or preloading critical hero image to prevent logo/UI pop-in flickering
+  if (view !== 'admin' && (loading || !heroImageLoaded)) {
     return (
       <div className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-slate-950 text-white select-none">
         {/* Modern grand background gradient */}
