@@ -1,3 +1,4 @@
+// Supabase client initialization with Vercel deployment check
 import { createBrowserClient } from "@supabase/ssr";
 
 const supabaseUrl = (typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_SUPABASE_URL) || process.env.VITE_SUPABASE_URL;
