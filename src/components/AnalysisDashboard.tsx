@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { AlertCircle, ShieldCheck, Zap, Calculator, Target, Brain, Heart, Stethoscope, Clock, Hotel, Baby, Sparkles, TrendingUp, Plane, Gift, Dog, Cat, Scale, Building, PiggyBank, Coins } from 'lucide-react';
+import { AlertCircle, ShieldCheck, Zap, Calculator, Target, Brain, Heart, Stethoscope, Clock, Hotel, Baby, Sparkles, TrendingUp, Plane, Gift, Dog, Cat, Scale, Building, PiggyBank, Coins, Send, Smartphone } from 'lucide-react';
 import { AnalysisResult } from '../types/insurance';
 import RadarChart from './RadarChart';
 import ComparisonTable from './ComparisonTable';
@@ -216,6 +216,44 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
   const [uwNone, setUwNone] = React.useState(false);
   const [uwSubmitting, setUwSubmitting] = React.useState(false);
 
+  // SMS Storage Locker States & Handler
+  const [smsName, setSmsName] = React.useState('');
+  const [smsPhone, setSmsPhone] = React.useState('');
+  const [smsSubmitting, setSmsSubmitting] = React.useState(false);
+  const [smsSuccess, setSmsSuccess] = React.useState(false);
+
+  const handleSmsSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (smsSubmitting) return;
+    setSmsSubmitting(true);
+    try {
+      const category = result.analysis.selectedCategory || 'general';
+      const simCode = (result as any).simulation_code || '';
+      
+      if (onSubmitLead) {
+        const customAnalysis = {
+          ...result.analysis,
+          name: smsName,
+          mobile: smsPhone
+        };
+        await onSubmitLead(
+          customAnalysis,
+          `${category}_sms`,
+          result,
+          'regular'
+        );
+      }
+      
+      setSmsSuccess(true);
+      alert(`[알림톡/SMS 발송 완료]\n\n고유 설계 코드: [ ${simCode} ]\n모바일 링크: http://localhost:3000/?code=${simCode}\n\n${smsName} 고객님(${smsPhone})께 모바일 비교 보고서 보관용 링크가 발송되었습니다.`);
+    } catch (err) {
+      console.error(err);
+      alert("전송 중 오류가 발생했습니다. 다시 시도해 주세요.");
+    } finally {
+      setSmsSubmitting(false);
+    }
+  };
+
   const handleUnderwritingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (uwSubmitting) return;
@@ -420,6 +458,79 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
 
   return (
     <div className="space-y-32">
+      {/* 📱 설계안 평생 무료 보관함 트리거 */}
+      <section className="bg-gradient-to-r from-slate-900 via-slate-950 to-slate-900 border border-white/10 rounded-[3rem] p-8 md:p-12 relative overflow-hidden group shadow-[0_30px_60px_rgba(0,0,0,0.5)]">
+        <div className="absolute top-0 right-0 p-24 opacity-5 scale-150 transform group-hover:scale-125 transition-transform duration-1000 rotate-12">
+          <Smartphone className="w-96 h-96 text-white" />
+        </div>
+        <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div className="space-y-4 max-w-xl text-left">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-orange-500/10 text-orange-400 rounded-full text-[10px] font-black uppercase tracking-wider border border-orange-500/20">
+              <Sparkles size={12} className="text-orange-400 animate-spin-slow" /> 설계안 평생 무료 보관함
+            </div>
+            <h3 className="text-2xl md:text-3xl font-black text-white leading-tight tracking-tight">
+              지금 화면을 닫으면 분석 결과가 사라집니다!
+            </h3>
+            <p className="text-sm text-slate-400 font-bold leading-relaxed">
+              내 전용 비교 설계안 보고서를 스마트폰으로 평생 무료 보관하세요. (알림톡/SMS 즉시 전송)
+            </p>
+          </div>
+
+          <div className="w-full lg:w-auto shrink-0 min-w-[320px] md:min-w-[420px] bg-slate-950/60 p-6 md:p-8 rounded-[2rem] border border-white/5 shadow-inner">
+            {smsSuccess ? (
+              <div className="text-center py-4 space-y-4">
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xl font-black">
+                  ✓
+                </div>
+                <div className="space-y-1">
+                  <h4 className="text-base font-black text-white">보관함 링크 전송 완료!</h4>
+                  <p className="text-xs text-slate-400 font-bold">
+                    입력하신 번호로 맞춤 설계 보고서 링크가 발송되었습니다.
+                  </p>
+                </div>
+                <div className="bg-white/5 border border-white/10 rounded-xl p-3 text-xs text-slate-350 font-bold inline-block">
+                  🔑 고유 설계 코드: <span className="text-orange-400 font-black uppercase tracking-widest">{(result as any).simulation_code || ''}</span>
+                </div>
+              </div>
+            ) : (
+              <form onSubmit={handleSmsSubmit} className="space-y-4">
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1 text-left">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">고객 이름</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="홍길동"
+                      value={smsName}
+                      onChange={(e) => setSmsName(e.target.value)}
+                      className="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors"
+                    />
+                  </div>
+                  <div className="space-y-1 text-left">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">휴대전화 번호</label>
+                    <input
+                      type="tel"
+                      required
+                      placeholder="010-1234-5678"
+                      value={smsPhone}
+                      onChange={(e) => setSmsPhone(e.target.value)}
+                      className="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors"
+                    />
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  disabled={smsSubmitting}
+                  className="w-full py-4.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:opacity-50 text-white font-black text-xs rounded-xl shadow-[0_10px_20px_-4px_rgba(255,107,0,0.4)] transition-all cursor-pointer text-center"
+                >
+                  {smsSubmitting ? "설계안 전송 중..." : "👉 내 번호로 설계안 전송하기"}
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      </section>
+
       {/* Insurance Summary Cards (Silson, Caregiving, Dental, etc.) */}
       <InsuranceSummary result={result} />
 

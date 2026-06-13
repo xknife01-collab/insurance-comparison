@@ -1366,19 +1366,33 @@ export const Footer = () => {
           </div>
           
           <div className="flex-1 flex justify-end items-center">
-            {branding?.logoUrl ? (
-              <img src={branding.logoUrl} alt={branding.name} className="h-12 opacity-80 hover:opacity-100 transition-opacity" />
-            ) : (
-              <span className="text-3xl font-black tracking-tighter text-slate-700 select-none">
-                {branding?.name || "보험리밸런스"}
-              </span>
-            )}
+            <div className="flex items-center gap-3">
+              {branding?.type === 'organic' ? (
+                <>
+                  <img src="/logo.png" alt="Incar" className="h-9 opacity-50 hover:opacity-100 transition-opacity object-contain invert brightness-200" />
+                  <div className="h-5 w-[1px] bg-slate-700" />
+                </>
+              ) : (
+                branding?.logoUrl && branding.logoUrl !== "/6397187.png" && (
+                  <>
+                    <img src={branding.logoUrl} alt={branding.name} className="h-10 opacity-80 hover:opacity-100 transition-opacity object-contain" />
+                    <div className="h-5 w-[1px] bg-slate-700" />
+                  </>
+                )
+              )}
+              <img src="/6397187.png" alt="보험리밸런스" className="h-10 opacity-80 hover:opacity-100 transition-opacity object-contain" />
+            </div>
           </div>
         </div>
 
         <div className="border-t border-slate-800 pt-12 text-[10px] text-slate-400 space-y-4 max-w-4xl opacity-80 leading-relaxed font-bold">
           <p className="text-slate-300">[ 필수안내사항 ]</p>
           <p>{branding?.customAddress || "보험대리점 : 인카금융서비스 (등록번호 : 제2006038313호) 본 광고는 광고심의기준을 준수하였으며, 유효기간은 심의일로부터 1년입니다."}</p>
+          {branding?.registrationNumber && (
+            <p className="text-orange-400 font-extrabold bg-slate-900 border border-slate-850 px-3.5 py-2 rounded-xl inline-block">
+              광고심의필: {branding.registrationNumber}
+            </p>
+          )}
           <p>보험계약자가 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서 질병이력, 연령증가 등으로 가입이 거절되거나 보험료가 인상될 수 있습니다. 또한 해약환급금 손실이 발생할 수 있으니 유의하시기 바랍니다.</p>
           <p className="text-slate-500">© {branding?.name || "보험리밸런스"}. All Rights Reserved.</p>
         </div>

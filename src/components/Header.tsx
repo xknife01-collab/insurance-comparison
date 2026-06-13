@@ -14,7 +14,7 @@ import {
 type ViewType =
   | 'admin' | 'home' | 'indemnity' | 'preexisting' | 'dental' | 'surgery'
   | 'cancer' | 'caregiving' | 'dementia' | 'cerebrovascular' | 'heart'
-  | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'property' | 'annuity' | 'whole' | 'variable' | 'legal' | 'credit' | 'health_general' | 'accident' | 'savings_general';
+  | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'property' | 'annuity' | 'whole' | 'variable' | 'legal' | 'credit' | 'health_general' | 'accident' | 'savings_general' | 'support';
 
 interface NavItem { label: string; view: ViewType; desc?: string; }
 interface NavGroup {
@@ -110,10 +110,18 @@ const ALL_GROUPS: NavGroup[] = [
 ];
 
 const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
-  const { branding } = useB2BBranding();
+  const { branding, deferredPrompt, onInstallClick, isInAppBrowser, setShowInAppGuide, isIOS, isStandalone } = useB2BBranding();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const searchResults = searchQuery
+    ? ALL_GROUPS.flatMap(g => g.items).filter(item =>
+        item.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (item.desc && item.desc.toLowerCase().includes(searchQuery.toLowerCase()))
+      )
+    : [];
 
   const navigate = (view: ViewType) => {
     setView(view);
@@ -138,21 +146,70 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
           {/* ── 상단 바 ── */}
           <div className="flex justify-between items-center h-16">
             <div
-              className="flex items-center gap-2 cursor-pointer transition-transform hover:scale-105 active:scale-95 shrink-0"
+              className="flex items-center gap-3 cursor-pointer transition-transform hover:scale-105 active:scale-95 shrink-0"
               onClick={() => navigate('home')}
             >
-              <img src={branding?.logoUrl || "/logo.png"} alt="Incar" className="h-[52px] w-auto object-contain" />
+              {branding?.type === 'organic' ? (
+                <>
+                  <img src="/logo.png" alt="Incar" className="h-12 w-auto object-contain" />
+                  <div className="h-6 w-[1px] bg-gray-200" />
+                </>
+              ) : (
+                branding?.logoUrl && branding.logoUrl !== "/6397187.png" && (
+                  <>
+                    <img src={branding.logoUrl} alt={branding.name} className="h-12 w-auto object-contain" />
+                    <div className="h-6 w-[1px] bg-gray-200" />
+                  </>
+                )
+              )}
+              <img src="/6397187.png" alt="보험리밸런스" className="h-12 w-auto object-contain" />
             </div>
 
-            <div className="hidden md:flex flex-1 max-w-sm mx-6">
+            <div className="hidden md:flex flex-1 max-w-sm mx-6 relative">
               <div className="relative w-full">
                 <input
                   type="text"
                   placeholder="검색어를 입력하세요"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && searchResults.length > 0) {
+                      navigate(searchResults[0].view);
+                      setSearchQuery('');
+                    }
+                  }}
                   className="w-full bg-gray-50 border border-gray-200 rounded-full py-2 px-4 pr-10 focus:outline-none focus:ring-2 focus:ring-orange-500/20 shadow-sm text-sm"
                 />
                 <Search className="absolute right-3 top-2.5 text-gray-400 w-5 h-5" />
               </div>
+
+              {/* Search Results Dropdown */}
+              {searchQuery && (
+                <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-150 rounded-2xl shadow-xl z-50 overflow-hidden max-h-60 overflow-y-auto">
+                  {searchResults.length > 0 ? (
+                    searchResults.map((item) => (
+                      <button
+                        key={item.view}
+                        onClick={() => {
+                          navigate(item.view);
+                          setSearchQuery('');
+                        }}
+                        className="w-full text-left px-4 py-3 hover:bg-orange-50/50 active:bg-orange-50 transition-colors border-b border-gray-50 last:border-0 flex justify-between items-center group"
+                      >
+                        <div>
+                          <span className="text-sm font-bold text-gray-800 group-hover:text-orange-600 transition-colors">{item.label}</span>
+                          {item.desc && <span className="text-xs text-gray-400 ml-2 font-medium">{item.desc}</span>}
+                        </div>
+                        <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-orange-400 transition-colors" />
+                      </button>
+                    ))
+                  ) : (
+                    <div className="p-4 text-center text-xs text-gray-400 font-medium">
+                      검색 결과가 없습니다.
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="hidden lg:flex items-center gap-4">
@@ -160,9 +217,6 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
                 <Phone className="w-4 h-4" />
                 <span className="font-bold text-sm">{branding?.customPhone || "080.808.1088"}</span>
               </div>
-              <button className="bg-white border border-gray-300 text-gray-700 px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors">
-                나의 라이프 플래너
-              </button>
               <button 
                 onClick={() => navigate('admin')}
                 className="bg-slate-900 border border-slate-800 text-white hover:bg-black px-4 py-1.5 rounded-lg text-sm font-bold shadow-sm transition-all cursor-pointer"
@@ -203,8 +257,12 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
               </button>
             ))}
             <div className="flex-1" />
-            <button className="text-xs font-bold text-gray-500 hover:text-orange-500 px-3">통합계산</button>
-            <button className="text-xs font-bold text-gray-500 hover:text-orange-500 px-3">고객센터</button>
+            <button 
+              onClick={() => navigate('support')}
+              className="text-xs font-bold text-gray-500 hover:text-orange-500 px-3 cursor-pointer"
+            >
+              고객센터
+            </button>
           </div>
         </div>
 
@@ -271,18 +329,72 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
           <div className="absolute right-0 top-0 h-full w-[85vw] max-w-sm bg-white shadow-2xl flex flex-col overflow-y-auto">
 
             <div className="flex items-center justify-between p-5 border-b border-gray-100 sticky top-0 bg-white z-10">
-              <img src={branding?.logoUrl || "/logo.png"} alt="Incar" className="h-10 w-auto object-contain" />
+              <div className="flex items-center gap-2">
+                {branding?.type === 'organic' ? (
+                  <>
+                    <img src="/logo.png" alt="Incar" className="h-8 w-auto object-contain" />
+                    <div className="h-4 w-[1px] bg-gray-200" />
+                  </>
+                ) : (
+                  branding?.logoUrl && branding.logoUrl !== "/6397187.png" && (
+                    <>
+                      <img src={branding.logoUrl} alt={branding.name} className="h-8 w-auto object-contain" />
+                      <div className="h-4 w-[1px] bg-gray-200" />
+                    </>
+                  )
+                )}
+                <img src="/6397187.png" alt="보험리밸런스" className="h-8 w-auto object-contain" />
+              </div>
               <button onClick={() => setMobileOpen(false)} className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors">
                 <X className="w-5 h-5 text-gray-600" />
               </button>
             </div>
 
-            <div className="p-4 border-b border-gray-50">
+            <div className="p-4 border-b border-gray-50 relative">
               <div className="relative">
-                <input type="text" placeholder="보험 종류를 검색하세요"
-                  className="w-full bg-gray-50 border border-gray-200 rounded-full py-2.5 px-4 pr-10 focus:outline-none focus:ring-2 focus:ring-orange-500/20 text-sm" />
+                <input
+                  type="text"
+                  placeholder="보험 종류를 검색하세요"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && searchResults.length > 0) {
+                      navigate(searchResults[0].view);
+                      setSearchQuery('');
+                    }
+                  }}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-full py-2.5 px-4 pr-10 focus:outline-none focus:ring-2 focus:ring-orange-500/20 text-sm"
+                />
                 <Search className="absolute right-3 top-2.5 text-gray-400 w-5 h-5" />
               </div>
+
+              {/* Mobile Search Results */}
+              {searchQuery && (
+                <div className="absolute top-full left-4 right-4 mt-1 bg-white border border-gray-150 rounded-2xl shadow-xl z-50 overflow-hidden max-h-60 overflow-y-auto">
+                  {searchResults.length > 0 ? (
+                    searchResults.map((item) => (
+                      <button
+                        key={item.view}
+                        onClick={() => {
+                          navigate(item.view);
+                          setSearchQuery('');
+                        }}
+                        className="w-full text-left px-4 py-3 hover:bg-orange-50/50 active:bg-orange-50 transition-colors border-b border-gray-50 last:border-0 flex justify-between items-center group"
+                      >
+                        <div>
+                          <span className="text-xs font-bold text-gray-800">{item.label}</span>
+                          {item.desc && <span className="text-[10px] text-gray-400 ml-2 font-medium">{item.desc}</span>}
+                        </div>
+                        <ChevronRight className="w-3.5 h-3.5 text-gray-300" />
+                      </button>
+                    ))
+                  ) : (
+                    <div className="p-4 text-center text-[10px] text-gray-400 font-bold">
+                      검색 결과가 없습니다.
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="flex-1 p-4 space-y-3">
@@ -317,9 +429,14 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
                 <Phone className="w-4 h-4" />
                 <span className="font-bold">{branding?.customPhone || "080.808.1088"}</span>
               </div>
-              <button className="w-full bg-orange-500 text-white py-3 rounded-2xl font-black text-sm hover:bg-orange-600 transition-colors">
-                나의 라이프 플래너
-              </button>
+              {!isStandalone && (deferredPrompt || isInAppBrowser || isIOS) && (
+                <button 
+                  onClick={(isInAppBrowser || isIOS) ? () => setShowInAppGuide(true) : onInstallClick}
+                  className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3.5 rounded-2xl font-black text-sm hover:from-orange-600 hover:to-orange-700 transition-all cursor-pointer flex items-center justify-center gap-2 shadow-[0_5px_15px_rgba(249,115,22,0.2)]"
+                >
+                  📱 1초 만에 앱 설치하기
+                </button>
+              )}
               <button 
                 onClick={() => navigate('admin')}
                 className="w-full bg-slate-900 text-white py-3 rounded-2xl font-black text-sm hover:bg-black transition-colors cursor-pointer"

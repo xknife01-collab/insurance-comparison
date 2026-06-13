@@ -1,0 +1,23 @@
+{
+  "short_name": "보험리밸런스",
+  "name": "보험리밸런스 - 0.1초 AI 빅데이터 보장 진단",
+  "icons": [
+    {
+      "src": "/6397187.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/6397187.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    }
+  ],
+  "start_url": "/?pwa=true",
+  "background_color": "#ffffff",
+  "theme_color": "#f97316",
+  "display": "standalone",
+  "orientation": "portrait"
+}

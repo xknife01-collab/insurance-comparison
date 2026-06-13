@@ -1,0 +1,24 @@
+Total rows in insurance_child_rates: 58
+Sample child rates:
+  Co: ABL생명 | Prod: (무)우리WON어린이보험(해약환급금 미지급형)[1형(재해장해보장형)] | Male: 23,061원 | Female: 21,314원
+  Co: ABL생명 | Prod: (무)우리WON어린이보험(해약환급금 미지급형)[2형(일반암진단보장형)] | Male: 34,761원 | Female: 30,644원
+  Co: ABL생명 | Prod: (무)우리WON어린이보험[1형(재해장해보장형)] | Male: 3,883원 | Female: 3,746원
+  Co: ABL생명 | Prod: (무)우리WON어린이보험[2형(일반암진단보장형)] | Male: 4,973원 | Female: 5,036원
+  Co: DB생명 | Prod: (무)백년친구 내가고른 어린이보험(2601)(표준형) | Male: 28,450원 | Female: 21,010원
+  Co: DB생명 | Prod: (무)백년친구 내가고른 어린이보험(2601)(해약환급금 미지급형) | Male: 20,880원 | Female: 16,220원
+  Co: DB손보 | Prod: (무)다이렉트자녀보험2605(CM) | Male: 26,602원 | Female: 23,144원
+  Co: DB손보 | Prod: (무)아이(I)러브(LOVE)플러스건강보험2604(10종) | Male: 7,890원 | Female: 7,550원
+  Co: DB손보 | Prod: (무)아이(I)러브(LOVE)플러스건강보험2604(11종) | Male: 5,130원 | Female: 4,720원
+  Co: DB손보 | Prod: (무)아이(I)러브(LOVE)플러스건강보험2604(2종) | Male: 65,720원 | Female: 62,330원
+  Co: DB손보 | Prod: (무)아이(I)러브(LOVE)플러스건강보험2604(4종) | Male: 5,590원 | Female: 4,430원
+  Co: DB손보 | Prod: (무)아이(I)러브(LOVE)플러스건강보험2604(8종) | Male: 66,610원 | Female: 63,280원
+  Co: DB손보 | Prod: (무)아이(I)러브(LOVE)플러스건강보험2604(9종) | Male: 50,800원 | Female: 48,610원
+  Co: DB손보 | Prod: (무)참좋은치아안심보험2510(자녀플랜) | Male: 11,606원 | Female: 13,666원
+  Co: KB손보 | Prod: KB 금쪽같은 자녀보험Plus(무배당)(26.04)_1종 1형(자녀 납입면제 환급형) | Male: 24,524원 | Female: 18,442원
+
+Total rows in insurance_child_sick_rates: 4
+Sample child sick rates:
+  Co: 현대해상 | Prod: 간편한 3.5.5 건강보험(어린이형) | Code: 3.5.5 | Male: 2원 | Female: 0원
+  Co: KB손해보험 | Prod: KB 슬기로운 간편어린이보험(3.5.5) | Code: 3.5.5 | Male: 2원 | Female: 0원
+  Co: 메리츠화재 | Prod: 간편한 3.5.5 어른이종합보험 | Code: 3.5.5 | Male: 2원 | Female: 0원
+  Co: DB손해보험 | Prod: 참좋은간편어린이(3.5.5) | Code: 3.5.5 | Male: 2원 | Female: 0원

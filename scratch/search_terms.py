@@ -1,0 +1,46 @@
+import os
+import pandas as pd
+import io
+import warnings
+
+warnings.filterwarnings('ignore')
+
+def load_raw_df(filepath):
+    try:
+        return pd.read_excel(filepath, engine='xlrd', header=None)
+    except Exception:
+        try:
+            with open(filepath, 'rb') as f:
+                raw_bytes = f.read()
+            for enc in ['cp949', 'euc-kr', 'utf-8']:
+                try:
+                    raw_text = raw_bytes.decode(enc)
+                    if '<table' in raw_text.lower():
+                        frames = pd.read_html(io.StringIO(raw_text), flavor='bs4')
+                        if frames:
+                            return frames[0]
+                except Exception:
+                    continue
+        except Exception:
+            pass
+    return None
+
+df = load_raw_df(r"C:\Users\zkfnt\Desktop\insurance-comparison-main\장기보장성 비교 공시 (5).xls")
+
+report_lines = ["=== SEARCH FOR PAYMENT / POLICY INFO IN 장기보장성 비교 공시 (5).xls ==="]
+
+keywords = ["년납", "일시납", "연납", "월납", "보험기간", "납입기간", "기준", "예시", "40세", "가입금액", "일시불"]
+found = []
+for idx, row in df.iterrows():
+    row_str = " ".join([str(x) for x in row.values])
+    matches = [k for k in keywords if k in row_str]
+    if matches:
+        found.append((idx, matches, [str(x).strip().replace('\n', ' ') for x in row.tolist()[:10]]))
+
+for idx, matches, row_vals in found:
+    report_lines.append(f"Row {idx:03d} (Matches {matches}): {row_vals}")
+
+with open(r"C:\Users\zkfnt\Desktop\insurance-comparison-main\insurance-comparison-main\scratch\search_terms_report.txt", "w", encoding="utf-8") as f:
+    f.write("\n".join(report_lines))
+
+print("Search terms completed!")

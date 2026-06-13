@@ -33,3 +33,51 @@
 .animate-marquee:hover {
   animation-play-state: paused;
 }
+
+/* 1. 도움말 가이드 전용 미세 글로우 애니메이션 (글씨 흔들림/투명도 변화 없음) */
+@keyframes help-glow-kf {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(249, 115, 22, 0.15), 0 0 10px rgba(249, 115, 22, 0.1);
+    border-color: rgba(249, 115, 22, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(249, 115, 22, 0.5), 0 0 30px rgba(249, 115, 22, 0.25);
+    border-color: rgba(249, 115, 22, 0.9);
+  }
+}
+.help-guide-glow {
+  animation: help-glow-kf 2s infinite ease-in-out;
+  border-width: 2px;
+  border-style: dashed;
+}
+
+/* 2. 대시보드 탭 전환 시 0.1초 반응형 페이드인 및 미세 솟아오름 애니메이션 */
+@keyframes tab-fade-slide-kf {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.active-tab-fade-slide {
+  animation: tab-fade-slide-kf 0.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 3. 소통 센터 메시지 말풍선 등장 애니메이션 */
+@keyframes bubble-enter-kf {
+  0% {
+    opacity: 0;
+    transform: scale(0.96) translateY(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+.bubble-enter {
+  animation: bubble-enter-kf 0.12s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+

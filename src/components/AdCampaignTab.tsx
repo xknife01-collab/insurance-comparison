@@ -34,11 +34,13 @@ interface AdCampaignTabProps {
     company_name?: string;
   };
   isSuperAdmin: boolean;
+  showHelpGuide?: boolean;
+  onToggleHelpGuide?: () => void;
 }
 
 const PRODUCTS_LIST = ['어린이보험', '종합 건강보험', '실손 의료보험', '치매/간병보험', '암보험', '운전자/자동차보험'];
 
-export const AdCampaignTab: React.FC<AdCampaignTabProps> = ({ currentUser, isSuperAdmin }) => {
+export const AdCampaignTab: React.FC<AdCampaignTabProps> = ({ currentUser, isSuperAdmin, showHelpGuide = false, onToggleHelpGuide }) => {
   const supabase = createClient();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   
@@ -431,13 +433,46 @@ export const AdCampaignTab: React.FC<AdCampaignTabProps> = ({ currentUser, isSup
               : '월 최소 300만원의 광고 충전 캐시 선결제로, 네이버 롱테일, 인스타 메타 릴스 광고 등 완벽히 대행해 드리는 플랫폼 연계 서비스입니다.'}
           </p>
         </div>
+
+        {onToggleHelpGuide && (
+          <button
+            type="button"
+            onClick={onToggleHelpGuide}
+            className={`flex items-center gap-2 px-4 py-3 rounded-2xl border text-[11px] font-black transition-all relative overflow-hidden shadow-md cursor-pointer shrink-0 ${
+              showHelpGuide 
+                ? 'bg-orange-500/10 border-orange-500/40 text-orange-400 hover:bg-orange-500/20 shadow-lg shadow-orange-500/5' 
+                : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <span className="relative flex h-2 w-2">
+              <span className={`animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75 ${showHelpGuide ? '' : 'hidden'}`}></span>
+              <span className={`relative inline-flex rounded-full h-2 w-2 ${showHelpGuide ? 'bg-orange-500' : 'bg-slate-600'}`}></span>
+            </span>
+            <span>💡 도움말 가이드 {showHelpGuide ? 'ON' : 'OFF'}</span>
+          </button>
+        )}
       </div>
 
       {!isSuperAdmin ? (
         /* Planner Form View */
         <div className="grid lg:grid-cols-5 gap-8">
           {/* Ad Campaign Info Banner */}
-          <div className="lg:col-span-2 space-y-6 bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 rounded-[2.5rem] p-8">
+          <div className={`lg:col-span-2 space-y-6 transition-all duration-300 ${
+            showHelpGuide 
+              ? 'border-2 border-dashed border-orange-500/80 animate-pulse bg-slate-900/90 rounded-[2.5rem]' 
+              : 'bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 rounded-[2.5rem]'
+          } p-8`}>
+            {showHelpGuide && (
+              <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)] relative z-10">
+                <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                <div className="pl-2 space-y-1">
+                  <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 광고 대행 현황판</span>
+                  <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                    "📢 플랫폼 내 광고 캐시를 충전하여 신청하면 본사 공식 광고 기획 대행사인 더윤컴퍼니가 네이버, 메타 스폰서드 광고 세팅을 실시간 대행하며, 신청 이력과 대행 상태를 추적 관리할 수 있습니다."
+                  </p>
+                </div>
+              </div>
+            )}
             <h3 className="text-lg font-black text-white flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-orange-500" />
               더윤컴퍼니 광고 대행 안내
@@ -524,7 +559,22 @@ export const AdCampaignTab: React.FC<AdCampaignTabProps> = ({ currentUser, isSup
           </div>
 
           {/* Ad Request Form Input */}
-          <form onSubmit={handleOpenContract} className="lg:col-span-3 bg-slate-900/40 border border-slate-850 rounded-[2.5rem] p-8 space-y-6">
+          <form onSubmit={handleOpenContract} className={`lg:col-span-3 p-8 space-y-6 transition-all duration-300 ${
+            showHelpGuide 
+              ? 'border-2 border-dashed border-orange-500/80 animate-pulse bg-slate-900/90 rounded-[2.5rem]' 
+              : 'bg-slate-900/40 border border-slate-850 rounded-[2.5rem]'
+          }`}>
+            {showHelpGuide && (
+              <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)] relative z-10">
+                <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                <div className="pl-2 space-y-1">
+                  <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 광고 대행 서비스 신청서</span>
+                  <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                    "✍️ 원하는 월 광고 예산액(수수료 포함)과 주요 타겟 보험 상품군을 다중 선택하고, 연동 서명함으로써 즉시 본사 1:1 대행 계약이 수립 및 예치 차감됩니다."
+                  </p>
+                </div>
+              </div>
+            )}
             <h3 className="text-lg font-black text-white">광고 대행 서비스 신청서</h3>
 
             {/* Budget options */}

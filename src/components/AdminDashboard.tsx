@@ -3,13 +3,15 @@ import { createClient } from '../utils/supabase/client';
 import { supabaseService } from '../utils/supabase/service';
 import { MarketingPlaybookTab } from './MarketingPlaybookTab';
 import { AdCampaignTab } from './AdCampaignTab';
-
+import { ChatTab } from './ChatTab';
+import { LeadDistributionSimulator } from './LeadDistributionSimulator';
+import { triggerWelcomeChat } from '../utils/chatHelper';
 
 import { 
   Users, Settings, CreditCard, FileText, Plus, LogOut, CheckCircle, 
   ExternalLink, Clock, Coins, Briefcase, ShieldAlert, ChevronRight, 
   User, Check, AlertCircle, Sparkles, Building, Phone, MapPin, Copy,
-  BarChart2, ShieldCheck, Download, BookOpen
+  BarChart2, ShieldCheck, Download, BookOpen, MessageSquare
 } from 'lucide-react';
 
 interface Agency {
@@ -41,6 +43,7 @@ interface Planner {
   subscription_expires_at?: string;
   company_name?: string;
   registration_number?: string;
+  email?: string;
 }
 
 interface Lead {
@@ -309,6 +312,8 @@ const getInsuranceTypeName = (type: string) => {
     : type;
 
   const map: Record<string, { label: string; bgClass: string; textClass: string }> = {
+    'support': { label: '고객센터 문의 📞', bgClass: 'bg-indigo-500/10 border-indigo-500/25', textClass: 'text-indigo-400' },
+    'support_consult': { label: '고객센터 문의 📞', bgClass: 'bg-indigo-500/10 border-indigo-500/25', textClass: 'text-indigo-400' },
     'remodeling': { label: '내 보험 다이어트 💸', bgClass: 'bg-emerald-500/10 border-emerald-500/25', textClass: 'text-emerald-400' },
     'remodeling_consult': { label: '카톡 정밀설계 요청 💬', bgClass: 'bg-amber-500/10 border-amber-500/25', textClass: 'text-amber-400' },
     'cancer': { label: '암보험 비교분석 🎗️', bgClass: 'bg-red-500/10 border-red-500/25', textClass: 'text-red-400' },
@@ -400,6 +405,31 @@ const getInsuranceTypeName = (type: string) => {
   };
 };
 
+const isLeadConsult = (type?: string | null): boolean => {
+  if (!type) return false;
+  return type.endsWith('_consult') || type === 'remodeling_consult' || type.endsWith('_sms');
+};
+
+const getUtmSourceBadge = (utmSource?: string) => {
+  if (!utmSource) return { label: '오가닉/기타', bgClass: 'bg-slate-800/40 text-slate-400 border-slate-700/50' };
+  
+  const cleanSource = utmSource.toLowerCase().trim();
+  const map: Record<string, { label: string; bgClass: string }> = {
+    'instagram': { label: '인스타그램 📸', bgClass: 'bg-pink-500/10 text-pink-400 border-pink-500/20' },
+    'facebook': { label: '페이스북 👥', bgClass: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20' },
+    'kakaotalk': { label: '카카오톡 💬', bgClass: 'bg-amber-500/15 text-amber-500 border-amber-500/20' },
+    'kakao': { label: '카카오톡 💬', bgClass: 'bg-amber-500/15 text-amber-500 border-amber-500/20' },
+    'naver': { label: '네이버 검색 💚', bgClass: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' },
+    'naver_gfa': { label: '네이버 GFA 💚', bgClass: 'bg-emerald-600/10 text-emerald-400 border-emerald-600/20' },
+    'google_ads': { label: '구글 광고 💙', bgClass: 'bg-blue-500/10 text-blue-400 border-blue-500/20' },
+    'google': { label: '구글 검색 💙', bgClass: 'bg-blue-650/10 text-blue-400 border-blue-600/20' },
+    'tiktok': { label: '틱톡 🎵', bgClass: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20' },
+    'organic': { label: '오가닉/직접 🌐', bgClass: 'bg-slate-800/40 text-slate-400 border-slate-700/50' }
+  };
+  
+  return map[cleanSource] || { label: `${utmSource} 🔗`, bgClass: 'bg-slate-800/40 text-slate-300 border-slate-700/50' };
+};
+
 export default function AdminDashboard() {
   const supabase = createClient();
   
@@ -457,13 +487,130 @@ export default function AdminDashboard() {
   const [invitedAgencyName, setInvitedAgencyName] = useState<string | null>(null);
 
   // Dashboard Tab state
-  const [activeTab, setActiveTab] = useState<'leads' | 'settings' | 'billing' | 'planners' | 'profile' | 'marketing' | 'playbook' | 'ad_campaign'>('leads');
+  const [activeTab, setActiveTab] = useState<'leads' | 'settings' | 'billing' | 'planners' | 'profile' | 'marketing' | 'playbook' | 'ad_campaign' | 'chat'>('leads');
+  const [unreadTotal, setUnreadTotal] = useState(0);
+
+  // 도움말 가이드 상태 및 로컬 스토리지 연동 (기본값 ON)
+  const [showHelpGuide, setShowHelpGuide] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('hide_help_guide') !== 'true';
+    }
+    return true;
+  });
+
+  const handleToggleHelpGuide = () => {
+    const nextVal = !showHelpGuide;
+    setShowHelpGuide(nextVal);
+    if (nextVal) {
+      localStorage.removeItem('hide_help_guide');
+    } else {
+      localStorage.setItem('hide_help_guide', 'true');
+    }
+  };
+
+  // FAQ 접기/펼치기 상태 및 로컬 스토리지 연동 (기본값 ON)
+  const [showFaq, setShowFaq] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('hide_faq') !== 'true';
+    }
+    return true;
+  });
+
+  const handleToggleFaq = () => {
+    const nextVal = !showFaq;
+    setShowFaq(nextVal);
+    if (nextVal) {
+      localStorage.removeItem('hide_faq');
+    } else {
+      localStorage.setItem('hide_faq', 'true');
+    }
+  };
+
+  const renderHelpGuideToggle = () => (
+    <button
+      type="button"
+      onClick={handleToggleHelpGuide}
+      className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl border text-[11px] font-black transition-all relative overflow-hidden shadow-md cursor-pointer shrink-0 ${
+        showHelpGuide 
+          ? 'bg-orange-500/10 border-orange-500/40 text-orange-400 hover:bg-orange-500/20 shadow-lg shadow-orange-500/5' 
+          : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200'
+      }`}
+    >
+      <span className="relative flex h-2 w-2">
+        <span className={`animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75 ${showHelpGuide ? '' : 'hidden'}`}></span>
+        <span className={`relative inline-flex rounded-full h-2 w-2 ${showHelpGuide ? 'bg-orange-500' : 'bg-slate-600'}`}></span>
+      </span>
+      <span>💡 도움말 가이드 {showHelpGuide ? 'ON' : 'OFF'}</span>
+    </button>
+  );
+
+  // Fetch unread messages total
+  const fetchUnreadTotal = async () => {
+    try {
+      const currentUserId = currentUser.plannerId || currentUser.agencyId || '00000000-0000-4000-a000-000000000000';
+      if (!currentUserId || currentUser.role === 'guest') return;
+
+      const { data: memberData } = await supabase
+        .from('chat_room_members')
+        .select('room_id')
+        .eq('user_id', currentUserId);
+
+      if (!memberData || memberData.length === 0) {
+        setUnreadTotal(0);
+        return;
+      }
+
+      const roomIds = memberData.map(m => m.room_id);
+
+      const { count } = await supabase
+        .from('chat_messages')
+        .select('*', { count: 'exact', head: true })
+        .in('room_id', roomIds)
+        .eq('is_read', false)
+        .neq('sender_id', currentUserId);
+
+      setUnreadTotal(count || 0);
+    } catch (err) {
+      console.warn("Failed to fetch unread total:", err);
+    }
+  };
+
+  // Subscribe to global messages to update unread badge
+  useEffect(() => {
+    const currentUserId = currentUser.plannerId || currentUser.agencyId || '00000000-0000-4000-a000-000000000000';
+    if (!currentUserId || currentUser.role === 'guest') return;
+
+    fetchUnreadTotal();
+
+    const channel = supabase
+      .channel('unread_count_sync')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'chat_messages'
+        },
+        () => {
+          fetchUnreadTotal();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [currentUser.plannerId, currentUser.agencyId, currentUser.role]);
+
   const [visitorLogs, setVisitorLogs] = useState<any[]>([]);
   const [marketingPeriod, setMarketingPeriod] = useState<'today' | '7days' | 'all'>('all');
   const [statsSubTab, setStatsSubTab] = useState<'marketing' | 'sales'>('marketing');
   const [leadsPeriod, setLeadsPeriod] = useState<'today' | '7days' | 'all'>('all');
   const [leadsCategoryFilter, setLeadsCategoryFilter] = useState<'all' | 'remodeling' | 'compare' | 'underwriting'>('all');
-  const [consultCategoryFilter, setConsultCategoryFilter] = useState<'all' | 'remodeling' | 'compare'>('all');
+  const [consultCategoryFilter, setConsultCategoryFilter] = useState<'all' | 'remodeling' | 'compare' | 'support'>('all');
+  const [analysisPage, setAnalysisPage] = useState(1);
+  const [consultPage, setConsultPage] = useState(1);
+
   
   // Credit Billing Ecosystem states
   const [transactions, setTransactions] = useState<CreditTransaction[]>([]);
@@ -499,6 +646,54 @@ export default function AdminDashboard() {
     } finally {
       setQuotaSaving(false);
     }
+  };
+
+  const handleUpdatePlannerWeight = async (plannerId: string, weight: number) => {
+    try {
+      const weightVal = Math.max(1, Math.min(100, weight));
+      const { error } = await supabaseService
+        .from('planners')
+        .update({ registration_number: `dist_weight:${weightVal}` })
+        .eq('id', plannerId);
+
+      if (error) throw error;
+      alert("설계사 배정 가중치가 변경되었습니다.");
+      await fetchData();
+    } catch (err: any) {
+      alert("가중치 변경 실패: " + err.message);
+    }
+  };
+
+  const handleTogglePlannerDistribution = async (plannerId: string, currentRegNum: string | null) => {
+    try {
+      const isDisabled = currentRegNum === 'dist_disabled';
+      const newVal = isDisabled ? 'dist_weight:5' : 'dist_disabled';
+      const { error } = await supabaseService
+        .from('planners')
+        .update({ registration_number: newVal })
+        .eq('id', plannerId);
+
+      if (error) throw error;
+      alert(isDisabled ? "자동 분배 대상에 포함되었습니다." : "자동 분배 대상에서 제외되었습니다.");
+      await fetchData();
+    } catch (err: any) {
+      alert("분배 상태 변경 실패: " + err.message);
+    }
+  };
+
+  const getPlannerAssignmentStats = (plannerId: string) => {
+    const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
+    const recentLeads = leads.filter(l => 
+      l.planner_id && 
+      l.created_at && 
+      new Date(l.created_at).getTime() >= thirtyDaysAgo
+    );
+    const totalCount = recentLeads.length;
+    const plannerCount = recentLeads.filter(l => l.planner_id === plannerId).length;
+    return {
+      count: plannerCount,
+      ratio: totalCount > 0 ? ((plannerCount / totalCount) * 100).toFixed(1) : '0.0'
+    };
   };
 
   const handleSaveAlertSettings = async () => {
@@ -641,6 +836,8 @@ export default function AdminDashboard() {
   const [editCustomAddress, setEditCustomAddress] = useState('');
   const [editPassword, setEditPassword] = useState('');
   const [editCompanyName, setEditCompanyName] = useState('');
+  const [editRegistrationNumber, setEditRegistrationNumber] = useState('');
+  const [editEmail, setEditEmail] = useState('');
 
   const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>, isReg: boolean) => {
     const file = e.target.files?.[0];
@@ -675,6 +872,15 @@ export default function AdminDashboard() {
   // Modal states
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
   const [leadSearchTerm, setLeadSearchTerm] = useState('');
+
+  // Reset pages when filters change
+  useEffect(() => {
+    setAnalysisPage(1);
+  }, [leadsPeriod, leadsCategoryFilter, leadSearchTerm]);
+
+  useEffect(() => {
+    setConsultPage(1);
+  }, [leadsPeriod, consultCategoryFilter, leadSearchTerm]);
   const [newMemoText, setNewMemoText] = useState('');
   const [copySuccess, setCopySuccess] = useState(false);
   const [assigningLead, setAssigningLead] = useState<Lead | null>(null);
@@ -705,9 +911,42 @@ export default function AdminDashboard() {
     setLoading(true);
     try {
       if (role === 'super') {
+        let { data: adminPlanner } = await supabase
+          .from('planners')
+          .select()
+          .eq('planner_code', 'admin')
+          .maybeSingle();
+
+        if (!adminPlanner) {
+          const newAdmin = {
+            id: '00000000-0000-4000-a000-000000000000',
+            planner_code: 'admin',
+            name: '플랫폼 총관리자',
+            phone: '080-808-1088',
+            custom_phone: '080-808-1088',
+            custom_address: '보험대리점 : 더윤컴퍼니 (등록번호 : 제2006038313호) 본 광고는 광고심의기준을 준수하였으며, 유효기간은 심의일로부터 1년입니다.',
+            greeting_title: '나만을 위한 맞춤형 보험 비교 서비스',
+            greeting_content: '대한민국 모든 보험사의 상품을 0.1초 만에 비교 분석하여 불필요한 고정 지출을 성공적으로 줄여 드립니다.',
+            company_name: '더윤컴퍼니',
+            subscription_status: 'active',
+            is_admin: true
+          };
+          const { data: inserted, error: insertErr } = await supabase
+            .from('planners')
+            .insert(newAdmin)
+            .select()
+            .single();
+          if (insertErr) {
+            console.error("Failed to insert default admin planner:", insertErr);
+          }
+          adminPlanner = inserted || newAdmin as any;
+        }
+
         setCurrentUser({
           role: 'super',
-          name: '시스템 총관리자',
+          plannerId: adminPlanner?.id,
+          name: '플랫폼 총관리자',
+          plannerCode: 'admin',
           subscriptionStatus: 'active'
         });
       } else if (role === 'agency') {
@@ -808,8 +1047,15 @@ export default function AdminDashboard() {
         return;
       }
 
+      let userRole: 'super' | 'agency' | 'planner' = 'planner';
+      if (planner.planner_code === 'admin') {
+        userRole = 'super';
+      } else if (planner.is_admin) {
+        userRole = 'agency';
+      }
+
       setCurrentUser({
-        role: planner.is_admin ? 'agency' : 'planner',
+        role: userRole,
         plannerId: planner.id,
         agencyId: planner.agency_id,
         name: planner.name,
@@ -916,6 +1162,9 @@ export default function AdminDashboard() {
         setLoading(false);
         return;
       }
+
+      // 2.5. Trigger onboarding welcome chat (runs asynchronously, caught internally)
+      await triggerWelcomeChat(plannerData.id, plannerData.name);
 
       // 3. Set logged in & Show Welcome
       const personalLink = `${window.location.origin}/?planner=${plannerData.planner_code}`;
@@ -1140,8 +1389,8 @@ export default function AdminDashboard() {
       let query = supabase.from('customer_leads').select().order('created_at', { ascending: false });
 
       if (currentUser.role === 'planner') {
-        // Planner can only see their own assigned leads
-        query = query.eq('planner_id', currentUser.plannerId);
+        // Planner can see their own assigned leads OR unassigned leads from their agency
+        query = query.or(`planner_id.eq.${currentUser.plannerId},and(planner_id.is.null,agency_id.eq.${currentUser.agencyId})`);
       } else if (currentUser.role === 'agency') {
         // Agency Admin can see all leads under their agency
         query = query.eq('agency_id', currentUser.agencyId);
@@ -1150,13 +1399,24 @@ export default function AdminDashboard() {
       const { data: leadList } = await query;
       
       // Map planner names locally for display
-      const mappedLeads = (leadList || []).map(lead => {
-        const matchedPlanner = (plannerList || []).find(p => p.id === lead.planner_id);
-        return {
-          ...lead,
-          planner_name: matchedPlanner ? matchedPlanner.name : '미배정'
-        };
-      });
+      const mappedLeads = (leadList || [])
+        .filter(lead => {
+          if (currentUser.role === 'planner') {
+            // Planner can only see their assigned leads OR unassigned CARD 1 leads
+            if (lead.planner_id === currentUser.plannerId) return true;
+            const isHighIntent = isLeadConsult(lead.insurance_type) || lead.insurance_type?.includes('_underwriting');
+            if (lead.planner_id === null && !isHighIntent) return true;
+            return false;
+          }
+          return true;
+        })
+        .map(lead => {
+          const matchedPlanner = (plannerList || []).find(p => p.id === lead.planner_id);
+          return {
+            ...lead,
+            planner_name: matchedPlanner ? matchedPlanner.name : '미배정'
+          };
+        });
 
       setLeads(mappedLeads);
 
@@ -1188,6 +1448,8 @@ export default function AdminDashboard() {
           setEditCustomAddress(myProfile.custom_address || '');
           setEditPassword(myProfile.password || '');
           setEditCompanyName(myProfile.company_name || '');
+          setEditRegistrationNumber(myProfile.registration_number || '');
+          setEditEmail(myProfile.email || '');
         }
       }
     } catch (err) {
@@ -1208,21 +1470,38 @@ export default function AdminDashboard() {
 
     // 1. Initial Creation Event
     if (lead.created_at) {
-      const isConsult = lead.insurance_type?.endsWith('_consult') || lead.insurance_type === 'remodeling_consult';
+      const isSupport = lead.insurance_type === 'support_consult';
+      const isConsult = isLeadConsult(lead.insurance_type);
+      
+      let detail = '무료 보장 진단 및 상담 신청이 접수되었습니다.';
+      if (isSupport) {
+        detail = '고객센터 1:1 문의글이 성공적으로 접수되었습니다.';
+      } else if (isConsult) {
+        detail = '카카오톡 1:1 최저가 설계서 상담 신청이 접수되었습니다.';
+      }
+
       timeline.push({
         id: 'created',
         type: 'created',
         author: '시스템',
-        detail: isConsult 
-          ? '카카오톡 1:1 최저가 설계서 상담 신청이 접수되었습니다.' 
-          : '무료 보장 진단 및 상담 신청이 접수되었습니다.',
+        detail,
         created_at: lead.created_at
       });
     }
 
     // 2. Add stored timeline events
     if (lead.raw_payload?.timeline && Array.isArray(lead.raw_payload.timeline)) {
-      timeline.push(...lead.raw_payload.timeline);
+      const mappedTimeline = lead.raw_payload.timeline.map((event: any) => {
+        if (lead.insurance_type === 'support_consult' && event.type === 'kakao_click') {
+          return {
+            ...event,
+            type: 'support_submit',
+            detail: '고객이 1:1 문의 폼을 작성하고 [전송하기]를 눌러 문의를 남겼습니다.'
+          };
+        }
+        return event;
+      });
+      timeline.push(...mappedTimeline);
     }
 
     // 3. Backward compatibility with memos
@@ -1380,7 +1659,7 @@ export default function AdminDashboard() {
   };
 
   const handleSendSmsTemplate = (lead: Lead) => {
-    const isConsult = lead.insurance_type?.endsWith('_consult') || lead.insurance_type === 'remodeling_consult';
+    const isConsult = isLeadConsult(lead.insurance_type);
     if (!isConsult) {
       alert("자가진단 리드는 무단 연락이 금지되어 있습니다.");
       return;
@@ -1430,7 +1709,7 @@ export default function AdminDashboard() {
         index + 1,
         l.name || '미기입',
         (() => {
-          const isConsult = l.insurance_type?.endsWith('_consult') || l.insurance_type === 'remodeling_consult';
+          const isConsult = isLeadConsult(l.insurance_type);
           const isUnderwriting = l.insurance_type?.includes('_underwriting');
           return (isConsult || isUnderwriting) ? (l.phone || '미기입') : maskPhoneNumber(l.phone);
         })(),
@@ -1566,11 +1845,11 @@ export default function AdminDashboard() {
       return;
     }
     if (!editCompanyName || editCompanyName.trim() === '') {
-      alert("지점(소속) 이름은 필수 입력 항목입니다. (예: 인카금융서비스 강남지점)");
+      alert("지점(소속) 이름은 필수 입력 항목입니다. (예: 더윤컴퍼니 강남지점)");
       return;
     }
     if (!editCustomAddress || editCustomAddress.trim() === '') {
-      alert("지점 주소 및 인증 문구는 필수 입력 항목입니다. (예: 인카금융서비스 공식 인증 설계사 또는 서울시 강남구 테헤란로 123)");
+      alert("지점 주소 및 인증 문구는 필수 입력 항목입니다. (예: 더윤컴퍼니 공식 인증 설계사 또는 서울시 강남구 테헤란로 123)");
       return;
     }
     setLoading(true);
@@ -1586,19 +1865,24 @@ export default function AdminDashboard() {
           custom_phone: editCustomPhone,
           custom_address: editCustomAddress,
           password: editPassword,
-          company_name: editCompanyName
+          company_name: editCompanyName,
+          registration_number: editRegistrationNumber,
+          email: editEmail
         })
         .eq('id', currentUser.plannerId);
 
       if (error) throw error;
 
       if (currentUser.role === 'agency' && currentUser.agencyId) {
-        const { error: agencyLogoError } = await supabase
+        const { error: agencyUpdateError } = await supabase
           .from('agencies')
-          .update({ logo_url: editLogoUrl })
+          .update({ 
+            logo_url: editLogoUrl,
+            email: editEmail
+          })
           .eq('id', currentUser.agencyId);
-        if (agencyLogoError) {
-          console.error("Failed to update agency logo:", agencyLogoError);
+        if (agencyUpdateError) {
+          console.error("Failed to update agency settings:", agencyUpdateError);
         }
       }
       alert("프로필 및 랜딩페이지 설정이 실시간으로 저장되었습니다. 즉시 내 홈페이지에 반영됩니다.");
@@ -1690,7 +1974,20 @@ export default function AdminDashboard() {
   const getCurrentRoutingType = () => {
     if (!currentUser.agencyId) return 'direct';
     const ag = agencies.find(a => a.id === currentUser.agencyId);
-    return ag ? ag.lead_routing_type : 'direct';
+    if (!ag) return 'direct';
+    if (ag.lead_routing_type && ag.lead_routing_type.startsWith('distribute_auto_')) {
+      return 'distribute_auto';
+    }
+    return ag.lead_routing_type || 'direct';
+  };
+
+  const getCurrentRoutingAlgo = () => {
+    if (!currentUser.agencyId) return 'round_robin';
+    const ag = agencies.find(a => a.id === currentUser.agencyId);
+    if (!ag) return 'round_robin';
+    if (ag.lead_routing_type === 'distribute_auto_weighted') return 'weighted';
+    if (ag.lead_routing_type === 'distribute_auto_activity') return 'activity';
+    return 'round_robin';
   };
 
   const isInKstDateRange = (dateStr: string, rangeType: 'today' | '7days' | 'all') => {
@@ -1740,7 +2037,7 @@ export default function AdminDashboard() {
       const dateMatch = isInKstDateRange(lead.created_at, leadsPeriod);
       if (!dateMatch) return false;
 
-      const isConsult = lead.insurance_type?.endsWith('_consult') || lead.insurance_type === 'remodeling_consult';
+      const isConsult = isLeadConsult(lead.insurance_type) || lead.insurance_type?.includes('_underwriting');
       if (isConsult) return false;
 
       if (leadSearchTerm.trim() !== '') {
@@ -1756,9 +2053,6 @@ export default function AdminDashboard() {
       if (leadsCategoryFilter === 'compare') {
         return lead.insurance_type !== 'remodeling' && !lead.insurance_type?.includes('_underwriting');
       }
-      if (leadsCategoryFilter === 'underwriting') {
-        return lead.insurance_type?.includes('_underwriting');
-      }
       return true;
     });
   };
@@ -1768,7 +2062,7 @@ export default function AdminDashboard() {
       const dateMatch = isInKstDateRange(lead.created_at, leadsPeriod);
       if (!dateMatch) return false;
 
-      const isConsult = lead.insurance_type?.endsWith('_consult') || lead.insurance_type === 'remodeling_consult';
+      const isConsult = isLeadConsult(lead.insurance_type) || lead.insurance_type?.includes('_underwriting');
       if (!isConsult) return false;
 
       if (leadSearchTerm.trim() !== '') {
@@ -1781,18 +2075,84 @@ export default function AdminDashboard() {
 
       if (consultCategoryFilter === 'all') return true;
       if (consultCategoryFilter === 'remodeling') {
-        return lead.insurance_type.includes('remodeling');
+        return lead.insurance_type?.includes('remodeling') || false;
       }
       if (consultCategoryFilter === 'compare') {
-        return !lead.insurance_type.includes('remodeling');
+        return !lead.insurance_type?.includes('remodeling') && lead.insurance_type !== 'support_consult' && !lead.insurance_type?.includes('_underwriting');
+      }
+      if (consultCategoryFilter === 'support') {
+        return lead.insurance_type === 'support_consult';
+      }
+      if (consultCategoryFilter === 'underwriting') {
+        return lead.insurance_type?.includes('_underwriting');
       }
       return true;
     });
   };
 
+  const renderPagination = (
+    currentPage: number, 
+    totalItems: number, 
+    itemsPerPage: number, 
+    onPageChange: (page: number) => void
+  ) => {
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    if (totalPages <= 1) return null;
+
+    const startItem = (currentPage - 1) * itemsPerPage + 1;
+    const endItem = Math.min(currentPage * itemsPerPage, totalItems);
+
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+      pageNumbers.push(i);
+    }
+
+    return (
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-800/40 px-2 text-slate-400">
+        <div className="text-[11px] font-bold">
+          총 <span className="text-orange-400 font-extrabold">{totalItems}</span>건 중{' '}
+          <span className="text-white font-extrabold">{startItem}</span> -{' '}
+          <span className="text-white font-extrabold">{endItem}</span> 표시 중
+        </div>
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            disabled={currentPage === 1}
+            onClick={() => onPageChange(currentPage - 1)}
+            className="px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-[10px] font-bold text-slate-300 hover:text-white disabled:opacity-30 disabled:hover:text-slate-300 transition-all cursor-pointer"
+          >
+            이전
+          </button>
+          {pageNumbers.map(page => (
+            <button
+              key={page}
+              type="button"
+              onClick={() => onPageChange(page)}
+              className={`w-7 h-7 rounded-lg text-[10px] font-black transition-all cursor-pointer ${
+                currentPage === page 
+                  ? 'bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/20' 
+                  : 'bg-slate-950 border border-slate-900 text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              {page}
+            </button>
+          ))}
+          <button
+            type="button"
+            disabled={currentPage === totalPages}
+            onClick={() => onPageChange(currentPage + 1)}
+            className="px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-[10px] font-bold text-slate-300 hover:text-white disabled:opacity-30 disabled:hover:text-slate-300 transition-all cursor-pointer"
+          >
+            다음
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   const renderLeadsTable = (leadsList: Lead[]) => {
     return (
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto max-h-[450px] overflow-y-auto pr-1">
         <table className="w-full min-w-[900px] text-left border-collapse">
           <thead>
             <tr className="border-b border-slate-800 text-[10px] text-slate-400 font-bold uppercase tracking-wider">
@@ -1819,7 +2179,7 @@ export default function AdminDashboard() {
                   </div>
                   <p className="text-[10px] text-slate-400 font-bold">
                     {(() => {
-                      const isConsult = lead.insurance_type?.endsWith('_consult') || lead.insurance_type === 'remodeling_consult';
+                      const isConsult = isLeadConsult(lead.insurance_type);
                       const isUnderwriting = lead.insurance_type?.includes('_underwriting');
                       return (isConsult || isUnderwriting) ? lead.phone : maskPhoneNumber(lead.phone);
                     })()} • {lead.age}세
@@ -1850,15 +2210,42 @@ export default function AdminDashboard() {
                         </span>
                       );
                     })()}
+                    {(() => {
+                      if (!isLeadConsult(lead.insurance_type) || lead.insurance_type === 'support_consult') return null;
+                      const consultType = lead.raw_payload?.consult_type;
+                      if (consultType === 'anonymous') {
+                        return (
+                          <span className="px-1.5 py-0.5 rounded bg-red-500/10 text-red-400 border border-red-500/20 text-[9px] font-black uppercase flex items-center gap-1 select-none">
+                            익명 상담 🔒
+                          </span>
+                        );
+                      }
+                      return (
+                        <span className="px-1.5 py-0.5 rounded bg-orange-500/10 text-orange-400 border border-orange-500/20 text-[9px] font-black uppercase flex items-center gap-1 select-none">
+                          정식 상담 🔑
+                        </span>
+                      );
+                    })()}
                   </div>
                 </td>
                 <td className="py-4.5 px-4 font-black text-orange-400">
                   {lead.monthly_premium?.toLocaleString() || 0} 원
                 </td>
-                <td className="py-4.5 px-4 text-slate-400 font-bold text-[10px] uppercase">
-                  {lead.lead_source === 'direct' && '개인직송 (Direct)'}
-                  {lead.lead_source === 'distribute' && '본사분배 (Central)'}
-                  {lead.lead_source === 'organic' && '오가닉 유입'}
+                <td className="py-4.5 px-4 space-y-1.5">
+                  <div className="text-slate-400 font-bold text-[10px] uppercase">
+                    {lead.lead_source === 'direct' && '개인직송 (Direct)'}
+                    {lead.lead_source === 'distribute' && '본사분배 (Central)'}
+                    {lead.lead_source === 'organic' && '오가닉 유입'}
+                  </div>
+                  {(() => {
+                    const utmSource = lead.raw_payload?.utm_source;
+                    const badge = getUtmSourceBadge(utmSource);
+                    return (
+                      <span className={`inline-block px-1.5 py-0.5 rounded border text-[9px] font-black tracking-tight ${badge.bgClass}`}>
+                        {badge.label}
+                      </span>
+                    );
+                  })()}
                 </td>
                 <td className="py-4.5 px-4">
                   <div className="flex items-center gap-1.5">
@@ -1913,6 +2300,7 @@ export default function AdminDashboard() {
       { key: 'naver', name: '네이버 일반/검색', iconColor: 'bg-emerald-500' },
       { key: 'facebook', name: '페이스북 스폰서드 광고', iconColor: 'bg-indigo-600' },
       { key: 'instagram', name: '인스타그램 피드/스토리 광고', iconColor: 'bg-pink-500' },
+      { key: 'kakaotalk', name: '카카오톡 공유/광고', iconColor: 'bg-amber-400' },
       { key: 'tiktok', name: '틱톡 동영상 광고', iconColor: 'bg-cyan-400' },
       { key: 'google', name: '구글 일반/검색', iconColor: 'bg-red-500' },
       { key: 'organic', name: '일반/자연 유입 (Direct)', iconColor: 'bg-slate-600' },
@@ -1922,9 +2310,14 @@ export default function AdminDashboard() {
     const filteredLeads = getFilteredLeads();
 
     const stats = channels.map(ch => {
-      const visits = filteredLogs.filter(log => log.utm_source === ch.key).length;
+      const visits = filteredLogs.filter(log => {
+        let logSrc = log.utm_source || 'organic';
+        if (logSrc === 'kakao') logSrc = 'kakaotalk';
+        return logSrc === ch.key;
+      }).length;
       const conversions = filteredLeads.filter(lead => {
-        const leadSrc = lead.raw_payload?.utm_source || 'organic';
+        let leadSrc = lead.raw_payload?.utm_source || 'organic';
+        if (leadSrc === 'kakao') leadSrc = 'kakaotalk';
         return leadSrc === ch.key;
       }).length;
       const rate = visits > 0 ? ((conversions / visits) * 100) : 0;
@@ -2620,7 +3013,7 @@ export default function AdminDashboard() {
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 pb-6 border-b border-slate-800">
             <div className="space-y-1">
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-3">
                 <h1 className="text-2xl font-black text-white">{currentUser.name} 관리자 콘솔</h1>
                 <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider ${currentUser.subscriptionStatus === 'active' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20 animate-pulse'}`}>
                   {currentUser.subscriptionStatus === 'active' ? '구독 활성화' : '구독 만료'}
@@ -2628,6 +3021,10 @@ export default function AdminDashboard() {
               </div>
               <p className="text-xs font-bold text-slate-400">
                 {currentUser.role === 'super' ? '시스템 내 모든 데이터를 통제 및 모니터링합니다.' : '수집된 리드를 0.1초 만에 확인하고 설계안을 지원합니다.'}
+              </p>
+              <p className="text-[10px] text-amber-400/95 font-black flex items-center gap-1.5 mt-1.5">
+                <span>📢</span>
+                <span>보험료 비교 데이터는 생명보험협회 및 손해보험협회 공시자료를 토대로 한달에 한번 업데이트 됩니다.</span>
               </p>
             </div>
             
@@ -2739,13 +3136,30 @@ export default function AdminDashboard() {
                 구독 결제 관리
               </button>
 
-              {(currentUser.role === 'agency' || currentUser.role === 'planner') && (
+               {(currentUser.role === 'agency' || currentUser.role === 'planner' || currentUser.role === 'super') && (
                 <button 
                   onClick={() => setActiveTab('profile')}
                   className={`w-auto lg:w-full whitespace-nowrap flex-shrink-0 flex items-center gap-2.5 px-4 py-3 rounded-xl text-left font-bold text-xs transition-all cursor-pointer ${activeTab === 'profile' ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/10' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}
                 >
                   <User className="w-4 h-4" />
-                  개인 프로필/랜딩 설정
+                  {currentUser.role === 'super' ? '대표 랜딩페이지 설정' : '개인 프로필/랜딩 설정'}
+                </button>
+              )}
+
+               {(currentUser.role === 'agency' || currentUser.role === 'planner' || currentUser.role === 'super') && (
+                <button 
+                  onClick={() => setActiveTab('chat')}
+                  className={`w-auto lg:w-full whitespace-nowrap flex-shrink-0 flex items-center justify-between px-4 py-3 rounded-xl text-left font-bold text-xs transition-all cursor-pointer ${activeTab === 'chat' ? 'bg-violet-600 text-white shadow-lg shadow-violet-500/10' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <MessageSquare className="w-4 h-4" />
+                    <span>실시간 소통 센터 💬</span>
+                  </div>
+                  {unreadTotal > 0 && (
+                    <span className="bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-black animate-pulse">
+                      {unreadTotal}
+                    </span>
+                  )}
                 </button>
               )}
             </div>
@@ -2755,10 +3169,10 @@ export default function AdminDashboard() {
               
               {/* Tab 1: Leads view */}
               {activeTab === 'leads' && (
-                <div className="space-y-8">
+                <div key="leads" className="active-tab-fade-slide space-y-8">
                   
-                  {/* Header with Period Filter Tabs */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+                  {/* Header Row 1: Title and Toggle */}
+                  <div className="flex flex-row justify-between items-center gap-4 pb-2">
                     <div className="space-y-1 text-left">
                       <h2 className="text-lg font-black text-white">상담 리드 수집 목록</h2>
                       <p className="text-[10px] text-slate-400 font-bold">
@@ -2766,57 +3180,59 @@ export default function AdminDashboard() {
                       </p>
                     </div>
 
-                    {/* Search and Leads Period Filter Tabs */}
-                    <div className="flex flex-wrap items-center gap-3 self-start sm:self-auto">
-                      <div className="relative">
-                        <input
-                          type="text"
-                          placeholder="이름, 연락처, 설계코드 검색..."
-                          value={leadSearchTerm}
-                          onChange={(e) => setLeadSearchTerm(e.target.value)}
-                          className="bg-slate-950 border border-slate-850 hover:border-slate-800 focus:border-orange-500/50 rounded-xl py-1.5 pl-3 pr-8 text-xs font-bold text-white outline-none w-52 transition-all placeholder:text-slate-600"
-                        />
-                        {leadSearchTerm && (
-                          <button 
-                            type="button"
-                            onClick={() => setLeadSearchTerm('')}
-                            className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white text-[10px] font-bold cursor-pointer"
-                          >
-                            ✕
-                          </button>
-                        )}
-                      </div>
+                    {renderHelpGuideToggle()}
+                  </div>
 
-                      <div className="bg-slate-950 p-1 rounded-xl border border-slate-850 flex items-center gap-1 shrink-0">
-                        <button
+                  {/* Header Row 2: Search and Leads Period Filter Tabs */}
+                  <div className="flex flex-wrap items-center justify-end gap-3 border-b border-slate-800/80 pb-4">
+                    <div className="relative">
+                      <input
+                        type="text"
+                        placeholder="이름, 연락처, 설계코드 검색..."
+                        value={leadSearchTerm}
+                        onChange={(e) => setLeadSearchTerm(e.target.value)}
+                        className="bg-slate-950 border border-slate-850 hover:border-slate-800 focus:border-orange-500/50 rounded-xl py-1.5 pl-3 pr-8 text-xs font-bold text-white outline-none w-52 transition-all placeholder:text-slate-600"
+                      />
+                      {leadSearchTerm && (
+                        <button 
                           type="button"
-                          onClick={() => setLeadsPeriod('today')}
-                          className={`px-3 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${leadsPeriod === 'today' ? 'bg-orange-500 text-white shadow shadow-orange-500/10' : 'text-slate-400 hover:text-slate-200'}`}
+                          onClick={() => setLeadSearchTerm('')}
+                          className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white text-[10px] font-bold cursor-pointer"
                         >
-                          오늘
+                          ✕
                         </button>
-                        <button
-                          type="button"
-                          onClick={() => setLeadsPeriod('7days')}
-                          className={`px-3 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${leadsPeriod === '7days' ? 'bg-orange-500 text-white shadow shadow-orange-500/10' : 'text-slate-400 hover:text-slate-200'}`}
-                        >
-                          최근 7일
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setLeadsPeriod('all')}
-                          className={`px-3 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${leadsPeriod === 'all' ? 'bg-orange-500 text-white shadow shadow-orange-500/10' : 'text-slate-400 hover:text-slate-200'}`}
-                        >
-                          전체 기간
-                        </button>
-                      </div>
+                      )}
+                    </div>
+
+                     <div className="bg-slate-950 p-1 rounded-xl border border-slate-850 flex items-center gap-1 shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => setLeadsPeriod('today')}
+                        className={`px-3 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${leadsPeriod === 'today' ? 'bg-orange-500 text-white shadow shadow-orange-500/10' : 'text-slate-400 hover:text-slate-200'}`}
+                      >
+                        오늘
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setLeadsPeriod('7days')}
+                        className={`px-3 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${leadsPeriod === '7days' ? 'bg-orange-500 text-white shadow shadow-orange-500/10' : 'text-slate-400 hover:text-slate-200'}`}
+                      >
+                        최근 7일
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setLeadsPeriod('all')}
+                        className={`px-3 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${leadsPeriod === 'all' ? 'bg-orange-500 text-white shadow shadow-orange-500/10' : 'text-slate-400 hover:text-slate-200'}`}
+                      >
+                        전체 기간
+                      </button>
                     </div>
                   </div>
 
-                  {/* 카카오톡 설계코드 안내 배너 */}
-                  <div className="bg-gradient-to-r from-orange-500/10 to-transparent border border-orange-500/20 p-4.5 rounded-2xl flex items-start gap-3 relative overflow-hidden">
+                  {/* 카카오톡 설계코드 상담 매칭 기능 안내 배너 */}
+                  <div className="bg-gradient-to-r from-orange-500/10 to-transparent border border-orange-500/20 p-4.5 rounded-2xl flex items-start gap-3 relative overflow-hidden text-left">
                     <span className="text-xl shrink-0">🔑</span>
-                    <div className="space-y-1 text-left">
+                    <div className="space-y-1">
                       <h4 className="text-xs font-extrabold text-orange-400">카카오톡 설계코드 상담 매칭 기능 안내</h4>
                       <p className="text-[11px] text-slate-300 font-bold leading-relaxed break-keep">
                         고객이 카카오톡으로 상담을 신청하면 메시지에 포함된 설계 코드 <code className="text-orange-300 font-black bg-orange-500/5 px-1 py-0.5 rounded border border-orange-500/15 font-mono uppercase tracking-wider text-[10px]">RPT-xxxxxx</code>를 복사하여 오른쪽 검색창에 입력하세요. 0.1초 만에 해당 고객의 가입 내역, 진단 결과 및 세부 타임라인을 파악하여 신속하고 정확한 맞춤형 보험 상담을 진행할 수 있습니다.
@@ -2825,16 +3241,28 @@ export default function AdminDashboard() {
                   </div>
 
                   {/* ── CARD 1: 실시간 보험 분석 & 다이어트 시도 목록 (잠재고객 DB) ── */}
-                  <div className="bg-slate-900/40 border border-slate-800/80 p-6 rounded-[2rem] space-y-6">
-                    <div className="space-y-1">
+                  <div className={`p-6 rounded-[2rem] space-y-6 relative overflow-hidden transition-all duration-300 ${
+                    showHelpGuide 
+                      ? 'help-guide-glow bg-slate-900/20 shadow-[0_20px_50px_-12px_rgba(255,107,0,0.25)]' 
+                      : 'bg-slate-900/40 border border-slate-800/80 shadow-none'
+                  }`}>
+                    {showHelpGuide && (
+                      <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)] relative z-10">
+                        <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                        <div className="pl-2 space-y-1">
+                          <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 실시간 자가진단 분석 리드 목록</span>
+                          <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                            "📊 홈페이지에 들어와서 자가보장비교 및 보험 다이어트를 완료한 잠재고객 DB입니다. 연락처와 상세 보장 분석 내역이 자동으로 수집되어 즉각 상담이 가능합니다."
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                    <div className="space-y-1 text-left">
                       <h3 className="text-sm font-black text-white flex items-center gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                         실시간 보험 분석 & 다이어트 시도 목록
                       </h3>
                       <p className="text-[10px] text-slate-400 font-bold">고객이 홈페이지에서 자가 보장 진단 및 보험 분석을 수행하여 이탈 방지용으로 자동 수집된 DB입니다.</p>
-                      <div className="mt-3 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-[10px] text-emerald-400 font-extrabold leading-relaxed break-keep">
-                        🟢 [사전 심사 요청 고객 대응 가이드] 본 고객은 과거 병력을 기반으로 가입 가능 여부를 심사받기 위해 사전 심사를 직접 신청한 고객입니다. 빠른 가입 여부 피드백 및 심사 진행을 위해 즉시 전화 통화 또는 카카오톡으로 연락하여 병력 보완 사항을 확인하고 상담을 진행하시기 바랍니다.
-                      </div>
                     </div>
 
                     {/* Upper Category Filter Tabs */}
@@ -2849,7 +3277,7 @@ export default function AdminDashboard() {
                             onClick={() => setLeadsCategoryFilter('all')}
                             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${leadsCategoryFilter === 'all' ? 'bg-orange-500 text-white shadow shadow-orange-500/10' : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-850'}`}
                           >
-                            전체보기 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && !l.insurance_type?.endsWith('_consult') && l.insurance_type !== 'remodeling_consult').length}건)
+                            전체보기 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && !isLeadConsult(l.insurance_type) && !l.insurance_type?.includes('_underwriting')).length}건)
                           </button>
                           <button
                             type="button"
@@ -2863,14 +3291,7 @@ export default function AdminDashboard() {
                             onClick={() => setLeadsCategoryFilter('compare')}
                             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${leadsCategoryFilter === 'compare' ? 'bg-sky-500 text-white shadow shadow-sky-500/10' : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-850'}`}
                           >
-                            📊 보험 비교분석 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && !l.insurance_type?.endsWith('_consult') && l.insurance_type !== 'remodeling_consult' && l.insurance_type !== 'remodeling' && !l.insurance_type?.includes('_underwriting')).length}건)
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setLeadsCategoryFilter('underwriting')}
-                            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${leadsCategoryFilter === 'underwriting' ? 'bg-amber-500 text-white shadow shadow-amber-500/10' : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-850'}`}
-                          >
-                            🔍 사전심사 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && !l.insurance_type?.endsWith('_consult') && l.insurance_type !== 'remodeling_consult' && l.insurance_type?.includes('_underwriting')).length}건)
+                            📊 보험 비교분석 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && !isLeadConsult(l.insurance_type) && l.insurance_type !== 'remodeling' && !l.insurance_type?.includes('_underwriting')).length}건)
                           </button>
                         </div>
                       </div>
@@ -2890,22 +3311,45 @@ export default function AdminDashboard() {
                         <p className="text-xs font-bold">수집된 자가 분석 리드가 없습니다.</p>
                       </div>
                     ) : (
-                      renderLeadsTable(getFilteredAnalysisLeads())
+                      <div className="space-y-4">
+                        {renderLeadsTable(getFilteredAnalysisLeads().slice((analysisPage - 1) * 10, analysisPage * 10))}
+                        {renderPagination(analysisPage, getFilteredAnalysisLeads().length, 10, setAnalysisPage)}
+                      </div>
                     )}
                   </div>
 
                   {/* ── CARD 2: 🔥 카카오톡 정밀설계 신청 목록 (초고관여 상담 DB) ── */}
-                  <div className="bg-slate-950 border-2 border-orange-500/30 p-6 rounded-[2rem] space-y-6 shadow-[0_20px_50px_-12px_rgba(255,107,0,0.15)] relative overflow-hidden">
+                  <div className={`p-6 rounded-[2rem] space-y-6 relative overflow-hidden transition-all duration-300 ${
+                    showHelpGuide 
+                      ? 'help-guide-glow bg-slate-950/90 shadow-[0_20px_50px_-12px_rgba(255,107,0,0.25)]' 
+                      : 'bg-slate-950 border-2 border-orange-500/30 shadow-[0_20px_50px_-12px_rgba(255,107,0,0.15)]'
+                  }`}>
+                    {showHelpGuide && (
+                      <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)] relative z-10">
+                        <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                        <div className="pl-2 space-y-1">
+                          <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 실시간 고객 상담 신청 현황 (리드 목록)</span>
+                          <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                            "📋 진단을 마친 고객이 상담 신청 시 실시간으로 DB가 쌓이는 곳입니다. 상세 보기 버튼을 눌러 고객의 성별, 연령, 매칭률 및 상세 설문 결과를 확인하고 상담을 진행하세요."
+                          </p>
+                        </div>
+                      </div>
+                    )}
                     <div className="absolute top-0 right-0 p-4 opacity-[0.02] pointer-events-none">
                       <ShieldCheck className="w-48 h-48 text-orange-500" />
                     </div>
                     
-                    <div className="space-y-1 relative z-10">
+                    <div className="space-y-1 relative z-10 text-left">
                       <h3 className="text-sm font-black text-white flex items-center gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-                        💬 카카오톡 정밀설계 신청 목록
+                        💬 카톡 상담 신청 및 1:1 고객센터 문의 목록
                       </h3>
-                      <p className="text-[10px] text-slate-400 font-bold">고객이 분석 결과를 확인한 후 설계사에게 직접 카카오톡 맞춤 상담 및 최저가 제안서를 요청한 초고관여 DB입니다.</p>
+                      <p className="text-[10px] text-slate-400 font-bold">고객이 분석 결과를 확인한 후 카톡 상담을 요청했거나, 고객센터를 통해 1:1 문의를 남긴 초고관여 리드 목록입니다.</p>
+                      {(consultCategoryFilter === 'all' || consultCategoryFilter === 'underwriting') && (
+                        <div className="mt-3 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-[10px] text-emerald-400 font-extrabold leading-relaxed break-keep">
+                          🟢 [사전 심사 요청 고객 대응 가이드] 본 고객은 과거 병력을 기반으로 가입 가능 여부를 심사받기 위해 사전 심사를 직접 신청한 고객입니다. 빠른 가입 여부 피드백 및 심사 진행을 위해 즉시 전화 통화 또는 카카오톡으로 연락하여 병력 보완 사항을 확인하고 상담을 진행하시기 바랍니다.
+                        </div>
+                      )}
                     </div>
 
                     {/* Lower Category Filter Tabs */}
@@ -2920,21 +3364,35 @@ export default function AdminDashboard() {
                             onClick={() => setConsultCategoryFilter('all')}
                             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${consultCategoryFilter === 'all' ? 'bg-amber-500 text-white shadow shadow-amber-500/10' : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-850'}`}
                           >
-                            전체보기 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && (l.insurance_type?.endsWith('_consult') || l.insurance_type === 'remodeling_consult')).length}건)
+                            전체보기 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && (isLeadConsult(l.insurance_type) || l.insurance_type?.includes('_underwriting'))).length}건)
                           </button>
                           <button
                             type="button"
                             onClick={() => setConsultCategoryFilter('remodeling')}
                             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${consultCategoryFilter === 'remodeling' ? 'bg-emerald-500 text-white shadow shadow-emerald-500/10' : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-850'}`}
                           >
-                            💸 내 보험 다이어트 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && (l.insurance_type === 'remodeling_consult')).length}건)
+                            💸 내 보험 다이어트 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && (isLeadConsult(l.insurance_type) || l.insurance_type?.includes('_underwriting')) && l.insurance_type?.includes('remodeling')).length}건)
                           </button>
                           <button
                             type="button"
                             onClick={() => setConsultCategoryFilter('compare')}
                             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${consultCategoryFilter === 'compare' ? 'bg-sky-500 text-white shadow shadow-sky-500/10' : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-850'}`}
                           >
-                            📊 보험 비교분석 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && l.insurance_type?.endsWith('_consult') && l.insurance_type !== 'remodeling_consult').length}건)
+                            📊 보험 비교분석 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && isLeadConsult(l.insurance_type) && !l.insurance_type?.includes('remodeling') && l.insurance_type !== 'support_consult').length}건)
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setConsultCategoryFilter('underwriting')}
+                            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${consultCategoryFilter === 'underwriting' ? 'bg-amber-500 text-white shadow shadow-amber-500/10' : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-850'}`}
+                          >
+                            🔍 사전심사 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && l.insurance_type?.includes('_underwriting')).length}건)
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setConsultCategoryFilter('support')}
+                            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${consultCategoryFilter === 'support' ? 'bg-indigo-500 text-white shadow shadow-indigo-500/10' : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-850'}`}
+                          >
+                            📞 고객센터 문의 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && l.insurance_type === 'support_consult').length}건)
                           </button>
                         </div>
                       </div>
@@ -2951,10 +3409,13 @@ export default function AdminDashboard() {
                     {getFilteredConsultLeads().length === 0 ? (
                       <div className="flex flex-col items-center justify-center py-12 text-slate-500 space-y-2 bg-slate-950/20 rounded-2xl border border-slate-900/60">
                         <FileText className="w-10 h-10 text-slate-600" />
-                        <p className="text-xs font-bold">수집된 카카오톡 상담 요청 리드가 없습니다.</p>
+                        <p className="text-xs font-bold">수집된 카카오톡 상담 요청 또는 고객센터 문의 리드가 없습니다.</p>
                       </div>
                     ) : (
-                      renderLeadsTable(getFilteredConsultLeads())
+                      <div className="space-y-4">
+                        {renderLeadsTable(getFilteredConsultLeads().slice((consultPage - 1) * 10, consultPage * 10))}
+                        {renderPagination(consultPage, getFilteredConsultLeads().length, 10, setConsultPage)}
+                      </div>
                     )}
                   </div>
                 </div>
@@ -2962,21 +3423,50 @@ export default function AdminDashboard() {
 
               {/* Tab 2: Planners panel */}
               {activeTab === 'planners' && (
-                <div className="space-y-6">
+                <div key="planners" className="active-tab-fade-slide space-y-6">
+                  {showHelpGuide && (
+                    <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)]">
+                      <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                      <div className="pl-2 space-y-1">
+                        <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 소속 설계사 관리</span>
+                        <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                          "👥 대리점에 소속되어 활동 중인 보험 설계사(플래너) 목록입니다. 신규 플래너의 가입 승인, 승인 대기 해제, 활동 상태(활성/정지)를 한눈에 관리하세요."
+                        </p>
+                      </div>
+                    </div>
+                  )}
                   <div className="flex items-center justify-between">
                     <h2 className="text-lg font-black text-white">
                       {currentUser.role === 'super' ? '전체 가입 설계사 현황' : '대리점 소속 설계사 관리'}
                     </h2>
-                    <span className="px-2.5 py-0.5 bg-blue-500/10 text-blue-400 rounded-lg text-[10px] font-black">
-                      {currentUser.role === 'super' 
-                        ? `전체 설계사: ${planners.length}명`
-                        : `대리점 소속원: ${planners.filter(p => p.agency_id === currentUser.agencyId).length}명`}
-                    </span>
+                    <div className="flex items-center gap-3">
+                      <span className="px-2.5 py-0.5 bg-blue-500/10 text-blue-400 rounded-lg text-[10px] font-black">
+                        {currentUser.role === 'super' 
+                          ? `전체 설계사: ${planners.length}명`
+                          : `대리점 소속원: ${planners.filter(p => p.agency_id === currentUser.agencyId).length}명`}
+                      </span>
+                      {renderHelpGuideToggle()}
+                    </div>
                   </div>
 
                   {/* 초대 코드 및 링크 섹션 */}
                   {currentUser.role === 'agency' && (
-                    <div className="bg-gradient-to-r from-blue-500/10 via-slate-900 to-slate-950 border border-blue-500/20 rounded-2xl p-6 text-left space-y-4">
+                    <div className={`bg-gradient-to-r from-blue-500/10 via-slate-900 to-slate-950 rounded-2xl p-6 text-left space-y-4 transition-all duration-300 relative overflow-hidden ${
+                      showHelpGuide 
+                        ? 'border-2 border-dashed border-orange-500/80 animate-pulse bg-slate-900/10' 
+                        : 'border border-blue-500/20'
+                    }`}>
+                      {showHelpGuide && (
+                        <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)] relative z-10">
+                          <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                          <div className="pl-2 space-y-1">
+                            <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 소속 설계사 가입 초대 링크</span>
+                            <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                              "🔗 대리점에 소속되어 활동할 설계사분들에게 전달할 초대 링크입니다. 이 링크로 가입한 플래너는 대리점 승인 대기 목록에 자동으로 등록됩니다."
+                            </p>
+                          </div>
+                        </div>
+                      )}
                       <div className="flex items-center gap-2">
                         <span className="px-2 py-0.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded text-[9px] font-black uppercase">
                           INVITATION LINK
@@ -3007,7 +3497,21 @@ export default function AdminDashboard() {
                     </div>
                   )}
 
-                  <div className="grid md:grid-cols-2 gap-4">
+                  {showHelpGuide && (
+                    <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)] mb-4">
+                      <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                      <div className="pl-2 space-y-1">
+                        <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 소속 설계사 목록 및 승인</span>
+                        <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                          "👥 등록된 설계사의 코드를 확인하고 홍보 링크를 복사할 수 있으며, 신규 가입한 대기 설계사의 가입 승인 및 해지가 가능합니다."
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className={`grid md:grid-cols-2 gap-4 transition-all duration-300 ${
+                    showHelpGuide ? 'help-guide-glow p-4 rounded-[2rem] bg-slate-900/10' : ''
+                  }`}>
                     {planners
                       .filter(p => currentUser.role === 'super' ? true : p.agency_id === currentUser.agencyId)
                       .map(p => (
@@ -3082,15 +3586,43 @@ export default function AdminDashboard() {
 
               {/* Tab: Agencies panel (Super Admin only) */}
               {activeTab === 'agencies' && currentUser.role === 'super' && (
-                <div className="space-y-6">
+                <div key="agencies" className="active-tab-fade-slide space-y-6">
+                  {showHelpGuide && (
+                    <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)]">
+                      <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                      <div className="pl-2 space-y-1">
+                        <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 전체 대리점 관리 (총관리자 전용)</span>
+                        <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                          "🏢 시스템 내에 등록된 모든 보험대리점(GA)의 결제 상태, 보유 크레딧 잔액, 소속 설계사 수 및 분배 방식을 통합 관제하고 크레딧 조정을 수행합니다."
+                        </p>
+                      </div>
+                    </div>
+                  )}
                   <div className="flex items-center justify-between">
                     <h2 className="text-lg font-black text-white">전체 등록 대리점 관리</h2>
-                    <span className="px-2.5 py-0.5 bg-blue-500/10 text-blue-400 rounded-lg text-[10px] font-black">
-                      등록 대리점: {agencies.length}개
-                    </span>
+                    <div className="flex items-center gap-3">
+                      <span className="px-2.5 py-0.5 bg-blue-500/10 text-blue-400 rounded-lg text-[10px] font-black">
+                        등록 대리점: {agencies.length}개
+                      </span>
+                      {renderHelpGuideToggle()}
+                    </div>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-4">
+                  {showHelpGuide && (
+                    <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)] mb-4">
+                      <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                      <div className="pl-2 space-y-1">
+                        <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 대리점 정보 및 크레딧 실시간 충전</span>
+                        <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                          "🏢 등록 대리점들의 정보를 수정하거나, 선불 API 조회 크레딧을 추가/차감 충전하여 강제 할당 상태를 0.1초 만에 즉각 제어하는 관제 카드입니다."
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className={`grid md:grid-cols-2 gap-4 transition-all duration-300 ${
+                    showHelpGuide ? 'help-guide-glow p-4 rounded-[2rem] bg-slate-900/10' : ''
+                  }`}>
                     {agencies.map((agency) => {
                       const affiliatedPlannersCount = planners.filter(p => p.agency_id === agency.id).length;
                       return (
@@ -3163,61 +3695,488 @@ export default function AdminDashboard() {
 
               {/* Tab 3: Settings panel */}
               {activeTab === 'settings' && (
-                <div className="space-y-6">
-                  <h2 className="text-lg font-black text-white">대리점 DB 분배 방식 변경 설정</h2>
+                <div key="settings" className="active-tab-fade-slide space-y-6">
+                  {showHelpGuide && (
+                    <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)]">
+                      <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                      <div className="pl-2 space-y-1">
+                        <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 대리점 분배 정책 설정</span>
+                        <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                          "⚙️ 소속 설계사들에게 신규 유입 고객 DB를 분배하는 알고리즘 규칙(자동 즉시 분배 vs 대리점주 수동 재할당) 및 상세 시스템 정책을 실시간으로 제어합니다."
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  <div className="flex justify-between items-center">
+                    <h2 className="text-lg font-black text-white">대리점 DB 분배 방식 변경 설정</h2>
+                    {renderHelpGuideToggle()}
+                  </div>
                   <p className="text-xs text-slate-400 font-bold leading-normal break-keep">
                     대표 광고 또는 소속 플래너들이 수집한 고객 상담 데이터(리드)를 대리점 내부에서 어떻게 흐르게 할 것인지 결정합니다. 설정 변경 시 즉시 Supabase DB에 반영되어 다음 리드부터 적용됩니다.
                   </p>
-                  <div className="grid md:grid-cols-2 gap-6 pt-4">
+                  {showHelpGuide && (
+                    <div className="p-6 bg-slate-950 border border-orange-500/30 rounded-[2rem] text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.08)] mb-6">
+                      <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-orange-500 to-amber-500" />
+                      <div className="pl-4 space-y-3">
+                        <span className="text-[11px] font-black text-orange-400 block uppercase tracking-wider">💡 분배 정책 도움말 가이드 및 매뉴얼</span>
+                        <h4 className="text-sm font-extrabold text-white">대리점 운영 환경에 맞는 최적의 라우팅 모드를 선택하세요</h4>
+                        <div className="grid md:grid-cols-3 gap-4 text-xs font-bold text-slate-350 pt-2">
+                          <div className="space-y-1 bg-slate-900/40 p-3.5 rounded-xl border border-slate-800/60">
+                            <span className="text-white font-extrabold block">1. 개인 홍보 직접배정형 (Direct)</span>
+                            <p className="text-[11px] text-slate-450 leading-relaxed break-keep">각 플래너 개인 링크로 유치된 리드를 0.1초 만에 설계사 본인에게 즉시 단독 노출 및 배정합니다. 대리점 광고를 진행하지 않을 때 추천합니다.</p>
+                          </div>
+                          <div className="space-y-1 bg-slate-900/40 p-3.5 rounded-xl border border-slate-800/60">
+                            <span className="text-white font-extrabold block">2. 대리점 수동 분배형 (Manual Pool)</span>
+                            <p className="text-[11px] text-slate-450 leading-relaxed break-keep">유입된 모든 공동 리드가 미배정 상태(대기 풀)로 안전하게 쌓입니다. 대리점주가 설문이나 분석 상세를 검토 후 수동으로 알맞은 설계사에게 배정합니다.</p>
+                          </div>
+                          <div className="space-y-1 bg-slate-900/40 p-3.5 rounded-xl border border-slate-800/60">
+                            <span className="text-white font-extrabold block">3. 실시간 자동 분배형 (Auto-Routing)</span>
+                            <p className="text-[11px] text-slate-450 leading-relaxed break-keep">다량의 공동 광고 리드를 0.1초 안에 자동으로 매칭합니다. 세부 알고리즘(순차/가중치/실적)에 따라 대기 없이 설계사들에게 공평하게 즉시 할당합니다.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className={`grid lg:grid-cols-3 gap-6 pt-4 transition-all duration-300 ${
+                    showHelpGuide ? 'help-guide-glow p-4 rounded-[2rem] bg-slate-900/10' : ''
+                  }`}>
+                    {/* 카드 1. 개인 홍보 직접배정형 */}
                     <div
                       onClick={() => handleUpdateRouting('direct')}
-                      className={`p-6 rounded-2xl border-2 cursor-pointer transition-all flex flex-col justify-between text-left h-52 relative ${getCurrentRoutingType() === 'direct' ? 'bg-slate-950/40 border-orange-500 shadow-md' : 'bg-slate-950/10 border-slate-800 hover:border-slate-700'}`}
+                      className={`p-6 rounded-2xl border-2 cursor-pointer transition-all flex flex-col justify-between text-left min-h-[17.5rem] relative ${getCurrentRoutingType() === 'direct' ? 'bg-slate-950/40 border-orange-500 shadow-md shadow-orange-500/5' : 'bg-slate-950/10 border-slate-800 hover:border-slate-700'}`}
                     >
                       {getCurrentRoutingType() === 'direct' && (
                         <div className="absolute top-4 right-4 text-orange-500">
                           <Check className="w-5 h-5 stroke-[3]" />
                         </div>
                       )}
-                      <div className="space-y-2">
+                      <div className="space-y-3">
                         <h4 className="font-extrabold text-sm text-white">개인 홍보 직접배정형 (Direct)</h4>
                         <p className="text-[11px] text-slate-400 font-bold leading-relaxed break-keep">
-                          소속 설계사들의 개인화 링크(`?planner=코드`)로 접수된 모든 고객 리드가 대리점을 거치지 않고, 해당 설계사에게 즉시 단독 노출 및 배정됩니다.
+                          소속 설계사들이 각자 링크(<code className="text-orange-300 font-black bg-orange-500/5 px-1 py-0.5 rounded border border-orange-500/15 font-mono text-[10px]">?planner=코드</code>)로 직접 유치한 고객 DB를 대리점 개입 없이 설계사 본인에게 즉시 즉각 단독 노출 및 자동 지정하는 개인형 구조입니다.
                         </p>
+                        <div className="border-t border-slate-900/60 pt-2.5">
+                          <p className="text-[10px] text-slate-500 font-bold leading-relaxed break-keep">
+                            💡 대리점 차원의 통합 광고를 집행하지 않고, 소속 설계사들이 각자 개별 영업 및 홍보를 진행할 때 적합합니다.
+                          </p>
+                        </div>
                       </div>
-                      <div className="text-[9px] text-orange-400 font-black tracking-widest uppercase">
-                        현재 활성화 상태
+                      <div className={`text-[9px] font-black tracking-widest uppercase mt-3 ${getCurrentRoutingType() === 'direct' ? 'text-orange-400' : 'text-slate-500'}`}>
+                        {getCurrentRoutingType() === 'direct' ? '현재 활성화 상태' : '선택하기'}
                       </div>
                     </div>
+
+                    {/* 카드 2. 대리점 수동 분배형 */}
                     <div
                       onClick={() => handleUpdateRouting('distribute')}
-                      className={`p-6 rounded-2xl border-2 cursor-pointer transition-all flex flex-col justify-between text-left h-52 relative ${getCurrentRoutingType() === 'distribute' ? 'bg-slate-950/40 border-orange-500 shadow-md' : 'bg-slate-950/10 border-slate-800 hover:border-slate-700'}`}
+                      className={`p-6 rounded-2xl border-2 cursor-pointer transition-all flex flex-col justify-between text-left min-h-[17.5rem] relative ${getCurrentRoutingType() === 'distribute' ? 'bg-slate-950/40 border-orange-500 shadow-md shadow-orange-500/5' : 'bg-slate-950/10 border-slate-800 hover:border-slate-700'}`}
                     >
                       {getCurrentRoutingType() === 'distribute' && (
                         <div className="absolute top-4 right-4 text-orange-500">
                           <Check className="w-5 h-5 stroke-[3]" />
                         </div>
                       )}
-                      <div className="space-y-2">
-                        <h4 className="font-extrabold text-sm text-white">대리점 집중 분배형 (Distribute)</h4>
+                      <div className="space-y-3">
+                        <h4 className="font-extrabold text-sm text-white">대리점 수동 분배형 (Manual Pool)</h4>
                         <p className="text-[11px] text-slate-400 font-bold leading-relaxed break-keep">
-                          대리점 전체 광고 등으로 들어온 모든 리드가 대기 풀(Pool)로 모이며, 대표 관리자(대리점주)가 '고객 리드 수집 현황' 탭에서 클릭 한 번으로 특정 플래너에게 담당을 재지정해 줍니다.
+                          대리점 대표 광고로 들어온 공용 DB를 미배정(대기 풀) 상태로 쌓아두고, 대리점주가 직접 고객 정보나 설문을 검토한 후 적합한 설계사를 수동 지정하는 통제형 구조입니다.
                         </p>
+                        <div className="border-t border-slate-900/60 pt-2.5">
+                          <p className="text-[10px] text-slate-500 font-bold leading-relaxed break-keep">
+                            📢 대리점 통합 광고를 집행하여 유입된 공용 DB를 대표자가 직접 검증 후 전략적으로 직접 배정하고자 할 때 적합합니다.
+                          </p>
+                        </div>
                       </div>
-                      <div className="text-[9px] text-orange-400 font-black tracking-widest uppercase">
-                        현재 활성화 상태
+                      <div className={`text-[9px] font-black tracking-widest uppercase mt-3 ${getCurrentRoutingType() === 'distribute' ? 'text-orange-400' : 'text-slate-500'}`}>
+                        {getCurrentRoutingType() === 'distribute' ? '현재 활성화 상태' : '선택하기'}
                       </div>
                     </div>
+
+                    {/* 카드 3. 실시간 자동 분배형 */}
+                    <div
+                      onClick={() => handleUpdateRouting('distribute_auto_round_robin')}
+                      className={`p-6 rounded-2xl border-2 cursor-pointer transition-all flex flex-col justify-between text-left min-h-[17.5rem] relative ${getCurrentRoutingType() === 'distribute_auto' ? 'bg-slate-950/40 border-orange-500 shadow-md shadow-orange-500/5' : 'bg-slate-950/10 border-slate-800 hover:border-slate-700'}`}
+                    >
+                      {getCurrentRoutingType() === 'distribute_auto' && (
+                        <div className="absolute top-4 right-4 text-orange-500">
+                          <Check className="w-5 h-5 stroke-[3]" />
+                        </div>
+                      )}
+                      <div className="space-y-3">
+                        <h4 className="font-extrabold text-sm text-amber-400 flex items-center gap-1">
+                          실시간 자동 분배형 (Auto-Routing) <span className="text-[9px] bg-amber-500/10 border border-amber-500/20 px-1 py-0.5 rounded text-amber-500 font-black">★추천</span>
+                        </h4>
+                        <p className="text-[11px] text-slate-400 font-bold leading-relaxed break-keep">
+                          대리점 광고로 들어온 공용 DB를 시스템이 0.1초 만에 최적의 설계사를 골라 즉시 분배하는 고속 자동화 구조입니다. (하단에서 균등/가중치/실적 세부 알고리즘 선택 가능)
+                        </p>
+                        <div className="border-t border-slate-900/60 pt-2.5">
+                          <p className="text-[10px] text-slate-500 font-bold leading-relaxed break-keep">
+                            ⚡ 대리점 통합 광고를 통해 유입되는 다량의 공용 DB를 대기 시간 없이 실시간으로 즉시 배정 분배하고자 할 때 최적입니다.
+                          </p>
+                        </div>
+                      </div>
+                      <div className={`text-[9px] font-black tracking-widest uppercase mt-3 ${getCurrentRoutingType() === 'distribute_auto' ? 'text-orange-400' : 'text-slate-500'}`}>
+                        {getCurrentRoutingType() === 'distribute_auto' ? '현재 활성화 상태' : '선택하기'}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 분배형 분기 화면 */}
+                  {getCurrentRoutingType() === 'direct' && (
+                    <div className="bg-slate-900/60 border border-slate-800 rounded-[2rem] p-8 space-y-6 text-left mt-6">
+                      <div className="flex items-center gap-3 border-b border-slate-800/80 pb-4">
+                        <span className="text-2xl">👤</span>
+                        <div>
+                          <h3 className="text-base font-extrabold text-white">개인 홍보 직접배정형 전용 관리</h3>
+                          <p className="text-xs text-slate-400 font-semibold mt-1">
+                            대리점 개입 없이 설계사 개별 유치 리드만 즉각 할당되는 상태입니다.
+                          </p>
+                        </div>
+                      </div>
+                      <p className="text-xs text-slate-350 font-bold leading-relaxed break-keep">
+                        현재 대리점의 분배 방식이 <span className="text-white font-extrabold font-mono">"개인 홍보 직접배정형"</span>으로 설정되어 있습니다. 이 모드에서는 대리점 통합 광고(공용 DB) 분배 기능이 동작하지 않으며, 각 설계사의 고유 링크(<code className="text-orange-400 bg-orange-500/5 px-1 py-0.5 rounded border border-orange-500/15 font-mono">?planner=코드</code>)를 통해 접수된 건만 해당 설계사에게 즉시 배정됩니다.
+                      </p>
+                      
+                      {/* 설계사 개인 링크 목록 */}
+                      <div className="space-y-4 pt-2">
+                        <div className="space-y-1">
+                          <h4 className="text-xs font-extrabold text-white">🔗 소속 설계사 개인 홍보 링크 현황</h4>
+                          <p className="text-[10px] text-slate-400 font-bold">소속 설계사들의 홍보용 URL입니다. 해당 주소로 유치 시 대리점을 안 거치고 다이렉트로 설계사에게 배정됩니다.</p>
+                        </div>
+                        <div className="grid md:grid-cols-2 gap-4">
+                          {planners
+                            .filter(p => p.agency_id === currentUser.agencyId && p.subscription_status === 'active')
+                            .map(p => (
+                              <div key={p.id} className="bg-slate-950/80 p-4 rounded-2xl border border-slate-850 flex items-center justify-between text-xs font-bold text-slate-300">
+                                <div className="space-y-1 text-left">
+                                  <span className="text-white font-extrabold block">{p.name} ({p.planner_code})</span>
+                                  <span className="text-[10px] text-slate-500 font-mono select-all">/?planner={p.planner_code}</span>
+                                </div>
+                                <button
+                                  onClick={() => {
+                                    navigator.clipboard.writeText(`${window.location.origin}/?planner=${p.planner_code}`);
+                                    alert(`[${p.name}] 설계사의 개인 홍보 링크가 복사되었습니다!`);
+                                  }}
+                                  className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-orange-400 hover:text-orange-300 font-black rounded-lg text-[10px] cursor-pointer"
+                                >
+                                  링크 복사
+                                </button>
+                              </div>
+                            ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {getCurrentRoutingType() === 'distribute' && (
+                    <div className="bg-slate-900/60 border border-slate-800 rounded-[2rem] p-8 space-y-6 text-left mt-6">
+                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800/80 pb-4">
+                        <div>
+                          <h3 className="text-base font-extrabold text-white flex items-center gap-2">
+                            📥 수동 분배 대기 풀 관리 (Manual Pool Control)
+                          </h3>
+                          <p className="text-xs text-slate-400 font-semibold mt-1">
+                            대리점 공용 채널을 통해 유입되었으나 아직 담당자가 배정되지 않은 미배정 리드 목록입니다.
+                          </p>
+                        </div>
+                        <span className="px-2.5 py-0.5 bg-orange-500/10 border border-orange-500/20 text-orange-400 rounded-lg text-[10px] font-black">
+                          대기 DB: {leads.filter(l => !l.planner_id && (isLeadConsult(l.insurance_type) || l.insurance_type?.includes('_underwriting'))).length}건
+                        </span>
+                      </div>
+
+                      {leads.filter(l => !l.planner_id && (isLeadConsult(l.insurance_type) || l.insurance_type?.includes('_underwriting'))).length === 0 ? (
+                        <div className="py-12 text-center text-slate-500 text-xs border border-dashed border-slate-850 rounded-2xl bg-slate-950/20">
+                          🎉 대기 풀에 미배정된 고관여 공용 DB가 없습니다. 모든 리드가 배정되었습니다.
+                        </div>
+                      ) : (
+                        <div className="overflow-x-auto border border-slate-800 rounded-xl bg-slate-950">
+                          <table className="w-full min-w-[700px] text-xs font-bold text-slate-350">
+                            <thead>
+                              <tr className="border-b border-slate-800 bg-slate-900 text-[10px] text-slate-450 text-left">
+                                <th className="py-3 px-4">고객명</th>
+                                <th className="py-3 px-4">연락처</th>
+                                <th className="py-3 px-4">신청 유형</th>
+                                <th className="py-3 px-4">유입 일시</th>
+                                <th className="py-3 px-4 text-center">설계사 지정 배정</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {leads
+                                .filter(l => !l.planner_id && (isLeadConsult(l.insurance_type) || l.insurance_type?.includes('_underwriting')))
+                                .map(lead => (
+                                  <tr key={lead.id} className="border-b border-slate-800/60 hover:bg-slate-900/40">
+                                    <td className="py-3 px-4 text-slate-200">{lead.name}</td>
+                                    <td className="py-3 px-4 text-slate-400">{lead.phone}</td>
+                                    <td className="py-3 px-4">
+                                      <span className="px-1.5 py-0.5 bg-orange-500/10 text-orange-400 rounded text-[9px] font-black">
+                                        {getInsuranceTypeName(lead.insurance_type || '').label}
+                                      </span>
+                                    </td>
+                                    <td className="py-3 px-4 text-slate-450">
+                                      {new Date(lead.created_at).toLocaleString('ko-KR')}
+                                    </td>
+                                    <td className="py-3 px-4 text-center">
+                                      <select
+                                        onChange={(e) => {
+                                          if (e.target.value) {
+                                            handleAssignPlanner(lead.id, e.target.value);
+                                            e.target.value = '';
+                                          }
+                                        }}
+                                        className="bg-slate-900 border border-slate-800 rounded-lg py-1 px-3 text-xs font-bold text-slate-300 focus:outline-none focus:border-orange-500"
+                                      >
+                                        <option value="">설계사 지정...</option>
+                                        {planners
+                                          .filter(p => p.agency_id === currentUser.agencyId && p.subscription_status === 'active')
+                                          .map(p => (
+                                            <option key={p.id} value={p.id}>{p.name} ({p.planner_code})</option>
+                                          ))}
+                                      </select>
+                                    </td>
+                                  </tr>
+                                ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {getCurrentRoutingType() === 'distribute_auto' && (
+                    <div className="space-y-6 mt-6">
+                      <div className="bg-slate-900/60 border border-slate-800 rounded-[2rem] p-8 space-y-8 text-left">
+                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800/80 pb-4">
+                          <div>
+                            <h3 className="text-base font-extrabold text-white flex items-center gap-2">
+                              ⚡ 실시간 자동 분배 엔진 세부 설정 (Auto-Routing Settings)
+                            </h3>
+                            <p className="text-xs text-slate-450 font-semibold mt-1">
+                              대리점 대표 광고로 들어온 공용 DB를 배정할 때 적용할 알고리즘 및 설계사별 정책을 제어합니다.
+                            </p>
+                          </div>
+                          <span className="px-2.5 py-0.5 bg-amber-500/10 border border-amber-500/20 text-amber-400 rounded-lg text-[10px] font-black uppercase">
+                            엔진 상태: 가동 중
+                          </span>
+                        </div>
+
+                        {/* 알고리즘 선택 버튼 */}
+                        <div className="space-y-3">
+                          <label className="text-xs font-extrabold text-slate-300 block">활성화 알고리즘 선택</label>
+                          <div className="grid md:grid-cols-3 gap-4">
+                            {[
+                              { 
+                                type: 'distribute_auto_round_robin', 
+                                label: '균등 순차 분배 (Round-Robin)', 
+                                desc: '최근 30일 배정 건수가 가장 적은 설계사에게 순서대로 리드를 균등 분배합니다.' 
+                              },
+                              { 
+                                type: 'distribute_auto_weighted', 
+                                label: '가중치 기반 비율 분배 (Weighted)', 
+                                desc: '설계사별 설정된 영업 가중치(비율)에 비례하여 높은 확률로 자동 분배합니다.' 
+                              },
+                              { 
+                                type: 'distribute_auto_activity', 
+                                label: '응대 실적 기반 분배 (Activity-Based)', 
+                                desc: '이번 달 크레딧 사용량(활동 실적)이 높은 최우수 설계사에게 가중 우선 분배합니다.' 
+                              }
+                            ].map((algo) => {
+                              const isSelected = agencies.find(a => a.id === currentUser.agencyId)?.lead_routing_type === algo.type;
+                              return (
+                                <button
+                                  key={algo.type}
+                                  onClick={() => handleUpdateRouting(algo.type)}
+                                  className={`p-4.5 rounded-xl border text-left text-xs transition-all cursor-pointer ${isSelected ? 'border-orange-500 bg-orange-500/5 text-white' : 'border-slate-800 bg-slate-950/40 text-slate-400 hover:border-slate-700'}`}
+                                >
+                                  <div className="font-extrabold text-sm flex items-center gap-1.5">
+                                    <span className={`w-2 h-2 rounded-full ${isSelected ? 'bg-orange-500' : 'bg-slate-750'}`} />
+                                    {algo.label}
+                                  </div>
+                                  <p className="text-[10px] text-slate-500 font-semibold mt-2 leading-relaxed break-keep">
+                                    {algo.desc}
+                                  </p>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+
+                        {/* 설계사별 배정 상태 및 가중치 관리 테이블 */}
+                        <div className="space-y-4">
+                          <div className="space-y-1">
+                            <h4 className="text-xs font-extrabold text-white">👥 플래너별 자동 분배 정책 설정</h4>
+                            <p className="text-[11px] text-slate-450 font-bold">각 설계사의 자동 분배 배제 여부(Disabled) 및 가중치(Weight)를 실시간으로 제어합니다.</p>
+                          </div>
+
+                          <div className="overflow-x-auto border border-slate-800 rounded-xl bg-slate-950">
+                            <table className="w-full min-w-[800px] text-xs font-bold text-slate-350">
+                              <thead>
+                                <tr className="border-b border-slate-800 bg-slate-900 text-[10px] text-slate-450 text-left">
+                                  <th className="py-3 px-4">설계사명</th>
+                                  <th className="py-3 px-4">연락처</th>
+                                  <th className="py-3 px-4 text-center">최근 30일 배정 상태</th>
+                                  <th className="py-3 px-4 text-center">이번 달 실적 점수</th>
+                                  <th className="py-3 px-4 text-center w-36">영업 가중치 (Weight)</th>
+                                  <th className="py-3 px-4 text-center w-32">분배 수신 상태</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {planners
+                                  .filter(p => p.agency_id === currentUser.agencyId && p.subscription_status === 'active')
+                                  .map(planner => {
+                                    const stats = getPlannerAssignmentStats(planner.id);
+                                    const regNum = planner.registration_number || '';
+                                    const isDisabled = regNum === 'dist_disabled';
+                                    
+                                    // Parse weight
+                                    let weight = 5;
+                                    if (regNum.startsWith('dist_weight:')) {
+                                      const w = parseInt(regNum.split(':')[1]);
+                                      weight = isNaN(w) ? 5 : w;
+                                    }
+
+                                    return (
+                                      <tr key={planner.id} className="border-b border-slate-800/60 hover:bg-slate-900/40">
+                                        <td className="py-3 px-4 text-slate-200">{planner.name} ({planner.planner_code})</td>
+                                        <td className="py-3 px-4 text-slate-450">{planner.phone}</td>
+                                        <td className="py-3 px-4 text-center text-slate-455">
+                                          {stats.count}건 <span className="text-[10px] text-slate-500">({stats.ratio}%)</span>
+                                        </td>
+                                        <td className="py-3 px-4 text-center">
+                                          <span className="text-emerald-400 font-extrabold">{planner.monthly_credit_used || 0}점</span>
+                                        </td>
+                                        <td className="py-3 px-4 text-center">
+                                          <input
+                                            type="number"
+                                            disabled={isDisabled}
+                                            defaultValue={isDisabled ? '' : weight}
+                                            onBlur={(e) => handleUpdatePlannerWeight(planner.id, Number(e.target.value))}
+                                            placeholder="5"
+                                            min="1"
+                                            max="100"
+                                            className="w-20 bg-slate-900 border border-slate-800 disabled:opacity-30 rounded-lg py-1 px-2 text-center text-xs font-black text-white focus:outline-none focus:border-orange-500"
+                                          />
+                                        </td>
+                                        <td className="py-3 px-4 text-center">
+                                          <button
+                                            onClick={() => handleTogglePlannerDistribution(planner.id, regNum)}
+                                            className={`px-3 py-1.5 rounded-lg text-[10px] font-black transition-all cursor-pointer ${isDisabled ? 'bg-rose-500/10 border border-rose-500/20 text-rose-400 hover:bg-rose-500/20' : 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20'}`}
+                                          >
+                                            {isDisabled ? '❌ 제외됨 (Disabled)' : '🟢 배정중 (Active)'}
+                                          </button>
+                                        </td>
+                                      </tr>
+                                    );
+                                  })}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* DB 분배 시뮬레이터 (Lead Distribution Visualizer) */}
+                      <LeadDistributionSimulator 
+                        planners={planners} 
+                        agencies={agencies} 
+                        currentUser={currentUser} 
+                        showHelpGuide={showHelpGuide} 
+                        activeStrategy={getCurrentRoutingAlgo()}
+                      />
+                    </div>
+                  )}
+
+                  {/* 자주 묻는 질문 (FAQ) 섹션 */}
+                  <div className="bg-slate-900/40 border border-slate-800/80 rounded-[2rem] p-8 space-y-6 text-left mt-8">
+                    <div className="flex items-center justify-between border-b border-slate-850 pb-4">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xl">❓</span>
+                        <div>
+                          <h3 className="text-base font-extrabold text-white">⚙️ 분배 시스템 자주 묻는 질문 (FAQ)</h3>
+                          <p className="text-xs text-slate-450 font-semibold mt-1">대리점 대표자들이 가장 자주 문의하는 분배 정책 핵심 매뉴얼입니다.</p>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={handleToggleFaq}
+                        className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border text-[11px] font-black transition-all cursor-pointer ${
+                          showFaq 
+                            ? 'bg-orange-500/10 border-orange-500/40 text-orange-400 hover:bg-orange-500/20 shadow-lg shadow-orange-500/5' 
+                            : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200'
+                        }`}
+                      >
+                        {showFaq ? '📖 FAQ 접기' : '📘 FAQ 펼치기'}
+                      </button>
+                    </div>
+
+                    {showFaq && (
+                      <div className="space-y-4 active-tab-fade-slide">
+                        {[
+                          {
+                            q: "Q1. 3가지 분배 방식(Direct, Manual, Auto-Routing)은 각각 언제 선택하나요?",
+                            a: "• 개인 홍보 직접배정형 (Direct)은 대리점 차원 광고가 없고 설계사 개별 영업에 의존할 때 적합합니다.\n• 대리점 수동 분배형 (Manual Pool)은 공동 광고로 유입된 고관여 리드를 관리자가 면밀히 검토 후 수동 매칭하고자 할 때 최적입니다.\n• 실시간 자동 분배형 (Auto-Routing)은 대량의 공동 리드가 쏟아질 때 실시간(0.1초 이내)으로 공평 또는 성과 비례로 자동 즉시 분배하고자 할 때 최적입니다."
+                          },
+                          {
+                            q: "Q2. 실시간 자동 분배의 3가지 알고리즘(순차, 가중치, 실적)은 어떻게 작동하나요?",
+                            a: "• 균등 순차 분배 (Round-Robin): 최근 30일 배정 비율을 분석해 배정 건수가 가장 적은 플래너에게 순환하여 1건씩 똑같이 배정합니다.\n• 가중치 기반 비율 분배 (Weighted): 설정된 영업 가중치(Weight) 값에 비례하여 더 높은 확률로 분배받습니다. (예: 가중치 10은 가중치 5보다 2배 더 자주 배정됨)\n• 응대 실적 기반 분배 (Activity-Based): 이번 달 활동 실적 점수(크레딧 사용량 등)가 높은 열정적인 플래너에게 우선 할당됩니다."
+                          },
+                          {
+                            q: "Q3. 특정 설계사를 자동 배정 대상에서 완전히 제외하려면 어떻게 합니까?",
+                            a: "• 실시간 자동 분배형 하단 테이블의 '분배 수신 상태'에서 플래너 우측의 녹색 버튼(배정중)을 클릭하여 빨간색 '❌ 제외됨 (Disabled)' 상태로 변경하시면, 어떠한 분배 알고리즘에서도 0.1초 만에 즉각 제외 처리가 동기화됩니다."
+                          },
+                          {
+                            q: "Q4. 수동 분배 대기 풀에 누적된 리드는 플래너에게 보이나요?",
+                            a: "• 아니오. 수동 분배 대기 풀에 머물고 있는 공용 리드는 담당 플래너가 지정되지 않은 상태이므로 일반 소속 설계사의 대시보드에는 전혀 보이지 않으며, 오직 대리점 대표 관리자의 화면에서만 관리 및 배정이 가능합니다."
+                          }
+                        ].map((item, idx) => (
+                          <div key={idx} className="bg-slate-950/60 p-5 rounded-2xl border border-slate-850 hover:border-slate-800 transition-all">
+                            <span className="text-xs font-black text-orange-400 block mb-2 font-mono">{item.q}</span>
+                            <p className="text-xs font-bold text-slate-350 leading-relaxed whitespace-pre-line break-keep font-sans">
+                              {item.a}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
 
               {/* Tab 4: Billing panel */}
               {activeTab === 'billing' && (
-                <div className="space-y-8">
-                  <h2 className="text-lg font-black text-white">구독 계약 및 결제 시뮬레이션</h2>
+                <div key="billing" className="active-tab-fade-slide space-y-8">
+                  {showHelpGuide && (
+                    <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)]">
+                      <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                      <div className="pl-2 space-y-1">
+                        <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 구독 결제 관리</span>
+                        <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                          "🎫 대시보드 라이선스를 유지하는 정기 구독권(월단위 연장) 및 실시간 가격비교 API 연동에 사용되는 건별 선불 크레딧 충전 상태를 투명하게 모니터링합니다."
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  <div className="flex justify-between items-center">
+                    <h2 className="text-lg font-black text-white">구독 계약 및 결제 시뮬레이션</h2>
+                    {renderHelpGuideToggle()}
+                  </div>
 
                   {/* 1. Subscription card */}
-                  <div className="bg-gradient-to-br from-slate-900 to-slate-950 border-2 border-orange-500/20 rounded-[2rem] p-8 space-y-6 text-left relative overflow-hidden shadow-[0_20px_50px_-12px_rgba(255,107,0,0.08)]">
+                  <div className={`p-8 space-y-6 text-left relative overflow-hidden transition-all duration-300 ${
+                    showHelpGuide 
+                      ? 'help-guide-glow bg-slate-900/90 shadow-[0_20px_50px_-12px_rgba(255,107,0,0.25)] rounded-[2rem]' 
+                      : 'bg-gradient-to-br from-slate-900 to-slate-950 border-2 border-orange-500/20 rounded-[2rem] shadow-[0_20px_50px_-12px_rgba(255,107,0,0.08)]'
+                  }`}>
+                    {showHelpGuide && (
+                      <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)] relative z-10">
+                        <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                        <div className="pl-2 space-y-1">
+                          <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 월 정기 라이선스 결제 및 연장</span>
+                          <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                            "🎫 플랫폼 대시보드와 개인/대리점 홍보용 홈페이지를 활성화 상태로 유지하기 위한 월 정기 라이선스 계약 영역입니다. 시뮬레이터를 통해 1개월 연장이 가능합니다."
+                          </p>
+                        </div>
+                      </div>
+                    )}
                     <div className="absolute -top-10 -right-10 w-44 h-44 bg-orange-500/5 rounded-full blur-2xl" />
                     
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-6">
@@ -3252,7 +4211,7 @@ export default function AdminDashboard() {
                         </div>
                       </div>
                     </div>
-
+ 
                     <div className="space-y-4">
                       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs font-bold">
                         <div className="space-y-1">
@@ -3276,10 +4235,25 @@ export default function AdminDashboard() {
                       </div>
                     </div>
                   </div>
-
+ 
                   {/* 2. Prepaid Credits Card */}
                   {(currentUser.role === 'agency' || currentUser.role === 'super' || currentUser.role === 'planner') && (
-                    <div className="bg-gradient-to-br from-slate-900 to-slate-950 border-2 border-amber-500/20 rounded-[2rem] p-8 space-y-6 text-left relative overflow-hidden shadow-[0_20px_50px_-12px_rgba(245,158,11,0.08)]">
+                    <div className={`p-8 space-y-6 text-left relative overflow-hidden transition-all duration-300 ${
+                      showHelpGuide 
+                        ? 'help-guide-glow bg-slate-900/90 shadow-[0_20px_50px_-12px_rgba(245,158,11,0.25)] rounded-[2rem]' 
+                        : 'bg-gradient-to-br from-slate-900 to-slate-950 border-2 border-amber-500/20 rounded-[2rem] shadow-[0_20px_50px_-12px_rgba(245,158,11,0.08)]'
+                    }`}>
+                      {showHelpGuide && (
+                        <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)] relative z-10">
+                          <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                          <div className="pl-2 space-y-1">
+                            <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 실시간 API 크레딧 충전 및 잔액 관리</span>
+                            <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                              "⚡ 보험 보장 분석(400크레딧) 및 자동차 보험료 계산(300크레딧)을 수행할 때 API 서버 통신 원가로 실시간 차감되는 선불제 크레딧입니다. 버튼을 클릭해 충전이 가능합니다."
+                            </p>
+                          </div>
+                        </div>
+                      )}
                       <div className="absolute -top-10 -right-10 w-44 h-44 bg-amber-500/5 rounded-full blur-2xl" />
                       
                       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-6">
@@ -3402,33 +4376,63 @@ export default function AdminDashboard() {
 
                   {/* 3. ROI Stats & Analytics Card */}
                   {(currentUser.role === 'agency' || currentUser.role === 'super') && (
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-left">
-                      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-1">
-                        <span className="text-[10px] text-slate-500 font-bold block uppercase">총 투입 비용 (API 원가)</span>
-                        <span className="text-lg font-black text-white">{roiStats.totalCostKRW.toLocaleString()}원</span>
-                        <span className="text-[9px] text-slate-400 block font-semibold">사용된 {roiStats.totalSpentCredits.toLocaleString()} 크레딧</span>
-                      </div>
-                      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-1">
-                        <span className="text-[10px] text-slate-500 font-bold block uppercase">수집 고객 리드</span>
-                        <span className="text-lg font-black text-white">{roiStats.totalLeads.toLocaleString()}건</span>
-                        <span className="text-[9px] text-slate-400 block font-semibold">설계사 링크 총 유입</span>
-                      </div>
-                      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-1">
-                        <span className="text-[10px] text-slate-500 font-bold block uppercase">평균 리드 획득 단가 (CAC)</span>
-                        <span className="text-lg font-black text-amber-500">{roiStats.cac.toLocaleString()}원</span>
-                        <span className="text-[9px] text-slate-450 block font-semibold">리드 1건당 평균 분석 비용</span>
-                      </div>
-                      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-1">
-                        <span className="text-[10px] text-slate-500 font-bold block uppercase">영업 전환율 (ROI)</span>
-                        <span className="text-lg font-black text-emerald-500">{roiStats.conversionRate}%</span>
-                        <span className="text-[9px] text-slate-400 block font-semibold">전체 {roiStats.totalLeads}건 중 {roiStats.completedLeads}건 완료</span>
+                    <div className="space-y-4">
+                      {showHelpGuide && (
+                        <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)]">
+                          <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                          <div className="pl-2 space-y-1">
+                            <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 마케팅 투자 대비 효율 (ROI) 분석</span>
+                            <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                              "📊 총 비용(API 사용 원가), 수집 리드 수, 고객 획득 비용(CAC) 및 최종 상담 완료율을 종합하여 0.1초 만에 마케팅 생산성 지표를 제공합니다."
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                      <div className={`grid grid-cols-2 md:grid-cols-4 gap-4 text-left transition-all duration-300 ${
+                        showHelpGuide ? 'help-guide-glow p-4 rounded-[2rem] bg-slate-900/10' : ''
+                      }`}>
+                        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-1">
+                          <span className="text-[10px] text-slate-500 font-bold block uppercase">총 투입 비용 (API 원가)</span>
+                          <span className="text-lg font-black text-white">{roiStats.totalCostKRW.toLocaleString()}원</span>
+                          <span className="text-[9px] text-slate-400 block font-semibold">사용된 {roiStats.totalSpentCredits.toLocaleString()} 크레딧</span>
+                        </div>
+                        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-1">
+                          <span className="text-[10px] text-slate-500 font-bold block uppercase">수집 고객 리드</span>
+                          <span className="text-lg font-black text-white">{roiStats.totalLeads.toLocaleString()}건</span>
+                          <span className="text-[9px] text-slate-450 block font-semibold">설계사 링크 총 유입</span>
+                        </div>
+                        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-1">
+                          <span className="text-[10px] text-slate-500 font-bold block uppercase">평균 리드 획득 단가 (CAC)</span>
+                          <span className="text-lg font-black text-amber-500">{roiStats.cac.toLocaleString()}원</span>
+                          <span className="text-[9px] text-slate-450 block font-semibold">리드 1건당 평균 분석 비용</span>
+                        </div>
+                        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-1">
+                          <span className="text-[10px] text-slate-500 font-bold block uppercase">영업 전환율 (ROI)</span>
+                          <span className="text-lg font-black text-emerald-500">{roiStats.conversionRate}%</span>
+                          <span className="text-[9px] text-slate-400 block font-semibold">전체 {roiStats.totalLeads}건 중 {roiStats.completedLeads}건 완료</span>
+                        </div>
                       </div>
                     </div>
                   )}
 
                   {/* 4. Low Credit Alerts Config Card */}
                   {currentUser.role === 'agency' && (
-                    <div className="bg-slate-900 border border-slate-800 rounded-[2rem] p-8 text-left space-y-6">
+                    <div className={`rounded-[2rem] p-8 text-left space-y-6 transition-all duration-300 ${
+                      showHelpGuide 
+                        ? 'help-guide-glow bg-slate-900/90' 
+                        : 'bg-slate-900 border border-slate-800'
+                    }`}>
+                      {showHelpGuide && (
+                        <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)]">
+                          <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                          <div className="pl-2 space-y-1">
+                            <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 대리점 전용 크레딧 및 알림 설정</span>
+                            <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                              "💳 소속 설계사들의 보장 분석 건당 차감되는 크레딧 잔액을 확인하고 충전할 수 있습니다. 크레딧 소진 경보 번호를 등록하면 한도 소진 전 문자로 즉시 알림이 발송됩니다."
+                            </p>
+                          </div>
+                        </div>
+                      )}
                       <div className="space-y-1">
                         <h3 className="text-base font-extrabold text-white">🚨 크레딧 소진 경보 및 알림 설정</h3>
                         <p className="text-xs text-slate-450 font-medium">크레딧이 부족할 경우 알림을 받을 경고 기준 액수와 휴대폰 번호를 구성합니다.</p>
@@ -3467,7 +4471,22 @@ export default function AdminDashboard() {
 
                   {/* 5. Planner Quotas Card */}
                   {currentUser.role === 'agency' && (
-                    <div className="bg-slate-900 border border-slate-800 rounded-[2rem] p-8 text-left space-y-6">
+                    <div className={`p-8 text-left space-y-6 transition-all duration-300 ${
+                      showHelpGuide 
+                        ? 'help-guide-glow bg-slate-900/90 rounded-[2rem]' 
+                        : 'bg-slate-900 border border-slate-800 rounded-[2rem]'
+                    }`}>
+                      {showHelpGuide && (
+                        <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)] relative z-10">
+                          <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                          <div className="pl-2 space-y-1">
+                            <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 설계사 월간 크레딧 제한 설정</span>
+                            <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                              "🛡️ 소속 설계사가 단기간에 대량의 API를 호출하여 크레딧을 무단 소진하지 못하도록 월간 사용 한도를 강제 지정할 수 있는 차단기 설정판입니다."
+                            </p>
+                          </div>
+                        </div>
+                      )}
                       <div className="space-y-1">
                         <h3 className="text-base font-extrabold text-white">🛡️ 소속 설계사 월간 사용 한도 설정</h3>
                         <p className="text-xs text-slate-450 font-medium">소속 설계사의 무분별한 크레딧 남용을 방지하기 위해 개별 월간 할당량을 부여할 수 있습니다. (-1은 제한 없음)</p>
@@ -3511,7 +4530,22 @@ export default function AdminDashboard() {
 
                   {/* 6. Transaction Log Table Card */}
                   {(currentUser.role === 'agency' || currentUser.role === 'super' || currentUser.role === 'planner') && (
-                    <div className="bg-slate-900 border border-slate-800 rounded-[2rem] p-8 text-left space-y-6">
+                    <div className={`p-8 text-left space-y-6 transition-all duration-300 ${
+                      showHelpGuide 
+                        ? 'help-guide-glow bg-slate-900/90 rounded-[2rem]' 
+                        : 'bg-slate-900 border border-slate-800 rounded-[2rem]'
+                    }`}>
+                      {showHelpGuide && (
+                        <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)] relative z-10">
+                          <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                          <div className="pl-2 space-y-1">
+                            <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 크레딧 사용 및 충전 입출금 장부</span>
+                            <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                              "📝 대리점 크레딧이 어떠한 경위로 충전/조정되었고, 어떤 설계사가 몇 시 몇 분에 어떠한 유형(내보험 분석/자동차)으로 소진했는지 보여주는 회계 이력입니다."
+                            </p>
+                          </div>
+                        </div>
+                      )}
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div className="space-y-1">
                           <h3 className="text-base font-extrabold text-white">📝 크레딧 충전 및 사용 이력</h3>
@@ -3610,10 +4644,21 @@ export default function AdminDashboard() {
               )}
               {/* Tab 6: Marketing & Campaign Analytics */}
               {activeTab === 'marketing' && (
-                <div className="space-y-8 text-left animate-in fade-in duration-300">
+                <div key="marketing" className="active-tab-fade-slide space-y-8 text-left">
+                  {showHelpGuide && (
+                    <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)]">
+                      <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                      <div className="pl-2 space-y-1">
+                        <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 광고 / 유입 분석</span>
+                        <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                          "📈 오늘 및 누적 접속자 수, 카톡 상담 요청 전환율, 유입 경로(인스타, 네이버, 카톡, 구글 광고) 성과 지표를 실시간으로 모니터링하여 광고 효율을 극대화합니다."
+                        </p>
+                      </div>
+                    </div>
+                  )}
                   
-                  {/* Tab Header with Period Filter Tabs */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-6">
+                  {/* Tab Header Row 1: Title and Toggle */}
+                  <div className="flex flex-row justify-between items-center gap-4 pb-2">
                     <div className="space-y-1">
                       <h2 className="text-lg font-black text-white flex items-center gap-2">
                         📈 실시간 마케팅 & 광고 유입 통계
@@ -3623,8 +4668,12 @@ export default function AdminDashboard() {
                       </p>
                     </div>
 
-                    {/* Time Period Filter Tabs */}
-                    <div className="bg-slate-950 p-1 rounded-xl border border-slate-850 flex items-center gap-1 self-start sm:self-auto">
+                    {renderHelpGuideToggle()}
+                  </div>
+
+                  {/* Tab Header Row 2: Time Period Filter Tabs */}
+                  <div className="flex flex-wrap items-center justify-end gap-3 border-b border-slate-800/80 pb-4">
+                    <div className="bg-slate-950 p-1 rounded-xl border border-slate-850 flex items-center gap-1">
                       <button
                         type="button"
                         onClick={() => setMarketingPeriod('today')}
@@ -3671,7 +4720,9 @@ export default function AdminDashboard() {
                   {statsSubTab === 'marketing' && (
                     <>
                       {/* Summary Metric Cards */}
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      <div className={`grid grid-cols-2 md:grid-cols-4 gap-4 transition-all duration-300 ${
+                        showHelpGuide ? 'border-2 border-dashed border-orange-500/80 animate-pulse p-4 rounded-[2rem] bg-slate-900/10' : ''
+                      }`}>
                     {/* Today Visitors */}
                     <div className="bg-slate-950/40 border border-slate-850 p-5 rounded-2xl space-y-1 hover:border-slate-800 transition-all">
                       <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider block">오늘 접속자 수</span>
@@ -3737,7 +4788,22 @@ export default function AdminDashboard() {
                   })()}
 
                   {/* Channel Breakdown Breakdown */}
-                  <div className="bg-slate-950/40 border border-slate-850 rounded-[2rem] p-8 space-y-6">
+                  <div className={`p-8 space-y-6 transition-all duration-300 ${
+                    showHelpGuide 
+                      ? 'border-2 border-dashed border-orange-500/80 animate-pulse bg-slate-900/90 rounded-[2rem]' 
+                      : 'bg-slate-950/40 border border-slate-850 rounded-[2rem]'
+                  }`}>
+                    {showHelpGuide && (
+                      <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)] relative z-10">
+                        <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                        <div className="pl-2 space-y-1">
+                          <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 유입 경로별 효율 상세 분석</span>
+                          <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                            "📍 인스타그램, 네이버 블로그, 카카오톡 채널, 구글 검색광고 등 마케팅 매체별 방문 횟수 대비 실제 내보험 분석 신청 전환 건수를 0.1초 단위로 대조 정산합니다."
+                          </p>
+                        </div>
+                      </div>
+                    )}
                     <div className="flex justify-between items-center">
                       <h3 className="text-sm font-extrabold text-white flex items-center gap-1.5">
                         📍 유입 채널별 효율 상세 데이터
@@ -3839,7 +4905,22 @@ export default function AdminDashboard() {
                   <div className="grid lg:grid-cols-3 gap-6">
                     
                     {/* 1. Planner performance table */}
-                    <div className="lg:col-span-2 bg-slate-950/40 border border-slate-850 rounded-[2rem] p-8 space-y-6">
+                    <div className={`lg:col-span-2 p-8 space-y-6 transition-all duration-300 ${
+                      showHelpGuide 
+                        ? 'border-2 border-dashed border-orange-500/80 animate-pulse bg-slate-900/90 rounded-[2rem]' 
+                        : 'bg-slate-950/40 border border-slate-850 rounded-[2rem]'
+                    }`}>
+                      {showHelpGuide && (
+                        <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)] relative z-10">
+                          <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                          <div className="pl-2 space-y-1">
+                            <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 설계사별 리드 배정 및 계약 실적 현황</span>
+                            <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                              "👤 소속 설계사 개개인에게 배정된 총 상담 리드 대비 최종 계약 완료를 지은 실적과 그에 따른 영업 전환율(%)을 일목요연하게 표시합니다."
+                            </p>
+                          </div>
+                        </div>
+                      )}
                       <h3 className="text-sm font-extrabold text-white flex items-center gap-2">
                         👤 설계사별 리드 배정 및 계약 실적 현황
                       </h3>
@@ -3880,7 +4961,20 @@ export default function AdminDashboard() {
                     </div>
 
                     {/* Right column: Category Share & Demographics */}
-                    <div className="space-y-6">
+                    <div className={`space-y-6 p-4 transition-all duration-300 ${
+                      showHelpGuide ? 'border-2 border-dashed border-orange-500/80 animate-pulse rounded-[2rem] bg-slate-900/10' : ''
+                    }`}>
+                      {showHelpGuide && (
+                        <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)]">
+                          <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                          <div className="pl-2 space-y-1">
+                            <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 가입 분석 상품 점유율 및 성별/연령대</span>
+                            <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                              "📦 고객들이 신청한 보험군(실손, 암, 뇌/심장, 연금 등) 분포와 신청자들의 성별 및 연령대 통계 비율을 시각적으로 0.1초 만에 집계 제공합니다."
+                            </p>
+                          </div>
+                        </div>
+                      )}
                       
                       {/* 2. Product Category breakdown */}
                       <div className="bg-slate-950/40 border border-slate-850 rounded-[2rem] p-6 space-y-4">
@@ -3966,60 +5060,129 @@ export default function AdminDashboard() {
 
               {/* Tab 5: Profile/Landing page settings */}
               {activeTab === 'profile' && (
-                <form onSubmit={handleSaveProfile} className="space-y-8 text-left">
-                  <div className="space-y-1">
-                    <h2 className="text-lg font-black text-white">개인 프로필 및 랜딩페이지 설정</h2>
-                    <p className="text-xs font-bold text-slate-400">
-                      고객에게 보여줄 내 프로필 사진, 인사말 문구, 카카오톡 상담 링크 및 대표번호를 실시간으로 커스텀하세요.
-                    </p>
+                <form key="profile" onSubmit={handleSaveProfile} className="active-tab-fade-slide space-y-8 text-left">
+                  <div className="flex justify-between items-center gap-4">
+                    <div className="space-y-1">
+                      <h2 className="text-lg font-black text-white">
+                        {currentUser.role === 'super' ? '대표 랜딩페이지 설정' : '개인 프로필 및 랜딩페이지 설정'}
+                      </h2>
+                      <p className="text-xs font-bold text-slate-400">
+                        {currentUser.role === 'super'
+                          ? '기본 주소(설계사 파라미터가 없을 때)로 접속하는 고객에게 보여줄 랜딩페이지 인사말, 링크, 연락처를 실시간으로 설정하세요.'
+                          : '고객에게 보여줄 내 프로필 사진, 인사말 문구, 카카오톡 상담 링크 및 대표번호를 실시간으로 커스텀하세요.'
+                        }
+                      </p>
+                    </div>
+                    {renderHelpGuideToggle()}
                   </div>
 
                   {/* Promo URL Banner */}
                   {(() => {
-                    const myHomepageUrl = currentUser.role === 'planner'
-                      ? `${window.location.origin}/?planner=${currentUser.plannerCode || ''}`
-                      : `${window.location.origin}/?agency=${currentUser.agencyId || ''}`;
+                    const myHomepageUrl = currentUser.role === 'super'
+                      ? `${window.location.origin}/`
+                      : currentUser.role === 'planner'
+                        ? `${window.location.origin}/?planner=${currentUser.plannerCode || ''}`
+                        : `${window.location.origin}/?agency=${currentUser.agencyId || ''}`;
                     return (
-                      <div className="bg-gradient-to-r from-orange-500/10 via-amber-500/5 to-slate-950 border border-orange-500/20 rounded-[2rem] p-8 space-y-4">
-                        <div className="flex items-center gap-2">
-                          <span className="px-2 py-0.5 bg-orange-500/10 border border-orange-500/20 text-orange-400 rounded text-[9px] font-black uppercase">
-                            PROMO LINK
-                          </span>
-                          <h4 className="font-extrabold text-sm text-white">내 영업 홍보 전용 홈페이지 주소</h4>
+                      <div className="space-y-6">
+                        <div className={`bg-gradient-to-r from-orange-500/10 via-amber-500/5 to-slate-950 rounded-[2rem] p-8 space-y-4 transition-all duration-300 ${
+                          showHelpGuide 
+                            ? 'border-2 border-dashed border-orange-500/80 animate-pulse' 
+                            : 'border border-orange-500/20'
+                        }`}>
+                          <div className="flex items-center gap-2">
+                            <span className="px-2 py-0.5 bg-orange-500/10 border border-orange-500/20 text-orange-400 rounded text-[9px] font-black uppercase">
+                              PROMO LINK
+                            </span>
+                            <h4 className="font-extrabold text-sm text-white">내 영업 홍보 전용 홈페이지 주소</h4>
+                          </div>
+                          <div className="flex flex-col sm:flex-row gap-2.5 items-stretch sm:items-center">
+                            <input 
+                              type="text" 
+                              readOnly 
+                              value={myHomepageUrl}
+                              className="flex-1 bg-slate-950 border border-slate-800 rounded-xl py-3 px-4 text-xs text-slate-300 font-bold outline-none"
+                            />
+                            <div className="flex gap-2">
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  navigator.clipboard.writeText(myHomepageUrl);
+                                  alert("홍보용 홈페이지 주소가 클립보드에 복사되었습니다!");
+                                }}
+                                className="px-5 py-3 bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-300 font-black text-xs rounded-xl cursor-pointer transition-all shadow-md flex items-center justify-center gap-1.5"
+                              >
+                                <Copy className="w-3.5 h-3.5" /> 주소 복사
+                              </button>
+                              <a
+                                href={myHomepageUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="px-5 py-3 bg-orange-500 hover:bg-orange-600 text-white font-black text-xs rounded-xl cursor-pointer transition-all shadow-md flex items-center justify-center gap-1.5 no-underline"
+                              >
+                                <ExternalLink className="w-3.5 h-3.5" /> 내 홈페이지 바로가기
+                              </a>
+                            </div>
+                          </div>
                         </div>
-                        <div className="flex flex-col sm:flex-row gap-2.5 items-stretch sm:items-center">
-                          <input 
-                            type="text" 
-                            readOnly 
-                            value={myHomepageUrl}
-                            className="flex-1 bg-slate-950 border border-slate-800 rounded-xl py-3 px-4 text-xs text-slate-300 font-bold outline-none"
-                          />
-                          <div className="flex gap-2">
-                            <button
-                              type="button"
-                              onClick={() => {
-                                navigator.clipboard.writeText(myHomepageUrl);
-                                alert("홍보용 홈페이지 주소가 클립보드에 복사되었습니다!");
-                              }}
-                              className="px-5 py-3 bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-300 font-black text-xs rounded-xl cursor-pointer transition-all shadow-md flex items-center justify-center gap-1.5"
-                            >
-                              <Copy className="w-3.5 h-3.5" /> 주소 복사
-                            </button>
-                            <a
-                              href={myHomepageUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="px-5 py-3 bg-orange-500 hover:bg-orange-600 text-white font-black text-xs rounded-xl cursor-pointer transition-all shadow-md flex items-center justify-center gap-1.5 no-underline"
-                            >
-                              <ExternalLink className="w-3.5 h-3.5" /> 내 홈페이지 바로가기
-                            </a>
+
+                        {showHelpGuide && (
+                          <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)]">
+                            <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                            <div className="pl-2 space-y-1">
+                              <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 나의 랜딩페이지 링크 복사</span>
+                              <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                                "🔗 이 링크를 복사하여 고객에게 전달하거나 카카오톡 프로필에 등록하면, 대표님 전용 맞춤 보험 진단 페이지로 연결됩니다!"
+                              </p>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* 광고심의 안내 배너 */}
+                        <div className="bg-slate-950 border border-orange-500/20 rounded-[2rem] p-8 space-y-3 relative overflow-hidden">
+                          <div className="flex items-center gap-2 text-orange-400 font-extrabold text-xs">
+                            <AlertCircle className="w-4 h-4" />
+                            <span>[필독] 링크 배포 및 외부 광고 시 광고 심의 준수 안내</span>
+                          </div>
+                          <p className="text-[11px] text-slate-400 font-bold leading-relaxed">
+                            회원(설계사)님의 안전한 영업을 위해 외부 광고 집행 시 아래 심의 규정을 반드시 확인해 주시기 바랍니다.
+                          </p>
+                          <div className="text-[10px] text-slate-400 space-y-2.5 border-t border-slate-900 pt-3">
+                            <div>
+                              <p className="font-extrabold text-slate-300">📌 대리점(GA)별 개별 심의 원칙</p>
+                              <p className="pl-3 leading-relaxed text-slate-400 mt-1">
+                                보험협회 광고 심의는 법인(GA)별로 개별 적용됩니다. 타 대리점(예: 더윤컴퍼니 vs 에이원자산관리)의 심의필 번호를 도용하거나, 심의 없이 블로그·카페·SNS 등에 링크를 무단 배포할 경우 <strong className="text-red-400 font-bold">금융소비자보호법(금소법) 위반으로 고액의 과태료 및 자격 정지 처분</strong>을 받을 수 있습니다.
+                              </p>
+                            </div>
+                            <div>
+                              <p className="font-extrabold text-slate-300">💡 안전한 활용 가이드라인</p>
+                              <ul className="list-disc pl-7 space-y-1.5 leading-relaxed text-slate-400 mt-1">
+                                <li><strong>1:1 상담용 (심의 불필요)</strong>: 이미 상담 중인 고객에게 카카오톡 1:1 메시지로 분석 리포트 링크를 보내는 것은 '영업 지원 도구'에 해당하여 심의 없이 즉시 가능합니다.</li>
+                                <li><strong>불특정 다수 대상 홍보 (심의 필수)</strong>: 블로그, 유튜브, 키워드 광고 등에 링크를 공개적으로 게시할 경우, 소속 대리점(GA) 준법감시실을 통해 본 플랫폼의 화면 심의를 먼저 통과한 후 <strong>부여받은 심의번호를 하단에 기재</strong>하고 광고를 집행해야 합니다.</li>
+                              </ul>
+                            </div>
                           </div>
                         </div>
                       </div>
                     );
                   })()}
 
-                  <div className="bg-slate-950/40 border border-slate-850 rounded-[2rem] p-8 space-y-6">
+                  <div className={`bg-slate-950/40 rounded-[2rem] p-8 space-y-6 transition-all duration-300 ${
+                    showHelpGuide 
+                      ? 'border-2 border-dashed border-orange-500/80 animate-pulse' 
+                      : 'border border-slate-850'
+                  }`}>
+                    {showHelpGuide && (
+                      <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)]">
+                        <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                        <div className="pl-2 space-y-1">
+                          <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 프로필 및 랜딩 브랜딩 설정</span>
+                          <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                            "🎨 이곳에 등록한 사진, 로고, 대표 번호, 소속 지점 주소 및 진심 어린 인사말이 고객의 보장 분석 결과 하단 카드와 푸터에 0.1초 만에 즉시 동적 반영됩니다."
+                          </p>
+                        </div>
+                      </div>
+                    )}
                     <div className="grid md:grid-cols-2 gap-6">
                       
                       {/* Phone */}
@@ -4051,17 +5214,50 @@ export default function AdminDashboard() {
                         />
                       </div>
 
+                      {/* Email */}
+                      <div className="space-y-2 md:col-span-2">
+                        <label className="text-xs font-black text-slate-400 uppercase tracking-wider block">
+                          대표 상담 이메일 (선택)
+                        </label>
+                        <input 
+                          type="email"
+                          value={editEmail}
+                          onChange={(e) => setEditEmail(e.target.value)}
+                          placeholder="예: support@rebalance.com"
+                          className="w-full bg-slate-950 border border-slate-800 focus:border-orange-500/50 rounded-xl py-2.5 px-4 outline-none text-xs text-white font-bold"
+                        />
+                      </div>
+
+                      {/* 광고심의필 번호 */}
+                      <div className="space-y-2 md:col-span-2">
+                        <label className="text-xs font-black text-slate-400 uppercase tracking-wider block">
+                          보험대리점 광고심의필 번호 (선택 - 등록 시 하단 푸터 및 랜딩페이지에 상시 노출)
+                        </label>
+                        <input 
+                          type="text"
+                          value={editRegistrationNumber}
+                          onChange={(e) => setEditRegistrationNumber(e.target.value)}
+                          placeholder="예: 손해보험협회 심의필 제2026-1234호 또는 생명보험협회 심의필 제2026-5678호"
+                          className="w-full bg-slate-950 border border-slate-800 focus:border-orange-500/50 rounded-xl py-2.5 px-4 outline-none text-xs text-white font-bold"
+                          autoComplete="off"
+                        />
+                      </div>
+
                       {/* Password */}
                       <div className="space-y-2 md:col-span-2">
                         <label className="text-xs font-black text-slate-400 uppercase tracking-wider block">
                           로그인 비밀번호 변경 *
                         </label>
+                        {/* Dummy inputs to prevent Chrome autofill */}
+                        <input type="text" name="chrome_autofill_prevent_un" style={{ display: 'none' }} />
+                        <input type="password" name="chrome_autofill_prevent_pw" style={{ display: 'none' }} />
                         <input 
                           type="password"
                           value={editPassword}
                           onChange={(e) => setEditPassword(e.target.value)}
                           placeholder="대시보드 로그인 시 사용할 비밀번호를 입력하세요"
                           className="w-full bg-slate-950 border border-slate-800 focus:border-orange-500/50 rounded-xl py-2.5 px-4 outline-none text-xs text-white font-bold"
+                          autoComplete="new-password"
                           required
                         />
                       </div>
@@ -4181,7 +5377,7 @@ export default function AdminDashboard() {
                           type="text"
                           value={editCompanyName}
                           onChange={(e) => setEditCompanyName(e.target.value)}
-                          placeholder="예: 인카금융서비스 강남지점"
+                          placeholder="예: 더윤컴퍼니 강남지점"
                           className="w-full bg-slate-950 border border-slate-800 focus:border-orange-500/50 rounded-xl py-2.5 px-4 outline-none text-xs text-white font-bold"
                           required
                         />
@@ -4196,7 +5392,7 @@ export default function AdminDashboard() {
                           type="text"
                           value={editCustomAddress}
                           onChange={(e) => setEditCustomAddress(e.target.value)}
-                          placeholder="예: 서울시 강남구 테헤란로 123 (인카금융서비스 공식 인증 설계사)"
+                          placeholder="예: 서울시 강남구 테헤란로 123 (더윤컴퍼니 공식 인증 설계사)"
                           className="w-full bg-slate-950 border border-slate-800 focus:border-orange-500/50 rounded-xl py-2.5 px-4 outline-none text-xs text-white font-bold"
                           required
                         />
@@ -4219,18 +5415,80 @@ export default function AdminDashboard() {
 
               {/* Tab 7: B2B Marketing Playbook */}
               {activeTab === 'playbook' && (
-                <div className="animate-in fade-in duration-350">
-                  <MarketingPlaybookTab isSuperAdmin={currentUser.role === 'super'} />
+                <div key="playbook" className="active-tab-fade-slide space-y-6">
+                  {showHelpGuide && (
+                    <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)]">
+                      <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                      <div className="pl-2 space-y-1">
+                        <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 실전 마케팅 비법서</span>
+                        <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                          "📚 설계사분들의 온라인 비대면 영업 성과를 높이기 위한 실전 DB 추출 노하우, 네이버 블로그 마케팅 세팅 가이드, 카톡 상담 템플릿 등 실무 교육 자료를 제공합니다."
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  <div className={`transition-all duration-300 ${
+                    showHelpGuide ? 'help-guide-glow p-4 rounded-[2rem] bg-slate-900/10' : ''
+                  }`}>
+                    <MarketingPlaybookTab 
+                      isSuperAdmin={currentUser.role === 'super'} 
+                      showHelpGuide={showHelpGuide} 
+                      onToggleHelpGuide={handleToggleHelpGuide}
+                    />
+                  </div>
                 </div>
               )}
 
               {/* Tab 8: Ad Campaign Agency Request */}
               {activeTab === 'ad_campaign' && (
-                <div className="animate-in fade-in duration-350">
-                  <AdCampaignTab 
-                    currentUser={currentUser as any} 
-                    isSuperAdmin={currentUser.role === 'super'} 
-                  />
+                <div key="ad_campaign" className="active-tab-fade-slide space-y-6">
+                  {showHelpGuide && (
+                    <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)]">
+                      <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                      <div className="pl-2 space-y-1">
+                        <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 광고 대행 요청</span>
+                        <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                          "📢 매달 적은 예산으로도 타겟팅 광고를 집행해 실시간 유입 리드를 확보할 수 있도록, 본사 마케팅 전문가가 직접 세팅하는 네이버/인스타그램 광고 대행 서비스 신청 영역입니다."
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  <div className={`transition-all duration-300 ${
+                    showHelpGuide ? 'help-guide-glow p-4 rounded-[2rem] bg-slate-900/10' : ''
+                  }`}>
+                    <AdCampaignTab 
+                      currentUser={currentUser as any} 
+                      isSuperAdmin={currentUser.role === 'super'} 
+                      showHelpGuide={showHelpGuide}
+                      onToggleHelpGuide={handleToggleHelpGuide}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Tab 9: Real-time Communication Hub */}
+              {activeTab === 'chat' && (
+                <div key="chat" className="active-tab-fade-slide space-y-6">
+                  {showHelpGuide && (
+                    <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)]">
+                      <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                      <div className="pl-2 space-y-1">
+                        <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 실시간 헬프데스크</span>
+                        <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                          "💬 플랫폼 이용 방법, 보험료 비교 업데이트 문의, 또는 대리점 개별 맞춤 기능 건의 등 본사 관리자 및 지원팀과 1:1로 실시간 소통하는 창구입니다."
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  <div className={`transition-all duration-300 ${
+                    showHelpGuide ? 'help-guide-glow p-4 rounded-[2rem] bg-slate-900/10' : ''
+                  }`}>
+                    <ChatTab 
+                      currentUser={currentUser} 
+                      showHelpGuide={showHelpGuide} 
+                      onToggleHelpGuide={handleToggleHelpGuide}
+                    />
+                  </div>
                 </div>
               )}
 
@@ -4290,16 +5548,19 @@ export default function AdminDashboard() {
               <div className="space-y-1.5">
                 <div className="flex items-center gap-1.5 flex-wrap">
                   {(() => {
+                    const isSupport = selectedLead.insurance_type === 'support_consult';
                     const isPrecision = selectedLead.insurance_type?.includes('remodeling');
                     const badge = getInsuranceTypeName(selectedLead.insurance_type || '');
                     return (
                       <>
                         <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase border ${
-                          isPrecision 
+                          isSupport
+                            ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20'
+                            : isPrecision 
                             ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' 
                             : 'bg-blue-500/10 text-blue-400 border-blue-500/20'
                         }`}>
-                          {isPrecision ? '내보험 정밀분석 🔍' : '실시간 가격비교 📊'}
+                          {isSupport ? '고객센터 문의 📞' : isPrecision ? '내보험 정밀분석 🔍' : '실시간 가격비교 📊'}
                         </span>
                         <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase border ${badge.bgClass} ${badge.textClass}`}>
                           {badge.label}
@@ -4308,7 +5569,12 @@ export default function AdminDashboard() {
                     );
                   })()}
                 </div>
-                <h3 className="text-xl font-extrabold text-white">{selectedLead.name} 고객 진단 결과 리포트</h3>
+                <h3 className="text-xl font-extrabold text-white">
+                  {selectedLead.insurance_type === 'support_consult'
+                    ? `${selectedLead.name} 고객 1:1 고객센터 문의 내역`
+                    : `${selectedLead.name} 고객 진단 결과 리포트`
+                  }
+                </h3>
               </div>
               <button 
                 onClick={() => setSelectedLead(null)}
@@ -4327,13 +5593,22 @@ export default function AdminDashboard() {
                   <p className="font-extrabold text-slate-300">연령: {selectedLead.age || '미기입'}세</p>
                   <p className="font-extrabold text-slate-300">
                     연락처: {(() => {
-                      const isConsult = selectedLead.insurance_type?.endsWith('_consult') || selectedLead.insurance_type === 'remodeling_consult';
+                      const isConsult = isLeadConsult(selectedLead.insurance_type);
                       const isUnderwriting = selectedLead.insurance_type?.includes('_underwriting');
                       return (isConsult || isUnderwriting) ? selectedLead.phone : maskPhoneNumber(selectedLead.phone);
                     })()}
                   </p>
                   <p className="font-extrabold text-slate-300">성별: {selectedLead.raw_payload?.gender === 'M' ? '남성' : selectedLead.raw_payload?.gender === 'F' ? '여성' : '미확인'}</p>
-                  <p className="font-extrabold text-slate-350 mt-1.5 pt-1.5 border-t border-slate-900/50 flex items-center gap-1">
+                  {(() => {
+                    const utmSource = selectedLead.raw_payload?.utm_source;
+                    const badge = getUtmSourceBadge(utmSource);
+                    return (
+                      <p className="font-extrabold text-slate-300 flex items-center gap-1.5 mt-1">
+                        유입 경로: <span className={`inline-block px-1.5 py-0.5 rounded border text-[9px] font-black tracking-tight ${badge.bgClass}`}>{badge.label}</span>
+                      </p>
+                    );
+                  })()}
+                  <p className="font-extrabold text-slate-355 mt-1.5 pt-1.5 border-t border-slate-900/50 flex items-center gap-1">
                     ⏱️ 비교 분석: <span className="text-orange-400">{new Date(selectedLead.created_at).toLocaleString('ko-KR')}</span>
                   </p>
                   {selectedLead.raw_payload?.simulation_code && (
@@ -4342,7 +5617,7 @@ export default function AdminDashboard() {
                     </p>
                   )}
                   {(() => {
-                    const isConsult = selectedLead.insurance_type?.endsWith('_consult') || selectedLead.insurance_type === 'remodeling_consult';
+                    const isConsult = isLeadConsult(selectedLead.insurance_type);
                     const isUnderwriting = selectedLead.insurance_type?.includes('_underwriting');
                     
                     if (isUnderwriting) {
@@ -4364,7 +5639,7 @@ export default function AdminDashboard() {
                       }
                       return (
                         <div className="mt-2.5 p-2 bg-orange-500/10 border border-orange-500/20 rounded-xl text-[9.5px] text-orange-400 font-extrabold leading-normal break-keep">
-                          ⚠️ [정식 상담 약속 준수 가이드] 본 고객은 정식 상담을 신청한 고객입니다. 무단 유선 전화를 피하고, 카톡으로 먼저 설계안을 전달한 뒤 전화 동의를 받아주세요.
+                          ⚠️ [정식 상담 약속 준수 가이드] 본 고객은 정식 상담을 신청한 고객입니다. 카카오톡으로 연락 후, 고객 동의 후 유선 안내 바랍니다.
                         </div>
                       );
                     }
@@ -4373,7 +5648,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="flex gap-2 pt-2 border-t border-slate-900">
                   {(() => {
-                    const isConsult = selectedLead.insurance_type?.endsWith('_consult') || selectedLead.insurance_type === 'remodeling_consult';
+                    const isConsult = isLeadConsult(selectedLead.insurance_type);
                     const isUnderwriting = selectedLead.insurance_type?.includes('_underwriting');
                     if (isConsult || isUnderwriting) {
                       return (
@@ -4402,25 +5677,69 @@ export default function AdminDashboard() {
                   })()}
                 </div>
               </div>
-              <div className="bg-slate-950 p-4 rounded-xl border border-slate-850">
-                <span className="text-slate-500 block font-bold mb-1">보험 등급 (종합)</span>
-                <p className="font-black text-lg text-emerald-400">
-                  {selectedLead.analysis_result?.scores?.total || 75} 점 / 100점
-                </p>
-                <p className="text-[10px] text-slate-500 font-bold mt-1">
-                  기본 분석 대비 절감 가능성 진단
-                </p>
-              </div>
-              <div className="bg-slate-950 p-4 rounded-xl border border-slate-850">
-                <span className="text-slate-500 block font-bold mb-1">설계 월 납입료</span>
-                <p className="font-black text-lg text-orange-400">
-                  {selectedLead.monthly_premium?.toLocaleString() || 0} 원
-                </p>
-                <p className="text-[10px] text-slate-500 font-bold mt-1">
-                  리모델링 설계 적용 시 월 요금
-                </p>
-              </div>
+              {selectedLead.insurance_type === 'support_consult' ? (
+                <>
+                  <div className="bg-slate-950 p-4 rounded-xl border border-slate-850">
+                    <span className="text-slate-500 block font-bold mb-1">소속 / 회사명</span>
+                    <p className="font-black text-lg text-emerald-400 truncate">
+                      {selectedLead.analysis_result?.company || selectedLead.raw_payload?.company || '개인'}
+                    </p>
+                    <p className="text-[10px] text-slate-500 font-bold mt-1">
+                      작성자가 입력한 소속 정보
+                    </p>
+                  </div>
+                  <div className="bg-slate-950 p-4 rounded-xl border border-slate-850">
+                    <span className="text-slate-500 block font-bold mb-1">회신 이메일</span>
+                    <p className="font-black text-sm text-orange-400 truncate select-all mt-1">
+                      {selectedLead.analysis_result?.email || selectedLead.raw_payload?.email || '미입력'}
+                    </p>
+                    <p className="text-[10px] text-slate-500 font-bold mt-1">
+                      답변을 보낼 회신 주소
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="bg-slate-950 p-4 rounded-xl border border-slate-850">
+                    <span className="text-slate-500 block font-bold mb-1">보험 등급 (종합)</span>
+                    <p className="font-black text-lg text-emerald-400">
+                      {selectedLead.analysis_result?.scores?.total || 75} 점 / 100점
+                    </p>
+                    <p className="text-[10px] text-slate-500 font-bold mt-1">
+                      기본 분석 대비 절감 가능성 진단
+                    </p>
+                  </div>
+                  <div className="bg-slate-950 p-4 rounded-xl border border-slate-850">
+                    <span className="text-slate-500 block font-bold mb-1">설계 월 납입료</span>
+                    <p className="font-black text-lg text-orange-400">
+                      {selectedLead.monthly_premium?.toLocaleString() || 0} 원
+                    </p>
+                    <p className="text-[10px] text-slate-500 font-bold mt-1">
+                      리모델링 설계 적용 시 월 요금
+                    </p>
+                  </div>
+                </>
+              )}
             </div>
+
+            {/* 고객센터 문의 본문 내용 표시 */}
+            {selectedLead.insurance_type === 'support_consult' && (
+              <div className="space-y-4 bg-slate-950 p-6 rounded-[1.5rem] border border-slate-850 text-left">
+                <div className="space-y-1">
+                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">문의 유형 / 제목</span>
+                  <h4 className="font-extrabold text-sm text-white">
+                    [{selectedLead.analysis_result?.subject || selectedLead.raw_payload?.subject || '일반 문의'}]
+                  </h4>
+                </div>
+                <div className="w-full h-px bg-slate-900" />
+                <div className="space-y-1.5">
+                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">상세 문의 내용</span>
+                  <div className="text-xs text-slate-350 font-semibold leading-relaxed bg-slate-900/40 p-4 rounded-xl border border-slate-850/60 whitespace-pre-wrap break-all min-h-[120px]">
+                    {selectedLead.analysis_result?.message || selectedLead.raw_payload?.message || '문의 내용이 존재하지 않습니다.'}
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Real-time Remodeling Active Insurance Policy List */}
             {(() => {

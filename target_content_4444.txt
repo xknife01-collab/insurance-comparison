@@ -1,0 +1,2 @@
+"              {/* Tab 4: Billing panel */}\n              {activeTab === 'billing' && (\n                <div className=\"space-y-8\">\n                  <h2 className=\"text-lg font-black text-white\">구독 계약 및 결제 시뮬레이션</h2>\n\n    
+<truncated 37748 bytes>

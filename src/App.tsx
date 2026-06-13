@@ -43,13 +43,14 @@ import { AccidentExplanation } from './components/insurance/accident/AccidentExp
 import { SavingsExplanation } from './components/insurance/savings/SavingsExplanation';
 import { PropertyExplanation } from './components/insurance/property/PropertyExplanation';
 import AdminDashboard from './components/AdminDashboard';
+import { CustomerSupportSection } from './components/CustomerSupportSection';
 
 export default function App() {
-  const { branding } = useB2BBranding();
+  const { branding, loading, showInAppGuide, setShowInAppGuide, isIOS, isInAppBrowser, isStandalone, updateBranding } = useB2BBranding();
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [remodelingResult, setRemodelingResult] = useState<AnalysisResult | null>(null);
   const [currentAnalysis, setCurrentAnalysis] = useState<InsuranceAnalysis | null>(null);
-  const [view, setView] = useState<'admin' | 'home' | 'indemnity' | 'preexisting' | 'dental' | 'caregiving' | 'dementia' | 'surgery' | 'cancer' | 'cerebrovascular' | 'heart' | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'property' | 'annuity' | 'whole' | 'variable' | 'legal' | 'credit' | 'health_general' | 'accident' | 'savings_general'>(() => {
+  const [view, setView] = useState<'admin' | 'home' | 'indemnity' | 'preexisting' | 'dental' | 'caregiving' | 'dementia' | 'surgery' | 'cancer' | 'cerebrovascular' | 'heart' | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'property' | 'annuity' | 'whole' | 'variable' | 'legal' | 'credit' | 'health_general' | 'accident' | 'savings_general' | 'support'>(() => {
     if (window.location.pathname === '/admin') return 'admin';
     return 'home';
   });
@@ -153,7 +154,7 @@ export default function App() {
     }
 
     const initialTimeline = [];
-    const isConsult = category.endsWith('_consult') || category === 'remodeling_consult';
+    const isConsult = (category.endsWith('_consult') || category === 'remodeling_consult') && category !== 'support_consult';
     if (isConsult) {
       const typeLabel = consultType === 'anonymous' ? '익명' : consultType === 'regular' ? '정식' : '일반';
       initialTimeline.push({
@@ -163,10 +164,123 @@ export default function App() {
         detail: `고객이 전담 설계사 카카오톡 1:1 [${typeLabel} 상담] 버튼을 클릭하여 채팅을 시작했습니다.`,
         created_at: new Date().toISOString()
       });
+    } else if (category === 'support_consult') {
+      initialTimeline.push({
+        id: `support-${Date.now()}`,
+        type: 'support_submit',
+        author: '고객',
+        detail: `고객이 1:1 문의 폼을 작성하고 [전송하기]를 눌러 문의를 남겼습니다.`,
+        created_at: new Date().toISOString()
+      });
+    }
+
+    let chosenPlannerId = branding.plannerId;
+    let autoAssignedLog = '';
+
+    const isUnderwriting = category.includes('_underwriting');
+    const isSupport = category === 'support_consult';
+    const isHighIntent = isUnderwriting || isConsult || isSupport;
+
+    if (isHighIntent && branding.agencyId && (branding.type === 'agency' || branding.type === 'organic')) {
+      if (branding.leadRoutingType && branding.leadRoutingType.startsWith('distribute_auto_')) {
+        try {
+          const { data: planners } = await supabase
+            .from('planners')
+            .select('id, name, registration_number, monthly_credit_used, profile_image_url, logo_url, greeting_title, greeting_content, custom_phone, custom_address, kakao_link, company_name, phone, email, subscription_status')
+            .eq('agency_id', branding.agencyId)
+            .eq('subscription_status', 'active');
+
+          const activePlanners = (planners || []).filter(p => p.registration_number !== 'dist_disabled');
+
+          if (activePlanners.length > 0) {
+            let chosen = activePlanners[0];
+
+            if (activePlanners.length > 1) {
+              const { data: recentLeads } = await supabase
+                .from('customer_leads')
+                .select('planner_id')
+                .eq('agency_id', branding.agencyId)
+                .not('planner_id', 'is', null)
+                .gte('created_at', new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString());
+
+              const counts: Record<string, number> = {};
+              activePlanners.forEach(p => { counts[p.id] = 0; });
+              recentLeads?.forEach(l => {
+                if (l.planner_id && counts[l.planner_id] !== undefined) {
+                  counts[l.planner_id]++;
+                }
+              });
+
+              let minScore = Infinity;
+              activePlanners.forEach(p => {
+                let weight = 1;
+                if (branding.leadRoutingType === 'distribute_auto_weighted') {
+                  if (p.registration_number && p.registration_number.startsWith('dist_weight:')) {
+                    const w = parseInt(p.registration_number.split(':')[1]);
+                    weight = isNaN(w) ? 5 : w;
+                  } else {
+                    weight = 5;
+                  }
+                } else if (branding.leadRoutingType === 'distribute_auto_activity') {
+                  weight = (p.monthly_credit_used || 0) + 1;
+                }
+                
+                const score = counts[p.id] / (weight || 1);
+                if (score < minScore) {
+                  minScore = score;
+                  chosen = p;
+                }
+              });
+            }
+
+            chosenPlannerId = chosen.id;
+            
+            const algoName = branding.leadRoutingType === 'distribute_auto_round_robin' 
+              ? '균등 순차 분배' 
+              : branding.leadRoutingType === 'distribute_auto_weighted' 
+              ? '가중치 비율 분배' 
+              : '실적 기반 분배';
+              
+            autoAssignedLog = `⚡ 실시간 자동 분배 엔진에 의해 [${chosen.name}] 플래너에게 배정되었습니다. (${algoName})`;
+
+            const newPlannerBranding = {
+              type: 'planner' as const,
+              plannerId: chosen.id,
+              agencyId: branding.agencyId,
+              name: chosen.name,
+              profileImageUrl: chosen.profile_image_url || null,
+              logoUrl: chosen.logo_url || branding.logoUrl || null,
+              greetingTitle: chosen.greeting_title || `${chosen.name} 플래너의 맞춤 안심 보장`,
+              greetingContent: chosen.greeting_content || `${chosen.name} 설계사가 양심을 걸고 정직하게 분석해 드립니다.`,
+              customPhone: chosen.custom_phone || chosen.phone || branding.customPhone,
+              customAddress: chosen.custom_address || branding.customAddress,
+              kakaoLink: chosen.kakao_link || null,
+              agencyName: chosen.company_name || branding.agencyName || null,
+              agencyAddress: chosen.custom_address || branding.agencyAddress || null,
+              registrationNumber: chosen.registration_number || null,
+              customEmail: chosen.email || branding.customEmail || null,
+              leadRoutingType: branding.leadRoutingType,
+            };
+            updateBranding(newPlannerBranding);
+          }
+        } catch (err) {
+          console.error('Error during auto distribution:', err);
+        }
+      }
+    }
+
+    if (autoAssignedLog) {
+      initialTimeline.push({
+        id: `system-dist-${Date.now()}`,
+        type: 'system_log',
+        author: '시스템',
+        detail: autoAssignedLog,
+        created_at: new Date().toISOString()
+      });
     }
 
     const payload = {
-      planner_id: branding.plannerId,
+      planner_id: chosenPlannerId,
       agency_id: branding.agencyId,
       name: analysis.name || '무명고객',
       phone: analysis.mobile || '010-0000-0000',
@@ -179,7 +293,7 @@ export default function App() {
         jobClass: analysis.jobClass, 
         category,
         consult_type: consultType || 'regular',
-        utm_source: sessionStorage.getItem('ins_utm_source') || 'organic',
+        utm_source: sessionStorage.getItem('ins_utm_source') || localStorage.getItem('ins_utm_source') || 'organic',
         analysisInputs: analysis,
         timeline: initialTimeline,
         simulation_code: simulationCode
@@ -269,8 +383,74 @@ export default function App() {
     }
   }, [view]);
 
+  // Render splash screen if loading B2B branding for query/cached parameters
+  if (loading && (
+    window.location.search.includes('planner') || 
+    window.location.search.includes('agency') || 
+    localStorage.getItem('pwa_saved_planner') || 
+    localStorage.getItem('pwa_saved_agency')
+  )) {
+    return (
+      <div className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-slate-950 text-white select-none">
+        {/* Modern grand background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-950 to-black opacity-90" />
+        
+        {/* Splash Content */}
+        <div className="relative z-10 flex flex-col items-center space-y-6 text-center px-6 animate-pulse duration-1000">
+          {/* Logo Symbol Container */}
+          <div className="w-24 h-24 bg-white/5 border border-white/10 rounded-[2rem] flex items-center justify-center shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-md relative overflow-hidden">
+            <img 
+              src="/6397187.png" 
+              alt="보험리밸런스" 
+              className="w-16 h-16 object-contain"
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <h1 className="text-xl font-black tracking-tight bg-gradient-to-r from-orange-400 via-orange-500 to-amber-500 bg-clip-text text-transparent">
+              보험리밸런스
+            </h1>
+            <p className="text-[10px] text-slate-400 font-black tracking-[0.2em] uppercase">
+              0.1s Big Data Analysis Engine
+            </p>
+          </div>
+          
+          {/* Loading Indicator */}
+          <div className="flex items-center gap-1.5 pt-4">
+            <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-bounce" style={{ animationDelay: '0ms' }} />
+            <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-bounce" style={{ animationDelay: '150ms' }} />
+            <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-bounce" style={{ animationDelay: '300ms' }} />
+          </div>
+          
+          <p className="text-[10px] text-slate-500 font-bold tracking-tight">
+            설계사 맞춤 솔루션을 안전하게 불러오는 중입니다...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   if (view === 'admin') {
     return <AdminDashboard />;
+  }
+
+  if (view === 'support') {
+    return (
+      <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-orange-100 selection:text-orange-900 antialiased flex flex-col justify-between">
+        <div>
+          <Header setView={setView} />
+          <main className="bg-white">
+            <CustomerSupportSection 
+              branding={branding} 
+              onSubmitLead={submitLead} 
+              setView={setView}
+              setCalcTarget={setCalcTarget}
+            />
+          </main>
+        </div>
+        <Footer />
+      </div>
+    );
   }
 
   if (view === 'indemnity') {
@@ -1079,18 +1259,101 @@ export default function App() {
         <PhilosophySection />
       </main>
 
-      {/* Floating Action Buttons */}
-      <div className="fixed bottom-8 right-8 flex flex-col gap-4 z-50">
-          <button className="w-16 h-16 bg-white rounded-3xl shadow-[0_20px_40px_-10px_rgba(0,0,0,0.15)] border border-gray-100 flex items-center justify-center text-gray-400 hover:text-orange-500 hover:border-orange-200 transition-all hover:scale-110 active:scale-95 group">
-            <span className="text-3xl group-hover:rotate-90 transition-transform">+</span>
-          </button>
-          <button className="w-16 h-16 bg-gray-900 rounded-3xl shadow-[0_20px_40px_-10px_rgba(0,0,0,0.4)] flex items-center justify-center text-white hover:bg-black transition-all hover:scale-110 active:scale-95">
-            <span className="text-xl">↑</span>
-          </button>
-      </div>
-
       <Footer />
       <PlannerWidget branding={branding} onKakaoClick={handlePlannerWidgetKakaoClick} />
+
+      {/* PWA In-App Browser & iOS Safari Guidance Modal */}
+      {showInAppGuide && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="bg-slate-900 border border-slate-800 text-white rounded-[2.5rem] p-6 max-w-sm w-full space-y-6 shadow-2xl relative overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            {/* Header / Icon */}
+            <div className="flex flex-col items-center text-center space-y-3">
+              <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg">
+                <span className="text-3xl">📱</span>
+              </div>
+              <h3 className="text-lg font-black tracking-tight mt-2">
+                {isInAppBrowser ? '안전하고 빠른 앱 설치 안내' : '아이폰 앱 바로가기 설치 안내'}
+              </h3>
+              <p className="text-xs text-slate-400 font-bold leading-relaxed break-keep">
+                {isInAppBrowser ? (
+                  <>
+                    현재 접속하신 인스타그램/페이스북/카카오톡 화면 내에서는 직접 앱을 다운로드할 수 없습니다. 
+                    아래 순서에 따라 **기본 브라우저(사파리 또는 크롬)**로 이동하여 편리하게 앱을 설치해 주세요!
+                  </>
+                ) : (
+                  <>
+                    아이폰 사파리(Safari) 브라우저에서 아래 순서에 따라 홈 화면에 바로가기 앱을 등록해 보세요.
+                    아이콘 터치 한 번으로 0.1초 만에 보험 분석을 시작할 수 있습니다!
+                  </>
+                )}
+              </p>
+            </div>
+
+            {/* Instruction Steps */}
+            <div className="bg-white/5 border border-white/5 rounded-2xl p-4 space-y-4">
+              {isInAppBrowser ? (
+                isIOS ? (
+                  <>
+                    <div className="flex items-start gap-3 text-left">
+                      <span className="w-5 h-5 rounded-full bg-orange-500 text-[10px] font-black flex items-center justify-center shrink-0 mt-0.5 text-white">1</span>
+                      <p className="text-xs font-bold text-slate-200">
+                        화면 아래에 있는 **공유(내보내기) 버튼** 또는 우측 하단 **점 3개(...)** 버튼을 터치해 주세요.
+                      </p>
+                    </div>
+                    <div className="flex items-start gap-3 text-left">
+                      <span className="w-5 h-5 rounded-full bg-orange-500 text-[10px] font-black flex items-center justify-center shrink-0 mt-0.5 text-white">2</span>
+                      <p className="text-xs font-bold text-slate-200">
+                        옵션 메뉴 중에서 **[Safari로 열기]** 또는 **[기본 브라우저로 열기]**를 선택해 주세요.
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="flex items-start gap-3 text-left">
+                      <span className="w-5 h-5 rounded-full bg-orange-500 text-[10px] font-black flex items-center justify-center shrink-0 mt-0.5 text-white">1</span>
+                      <p className="text-xs font-bold text-slate-200">
+                        화면 우측 상단에 있는 **점 3개(더보기 `⋮`)** 버튼을 터치해 주세요.
+                      </p>
+                    </div>
+                    <div className="flex items-start gap-3 text-left">
+                      <span className="w-5 h-5 rounded-full bg-orange-500 text-[10px] font-black flex items-center justify-center shrink-0 mt-0.5 text-white">2</span>
+                      <p className="text-xs font-bold text-slate-200">
+                        메뉴 중에서 **[다른 브라우저로 열기]** 또는 **[Chrome으로 열기]**를 선택해 주세요.
+                      </p>
+                    </div>
+                  </>
+                )
+              ) : (
+                /* iOS Safari Native PWA Add to Home Screen Instructions */
+                <>
+                  <div className="flex items-start gap-3 text-left">
+                    <span className="w-5 h-5 rounded-full bg-orange-500 text-[10px] font-black flex items-center justify-center shrink-0 mt-0.5 text-white">1</span>
+                    <p className="text-xs font-bold text-slate-200">
+                      사파리 브라우저 화면 하단의 **[공유(내보내기)]** 아이콘을 터치해 주세요.
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-3 text-left">
+                    <span className="w-5 h-5 rounded-full bg-orange-500 text-[10px] font-black flex items-center justify-center shrink-0 mt-0.5 text-white">2</span>
+                    <p className="text-xs font-bold text-slate-200">
+                      메뉴를 아래로 스크롤하여 **[홈 화면에 추가]** 버튼을 선택해 주세요.
+                    </p>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* Action buttons */}
+            <div className="space-y-2">
+              <button
+                onClick={() => setShowInAppGuide(false)}
+                className="w-full py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xs rounded-xl shadow-lg transition-colors cursor-pointer text-center"
+              >
+                확인했습니다
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
