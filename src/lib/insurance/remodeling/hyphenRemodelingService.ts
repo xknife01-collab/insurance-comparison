@@ -1,8 +1,15 @@
 // HYPHEN 내보험다보여 API 연동 서비스
 import { RawInsurancePolicy } from '../../../types/remodeling';
 
-const USER_ID = (import.meta as any).env.VITE_HYPHEN_USER_ID || 'zkfnth01';
-const HKEY = (import.meta as any).env.VITE_HYPHEN_HKEY || 'bebc2c0dfab3266b';
+const USER_ID = 
+  (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_HYPHEN_USER_ID) || 
+  (typeof process !== 'undefined' && process.env && process.env.VITE_HYPHEN_USER_ID) || 
+  'zkfnth01';
+
+const HKEY = 
+  (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_HYPHEN_HKEY) || 
+  (typeof process !== 'undefined' && process.env && process.env.VITE_HYPHEN_HKEY) || 
+  'bebc2c0dfab3266b';
 
 export interface HyphenCommonResponse {
   errYn: 'Y' | 'N';

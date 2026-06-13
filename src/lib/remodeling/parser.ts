@@ -5,7 +5,7 @@ let _ai: GoogleGenAI | null = null;
 
 function getGeminiKey(): string | undefined {
   return (
-    (import.meta as any).env?.VITE_GEMINI_API_KEY ||
+    (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_GEMINI_API_KEY) ||
     (typeof process !== 'undefined' && (process.env as any)?.GEMINI_API_KEY) ||
     (typeof process !== 'undefined' && (process.env as any)?.GOOGLE_API_KEY)
   ) || undefined;
