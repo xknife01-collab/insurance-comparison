@@ -5,7 +5,7 @@ import {
 } from 'lucide-react';
 
 export const ChildPrenatalSection = ({ onAction }: { onAction: () => void }) => (
-  <section className="py-32 bg-yellow-50/20 px-4 relative overflow-hidden" id="child-detail">
+  <section className="py-32 bg-yellow-50/20 px-2 sm:px-4 relative overflow-hidden" id="child-detail">
     <div className="max-w-7xl mx-auto">
 
       {/* ── 헤더 ── */}
@@ -36,7 +36,7 @@ export const ChildPrenatalSection = ({ onAction }: { onAction: () => void }) => 
           { num: '3대 진단비', label: '어린이보험 필수 특약', sub: '암, 뇌혈관, 허혈성 심장 집중' },
           { num: '계약전환권', label: '30세 만기 시 100세 연장', sub: '아프더라도 무심사로 보장 연장' },
         ].map((s, i) => (
-          <div key={i} className="bg-white border border-yellow-100 rounded-[3rem] p-8 text-center shadow-sm hover:shadow-xl hover:border-yellow-200 transition-all group">
+          <div key={i} className="bg-white border border-yellow-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-yellow-200 transition-all group">
             <p className="text-3xl font-black text-yellow-600 mb-2 group-hover:scale-110 transition-transform inline-block">{s.num}</p>
             <p className="font-black text-slate-800 text-sm leading-tight mb-1">{s.label}</p>
             <p className="text-[11px] text-slate-400 font-bold">{s.sub}</p>
@@ -48,9 +48,9 @@ export const ChildPrenatalSection = ({ onAction }: { onAction: () => void }) => 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
 
         {/* 연령층 가이드 */}
-        <div className="bg-white rounded-[4rem] p-12 border border-yellow-100 shadow-lg hover:shadow-2xl transition-all group">
+        <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-yellow-100 shadow-lg hover:shadow-2xl transition-all group">
           <div className="flex items-center gap-4 mb-10">
-            <div className="w-16 h-16 bg-yellow-500 rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
+            <div className="w-16 h-16 bg-yellow-500 rounded-2xl md:rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
               <Baby className="w-8 h-8" />
             </div>
             <div>
@@ -81,7 +81,7 @@ export const ChildPrenatalSection = ({ onAction }: { onAction: () => void }) => 
             ))}
           </div>
 
-          <div className="mt-8 p-6 bg-yellow-50 rounded-3xl border border-yellow-100">
+          <div className="mt-8 p-5 md:p-6 bg-yellow-50 rounded-3xl border border-yellow-100">
             <p className="text-yellow-700 font-black text-xs mb-1">⚠️ 태아 가입 시 필수 체크</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
               임신 사실 확인 직후부터 <span className="text-yellow-600 font-black">22주 6일 이내</span>에 가입해야 
@@ -91,14 +91,14 @@ export const ChildPrenatalSection = ({ onAction }: { onAction: () => void }) => 
         </div>
 
         {/* 30세 vs 100세 만기 비교 */}
-        <div className="bg-slate-900 rounded-[4rem] p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
-          <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
             <Calendar className="w-56 h-56" />
           </div>
 
           <div className="relative z-10">
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-16 h-16 bg-yellow-500 rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
+              <div className="w-16 h-16 bg-yellow-500 rounded-2xl md:rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
                 <ShieldCheck className="w-8 h-8" />
               </div>
               <div>
@@ -109,7 +109,7 @@ export const ChildPrenatalSection = ({ onAction }: { onAction: () => void }) => 
 
             <div className="space-y-6">
               {/* 30세 만기 */}
-              <div className="p-8 bg-white/10 rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
+              <div className="p-5 md:p-8 bg-white/10 rounded-2xl md:rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
                 <p className="font-black text-yellow-300 mb-3 flex items-center gap-2">
                   <Clock className="w-4 h-4" /> 30세 만기 플랜 (가성비 중심)
                 </p>
@@ -129,7 +129,7 @@ export const ChildPrenatalSection = ({ onAction }: { onAction: () => void }) => 
               </div>
 
               {/* 100세 만기 */}
-              <div className="p-8 bg-yellow-500/20 rounded-[2.5rem] border border-yellow-400/30 hover:bg-yellow-500/30 transition-colors">
+              <div className="p-5 md:p-8 bg-yellow-500/20 rounded-2xl md:rounded-[2.5rem] border border-yellow-400/30 hover:bg-yellow-500/30 transition-colors">
                 <p className="font-black text-yellow-300 mb-3 flex items-center gap-2">
                   <Activity className="w-4 h-4" /> 100세 만기 플랜 (평생 보장형)
                 </p>
@@ -150,7 +150,7 @@ export const ChildPrenatalSection = ({ onAction }: { onAction: () => void }) => 
             </div>
           </div>
 
-          <div className="relative z-10 mt-8 p-6 bg-white/5 rounded-3xl border border-white/10">
+          <div className="relative z-10 mt-8 p-5 md:p-6 bg-white/5 rounded-3xl border border-white/10">
             <p className="text-yellow-400 font-black text-xs mb-1 uppercase tracking-widest">💡 전문가 매칭 전략</p>
             <p className="text-white font-bold text-xs leading-relaxed opacity-80">
               "부모의 납입 여력에 맞춰 첫째 아이나 예산이 타이트할 때는 30세 만기로 설계한 후 만기 전환을 노리는 것이 합리적이며,
@@ -161,8 +161,8 @@ export const ChildPrenatalSection = ({ onAction }: { onAction: () => void }) => 
       </div>
 
       {/* ── 2025~2026 트렌드: 어른이보험 통합 비교 ── */}
-      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-[4rem] p-12 text-white relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
+      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-5 md:p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
           <Sparkles className="w-40 h-40" />
         </div>
         <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
@@ -198,7 +198,7 @@ export const ChildPrenatalSection = ({ onAction }: { onAction: () => void }) => 
 
       {/* ── 가입 시 주의 사항 체크리스트 ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-        <div className="md:col-span-2 bg-white border border-yellow-100 rounded-[4rem] p-12 shadow-sm hover:shadow-xl transition-all">
+        <div className="md:col-span-2 bg-white border border-yellow-100 rounded-3xl md:rounded-[4rem] p-5 md:p-12 shadow-sm hover:shadow-xl transition-all">
           <h3 className="text-2xl font-black text-slate-900 mb-8 tracking-tight flex items-center gap-3">
             <UserCheck className="w-6 h-6 text-yellow-500" /> 자녀 안심 보장 체크리스트
           </h3>
@@ -220,7 +220,7 @@ export const ChildPrenatalSection = ({ onAction }: { onAction: () => void }) => 
         </div>
 
         <div className="flex flex-col gap-6">
-          <div className="bg-yellow-500 text-white rounded-[3.5rem] p-10 shadow-xl">
+          <div className="bg-yellow-500 text-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-xl">
             <h4 className="text-xl font-black mb-4">어린이 보장 핵심 TOP 5</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
               ① 백혈병 등 소아암 대비 다제암 특약<br />
@@ -230,7 +230,7 @@ export const ChildPrenatalSection = ({ onAction }: { onAction: () => void }) => 
               ⑤ 30세 만기 전환제도 탑재
             </p>
           </div>
-          <div className="bg-white border border-yellow-100 rounded-[3.5rem] p-10 shadow-sm hover:shadow-xl transition-all">
+          <div className="bg-white border border-yellow-100 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-sm hover:shadow-xl transition-all">
             <h4 className="text-xl font-black mb-4 flex items-center gap-2">
               <Clock className="text-yellow-500 w-5 h-5" /> 선천 장애 면책 조항
             </h4>
@@ -242,7 +242,7 @@ export const ChildPrenatalSection = ({ onAction }: { onAction: () => void }) => 
       </div>
 
       {/* ── 주요 상품 종합 비교표 ── */}
-      <div className="mb-20 bg-white rounded-[4rem] p-12 border border-yellow-100 shadow-sm">
+      <div className="mb-20 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-yellow-100 shadow-sm">
         <h3 className="text-2xl font-black text-slate-900 mb-10 tracking-tight">
           국내 Top 6 어린이/태아보험 상품 경쟁력 전수 비교
         </h3>
@@ -255,7 +255,7 @@ export const ChildPrenatalSection = ({ onAction }: { onAction: () => void }) => 
             { company: '삼성화재', product: '우리 아이 안심케어', highlight: '대기업 네임드 신속 보상 서비스 연계', badges: ['삼성케어', '치아+어린이 통합'] },
             { company: '한화손해보험', product: '라이프플러스어린이', highlight: '어른이보험 실속형 비갱신 가격 경쟁력 우수', badges: ['어른이 실속형', '비갱신 강자'] },
           ].map((item, i) => (
-            <div key={i} className="p-8 bg-yellow-50/20 rounded-[2.5rem] border border-yellow-100 hover:border-yellow-300 hover:shadow-lg transition-all">
+            <div key={i} className="p-5 md:p-8 bg-yellow-50/20 rounded-2xl md:rounded-[2.5rem] border border-yellow-100 hover:border-yellow-300 hover:shadow-lg transition-all">
               <p className="text-xs font-black text-yellow-600 mb-1">{item.company}</p>
               <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
               <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>

@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
-  <section className="py-24 bg-slate-50/10 px-4 relative overflow-hidden" id="legal-detail">
+  <section className="py-24 bg-slate-50/10 px-2 sm:px-4 relative overflow-hidden" id="legal-detail">
     <div className="max-w-7xl mx-auto">
 
       {/* ── 헤더 ── */}
@@ -39,7 +39,7 @@ export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
           { num: '비례 공제 요율', label: '10% 비례 자기부담금 설정 시', sub: '매월 보험료 10% 추가 세이빙 할인' },
           { num: '변호사 보수 한도', label: '심급별 최대 3,000만원 보장', sub: '1심, 2심, 3심 독립적인 한도 매핑' },
         ].map((s, i) => (
-          <div key={i} className="bg-white border border-indigo-100/50 rounded-[3rem] p-8 text-center shadow-sm hover:shadow-xl hover:border-indigo-200 transition-all group">
+          <div key={i} className="bg-white border border-indigo-100/50 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-indigo-200 transition-all group">
             <p className="text-2xl font-black text-indigo-600 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
             <p className="font-black text-slate-800 text-sm leading-tight mb-1">{s.label}</p>
             <p className="text-[11px] text-slate-400 font-bold">{s.sub}</p>
@@ -51,9 +51,9 @@ export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
 
         {/* GUIDE 01: 법률비용 3대 핵심 보장 가이드 */}
-        <div className="bg-white rounded-[4rem] p-12 border border-indigo-100/60 shadow-lg hover:shadow-2xl transition-all group">
+        <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-indigo-100/60 shadow-lg hover:shadow-2xl transition-all group">
           <div className="flex items-center gap-4 mb-10">
-            <div className="w-16 h-16 bg-indigo-600 rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
+            <div className="w-16 h-16 bg-indigo-600 rounded-2xl md:rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
               <Compass className="w-8 h-8" />
             </div>
             <div>
@@ -84,7 +84,7 @@ export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
             ))}
           </div>
 
-          <div className="mt-8 p-6 bg-indigo-50/50 rounded-3xl border border-indigo-100/40">
+          <div className="mt-8 p-5 md:p-6 bg-indigo-50/50 rounded-3xl border border-indigo-100/40">
             <p className="text-indigo-800 font-black text-xs mb-1">⚠️ 가입 전 면책 범위 유의사항</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
               법률비용보험은 대부분 **'가족 간의 소송(가사 소송)'**, **'도박 및 불법 행위 관련 소송'**, **'고의로 인한 고소사건'** 등은 보상에서 엄격히 제외합니다. 또한 기왕력처럼 가입일 이전에 이미 소인(소송의 원인)이 발생한 분쟁에 대해서는 보장받을 수 없으니 사전 확인이 요구됩니다.
@@ -93,14 +93,14 @@ export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         {/* GUIDE 02: 민사소송비용 작동 원리 */}
-        <div className="bg-slate-900 rounded-[4rem] p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
-          <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
             <Scale className="w-56 h-56 text-indigo-500" />
           </div>
 
           <div className="relative z-10">
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-16 h-16 bg-indigo-600 rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
+              <div className="w-16 h-16 bg-indigo-600 rounded-2xl md:rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
                 <Activity className="w-8 h-8" />
               </div>
               <div>
@@ -110,7 +110,7 @@ export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
 
             <div className="space-y-6">
-              <div className="p-6 bg-white/10 rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
+              <div className="p-5 md:p-6 bg-white/10 rounded-2xl md:rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
                 <p className="font-black text-indigo-300 mb-2 flex items-center gap-2">
                   ⚖️ 승소 시 소송비용 확정 절차
                 </p>
@@ -119,7 +119,7 @@ export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
                 </p>
               </div>
 
-              <div className="p-6 bg-indigo-600/25 rounded-[2.5rem] border border-indigo-400/30 hover:bg-indigo-600/40 transition-colors">
+              <div className="p-5 md:p-6 bg-indigo-600/25 rounded-2xl md:rounded-[2.5rem] border border-indigo-400/30 hover:bg-indigo-600/40 transition-colors">
                 <p className="font-black text-indigo-300 mb-2 flex items-center gap-2">
                   🛡️ 실손 보상 비례 분담 원칙
                 </p>
@@ -130,7 +130,7 @@ export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
           </div>
 
-          <div className="relative z-10 mt-8 p-6 bg-white/5 rounded-3xl border border-white/10">
+          <div className="relative z-10 mt-8 p-5 md:p-6 bg-white/5 rounded-3xl border border-white/10">
             <p className="text-indigo-400 font-black text-xs mb-1 uppercase tracking-widest">💡 변호사 보수 규칙 해설</p>
             <p className="text-white font-bold text-xs leading-relaxed opacity-80">
               "대법원 규칙(변호사보수의 소송비용 산입에 관한 규칙)에 의거하여, 민사소송금액의 규모에 따라 상대방에게 청구할 수 있는 보장 금액 상한선이 정의됩니다. 이 규칙과 보험의 심급별 보장액을 세심하게 매칭 설계해야 소송비 손실을 제로화할 수 있습니다."
@@ -140,8 +140,8 @@ export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 트렌드: EDR 급발진 소송 특약 및 전자소송 5% 할인 ── */}
-      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-[4rem] p-12 text-white relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
+      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-5 md:p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
           <Sparkles className="w-40 h-40" />
         </div>
         <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
@@ -177,7 +177,7 @@ export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
 
       {/* ── 체크리스트 ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-        <div className="md:col-span-2 bg-white border border-indigo-100/50 rounded-[4rem] p-12 shadow-sm hover:shadow-xl transition-all">
+        <div className="md:col-span-2 bg-white border border-indigo-100/50 rounded-3xl md:rounded-[4rem] p-5 md:p-12 shadow-sm hover:shadow-xl transition-all">
           <h3 className="text-2xl font-black text-slate-900 mb-8 tracking-tight flex items-center gap-3">
             <CheckCircle className="w-6 h-6 text-indigo-600" /> 합리적 법률비용보험 스마트 설계 체크리스트
           </h3>
@@ -199,7 +199,7 @@ export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         <div className="flex flex-col gap-6">
-          <div className="bg-indigo-600 text-white rounded-[3.5rem] p-10 shadow-xl">
+          <div className="bg-indigo-600 text-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-xl">
             <h4 className="text-xl font-black mb-4">법률보장 최적화 TOP 5</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
               ① 대법원 전자소송 이용 동의로 5% 절감<br />
@@ -209,7 +209,7 @@ export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
               ⑤ 가족간 소송 면책 약관 제외 확인
             </p>
           </div>
-          <div className="bg-white border border-indigo-100/50 rounded-[3.5rem] p-10 shadow-sm hover:shadow-xl transition-all">
+          <div className="bg-white border border-indigo-100/50 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-sm hover:shadow-xl transition-all">
             <h4 className="text-xl font-black mb-4 flex items-center gap-2">
               <Clock className="text-indigo-600 w-5 h-5" /> 분쟁 전 가입의 중요성
             </h4>
@@ -221,7 +221,7 @@ export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 주요 상품 종합 비교표 ── */}
-      <div className="mb-20 bg-white rounded-[4rem] p-12 border border-indigo-100/50 shadow-sm">
+      <div className="mb-20 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-indigo-100/50 shadow-sm">
         <h3 className="text-2xl font-black text-slate-900 mb-10 tracking-tight">
           국내 대표 6대 보험사 법률비용손해 특약 및 보험 경쟁력 분석
         </h3>
@@ -234,7 +234,7 @@ export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
             { company: '메리츠화재', product: '(무)법률방패 수호신', highlight: '착수금 실손 한도를 든든히 확보하여 소송 초기 대응력 극대화, 간편 가입 승인 제도', badges: ['착수금 보장 강점', '간편 심사'] },
             { company: '한화손해보험', product: '다이렉트 든든법률비용', highlight: '최저 수준의 기본 월 납입료로 실속 민사 중심의 다이어트형 플랜 조율 적합', badges: ['실속 플랜 지원', '최저 기초료'] },
           ].map((item, i) => (
-            <div key={i} className="p-8 bg-indigo-50/20 rounded-[2.5rem] border border-indigo-100/40 hover:border-indigo-300 hover:shadow-lg transition-all">
+            <div key={i} className="p-5 md:p-8 bg-indigo-50/20 rounded-2xl md:rounded-[2.5rem] border border-indigo-100/40 hover:border-indigo-300 hover:shadow-lg transition-all">
               <p className="text-xs font-black text-indigo-600 mb-1">{item.company}</p>
               <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
               <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>

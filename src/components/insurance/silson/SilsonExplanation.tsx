@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
-  <section className="py-24 bg-blue-50/10 px-4 relative overflow-hidden" id="silson-detail">
+  <section className="py-24 bg-blue-50/10 px-2 sm:px-4 relative overflow-hidden" id="silson-detail">
     <div className="max-w-7xl mx-auto">
 
       {/* ── 헤더 ── */}
@@ -40,7 +40,7 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
           { num: '비급여 주사/도수', label: '비급여 치료비 50~70% 보장', sub: '도수치료, 주사제, MRI 집중 케어' },
           { num: '보험료 차등제', label: '비급여 미청구 시 추가 할인', sub: '합리적인 이용량 기반 할인/할증' },
         ].map((s, i) => (
-          <div key={i} className="bg-white border border-blue-100 rounded-[3rem] p-8 text-center shadow-sm hover:shadow-xl hover:border-blue-200 transition-all group">
+          <div key={i} className="bg-white border border-blue-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-blue-200 transition-all group">
             <p className="text-2xl font-black text-blue-600 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
             <p className="font-black text-slate-800 text-sm leading-tight mb-1">{s.label}</p>
             <p className="text-[11px] text-slate-400 font-bold">{s.sub}</p>
@@ -52,9 +52,9 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
 
         {/* GUIDE 01: 필수 체크 3대 핵심 보장 */}
-        <div className="bg-white rounded-[4rem] p-12 border border-blue-100 shadow-lg hover:shadow-2xl transition-all group">
+        <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-blue-100 shadow-lg hover:shadow-2xl transition-all group">
           <div className="flex items-center gap-4 mb-10">
-            <div className="w-16 h-16 bg-blue-600 rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
+            <div className="w-16 h-16 bg-blue-600 rounded-2xl md:rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
               <Compass className="w-8 h-8" />
             </div>
             <div>
@@ -85,7 +85,7 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
             ))}
           </div>
 
-          <div className="mt-8 p-6 bg-blue-50 rounded-3xl border border-blue-100">
+          <div className="mt-8 p-5 md:p-6 bg-blue-50 rounded-3xl border border-blue-100">
             <p className="text-blue-700 font-black text-xs mb-1">⚠️ 4/5세대 실손보험 보험금 청구 및 전환 팁</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
               급여 항목(본인부담금 20%)과 비급여 항목(4세대 30% / 5세대 비중증 비급여 50%)의 공제 기준을 미리 대조해 보세요. 특히 5세대 실손으로 전환 가입한 뒤에도 6개월 이내에 청구한 보험금이 없다면 기존 이전 세대 보험으로 복귀할 수 있어 부담 없이 검토 가능합니다.
@@ -94,14 +94,14 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         {/* GUIDE 02: 보장 대상 제외 및 예외 룰 */}
-        <div className="bg-slate-900 rounded-[4rem] p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
-          <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
             <Heart className="w-56 h-56 text-blue-500" />
           </div>
 
           <div className="relative z-10">
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-16 h-16 bg-blue-500 rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
+              <div className="w-16 h-16 bg-blue-500 rounded-2xl md:rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
                 <Activity className="w-8 h-8" />
               </div>
               <div>
@@ -111,7 +111,7 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
 
             <div className="space-y-6">
-              <div className="p-6 bg-white/10 rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
+              <div className="p-5 md:p-6 bg-white/10 rounded-2xl md:rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
                 <p className="font-black text-blue-300 mb-2 flex items-center gap-2">
                   🚫 단순 미용 및 예방 목적 진료 면책
                 </p>
@@ -120,7 +120,7 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
                 </p>
               </div>
 
-              <div className="p-6 bg-blue-500/20 rounded-[2.5rem] border border-blue-400/30 hover:bg-blue-500/30 transition-colors">
+              <div className="p-5 md:p-6 bg-blue-500/20 rounded-2xl md:rounded-[2.5rem] border border-blue-400/30 hover:bg-blue-500/30 transition-colors">
                 <p className="font-black text-blue-300 mb-2 flex items-center gap-2">
                   ⚖️ 세대별 가입 시기 및 자기부담금 비율
                 </p>
@@ -131,7 +131,7 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
           </div>
 
-          <div className="relative z-10 mt-8 p-6 bg-white/5 rounded-3xl border border-white/10">
+          <div className="relative z-10 mt-8 p-5 md:p-6 bg-white/5 rounded-3xl border border-white/10">
             <p className="text-blue-400 font-black text-xs mb-1 uppercase tracking-widest">💡 유병자/만성질환 가입 특례</p>
             <p className="text-white font-bold text-xs leading-relaxed opacity-80">
               당뇨, 고혈압 등의 만성 질환으로 정기 처방을 받고 계시거나, 과거 치료 이력이 있는 유병력자분들도 **3가지 간편 고지 질문**만 통과하면 간편 유병자 실손의료보험을 통해 핵심 수술/입원 실손 의료비를 확보할 수 있습니다.
@@ -141,8 +141,8 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 트렌드: 4세대 실손보험 전환 ── */}
-      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-[4rem] p-12 text-white relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
+      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-5 md:p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
           <Sparkles className="w-40 h-40" />
         </div>
         <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
@@ -177,7 +177,7 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
 
       {/* ── 체크리스트 ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-        <div className="md:col-span-2 bg-white border border-blue-100 rounded-[4rem] p-12 shadow-sm hover:shadow-xl transition-all">
+        <div className="md:col-span-2 bg-white border border-blue-100 rounded-3xl md:rounded-[4rem] p-5 md:p-12 shadow-sm hover:shadow-xl transition-all">
           <h3 className="text-2xl font-black text-slate-900 mb-8 tracking-tight flex items-center gap-3">
             <CheckCircle className="w-6 h-6 text-blue-500" /> 합리적 실손보험 스마트 가입/전환 체크리스트
           </h3>
@@ -199,7 +199,7 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         <div className="flex flex-col gap-6">
-          <div className="bg-blue-600 text-white rounded-[3.5rem] p-10 shadow-xl">
+          <div className="bg-blue-600 text-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-xl">
             <h4 className="text-xl font-black mb-4">실손보험 스마트 팁 TOP 5</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
               ① 4/5세대 전환 시 계약전환 할인(최대 3년간 50% 할인) 혜택 체크<br />
@@ -209,7 +209,7 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
               ⑤ 중복 가입 하더라도 실손은 비례보상(이중 지급 불가) 됨을 숙지
             </p>
           </div>
-          <div className="bg-white border border-blue-100 rounded-[3.5rem] p-10 shadow-sm hover:shadow-xl transition-all">
+          <div className="bg-white border border-blue-100 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-sm hover:shadow-xl transition-all">
             <h4 className="text-xl font-black mb-4 flex items-center gap-2">
               <Clock className="text-blue-500 w-5 h-5" /> 가입 최적 시점
             </h4>
@@ -221,7 +221,7 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 주요 상품 종합 비교표 ── */}
-      <div className="mb-20 bg-white rounded-[4rem] p-12 border border-blue-100 shadow-sm">
+      <div className="mb-20 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-blue-100 shadow-sm">
         <h3 className="text-2xl font-black text-slate-900 mb-10 tracking-tight">
           국내 주요 손해보험사 실손의료비보험 상품 경쟁력 비교
         </h3>
@@ -234,7 +234,7 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
             { company: 'KB손해보험', product: '다이렉트 실손의료비보장보험', highlight: 'KB금융 계열사 통합 금융 혜택 연동 및 주택화재/자동차보험과의 간편 패키지 결합 우대 혜택 보유', badges: ['그룹 결합 우대', '쉽고 빠른 UI'] },
             { company: '한화손해보험', product: '다이렉트 실손의료비보험', highlight: '월 납입 비용 다이어트에 초점을 맞춘 합리적이고 매력적인 하루 실비 요율 책정으로 실속 지향 고객에게 우수', badges: ['가성비 집중', '실속 다이어트'] },
           ].map((item, i) => (
-            <div key={i} className="p-8 bg-blue-50/20 rounded-[2.5rem] border border-blue-100 hover:border-blue-300 hover:shadow-lg transition-all">
+            <div key={i} className="p-5 md:p-8 bg-blue-50/20 rounded-2xl md:rounded-[2.5rem] border border-blue-100 hover:border-blue-300 hover:shadow-lg transition-all">
               <p className="text-xs font-black text-blue-600 mb-1">{item.company}</p>
               <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
               <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>

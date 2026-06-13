@@ -13,7 +13,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
     <div className="mt-16 space-y-24 animate-in fade-in slide-in-from-bottom-8 duration-1000">
       
       {/* ── 1. 프리미엄 HERO 헤더 섹션 ── */}
-      <div className="bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950 rounded-[3rem] p-12 md:p-20 text-center space-y-8 relative overflow-hidden shadow-2xl border border-indigo-500/20">
+      <div className="bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950 rounded-3xl md:rounded-[3rem] p-5 md:p-12 md:p-20 text-center space-y-8 relative overflow-hidden shadow-2xl border border-indigo-500/20">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-500/10 via-transparent to-transparent opacity-60"></div>
         <div className="absolute -right-16 -top-16 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl"></div>
         <div className="absolute -left-16 -bottom-16 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl"></div>
@@ -68,7 +68,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
         ].map((card, idx) => (
           <div 
             key={idx} 
-            className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-[0_15px_35px_-5px_rgba(0,0,0,0.03)] hover:shadow-[0_25px_50px_-10px_rgba(79,70,229,0.08)] transition-all hover:-translate-y-1 duration-300 flex flex-col justify-between space-y-6"
+            className="bg-white rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-gray-100 shadow-[0_15px_35px_-5px_rgba(0,0,0,0.03)] hover:shadow-[0_25px_50px_-10px_rgba(79,70,229,0.08)] transition-all hover:-translate-y-1 duration-300 flex flex-col justify-between space-y-6"
           >
             <div className="space-y-4">
               <div className="flex justify-between items-center">
@@ -87,7 +87,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
       </div>
 
       {/* ── 3. GUIDE 01: 보장 범위의 치명적인 차이 (뇌출혈 vs 뇌졸중 vs 뇌혈관질환) ── */}
-      <div className="bg-white rounded-[4rem] p-8 md:p-16 border border-gray-100 shadow-xl space-y-12">
+      <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-8 md:p-16 border border-gray-100 shadow-xl space-y-12">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-gray-100">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-indigo-600/20">
@@ -107,7 +107,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
         <div className="grid lg:grid-cols-3 gap-8">
           
           {/* 1. 뇌출혈 */}
-          <div className="bg-slate-50 rounded-[2.5rem] p-8 border border-slate-100 flex flex-col justify-between space-y-6 opacity-60">
+          <div className="bg-slate-50 rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-slate-100 flex flex-col justify-between space-y-6 opacity-60">
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <h4 className="text-lg font-black text-gray-500 flex items-center gap-2">
@@ -129,7 +129,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
           </div>
 
           {/* 2. 뇌졸중 */}
-          <div className="bg-slate-50 rounded-[2.5rem] p-8 border border-slate-100 flex flex-col justify-between space-y-6 opacity-80">
+          <div className="bg-slate-50 rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-slate-100 flex flex-col justify-between space-y-6 opacity-80">
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <h4 className="text-lg font-black text-slate-800 flex items-center gap-2">
@@ -151,7 +151,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
           </div>
 
           {/* 3. 뇌혈관질환 */}
-          <div className="bg-slate-50 rounded-[2.5rem] p-8 border border-indigo-100 flex flex-col justify-between space-y-6 shadow-[0_10px_30px_-5px_rgba(79,70,229,0.05)]">
+          <div className="bg-slate-50 rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-indigo-100 flex flex-col justify-between space-y-6 shadow-[0_10px_30px_-5px_rgba(79,70,229,0.05)]">
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <h4 className="text-lg font-black text-indigo-900 flex items-center gap-2">
@@ -175,7 +175,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
         </div>
 
         {/* 뇌동맥류(I67.1) 설명 스포트라이트 */}
-        <div className="bg-gradient-to-br from-indigo-50 to-indigo-100/50 rounded-[3rem] p-8 md:p-12 border border-indigo-100 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="bg-gradient-to-br from-indigo-50 to-indigo-100/50 rounded-3xl md:rounded-[3rem] p-5 md:p-8 md:p-12 border border-indigo-100 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="space-y-2">
             <h4 className="text-lg font-black text-indigo-900 flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-indigo-600" /> 건강검진 MRI 단골 진단인 '뇌동맥류(I67)'의 중요성
@@ -195,8 +195,8 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
       <div className="grid lg:grid-cols-2 gap-8">
         
         {/* 비관혈 카테터 수술 기술 */}
-        <div className="bg-slate-900 rounded-[3.5rem] p-10 md:p-14 text-white shadow-2xl relative overflow-hidden flex flex-col justify-between space-y-10 border border-slate-800">
-          <div className="absolute top-0 right-0 p-12 opacity-5 rotate-12 pointer-events-none">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 md:p-14 text-white shadow-2xl relative overflow-hidden flex flex-col justify-between space-y-10 border border-slate-800">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 rotate-12 pointer-events-none">
             <ShieldCheck size={260} className="text-white" />
           </div>
           
@@ -234,7 +234,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
         </div>
 
         {/* 중증 질환 산정특례 반복 보장 */}
-        <div className="bg-white rounded-[3.5rem] p-10 md:p-14 border border-gray-100 shadow-xl flex flex-col justify-between space-y-8">
+        <div className="bg-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 md:p-14 border border-gray-100 shadow-xl flex flex-col justify-between space-y-8">
           <div className="space-y-6">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600">
@@ -250,7 +250,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
               뇌졸중으로 수술을 받거나 중환자실 치료를 받게 되면 국가 건강보험에서 중증 질환 '산정특례' 환자로 등록하여 본인부담금을 5% 수준으로 경감해 줍니다. 보험사에서는 이와 연동하여 **'뇌혈관 산정특례 진단비'** 특약을 별도 제공하며, 이는 재발률이 극도로 높은 뇌질환에 대처하기 위해 매년 일정 조건 충족 시마다 계속 지급하는 고효율 담보입니다.
             </p>
 
-            <div className="bg-indigo-50/50 p-6 rounded-2xl border border-indigo-100 space-y-4">
+            <div className="bg-indigo-50/50 p-5 md:p-6 rounded-2xl border border-indigo-100 space-y-4">
               <p className="text-sm font-black text-indigo-950">💡 산정특례 진단비의 매력</p>
               <div className="space-y-2 text-[10px] text-gray-600 font-bold">
                 <div className="flex justify-between p-2.5 bg-white rounded-lg border border-indigo-100/50">
@@ -268,7 +268,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
             </div>
           </div>
 
-          <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100">
+          <div className="p-5 md:p-6 bg-slate-50 rounded-2xl border border-slate-100">
             <p className="text-xs text-indigo-600 font-black mb-1">📢 전문가 분석 조언</p>
             <p className="text-[11px] text-gray-600 font-bold leading-relaxed">
               "뇌경색 환자가 퇴원 후 2차 재발을 막기 위해 장기 뇌혈관 약제 복용을 하거나 코일 시술 후 보강 시술을 하게 될 때 진단비 1회 수령만으로는 부족합니다. 반복 지급되는 '산정특례 진단비'와 '뇌혈관 수술비(매회)' 특약의 조화를 최우선 시 하세요."
@@ -344,7 +344,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
           ].map((item, index) => (
             <div 
               key={index} 
-              className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-[0_12px_30px_-5px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_45px_-10px_rgba(79,70,229,0.06)] hover:border-indigo-100 transition-all duration-300 flex flex-col justify-between space-y-6"
+              className="bg-white rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-gray-100 shadow-[0_12px_30px_-5px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_45px_-10px_rgba(79,70,229,0.06)] hover:border-indigo-100 transition-all duration-300 flex flex-col justify-between space-y-6"
             >
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
@@ -372,7 +372,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
       </div>
 
       {/* ── 6. 전문가 실전 뇌혈관 리모델링 체크리스트 ── */}
-      <div className="bg-slate-50 rounded-[4rem] p-8 md:p-16 border border-slate-100">
+      <div className="bg-slate-50 rounded-3xl md:rounded-[4rem] p-5 md:p-8 md:p-16 border border-slate-100">
         <h4 className="text-xl font-black text-slate-900 mb-8 flex items-center gap-3">
           <HelpCircle className="w-6 h-6 text-indigo-600" /> 뇌혈관 보험 리모델링 실전 4단계 체크리스트
         </h4>
@@ -399,7 +399,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
               desc: '뇌혈관 질환은 영구 후유증이 남거나 주기적 경과 관찰과 보강 시술이 필요한 중증 재발 위험이 높습니다. 1회성 진단비의 소멸 한계를 극복하기 위해 매년 반복되는 산정특례와 매회 수술비의 비중을 강화하세요.'
             }
           ].map((item, idx) => (
-            <div key={idx} className="bg-white p-8 rounded-3xl border border-slate-100 flex gap-6">
+            <div key={idx} className="bg-white p-5 md:p-8 rounded-3xl border border-slate-100 flex gap-6">
               <span className="text-3xl font-black text-indigo-100 leading-none">{item.step}</span>
               <div className="space-y-2">
                 <h5 className="text-base font-black text-slate-900">{item.title}</h5>
@@ -411,8 +411,8 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
       </div>
 
       {/* ── 7. 하단 CALL TO ACTION (CTA) 연동 블록 ── */}
-      <div className="bg-gradient-to-br from-indigo-900 to-indigo-950 rounded-[3rem] p-8 md:p-12 text-center text-white relative overflow-hidden shadow-xl border border-indigo-500/20">
-        <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
+      <div className="bg-gradient-to-br from-indigo-900 to-indigo-950 rounded-3xl md:rounded-[3rem] p-5 md:p-8 md:p-12 text-center text-white relative overflow-hidden shadow-xl border border-indigo-500/20">
+        <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 pointer-events-none">
           <Sparkles size={160} />
         </div>
         <div className="relative z-10 space-y-6 max-w-2xl mx-auto">

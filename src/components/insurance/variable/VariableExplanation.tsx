@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
-  <section className="py-24 bg-indigo-50/10 px-4 relative overflow-hidden text-left" id="variable-detail">
+  <section className="py-24 bg-indigo-50/10 px-2 sm:px-4 relative overflow-hidden text-left" id="variable-detail">
     <div className="max-w-7xl mx-auto">
 
       {/* ── 헤더 ── */}
@@ -40,7 +40,7 @@ export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
           { num: '연 5%~7% 기대', label: '변액 펀드 자산 운용 수익률', sub: '글로벌 ETF 및 미국 우량 주식형 투입 비율 연계' },
           { num: '10년 이상 비과세', label: '변액 적립 수익금 절세 효과', sub: '금융소득 종합과세 대상 제외 및 이자 전액 면제' },
         ].map((s, i) => (
-          <div key={i} className="bg-white border border-indigo-100 rounded-[3rem] p-8 text-center shadow-sm hover:shadow-xl hover:border-indigo-200 transition-all group">
+          <div key={i} className="bg-white border border-indigo-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-indigo-200 transition-all group">
             <p className="text-2xl font-black text-indigo-600 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
             <p className="font-black text-slate-800 text-sm leading-tight mb-1">{s.label}</p>
             <p className="text-[11px] text-slate-400 font-bold">{s.sub}</p>
@@ -52,9 +52,9 @@ export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
 
         {/* GUIDE 01: 변액보험 핵심 체크리스트 */}
-        <div className="bg-white rounded-[4rem] p-12 border border-indigo-100 shadow-lg hover:shadow-2xl transition-all group">
+        <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-indigo-100 shadow-lg hover:shadow-2xl transition-all group">
           <div className="flex items-center gap-4 mb-10">
-            <div className="w-16 h-16 bg-indigo-600 rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
+            <div className="w-16 h-16 bg-indigo-600 rounded-2xl md:rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
               <Compass className="w-8 h-8" />
             </div>
             <div>
@@ -84,7 +84,7 @@ export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
             ))}
           </div>
 
-          <div className="mt-8 p-6 bg-indigo-50 rounded-3xl border border-indigo-100">
+          <div className="mt-8 p-5 md:p-6 bg-indigo-50 rounded-3xl border border-indigo-100">
             <p className="text-indigo-700 font-black text-xs mb-1">⚠️ 초기 해약 원금 손실 및 투자 위험성</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
               변액보험은 예금자보호법이 적용되지 않는 실적배당형 상품이며, 가입 초기 3~5년 이내 해지할 경우 해약환급금이 원금에 미달할 수 있으므로 최소 10년 이상의 장기 유지 목적에 적합합니다.
@@ -93,14 +93,14 @@ export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         {/* GUIDE 02: 정기보험을 통한 지출 리모델링 */}
-        <div className="bg-slate-900 rounded-[4rem] p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
-          <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
             <Scale className="w-56 h-56 text-orange-500" />
           </div>
 
           <div className="relative z-10">
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-16 h-16 bg-orange-600 rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
+              <div className="w-16 h-16 bg-orange-600 rounded-2xl md:rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
                 <Scale className="w-8 h-8" />
               </div>
               <div>
@@ -110,7 +110,7 @@ export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
 
             <div className="space-y-6">
-              <div className="p-6 bg-white/10 rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
+              <div className="p-5 md:p-6 bg-white/10 rounded-2xl md:rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
                 <p className="font-black text-orange-300 mb-2 flex items-center gap-2">
                   🛡️ 종신의 본질은 평생 사망보장이 아닙니다
                 </p>
@@ -119,7 +119,7 @@ export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
                 </p>
               </div>
 
-              <div className="p-6 bg-emerald-950/40 rounded-[2.5rem] border border-emerald-500/20 hover:bg-emerald-950/60 transition-colors">
+              <div className="p-5 md:p-6 bg-emerald-950/40 rounded-2xl md:rounded-[2.5rem] border border-emerald-500/20 hover:bg-emerald-950/60 transition-colors">
                 <p className="font-black text-emerald-300 mb-2 flex items-center gap-2">
                   🏃 건강할수록 강해지는 우량체 할인 제도
                 </p>
@@ -130,7 +130,7 @@ export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
           </div>
 
-          <div className="relative z-10 mt-8 p-6 bg-white/5 rounded-3xl border border-white/10">
+          <div className="relative z-10 mt-8 p-5 md:p-6 bg-white/5 rounded-3xl border border-white/10">
             <p className="text-orange-400 font-black text-xs mb-1 uppercase tracking-widest">💡 금융전문가의 포트폴리오 제언</p>
             <p className="text-white font-bold text-xs leading-relaxed opacity-80">
               "사망 보장은 가성비 정기보험으로 단돈 2~3만원대에 묶어두고, 남은 차액 15만원을 연 복리 효과가 강한 펀드 상품이나 세액공제형 적립식 금융 상품에 돌려 스스로 연금과 목돈 자산을 주도적으로 쌓아 올리는 것이 100배 똑똑한 자산 관리법입니다."
@@ -140,8 +140,8 @@ export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 트렌드: 변액 연금 보증 제도 및 최근 동향 ── */}
-      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-[4rem] p-12 text-white relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
+      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-5 md:p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
           <Sparkles className="w-40 h-40" />
         </div>
         <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
@@ -174,7 +174,7 @@ export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
 
       {/* ── 체크리스트 ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-        <div className="md:col-span-2 bg-white border border-indigo-100 rounded-[4rem] p-12 shadow-sm hover:shadow-xl transition-all">
+        <div className="md:col-span-2 bg-white border border-indigo-100 rounded-3xl md:rounded-[4rem] p-5 md:p-12 shadow-sm hover:shadow-xl transition-all">
           <h3 className="text-2xl font-black text-slate-900 mb-8 tracking-tight flex items-center gap-3">
             <CheckCircle className="w-6 h-6 text-indigo-500" /> 합리적 변액·정기보험 스마트 가입 체크리스트
           </h3>
@@ -196,7 +196,7 @@ export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         <div className="flex flex-col gap-6">
-          <div className="bg-indigo-600 text-white rounded-[3.5rem] p-10 shadow-xl">
+          <div className="bg-indigo-600 text-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-xl">
             <h4 className="text-xl font-black mb-4">변액·정기 리모델링 핵심 TOP 5</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
               ① 종신보험 해약환급금 기회비용 재투자<br />
@@ -206,7 +206,7 @@ export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
               ⑤ 최저 보증(GMAB) 장치로 원금 보호 확보
             </p>
           </div>
-          <div className="bg-white border border-indigo-100 rounded-[3.5rem] p-10 shadow-sm hover:shadow-xl transition-all">
+          <div className="bg-white border border-indigo-100 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-sm hover:shadow-xl transition-all">
             <h4 className="text-xl font-black mb-4 flex items-center gap-2">
               <Clock className="text-indigo-500 w-5 h-5" /> 가입 및 전환 최적 연령대
             </h4>
@@ -218,7 +218,7 @@ export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 주요 상품 종합 비교표 ── */}
-      <div className="mb-20 bg-white rounded-[4rem] p-12 border border-indigo-100 shadow-sm">
+      <div className="mb-20 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-indigo-100 shadow-sm">
         <h3 className="text-2xl font-black text-slate-900 mb-10 tracking-tight">
           국내 대표 생명보험사 온라인 변액적립 및 가성비 정기보험 대표 상품 대조
         </h3>
@@ -231,7 +231,7 @@ export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
             { company: '한화생명', product: '(무)한화생명 e다이렉트 정기보험', highlight: '다이렉트 전용 스마트 시스템 탑재, 사망보장 한도를 최고 5억원까지 간편 모바일 심사로 보장 설계', badges: ['사망 5억 간편심사', '모바일 청약'] },
             { company: '삼성생명', product: '(무)삼성생명 다이렉트 정기보험', highlight: '대한민국 최대 자본 규모의 안정성, 전국 단위 청구 지원 및 비우량체 판정 시에도 합리적인 표준 요율 제공', badges: ['신속 청구 지원', '자본력 1위'] },
           ].map((item, i) => (
-            <div key={i} className="p-8 bg-indigo-50/20 rounded-[2.5rem] border border-indigo-100 hover:border-indigo-300 hover:shadow-lg transition-all text-left">
+            <div key={i} className="p-5 md:p-8 bg-indigo-50/20 rounded-2xl md:rounded-[2.5rem] border border-indigo-100 hover:border-indigo-300 hover:shadow-lg transition-all text-left">
               <p className="text-xs font-black text-indigo-600 mb-1">{item.company}</p>
               <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
               <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>

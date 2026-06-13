@@ -13,7 +13,7 @@ export const CancerExplanation: React.FC<Props> = ({ onAction }) => {
     <div className="mt-16 space-y-24 animate-in fade-in slide-in-from-bottom-8 duration-1000">
       
       {/* ── 1. 프리미엄 HERO 헤더 섹션 ── */}
-      <div className="bg-gradient-to-br from-rose-950 via-slate-900 to-rose-900 rounded-[3rem] p-12 md:p-20 text-center space-y-8 relative overflow-hidden shadow-2xl border border-rose-500/20">
+      <div className="bg-gradient-to-br from-rose-950 via-slate-900 to-rose-900 rounded-3xl md:rounded-[3rem] p-5 md:p-12 md:p-20 text-center space-y-8 relative overflow-hidden shadow-2xl border border-rose-500/20">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-rose-500/10 via-transparent to-transparent opacity-60"></div>
         <div className="absolute -right-16 -top-16 w-64 h-64 bg-rose-500/10 rounded-full blur-3xl"></div>
         <div className="absolute -left-16 -bottom-16 w-64 h-64 bg-pink-500/10 rounded-full blur-3xl"></div>
@@ -68,7 +68,7 @@ export const CancerExplanation: React.FC<Props> = ({ onAction }) => {
         ].map((card, idx) => (
           <div 
             key={idx} 
-            className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-[0_15px_35px_-5px_rgba(0,0,0,0.03)] hover:shadow-[0_25px_50px_-10px_rgba(244,63,94,0.08)] transition-all hover:-translate-y-1 duration-300 flex flex-col justify-between space-y-6"
+            className="bg-white rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-gray-100 shadow-[0_15px_35px_-5px_rgba(0,0,0,0.03)] hover:shadow-[0_25px_50px_-10px_rgba(244,63,94,0.08)] transition-all hover:-translate-y-1 duration-300 flex flex-col justify-between space-y-6"
           >
             <div className="space-y-4">
               <div className="flex justify-between items-center">
@@ -87,7 +87,7 @@ export const CancerExplanation: React.FC<Props> = ({ onAction }) => {
       </div>
 
       {/* ── 3. GUIDE 01: 일반암 vs 유사암(소액암) 분류 기준 ── */}
-      <div className="bg-white rounded-[4rem] p-8 md:p-16 border border-gray-100 shadow-xl space-y-12">
+      <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-8 md:p-16 border border-gray-100 shadow-xl space-y-12">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-gray-100">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 bg-rose-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-rose-600/20">
@@ -107,7 +107,7 @@ export const CancerExplanation: React.FC<Props> = ({ onAction }) => {
         <div className="grid lg:grid-cols-2 gap-8">
           
           {/* 일반암 */}
-          <div className="bg-slate-50 rounded-[2.5rem] p-8 border border-slate-100 flex flex-col justify-between space-y-6">
+          <div className="bg-slate-50 rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-slate-100 flex flex-col justify-between space-y-6">
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <h4 className="text-xl font-black text-gray-900 flex items-center gap-2">
@@ -136,7 +136,7 @@ export const CancerExplanation: React.FC<Props> = ({ onAction }) => {
           </div>
 
           {/* 유사암 */}
-          <div className="bg-slate-50 rounded-[2.5rem] p-8 border border-slate-100 flex flex-col justify-between space-y-6">
+          <div className="bg-slate-50 rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-slate-100 flex flex-col justify-between space-y-6">
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <h4 className="text-xl font-black text-gray-900 flex items-center gap-2">
@@ -167,7 +167,7 @@ export const CancerExplanation: React.FC<Props> = ({ onAction }) => {
         </div>
 
         {/* 유사암 납입면제 핵심 팁 */}
-        <div className="bg-gradient-to-br from-rose-50 to-rose-100/50 rounded-[3rem] p-8 md:p-12 border border-rose-100 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="bg-gradient-to-br from-rose-50 to-rose-100/50 rounded-3xl md:rounded-[3rem] p-5 md:p-8 md:p-12 border border-rose-100 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="space-y-2">
             <h4 className="text-lg font-black text-rose-900 flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-rose-600" /> 유사암 진단 시 '납입면제 / 납입지원' 혜택을 챙기세요!
@@ -187,8 +187,8 @@ export const CancerExplanation: React.FC<Props> = ({ onAction }) => {
       <div className="grid lg:grid-cols-2 gap-8">
         
         {/* 표적항암 및 양성자/중입자 치료 */}
-        <div className="bg-slate-900 rounded-[3.5rem] p-10 md:p-14 text-white shadow-2xl relative overflow-hidden flex flex-col justify-between space-y-10 border border-slate-800">
-          <div className="absolute top-0 right-0 p-12 opacity-5 rotate-12 pointer-events-none">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 md:p-14 text-white shadow-2xl relative overflow-hidden flex flex-col justify-between space-y-10 border border-slate-800">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 rotate-12 pointer-events-none">
             <ShieldCheck size={260} className="text-white" />
           </div>
           
@@ -226,7 +226,7 @@ export const CancerExplanation: React.FC<Props> = ({ onAction }) => {
         </div>
 
         {/* 비급여 암 주요치료비 트렌드 */}
-        <div className="bg-white rounded-[3.5rem] p-10 md:p-14 border border-gray-100 shadow-xl flex flex-col justify-between space-y-8">
+        <div className="bg-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 md:p-14 border border-gray-100 shadow-xl flex flex-col justify-between space-y-8">
           <div className="space-y-6">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-rose-50 rounded-2xl flex items-center justify-center text-rose-600">
@@ -242,7 +242,7 @@ export const CancerExplanation: React.FC<Props> = ({ onAction }) => {
               최근 암보험 시장의 패러다임이 진단비 일시금 중심에서 **'실제 쓴 치료비 연간 정산형'**으로 완전히 이동하고 있습니다. 매년 환자가 암 치료에 쓴 연간 비급여 치료비 구간에 따라 매년 최대 1억원씩 10년간 총 10억원을 지급하는 획기적인 담보입니다.
             </p>
 
-            <div className="bg-rose-50/50 p-6 rounded-2xl border border-rose-100 space-y-4">
+            <div className="bg-rose-50/50 p-5 md:p-6 rounded-2xl border border-rose-100 space-y-4">
               <p className="text-sm font-black text-rose-950">💡 연간 비급여 암 치료비 지급 구간 예시</p>
               <div className="space-y-2 text-[10px] text-gray-600 font-bold">
                 <div className="flex justify-between p-2 bg-white rounded-lg border border-rose-100/50">
@@ -265,7 +265,7 @@ export const CancerExplanation: React.FC<Props> = ({ onAction }) => {
             </div>
           </div>
 
-          <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100">
+          <div className="p-5 md:p-6 bg-slate-50 rounded-2xl border border-slate-100">
             <p className="text-xs text-rose-600 font-black mb-1">📢 암보험 핵심 조언</p>
             <p className="text-[11px] text-gray-600 font-bold leading-relaxed">
               "진단비 5,000만 원은 가입 후 1번 받으면 소멸하지만, 비급여 암 주요치료비는 10년 동안 생존하여 치료를 받는 내내 매년 구간별로 리필 지급되므로 장기 투병 시 고정비 리스크 방어에 가장 유리합니다."
@@ -341,7 +341,7 @@ export const CancerExplanation: React.FC<Props> = ({ onAction }) => {
           ].map((item, index) => (
             <div 
               key={index} 
-              className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-[0_12px_30px_-5px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_45px_-10px_rgba(0,0,0,0.06)] hover:border-rose-100 transition-all duration-300 flex flex-col justify-between space-y-6"
+              className="bg-white rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-gray-100 shadow-[0_12px_30px_-5px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_45px_-10px_rgba(0,0,0,0.06)] hover:border-rose-100 transition-all duration-300 flex flex-col justify-between space-y-6"
             >
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
@@ -369,7 +369,7 @@ export const CancerExplanation: React.FC<Props> = ({ onAction }) => {
       </div>
 
       {/* ── 6. 전문가 실전 가입 가이드 & 체크리스트 ── */}
-      <div className="bg-slate-50 rounded-[4rem] p-8 md:p-16 border border-slate-100">
+      <div className="bg-slate-50 rounded-3xl md:rounded-[4rem] p-5 md:p-8 md:p-16 border border-slate-100">
         <h4 className="text-xl font-black text-slate-900 mb-8 flex items-center gap-3">
           <HelpCircle className="w-6 h-6 text-rose-600" /> 암보험 리모델링 실전 4단계 체크리스트
         </h4>
@@ -396,7 +396,7 @@ export const CancerExplanation: React.FC<Props> = ({ onAction }) => {
               desc: '유사암(갑상선암, 제자리암 등)으로 아프더라도 차후 보험료 걱정 없이 계약을 유지할 수 있도록 유사암 납입지원 특약의 한도와 범위가 정교하게 포함되어 있는지 최종 설계서를 비교하세요.'
             }
           ].map((item, idx) => (
-            <div key={idx} className="bg-white p-8 rounded-3xl border border-slate-100 flex gap-6">
+            <div key={idx} className="bg-white p-5 md:p-8 rounded-3xl border border-slate-100 flex gap-6">
               <span className="text-3xl font-black text-rose-100 leading-none">{item.step}</span>
               <div className="space-y-2">
                 <h5 className="text-base font-black text-slate-900">{item.title}</h5>
@@ -408,8 +408,8 @@ export const CancerExplanation: React.FC<Props> = ({ onAction }) => {
       </div>
 
       {/* ── 7. 하단 CALL TO ACTION (CTA) 연동 블록 ── */}
-      <div className="bg-gradient-to-br from-rose-900 to-rose-950 rounded-[3rem] p-8 md:p-12 text-center text-white relative overflow-hidden shadow-xl border border-rose-500/20">
-        <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
+      <div className="bg-gradient-to-br from-rose-900 to-rose-950 rounded-3xl md:rounded-[3rem] p-5 md:p-8 md:p-12 text-center text-white relative overflow-hidden shadow-xl border border-rose-500/20">
+        <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 pointer-events-none">
           <Sparkles size={160} />
         </div>
         <div className="relative z-10 space-y-6 max-w-2xl mx-auto">

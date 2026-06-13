@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
-  <section className="py-24 bg-emerald-50/10 px-4 relative overflow-hidden" id="golf-detail">
+  <section className="py-24 bg-emerald-50/10 px-2 sm:px-4 relative overflow-hidden" id="golf-detail">
     <div className="max-w-7xl mx-auto">
 
       {/* ── 헤더 ── */}
@@ -41,7 +41,7 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
           { num: '골프 배상책임', label: '스윙 오발 사고 실손 배상', sub: '사고당 2,000만~3,000만 원 한도' },
           { num: '골프용품 손해', label: '클럽 파손/도난 보장', sub: '세트당 최대 100만~200만 원 보상' },
         ].map((s, i) => (
-          <div key={i} className="bg-white border border-emerald-100 rounded-[3rem] p-8 text-center shadow-sm hover:shadow-xl hover:border-emerald-200 transition-all group">
+          <div key={i} className="bg-white border border-emerald-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-emerald-200 transition-all group">
             <p className="text-2xl font-black text-emerald-500 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
             <p className="font-black text-slate-800 text-sm leading-tight mb-1">{s.label}</p>
             <p className="text-[11px] text-slate-400 font-bold">{s.sub}</p>
@@ -53,9 +53,9 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
 
         {/* GUIDE 01: 필수 체크 3대 핵심 보장 */}
-        <div className="bg-white rounded-[4rem] p-12 border border-emerald-100 shadow-lg hover:shadow-2xl transition-all group">
+        <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-emerald-100 shadow-lg hover:shadow-2xl transition-all group">
           <div className="flex items-center gap-4 mb-10">
-            <div className="w-16 h-16 bg-emerald-500 rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
+            <div className="w-16 h-16 bg-emerald-500 rounded-2xl md:rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
               <Compass className="w-8 h-8" />
             </div>
             <div>
@@ -86,7 +86,7 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
             ))}
           </div>
 
-          <div className="mt-8 p-6 bg-emerald-50 rounded-3xl border border-emerald-100">
+          <div className="mt-8 p-5 md:p-6 bg-emerald-50 rounded-3xl border border-emerald-100">
             <p className="text-emerald-700 font-black text-xs mb-1">⚠️ 홀인원 축하금 지급 증빙 조건</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
               홀인원 성공 후 **골프장에서 발급한 홀인원 증명서**와 라운딩 후 1개월(또는 3개월) 이내에 지출한 **카드 영수증**을 함께 제출해야 실손 정산됩니다. 현금 지출 내역은 증빙이 원칙적으로 불가하므로 주의해야 합니다.
@@ -95,14 +95,14 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
         </div>
 
         {/* GUIDE 02: 보장 대상 제외 및 예외 룰 */}
-        <div className="bg-slate-900 rounded-[4rem] p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
-          <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
             <Heart className="w-56 h-56 text-emerald-500" />
           </div>
 
           <div className="relative z-10">
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-16 h-16 bg-emerald-500 rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
+              <div className="w-16 h-16 bg-emerald-500 rounded-2xl md:rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
                 <Activity className="w-8 h-8" />
               </div>
               <div>
@@ -112,7 +112,7 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
             </div>
 
             <div className="space-y-6">
-              <div className="p-6 bg-white/10 rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
+              <div className="p-5 md:p-6 bg-white/10 rounded-2xl md:rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
                 <p className="font-black text-emerald-300 mb-2 flex items-center gap-2">
                   🚫 스크린골프 / 파3 보장 제외
                 </p>
@@ -121,7 +121,7 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
                 </p>
               </div>
 
-              <div className="p-6 bg-emerald-500/20 rounded-[2.5rem] border border-emerald-400/30 hover:bg-emerald-500/30 transition-colors">
+              <div className="p-5 md:p-6 bg-emerald-500/20 rounded-2xl md:rounded-[2.5rem] border border-emerald-400/30 hover:bg-emerald-500/30 transition-colors">
                 <p className="font-black text-emerald-300 mb-2 flex items-center gap-2">
                   ⚖️ 중복 가입 시 비례보상 원칙
                 </p>
@@ -132,7 +132,7 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
             </div>
           </div>
 
-          <div className="relative z-10 mt-8 p-6 bg-white/5 rounded-3xl border border-white/10">
+          <div className="relative z-10 mt-8 p-5 md:p-6 bg-white/5 rounded-3xl border border-white/10">
             <p className="text-emerald-400 font-black text-xs mb-1 uppercase tracking-widest">💡 프로/세미프로 자격 제한</p>
             <p className="text-white font-bold text-xs leading-relaxed opacity-80">
               {gameType === 'professional' ? (
@@ -146,8 +146,8 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
       </div>
 
       {/* ── 트렌드: 원데이 골프보험 ── */}
-      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-[4rem] p-12 text-white relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
+      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-5 md:p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
           <Sparkles className="w-40 h-40" />
         </div>
         <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
@@ -183,7 +183,7 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
 
       {/* ── 체크리스트 ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-        <div className="md:col-span-2 bg-white border border-emerald-100 rounded-[4rem] p-12 shadow-sm hover:shadow-xl transition-all">
+        <div className="md:col-span-2 bg-white border border-emerald-100 rounded-3xl md:rounded-[4rem] p-5 md:p-12 shadow-sm hover:shadow-xl transition-all">
           <h3 className="text-2xl font-black text-slate-900 mb-8 tracking-tight flex items-center gap-3">
             <CheckCircle className="w-6 h-6 text-emerald-500" /> 합리적 골프보험 스마트 가입 체크리스트
           </h3>
@@ -205,7 +205,7 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
         </div>
 
         <div className="flex flex-col gap-6">
-          <div className="bg-emerald-500 text-white rounded-[3.5rem] p-10 shadow-xl">
+          <div className="bg-emerald-500 text-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-xl">
             <h4 className="text-xl font-black mb-4">골프보험 스마트 팁 TOP 5</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
               ① 라운딩 1팀(4인) 일괄 가입 5% 할인 받기<br />
@@ -215,7 +215,7 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
               ⑤ 홀인원 축하 선물 및 캐디피 카드 영수증 보관
             </p>
           </div>
-          <div className="bg-white border border-emerald-100 rounded-[3.5rem] p-10 shadow-sm hover:shadow-xl transition-all">
+          <div className="bg-white border border-emerald-100 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-sm hover:shadow-xl transition-all">
             <h4 className="text-xl font-black mb-4 flex items-center gap-2">
               <Clock className="text-emerald-500 w-5 h-5" /> 가입 최적 시점
             </h4>
@@ -227,7 +227,7 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
       </div>
 
       {/* ── 주요 상품 종합 비교표 ── */}
-      <div className="mb-20 bg-white rounded-[4rem] p-12 border border-emerald-100 shadow-sm">
+      <div className="mb-20 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-emerald-100 shadow-sm">
         <h3 className="text-2xl font-black text-slate-900 mb-10 tracking-tight">
           국내 주요 손해보험사 골프·레저보험 상품 경쟁력 비교
         </h3>
@@ -240,7 +240,7 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
             { company: '메리츠화재', product: '든든한 골프파트너보험', highlight: '골프 중 발생할 수 있는 주요 중상해사망 및 장해율 보장 한도가 튼튼하게 설계된 정통 플랜', badges: ['상해보장 특화', '정통 골프플랜'] },
             { company: '현대해상', product: '현대해상 다이렉트 골프보험', highlight: '골프 카트 탑승 중 상해 사고 및 골프 경기장 외의 일반 스포츠 상해 손해까지 확장 설계 가능', badges: ['카트 상해 지원', '레저 상해 연계'] },
           ].map((item, i) => (
-            <div key={i} className="p-8 bg-emerald-50/20 rounded-[2.5rem] border border-emerald-100 hover:border-emerald-300 hover:shadow-lg transition-all">
+            <div key={i} className="p-5 md:p-8 bg-emerald-50/20 rounded-2xl md:rounded-[2.5rem] border border-emerald-100 hover:border-emerald-300 hover:shadow-lg transition-all">
               <p className="text-xs font-black text-emerald-600 mb-1">{item.company}</p>
               <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
               <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>

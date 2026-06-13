@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
-  <section className="py-24 bg-orange-50/10 px-4 relative overflow-hidden" id="health-general-detail">
+  <section className="py-24 bg-orange-50/10 px-2 sm:px-4 relative overflow-hidden" id="health-general-detail">
     {/* Background glowing decorations */}
     <div className="absolute top-1/4 -left-20 w-96 h-96 bg-orange-200/20 rounded-full blur-3xl pointer-events-none"></div>
     <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-amber-200/20 rounded-full blur-3xl pointer-events-none"></div>
@@ -44,7 +44,7 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
           { num: '1-5종 수술특약', label: '질병/상해 전수 보장', sub: '수술 횟수 상관없이 매회 지급 조건 우선 필터링' },
           { num: '무해지환급형 세이브', label: '동일 보장 대비 20~30% 할인', sub: '납입 기간 내 해지 환급금 축소로 고정 지출 절감' },
         ].map((s, i) => (
-          <div key={i} className="bg-white border border-orange-100/50 rounded-[3rem] p-8 text-center shadow-sm hover:shadow-xl hover:border-orange-300 transition-all group">
+          <div key={i} className="bg-white border border-orange-100/50 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-orange-300 transition-all group">
             <p className="text-xl sm:text-2xl font-black text-orange-500 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
             <p className="font-black text-slate-800 text-sm leading-tight mb-1">{s.label}</p>
             <p className="text-[11px] text-slate-400 font-bold">{s.sub}</p>
@@ -56,9 +56,9 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
 
         {/* GUIDE 01: 3대 중대질병 설계의 정석 */}
-        <div className="bg-white rounded-[4rem] p-12 border border-orange-100 shadow-lg hover:shadow-2xl transition-all group">
+        <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-orange-100 shadow-lg hover:shadow-2xl transition-all group">
           <div className="flex items-center gap-4 mb-10">
-            <div className="w-16 h-16 bg-orange-500 rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
+            <div className="w-16 h-16 bg-orange-500 rounded-2xl md:rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
               <Compass className="w-8 h-8" />
             </div>
             <div>
@@ -89,7 +89,7 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
             ))}
           </div>
 
-          <div className="mt-8 p-6 bg-orange-50 rounded-3xl border border-orange-100">
+          <div className="mt-8 p-5 md:p-6 bg-orange-50 rounded-3xl border border-orange-100">
             <p className="text-orange-700 font-black text-xs mb-1">⚠️ 보장 범위 확대 가이드</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
               기존 가입 증권 분석 시 **'뇌출혈'**, **'급성심근경색증'**으로 한정되어 있다면 실제 뇌졸중이나 협심증 발생 시 보험금을 전혀 지급받을 수 없으므로, 보험 다이어트를 통해 최우선적으로 리모델링해야 합니다.
@@ -98,14 +98,14 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         {/* GUIDE 02: 현명한 보험 요율의 설계 공식 */}
-        <div className="bg-slate-900 rounded-[4rem] p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
-          <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
             <Heart className="w-56 h-56 text-orange-500" />
           </div>
 
           <div className="relative z-10">
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-16 h-16 bg-orange-500 rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
+              <div className="w-16 h-16 bg-orange-500 rounded-2xl md:rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
                 <Activity className="w-8 h-8" />
               </div>
               <div>
@@ -150,7 +150,7 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
           </div>
 
-          <div className="relative z-10 mt-8 p-6 bg-white/5 rounded-3xl border border-white/10">
+          <div className="relative z-10 mt-8 p-5 md:p-6 bg-white/5 rounded-3xl border border-white/10">
             <p className="text-orange-400 font-black text-xs mb-1 uppercase tracking-widest">💡 전문가의 조립형 가이드</p>
             <p className="text-white font-bold text-xs leading-relaxed opacity-80">
               "종합보험 설계 시 실비는 전 보험사 공통 1년 갱신형이므로 단독 구성하시고, 3대 질병 진단비와 명품 특약(1-5종 수술비, 일상생활배상책임)은 비갱신형 무해지환급형으로 따로 분리 조립하는 것이 총 누적비용을 40% 이상 아끼는 노하우입니다."
@@ -160,8 +160,8 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 트렌드 배너 ── */}
-      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-[4rem] p-12 text-white relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
+      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-5 md:p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
           <Sparkles className="w-40 h-40" />
         </div>
         <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
@@ -197,7 +197,7 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
 
       {/* ── 체크리스트 ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-        <div className="md:col-span-2 bg-white border border-orange-100 rounded-[4rem] p-12 shadow-sm hover:shadow-xl transition-all">
+        <div className="md:col-span-2 bg-white border border-orange-100 rounded-3xl md:rounded-[4rem] p-5 md:p-12 shadow-sm hover:shadow-xl transition-all">
           <h3 className="text-2xl font-black text-slate-900 mb-8 tracking-tight flex items-center gap-3">
             <CheckCircle className="w-6 h-6 text-orange-500" /> 종합건강보험 현명한 가입 핵심 5대 프로세스
           </h3>
@@ -219,7 +219,7 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         <div className="flex flex-col gap-6">
-          <div className="bg-orange-500 text-white rounded-[3.5rem] p-10 shadow-xl">
+          <div className="bg-orange-500 text-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-xl">
             <h4 className="text-xl font-black mb-4">가입 시 핵심 우선순위 TOP 5</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
               ① 유사암 진단비 한도 최대 세팅<br />
@@ -229,7 +229,7 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
               ⑤ 가족 일상생활배상책임 특약 필수 가입
             </p>
           </div>
-          <div className="bg-white border border-orange-100 rounded-[3.5rem] p-10 shadow-sm hover:shadow-xl transition-all">
+          <div className="bg-white border border-orange-100 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-sm hover:shadow-xl transition-all">
             <h4 className="text-xl font-black mb-4 flex items-center gap-2">
               <Clock className="text-orange-500 w-5 h-5" /> 리모델링 적기 분석
             </h4>
@@ -241,7 +241,7 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 주요 상품 종합 비교표 ── */}
-      <div className="mb-20 bg-white rounded-[4rem] p-12 border border-orange-100 shadow-sm">
+      <div className="mb-20 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-orange-100 shadow-sm">
         <h3 className="text-2xl font-black text-slate-900 mb-10 tracking-tight">
           대한민국 Top 6 손해보험사 종합건강보험 주력 상품 강점 전수 비교
         </h3>
@@ -254,7 +254,7 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
             { company: 'DB손해보험', product: '나를위한 안심건강보험', highlight: '무사고 시 보험료 환급/할인 옵션 지원, 대형 수술비 및 3대 중대 질병 진단비 인하 경쟁력', badges: ['무사고 할인', '기본 진단비 우수'] },
             { company: '한화손해보험', product: '시그니처 여성/남성 건강보험', highlight: '성별 특화 질환 담보 라인업 강력 세팅, 무해지환급 구조 설계 시 업계 최저 수준 요율 경쟁력 확보', badges: ['성별 특화 보장', '최저 요율 매칭'] },
           ].map((item, i) => (
-            <div key={i} className="p-8 bg-orange-50/20 rounded-[2.5rem] border border-orange-100 hover:border-orange-300 hover:shadow-lg transition-all">
+            <div key={i} className="p-5 md:p-8 bg-orange-50/20 rounded-2xl md:rounded-[2.5rem] border border-orange-100 hover:border-orange-300 hover:shadow-lg transition-all">
               <p className="text-xs font-black text-orange-600 mb-1">{item.company}</p>
               <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
               <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>

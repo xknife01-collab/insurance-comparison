@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
-  <section className="py-24 bg-teal-50/10 px-4 relative overflow-hidden" id="dental-detail">
+  <section className="py-24 bg-teal-50/10 px-2 sm:px-4 relative overflow-hidden" id="dental-detail">
     <div className="max-w-7xl mx-auto">
 
       {/* ── 헤더 ── */}
@@ -40,7 +40,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
           { num: '진단형 프리패스', label: '즉시 면책/감액기간 0일 면제', sub: '사전 검진 통과 시 100% 당일 보장' },
           { num: '고지 간소 무진단', label: '치과 검진 없는 5분 초간편 가입', sub: '3가지 고지만으로 즉각 체결 가능' },
         ].map((s, i) => (
-          <div key={i} className="bg-white border border-teal-100 rounded-[3rem] p-8 text-center shadow-sm hover:shadow-xl hover:border-teal-200 transition-all group">
+          <div key={i} className="bg-white border border-teal-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-teal-200 transition-all group">
             <p className="text-2xl font-black text-teal-600 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
             <p className="font-black text-slate-800 text-sm leading-tight mb-1">{s.label}</p>
             <p className="text-[11px] text-slate-400 font-bold">{s.sub}</p>
@@ -52,9 +52,9 @@ export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
 
         {/* GUIDE 01: 필수 체크 3대 핵심 보장 */}
-        <div className="bg-white rounded-[4rem] p-12 border border-teal-100 shadow-lg hover:shadow-2xl transition-all group">
+        <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-teal-100 shadow-lg hover:shadow-2xl transition-all group">
           <div className="flex items-center gap-4 mb-10">
-            <div className="w-16 h-16 bg-teal-500 rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
+            <div className="w-16 h-16 bg-teal-500 rounded-2xl md:rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
               <Compass className="w-8 h-8" />
             </div>
             <div>
@@ -85,7 +85,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
             ))}
           </div>
 
-          <div className="mt-8 p-6 bg-teal-50 rounded-3xl border border-teal-100">
+          <div className="mt-8 p-5 md:p-6 bg-teal-50 rounded-3xl border border-teal-100">
             <p className="text-teal-700 font-black text-xs mb-1">⚠️ 충치와 잇몸병 치료 고지의무 주의</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
               가입 전 1년 이내 충치로 인한 치료 기록이 있거나, 5년 이내 잇몸병(치주염)으로 치아를 뺀 적이 있는 경우 고지의무 대상이 되며, 이를 정확히 알리지 않으면 보험금 지급 거절 및 강제 해지 사유가 되므로 투명한 고지가 선행되어야 합니다.
@@ -94,14 +94,14 @@ export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         {/* GUIDE 02: 보장 대상 제외 및 예외 룰 */}
-        <div className="bg-slate-900 rounded-[4rem] p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
-          <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
             <Heart className="w-56 h-56 text-teal-500" />
           </div>
 
           <div className="relative z-10">
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-16 h-16 bg-teal-500 rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
+              <div className="w-16 h-16 bg-teal-500 rounded-2xl md:rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
                 <Activity className="w-8 h-8" />
               </div>
               <div>
@@ -111,7 +111,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
 
             <div className="space-y-6">
-              <div className="p-6 bg-white/10 rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
+              <div className="p-5 md:p-6 bg-white/10 rounded-2xl md:rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
                 <p className="font-black text-teal-300 mb-2 flex items-center gap-2">
                   🚫 기발치 치아(이미 뽑은 치아) 면책 조항
                 </p>
@@ -120,7 +120,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
                 </p>
               </div>
 
-              <div className="p-6 bg-teal-500/20 rounded-[2.5rem] border border-teal-400/30 hover:bg-teal-500/30 transition-colors">
+              <div className="p-5 md:p-6 bg-teal-500/20 rounded-2xl md:rounded-[2.5rem] border border-teal-400/30 hover:bg-teal-500/30 transition-colors">
                 <p className="font-black text-teal-300 mb-2 flex items-center gap-2">
                   ⏱️ 질병 원인 면책 90일 및 1~2년 감액제
                 </p>
@@ -131,7 +131,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
           </div>
 
-          <div className="relative z-10 mt-8 p-6 bg-white/5 rounded-3xl border border-white/10">
+          <div className="relative z-10 mt-8 p-5 md:p-6 bg-white/5 rounded-3xl border border-white/10">
             <p className="text-teal-400 font-black text-xs mb-1 uppercase tracking-widest">💡 사랑니 및 미용 시술 면책</p>
             <p className="text-white font-bold text-xs leading-relaxed opacity-80">
               치열 교정 치료(미용 목적), 치아 미백 시술, 그리고 자연 퇴화되어 자연 발치되는 경우나 사랑니의 보존/보철 치료비는 순수 질병/치아우식 치료 목적으로 인정되지 않아 보장에서 제외됨을 유의해 주시기 바랍니다.
@@ -141,8 +141,8 @@ export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 트렌드: 진단형 vs 무진단형 ── */}
-      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-[4rem] p-12 text-white relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
+      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-5 md:p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
           <Sparkles className="w-40 h-40" />
         </div>
         <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
@@ -177,7 +177,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
 
       {/* ── 체크리스트 ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-        <div className="md:col-span-2 bg-white border border-teal-100 rounded-[4rem] p-12 shadow-sm hover:shadow-xl transition-all">
+        <div className="md:col-span-2 bg-white border border-teal-100 rounded-3xl md:rounded-[4rem] p-5 md:p-12 shadow-sm hover:shadow-xl transition-all">
           <h3 className="text-2xl font-black text-slate-900 mb-8 tracking-tight flex items-center gap-3">
             <CheckCircle className="w-6 h-6 text-teal-500" /> 합리적 치아보험 스마트 가입/리모델링 체크리스트
           </h3>
@@ -199,7 +199,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         <div className="flex flex-col gap-6">
-          <div className="bg-teal-600 text-white rounded-[3.5rem] p-10 shadow-xl">
+          <div className="bg-teal-600 text-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-xl">
             <h4 className="text-xl font-black mb-4">치아보험 스마트 팁 TOP 5</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
               ① 치아가 완전히 깨끗하다면 면책 없는 진단형 공략<br />
@@ -209,7 +209,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
               ⑤ 잇몸 건강 5년 무사고 시 대다수 무진단형 패스
             </p>
           </div>
-          <div className="bg-white border border-teal-100 rounded-[3.5rem] p-10 shadow-sm hover:shadow-xl transition-all">
+          <div className="bg-white border border-teal-100 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-sm hover:shadow-xl transition-all">
             <h4 className="text-xl font-black mb-4 flex items-center gap-2">
               <Clock className="text-teal-500 w-5 h-5" /> 가입 최적 시점
             </h4>
@@ -221,7 +221,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 주요 상품 종합 비교표 ── */}
-      <div className="mb-20 bg-white rounded-[4rem] p-12 border border-teal-100 shadow-sm">
+      <div className="mb-20 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-teal-100 shadow-sm">
         <h3 className="text-2xl font-black text-slate-900 mb-10 tracking-tight">
           국내 주요 보험사 치아·보철보험 상품 경쟁력 비교
         </h3>
@@ -234,7 +234,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
             { company: 'KB손해보험', product: '다이렉트 치아보장보험', highlight: 'KB스타클럽 금융 혜택 및 간편 고지 승인 시스템이 모바일에 완벽 장착되어 3가지 간편 질문만으로 간편한 가입 제공', badges: ['금융 우대 연계', '간편 가입'] },
             { company: '한화손해보험', product: '다이렉트 하얀이치아보험', highlight: '자연치아 보존 치료 한도 최적화를 통해 충치 레진, 인레이 다수 치료 필요 고객에게 가장 매력적인 가격 제시', badges: ['보존치료 강자', '다이어트 요율'] },
           ].map((item, i) => (
-            <div key={i} className="p-8 bg-teal-50/20 rounded-[2.5rem] border border-teal-100 hover:border-teal-300 hover:shadow-lg transition-all">
+            <div key={i} className="p-5 md:p-8 bg-teal-50/20 rounded-2xl md:rounded-[2.5rem] border border-teal-100 hover:border-teal-300 hover:shadow-lg transition-all">
               <p className="text-xs font-black text-teal-600 mb-1">{item.company}</p>
               <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
               <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>

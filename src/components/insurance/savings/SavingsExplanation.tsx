@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const SavingsExplanation: React.FC<Props> = ({ onAction }) => (
-  <section className="py-24 bg-emerald-50/10 px-4 relative overflow-hidden text-left" id="savings-detail">
+  <section className="py-24 bg-emerald-50/10 px-2 sm:px-4 relative overflow-hidden text-left" id="savings-detail">
     <div className="max-w-7xl mx-auto">
 
       {/* ── 헤더 ── */}
@@ -40,7 +40,7 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction }) => (
           { num: '추가납입 200%', label: '수수료 없는 유니버셜 혜택', sub: '기본 납입액 외 추가 금액은 수수료 면제 적산' },
           { num: '예금자보호 5천만', label: '안전한 제도권 금융 자산', sub: '보험사별 1인당 최고 5,000만 원 원리금 보호' },
         ].map((s, i) => (
-          <div key={i} className="bg-white border border-emerald-100 rounded-[3rem] p-8 text-center shadow-sm hover:shadow-xl hover:border-emerald-200 transition-all group">
+          <div key={i} className="bg-white border border-emerald-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-emerald-200 transition-all group">
             <p className="text-2xl font-black text-emerald-600 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
             <p className="font-black text-slate-800 text-sm leading-tight mb-1">{s.label}</p>
             <p className="text-[11px] text-slate-400 font-bold">{s.sub}</p>
@@ -52,9 +52,9 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction }) => (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
 
         {/* GUIDE 01: 비과세 요건 핵심 */}
-        <div className="bg-white rounded-[4rem] p-12 border border-emerald-100 shadow-lg hover:shadow-2xl transition-all group">
+        <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-emerald-100 shadow-lg hover:shadow-2xl transition-all group">
           <div className="flex items-center gap-4 mb-10">
-            <div className="w-16 h-16 bg-emerald-600 rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
+            <div className="w-16 h-16 bg-emerald-600 rounded-2xl md:rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
               <Compass className="w-8 h-8" />
             </div>
             <div>
@@ -84,7 +84,7 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction }) => (
             ))}
           </div>
 
-          <div className="mt-8 p-6 bg-emerald-50 rounded-3xl border border-emerald-100">
+          <div className="mt-8 p-5 md:p-6 bg-emerald-50 rounded-3xl border border-emerald-100">
             <p className="text-emerald-700 font-black text-xs mb-1">⚠️ 초기 사업비 차감으로 인한 해지 리스크</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
               저축보험은 가입 초기 약 3% ~ 5%의 수수료(사업비)가 먼저 차감된 후 나머지 금액에 대해 복리가 굴러갑니다. 따라서 **가입 후 1~2년 이내 단기 해지 시 원금 손실**이 날 수 있으므로 반드시 중장기 자산 증식 목적으로 운용하셔야 합니다.
@@ -93,14 +93,14 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         {/* GUIDE 02: 사업비 절감 및 추가납입 꿀팁 */}
-        <div className="bg-slate-900 rounded-[4rem] p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
-          <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
             <PiggyBank className="w-56 h-56 text-emerald-500" />
           </div>
 
           <div className="relative z-10">
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-16 h-16 bg-emerald-600 rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
+              <div className="w-16 h-16 bg-emerald-600 rounded-2xl md:rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
                 <TrendingUp className="w-8 h-8" />
               </div>
               <div>
@@ -110,7 +110,7 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
 
             <div className="space-y-6">
-              <div className="p-6 bg-white/10 rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
+              <div className="p-5 md:p-6 bg-white/10 rounded-2xl md:rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
                 <p className="font-black text-emerald-300 mb-2 flex items-center gap-2">
                   💡 기본납입 1 : 추가납입 2 규칙
                 </p>
@@ -120,7 +120,7 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction }) => (
                 </p>
               </div>
 
-              <div className="p-6 bg-teal-950/40 rounded-[2.5rem] border border-teal-500/20 hover:bg-teal-950/60 transition-colors">
+              <div className="p-5 md:p-6 bg-teal-950/40 rounded-2xl md:rounded-[2.5rem] border border-teal-500/20 hover:bg-teal-950/60 transition-colors">
                 <p className="font-black text-teal-300 mb-2 flex items-center gap-2">
                   📲 대면 창구 대신 다이렉트 CM 채널
                 </p>
@@ -131,7 +131,7 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
           </div>
 
-          <div className="relative z-10 mt-8 p-6 bg-white/5 rounded-3xl border border-white/10">
+          <div className="relative z-10 mt-8 p-5 md:p-6 bg-white/5 rounded-3xl border border-white/10">
             <p className="text-emerald-400 font-black text-xs mb-1 uppercase tracking-widest">💡 플랫폼 자산운용 수석 연구원의 팁</p>
             <p className="text-white font-bold text-xs leading-relaxed opacity-80">
               "기준금리가 동결되거나 하락하더라도, 저축보험은 **'최저보증이율'**이라는 안전망이 있어 시중금리가 아무리 하락하더라도 평생 최소 0.75%~1.25% 이상의 이율을 보장하므로 장기 목돈 예치용으로도 훌륭한 대안입니다."
@@ -142,7 +142,7 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction }) => (
 
       {/* ── 체크리스트 ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-        <div className="md:col-span-2 bg-white border border-emerald-100 rounded-[4rem] p-12 shadow-sm hover:shadow-xl transition-all">
+        <div className="md:col-span-2 bg-white border border-emerald-100 rounded-3xl md:rounded-[4rem] p-5 md:p-12 shadow-sm hover:shadow-xl transition-all">
           <h3 className="text-2xl font-black text-slate-900 mb-8 tracking-tight flex items-center gap-3">
             <CheckCircle className="w-6 h-6 text-emerald-500" /> 성공적인 저축보험 재테크 체크리스트
           </h3>
@@ -164,7 +164,7 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         <div className="flex flex-col gap-6">
-          <div className="bg-emerald-600 text-white rounded-[3.5rem] p-10 shadow-xl text-left">
+          <div className="bg-emerald-600 text-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-xl text-left">
             <h4 className="text-xl font-black mb-4">비과세 극대화 핵심 5</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
               ① 월 적립 한도 150만 원 비과세 설계<br />
@@ -174,7 +174,7 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction }) => (
               ⑤ 시중금리 급락에 대비한 최저보증이율 안전망 확보
             </p>
           </div>
-          <div className="bg-white border border-emerald-100 rounded-[3.5rem] p-10 shadow-sm hover:shadow-xl transition-all text-left">
+          <div className="bg-white border border-emerald-100 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-sm hover:shadow-xl transition-all text-left">
             <h4 className="text-xl font-black mb-4 flex items-center gap-2">
               <Clock className="text-emerald-500 w-5 h-5" /> 장기 자산의 마법
             </h4>

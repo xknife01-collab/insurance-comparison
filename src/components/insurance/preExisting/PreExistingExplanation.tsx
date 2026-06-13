@@ -13,7 +13,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction }) => {
     <div className="mt-16 space-y-24 animate-in fade-in slide-in-from-bottom-8 duration-1000">
       
       {/* ── 1. 프리미엄 HERO 헤더 섹션 ── */}
-      <div className="bg-gradient-to-br from-indigo-950 via-slate-900 to-indigo-900 rounded-[3rem] p-12 md:p-20 text-center space-y-8 relative overflow-hidden shadow-2xl border border-indigo-500/20">
+      <div className="bg-gradient-to-br from-indigo-950 via-slate-900 to-indigo-900 rounded-3xl md:rounded-[3rem] p-5 md:p-12 md:p-20 text-center space-y-8 relative overflow-hidden shadow-2xl border border-indigo-500/20">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-500/10 via-transparent to-transparent opacity-60"></div>
         <div className="absolute -right-16 -top-16 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl"></div>
         <div className="absolute -left-16 -bottom-16 w-64 h-64 bg-sky-500/10 rounded-full blur-3xl"></div>
@@ -68,7 +68,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction }) => {
         ].map((card, idx) => (
           <div 
             key={idx} 
-            className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-[0_15px_35px_-5px_rgba(0,0,0,0.03)] hover:shadow-[0_25px_50px_-10px_rgba(99,102,241,0.08)] transition-all hover:-translate-y-1 duration-300 flex flex-col justify-between space-y-6"
+            className="bg-white rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-gray-100 shadow-[0_15px_35px_-5px_rgba(0,0,0,0.03)] hover:shadow-[0_25px_50px_-10px_rgba(99,102,241,0.08)] transition-all hover:-translate-y-1 duration-300 flex flex-col justify-between space-y-6"
           >
             <div className="space-y-4">
               <div className="flex justify-between items-center">
@@ -87,7 +87,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction }) => {
       </div>
 
       {/* ── 3. GUIDE 01: 3.X.5 간편고지의 세부 조건 마스터 ── */}
-      <div className="bg-white rounded-[4rem] p-8 md:p-16 border border-gray-100 shadow-xl space-y-12">
+      <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-8 md:p-16 border border-gray-100 shadow-xl space-y-12">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-gray-100">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-indigo-600/20">
@@ -128,8 +128,8 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction }) => {
               warn: '여기에 해당하지 않고 단순 고혈압·당뇨·이상지질혈증만 있으신 분들은 5년 조건 통과가 가능합니다.'
             }
           ].map((item, index) => (
-            <div key={index} className="bg-slate-50 rounded-[2.5rem] p-8 border border-slate-100 flex flex-col justify-between space-y-6 relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-8 text-indigo-500/5 font-black text-9xl pointer-events-none group-hover:scale-110 group-hover:text-indigo-500/10 transition-all duration-500">
+            <div key={index} className="bg-slate-50 rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-slate-100 flex flex-col justify-between space-y-6 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 p-5 md:p-8 text-indigo-500/5 font-black text-9xl pointer-events-none group-hover:scale-110 group-hover:text-indigo-500/10 transition-all duration-500">
                 {item.number}
               </div>
               <div className="space-y-4 relative z-10">
@@ -149,7 +149,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction }) => {
         </div>
 
         {/* 등급별 보험료 차이 분석 요약 */}
-        <div className="bg-gradient-to-br from-indigo-50 to-indigo-100/50 rounded-[3rem] p-8 md:p-12 border border-indigo-100">
+        <div className="bg-gradient-to-br from-indigo-50 to-indigo-100/50 rounded-3xl md:rounded-[3rem] p-5 md:p-8 md:p-12 border border-indigo-100">
           <h4 className="text-lg font-black text-indigo-900 mb-6 flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-indigo-600" /> 어떤 간편 플랜을 선택해야 할까요?
           </h4>
@@ -160,7 +160,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction }) => {
               { name: '3.2.5 플랜', label: '표준 유병자', desc: '2년간 입원/수술 無', rate: '일반 대비 약 1.35배' },
               { name: '3.0.5 플랜', label: '초간편 가입', desc: '최근 입원/수술력 有', rate: '일반 대비 약 1.5배 이상' }
             ].map((plan, i) => (
-              <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-indigo-100 flex flex-col justify-between space-y-4">
+              <div key={i} className="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-indigo-100 flex flex-col justify-between space-y-4">
                 <div>
                   <p className="text-xs text-indigo-600 font-black uppercase tracking-wider">{plan.label}</p>
                   <p className="text-base font-black text-gray-900 mt-1">{plan.name}</p>
@@ -180,8 +180,8 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction }) => {
       <div className="grid lg:grid-cols-2 gap-8">
         
         {/* 만성질환 안심 가이드 */}
-        <div className="bg-slate-900 rounded-[3.5rem] p-10 md:p-14 text-white shadow-2xl relative overflow-hidden flex flex-col justify-between space-y-10 border border-slate-800">
-          <div className="absolute top-0 right-0 p-12 opacity-5 rotate-12 pointer-events-none">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 md:p-14 text-white shadow-2xl relative overflow-hidden flex flex-col justify-between space-y-10 border border-slate-800">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 rotate-12 pointer-events-none">
             <ShieldCheck size={260} className="text-white" />
           </div>
           
@@ -219,7 +219,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction }) => {
         </div>
 
         {/* 무사고 계약 전환 할인 소개 */}
-        <div className="bg-white rounded-[3.5rem] p-10 md:p-14 border border-gray-100 shadow-xl flex flex-col justify-between space-y-8">
+        <div className="bg-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 md:p-14 border border-gray-100 shadow-xl flex flex-col justify-between space-y-8">
           <div className="space-y-6">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-sky-50 rounded-2xl flex items-center justify-center text-sky-600">
@@ -235,7 +235,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction }) => {
               유병자 보험은 한 번 가입하면 비싼 보험료를 평생 내야 할까요? 절대 아닙니다. 최근 출시되는 프리미엄 유병자 보험은 **'무사고 계약 전환권'**을 탑재하여 가입자의 사후 건강 상태 회복을 보상합니다.
             </p>
 
-            <div className="bg-sky-50/50 p-6 rounded-2xl border border-sky-100 space-y-4">
+            <div className="bg-sky-50/50 p-5 md:p-6 rounded-2xl border border-sky-100 space-y-4">
               <p className="text-sm font-black text-sky-950">💡 계약 전환 제도의 핵심 원리</p>
               <div className="flex items-center justify-center gap-4 text-center py-2">
                 <div className="bg-white px-3 py-2 rounded-xl border border-sky-100 shadow-sm">
@@ -261,7 +261,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction }) => {
             </div>
           </div>
 
-          <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100">
+          <div className="p-5 md:p-6 bg-slate-50 rounded-2xl border border-slate-100">
             <p className="text-xs text-indigo-600 font-black mb-1">📢 가입 꿀팁</p>
             <p className="text-[11px] text-gray-600 font-bold leading-relaxed">
               "당장 2~3년 내 수술력 때문에 3.2.5 요금제로 비싸게 가입했더라도, 계약 전환권이 확실히 보장되는지 확인하고 가입하세요. 시간이 지나 무사고 기간을 채우면 자동으로 보험료가 절약됩니다."
@@ -337,7 +337,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction }) => {
           ].map((item, index) => (
             <div 
               key={index} 
-              className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-[0_12px_30px_-5px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_45px_-10px_rgba(0,0,0,0.06)] hover:border-indigo-100 transition-all duration-300 flex flex-col justify-between space-y-6"
+              className="bg-white rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-gray-100 shadow-[0_12px_30px_-5px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_45px_-10px_rgba(0,0,0,0.06)] hover:border-indigo-100 transition-all duration-300 flex flex-col justify-between space-y-6"
             >
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
@@ -365,7 +365,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction }) => {
       </div>
 
       {/* ── 6. 전문가 실전 가입 가이드 & 체크리스트 ── */}
-      <div className="bg-slate-50 rounded-[4rem] p-8 md:p-16 border border-slate-100">
+      <div className="bg-slate-50 rounded-3xl md:rounded-[4rem] p-5 md:p-8 md:p-16 border border-slate-100">
         <h4 className="text-xl font-black text-slate-900 mb-8 flex items-center gap-3">
           <HelpCircle className="w-6 h-6 text-indigo-600" /> 유병자 보험 리모델링 실전 4단계 체크리스트
         </h4>
@@ -392,7 +392,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction }) => {
               desc: '가입 이후 병력이 생기지 않고 일정 기간이 경과하면 더 저렴한 건강 요금제로 변경해 주는 권리를 직접 행사해야 합니다. 보험사가 알아서 내려주지 않는 권리이니 반드시 달력에 표기하세요.'
             }
           ].map((item, idx) => (
-            <div key={idx} className="bg-white p-8 rounded-3xl border border-slate-100 flex gap-6">
+            <div key={idx} className="bg-white p-5 md:p-8 rounded-3xl border border-slate-100 flex gap-6">
               <span className="text-3xl font-black text-indigo-100 leading-none">{item.step}</span>
               <div className="space-y-2">
                 <h5 className="text-base font-black text-slate-900">{item.title}</h5>
@@ -404,8 +404,8 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction }) => {
       </div>
 
       {/* ── 7. 하단 CALL TO ACTION (CTA) 연동 블록 ── */}
-      <div className="bg-gradient-to-br from-indigo-900 to-indigo-950 rounded-[3rem] p-8 md:p-12 text-center text-white relative overflow-hidden shadow-xl border border-indigo-500/20">
-        <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
+      <div className="bg-gradient-to-br from-indigo-900 to-indigo-950 rounded-3xl md:rounded-[3rem] p-5 md:p-8 md:p-12 text-center text-white relative overflow-hidden shadow-xl border border-indigo-500/20">
+        <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 pointer-events-none">
           <Sparkles size={160} />
         </div>
         <div className="relative z-10 space-y-6 max-w-2xl mx-auto">

@@ -13,7 +13,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction }) => {
     <div className="mt-16 space-y-24 animate-in fade-in slide-in-from-bottom-8 duration-1000">
       
       {/* ── 1. 프리미엄 HERO 헤더 섹션 ── */}
-      <div className="bg-gradient-to-br from-amber-950 via-slate-900 to-orange-950 rounded-[3rem] p-12 md:p-20 text-center space-y-8 relative overflow-hidden shadow-2xl border border-orange-500/20">
+      <div className="bg-gradient-to-br from-amber-950 via-slate-900 to-orange-950 rounded-3xl md:rounded-[3rem] p-5 md:p-12 md:p-20 text-center space-y-8 relative overflow-hidden shadow-2xl border border-orange-500/20">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-orange-500/10 via-transparent to-transparent opacity-60"></div>
         <div className="absolute -right-16 -top-16 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl"></div>
         <div className="absolute -left-16 -bottom-16 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl"></div>
@@ -68,7 +68,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction }) => {
         ].map((card, idx) => (
           <div 
             key={idx} 
-            className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-[0_15px_35px_-5px_rgba(0,0,0,0.03)] hover:shadow-[0_25px_50px_-10px_rgba(249,115,22,0.08)] transition-all hover:-translate-y-1 duration-300 flex flex-col justify-between space-y-6"
+            className="bg-white rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-gray-100 shadow-[0_15px_35px_-5px_rgba(0,0,0,0.03)] hover:shadow-[0_25px_50px_-10px_rgba(249,115,22,0.08)] transition-all hover:-translate-y-1 duration-300 flex flex-col justify-between space-y-6"
           >
             <div className="space-y-4">
               <div className="flex justify-between items-center">
@@ -87,7 +87,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction }) => {
       </div>
 
       {/* ── 3. GUIDE 01: 1~5종 수술 분류표 완벽 마스터 ── */}
-      <div className="bg-white rounded-[4rem] p-8 md:p-16 border border-gray-100 shadow-xl space-y-12">
+      <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-8 md:p-16 border border-gray-100 shadow-xl space-y-12">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-gray-100">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 bg-orange-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-orange-600/20">
@@ -142,7 +142,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction }) => {
               badge: '대형 위험 방어'
             }
           ].map((item, index) => (
-            <div key={index} className="bg-slate-50 rounded-[2rem] p-6 border border-slate-100 flex flex-col justify-between space-y-6 hover:bg-orange-50/20 hover:border-orange-100 transition-colors duration-300">
+            <div key={index} className="bg-slate-50 rounded-2xl md:rounded-[2rem] p-5 md:p-6 border border-slate-100 flex flex-col justify-between space-y-6 hover:bg-orange-50/20 hover:border-orange-100 transition-colors duration-300">
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <span className="text-2xl font-black text-orange-600">{item.grade}</span>
@@ -173,8 +173,8 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction }) => {
       <div className="grid lg:grid-cols-2 gap-8">
         
         {/* 실손의 보완재 역할 */}
-        <div className="bg-slate-900 rounded-[3.5rem] p-10 md:p-14 text-white shadow-2xl relative overflow-hidden flex flex-col justify-between space-y-10 border border-slate-800">
-          <div className="absolute top-0 right-0 p-12 opacity-5 rotate-12 pointer-events-none">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 md:p-14 text-white shadow-2xl relative overflow-hidden flex flex-col justify-between space-y-10 border border-slate-800">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 rotate-12 pointer-events-none">
             <ShieldCheck size={260} className="text-white" />
           </div>
           
@@ -212,7 +212,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction }) => {
         </div>
 
         {/* 매회 지급 약관의 중요성 */}
-        <div className="bg-white rounded-[3.5rem] p-10 md:p-14 border border-gray-100 shadow-xl flex flex-col justify-between space-y-8">
+        <div className="bg-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 md:p-14 border border-gray-100 shadow-xl flex flex-col justify-between space-y-8">
           <div className="space-y-6">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-orange-50 rounded-2xl flex items-center justify-center text-orange-600">
@@ -228,7 +228,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction }) => {
               많은 보험 가입자들이 놓치는 가장 치명적인 약관 조항은 바로 **'지급 횟수 제한'**입니다. 동일한 질병으로 여러 번 수술을 받게 될 때, 돈을 매번 주는지 한 번만 주는지에 따라 인생의 보장 한도가 완전히 갈립니다.
             </p>
 
-            <div className="bg-orange-50/50 p-6 rounded-2xl border border-orange-100 space-y-4">
+            <div className="bg-orange-50/50 p-5 md:p-6 rounded-2xl border border-orange-100 space-y-4">
               <p className="text-sm font-black text-orange-950">💡 매회 지급 vs 연 1회 지급 차이</p>
               <div className="flex items-center justify-center gap-6 text-center py-2">
                 <div className="bg-white p-4 rounded-xl border border-orange-100 shadow-sm w-36">
@@ -249,7 +249,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction }) => {
             </div>
           </div>
 
-          <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100">
+          <div className="p-5 md:p-6 bg-slate-50 rounded-2xl border border-slate-100">
             <p className="text-xs text-orange-600 font-black mb-1">📢 전문가 조언</p>
             <p className="text-[11px] text-gray-600 font-bold leading-relaxed">
               "최근 개발된 관동맥 혈관 스텐트 삽입술 등은 1회 시술 후 몇 개월 뒤 다시 좁아져 재수술을 하는 경우가 많습니다. 가입 설계 시 반드시 '질병 종수술비(매회 지급)' 특약이 중심에 있는지 확인하세요."
@@ -325,7 +325,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction }) => {
           ].map((item, index) => (
             <div 
               key={index} 
-              className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-[0_12px_30px_-5px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_45px_-10px_rgba(0,0,0,0.06)] hover:border-orange-100 transition-all duration-300 flex flex-col justify-between space-y-6"
+              className="bg-white rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-gray-100 shadow-[0_12px_30px_-5px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_45px_-10px_rgba(0,0,0,0.06)] hover:border-orange-100 transition-all duration-300 flex flex-col justify-between space-y-6"
             >
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
@@ -353,7 +353,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction }) => {
       </div>
 
       {/* ── 6. 전문가 실전 수술비 리모델링 체크리스트 ── */}
-      <div className="bg-slate-50 rounded-[4rem] p-8 md:p-16 border border-slate-100">
+      <div className="bg-slate-50 rounded-3xl md:rounded-[4rem] p-5 md:p-8 md:p-16 border border-slate-100">
         <h4 className="text-xl font-black text-slate-900 mb-8 flex items-center gap-3">
           <HelpCircle className="w-6 h-6 text-orange-600" /> 수술비·입원비 보험 리모델링 실전 4단계 체크리스트
         </h4>
@@ -380,7 +380,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction }) => {
               desc: '가입 전에 병원에서 이미 수술 권유를 받았거나 검사가 예약되어 있다면, 해당 부위는 가입 후 일정 기간 동안 보장받지 못하는 부담보 처리가 될 수 있으므로 심사 전에 반드시 고지 및 예외 규정을 확인하세요.'
             }
           ].map((item, idx) => (
-            <div key={idx} className="bg-white p-8 rounded-3xl border border-slate-100 flex gap-6">
+            <div key={idx} className="bg-white p-5 md:p-8 rounded-3xl border border-slate-100 flex gap-6">
               <span className="text-3xl font-black text-orange-100 leading-none">{item.step}</span>
               <div className="space-y-2">
                 <h5 className="text-base font-black text-slate-900">{item.title}</h5>
@@ -392,8 +392,8 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction }) => {
       </div>
 
       {/* ── 7. 하단 CALL TO ACTION (CTA) 연동 블록 ── */}
-      <div className="bg-gradient-to-br from-orange-900 to-orange-950 rounded-[3rem] p-8 md:p-12 text-center text-white relative overflow-hidden shadow-xl border border-orange-500/20">
-        <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
+      <div className="bg-gradient-to-br from-orange-900 to-orange-950 rounded-3xl md:rounded-[3rem] p-5 md:p-8 md:p-12 text-center text-white relative overflow-hidden shadow-xl border border-orange-500/20">
+        <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 pointer-events-none">
           <Sparkles size={160} />
         </div>
         <div className="relative z-10 space-y-6 max-w-2xl mx-auto">

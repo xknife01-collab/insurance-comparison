@@ -6,7 +6,7 @@ interface Props {
 }
 
 export const FireExplanation: React.FC<Props> = ({ onAction }) => (
-  <section className="py-24 bg-red-50/10 px-4 relative overflow-hidden" id="fire-detail">
+  <section className="py-24 bg-red-50/10 px-2 sm:px-4 relative overflow-hidden" id="fire-detail">
     <div className="max-w-7xl mx-auto">
 
       {/* ── 헤더 ── */}
@@ -37,7 +37,7 @@ export const FireExplanation: React.FC<Props> = ({ onAction }) => (
           { num: '임시 거주비 지원', label: '화재로 입주 불가 시 일당 지급', sub: '최대 90일 동안 1일 10만 원 한도 숙식 지원' },
           { num: '이웃집 화재 전파', label: '화재배상책임 대물 최대 20억', sub: '벌금 특약 최대 2천만 원 함께 보완' },
         ].map((s, i) => (
-          <div key={i} className="bg-white border border-red-100 rounded-[3rem] p-8 text-center shadow-sm hover:shadow-xl hover:border-red-200 transition-all group">
+          <div key={i} className="bg-white border border-red-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-red-200 transition-all group">
             <p className="text-2xl font-black text-red-500 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
             <p className="font-black text-slate-800 text-sm leading-tight mb-1">{s.label}</p>
             <p className="text-[11px] text-slate-400 font-bold">{s.sub}</p>
@@ -49,9 +49,9 @@ export const FireExplanation: React.FC<Props> = ({ onAction }) => (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
 
         {/* GUIDE 01: 임차자배상 vs 화재배상 */}
-        <div className="bg-white rounded-[4rem] p-12 border border-red-100 shadow-lg hover:shadow-2xl transition-all group">
+        <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-red-100 shadow-lg hover:shadow-2xl transition-all group">
           <div className="flex items-center gap-4 mb-10">
-            <div className="w-16 h-16 bg-red-500 rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
+            <div className="w-16 h-16 bg-red-500 rounded-2xl md:rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
               <Compass className="w-8 h-8" />
             </div>
             <div>
@@ -81,7 +81,7 @@ export const FireExplanation: React.FC<Props> = ({ onAction }) => (
             ))}
           </div>
 
-          <div className="mt-8 p-6 bg-red-50 rounded-3xl border border-red-100">
+          <div className="mt-8 p-5 md:p-6 bg-red-50 rounded-3xl border border-red-100">
             <p className="text-red-700 font-black text-xs mb-1">⚠️ 아파트 단체보험의 맹점</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
               관리비에 포함된 단체 화재보험은 보장 금액이 시세보다 매우 낮게 설정(건물 평당 100~200만 원 선)되어 있어 전소 시 원상복구가 불가능합니다. 또한 가재도구와 이웃집 배상 한도가 턱없이 적으므로, 개인 화재보험을 1만 원 내외로 보완 가입해 두는 것이 일반적입니다.
@@ -90,14 +90,14 @@ export const FireExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         {/* GUIDE 02: 급배수시설누출손해 */}
-        <div className="bg-slate-900 rounded-[4rem] p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
-          <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
             <Flame className="w-56 h-56 text-red-500" />
           </div>
 
           <div className="relative z-10">
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-16 h-16 bg-red-500 rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
+              <div className="w-16 h-16 bg-red-500 rounded-2xl md:rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
                 <ShieldCheck className="w-8 h-8" />
               </div>
               <div>
@@ -107,7 +107,7 @@ export const FireExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
 
             <div className="space-y-6">
-              <div className="p-6 bg-white/10 rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
+              <div className="p-5 md:p-6 bg-white/10 rounded-2xl md:rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
                 <p className="font-black text-red-300 mb-2 flex items-center gap-2">
                   💧 급배수누출 특약 (우리집 도배/장판 피해 복구)
                 </p>
@@ -116,7 +116,7 @@ export const FireExplanation: React.FC<Props> = ({ onAction }) => (
                 </p>
               </div>
 
-              <div className="p-6 bg-red-500/20 rounded-[2.5rem] border border-red-400/30 hover:bg-red-500/30 transition-colors">
+              <div className="p-5 md:p-6 bg-red-500/20 rounded-2xl md:rounded-[2.5rem] border border-red-400/30 hover:bg-red-500/30 transition-colors">
                 <p className="font-black text-red-300 mb-2 flex items-center gap-2">
                   🤝 일상생활배상책임 (이웃집 피해 배상 복구)
                 </p>
@@ -127,7 +127,7 @@ export const FireExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
           </div>
 
-          <div className="relative z-10 mt-8 p-6 bg-white/5 rounded-3xl border border-white/10">
+          <div className="relative z-10 mt-8 p-5 md:p-6 bg-white/5 rounded-3xl border border-white/10">
             <p className="text-red-400 font-black text-xs mb-1 uppercase tracking-widest">💡 누수 보장 가입 시 핵심 확인 팁</p>
             <p className="text-white font-bold text-xs leading-relaxed opacity-80">
               "급배수시설누출손해 특약은 아파트나 공동주택 연식에 따라 가입 조건이 다릅니다. 건물이 20년 이상 노후되었을 경우 보험사에서 급배수 특약 가입을 인수 거절하거나 본인부담금을 높게 책정하므로, 건물 연식이 더 오래되기 전에 미리 가입해 두는 것이 중요합니다."
@@ -137,8 +137,8 @@ export const FireExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 트렌드: 가전제품 고장수리 및 도난 ── */}
-      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-[4rem] p-12 text-white relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
+      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-5 md:p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
           <Sparkles className="w-40 h-40" />
         </div>
         <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
@@ -174,7 +174,7 @@ export const FireExplanation: React.FC<Props> = ({ onAction }) => (
 
       {/* ── 체크리스트 ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-        <div className="md:col-span-2 bg-white border border-red-100 rounded-[4rem] p-12 shadow-sm hover:shadow-xl transition-all">
+        <div className="md:col-span-2 bg-white border border-red-100 rounded-3xl md:rounded-[4rem] p-5 md:p-12 shadow-sm hover:shadow-xl transition-all">
           <h3 className="text-2xl font-black text-slate-900 mb-8 tracking-tight flex items-center gap-3">
             <CheckCircle className="w-6 h-6 text-red-500" /> 주택 화재보험 가입 전 필수 자가진단표
           </h3>
@@ -196,7 +196,7 @@ export const FireExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         <div className="flex flex-col gap-6">
-          <div className="bg-red-500 text-white rounded-[3.5rem] p-10 shadow-xl">
+          <div className="bg-red-500 text-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-xl">
             <h4 className="text-xl font-black mb-4">화재보험 리모델링 5대 원칙</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
               ① 관리비 단체보험 한도 부족 확인 및 보완<br />
@@ -206,7 +206,7 @@ export const FireExplanation: React.FC<Props> = ({ onAction }) => (
               ⑤ 6대 가전제품AS 보장 연동 여부 대조
             </p>
           </div>
-          <div className="bg-white border border-red-100 rounded-[3.5rem] p-10 shadow-sm hover:shadow-xl transition-all">
+          <div className="bg-white border border-red-100 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-sm hover:shadow-xl transition-all">
             <h4 className="text-xl font-black mb-4 flex items-center gap-2">
               <Clock className="text-red-500 w-5 h-5" /> 리모델링 시점
             </h4>
@@ -218,7 +218,7 @@ export const FireExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 주요 상품 종합 비교표 ── */}
-      <div className="mb-20 bg-white rounded-[4rem] p-12 border border-red-100 shadow-sm">
+      <div className="mb-20 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-red-100 shadow-sm">
         <h3 className="text-2xl font-black text-slate-900 mb-10 tracking-tight">
           국내 Top 6 손해보험사 주택화재보험 상품 전수 비교
         </h3>
@@ -231,7 +231,7 @@ export const FireExplanation: React.FC<Props> = ({ onAction }) => (
             { company: 'KB손해보험', product: 'KB 주택화재보험', highlight: '일상생활배상책임 한도 우수, 누수로 인한 아랫집 배상 처리 및 화재 벌금 일괄 보장', badges: ['배상책임 최고한도', '벌금 특약 완비'] },
             { company: '한화손해보험', product: '한화 다이렉트 주택화재보험', highlight: '실속형 최저 보험료 플랜 지원, 필수 특약만 골라 설계하여 월 5~7천원대 가입 지원', badges: ['최저가 플랜 지원', '실속 맞춤 설계'] },
           ].map((item, i) => (
-            <div key={i} className="p-8 bg-red-50/20 rounded-[2.5rem] border border-red-100 hover:border-red-300 hover:shadow-lg transition-all">
+            <div key={i} className="p-5 md:p-8 bg-red-50/20 rounded-2xl md:rounded-[2.5rem] border border-red-100 hover:border-red-300 hover:shadow-lg transition-all">
               <p className="text-xs font-black text-red-600 mb-1">{item.company}</p>
               <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
               <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>

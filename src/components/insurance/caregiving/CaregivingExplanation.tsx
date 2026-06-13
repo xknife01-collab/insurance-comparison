@@ -14,7 +14,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction }) => {
     <div className="mt-16 space-y-24 animate-in fade-in slide-in-from-bottom-8 duration-1000">
       
       {/* ── 1. 프리미엄 HERO 헤더 섹션 ── */}
-      <div className="bg-gradient-to-br from-purple-950 via-slate-900 to-slate-950 rounded-[3rem] p-12 md:p-20 text-center space-y-8 relative overflow-hidden shadow-2xl border border-purple-500/20">
+      <div className="bg-gradient-to-br from-purple-950 via-slate-900 to-slate-950 rounded-3xl md:rounded-[3rem] p-5 md:p-12 md:p-20 text-center space-y-8 relative overflow-hidden shadow-2xl border border-purple-500/20">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-purple-500/10 via-transparent to-transparent opacity-60"></div>
         <div className="absolute -right-16 -top-16 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl"></div>
         <div className="absolute -left-16 -bottom-16 w-64 h-64 bg-violet-500/10 rounded-full blur-3xl"></div>
@@ -69,7 +69,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction }) => {
         ].map((card, idx) => (
           <div 
             key={idx} 
-            className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-[0_15px_35px_-5px_rgba(0,0,0,0.03)] hover:shadow-[0_25px_50px_-10px_rgba(147,51,234,0.08)] transition-all hover:-translate-y-1 duration-300 flex flex-col justify-between space-y-6"
+            className="bg-white rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-gray-100 shadow-[0_15px_35px_-5px_rgba(0,0,0,0.03)] hover:shadow-[0_25px_50px_-10px_rgba(147,51,234,0.08)] transition-all hover:-translate-y-1 duration-300 flex flex-col justify-between space-y-6"
           >
             <div className="space-y-4">
               <div className="flex justify-between items-center">
@@ -88,7 +88,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction }) => {
       </div>
 
       {/* ── 3. GUIDE 01: 지원형 vs 사용형 장단점 완벽 대조 (Tabs/Table/Grids) ── */}
-      <div className="bg-white rounded-[4rem] p-8 md:p-16 border border-gray-100 shadow-xl space-y-12">
+      <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-8 md:p-16 border border-gray-100 shadow-xl space-y-12">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-gray-100">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 bg-purple-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-purple-600/20">
@@ -108,7 +108,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction }) => {
         <div className="grid lg:grid-cols-2 gap-8">
           
           {/* 1. 간병인 지원일당 (파견 서비스 제공형) */}
-          <div className="bg-slate-50 rounded-[2.5rem] p-8 border border-purple-100 flex flex-col justify-between space-y-6">
+          <div className="bg-slate-50 rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-purple-100 flex flex-col justify-between space-y-6">
             <div className="space-y-6">
               <div className="flex justify-between items-center">
                 <h4 className="text-lg font-black text-purple-900 flex items-center gap-2">
@@ -119,7 +119,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction }) => {
               <p className="text-xs text-slate-700 font-bold leading-relaxed">
                 보험금 청구 대신 콜센터로 서비스를 접수하면, 제휴를 맺은 간병 전문 업체 소속의 전문 간병인을 지정 병실로 보내 줍니다.
               </p>
-              <div className="space-y-3 bg-white p-6 rounded-2xl border border-slate-100">
+              <div className="space-y-3 bg-white p-5 md:p-6 rounded-2xl border border-slate-100">
                 <div className="flex justify-between text-xs font-bold text-gray-600">
                   <span>📌 인건비 변동 리스크</span>
                   <span className="text-purple-600 font-black">완전 없음 (보험사가 100% 부담)</span>
@@ -140,7 +140,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction }) => {
           </div>
 
           {/* 2. 간병인 사용일당 (정액 현금 지급형) */}
-          <div className="bg-slate-900 rounded-[2.5rem] p-8 text-white flex flex-col justify-between space-y-6 shadow-xl border border-slate-800">
+          <div className="bg-slate-900 rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 text-white flex flex-col justify-between space-y-6 shadow-xl border border-slate-800">
             <div className="space-y-6">
               <div className="flex justify-between items-center">
                 <h4 className="text-lg font-black text-white flex items-center gap-2">
@@ -151,7 +151,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction }) => {
               <p className="text-xs text-slate-300 font-bold leading-relaxed">
                 가입자가 아파트 간병인 플랫폼, 간병 협회 등을 통해 직접 구인을 진행한 후, 결제 영수증이나 확인서를 제출하여 약정 일당을 청구합니다.
               </p>
-              <div className="space-y-3 bg-white/5 p-6 rounded-2xl border border-white/10">
+              <div className="space-y-3 bg-white/5 p-5 md:p-6 rounded-2xl border border-white/10">
                 <div className="flex justify-between text-xs font-bold text-slate-300">
                   <span>📌 인건비 변동 리스크</span>
                   <span className="text-red-400 font-black">있음 (미래 일당 단가 초과 시 자부담 발생)</span>
@@ -174,7 +174,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction }) => {
         </div>
 
         {/* 체증형 가입 필수 강조 */}
-        <div className="bg-gradient-to-br from-purple-50 to-violet-100/50 rounded-[3rem] p-8 md:p-12 border border-purple-100 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="bg-gradient-to-br from-purple-50 to-violet-100/50 rounded-3xl md:rounded-[3rem] p-5 md:p-8 md:p-12 border border-purple-100 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="space-y-2">
             <h4 className="text-lg font-black text-purple-900 flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-purple-600 animate-pulse" /> 화폐 가치 하락과 물가 폭등을 이기는 '체증형 간병 사용일당'
@@ -194,8 +194,8 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction }) => {
       <div className="grid lg:grid-cols-2 gap-8">
         
         {/* 치매 임상평가 (CDR 척도) */}
-        <div className="bg-slate-900 rounded-[3.5rem] p-10 md:p-14 text-white shadow-2xl relative overflow-hidden flex flex-col justify-between space-y-10 border border-slate-800">
-          <div className="absolute top-0 right-0 p-12 opacity-5 rotate-12 pointer-events-none">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 md:p-14 text-white shadow-2xl relative overflow-hidden flex flex-col justify-between space-y-10 border border-slate-800">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 rotate-12 pointer-events-none">
             <ShieldCheck size={260} className="text-white" />
           </div>
           
@@ -233,7 +233,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction }) => {
         </div>
 
         {/* 국민건강보험공단 장기요양등급 연계 */}
-        <div className="bg-white rounded-[3.5rem] p-10 md:p-14 border border-gray-100 shadow-xl flex flex-col justify-between space-y-8">
+        <div className="bg-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 md:p-14 border border-gray-100 shadow-xl flex flex-col justify-between space-y-8">
           <div className="space-y-6">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-purple-50 rounded-2xl flex items-center justify-center text-purple-600">
@@ -249,7 +249,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction }) => {
               만 65세 이상 노인성 질환(뇌혈관, 치매, 파킨슨 등)으로 누워 지내게 되면, 국민건강보험공단에서 일상생활 자립도를 평가하여 1등급~5등급의 판정을 내립니다. 이와 결합하여 **'국가 장기요양 판정비 및 매월 재가/시설급여 보조금'** 특약을 장착하면 노후 실버타운이나 주야간보호센터 방문 비용을 큰 부담 없이 충당할 수 있습니다.
             </p>
 
-            <div className="bg-purple-50/50 p-6 rounded-2xl border border-purple-100 space-y-4">
+            <div className="bg-purple-50/50 p-5 md:p-6 rounded-2xl border border-purple-100 space-y-4">
               <p className="text-sm font-black text-purple-950">💡 장기요양 재가/시설 이용 보장 비교</p>
               <div className="space-y-2 text-[10px] text-gray-600 font-bold">
                 <div className="flex justify-between p-2.5 bg-white rounded-lg border border-purple-100/50">
@@ -267,7 +267,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction }) => {
             </div>
           </div>
 
-          <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100">
+          <div className="p-5 md:p-6 bg-slate-50 rounded-2xl border border-slate-100">
             <p className="text-xs text-purple-600 font-black mb-1">📢 전문가 분석 조언</p>
             <p className="text-[11px] text-gray-600 font-bold leading-relaxed">
               "치매는 가족의 영혼을 갉아먹는 질병이라 불릴 만큼 긴 간병 기간(평균 5~7년)을 보입니다. 진단비 1회 수령 후 끝나는 담보 대신, 재가 요양이나 사설 요양병원 입원 시 매월 평생(또는 10년간) 반복하여 통장에 찍히는 생활자금형 연금식 설계가 가입자 만족도가 높습니다."
@@ -343,7 +343,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction }) => {
           ].map((item, index) => (
             <div 
               key={index} 
-              className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-[0_12px_30px_-5px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_45px_-10px_rgba(147,51,234,0.06)] hover:border-purple-100 transition-all duration-300 flex flex-col justify-between space-y-6"
+              className="bg-white rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-gray-100 shadow-[0_12px_30px_-5px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_45px_-10px_rgba(147,51,234,0.06)] hover:border-purple-100 transition-all duration-300 flex flex-col justify-between space-y-6"
             >
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
@@ -371,7 +371,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction }) => {
       </div>
 
       {/* ── 6. 전문가 실전 간병보험 리모델링 체크리스트 ── */}
-      <div className="bg-slate-50 rounded-[4rem] p-8 md:p-16 border border-slate-100">
+      <div className="bg-slate-50 rounded-3xl md:rounded-[4rem] p-5 md:p-8 md:p-16 border border-slate-100">
         <h4 className="text-xl font-black text-slate-900 mb-8 flex items-center gap-3">
           <HelpCircle className="w-6 h-6 text-purple-600" /> 간병 보험 가입 및 리모델링 실전 4단계 체크리스트
         </h4>
@@ -398,7 +398,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction }) => {
               desc: '중증 치매(CDR 3점)만 보장하는 레거시 보험은 혜택을 받기 극도로 어렵습니다. 경도 치매(CDR 1점)부터 진단비가 분할 지급되고, 국가 장기요양 1~5등급 판정 시 재가방문 요양 혜택이 탑재되었는지 확인하세요.'
             }
           ].map((item, idx) => (
-            <div key={idx} className="bg-white p-8 rounded-3xl border border-slate-100 flex gap-6">
+            <div key={idx} className="bg-white p-5 md:p-8 rounded-3xl border border-slate-100 flex gap-6">
               <span className="text-3xl font-black text-purple-100 leading-none">{item.step}</span>
               <div className="space-y-2">
                 <h5 className="text-base font-black text-slate-900">{item.title}</h5>
@@ -410,8 +410,8 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction }) => {
       </div>
 
       {/* ── 7. 하단 CALL TO ACTION (CTA) 연동 블록 ── */}
-      <div className="bg-gradient-to-br from-purple-900 to-purple-950 rounded-[3rem] p-8 md:p-12 text-center text-white relative overflow-hidden shadow-xl border border-purple-500/20">
-        <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
+      <div className="bg-gradient-to-br from-purple-900 to-purple-950 rounded-3xl md:rounded-[3rem] p-5 md:p-8 md:p-12 text-center text-white relative overflow-hidden shadow-xl border border-purple-500/20">
+        <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 pointer-events-none">
           <Sparkles size={160} />
         </div>
         <div className="relative z-10 space-y-6 max-w-2xl mx-auto">

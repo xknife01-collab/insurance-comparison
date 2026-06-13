@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const CarExplanation: React.FC<Props> = ({ onAction }) => (
-  <section className="py-24 bg-blue-50/10 px-4 relative overflow-hidden" id="car-detail">
+  <section className="py-24 bg-blue-50/10 px-2 sm:px-4 relative overflow-hidden" id="car-detail">
     <div className="max-w-7xl mx-auto">
 
       {/* ── 헤더 ── */}
@@ -40,7 +40,7 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
           { num: '자동차상해', label: '치료비 전액 + 위자료 + 휴업손해', sub: '자기신체사고 대비 압도적 한도 보장' },
           { num: '5대 추가특약', label: '마일리지, 안전점수 등 연동', sub: '최대 40% 이상 연간 할인 환급 가능' },
         ].map((s, i) => (
-          <div key={i} className="bg-white border border-blue-100 rounded-[3rem] p-8 text-center shadow-sm hover:shadow-xl hover:border-blue-200 transition-all group">
+          <div key={i} className="bg-white border border-blue-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-blue-200 transition-all group">
             <p className="text-2xl font-black text-blue-600 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
             <p className="font-black text-slate-800 text-sm leading-tight mb-1">{s.label}</p>
             <p className="text-[11px] text-slate-400 font-bold">{s.sub}</p>
@@ -52,9 +52,9 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
 
         {/* GUIDE 01: 필수 핵심 담보 가이드 */}
-        <div className="bg-white rounded-[4rem] p-12 border border-blue-100 shadow-lg hover:shadow-2xl transition-all group">
+        <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-blue-100 shadow-lg hover:shadow-2xl transition-all group">
           <div className="flex items-center gap-4 mb-10">
-            <div className="w-16 h-16 bg-blue-600 rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
+            <div className="w-16 h-16 bg-blue-600 rounded-2xl md:rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
               <Compass className="w-8 h-8" />
             </div>
             <div>
@@ -85,7 +85,7 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
             ))}
           </div>
 
-          <div className="mt-8 p-6 bg-blue-50 rounded-3xl border border-blue-100">
+          <div className="mt-8 p-5 md:p-6 bg-blue-50 rounded-3xl border border-blue-100">
             <p className="text-blue-700 font-black text-xs mb-1">⚠️ 자상(자동차상해) 가입 시 필수 체크</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
               자기신체사고(자손) 대비 연 보험료는 단 <span className="text-blue-600 font-black">2~3만 원 차이</span>에 불과하지만, 큰 사고 시 본인 부담 병원비를 수천만 원 아낄 수 있는 실질적인 생존 보장 담보입니다.
@@ -94,14 +94,14 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         {/* GUIDE 02: 보험료 절감 5대 추가 특약 전략 */}
-        <div className="bg-slate-900 rounded-[4rem] p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
-          <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
             <Calculator className="w-56 h-56" />
           </div>
 
           <div className="relative z-10">
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-16 h-16 bg-blue-600 rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
+              <div className="w-16 h-16 bg-blue-600 rounded-2xl md:rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
                 <ShieldCheck className="w-8 h-8" />
               </div>
               <div>
@@ -112,7 +112,7 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
 
             <div className="space-y-6">
               {/* 특약 1 */}
-              <div className="p-6 bg-white/10 rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
+              <div className="p-5 md:p-6 bg-white/10 rounded-2xl md:rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
                 <p className="font-black text-blue-300 mb-2 flex items-center gap-2">
                   <Clock className="w-4 h-4" /> 주행거리 마일리지 & 안전운전 점수 특약
                 </p>
@@ -122,7 +122,7 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
               </div>
 
               {/* 특약 2 */}
-              <div className="p-6 bg-blue-500/20 rounded-[2.5rem] border border-blue-400/30 hover:bg-blue-500/30 transition-colors">
+              <div className="p-5 md:p-6 bg-blue-500/20 rounded-2xl md:rounded-[2.5rem] border border-blue-400/30 hover:bg-blue-500/30 transition-colors">
                 <p className="font-black text-blue-300 mb-2 flex items-center gap-2">
                   <Activity className="w-4 h-4" /> 첨단안전장치 & 커넥티드카 연동 할인
                 </p>
@@ -143,7 +143,7 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
           </div>
 
-          <div className="relative z-10 mt-8 p-6 bg-white/5 rounded-3xl border border-white/10">
+          <div className="relative z-10 mt-8 p-5 md:p-6 bg-white/5 rounded-3xl border border-white/10">
             <p className="text-blue-400 font-black text-xs mb-1 uppercase tracking-widest">💡 전문가 꿀팁</p>
             <p className="text-white font-bold text-xs leading-relaxed opacity-80">
               "블랙박스 할인 특약이나 커넥티드카 할인은 가입 시 사진 1장 등록이나 순정 앱 연동만으로 즉시 보험료가 차감되므로, 설계 시 빠뜨리지 않고 100% 챙겨가는 것이 현명한 맞춤 설계의 기초입니다."
@@ -153,8 +153,8 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 트렌드 ── */}
-      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-[4rem] p-12 text-white relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
+      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-5 md:p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
           <Sparkles className="w-40 h-40" />
         </div>
         <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
@@ -190,7 +190,7 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
 
       {/* ── 체크리스트 ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-        <div className="md:col-span-2 bg-white border border-blue-100 rounded-[4rem] p-12 shadow-sm hover:shadow-xl transition-all">
+        <div className="md:col-span-2 bg-white border border-blue-100 rounded-3xl md:rounded-[4rem] p-5 md:p-12 shadow-sm hover:shadow-xl transition-all">
           <h3 className="text-2xl font-black text-slate-900 mb-8 tracking-tight flex items-center gap-3">
             <UserCheck className="w-6 h-6 text-blue-500" /> 자격 및 담보 안심 체크리스트
           </h3>
@@ -212,7 +212,7 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         <div className="flex flex-col gap-6">
-          <div className="bg-blue-600 text-white rounded-[3.5rem] p-10 shadow-xl">
+          <div className="bg-blue-600 text-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-xl">
             <h4 className="text-xl font-black mb-4">자차 보장 핵심 TOP 5</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
               ① KIDI 요율 차종별 감가율 차등 적용<br />
@@ -222,7 +222,7 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
               ⑤ 무보험차상해 가입 (타인 무보험 뺑소니 대비)
             </p>
           </div>
-          <div className="bg-white border border-blue-100 rounded-[3.5rem] p-10 shadow-sm hover:shadow-xl transition-all">
+          <div className="bg-white border border-blue-100 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-sm hover:shadow-xl transition-all">
             <h4 className="text-xl font-black mb-4 flex items-center gap-2">
               <Clock className="text-blue-500 w-5 h-5" /> 선천/노후 차 감가 예방
             </h4>
@@ -234,7 +234,7 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 주요 상품 종합 비교표 ── */}
-      <div className="mb-20 bg-white rounded-[4rem] p-12 border border-blue-100 shadow-sm">
+      <div className="mb-20 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-blue-100 shadow-sm">
         <h3 className="text-2xl font-black text-slate-900 mb-10 tracking-tight">
           국내 Top 6 자동차/자차보험 상품 경쟁력 전수 비교
         </h3>
@@ -247,7 +247,7 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
             { company: '메리츠화재', product: '메리츠 자동차보험', highlight: '주행거리 마일리지 환급 구간 설계가 합리적', badges: ['단거리 최적화', '마일리지 우수'] },
             { company: '한화손해보험', product: '한화 자동차보험', highlight: '연간 운행이 극단적으로 적은 유저를 위한 가성비', badges: ['초실속 요율', '실속형 마일리지'] },
           ].map((item, i) => (
-            <div key={i} className="p-8 bg-blue-50/20 rounded-[2.5rem] border border-blue-100 hover:border-blue-300 hover:shadow-lg transition-all">
+            <div key={i} className="p-5 md:p-8 bg-blue-50/20 rounded-2xl md:rounded-[2.5rem] border border-blue-100 hover:border-blue-300 hover:shadow-lg transition-all">
               <p className="text-xs font-black text-blue-600 mb-1">{item.company}</p>
               <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
               <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>

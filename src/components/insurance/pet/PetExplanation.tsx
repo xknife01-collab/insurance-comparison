@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const PetExplanation: React.FC<Props> = ({ onAction }) => (
-  <section className="py-24 bg-orange-50/10 px-4 relative overflow-hidden" id="pet-detail">
+  <section className="py-24 bg-orange-50/10 px-2 sm:px-4 relative overflow-hidden" id="pet-detail">
     <div className="max-w-7xl mx-auto">
 
       {/* ── 헤더 ── */}
@@ -40,7 +40,7 @@ export const PetExplanation: React.FC<Props> = ({ onAction }) => (
           { num: '보장 비율 선택', label: '50%부터 최대 90% 보상', sub: '자기부담금 1만~10만 원 설계 매칭' },
           { num: '실손 의료비 청구', label: '통원/입원 일당 15~30만', sub: '수술 회당 최대 200~250만 원 보장' },
         ].map((s, i) => (
-          <div key={i} className="bg-white border border-orange-100 rounded-[3rem] p-8 text-center shadow-sm hover:shadow-xl hover:border-orange-200 transition-all group">
+          <div key={i} className="bg-white border border-orange-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-orange-200 transition-all group">
             <p className="text-2xl font-black text-orange-500 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
             <p className="font-black text-slate-800 text-sm leading-tight mb-1">{s.label}</p>
             <p className="text-[11px] text-slate-400 font-bold">{s.sub}</p>
@@ -52,9 +52,9 @@ export const PetExplanation: React.FC<Props> = ({ onAction }) => (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
 
         {/* GUIDE 01: 필수 핵심 3대 질환 가이드 */}
-        <div className="bg-white rounded-[4rem] p-12 border border-orange-100 shadow-lg hover:shadow-2xl transition-all group">
+        <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-orange-100 shadow-lg hover:shadow-2xl transition-all group">
           <div className="flex items-center gap-4 mb-10">
-            <div className="w-16 h-16 bg-orange-500 rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
+            <div className="w-16 h-16 bg-orange-500 rounded-2xl md:rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
               <Compass className="w-8 h-8" />
             </div>
             <div>
@@ -85,7 +85,7 @@ export const PetExplanation: React.FC<Props> = ({ onAction }) => (
             ))}
           </div>
 
-          <div className="mt-8 p-6 bg-orange-50 rounded-3xl border border-orange-100">
+          <div className="mt-8 p-5 md:p-6 bg-orange-50 rounded-3xl border border-orange-100">
             <p className="text-orange-700 font-black text-xs mb-1">⚠️ 가입 전 주의사항 (대기기간)</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
               펫보험은 가입 즉시 효력이 발생하는 상해 치료와 달리, **질병 보장은 30일**, **슬개골 등 특정 관절 질환은 1년(또는 6개월)**의 면책 대기기간이 적용되므로 건강할 때 미리 가입해두는 것이 가장 유리합니다.
@@ -94,14 +94,14 @@ export const PetExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         {/* GUIDE 02: 반려 실손 vs 사람 실손 비교 */}
-        <div className="bg-slate-900 rounded-[4rem] p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
-          <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
             <Heart className="w-56 h-56 text-orange-500" />
           </div>
 
           <div className="relative z-10">
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-16 h-16 bg-orange-500 rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
+              <div className="w-16 h-16 bg-orange-500 rounded-2xl md:rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
                 <Activity className="w-8 h-8" />
               </div>
               <div>
@@ -111,7 +111,7 @@ export const PetExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
 
             <div className="space-y-6">
-              <div className="p-6 bg-white/10 rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
+              <div className="p-5 md:p-6 bg-white/10 rounded-2xl md:rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
                 <p className="font-black text-orange-300 mb-2 flex items-center gap-2">
                   🐾 비급여 100% 동물병원 의료비
                 </p>
@@ -120,7 +120,7 @@ export const PetExplanation: React.FC<Props> = ({ onAction }) => (
                 </p>
               </div>
 
-              <div className="p-6 bg-orange-500/20 rounded-[2.5rem] border border-orange-400/30 hover:bg-orange-500/30 transition-colors">
+              <div className="p-5 md:p-6 bg-orange-500/20 rounded-2xl md:rounded-[2.5rem] border border-orange-400/30 hover:bg-orange-500/30 transition-colors">
                 <p className="font-black text-orange-300 mb-2 flex items-center gap-2">
                   🛡️ 펫 실손보험 (보장률 50~90% 매칭)
                 </p>
@@ -131,7 +131,7 @@ export const PetExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
           </div>
 
-          <div className="relative z-10 mt-8 p-6 bg-white/5 rounded-3xl border border-white/10">
+          <div className="relative z-10 mt-8 p-5 md:p-6 bg-white/5 rounded-3xl border border-white/10">
             <p className="text-orange-400 font-black text-xs mb-1 uppercase tracking-widest">💡 품종별 요율 설계 팁</p>
             <p className="text-white font-bold text-xs leading-relaxed opacity-80">
               "견종/묘종별로 취약한 유전 질환 요율이 각 보험사마다 상이합니다. 말티즈, 푸들, 포메라니안 등 우리나라 인기 견종일수록 슬개골 보장이 튼튼하고 갱신 시 인상 폭이 적은 상품을 비교 매칭받으셔야 합니다."
@@ -141,8 +141,8 @@ export const PetExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 트렌드: 동물등록제 및 간편 청구 ── */}
-      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-[4rem] p-12 text-white relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
+      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-5 md:p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
           <Sparkles className="w-40 h-40" />
         </div>
         <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
@@ -178,7 +178,7 @@ export const PetExplanation: React.FC<Props> = ({ onAction }) => (
 
       {/* ── 체크리스트 ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-        <div className="md:col-span-2 bg-white border border-orange-100 rounded-[4rem] p-12 shadow-sm hover:shadow-xl transition-all">
+        <div className="md:col-span-2 bg-white border border-orange-100 rounded-3xl md:rounded-[4rem] p-5 md:p-12 shadow-sm hover:shadow-xl transition-all">
           <h3 className="text-2xl font-black text-slate-900 mb-8 tracking-tight flex items-center gap-3">
             <CheckCircle className="w-6 h-6 text-orange-500" /> 합리적 펫보험 스마트 가입 체크리스트
           </h3>
@@ -200,7 +200,7 @@ export const PetExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         <div className="flex flex-col gap-6">
-          <div className="bg-orange-500 text-white rounded-[3.5rem] p-10 shadow-xl">
+          <div className="bg-orange-500 text-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-xl">
             <h4 className="text-xl font-black mb-4">펫보험 리모델링 핵심 TOP 5</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
               ① 동물등록 완료 후 즉시 2~5% 할인 적용<br />
@@ -210,7 +210,7 @@ export const PetExplanation: React.FC<Props> = ({ onAction }) => (
               ⑤ 갱신 주기 최대 연장으로 연간 인상 최소화
             </p>
           </div>
-          <div className="bg-white border border-orange-100 rounded-[3.5rem] p-10 shadow-sm hover:shadow-xl transition-all">
+          <div className="bg-white border border-orange-100 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-sm hover:shadow-xl transition-all">
             <h4 className="text-xl font-black mb-4 flex items-center gap-2">
               <Clock className="text-orange-500 w-5 h-5" /> 가입 최적 연령대
             </h4>
@@ -222,7 +222,7 @@ export const PetExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 주요 상품 종합 비교표 ── */}
-      <div className="mb-20 bg-white rounded-[4rem] p-12 border border-orange-100 shadow-sm">
+      <div className="mb-20 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-orange-100 shadow-sm">
         <h3 className="text-2xl font-black text-slate-900 mb-10 tracking-tight">
           국내 Top 6 보험사 펫실손의료비보험 상품 경쟁력 전수 비교
         </h3>
@@ -235,7 +235,7 @@ export const PetExplanation: React.FC<Props> = ({ onAction }) => (
             { company: 'DB손해보험', product: '아이러브펫블리', highlight: '높은 수술비 및 MRI/CT 정밀 진단비 특약 보장, 대형견 요율 테이블 경쟁력', badges: ['MRI 특약', '대형견 요율 강점'] },
             { company: '한화손해보험', product: '펫투게더 플러스', highlight: '실속형 50% 보장 플랜 지원으로 보험료 다이어트 최적화, 슬개골 탈구 보장 완비', badges: ['실속 플랜 지원', '최저 요율 매칭'] },
           ].map((item, i) => (
-            <div key={i} className="p-8 bg-orange-50/20 rounded-[2.5rem] border border-orange-100 hover:border-orange-300 hover:shadow-lg transition-all">
+            <div key={i} className="p-5 md:p-8 bg-orange-50/20 rounded-2xl md:rounded-[2.5rem] border border-orange-100 hover:border-orange-300 hover:shadow-lg transition-all">
               <p className="text-xs font-black text-orange-600 mb-1">{item.company}</p>
               <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
               <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>

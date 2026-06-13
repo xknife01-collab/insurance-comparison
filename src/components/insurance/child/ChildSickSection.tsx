@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 
 export const ChildSickSection = ({ onAction }: { onAction: () => void }) => (
-  <section className="py-32 bg-blue-50/20 px-4 relative overflow-hidden" id="child-sick-detail">
+  <section className="py-32 bg-blue-50/20 px-2 sm:px-4 relative overflow-hidden" id="child-sick-detail">
     <div className="max-w-7xl mx-auto">
 
       {/* ── 헤더 ── */}
@@ -37,7 +37,7 @@ export const ChildSickSection = ({ onAction }: { onAction: () => void }) => (
           { num: '5대 질환', label: '대표 유병 어린이 타겟', sub: 'ADHD·발달지연·성조숙증·천식·골절' },
           { num: '100%', label: '3대 진단비 동일 적용', sub: '암 5천만·뇌·심 각 3천만 한도 동일' },
         ].map((s, i) => (
-          <div key={i} className="bg-white border border-blue-100 rounded-[3rem] p-8 text-center shadow-sm hover:shadow-xl hover:border-blue-200 transition-all group">
+          <div key={i} className="bg-white border border-blue-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-blue-200 transition-all group">
             <p className="text-3xl font-black text-blue-600 mb-2 group-hover:scale-110 transition-transform inline-block">{s.num}</p>
             <p className="font-black text-slate-800 text-sm leading-tight mb-1">{s.label}</p>
             <p className="text-[11px] text-slate-400 font-bold">{s.sub}</p>
@@ -49,9 +49,9 @@ export const ChildSickSection = ({ onAction }: { onAction: () => void }) => (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
 
         {/* 간편고지 설명 */}
-        <div className="bg-white rounded-[4rem] p-12 border border-blue-100 shadow-lg hover:shadow-2xl transition-all group">
+        <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-blue-100 shadow-lg hover:shadow-2xl transition-all group">
           <div className="flex items-center gap-4 mb-10">
-            <div className="w-16 h-16 bg-blue-500 rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
+            <div className="w-16 h-16 bg-blue-500 rounded-2xl md:rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
               <Stethoscope className="w-8 h-8" />
             </div>
             <div>
@@ -82,7 +82,7 @@ export const ChildSickSection = ({ onAction }: { onAction: () => void }) => (
             ))}
           </div>
 
-          <div className="mt-8 p-6 bg-blue-50 rounded-3xl border border-blue-100">
+          <div className="mt-8 p-5 md:p-6 bg-blue-50 rounded-3xl border border-blue-100">
             <p className="text-blue-700 font-black text-xs mb-1">💡 핵심 포인트</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
               ADHD 약을 매일 먹어도, 발달치료를 주 3회 받아도 — <span className="text-blue-600 font-black">최근 3개월 내 입원·수술이 없으면</span> 3가지 질문을 모두 통과할 수 있습니다.
@@ -91,14 +91,14 @@ export const ChildSickSection = ({ onAction }: { onAction: () => void }) => (
         </div>
 
         {/* 3-N-5 등급 설명 */}
-        <div className="bg-slate-900 rounded-[4rem] p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
-          <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
             <Activity className="w-56 h-56" />
           </div>
 
           <div className="relative z-10">
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-16 h-16 bg-blue-500 rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
+              <div className="w-16 h-16 bg-blue-500 rounded-2xl md:rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
                 <ShieldCheck className="w-8 h-8" />
               </div>
               <div>
@@ -125,7 +125,7 @@ export const ChildSickSection = ({ onAction }: { onAction: () => void }) => (
             </div>
           </div>
 
-          <div className="relative z-10 mt-8 p-6 bg-white/5 rounded-3xl border border-white/10">
+          <div className="relative z-10 mt-8 p-5 md:p-6 bg-white/5 rounded-3xl border border-white/10">
             <p className="text-blue-400 font-black text-xs mb-1 uppercase tracking-widest">⚡ 무사고 전환 전략</p>
             <p className="text-white font-bold text-xs leading-relaxed opacity-80">
               처음에는 3.2.5로 가입 후, 2년 무사고 달성 시 3.5.5 전환권을 행사하면 보험료를 최대 20% 추가 절감할 수 있습니다.
@@ -135,7 +135,7 @@ export const ChildSickSection = ({ onAction }: { onAction: () => void }) => (
       </div>
 
       {/* ── 5대 유병 질환별 맞춤 전략 ── */}
-      <div className="mb-16 bg-white rounded-[4rem] p-12 border border-blue-100 shadow-sm">
+      <div className="mb-16 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-blue-100 shadow-sm">
         <h3 className="text-2xl font-black text-slate-900 mb-2 tracking-tight flex items-center gap-3">
           <Zap className="w-6 h-6 text-blue-500" /> 유병 질환별 맞춤 가입 전략
         </h3>
@@ -198,7 +198,7 @@ export const ChildSickSection = ({ onAction }: { onAction: () => void }) => (
               badgeColor: 'bg-green-100 text-green-700',
             },
           ].map((item, i) => (
-            <div key={i} className={`p-8 rounded-[2.5rem] border ${item.color} hover:shadow-lg transition-all`}>
+            <div key={i} className={`p-5 md:p-8 rounded-2xl md:rounded-[2.5rem] border ${item.color} hover:shadow-lg transition-all`}>
               <div className="text-3xl mb-4">{item.icon}</div>
               <p className={`text-[10px] font-black px-3 py-1 rounded-full inline-block mb-3 ${item.badgeColor}`}>{item.illness}</p>
               <div className="space-y-3">
@@ -221,8 +221,8 @@ export const ChildSickSection = ({ onAction }: { onAction: () => void }) => (
       </div>
 
       {/* ── 보험사 간편 어린이보험 비교표 ── */}
-      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-[4rem] p-12 text-white relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
+      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-5 md:p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
           <Star className="w-40 h-40" />
         </div>
         <div className="relative z-10">
@@ -262,7 +262,7 @@ export const ChildSickSection = ({ onAction }: { onAction: () => void }) => (
                 note: '처음엔 저렴한 간편 플랜으로 가입 후 나중에 표준 전환',
               },
             ].map((item, i) => (
-              <div key={i} className="flex flex-col md:flex-row items-start md:items-center justify-between p-6 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors gap-4">
+              <div key={i} className="flex flex-col md:flex-row items-start md:items-center justify-between p-5 md:p-6 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors gap-4">
                 <div className="flex-1">
                   <p className="font-black text-base">
                     {item.company}{' '}
@@ -286,7 +286,7 @@ export const ChildSickSection = ({ onAction }: { onAction: () => void }) => (
 
       {/* ── 체크리스트 + 주의사항 ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-        <div className="md:col-span-2 bg-white border border-blue-100 rounded-[4rem] p-12 shadow-sm hover:shadow-xl transition-all">
+        <div className="md:col-span-2 bg-white border border-blue-100 rounded-3xl md:rounded-[4rem] p-5 md:p-12 shadow-sm hover:shadow-xl transition-all">
           <h3 className="text-2xl font-black text-slate-900 mb-8 tracking-tight flex items-center gap-3">
             <UserCheck className="w-6 h-6 text-blue-500" /> 유병자 어린이보험 가입 전 체크리스트
           </h3>
@@ -309,7 +309,7 @@ export const ChildSickSection = ({ onAction }: { onAction: () => void }) => (
         </div>
 
         <div className="flex flex-col gap-6">
-          <div className="bg-blue-500 text-white rounded-[3.5rem] p-10 shadow-xl">
+          <div className="bg-blue-500 text-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-xl">
             <h4 className="text-xl font-black mb-4">유병 어린이 보장 핵심 TOP 5</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
               ① 일반암 진단비 5천만 (감액 없이)<br />
@@ -319,7 +319,7 @@ export const ChildSickSection = ({ onAction }: { onAction: () => void }) => (
               ⑤ 무사고 시 자동 할인 계약 전환권
             </p>
           </div>
-          <div className="bg-white border border-blue-100 rounded-[3.5rem] p-10 shadow-sm hover:shadow-xl transition-all">
+          <div className="bg-white border border-blue-100 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-sm hover:shadow-xl transition-all">
             <h4 className="text-xl font-black mb-4 flex items-center gap-2">
               <AlertTriangle className="text-rose-500 w-5 h-5" /> 반드시 피해야 할 함정
             </h4>

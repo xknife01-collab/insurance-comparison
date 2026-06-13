@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const PropertyExplanation: React.FC<Props> = ({ onAction }) => (
-  <section className="py-24 bg-orange-50/10 px-4 relative overflow-hidden" id="property-detail">
+  <section className="py-24 bg-orange-50/10 px-2 sm:px-4 relative overflow-hidden" id="property-detail">
     <div className="max-w-7xl mx-auto">
 
       {/* ── 헤더 ── */}
@@ -39,7 +39,7 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction }) => (
           { num: '의무 배상책임', label: '다중이용업소 화재/재난 의무', sub: '미가입 시 과태료 발생 대상 항목 완벽 매칭' },
           { num: '점포 휴업손해', label: '화재 복구 기간 임대료 지원', sub: '영업중단 손실액 매일 정액 보상' },
         ].map((s, i) => (
-          <div key={i} className="bg-white border border-orange-100 rounded-[3rem] p-8 text-center shadow-sm hover:shadow-xl hover:border-orange-200 transition-all group">
+          <div key={i} className="bg-white border border-orange-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-orange-200 transition-all group">
             <p className="text-2xl font-black text-orange-500 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
             <p className="font-black text-slate-800 text-sm leading-tight mb-1">{s.label}</p>
             <p className="text-[11px] text-slate-400 font-bold">{s.sub}</p>
@@ -51,9 +51,9 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction }) => (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
 
         {/* GUIDE 01: 필수 핵심 3대 질환 가이드 */}
-        <div className="bg-white rounded-[4rem] p-12 border border-orange-100 shadow-lg hover:shadow-2xl transition-all group">
+        <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-orange-100 shadow-lg hover:shadow-2xl transition-all group">
           <div className="flex items-center gap-4 mb-10">
-            <div className="w-16 h-16 bg-orange-500 rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
+            <div className="w-16 h-16 bg-orange-500 rounded-2xl md:rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
               <Compass className="w-8 h-8" />
             </div>
             <div>
@@ -84,7 +84,7 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction }) => (
             ))}
           </div>
 
-          <div className="mt-8 p-6 bg-orange-50 rounded-3xl border border-orange-100">
+          <div className="mt-8 p-5 md:p-6 bg-orange-50 rounded-3xl border border-orange-100">
             <p className="text-orange-700 font-black text-xs mb-1">⚠️ 비례보상의 함정 주의</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
               만약 5억 원 가치의 상가를 2억 원만 가입(일부보험)했을 경우, 화재 사고 시 실제 발생한 피해의 **40%만 비례 보상**되어 복구 자금이 모자라 파산하는 비극이 발생합니다. 가치 평가 100% 매칭이 핵심입니다.
@@ -93,14 +93,14 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         {/* GUIDE 02: 재물 실손 작동 원리 */}
-        <div className="bg-slate-900 rounded-[4rem] p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
-          <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
             <Building className="w-56 h-56 text-orange-500" />
           </div>
 
           <div className="relative z-10">
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-16 h-16 bg-orange-500 rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
+              <div className="w-16 h-16 bg-orange-500 rounded-2xl md:rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
                 <Activity className="w-8 h-8" />
               </div>
               <div>
@@ -110,7 +110,7 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
 
             <div className="space-y-6">
-              <div className="p-6 bg-white/10 rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
+              <div className="p-5 md:p-6 bg-white/10 rounded-2xl md:rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
                 <p className="font-black text-orange-300 mb-2 flex items-center gap-2">
                   🔥 급배수 누수 및 아래층 침수 보상
                 </p>
@@ -119,7 +119,7 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction }) => (
                 </p>
               </div>
 
-              <div className="p-6 bg-orange-500/20 rounded-[2.5rem] border border-orange-400/30 hover:bg-orange-500/30 transition-colors">
+              <div className="p-5 md:p-6 bg-orange-500/20 rounded-2xl md:rounded-[2.5rem] border border-orange-400/30 hover:bg-orange-500/30 transition-colors">
                 <p className="font-black text-orange-300 mb-2 flex items-center gap-2">
                   🛡️ 대물 배상책임 (화재 확산 위험 대비)
                 </p>
@@ -130,7 +130,7 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
           </div>
 
-          <div className="relative z-10 mt-8 p-6 bg-white/5 rounded-3xl border border-white/10">
+          <div className="relative z-10 mt-8 p-5 md:p-6 bg-white/5 rounded-3xl border border-white/10">
             <p className="text-orange-400 font-black text-xs mb-1 uppercase tracking-widest">💡 소상공인 요율 팁</p>
             <p className="text-white font-bold text-xs leading-relaxed opacity-80">
               "음식점처럼 불을 많이 쓰는 업종은 요율이 높으므로 인덕션 조리 기기 위주 사용 시 고지 적용을 받아 요율을 일부 인하받을 수 있으며, 건물 내 타 고위험 업종(노래방 등)이 입점했는지 확인하여 최적 조정을 받는 것이 좋습니다."
@@ -140,8 +140,8 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 트렌드 ── */}
-      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-[4rem] p-12 text-white relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
+      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-5 md:p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
           <Sparkles className="w-40 h-40" />
         </div>
         <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
@@ -177,7 +177,7 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction }) => (
 
       {/* ── 체크리스트 ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-        <div className="md:col-span-2 bg-white border border-orange-100 rounded-[4rem] p-12 shadow-sm hover:shadow-xl transition-all">
+        <div className="md:col-span-2 bg-white border border-orange-100 rounded-3xl md:rounded-[4rem] p-5 md:p-12 shadow-sm hover:shadow-xl transition-all">
           <h3 className="text-2xl font-black text-slate-900 mb-8 tracking-tight flex items-center gap-3">
             <CheckCircle className="w-6 h-6 text-orange-500" /> 재물종합보험 필수 가입 체크리스트
           </h3>
@@ -199,7 +199,7 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         <div className="flex flex-col gap-6">
-          <div className="bg-orange-500 text-white rounded-[3.5rem] p-10 shadow-xl">
+          <div className="bg-orange-500 text-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-xl">
             <h4 className="text-xl font-black mb-4">재물 리모델링 핵심 5원칙</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
               ① 건물 구조 등급의 실제 현장 일치화<br />
@@ -209,7 +209,7 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction }) => (
               ⑤ 화재 시 임차료 방어를 위한 휴업손해 확보
             </p>
           </div>
-          <div className="bg-white border border-orange-100 rounded-[3.5rem] p-10 shadow-sm hover:shadow-xl transition-all">
+          <div className="bg-white border border-orange-100 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-sm hover:shadow-xl transition-all">
             <h4 className="text-xl font-black mb-4 flex items-center gap-2">
               <Clock className="text-orange-500 w-5 h-5" /> 가입 주기 권장
             </h4>
@@ -221,7 +221,7 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 주요 상품 종합 비교표 ── */}
-      <div className="mb-20 bg-white rounded-[4rem] p-12 border border-orange-100 shadow-sm">
+      <div className="mb-20 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-orange-100 shadow-sm">
         <h3 className="text-2xl font-black text-slate-900 mb-10 tracking-tight">
           국내 대표 6개사 소상공인 재물종합자산보험 경쟁력 비교
         </h3>
@@ -234,7 +234,7 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction }) => (
             { company: 'DB손해보험', product: '참좋은소상공인재물', highlight: '대형 창고 및 복합 소매점 자산 평가 경쟁력, 물류 자산 손실 보장 업계 최대', badges: ['물류창고 우대', '재고자산 실손'] },
             { company: '한화손해보험', product: '세이프투게더재물종합', highlight: '사무실 및 학원 전용 최저 요율 플랜 지원, 초경량 실속 가입 희망 매장에 유리', badges: ['초경량 요율', '학원/사무실 추천'] },
           ].map((item, i) => (
-            <div key={i} className="p-8 bg-orange-50/20 rounded-[2.5rem] border border-orange-100 hover:border-orange-300 hover:shadow-lg transition-all">
+            <div key={i} className="p-5 md:p-8 bg-orange-50/20 rounded-2xl md:rounded-[2.5rem] border border-orange-100 hover:border-orange-300 hover:shadow-lg transition-all">
               <p className="text-xs font-black text-orange-600 mb-1">{item.company}</p>
               <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
               <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>

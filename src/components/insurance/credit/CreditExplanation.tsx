@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const CreditExplanation: React.FC<Props> = ({ onAction }) => (
-  <section className="py-24 bg-blue-50/10 px-4 relative overflow-hidden" id="credit-detail">
+  <section className="py-24 bg-blue-50/10 px-2 sm:px-4 relative overflow-hidden" id="credit-detail">
     <div className="max-w-7xl mx-auto">
 
       {/* ── 헤더 ── */}
@@ -40,7 +40,7 @@ export const CreditExplanation: React.FC<Props> = ({ onAction }) => (
           { num: '대위변제 프로세스', label: '지급처가 가입자 아닌 은행', sub: '중도 횡령 불가, 빚 전액 소거 집중' },
           { num: '연체 리스크 방어', label: '신용도 폭락 예방 안전판', sub: '사망/장해/3대 질병 시 채무 완납' },
         ].map((s, i) => (
-          <div key={i} className="bg-white border border-blue-100 rounded-[3rem] p-8 text-center shadow-sm hover:shadow-xl hover:border-blue-200 transition-all group">
+          <div key={i} className="bg-white border border-blue-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-blue-200 transition-all group">
             <p className="text-2xl font-black text-blue-600 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
             <p className="font-black text-slate-800 text-sm leading-tight mb-1">{s.label}</p>
             <p className="text-[11px] text-slate-400 font-bold">{s.sub}</p>
@@ -52,9 +52,9 @@ export const CreditExplanation: React.FC<Props> = ({ onAction }) => (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
 
         {/* GUIDE 01: 도덕적 해이 및 부정 가입 원천 방어막 */}
-        <div className="bg-white rounded-[4rem] p-12 border border-blue-100 shadow-lg hover:shadow-2xl transition-all group">
+        <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-blue-100 shadow-lg hover:shadow-2xl transition-all group">
           <div className="flex items-center gap-4 mb-10">
-            <div className="w-16 h-16 bg-blue-600 rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
+            <div className="w-16 h-16 bg-blue-600 rounded-2xl md:rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
               <Compass className="w-8 h-8" />
             </div>
             <div>
@@ -84,7 +84,7 @@ export const CreditExplanation: React.FC<Props> = ({ onAction }) => (
             ))}
           </div>
 
-          <div className="mt-8 p-6 bg-blue-50 rounded-3xl border border-blue-100">
+          <div className="mt-8 p-5 md:p-6 bg-blue-50 rounded-3xl border border-blue-100">
             <p className="text-blue-700 font-black text-xs mb-1">⚠️ 가입 심사 및 대기기간 (Underwriting)</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
               이미 걸린 질병이 있는 상태에서 거액의 대출을 일으킨 뒤 가입하는 악용을 방지하기 위해 중대 질병(암 등) 보장 특약은 **가입 후 90일 동안 면책 대기기간**이 적용되며, 심각한 유병 상태의 경우에는 언더라이팅에서 승인이 거절됩니다.
@@ -93,14 +93,14 @@ export const CreditExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         {/* GUIDE 02: 신용보험이 작동하는 3단계 안심 구조 */}
-        <div className="bg-slate-900 rounded-[4rem] p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
-          <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
             <Coins className="w-56 h-56 text-blue-500" />
           </div>
 
           <div className="relative z-10">
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-16 h-16 bg-blue-600 rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
+              <div className="w-16 h-16 bg-blue-600 rounded-2xl md:rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
                 <Activity className="w-8 h-8" />
               </div>
               <div>
@@ -110,7 +110,7 @@ export const CreditExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
 
             <div className="space-y-6">
-              <div className="p-6 bg-white/10 rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
+              <div className="p-5 md:p-6 bg-white/10 rounded-2xl md:rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
                 <p className="font-black text-blue-300 mb-2 flex items-center gap-2">
                   🏦 대위변제를 통한 유가족 빚 대물림 방지
                 </p>
@@ -119,7 +119,7 @@ export const CreditExplanation: React.FC<Props> = ({ onAction }) => (
                 </p>
               </div>
 
-              <div className="p-6 bg-blue-600/20 rounded-[2.5rem] border border-blue-400/30 hover:bg-blue-600/30 transition-colors">
+              <div className="p-5 md:p-6 bg-blue-600/20 rounded-2xl md:rounded-[2.5rem] border border-blue-400/30 hover:bg-blue-600/30 transition-colors">
                 <p className="font-black text-blue-300 mb-2 flex items-center gap-2">
                   🏥 중대 질병 및 고도후유장해 시 채무 상환 대행
                 </p>
@@ -128,7 +128,7 @@ export const CreditExplanation: React.FC<Props> = ({ onAction }) => (
                 </p>
               </div>
 
-              <div className="p-6 bg-white/10 rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
+              <div className="p-5 md:p-6 bg-white/10 rounded-2xl md:rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
                 <p className="font-black text-blue-300 mb-2 flex items-center gap-2">
                   📉 신용생명지수 우량 시 최대 10% 보험료 할인
                 </p>
@@ -139,7 +139,7 @@ export const CreditExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
           </div>
 
-          <div className="relative z-10 mt-8 p-6 bg-white/5 rounded-3xl border border-white/10">
+          <div className="relative z-10 mt-8 p-5 md:p-6 bg-white/5 rounded-3xl border border-white/10">
             <p className="text-blue-400 font-black text-xs mb-1 uppercase tracking-widest">💡 대출자 맞춤 설계 요령</p>
             <p className="text-white font-bold text-xs leading-relaxed opacity-80">
               "주택담보대출처럼 원리금 규모가 크고 상환 기간이 긴 대출을 실행할 때는 단순히 사망 보장뿐만 아니라 **3대 질병 진단 상환 특약**과 **고도장해 보장 특약**을 함께 조립하여 빈틈없는 재무 리스크 방어벽을 세우시는 것이 정석입니다."
@@ -149,8 +149,8 @@ export const CreditExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 트렌드: 핀테크 플랫폼 제어 및 갱신 ── */}
-      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-[4rem] p-12 text-white relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
+      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-5 md:p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
           <Sparkles className="w-40 h-40" />
         </div>
         <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
@@ -186,7 +186,7 @@ export const CreditExplanation: React.FC<Props> = ({ onAction }) => (
 
       {/* ── 체크리스트 ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-        <div className="md:col-span-2 bg-white border border-blue-100 rounded-[4rem] p-12 shadow-sm hover:shadow-xl transition-all">
+        <div className="md:col-span-2 bg-white border border-blue-100 rounded-3xl md:rounded-[4rem] p-5 md:p-12 shadow-sm hover:shadow-xl transition-all">
           <h3 className="text-2xl font-black text-slate-900 mb-8 tracking-tight flex items-center gap-3">
             <CheckCircle className="w-6 h-6 text-blue-600" /> 합리적 신용보험 스마트 설계 체크리스트
           </h3>
@@ -208,7 +208,7 @@ export const CreditExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         <div className="flex flex-col gap-6">
-          <div className="bg-blue-600 text-white rounded-[3.5rem] p-10 shadow-xl">
+          <div className="bg-blue-600 text-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-xl">
             <h4 className="text-xl font-black mb-4">신용보험 가입 핵심 가이드</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
               ① 대출 승인 즉시 가입 시 요율 우대<br />
@@ -218,7 +218,7 @@ export const CreditExplanation: React.FC<Props> = ({ onAction }) => (
               ⑤ 중도 대출 전액 상환 시 해약 및 즉시 환급
             </p>
           </div>
-          <div className="bg-white border border-blue-100 rounded-[3.5rem] p-10 shadow-sm hover:shadow-xl transition-all">
+          <div className="bg-white border border-blue-100 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-sm hover:shadow-xl transition-all">
             <h4 className="text-xl font-black mb-4 flex items-center gap-2">
               <Clock className="text-blue-500 w-5 h-5" /> 가입 최적 시점
             </h4>
@@ -230,7 +230,7 @@ export const CreditExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 주요 상품 종합 비교표 ── */}
-      <div className="mb-20 bg-white rounded-[4rem] p-12 border border-blue-100 shadow-sm">
+      <div className="mb-20 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-blue-100 shadow-sm">
         <h3 className="text-2xl font-black text-slate-900 mb-10 tracking-tight">
           국내 주요 대출안심 신용보험(대출상환보장) 상품 핵심 비교
         </h3>
@@ -240,7 +240,7 @@ export const CreditExplanation: React.FC<Props> = ({ onAction }) => (
             { company: '메트라이프생명', product: '신용대출 상환 정기보험', highlight: '사망 보장에 고도후유장해 상환 특약 집중 결합 가능, 연령층 대비 실속 있는 주계약 사망 설계 지원', badges: ['정기 보장 강점', '고도장해 보장'] },
             { company: 'BNP파리바 카디프생명', product: '대출안심 보장보험 (다이렉트)', highlight: '핀테크 채널(토스 등) 전용 간편 다이렉트 가입 플랜, 0.1초 신용 데이터 연동 및 초간편 즉시 청약 승인', badges: ['모바일 특화', '0.1초 즉시 승인'] },
           ].map((item, i) => (
-            <div key={i} className="p-8 bg-blue-50/20 rounded-[2.5rem] border border-blue-100 hover:border-blue-300 hover:shadow-lg transition-all">
+            <div key={i} className="p-5 md:p-8 bg-blue-50/20 rounded-2xl md:rounded-[2.5rem] border border-blue-100 hover:border-blue-300 hover:shadow-lg transition-all">
               <p className="text-xs font-black text-blue-600 mb-1">{item.company}</p>
               <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
               <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>

@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const AnnuityExplanation: React.FC<Props> = ({ onAction }) => (
-  <section className="py-24 bg-blue-50/10 px-4 relative overflow-hidden text-left" id="annuity-detail">
+  <section className="py-24 bg-blue-50/10 px-2 sm:px-4 relative overflow-hidden text-left" id="annuity-detail">
     <div className="max-w-7xl mx-auto">
 
       {/* ── 헤더 ── */}
@@ -40,7 +40,7 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction }) => (
           { num: '3.3% ~ 5.5%', label: '수령 시 저율 연금소득세', sub: '수령 개시 연령이 늦을수록 세율 인하' },
           { num: '10년 이상 비과세', label: '일반 연금보험 선택 시', sub: '연금 수령 시 발생하는 이자 전액 면제' },
         ].map((s, i) => (
-          <div key={i} className="bg-white border border-blue-100 rounded-[3rem] p-8 text-center shadow-sm hover:shadow-xl hover:border-blue-200 transition-all group">
+          <div key={i} className="bg-white border border-blue-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-blue-200 transition-all group">
             <p className="text-2xl font-black text-blue-600 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
             <p className="font-black text-slate-800 text-sm leading-tight mb-1">{s.label}</p>
             <p className="text-[11px] text-slate-400 font-bold">{s.sub}</p>
@@ -52,9 +52,9 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction }) => (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
 
         {/* GUIDE 01: 필수 체크 3대 세제 혜택 */}
-        <div className="bg-white rounded-[4rem] p-12 border border-blue-100 shadow-lg hover:shadow-2xl transition-all group">
+        <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-blue-100 shadow-lg hover:shadow-2xl transition-all group">
           <div className="flex items-center gap-4 mb-10">
-            <div className="w-16 h-16 bg-blue-600 rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
+            <div className="w-16 h-16 bg-blue-600 rounded-2xl md:rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
               <Compass className="w-8 h-8" />
             </div>
             <div>
@@ -84,7 +84,7 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction }) => (
             ))}
           </div>
 
-          <div className="mt-8 p-6 bg-blue-50 rounded-3xl border border-blue-100">
+          <div className="mt-8 p-5 md:p-6 bg-blue-50 rounded-3xl border border-blue-100">
             <p className="text-blue-700 font-black text-xs mb-1">⚠️ 중도 해지 리스크 안내 (16.5% 기타소득세)</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
               연금저축보험은 중도에 해약하거나 연금 외 형태로 수령할 때, **그동안 공제받은 원금과 이자 전체에 대하여 16.5%의 기타소득세가 일괄 부과**되어 손실을 볼 수 있으므로 은퇴 전까지 해지하지 않을 안전한 예산으로 관리해야 합니다.
@@ -93,14 +93,14 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         {/* GUIDE 02: 연금저축 vs 일반연금 차이 */}
-        <div className="bg-slate-900 rounded-[4rem] p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
-          <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
             <PiggyBank className="w-56 h-56 text-blue-500" />
           </div>
 
           <div className="relative z-10">
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-16 h-16 bg-blue-600 rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
+              <div className="w-16 h-16 bg-blue-600 rounded-2xl md:rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
                 <TrendingUp className="w-8 h-8" />
               </div>
               <div>
@@ -110,7 +110,7 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
 
             <div className="space-y-6">
-              <div className="p-6 bg-white/10 rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
+              <div className="p-5 md:p-6 bg-white/10 rounded-2xl md:rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
                 <p className="font-black text-blue-300 mb-2 flex items-center gap-2">
                   💼 직장인 / 자영업자 (연금저축 권장)
                 </p>
@@ -119,7 +119,7 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction }) => (
                 </p>
               </div>
 
-              <div className="p-6 bg-emerald-950/40 rounded-[2.5rem] border border-emerald-500/20 hover:bg-emerald-950/60 transition-colors">
+              <div className="p-5 md:p-6 bg-emerald-950/40 rounded-2xl md:rounded-[2.5rem] border border-emerald-500/20 hover:bg-emerald-950/60 transition-colors">
                 <p className="font-black text-emerald-300 mb-2 flex items-center gap-2">
                   🏡 전업주부 / 자녀 / 고소득 자산가 (일반연금 권장)
                 </p>
@@ -130,7 +130,7 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
           </div>
 
-          <div className="relative z-10 mt-8 p-6 bg-white/5 rounded-3xl border border-white/10">
+          <div className="relative z-10 mt-8 p-5 md:p-6 bg-white/5 rounded-3xl border border-white/10">
             <p className="text-blue-400 font-black text-xs mb-1 uppercase tracking-widest">💡 플랫폼 수석 아키텍트의 꿀팁</p>
             <p className="text-white font-bold text-xs leading-relaxed opacity-80">
               "연금저축에 가입할 때는 매월 부과되는 사업비 비율이 낮고, 공시이율이 높은 다이렉트(인터넷) 상품을 고르는 것이 장기 적립금 가치를 올리는 핵심입니다. 당사가 비교해 드리는 추천 리스트는 인터넷 전용 저사업비 상품들로 구성되어 있습니다."
@@ -140,8 +140,8 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 트렌드: 연금 이전 제도 및 비과세 동향 ── */}
-      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-[4rem] p-12 text-white relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
+      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-5 md:p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
           <Sparkles className="w-40 h-40" />
         </div>
         <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
@@ -176,7 +176,7 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction }) => (
 
       {/* ── 체크리스트 ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-        <div className="md:col-span-2 bg-white border border-blue-100 rounded-[4rem] p-12 shadow-sm hover:shadow-xl transition-all">
+        <div className="md:col-span-2 bg-white border border-blue-100 rounded-3xl md:rounded-[4rem] p-5 md:p-12 shadow-sm hover:shadow-xl transition-all">
           <h3 className="text-2xl font-black text-slate-900 mb-8 tracking-tight flex items-center gap-3">
             <CheckCircle className="w-6 h-6 text-blue-500" /> 합리적 연금 설계 가입 체크리스트
           </h3>
@@ -198,7 +198,7 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         <div className="flex flex-col gap-6">
-          <div className="bg-blue-600 text-white rounded-[3.5rem] p-10 shadow-xl text-left">
+          <div className="bg-blue-600 text-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-xl text-left">
             <h4 className="text-xl font-black mb-4">연금저축 리모델링 핵심 5</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
               ① 연간 600만 원 (월 50만) 납입금 비율 조절<br />
@@ -208,7 +208,7 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction }) => (
               ⑤ 은퇴 연령에 따른 수령 개시 연한 최대 확보
             </p>
           </div>
-          <div className="bg-white border border-blue-100 rounded-[3.5rem] p-10 shadow-sm hover:shadow-xl transition-all text-left">
+          <div className="bg-white border border-blue-100 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-sm hover:shadow-xl transition-all text-left">
             <h4 className="text-xl font-black mb-4 flex items-center gap-2">
               <Clock className="text-blue-500 w-5 h-5" /> 장기 유지의 마법
             </h4>
@@ -220,7 +220,7 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 주요 상품 종합 비교표 ── */}
-      <div className="mb-20 bg-white rounded-[4rem] p-12 border border-blue-100 shadow-sm">
+      <div className="mb-20 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-blue-100 shadow-sm">
         <h3 className="text-2xl font-black text-slate-900 mb-10 tracking-tight">
           국내 대표 생명보험사 온라인 연금저축 / 연금보험 대표 상품 비교
         </h3>
@@ -233,7 +233,7 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction }) => (
             { company: '동양생명', product: '(무)수호천사 인터넷연금저축보험', highlight: '중저소득 직장인을 위한 적립금 가산 혜택 제공, 우수 고객 수수료 감면으로 해지 환급 가치 우위', badges: ['적립 가산', '수수료 감면'] },
             { company: '교보라이프플래닛', product: '(무)라이프플래닛 연금보험(비과세)', highlight: '세액공제 환급 대신 수령액 비과세 혜택 집중, 10년 거치 시 완벽한 비과세 계좌 전환 지원', badges: ['비과세 집중형', '이자소득세 면제'] },
           ].map((item, i) => (
-            <div key={i} className="p-8 bg-blue-50/20 rounded-[2.5rem] border border-blue-100 hover:border-blue-300 hover:shadow-lg transition-all text-left">
+            <div key={i} className="p-5 md:p-8 bg-blue-50/20 rounded-2xl md:rounded-[2.5rem] border border-blue-100 hover:border-blue-300 hover:shadow-lg transition-all text-left">
               <p className="text-xs font-black text-blue-600 mb-1">{item.company}</p>
               <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
               <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>

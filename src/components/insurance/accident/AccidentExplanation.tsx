@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
-  <section className="py-24 bg-red-50/10 px-4 relative overflow-hidden" id="accident-detail">
+  <section className="py-24 bg-red-50/10 px-2 sm:px-4 relative overflow-hidden" id="accident-detail">
     <div className="max-w-7xl mx-auto">
 
       {/* ── 헤더 ── */}
@@ -40,7 +40,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
           { num: '후유장해 전 구간', label: '3%부터 100% 장해율 지급', sub: '고도장해(80% 이상) 한정 특약 피하기' },
           { num: '레저 스포츠 특약', label: '등산/골프 등 야외 사고 케어', sub: '저렴한 월 1천 원대로 든든한 보강' },
         ].map((s, i) => (
-          <div key={i} className="bg-white border border-red-100 rounded-[3rem] p-8 text-center shadow-sm hover:shadow-xl hover:border-red-200 transition-all group">
+          <div key={i} className="bg-white border border-red-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-red-200 transition-all group">
             <p className="text-2xl font-black text-red-600 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
             <p className="font-black text-slate-800 text-sm leading-tight mb-1">{s.label}</p>
             <p className="text-[11px] text-slate-400 font-bold">{s.sub}</p>
@@ -52,9 +52,9 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
 
         {/* GUIDE 01: 필수 핵심 3대 질환 가이드 */}
-        <div className="bg-white rounded-[4rem] p-12 border border-red-100 shadow-lg hover:shadow-2xl transition-all group">
+        <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-red-100 shadow-lg hover:shadow-2xl transition-all group">
           <div className="flex items-center gap-4 mb-10">
-            <div className="w-16 h-16 bg-red-600 rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
+            <div className="w-16 h-16 bg-red-600 rounded-2xl md:rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
               <Compass className="w-8 h-8" />
             </div>
             <div>
@@ -85,7 +85,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
             ))}
           </div>
 
-          <div className="mt-8 p-6 bg-red-50 rounded-3xl border border-red-100">
+          <div className="mt-8 p-5 md:p-6 bg-red-50 rounded-3xl border border-red-100">
             <p className="text-red-700 font-black text-xs mb-1">⚠️ 계약 후 알릴 의무 (통지의무)</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
               상해보험은 가입 시 직업과 직무 위험군에 따라 요율이 결정되므로, 가입 후 **이직, 부서 이동, 주행 용도 변경(영업용/이륜차 사용 등)** 시 반드시 보험사에 변경 사실을 서면 통지해야 합니다. 불이행 시 보험금이 크게 삭감되거나 계약이 해지될 수 있습니다.
@@ -94,14 +94,14 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         {/* GUIDE 02: 직업급수와 고지/통지의무 작동 원리 */}
-        <div className="bg-slate-900 rounded-[4rem] p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
-          <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
             <Heart className="w-56 h-56 text-red-600" />
           </div>
 
           <div className="relative z-10">
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-16 h-16 bg-red-600 rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
+              <div className="w-16 h-16 bg-red-600 rounded-2xl md:rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
                 <Activity className="w-8 h-8" />
               </div>
               <div>
@@ -111,7 +111,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
 
             <div className="space-y-6">
-              <div className="p-6 bg-white/10 rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
+              <div className="p-5 md:p-6 bg-white/10 rounded-2xl md:rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
                 <p className="font-black text-red-300 mb-2 flex items-center gap-2">
                   💼 직업 위험 분류 (1급 ~ 3급)
                 </p>
@@ -120,7 +120,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
                 </p>
               </div>
 
-              <div className="p-6 bg-white/10 rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
+              <div className="p-5 md:p-6 bg-white/10 rounded-2xl md:rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
                 <p className="font-black text-red-300 mb-2 flex items-center gap-2">
                   🏍️ 이륜차 및 차량 주행 목적 고지
                 </p>
@@ -129,7 +129,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
                 </p>
               </div>
 
-              <div className="p-6 bg-red-600/20 rounded-[2.5rem] border border-red-400/30 hover:bg-red-600/30 transition-colors">
+              <div className="p-5 md:p-6 bg-red-600/20 rounded-2xl md:rounded-[2.5rem] border border-red-400/30 hover:bg-red-600/30 transition-colors">
                 <p className="font-black text-red-300 mb-2 flex items-center gap-2">
                   🚗 비운전자 할인 제도 (최대 10% 감면)
                 </p>
@@ -140,7 +140,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
           </div>
 
-          <div className="relative z-10 mt-8 p-6 bg-white/5 rounded-3xl border border-white/10">
+          <div className="relative z-10 mt-8 p-5 md:p-6 bg-white/5 rounded-3xl border border-white/10">
             <p className="text-red-400 font-black text-xs mb-1 uppercase tracking-widest">💡 치아파절 포함 여부 확인법</p>
             <p className="text-white font-bold text-xs leading-relaxed opacity-80">
               "사고로 앞니가 깨지는 등 치아 파절(코드 S02.5)은 일상 상해 중 다발하는 재해입니다. 대다수 보험사가 가격 경쟁을 위해 '골절진단비(치아파절 제외)'로 설계하는 경우가 많으므로 반드시 '치아파절 포함' 특약이 들어가 있는지 대조해 보세요."
@@ -150,8 +150,8 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 트렌드: 아웃도어 및 응급실 내원 ── */}
-      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-[4rem] p-12 text-white relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
+      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-5 md:p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
           <Sparkles className="w-40 h-40" />
         </div>
         <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
@@ -187,7 +187,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
 
       {/* ── 체크리스트 ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-        <div className="md:col-span-2 bg-white border border-red-100 rounded-[4rem] p-12 shadow-sm hover:shadow-xl transition-all">
+        <div className="md:col-span-2 bg-white border border-red-100 rounded-3xl md:rounded-[4rem] p-5 md:p-12 shadow-sm hover:shadow-xl transition-all">
           <h3 className="text-2xl font-black text-slate-900 mb-8 tracking-tight flex items-center gap-3">
             <CheckCircle className="w-6 h-6 text-red-600" /> 합리적 상해보험 스마트 가입 체크리스트
           </h3>
@@ -209,7 +209,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         <div className="flex flex-col gap-6">
-          <div className="bg-red-600 text-white rounded-[3.5rem] p-10 shadow-xl">
+          <div className="bg-red-600 text-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-xl">
             <h4 className="text-xl font-black mb-4">상해 리모델링 핵심 TOP 5</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
               ① 이직 시 통지의무 누락 확인<br />
@@ -219,7 +219,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
               ⑤ 비운전자 할인 대상인지 확인하여 10% 세이빙
             </p>
           </div>
-          <div className="bg-white border border-red-100 rounded-[3.5rem] p-10 shadow-sm hover:shadow-xl transition-all">
+          <div className="bg-white border border-red-100 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-sm hover:shadow-xl transition-all">
             <h4 className="text-xl font-black mb-4 flex items-center gap-2">
               <Clock className="text-red-600 w-5 h-5" /> 라이프 사이클 위험 시기
             </h4>
@@ -231,7 +231,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 주요 상품 종합 비교표 ── */}
-      <div className="mb-20 bg-white rounded-[4rem] p-12 border border-red-100 shadow-sm">
+      <div className="mb-20 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-red-100 shadow-sm">
         <h3 className="text-2xl font-black text-slate-900 mb-10 tracking-tight">
           국내 대표 5대 보험사 상해보험 경쟁력 전수 비교
         </h3>
@@ -243,7 +243,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
             { company: 'KB손해보험', product: 'KB 다이렉트 상해보험', highlight: '일상 미끄러짐 및 단순 골절/깁스 정액 진단비 최적 요율 매칭, 비운전자 감면 폭 최다', badges: ['골절/깁스 강점', '비운전 할인 우수'] },
             { company: 'Meritz 메리츠화재', product: '메리츠 올바른 상해보험', highlight: '2~3급 고위험군 직무 인수 기준 완화, 다발 사고에 대한 모바일 간편 청구 및 보상금 신속 지급 연동', badges: ['3급 한도 완화', '신속 보상 강자'] },
           ].map((item, i) => (
-            <div key={i} className="p-8 bg-red-50/20 rounded-[2.5rem] border border-red-100 hover:border-red-300 hover:shadow-lg transition-all">
+            <div key={i} className="p-5 md:p-8 bg-red-50/20 rounded-2xl md:rounded-[2.5rem] border border-red-100 hover:border-red-300 hover:shadow-lg transition-all">
               <p className="text-xs font-black text-red-600 mb-1">{item.company}</p>
               <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
               <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>

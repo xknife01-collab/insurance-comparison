@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
-  <section className="py-24 bg-indigo-50/10 px-4 relative overflow-hidden animate-in fade-in duration-500" id="wholelife-detail">
+  <section className="py-24 bg-indigo-50/10 px-2 sm:px-4 relative overflow-hidden animate-in fade-in duration-500" id="wholelife-detail">
     <div className="max-w-7xl mx-auto">
 
       {/* ── 헤더 ── */}
@@ -41,7 +41,7 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
           { num: '체증형 물가방어', label: '사망금 연 5% 복리 증액', sub: '인플레이션 화폐가치 하락 위험 방어' },
           { num: '상속세 절세 세팅', label: '계약자(자녀) 피보험자(부모)', sub: '상속재산 배제로 상속세 100% 비과세' },
         ].map((s, i) => (
-          <div key={i} className="bg-white border border-indigo-100 rounded-[3rem] p-8 text-center shadow-sm hover:shadow-xl hover:border-indigo-200 transition-all group">
+          <div key={i} className="bg-white border border-indigo-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-indigo-200 transition-all group">
             <p className="text-2xl font-black text-indigo-600 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
             <p className="font-black text-slate-800 text-sm leading-tight mb-1">{s.label}</p>
             <p className="text-[11px] text-slate-400 font-bold">{s.sub}</p>
@@ -53,9 +53,9 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
 
         {/* GUIDE 01: 필수 핵심 3대 체크 포인트 */}
-        <div className="bg-white rounded-[4rem] p-12 border border-indigo-100 shadow-lg hover:shadow-2xl transition-all group">
+        <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-indigo-100 shadow-lg hover:shadow-2xl transition-all group">
           <div className="flex items-center gap-4 mb-10">
-            <div className="w-16 h-16 bg-indigo-600 rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
+            <div className="w-16 h-16 bg-indigo-600 rounded-2xl md:rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
               <Compass className="w-8 h-8" />
             </div>
             <div>
@@ -86,7 +86,7 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
             ))}
           </div>
 
-          <div className="mt-8 p-6 bg-rose-50 rounded-3xl border border-rose-100">
+          <div className="mt-8 p-5 md:p-6 bg-rose-50 rounded-3xl border border-rose-100">
             <p className="text-rose-700 font-black text-xs mb-1">⚠️ 저해지 환급형 가입 시 주의사항</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
               저해지/무해지 환급형은 동일 사망보장 대비 월 납입 보험료가 약 15~18% 저렴하지만, **납입 기한 도중 해약할 경우 해약환급금이 0원이거나 납입원금의 10% 미만**에 불과합니다. 반드시 무리하지 않는 여유자금 한도에서 완납을 전제로 가입해야 합니다.
@@ -95,14 +95,14 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         {/* GUIDE 02: 상속세 절세 계약 구조 */}
-        <div className="bg-slate-900 rounded-[4rem] p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
-          <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
             <Heart className="w-56 h-56 text-indigo-500" />
           </div>
 
           <div className="relative z-10">
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-16 h-16 bg-indigo-600 rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
+              <div className="w-16 h-16 bg-indigo-600 rounded-2xl md:rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
                 <Scale className="w-8 h-8" />
               </div>
               <div>
@@ -112,7 +112,7 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
 
             <div className="space-y-6">
-              <div className="p-6 bg-white/10 rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
+              <div className="p-5 md:p-6 bg-white/10 rounded-2xl md:rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
                 <p className="font-black text-indigo-300 mb-2 flex items-center gap-2">
                   🚫 잘못된 계약 구조 (부모가 계약 및 납입)
                 </p>
@@ -121,7 +121,7 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
                 </p>
               </div>
 
-              <div className="p-6 bg-indigo-600/20 rounded-[2.5rem] border border-indigo-400/30 hover:bg-indigo-500/30 transition-colors">
+              <div className="p-5 md:p-6 bg-indigo-600/20 rounded-2xl md:rounded-[2.5rem] border border-indigo-400/30 hover:bg-indigo-500/30 transition-colors">
                 <p className="font-black text-indigo-300 mb-2 flex items-center gap-2">
                   🛡️ 합법적 절세 구조 (계약자/수익자 = 자녀)
                 </p>
@@ -132,7 +132,7 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
           </div>
 
-          <div className="relative z-10 mt-8 p-6 bg-white/5 rounded-3xl border border-white/10">
+          <div className="relative z-10 mt-8 p-5 md:p-6 bg-white/5 rounded-3xl border border-white/10">
             <p className="text-indigo-400 font-black text-xs mb-1 uppercase tracking-widest">💡 자금 출처 조사의 핵심 팁</p>
             <p className="text-white font-bold text-xs leading-relaxed opacity-80">
               "자녀가 미성년자이거나 무자력자일 경우, 납입된 보험료가 부모의 간접 증여로 간주될 위험이 큽니다. 따라서 사전에 합법적인 연간 5천만 원(성인 자녀 기준) 증여공제 한도 내에서 현금 증여 신고 후 자녀 명의 계좌에서 계좌 이체 납입하는 방식의 고도화 세무 처리가 필수적입니다."
@@ -142,8 +142,8 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 트렌드: 연금 전환 및 건강 특약 ── */}
-      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-[4rem] p-12 text-white relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
+      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-5 md:p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
           <Sparkles className="w-40 h-40" />
         </div>
         <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
@@ -179,7 +179,7 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
 
       {/* ── 체크리스트 ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-        <div className="md:col-span-2 bg-white border border-indigo-100 rounded-[4rem] p-12 shadow-sm hover:shadow-xl transition-all">
+        <div className="md:col-span-2 bg-white border border-indigo-100 rounded-3xl md:rounded-[4rem] p-5 md:p-12 shadow-sm hover:shadow-xl transition-all">
           <h3 className="text-2xl font-black text-slate-900 mb-8 tracking-tight flex items-center gap-3">
             <CheckCircle className="w-6 h-6 text-indigo-500" /> 종신보험 리모델링 스마트 가입 체크리스트
           </h3>
@@ -201,7 +201,7 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         <div className="flex flex-col gap-6">
-          <div className="bg-indigo-600 text-white rounded-[3.5rem] p-10 shadow-xl">
+          <div className="bg-indigo-600 text-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-xl">
             <h4 className="text-xl font-black mb-4">종신보험 리모델링 핵심 TOP 5</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
               ① 소득 전성기에 빠르게 마치는 5/7/10년납 권장<br />
@@ -211,7 +211,7 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
               ⑤ 완납 후 10년 시점의 비과세 환급률 한도 비교
             </p>
           </div>
-          <div className="bg-white border border-indigo-100 rounded-[3.5rem] p-10 shadow-sm hover:shadow-xl transition-all">
+          <div className="bg-white border border-indigo-100 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-sm hover:shadow-xl transition-all">
             <h4 className="text-xl font-black mb-4 flex items-center gap-2">
               <Clock className="text-indigo-500 w-5 h-5" /> 가입 최적 시기
             </h4>
@@ -223,7 +223,7 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 주요 상품 종합 비교표 ── */}
-      <div className="mb-20 bg-white rounded-[4rem] p-12 border border-indigo-100 shadow-sm">
+      <div className="mb-20 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-indigo-100 shadow-sm">
         <h3 className="text-2xl font-black text-slate-900 mb-10 tracking-tight">
           국내 Top 6 보험사 단기납/체증형 종신보험 상품 경쟁력 전수 비교
         </h3>
@@ -236,7 +236,7 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
             { company: '동양생명', product: '수호천사종신보험', highlight: '저해지 환급 조건 설계 시 최저 가성비 요율 테이블 구현, 일반 종합 건강 특약 동시 조립 조화', badges: ['가성비 강점', '특약 조립 유연'] },
             { company: 'KDB생명', product: 'KDB든든단기납종신', highlight: '납입 기간 완료 시점의 책임준비금 및 계약 유지 가산율을 극대화하여 10년 비과세 환급 가치 최적화', badges: ['유지보너스 최상', '환급 가치 우대'] },
           ].map((item, i) => (
-            <div key={i} className="p-8 bg-indigo-50/20 rounded-[2.5rem] border border-indigo-100 hover:border-indigo-300 hover:shadow-lg transition-all">
+            <div key={i} className="p-5 md:p-8 bg-indigo-50/20 rounded-2xl md:rounded-[2.5rem] border border-indigo-100 hover:border-indigo-300 hover:shadow-lg transition-all">
               <p className="text-xs font-black text-indigo-600 mb-1">{item.company}</p>
               <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
               <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>

@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
-  <section className="py-24 bg-purple-50/10 px-4 relative overflow-hidden" id="driver-detail">
+  <section className="py-24 bg-purple-50/10 px-2 sm:px-4 relative overflow-hidden" id="driver-detail">
     <div className="max-w-7xl mx-auto">
 
       {/* ── 헤더 ── */}
@@ -40,7 +40,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
           { num: '스쿨존 대인벌금', label: '민식이법 벌금 최대 3천만', sub: '대물벌금 500만 원 중복 보장' },
           { num: '자부상 치료비', label: '14급 단순 염좌도 정액 지급', sub: '사고부상치료비 등급별 집중 케어' },
         ].map((s, i) => (
-          <div key={i} className="bg-white border border-purple-100 rounded-[3rem] p-8 text-center shadow-sm hover:shadow-xl hover:border-purple-200 transition-all group">
+          <div key={i} className="bg-white border border-purple-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-purple-200 transition-all group">
             <p className="text-2xl font-black text-purple-600 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
             <p className="font-black text-slate-800 text-sm leading-tight mb-1">{s.label}</p>
             <p className="text-[11px] text-slate-400 font-bold">{s.sub}</p>
@@ -52,9 +52,9 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
 
         {/* GUIDE 01: 필수 핵심 3대 담보 가이드 */}
-        <div className="bg-white rounded-[4rem] p-12 border border-purple-100 shadow-lg hover:shadow-2xl transition-all group">
+        <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-purple-100 shadow-lg hover:shadow-2xl transition-all group">
           <div className="flex items-center gap-4 mb-10">
-            <div className="w-16 h-16 bg-purple-600 rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
+            <div className="w-16 h-16 bg-purple-600 rounded-2xl md:rounded-[2rem] flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform">
               <Compass className="w-8 h-8" />
             </div>
             <div>
@@ -85,7 +85,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
             ))}
           </div>
 
-          <div className="mt-8 p-6 bg-purple-50 rounded-3xl border border-purple-100">
+          <div className="mt-8 p-5 md:p-6 bg-purple-50 rounded-3xl border border-purple-100">
             <p className="text-purple-700 font-black text-xs mb-1">⚠️ 구 가입자 리모델링 가이드</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
               2025년 이전 가입 고객은 최근 대다수 상품에 도입된 **변호사 선임비 자기부담금 50% 페널티**가 없는 경우가 많으므로, 단순히 한도 증액을 위해 함부로 해약하기보다는 기존 증권을 먼저 정밀 진단받는 것이 훨씬 안전합니다.
@@ -94,14 +94,14 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         {/* GUIDE 02: 자동차보험 vs 운전자보험 비교 */}
-        <div className="bg-slate-900 rounded-[4rem] p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
-          <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white shadow-2xl relative overflow-hidden group flex flex-col justify-between">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 group-hover:scale-125 transition-transform duration-1000">
             <Scale className="w-56 h-56 text-purple-600" />
           </div>
 
           <div className="relative z-10">
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-16 h-16 bg-purple-600 rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
+              <div className="w-16 h-16 bg-purple-600 rounded-2xl md:rounded-[2.2rem] flex items-center justify-center text-white shadow-xl">
                 <ShieldAlert className="w-8 h-8" />
               </div>
               <div>
@@ -112,7 +112,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
 
             <div className="space-y-6">
               {/* 차이 1 */}
-              <div className="p-6 bg-white/10 rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
+              <div className="p-5 md:p-6 bg-white/10 rounded-2xl md:rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
                 <p className="font-black text-purple-300 mb-2 flex items-center gap-2">
                   🚗 자동차보험 (민사 배상 100%)
                 </p>
@@ -122,7 +122,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
               </div>
 
               {/* 차이 2 */}
-              <div className="p-6 bg-purple-500/20 rounded-[2.5rem] border border-purple-400/30 hover:bg-purple-500/30 transition-colors">
+              <div className="p-5 md:p-6 bg-purple-500/20 rounded-2xl md:rounded-[2.5rem] border border-purple-400/30 hover:bg-purple-500/30 transition-colors">
                 <p className="font-black text-purple-300 mb-2 flex items-center gap-2">
                   🛡️ 운전자보험 (형사/행정 방어 100%)
                 </p>
@@ -133,7 +133,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
           </div>
 
-          <div className="relative z-10 mt-8 p-6 bg-white/5 rounded-3xl border border-white/10">
+          <div className="relative z-10 mt-8 p-5 md:p-6 bg-white/5 rounded-3xl border border-white/10">
             <p className="text-purple-400 font-black text-xs mb-1 uppercase tracking-widest">💡 설계 핵심 팁</p>
             <p className="text-white font-bold text-xs leading-relaxed opacity-80">
               "자동차보험에서 모든 것이 해결될 것이라 믿다가, 중과실 인명 사고 시 형사합의비 수천만 원을 개인 자산으로 감당해 가정이 흔들리는 운전자가 많습니다. 단 월 1~2만 원의 운전자 설계가 인생의 최후 보루가 됩니다."
@@ -143,8 +143,8 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 트렌드: 경찰조사단계 보장 의무화 ── */}
-      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-[4rem] p-12 text-white relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
+      <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-5 md:p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
           <Sparkles className="w-40 h-40" />
         </div>
         <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
@@ -180,7 +180,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
 
       {/* ── 체크리스트 ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-        <div className="md:col-span-2 bg-white border border-purple-100 rounded-[4rem] p-12 shadow-sm hover:shadow-xl transition-all">
+        <div className="md:col-span-2 bg-white border border-purple-100 rounded-3xl md:rounded-[4rem] p-5 md:p-12 shadow-sm hover:shadow-xl transition-all">
           <h3 className="text-2xl font-black text-slate-900 mb-8 tracking-tight flex items-center gap-3">
             <UserCheck className="w-6 h-6 text-purple-500" /> 안심 리모델링 & 가입 체크리스트
           </h3>
@@ -202,7 +202,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
         </div>
 
         <div className="flex flex-col gap-6">
-          <div className="bg-purple-600 text-white rounded-[3.5rem] p-10 shadow-xl">
+          <div className="bg-purple-600 text-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-xl">
             <h4 className="text-xl font-black mb-4">보장 리모델링 핵심 TOP 5</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
               ① 자기부담금 50% 조항 적용 여부 체크<br />
@@ -212,7 +212,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
               ⑤ 벌금 한도 법정 최고액 3천만 세팅
             </p>
           </div>
-          <div className="bg-white border border-purple-100 rounded-[3.5rem] p-10 shadow-sm hover:shadow-xl transition-all">
+          <div className="bg-white border border-purple-100 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-sm hover:shadow-xl transition-all">
             <h4 className="text-xl font-black mb-4 flex items-center gap-2">
               <Clock className="text-purple-500 w-5 h-5" /> 기존 보험 유지 검토
             </h4>
@@ -224,7 +224,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
       </div>
 
       {/* ── 주요 상품 종합 비교표 ── */}
-      <div className="mb-20 bg-white rounded-[4rem] p-12 border border-purple-100 shadow-sm">
+      <div className="mb-20 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-purple-100 shadow-sm">
         <h3 className="text-2xl font-black text-slate-900 mb-10 tracking-tight">
           국내 Top 6 보험사 운전자/법률비용보험 상품 경쟁력 전수 비교
         </h3>
@@ -237,7 +237,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
             { company: '메리츠화재', product: '올바른 운전자보험', highlight: '12대 중과실 한도 보장 극대화 및 단순 타박상 단독 보장 설계 최적화', badges: ['중과실 특화', '경상 케어 최적화'] },
             { company: '한화손해보험', product: '차도리 운전자보험', highlight: '주말 상해사고 집중 보강 특약 및 직장인 출퇴근길 안심 보장 특화', badges: ['주말사고 특약', '직장인 맞춤형'] },
           ].map((item, i) => (
-            <div key={i} className="p-8 bg-purple-50/20 rounded-[2.5rem] border border-purple-100 hover:border-purple-300 hover:shadow-lg transition-all">
+            <div key={i} className="p-5 md:p-8 bg-purple-50/20 rounded-2xl md:rounded-[2.5rem] border border-purple-100 hover:border-purple-300 hover:shadow-lg transition-all">
               <p className="text-xs font-black text-purple-600 mb-1">{item.company}</p>
               <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
               <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>

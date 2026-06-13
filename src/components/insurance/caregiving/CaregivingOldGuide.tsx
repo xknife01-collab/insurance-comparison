@@ -44,7 +44,7 @@ export const CaregivingOldGuide: React.FC = () => {
           <motion.div 
             key={i}
             whileHover={{ y: -10 }}
-            className="bg-white p-10 rounded-[3rem] border border-gray-100 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.03)] space-y-6"
+            className="bg-white p-6 md:p-10 rounded-3xl md:rounded-[3rem] border border-gray-100 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.03)] space-y-6"
           >
             <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center shadow-inner">
               {stat.icon}
@@ -59,7 +59,7 @@ export const CaregivingOldGuide: React.FC = () => {
       </div>
 
       {/* Main Knowledge Section */}
-      <div className="bg-slate-900 rounded-[4rem] p-10 md:p-20 text-white overflow-hidden relative">
+      <div className="bg-slate-900 rounded-3xl md:rounded-[4rem] p-6 md:p-10 md:p-20 text-white overflow-hidden relative">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-amber-500/10 to-transparent pointer-events-none" />
         <div className="relative z-10 grid lg:grid-cols-2 gap-20 items-center">
           <div className="space-y-10">
@@ -103,7 +103,7 @@ export const CaregivingOldGuide: React.FC = () => {
               { label: "CDR 3점", desc: "중증 (24시간 돌봄)", color: "bg-orange-500" },
               { label: "CDR 4-5점", desc: "심각 (말기 상태)", color: "bg-rose-500" },
             ].map((level, i) => (
-              <div key={i} className="bg-white/5 p-6 rounded-3xl border border-white/10 space-y-4">
+              <div key={i} className="bg-white/5 p-5 md:p-6 rounded-3xl border border-white/10 space-y-4">
                 <div className={`w-3 h-3 rounded-full ${level.color} shadow-lg shadow-black/20`} />
                 <div>
                   <p className="text-lg font-black text-white tracking-tight">{level.label}</p>
@@ -116,9 +116,9 @@ export const CaregivingOldGuide: React.FC = () => {
       </div>
 
       {/* Critical Tip Section */}
-      <div className="bg-amber-50 rounded-[3rem] p-10 md:p-16 border border-amber-100 grid lg:grid-cols-2 gap-12 items-center">
+      <div className="bg-amber-50 rounded-3xl md:rounded-[3rem] p-6 md:p-10 md:p-16 border border-amber-100 grid lg:grid-cols-2 gap-12 items-center">
         <div className="space-y-6">
-          <div className="w-16 h-16 bg-white rounded-[2rem] flex items-center justify-center text-amber-600 shadow-xl shadow-amber-200/50">
+          <div className="w-16 h-16 bg-white rounded-2xl md:rounded-[2rem] flex items-center justify-center text-amber-600 shadow-xl shadow-amber-200/50">
             <ShieldCheck size={32} />
           </div>
           <div className="space-y-3">
@@ -126,7 +126,7 @@ export const CaregivingOldGuide: React.FC = () => {
             <p className="text-lg text-amber-900/60 font-bold italic tracking-tight">"가입하고도 못 받는 일을 막으려면?"</p>
           </div>
         </div>
-        <div className="space-y-6 bg-white p-10 rounded-[2.5rem] shadow-sm border border-amber-100">
+        <div className="space-y-6 bg-white p-6 md:p-10 rounded-2xl md:rounded-[2.5rem] shadow-sm border border-amber-100">
           <div className="flex gap-4">
             <AlertCircle className="text-amber-500 shrink-0" size={20} />
             <p className="text-sm font-medium text-gray-700 leading-relaxed">

@@ -457,7 +457,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-blue-100 selection:text-blue-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -478,7 +478,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-indigo-100 selection:text-indigo-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -499,7 +499,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-teal-100 selection:text-teal-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -520,7 +520,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-purple-100 selection:text-purple-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -540,7 +540,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-orange-100 selection:text-orange-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-amber-50/30">
+        <main className="pt-12 px-2 sm:px-4 bg-amber-50/30">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -561,7 +561,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-orange-100 selection:text-orange-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -581,7 +581,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-indigo-100 selection:text-indigo-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -601,7 +601,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-red-100 selection:text-red-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -622,7 +622,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-rose-100 selection:text-rose-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -643,7 +643,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-orange-100 selection:text-orange-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -664,7 +664,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-blue-100 selection:text-blue-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -685,7 +685,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-orange-100 selection:text-orange-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -706,7 +706,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-blue-100 selection:text-blue-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -727,7 +727,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-purple-100 selection:text-purple-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -748,7 +748,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-orange-100 selection:text-orange-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -769,7 +769,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-orange-100 selection:text-orange-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -790,7 +790,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-red-100 selection:text-red-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -811,7 +811,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-blue-100 selection:text-blue-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -832,7 +832,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-emerald-100 selection:text-emerald-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -853,7 +853,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-red-100 selection:text-red-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -874,7 +874,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-blue-100 selection:text-blue-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -895,7 +895,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-blue-100 selection:text-blue-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -916,7 +916,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-indigo-100 selection:text-indigo-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -937,7 +937,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-slate-100 selection:text-slate-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -958,7 +958,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-indigo-100 selection:text-indigo-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}
@@ -979,7 +979,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-emerald-100 selection:text-emerald-900 antialiased">
         <Header setView={setView} />
-        <main className="pt-12 px-4 bg-white">
+        <main className="pt-12 px-2 sm:px-4 bg-white">
            <div className="max-w-7xl mx-auto flex justify-end">
               <button 
                 onClick={() => { setCalcTarget(null); setView('home'); }}

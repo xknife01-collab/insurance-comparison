@@ -13,7 +13,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction }) => {
     <div className="mt-16 space-y-24 animate-in fade-in slide-in-from-bottom-8 duration-1000">
       
       {/* ── 1. 프리미엄 HERO 헤더 섹션 ── */}
-      <div className="bg-gradient-to-br from-red-950 via-slate-900 to-slate-950 rounded-[3rem] p-12 md:p-20 text-center space-y-8 relative overflow-hidden shadow-2xl border border-red-500/20">
+      <div className="bg-gradient-to-br from-red-950 via-slate-900 to-slate-950 rounded-3xl md:rounded-[3rem] p-5 md:p-12 md:p-20 text-center space-y-8 relative overflow-hidden shadow-2xl border border-red-500/20">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-red-500/10 via-transparent to-transparent opacity-60"></div>
         <div className="absolute -right-16 -top-16 w-64 h-64 bg-red-500/10 rounded-full blur-3xl"></div>
         <div className="absolute -left-16 -bottom-16 w-64 h-64 bg-rose-500/10 rounded-full blur-3xl"></div>
@@ -68,7 +68,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction }) => {
         ].map((card, idx) => (
           <div 
             key={idx} 
-            className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-[0_15px_35px_-5px_rgba(0,0,0,0.03)] hover:shadow-[0_25px_50px_-10px_rgba(239,68,68,0.08)] transition-all hover:-translate-y-1 duration-300 flex flex-col justify-between space-y-6"
+            className="bg-white rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-gray-100 shadow-[0_15px_35px_-5px_rgba(0,0,0,0.03)] hover:shadow-[0_25px_50px_-10px_rgba(239,68,68,0.08)] transition-all hover:-translate-y-1 duration-300 flex flex-col justify-between space-y-6"
           >
             <div className="space-y-4">
               <div className="flex justify-between items-center">
@@ -87,7 +87,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction }) => {
       </div>
 
       {/* ── 3. GUIDE 01: 보장 범위의 치명적인 차이 (급성심근경색 vs 허혈성 vs 심장질환 전체) ── */}
-      <div className="bg-white rounded-[4rem] p-8 md:p-16 border border-gray-100 shadow-xl space-y-12">
+      <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-8 md:p-16 border border-gray-100 shadow-xl space-y-12">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-gray-100">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 bg-red-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-red-600/20">
@@ -107,7 +107,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction }) => {
         <div className="grid lg:grid-cols-3 gap-8">
           
           {/* 1. 급성심근경색 */}
-          <div className="bg-slate-50 rounded-[2.5rem] p-8 border border-slate-100 flex flex-col justify-between space-y-6 opacity-60">
+          <div className="bg-slate-50 rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-slate-100 flex flex-col justify-between space-y-6 opacity-60">
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <h4 className="text-lg font-black text-gray-500 flex items-center gap-2">
@@ -129,7 +129,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction }) => {
           </div>
 
           {/* 2. 허혈성 심장질환 */}
-          <div className="bg-slate-50 rounded-[2.5rem] p-8 border border-slate-100 flex flex-col justify-between space-y-6 opacity-80">
+          <div className="bg-slate-50 rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-slate-100 flex flex-col justify-between space-y-6 opacity-80">
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <h4 className="text-lg font-black text-slate-800 flex items-center gap-2">
@@ -151,7 +151,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction }) => {
           </div>
 
           {/* 3. 심장질환 (전체 보장) */}
-          <div className="bg-slate-50 rounded-[2.5rem] p-8 border border-red-100 flex flex-col justify-between space-y-6 shadow-[0_10px_30px_-5px_rgba(239,68,68,0.05)]">
+          <div className="bg-slate-50 rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-red-100 flex flex-col justify-between space-y-6 shadow-[0_10px_30px_-5px_rgba(239,68,68,0.05)]">
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <h4 className="text-lg font-black text-red-900 flex items-center gap-2">
@@ -175,7 +175,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction }) => {
         </div>
 
         {/* 부정맥(I49) 설명 스포트라이트 */}
-        <div className="bg-gradient-to-br from-red-50 to-rose-100/50 rounded-[3rem] p-8 md:p-12 border border-red-100 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="bg-gradient-to-br from-red-50 to-rose-100/50 rounded-3xl md:rounded-[3rem] p-5 md:p-8 md:p-12 border border-red-100 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="space-y-2">
             <h4 className="text-lg font-black text-red-900 flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-red-600" /> 스트레스와 과로로 급증하는 '기타 심장 부정맥(I49)'
@@ -195,8 +195,8 @@ export const HeartExplanation: React.FC<Props> = ({ onAction }) => {
       <div className="grid lg:grid-cols-2 gap-8">
         
         {/* 비관혈 카테터 수술 기술 */}
-        <div className="bg-slate-900 rounded-[3.5rem] p-10 md:p-14 text-white shadow-2xl relative overflow-hidden flex flex-col justify-between space-y-10 border border-slate-800">
-          <div className="absolute top-0 right-0 p-12 opacity-5 rotate-12 pointer-events-none">
+        <div className="bg-slate-900 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 md:p-14 text-white shadow-2xl relative overflow-hidden flex flex-col justify-between space-y-10 border border-slate-800">
+          <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 rotate-12 pointer-events-none">
             <ShieldCheck size={260} className="text-white" />
           </div>
           
@@ -234,7 +234,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction }) => {
         </div>
 
         {/* 중증 질환 산정특례 반복 보장 */}
-        <div className="bg-white rounded-[3.5rem] p-10 md:p-14 border border-gray-100 shadow-xl flex flex-col justify-between space-y-8">
+        <div className="bg-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 md:p-14 border border-gray-100 shadow-xl flex flex-col justify-between space-y-8">
           <div className="space-y-6">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-red-50 rounded-2xl flex items-center justify-center text-red-600">
@@ -250,7 +250,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction }) => {
               심근경색으로 관상동맥 우회술을 받거나 약물 치료로 입원하는 중증 환자는 국가 중증질환 '산정특례' 대상으로 분류되어 건강보험 혜택을 크게 누립니다. 민간 보험사는 이에 연동하여 **'심장질환 산정특례 진단비'** 특약을 지원하며, 심장질환은 고혈압 등 만성 상태로 재발이 잦아 매년 조건 충족 시마다 리필되는 반복 지급형 담보를 추천합니다.
             </p>
 
-            <div className="bg-red-50/50 p-6 rounded-2xl border border-red-100 space-y-4">
+            <div className="bg-red-50/50 p-5 md:p-6 rounded-2xl border border-red-100 space-y-4">
               <p className="text-sm font-black text-red-950">💡 산정특례 진단비의 강점</p>
               <div className="space-y-2 text-[10px] text-gray-600 font-bold">
                 <div className="flex justify-between p-2.5 bg-white rounded-lg border border-red-100/50">
@@ -268,7 +268,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction }) => {
             </div>
           </div>
 
-          <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100">
+          <div className="p-5 md:p-6 bg-slate-50 rounded-2xl border border-slate-100">
             <p className="text-xs text-red-600 font-black mb-1">📢 전문가 분석 조언</p>
             <p className="text-[11px] text-gray-600 font-bold leading-relaxed">
               "스텐트 시술 후 혈소판 응집 억제제(아스피린 등)를 장복하며 평생 관리해야 하는 환자들은 진단금 1회 일시금보다, 매회 수술 시마다 삭감 없이 반복 지급해 주는 '심장질환 수술비' 특약의 만족도가 장기적으로 월등히 높습니다."
@@ -344,7 +344,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction }) => {
           ].map((item, index) => (
             <div 
               key={index} 
-              className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-[0_12px_30px_-5px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_45px_-10px_rgba(239,68,68,0.06)] hover:border-red-100 transition-all duration-300 flex flex-col justify-between space-y-6"
+              className="bg-white rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-gray-100 shadow-[0_12px_30px_-5px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_45px_-10px_rgba(239,68,68,0.06)] hover:border-red-100 transition-all duration-300 flex flex-col justify-between space-y-6"
             >
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
@@ -372,7 +372,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction }) => {
       </div>
 
       {/* ── 6. 전문가 실전 심장질환 리모델링 체크리스트 ── */}
-      <div className="bg-slate-50 rounded-[4rem] p-8 md:p-16 border border-slate-100">
+      <div className="bg-slate-50 rounded-3xl md:rounded-[4rem] p-5 md:p-8 md:p-16 border border-slate-100">
         <h4 className="text-xl font-black text-slate-900 mb-8 flex items-center gap-3">
           <HelpCircle className="w-6 h-6 text-red-600" /> 심장질환 보험 리모델링 실전 4단계 체크리스트
         </h4>
@@ -399,7 +399,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction }) => {
               desc: '뇌와 심장은 우리 몸의 2대 혈관 시스템으로 밀접하게 연결되어 있습니다. 어느 한쪽 보장 진단비 규모가 쏠리지 않도록 뇌혈관 진단비와 심장질환 진단비 한도를 동일하게 1:1 비율로 맞추어 설계하는 것이 정석입니다.'
             }
           ].map((item, idx) => (
-            <div key={idx} className="bg-white p-8 rounded-3xl border border-slate-100 flex gap-6">
+            <div key={idx} className="bg-white p-5 md:p-8 rounded-3xl border border-slate-100 flex gap-6">
               <span className="text-3xl font-black text-red-100 leading-none">{item.step}</span>
               <div className="space-y-2">
                 <h5 className="text-base font-black text-slate-900">{item.title}</h5>
@@ -411,8 +411,8 @@ export const HeartExplanation: React.FC<Props> = ({ onAction }) => {
       </div>
 
       {/* ── 7. 하단 CALL TO ACTION (CTA) 연동 블록 ── */}
-      <div className="bg-gradient-to-br from-red-900 to-red-950 rounded-[3rem] p-8 md:p-12 text-center text-white relative overflow-hidden shadow-xl border border-red-500/20">
-        <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
+      <div className="bg-gradient-to-br from-red-900 to-red-950 rounded-3xl md:rounded-[3rem] p-5 md:p-8 md:p-12 text-center text-white relative overflow-hidden shadow-xl border border-red-500/20">
+        <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 pointer-events-none">
           <Sparkles size={160} />
         </div>
         <div className="relative z-10 space-y-6 max-w-2xl mx-auto">
