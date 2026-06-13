@@ -5,7 +5,7 @@ const ComparisonSection = () => {
   return (
     <section 
       className="relative bg-slate-900 bg-cover bg-center pt-32 pb-40 md:pt-40 md:pb-52 overflow-hidden"
-      style={{ backgroundImage: "url('/hero.jpg')" }}
+      style={{ backgroundImage: "url('/hero.webp')" }}
     >
       {/* Dark overlay to ensure readable text on the left while keeping the woman visible on the right */}
       <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/45 to-transparent z-0 pointer-events-none" />

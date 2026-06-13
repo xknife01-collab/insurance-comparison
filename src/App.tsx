@@ -388,7 +388,7 @@ export default function App() {
   useEffect(() => {
     if (view === 'admin') return;
     const img = new Image();
-    img.src = '/hero.jpg';
+    img.src = '/hero.webp';
     img.onload = () => setHeroImageLoaded(true);
     img.onerror = () => setHeroImageLoaded(true); // Prevent infinite loading if image fails
   }, [view]);

@@ -76,7 +76,7 @@ export const CustomerSupportSection: React.FC<CustomerSupportSectionProps> = ({
       {/* 100% Full-Width Office Image Banner at the very top (Right below the Header) */}
       <div className="w-full relative h-[450px] md:h-[520px] bg-slate-950 overflow-hidden">
         <img
-          src="/oh__img9356.jpg"
+          src="/oh__img9356.webp"
           alt="Office"
           className="w-full h-full object-cover opacity-90"
         />
