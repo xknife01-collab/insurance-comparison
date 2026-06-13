@@ -383,13 +383,8 @@ export default function App() {
     }
   }, [view]);
 
-  // Render splash screen if loading B2B branding for query/cached parameters
-  if (loading && (
-    window.location.search.includes('planner') || 
-    window.location.search.includes('agency') || 
-    localStorage.getItem('pwa_saved_planner') || 
-    localStorage.getItem('pwa_saved_agency')
-  )) {
+  // Render splash screen while loading B2B branding to prevent logo/UI pop-in flickering
+  if (loading) {
     return (
       <div className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-slate-950 text-white select-none">
         {/* Modern grand background gradient */}
@@ -423,7 +418,9 @@ export default function App() {
           </div>
           
           <p className="text-[10px] text-slate-500 font-bold tracking-tight">
-            설계사 맞춤 솔루션을 안전하게 불러오는 중입니다...
+            {window.location.search.includes('planner') || window.location.search.includes('agency') || localStorage.getItem('pwa_saved_planner') || localStorage.getItem('pwa_saved_agency')
+              ? '설계사 맞춤 솔루션을 안전하게 불러오는 중입니다...'
+              : '0.1초 빅데이터 분석 시스템을 안전하게 불러오는 중입니다...'}
           </p>
         </div>
       </div>

@@ -85,7 +85,23 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
     }
     return DEFAULT_BRANDING;
   });
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => {
+    try {
+      const isStandaloneApp = typeof window !== 'undefined' && (
+        window.matchMedia('(display-mode: standalone)').matches ||
+        (window.navigator as any).standalone === true
+      );
+      const cached = isStandaloneApp 
+        ? localStorage.getItem(CACHE_KEY) 
+        : sessionStorage.getItem(CACHE_KEY);
+      if (cached) {
+        return false;
+      }
+    } catch (e) {
+      console.error('Failed to parse cached branding for loading state', e);
+    }
+    return true;
+  });
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [showInAppGuide, setShowInAppGuide] = useState(false);
 
