@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { createClient } from '../utils/supabase/client';
-import { supabaseService } from '../utils/supabase/service';
 import { MarketingPlaybookTab } from './MarketingPlaybookTab';
 import { AdCampaignTab } from './AdCampaignTab';
 import { ChatTab } from './ChatTab';
@@ -629,7 +628,7 @@ export default function AdminDashboard() {
   const handleUpdatePlannerQuota = async (plannerId: string, quota: number) => {
     try {
       setQuotaSaving(true);
-      const { error } = await supabaseService
+      const { error } = await supabase
         .from('planners')
         .update({ monthly_credit_quota: quota })
         .eq('id', plannerId);
@@ -651,7 +650,7 @@ export default function AdminDashboard() {
   const handleUpdatePlannerWeight = async (plannerId: string, weight: number) => {
     try {
       const weightVal = Math.max(1, Math.min(100, weight));
-      const { error } = await supabaseService
+      const { error } = await supabase
         .from('planners')
         .update({ registration_number: `dist_weight:${weightVal}` })
         .eq('id', plannerId);
@@ -668,7 +667,7 @@ export default function AdminDashboard() {
     try {
       const isDisabled = currentRegNum === 'dist_disabled';
       const newVal = isDisabled ? 'dist_weight:5' : 'dist_disabled';
-      const { error } = await supabaseService
+      const { error } = await supabase
         .from('planners')
         .update({ registration_number: newVal })
         .eq('id', plannerId);
@@ -700,7 +699,7 @@ export default function AdminDashboard() {
     if (!currentUser.agencyId) return;
     try {
       setSavingAlert(true);
-      const { error } = await supabaseService
+      const { error } = await supabase
         .from('agencies')
         .update({
           low_credit_alert_threshold: alertThreshold,
@@ -783,7 +782,7 @@ export default function AdminDashboard() {
   const handleTopupCredits = async (agencyId: string, amount: number) => {
     try {
       setTopupLoading(true);
-      const { data: agencyData, error: fetchErr } = await supabaseService
+      const { data: agencyData, error: fetchErr } = await supabase
         .from('agencies')
         .select('current_credits')
         .eq('id', agencyId)
@@ -796,7 +795,7 @@ export default function AdminDashboard() {
       
       const newCredits = (agencyData.current_credits || 0) + amount;
       
-      const { error: updateErr } = await supabaseService
+      const { error: updateErr } = await supabase
         .from('agencies')
         .update({ current_credits: newCredits })
         .eq('id', agencyId);
@@ -811,7 +810,7 @@ export default function AdminDashboard() {
       const txDesc = amount > 0 
         ? `대시보드 모의 크레딧 충전 (${amount.toLocaleString()})`
         : `관리자 크레딧 조정 수동 차감 (${Math.abs(amount).toLocaleString()})`;
-      await supabaseService.from('credit_transactions').insert({
+      await supabase.from('credit_transactions').insert({
         agency_id: agencyId,
         amount: amount,
         type: txType,
