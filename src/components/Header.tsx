@@ -438,6 +438,12 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
                 </button>
               )}
               <button 
+                onClick={() => navigate('support')}
+                className="w-full bg-white border border-gray-250 text-gray-700 py-3 rounded-2xl font-black text-sm hover:bg-gray-150 transition-all cursor-pointer flex items-center justify-center gap-2 shadow-sm"
+              >
+                📞 고객센터 (1:1 문의)
+              </button>
+              <button 
                 onClick={() => navigate('admin')}
                 className="w-full bg-slate-900 text-white py-3 rounded-2xl font-black text-sm hover:bg-black transition-colors cursor-pointer"
               >
