@@ -250,6 +250,8 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
             .single();
 
           if (!pError && planner && planner.subscription_status === 'active') {
+            const isDemo = planner.agencies?.id === '88888888-8888-4888-a888-888888888888' || planner.planner_code === 'test_planner';
+            const demoRoutingOverride = isDemo ? sessionStorage.getItem('demo_lead_routing_type') : null;
             const plannerBranding: B2BBranding = {
               type: 'planner',
               plannerId: planner.id,
@@ -266,7 +268,7 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
               agencyAddress: planner.custom_address || planner.agencies?.address || null,
               registrationNumber: planner.registration_number || null,
               customEmail: planner.email || planner.agencies?.email || DEFAULT_BRANDING.customEmail,
-              leadRoutingType: planner.agencies?.lead_routing_type || 'direct',
+              leadRoutingType: demoRoutingOverride || planner.agencies?.lead_routing_type || 'direct',
             };
             setBranding(plannerBranding);
             
@@ -306,6 +308,8 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
             .single();
 
           if (!aError && agency && agency.subscription_status === 'active') {
+            const isDemo = agency.id === '88888888-8888-4888-a888-888888888888';
+            const demoRoutingOverride = isDemo ? sessionStorage.getItem('demo_lead_routing_type') : null;
             const agencyBranding: B2BBranding = {
               type: 'agency',
               plannerId: null,
@@ -321,7 +325,7 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
               agencyName: agency.name,
               agencyAddress: agency.address || null,
               customEmail: agency.email || DEFAULT_BRANDING.customEmail,
-              leadRoutingType: agency.lead_routing_type || 'direct',
+              leadRoutingType: demoRoutingOverride || agency.lead_routing_type || 'direct',
             };
             setBranding(agencyBranding);
             
@@ -344,6 +348,8 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
             .maybeSingle();
 
           if (!aError && adminPlanner) {
+            const isDemo = adminPlanner.agencies?.id === '88888888-8888-4888-a888-888888888888';
+            const demoRoutingOverride = isDemo ? sessionStorage.getItem('demo_lead_routing_type') : null;
             const organicBranding: B2BBranding = {
               type: 'organic',
               plannerId: adminPlanner.id,
@@ -360,7 +366,7 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
               agencyAddress: adminPlanner.custom_address || adminPlanner.agencies?.address || null,
               registrationNumber: adminPlanner.registration_number || null,
               customEmail: adminPlanner.email || adminPlanner.agencies?.email || DEFAULT_BRANDING.customEmail,
-              leadRoutingType: adminPlanner.agencies?.lead_routing_type || 'direct',
+              leadRoutingType: demoRoutingOverride || adminPlanner.agencies?.lead_routing_type || 'direct',
             };
             setBranding(organicBranding);
             

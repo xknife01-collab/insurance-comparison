@@ -22,6 +22,8 @@ interface Agency {
   phone?: string;
   address?: string;
   current_credits?: number;
+  subscription_tier?: string;
+  max_planner_limit?: number;
 }
 
 interface Planner {
@@ -476,6 +478,7 @@ export default function AdminDashboard() {
   const [regAgencyAddress, setRegAgencyAddress] = useState('');
   const [regLogoUrl, setRegLogoUrl] = useState(DEFAULT_LOGO_IMG);
   const [regRoutingType, setRegRoutingType] = useState<'direct' | 'distribute'>('direct');
+  const [regAgencyTier, setRegAgencyTier] = useState<'basic' | 'pro' | 'enterprise'>('basic');
   
   // Onboarding generated links
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
@@ -524,6 +527,29 @@ export default function AdminDashboard() {
       localStorage.setItem('hide_faq', 'true');
     }
   };
+
+  // B2B Billing Capacity Calculations
+  const billingAgency = agencies.find(a => a.id === currentUser.agencyId);
+  const billingTier = billingAgency?.subscription_tier || 'pro';
+  const billingMaxLimit = billingAgency?.max_planner_limit || 28;
+  const billingActivePlanners = planners.filter(p => p.agency_id === currentUser.agencyId && p.subscription_status === 'active').length;
+  const billingCapacityPercent = Math.min(100, Math.round((billingActivePlanners / billingMaxLimit) * 100));
+
+  let billingGaugeColor = 'from-emerald-500 to-teal-500';
+  let billingTextColor = 'text-emerald-400';
+  let billingBorderColor = 'border-emerald-500/20';
+  let billingBgColor = 'bg-emerald-500/5';
+  if (billingCapacityPercent >= 90) {
+    billingGaugeColor = 'from-red-500 to-rose-600';
+    billingTextColor = 'text-red-400';
+    billingBorderColor = 'border-red-500/20';
+    billingBgColor = 'bg-red-500/5';
+  } else if (billingCapacityPercent >= 70) {
+    billingGaugeColor = 'from-orange-500 to-amber-500';
+    billingTextColor = 'text-orange-400';
+    billingBorderColor = 'border-orange-500/20';
+    billingBgColor = 'bg-orange-500/5';
+  }
 
   const renderHelpGuideToggle = () => (
     <button
@@ -628,6 +654,11 @@ export default function AdminDashboard() {
   const handleUpdatePlannerQuota = async (plannerId: string, quota: number) => {
     try {
       setQuotaSaving(true);
+      if (currentUser.plannerCode === 'test' || currentUser.plannerCode === 'test_planner') {
+        setPlanners(prev => prev.map(p => p.id === plannerId ? { ...p, monthly_credit_quota: quota } : p));
+        alert('설계사 월간 한도가 정상적으로 업데이트되었습니다. (데모 모드)');
+        return;
+      }
       const { error } = await supabase
         .from('planners')
         .update({ monthly_credit_quota: quota })
@@ -650,6 +681,11 @@ export default function AdminDashboard() {
   const handleUpdatePlannerWeight = async (plannerId: string, weight: number) => {
     try {
       const weightVal = Math.max(1, Math.min(100, weight));
+      if (currentUser.plannerCode === 'test' || currentUser.plannerCode === 'test_planner') {
+        setPlanners(prev => prev.map(p => p.id === plannerId ? { ...p, registration_number: `dist_weight:${weightVal}` } : p));
+        alert("설계사 배정 가중치가 변경되었습니다. (데모 모드)");
+        return;
+      }
       const { error } = await supabase
         .from('planners')
         .update({ registration_number: `dist_weight:${weightVal}` })
@@ -667,6 +703,11 @@ export default function AdminDashboard() {
     try {
       const isDisabled = currentRegNum === 'dist_disabled';
       const newVal = isDisabled ? 'dist_weight:5' : 'dist_disabled';
+      if (currentUser.plannerCode === 'test' || currentUser.plannerCode === 'test_planner') {
+        setPlanners(prev => prev.map(p => p.id === plannerId ? { ...p, registration_number: newVal } : p));
+        alert(isDisabled ? "자동 분배 대상에 포함되었습니다. (데모 모드)" : "자동 분배 대상에서 제외되었습니다. (데모 모드)");
+        return;
+      }
       const { error } = await supabase
         .from('planners')
         .update({ registration_number: newVal })
@@ -782,6 +823,37 @@ export default function AdminDashboard() {
   const handleTopupCredits = async (agencyId: string, amount: number) => {
     try {
       setTopupLoading(true);
+      if (currentUser.plannerCode === 'test' || currentUser.plannerCode === 'test_planner') {
+        setAgencies(prev => prev.map(a => {
+          if (a.id === agencyId) {
+            const newCredits = (a.current_credits || 0) + amount;
+            return { ...a, current_credits: newCredits };
+          }
+          return a;
+        }));
+        
+        const txType = amount > 0 ? 'topup' : 'adjust';
+        const txDesc = amount > 0 
+          ? `대시보드 모의 크레딧 충전 (${amount.toLocaleString()})`
+          : `관리자 크레딧 조정 수동 차감 (${Math.abs(amount).toLocaleString()})`;
+        
+        setTransactions(prev => [
+          {
+            id: `tx-${Date.now()}`,
+            agency_id: agencyId,
+            amount: amount,
+            type: txType,
+            description: txDesc,
+            created_at: new Date().toISOString(),
+            planner_name: currentUser.name || '체험대표'
+          },
+          ...prev
+        ]);
+        
+        alert(`성공적으로 ${amount.toLocaleString()} 크레딧이 조정되었습니다. (데모 모드)`);
+        return;
+      }
+
       const { data: agencyData, error: fetchErr } = await supabase
         .from('agencies')
         .select('current_credits')
@@ -949,45 +1021,120 @@ export default function AdminDashboard() {
           subscriptionStatus: 'active'
         });
       } else if (role === 'agency') {
-        // Fetch test agency
-        const { data: testAgencies } = await supabase.from('agencies').select().limit(1);
-        const agency = testAgencies?.[0];
-        if (agency) {
-          // Find representative planner
-          const { data: representative } = await supabase
-            .from('planners')
-            .select()
-            .eq('agency_id', agency.id)
-            .eq('is_admin', true)
-            .limit(1);
-          const repPlanner = representative?.[0];
+        let agency = null;
+        let repPlanner = null;
+        try {
+          // 1. If currently in an agency context, prioritize that
+          if (currentUser.agencyId) {
+            const { data } = await supabase.from('agencies').select().eq('id', currentUser.agencyId).maybeSingle();
+            agency = data;
+          }
+          // 2. Otherwise get the first agency in the database
+          if (!agency) {
+            const { data: testAgencies } = await supabase.from('agencies').select().limit(1);
+            agency = testAgencies?.[0];
+          }
+          // 3. Find representative planner under this agency
+          if (agency) {
+            const { data: representative } = await supabase
+              .from('planners')
+              .select()
+              .eq('agency_id', agency.id)
+              .eq('is_admin', true)
+              .limit(1);
+            repPlanner = representative?.[0];
+            
+            if (!repPlanner) {
+              const { data: anyPlanner } = await supabase
+                .from('planners')
+                .select()
+                .eq('agency_id', agency.id)
+                .limit(1);
+              repPlanner = anyPlanner?.[0];
+            }
+          }
+        } catch (e) {
+          console.warn("Supabase fetch failed for agency simulation:", e);
+        }
 
+        if (agency) {
           setCurrentUser({
             role: 'agency',
             agencyId: agency.id,
-            plannerId: repPlanner?.id,
+            plannerId: repPlanner?.id || '11111111-1111-4111-a111-111111111111',
             name: `${agency.name} 대표자`,
             subscriptionStatus: agency.subscription_status,
-            expiresAt: new Date(Date.now() + 30 * 86400000).toISOString() // Simulated
+            expiresAt: agency.subscription_expires_at || new Date(Date.now() + 30 * 86400000).toISOString()
           });
         } else {
-          alert("먼저 seed_db.py를 실행하거나 가입을 통해 대리점을 등록해주세요.");
+          // Fallback to local demo agency state
+          setCurrentUser({
+            role: 'agency',
+            plannerId: '11111111-1111-4111-a111-111111111111',
+            agencyId: '88888888-8888-4888-a888-888888888888',
+            name: '대리점 체험대표',
+            plannerCode: 'test',
+            subscriptionStatus: 'active',
+            expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+          });
         }
       } else if (role === 'planner') {
-        // Fetch test planner
-        const { data: testPlanners } = await supabase.from('planners').select().eq('planner_code', 'planner_test_1').single();
-        if (testPlanners) {
+        let testPlanner = null;
+        try {
+          // 1. If currently in an agency context, look up a planner under this agency
+          if (currentUser.agencyId) {
+            const { data } = await supabase
+              .from('planners')
+              .select()
+              .eq('agency_id', currentUser.agencyId)
+              .eq('is_admin', false)
+              .limit(1);
+            testPlanner = data?.[0];
+            
+            if (!testPlanner) {
+              const { data: anyPlanner } = await supabase
+                .from('planners')
+                .select()
+                .eq('agency_id', currentUser.agencyId)
+                .limit(1);
+              testPlanner = anyPlanner?.[0];
+            }
+          }
+          // 2. Otherwise try to query test_planner
+          if (!testPlanner) {
+            const { data } = await supabase.from('planners').select().eq('planner_code', 'test_planner').maybeSingle();
+            testPlanner = data;
+          }
+          // 3. Otherwise get any planner in the database
+          if (!testPlanner) {
+            const { data: anyPlanners } = await supabase.from('planners').select().limit(1);
+            testPlanner = anyPlanners?.[0];
+          }
+        } catch (e) {
+          console.warn("Supabase fetch failed for planner simulation:", e);
+        }
+
+        if (testPlanner) {
           setCurrentUser({
             role: 'planner',
-            plannerId: testPlanners.id,
-            agencyId: testPlanners.agency_id,
-            name: testPlanners.name,
-            plannerCode: testPlanners.planner_code,
-            subscriptionStatus: testPlanners.subscription_status,
-            expiresAt: testPlanners.subscription_expires_at || new Date(Date.now() + 30 * 86400000).toISOString()
+            plannerId: testPlanner.id,
+            agencyId: testPlanner.agency_id,
+            name: testPlanner.name,
+            plannerCode: testPlanner.planner_code,
+            subscriptionStatus: testPlanner.subscription_status,
+            expiresAt: testPlanner.subscription_expires_at || new Date(Date.now() + 30 * 86400000).toISOString()
           });
         } else {
-          alert("먼저 seed_db.py를 실행하거나 가입을 통해 설계사를 등록해주세요.");
+          // Fallback to local demo planner state
+          setCurrentUser({
+            role: 'planner',
+            plannerId: '22222222-2222-4222-a222-222222222222',
+            agencyId: null,
+            name: '설계사 체험설계',
+            plannerCode: 'test_planner',
+            subscriptionStatus: 'active',
+            expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+          });
         }
       }
       setActiveTab('leads');
@@ -1019,18 +1166,668 @@ export default function AdminDashboard() {
   };
 
   // Perform Login
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Perform Login
+  const handleLogin = async (e?: React.FormEvent, codeOverride?: string, passwordOverride?: string) => {
+    if (e) e.preventDefault();
     setLoginError('');
-    if (!loginCode.trim()) return;
+    const targetCode = (codeOverride || loginCode).trim();
+    const targetPassword = (passwordOverride || loginPassword).trim();
+    if (!targetCode) return;
     setLoading(true);
+
+    // Intercept Demo accounts
+    if (targetCode === 'test' && targetPassword === '1234') {
+      setCurrentUser({
+        role: 'agency',
+        plannerId: '11111111-1111-4111-a111-111111111111',
+        agencyId: '88888888-8888-4888-a888-888888888888',
+        name: '대리점 체험대표',
+        plannerCode: 'test',
+        subscriptionStatus: 'active',
+        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+      });
+      
+      setAgencies(prev => {
+        if (!prev.some(a => a.id === '88888888-8888-4888-a888-888888888888')) {
+          return [...prev, {
+            id: '88888888-8888-4888-a888-888888888888',
+            name: '스마트보험파트너스 데모 대리점',
+            code: 'demo-agency',
+            subscription_status: 'active',
+            subscription_tier: 'pro',
+            subscription_expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+            max_planner_limit: 28,
+            current_credits: 153000,
+            lead_routing_type: 'distribute_auto_round_robin',
+            logo_url: '/logo.png',
+            email: 'demo@insurance-partner.com'
+          }];
+        }
+        return prev;
+      });
+      
+      setPlanners(prev => {
+        const nonDemo = prev.filter(p => p.agency_id !== '88888888-8888-4888-a888-888888888888');
+        return [
+          ...nonDemo,
+          { 
+            id: '11111111-1111-4111-a111-111111111111', 
+            agency_id: '88888888-8888-4888-a888-888888888888', 
+            name: '대리점 체험대표', 
+            planner_code: 'test', 
+            active: true, 
+            phone: '010-0000-0000', 
+            is_admin: true, 
+            subscription_status: 'active', 
+            registration_number: 'dist_weight:10', 
+            monthly_credit_used: 50, 
+            monthly_credit_quota: 200,
+            company_name: '스마트보험파트너스 데모 대리점',
+            custom_phone: '010-0000-0000',
+            custom_address: '서울시 강남구 테헤란로 123'
+          },
+          { 
+            id: '33333333-3333-4333-a333-333333333333', 
+            agency_id: '88888888-8888-4888-a888-888888888888', 
+            name: '김설계', 
+            planner_code: 'p1', 
+            active: true, 
+            phone: '010-1111-2222', 
+            is_admin: false, 
+            subscription_status: 'active', 
+            registration_number: 'dist_weight:8', 
+            monthly_credit_used: 120, 
+            monthly_credit_quota: 300 
+          },
+          { 
+            id: '44444444-4444-4444-a444-444444444444', 
+            agency_id: '88888888-8888-4888-a888-888888888888', 
+            name: '이보장', 
+            planner_code: 'p2', 
+            active: true, 
+            phone: '010-2222-3333', 
+            is_admin: false, 
+            subscription_status: 'active', 
+            registration_number: 'dist_weight:5', 
+            monthly_credit_used: 85, 
+            monthly_credit_quota: 250 
+          },
+          { 
+            id: '55555555-5555-4555-a555-555555555555', 
+            agency_id: '88888888-8888-4888-a888-888888888888', 
+            name: '박보험', 
+            planner_code: 'p3', 
+            active: true, 
+            phone: '010-3333-4444', 
+            is_admin: false, 
+            subscription_status: 'active', 
+            registration_number: 'dist_disabled', 
+            monthly_credit_used: 0, 
+            monthly_credit_quota: 100 
+          },
+          { 
+            id: '66666666-6666-4666-a666-666666666666', 
+            agency_id: '88888888-8888-4888-a888-888888888888', 
+            name: '최분석', 
+            planner_code: 'p4', 
+            active: true, 
+            phone: '010-4444-5555', 
+            is_admin: false, 
+            subscription_status: 'active', 
+            registration_number: 'dist_weight:10', 
+            monthly_credit_used: 150, 
+            monthly_credit_quota: 500 
+          },
+        ];
+      });
+
+      const remodelingPoliciesHong = {
+        current_total_premium: 280000,
+        policies: [
+          {
+            insurance_company: "삼성생명",
+            product_name: "무배당 삼성종신보험",
+            monthly_premium: 150000,
+            riders: [
+              { rider_name: "일반사망보장", coverage_amount: 100000000 },
+              { rider_name: "암진단특약", coverage_amount: 30000000 },
+              { rider_name: "뇌출혈진단특약", coverage_amount: 20000000 },
+              { rider_name: "급성심근경색특약", coverage_amount: 20000000 }
+            ]
+          },
+          {
+            insurance_company: "메리츠화재",
+            product_name: "무배당 메리츠알파건강보험",
+            monthly_premium: 130000,
+            riders: [
+              { rider_name: "암진단비(유사암제외)", coverage_amount: 50000000 },
+              { rider_name: "유사암진단비", coverage_amount: 10000000 },
+              { rider_name: "뇌혈관질환진단비", coverage_amount: 20000000 },
+              { rider_name: "허혈성심장질환진단비", coverage_amount: 20000000 },
+              { rider_name: "질병수술비", coverage_amount: 5000000 }
+            ]
+          }
+        ]
+      };
+
+      const remodelingPoliciesSim = {
+        current_total_premium: 195000,
+        policies: [
+          {
+            insurance_company: "교보생명",
+            product_name: "무배당 교보실손종합보장보험",
+            monthly_premium: 95000,
+            riders: [
+              { rider_name: "상해사망", coverage_amount: 50000000 },
+              { rider_name: "질병사망", coverage_amount: 30000000 },
+              { rider_name: "상해입원일당", coverage_amount: 30000 }
+            ]
+          },
+          {
+            insurance_company: "현대해상",
+            product_name: "무배당 현대태아안심보험",
+            monthly_premium: 100000,
+            riders: [
+              { rider_name: "암진단비", coverage_amount: 30000000 },
+              { rider_name: "뇌혈관진단비", coverage_amount: 20000000 },
+              { rider_name: "허혈성심장진단비", coverage_amount: 20000000 }
+            ]
+          }
+        ]
+      };
+
+      setLeads([
+        {
+          id: 9901,
+          agency_id: '88888888-8888-4888-a888-888888888888',
+          planner_id: '33333333-3333-4333-a333-333333333333',
+          name: '홍길동',
+          phone: '010-9999-8888',
+          age: 45,
+          insurance_type: 'remodeling',
+          monthly_premium: 280000,
+          status: 'consulting',
+          lead_source: 'remodeling',
+          created_at: new Date(Date.now() - 3600000).toISOString(),
+          planner_name: '김설계',
+          raw_payload: {
+            gender: 'M',
+            utm_source: 'instagram',
+            simulation_code: 'SIM-REMOD-01',
+            company: '삼성생명',
+            email: 'gildong@naver.com',
+            analysisInputs: {
+              _remodelingCoverage: remodelingPoliciesHong
+            },
+            timeline: [
+              { id: '1', type: 'status_change', author: '시스템', detail: '고객 분석 보고서 작성 시도', created_at: new Date(Date.now() - 3600000).toISOString() }
+            ]
+          }
+        },
+        {
+          id: 9902,
+          agency_id: '88888888-8888-4888-a888-888888888888',
+          planner_id: '44444444-4444-4444-a444-444444444444',
+          name: '성춘향',
+          phone: '010-8888-7777',
+          age: 32,
+          insurance_type: 'cancer',
+          monthly_premium: 85000,
+          status: 'new',
+          lead_source: 'compare',
+          created_at: new Date(Date.now() - 7200000).toISOString(),
+          planner_name: '이보장',
+          raw_payload: {
+            gender: 'F',
+            utm_source: 'naver',
+            simulation_code: 'SIM-CANCER-02',
+            company: '메리츠화재',
+            email: 'chunhyang@daum.net',
+            timeline: [
+              { id: '1', type: 'status_change', author: '시스템', detail: '암보험 신규 분석 완료', created_at: new Date(Date.now() - 7200000).toISOString() }
+            ]
+          }
+        },
+        {
+          id: 9903,
+          agency_id: '88888888-8888-4888-a888-888888888888',
+          planner_id: '66666666-6666-4666-a666-666666666666',
+          name: '이몽룡',
+          phone: '010-7777-6666',
+          age: 28,
+          insurance_type: 'driver',
+          monthly_premium: 32000,
+          status: 'completed',
+          lead_source: 'compare',
+          created_at: new Date(Date.now() - 86400000).toISOString(),
+          planner_name: '최분석',
+          raw_payload: {
+            gender: 'M',
+            utm_source: 'facebook',
+            simulation_code: 'SIM-DRIVER-03',
+            company: 'DB손해보험',
+            email: 'mongryong@gmail.com',
+            timeline: [
+              { id: '1', type: 'status_change', author: '최분석', detail: '운전자보험 상담 완료 및 청약 가입', created_at: new Date(Date.now() - 40000000).toISOString() }
+            ]
+          }
+        },
+        {
+          id: 9904,
+          agency_id: '88888888-8888-4888-a888-888888888888',
+          planner_id: '33333333-3333-4333-a333-333333333333',
+          name: '심청',
+          phone: '010-5555-4444',
+          age: 24,
+          insurance_type: 'remodeling_consult',
+          monthly_premium: 195000,
+          status: 'new',
+          lead_source: 'kakaotalk',
+          created_at: new Date(Date.now() - 1800000).toISOString(),
+          planner_name: '김설계',
+          raw_payload: {
+            gender: 'F',
+            utm_source: 'kakaotalk',
+            simulation_code: 'SIM-REMOD-04',
+            company: '교보생명',
+            email: 'cheong@naver.com',
+            analysisInputs: {
+              _remodelingCoverage: remodelingPoliciesSim
+            },
+            timeline: [
+              { id: '1', type: 'status_change', author: '시스템', detail: '카카오톡 정밀 리모델링 상담 요청 접수', created_at: new Date(Date.now() - 1800000).toISOString() }
+            ]
+          }
+        },
+        {
+          id: 9905,
+          agency_id: '88888888-8888-4888-a888-888888888888',
+          planner_id: '44444444-4444-4444-a444-444444444444',
+          name: '임꺽정',
+          phone: '010-6666-5555',
+          age: 50,
+          insurance_type: 'cancer_consult',
+          monthly_premium: 145000,
+          status: 'consulting',
+          lead_source: 'compare',
+          created_at: new Date(Date.now() - 43200000).toISOString(),
+          planner_name: '이보장',
+          raw_payload: {
+            gender: 'M',
+            utm_source: 'google_ads',
+            simulation_code: 'SIM-CANCER-05',
+            company: '한화손해보험',
+            email: 'kkukjung@daum.net',
+            timeline: [
+              { id: '1', type: 'status_change', author: '이보장', detail: '상담전화 연결 및 통화 진행 중', created_at: new Date(Date.now() - 20000000).toISOString() }
+            ]
+          }
+        },
+        {
+          id: 9906,
+          agency_id: '88888888-8888-4888-a888-888888888888',
+          planner_id: '66666666-6666-4666-a666-666666666666',
+          name: '장보고',
+          phone: '010-4444-3333',
+          age: 38,
+          insurance_type: 'support_consult',
+          status: 'new',
+          lead_source: 'support',
+          created_at: new Date(Date.now() - 10800000).toISOString(),
+          planner_name: '최분석',
+          raw_payload: {
+            gender: 'M',
+            utm_source: 'organic',
+            company: '해상무역진흥',
+            email: 'bogo@trade.com',
+            subject: '대리점 단체 구독 크레딧 자동 배분 문의',
+            message: '대리점 Pro 등급 가입 시 소속 설계사들에게 크레딧이 자동으로 매달 분배되는 방식과 가중치 분배 방식 차이를 더 자세히 설명해 주세요.',
+            timeline: [
+              { id: '1', type: 'status_change', author: '시스템', detail: '1:1 고객센터 상담 문의가 성공적으로 접수되었습니다.', created_at: new Date(Date.now() - 10800000).toISOString() }
+            ]
+          }
+        },
+        {
+          id: 9907,
+          agency_id: '88888888-8888-4888-a888-888888888888',
+          planner_id: undefined,
+          name: '놀부',
+          phone: '010-3333-2222',
+          age: 55,
+          insurance_type: 'cancer_consult',
+          monthly_premium: 190000,
+          status: 'new',
+          lead_source: 'compare',
+          created_at: new Date(Date.now() - 1200000).toISOString(),
+          planner_name: '미배정',
+          raw_payload: {
+            gender: 'M',
+            utm_source: 'naver',
+            simulation_code: 'SIM-CANCER-07',
+            company: '삼성화재',
+            email: 'nolbu@greedy.com',
+            timeline: [
+              { id: '1', type: 'status_change', author: '시스템', detail: '공용 유입 DB 수동 배정 풀(Manual Pool) 대기 중', created_at: new Date(Date.now() - 1200000).toISOString() }
+            ]
+          }
+        },
+        {
+          id: 9908,
+          agency_id: '88888888-8888-4888-a888-888888888888',
+          planner_id: '44444444-4444-4444-a444-444444444444',
+          name: '흥부',
+          phone: '010-2222-1111',
+          age: 52,
+          insurance_type: 'cancer_underwriting',
+          monthly_premium: 98000,
+          status: 'new',
+          lead_source: 'underwriting',
+          created_at: new Date(Date.now() - 5000000).toISOString(),
+          planner_name: '이보장',
+          raw_payload: {
+            gender: 'M',
+            utm_source: 'instagram',
+            simulation_code: 'SIM-CANCER-08',
+            company: 'KB손해보험',
+            email: 'heungbu@good.com',
+            underwriting: {
+              disease_history: '고혈압 약 복용 중 (3년)',
+              additional_notes: '현재 약 복용 외에 다른 합병증이나 수술 이력은 전혀 없습니다.'
+            },
+            timeline: [
+              { id: '1', type: 'status_change', author: '시스템', detail: '가입 사전심사 신청 접수 완료', created_at: new Date(Date.now() - 5000000).toISOString() }
+            ]
+          }
+        },
+        {
+          id: 9909,
+          agency_id: '88888888-8888-4888-a888-888888888888',
+          planner_id: '33333333-3333-4333-a333-333333333333',
+          name: '김종신',
+          phone: '010-1234-5678',
+          age: 40,
+          insurance_type: 'whole',
+          monthly_premium: 180000,
+          status: 'new',
+          lead_source: 'compare',
+          created_at: new Date(Date.now() - 7200000).toISOString(),
+          planner_name: '김설계',
+          raw_payload: {
+            gender: 'M',
+            utm_source: 'naver',
+            simulation_code: 'SIM-WHOLE-09',
+            email: 'jongshin@gmail.com',
+            analysisInputs: {
+              wholeLife: {
+                isStepUp: false,
+                objective: 'savings',
+                refundType: 'low',
+                deathBenefit: 200000000
+              }
+            },
+            timeline: [
+              { id: '1', type: 'status_change', author: '시스템', detail: '종신보험 상세 설계 비교분석 완료', created_at: new Date(Date.now() - 7200000).toISOString() }
+            ]
+          }
+        },
+        {
+          id: 9910,
+          agency_id: '88888888-8888-4888-a888-888888888888',
+          planner_id: '44444444-4444-4444-a444-444444444444',
+          name: '박종신',
+          phone: '010-8765-4321',
+          age: 35,
+          insurance_type: 'whole_consult',
+          monthly_premium: 220000,
+          status: 'new',
+          lead_source: 'kakaotalk',
+          planner_name: '이보장',
+          raw_payload: {
+            gender: 'F',
+            utm_source: 'google_ads',
+            simulation_code: 'SIM-WHOLE-10',
+            email: 'parkjs@naver.com',
+            analysisInputs: {
+              wholeLife: {
+                isStepUp: true,
+                objective: 'family',
+                refundType: 'standard',
+                deathBenefit: 150000000
+              }
+            },
+            timeline: [
+              { id: '1', type: 'status_change', author: '시스템', detail: '종신보험 카카오톡 상담 요청 접수 완료', created_at: new Date(Date.now() - 14400000).toISOString() }
+            ]
+          }
+        }
+      ]);
+      
+      setActiveTab('leads');
+      setLoading(false);
+      return;
+    }
+
+    if (targetCode === 'test_planner' && targetPassword === '1234') {
+      setCurrentUser({
+        role: 'planner',
+        plannerId: '22222222-2222-4222-a222-222222222222',
+        agencyId: null,
+        name: '설계사 체험설계',
+        plannerCode: 'test_planner',
+        subscriptionStatus: 'active',
+        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+      });
+
+      setPlanners([
+        {
+          id: '22222222-2222-4222-a222-222222222222',
+          agency_id: null,
+          name: '설계사 체험설계',
+          planner_code: 'test_planner',
+          active: true,
+          phone: '010-5555-6666',
+          is_admin: false,
+          subscription_status: 'active',
+          monthly_credit_used: 40,
+          monthly_credit_quota: 200,
+          company_name: '개인 스마트 설계사',
+          custom_phone: '010-5555-6666',
+          custom_address: '서울시 서초구 서초대로 456'
+        }
+      ]);
+
+      setAgencies([]);
+      
+      const remodelingPoliciesLim = {
+        current_total_premium: 450000,
+        policies: [
+          {
+            insurance_company: "한화생명",
+            product_name: "무배당 한화종신보장보험",
+            monthly_premium: 250000,
+            riders: [
+              { rider_name: "일반사망", coverage_amount: 200000000 },
+              { rider_name: "암수술비", coverage_amount: 5000000 }
+            ]
+          },
+          {
+            insurance_company: "DB손해보험",
+            product_name: "무배당 DB참좋은훼밀리건강보험",
+            monthly_premium: 200000,
+            riders: [
+              { rider_name: "암진단비", coverage_amount: 50000000 },
+              { rider_name: "뇌혈관진단비", coverage_amount: 30000000 },
+              { rider_name: "허혈성심장진단비", coverage_amount: 30000000 },
+              { rider_name: "상해후유장해", coverage_amount: 100000000 }
+            ]
+          }
+        ]
+      };
+
+      const remodelingPoliciesHeung = {
+        current_total_premium: 128000,
+        policies: [
+          {
+            insurance_company: "KB손해보험",
+            product_name: "무배당 KB간편건강보험",
+            monthly_premium: 128000,
+            riders: [
+              { rider_name: "암진단비", coverage_amount: 20000000 },
+              { rider_name: "뇌출혈진단비", coverage_amount: 10000000 },
+              { rider_name: "급성심근경색진단비", coverage_amount: 10000000 }
+            ]
+          }
+        ]
+      };
+
+      setLeads([
+        {
+          id: 9911,
+          planner_id: '22222222-2222-4222-a222-222222222222',
+          name: '임꺽정',
+          phone: '010-6666-5555',
+          age: 50,
+          insurance_type: 'remodeling',
+          monthly_premium: 450000,
+          status: 'new',
+          lead_source: 'remodeling',
+          created_at: new Date(Date.now() - 1800000).toISOString(),
+          planner_name: '설계사 체험설계',
+          raw_payload: {
+            gender: 'M',
+            utm_source: 'instagram',
+            simulation_code: 'SIM-REMOD-11',
+            company: '삼성생명',
+            email: 'kkukjung@daum.net',
+            analysisInputs: {
+              _remodelingCoverage: remodelingPoliciesLim
+            },
+            timeline: [
+              { id: '1', type: 'status_change', author: '시스템', detail: '보험료 다이어트 분석 시도', created_at: new Date(Date.now() - 1800000).toISOString() }
+            ]
+          }
+        },
+        {
+          id: 9912,
+          planner_id: '22222222-2222-4222-a222-222222222222',
+          name: '심청',
+          phone: '010-5555-4444',
+          age: 24,
+          insurance_type: 'driver',
+          monthly_premium: 25000,
+          status: 'consulting',
+          lead_source: 'compare',
+          created_at: new Date(Date.now() - 43200000).toISOString(),
+          planner_name: '설계사 체험설계',
+          raw_payload: {
+            gender: 'F',
+            utm_source: 'naver',
+            simulation_code: 'SIM-DRIVER-12',
+            company: 'KB손해보험',
+            email: 'cheong@naver.com',
+            timeline: [
+              { id: '1', type: 'status_change', author: '설계사 체험설계', detail: '전화 상담 시작', created_at: new Date(Date.now() - 20000000).toISOString() }
+            ]
+          }
+        },
+        {
+          id: 9913,
+          planner_id: '22222222-2222-4222-a222-222222222222',
+          name: '흥부',
+          phone: '010-2222-1111',
+          age: 48,
+          insurance_type: 'remodeling_consult',
+          monthly_premium: 128000,
+          status: 'new',
+          lead_source: 'remodeling',
+          created_at: new Date(Date.now() - 600000).toISOString(),
+          planner_name: '설계사 체험설계',
+          raw_payload: {
+            gender: 'M',
+            utm_source: 'kakaotalk',
+            simulation_code: 'SIM-REMOD-13',
+            company: '메리츠화재',
+            email: 'heungbu@gmail.com',
+            analysisInputs: {
+              _remodelingCoverage: remodelingPoliciesHeung
+            },
+            timeline: [
+              { id: '1', type: 'status_change', author: '시스템', detail: '카톡 정밀 상담 요청 접수', created_at: new Date(Date.now() - 600000).toISOString() }
+            ]
+          }
+        },
+        {
+          id: 9914,
+          planner_id: '22222222-2222-4222-a222-222222222222',
+          name: '김종신',
+          phone: '010-1234-5678',
+          age: 40,
+          insurance_type: 'whole',
+          monthly_premium: 180000,
+          status: 'new',
+          lead_source: 'compare',
+          created_at: new Date(Date.now() - 7200000).toISOString(),
+          planner_name: '설계사 체험설계',
+          raw_payload: {
+            gender: 'M',
+            utm_source: 'naver',
+            simulation_code: 'SIM-WHOLE-14',
+            email: 'jongshin@gmail.com',
+            analysisInputs: {
+              wholeLife: {
+                isStepUp: false,
+                objective: 'savings',
+                refundType: 'low',
+                deathBenefit: 200000000
+              }
+            },
+            timeline: [
+              { id: '1', type: 'status_change', author: '시스템', detail: '종신보험 상세 설계 비교분석 완료', created_at: new Date(Date.now() - 7200000).toISOString() }
+            ]
+          }
+        },
+        {
+          id: 9915,
+          planner_id: '22222222-2222-4222-a222-222222222222',
+          name: '박종신',
+          phone: '010-8765-4321',
+          age: 35,
+          insurance_type: 'whole_consult',
+          monthly_premium: 220000,
+          status: 'new',
+          lead_source: 'kakaotalk',
+          planner_name: '설계사 체험설계',
+          raw_payload: {
+            gender: 'F',
+            utm_source: 'google_ads',
+            simulation_code: 'SIM-WHOLE-15',
+            email: 'parkjs@naver.com',
+            analysisInputs: {
+              wholeLife: {
+                isStepUp: true,
+                objective: 'family',
+                refundType: 'standard',
+                deathBenefit: 150000000
+              }
+            },
+            timeline: [
+              { id: '1', type: 'status_change', author: '시스템', detail: '종신보험 카카오톡 상담 요청 접수 완료', created_at: new Date(Date.now() - 14400000).toISOString() }
+            ]
+          }
+        }
+      ]);
+      
+      setActiveTab('leads');
+      setLoading(false);
+      return;
+    }
 
     try {
       // Find planner by code
       const { data: planner, error } = await supabase
         .from('planners')
         .select()
-        .eq('planner_code', loginCode.trim())
+        .eq('planner_code', targetCode)
         .single();
 
       if (error || !planner) {
@@ -1040,7 +1837,7 @@ export default function AdminDashboard() {
       }
 
       // Validate password if set
-      if (planner.password && planner.password.trim() !== loginPassword.trim()) {
+      if (planner.password && planner.password.trim() !== targetPassword) {
         setLoginError('비밀번호가 일치하지 않습니다. 다시 입력해 주세요.');
         setLoading(false);
         return;
@@ -1092,6 +1889,30 @@ export default function AdminDashboard() {
         return;
       }
 
+      if (invitedAgencyId) {
+        // Check agency planner capacity limit
+        const { count, error: countErr } = await supabase
+          .from('planners')
+          .select('*', { count: 'exact', head: true })
+          .eq('agency_id', invitedAgencyId)
+          .eq('subscription_status', 'active');
+
+        const { data: agencyData, error: agencyErr } = await supabase
+          .from('agencies')
+          .select('max_planner_limit, subscription_tier')
+          .eq('id', invitedAgencyId)
+          .single();
+
+        if (!agencyErr && agencyData) {
+          const currentCount = count || 0;
+          if (currentCount >= (agencyData.max_planner_limit || 13)) {
+            alert(`[가입 제한] 해당 대리점의 요금제(${agencyData.subscription_tier?.toUpperCase() || 'BASIC'}) 설계사 등록 한도(${agencyData.max_planner_limit || 13}명)를 초과하였습니다. 대리점 관리자에게 요금제 업그레이드를 요청해 주세요.`);
+            setLoading(false);
+            return;
+          }
+        }
+      }
+
       let agencyId: string | undefined = undefined;
       const trialExpiry = new Date();
       trialExpiry.setDate(trialExpiry.getDate() + 30); // 30 Days Free Trial
@@ -1110,7 +1931,9 @@ export default function AdminDashboard() {
           address: regAgencyAddress,
           logo_url: regLogoUrl,
           subscription_status: 'active', // Active during trial
-          lead_routing_type: regRoutingType
+          lead_routing_type: regRoutingType,
+          subscription_tier: regAgencyTier,
+          max_planner_limit: regAgencyTier === 'basic' ? 13 : regAgencyTier === 'pro' ? 28 : 150
         };
 
         const { data: agencyData, error: agencyError } = await supabase
@@ -1356,8 +2179,24 @@ export default function AdminDashboard() {
       const { data: plannerList } = await supabase.from('planners').select();
       const { data: agencyList } = await supabase.from('agencies').select();
       
-      setPlanners(plannerList || []);
-      setAgencies(agencyList || []);
+      const currentPlanners = plannerList && plannerList.length > 0 ? plannerList : planners;
+      const currentAgencies = agencyList && agencyList.length > 0 ? agencyList : agencies;
+
+      if (plannerList && plannerList.length > 0) {
+        setPlanners(plannerList);
+      }
+      if (agencyList && agencyList.length > 0) {
+        const mappedAgencies = agencyList.map(a => {
+          if (a.id === '88888888-8888-4888-a888-888888888888') {
+            const override = sessionStorage.getItem('demo_lead_routing_type');
+            if (override) {
+              return { ...a, lead_routing_type: override };
+            }
+          }
+          return a;
+        });
+        setAgencies(mappedAgencies);
+      }
 
       // 4. Fetch Credit Transactions
       let txQuery = supabase.from('credit_transactions').select().order('created_at', { ascending: false });
@@ -1366,18 +2205,20 @@ export default function AdminDashboard() {
       }
       const { data: txList } = await txQuery;
       
-      const mappedTx = (txList || []).map(tx => {
-        const matchedPlanner = (plannerList || []).find(p => p.id === tx.planner_id);
-        return {
-          ...tx,
-          planner_name: matchedPlanner ? matchedPlanner.name : '시스템/관리자'
-        };
-      });
-      setTransactions(mappedTx as CreditTransaction[]);
+      if (txList && txList.length > 0) {
+        const mappedTx = txList.map(tx => {
+          const matchedPlanner = currentPlanners.find(p => p.id === tx.planner_id);
+          return {
+            ...tx,
+            planner_name: matchedPlanner ? matchedPlanner.name : '시스템/관리자'
+          };
+        });
+        setTransactions(mappedTx as CreditTransaction[]);
+      }
 
       // 5. Pre-populate alert configs
       if (currentUser.role === 'agency' && currentUser.agencyId) {
-        const myAgency = (agencyList || []).find(a => a.id === currentUser.agencyId);
+        const myAgency = currentAgencies.find(a => a.id === currentUser.agencyId);
         if (myAgency) {
           setAlertThreshold((myAgency as any).low_credit_alert_threshold ?? 2000);
           setAlertPhone((myAgency as any).low_credit_alert_phone ?? '');
@@ -1387,9 +2228,18 @@ export default function AdminDashboard() {
       // 2. Fetch Leads based on permission boundaries
       let query = supabase.from('customer_leads').select().order('created_at', { ascending: false });
 
+      // Filter by is_demo status to keep demo and production leads fully segregated
+      const isUserDemo = currentUser.plannerCode === 'test_planner' || currentUser.plannerCode === 'test' || currentUser.agencyId === '88888888-8888-4888-a888-888888888888' || (currentUser as any).isDemo;
+      query = query.eq('is_demo', !!isUserDemo);
+
       if (currentUser.role === 'planner') {
         // Planner can see their own assigned leads OR unassigned leads from their agency
-        query = query.or(`planner_id.eq.${currentUser.plannerId},and(planner_id.is.null,agency_id.eq.${currentUser.agencyId})`);
+        if (currentUser.agencyId) {
+          query = query.or(`planner_id.eq.${currentUser.plannerId},and(planner_id.is.null,agency_id.eq.${currentUser.agencyId})`);
+        } else {
+          // Freelance planner can see their own assigned leads OR unassigned leads with no agency
+          query = query.or(`planner_id.eq.${currentUser.plannerId},and(planner_id.is.null,agency_id.is.null)`);
+        }
       } else if (currentUser.role === 'agency') {
         // Agency Admin can see all leads under their agency
         query = query.eq('agency_id', currentUser.agencyId);
@@ -1397,27 +2247,29 @@ export default function AdminDashboard() {
 
       const { data: leadList } = await query;
       
-      // Map planner names locally for display
-      const mappedLeads = (leadList || [])
-        .filter(lead => {
-          if (currentUser.role === 'planner') {
-            // Planner can only see their assigned leads OR unassigned CARD 1 leads
-            if (lead.planner_id === currentUser.plannerId) return true;
-            const isHighIntent = isLeadConsult(lead.insurance_type) || lead.insurance_type?.includes('_underwriting');
-            if (lead.planner_id === null && !isHighIntent) return true;
-            return false;
-          }
-          return true;
-        })
-        .map(lead => {
-          const matchedPlanner = (plannerList || []).find(p => p.id === lead.planner_id);
-          return {
-            ...lead,
-            planner_name: matchedPlanner ? matchedPlanner.name : '미배정'
-          };
-        });
+      if (leadList && leadList.length > 0) {
+        // Map planner names locally for display
+        const mappedLeads = leadList
+          .filter(lead => {
+            if (currentUser.role === 'planner') {
+              // Planner can only see their assigned leads OR unassigned CARD 1 leads
+              if (lead.planner_id === currentUser.plannerId) return true;
+              const isHighIntent = isLeadConsult(lead.insurance_type) || lead.insurance_type?.includes('_underwriting');
+              if (lead.planner_id === null && !isHighIntent) return true;
+              return false;
+            }
+            return true;
+          })
+          .map(lead => {
+            const matchedPlanner = currentPlanners.find(p => p.id === lead.planner_id);
+            return {
+              ...lead,
+              planner_name: matchedPlanner ? matchedPlanner.name : '미배정'
+            };
+          });
 
-      setLeads(mappedLeads);
+        setLeads(mappedLeads);
+      }
 
       // 3. Fetch Visitor Logs based on permission boundaries
       let visitorQuery = supabase.from('visitor_logs').select().order('created_at', { ascending: false });
@@ -1425,18 +2277,20 @@ export default function AdminDashboard() {
       if (currentUser.role === 'planner') {
         visitorQuery = visitorQuery.eq('planner_code', currentUser.plannerCode);
       } else if (currentUser.role === 'agency') {
-        const plannerCodes = (plannerList || [])
+        const plannerCodes = currentPlanners
           .filter(p => p.agency_id === currentUser.agencyId)
           .map(p => p.planner_code);
         visitorQuery = visitorQuery.in('planner_code', plannerCodes);
       }
 
       const { data: visitorList } = await visitorQuery;
-      setVisitorLogs(visitorList || []);
+      if (visitorList && visitorList.length > 0) {
+        setVisitorLogs(visitorList);
+      }
 
       // Pre-populate profile editing states
       if (currentUser.plannerId) {
-        const myProfile = (plannerList || []).find(p => p.id === currentUser.plannerId);
+        const myProfile = currentPlanners.find(p => p.id === currentUser.plannerId);
         if (myProfile) {
           setEditKakao(myProfile.kakao_link || '');
           setEditGreetingTitle(myProfile.greeting_title || '');
@@ -1558,6 +2412,17 @@ export default function AdminDashboard() {
         timeline: [newEvent, ...currentTimeline]
       };
 
+      if (currentUser.plannerCode === 'test' || currentUser.plannerCode === 'test_planner') {
+        const updatedLeads = leads.map(l => l.id === leadId ? { ...l, status: newStatus, raw_payload: updatedPayload } : l);
+        setLeads(updatedLeads);
+
+        const nextSelectedLead = updatedLeads.find(l => l.id === leadId);
+        if (nextSelectedLead) {
+          setSelectedLead(nextSelectedLead);
+        }
+        return;
+      }
+
       const { error } = await supabase
         .from('customer_leads')
         .update({ 
@@ -1617,6 +2482,18 @@ export default function AdminDashboard() {
         memos: [newMemo, ...currentMemos],
         timeline: [newTimelineEvent, ...currentTimeline]
       };
+
+      if (currentUser.plannerCode === 'test' || currentUser.plannerCode === 'test_planner') {
+        const updatedLeads = leads.map(l => l.id === leadId ? { ...l, raw_payload: updatedPayload } : l);
+        setLeads(updatedLeads);
+        
+        const nextSelectedLead = updatedLeads.find(l => l.id === leadId);
+        if (nextSelectedLead) {
+          setSelectedLead(nextSelectedLead);
+        }
+        setNewMemoText('');
+        return;
+      }
 
       const { error } = await supabase
         .from('customer_leads')
@@ -1767,6 +2644,25 @@ export default function AdminDashboard() {
         timeline: [newEvent, ...currentTimeline]
       };
 
+      if (currentUser.plannerCode === 'test' || currentUser.plannerCode === 'test_planner') {
+        const updatedLeads = leads.map(l => l.id === leadId ? { 
+          ...l, 
+          planner_id: plannerId, 
+          planner_name: plannerName,
+          status: 'calling',
+          raw_payload: updatedPayload
+        } : l);
+        setLeads(updatedLeads);
+
+        const nextSelectedLead = updatedLeads.find(l => l.id === leadId);
+        if (nextSelectedLead) {
+          setSelectedLead(nextSelectedLead);
+        }
+        setAssigningLead(null);
+        alert(`[${plannerName}] 설계사에게 성공적으로 수동 배정되었습니다. (데모 모드)`);
+        return;
+      }
+
       const { error } = await supabase
         .from('customer_leads')
         .update({ 
@@ -1800,6 +2696,30 @@ export default function AdminDashboard() {
   // Approve invited planner's registration
   const handleApprovePlanner = async (plannerId: string) => {
     try {
+      if (!currentUser.agencyId) return;
+
+      // 1. Get current count of active planners in the agency
+      const { count, error: countErr } = await supabase
+        .from('planners')
+        .select('*', { count: 'exact', head: true })
+        .eq('agency_id', currentUser.agencyId)
+        .eq('subscription_status', 'active');
+
+      // 2. Get the agency's limit
+      const { data: agencyData, error: agencyErr } = await supabase
+        .from('agencies')
+        .select('max_planner_limit, subscription_tier')
+        .eq('id', currentUser.agencyId)
+        .single();
+
+      if (!agencyErr && agencyData) {
+        const activeCount = count || 0;
+        if (activeCount >= (agencyData.max_planner_limit || 13)) {
+          alert(`[승인 실패] 대리점의 요금제(${agencyData.subscription_tier?.toUpperCase() || 'BASIC'}) 설계사 등록 한도(${agencyData.max_planner_limit || 13}명)를 초과하였습니다. 설계사를 추가하려면 대리점 요금제를 업그레이드해 주세요.`);
+          return;
+        }
+      }
+
       const { error } = await supabase
         .from('planners')
         .update({ subscription_status: 'active' })
@@ -1853,6 +2773,36 @@ export default function AdminDashboard() {
     }
     setLoading(true);
     try {
+      if (currentUser.plannerCode === 'test' || currentUser.plannerCode === 'test_planner') {
+        setCurrentUser(prev => ({
+          ...prev,
+          name: editGreetingTitle ? `${editGreetingTitle} (${editCompanyName})` : prev.name
+        }));
+        setPlanners(prev => prev.map(p => p.id === currentUser.plannerId ? {
+          ...p,
+          kakao_link: editKakao,
+          greeting_title: editGreetingTitle,
+          greeting_content: editGreetingContent,
+          profile_image_url: editProfileImg,
+          logo_url: editLogoUrl,
+          custom_phone: editCustomPhone,
+          custom_address: editCustomAddress,
+          password: editPassword,
+          company_name: editCompanyName,
+          registration_number: editRegistrationNumber,
+          email: editEmail
+        } : p));
+        if (currentUser.role === 'agency' && currentUser.agencyId) {
+          setAgencies(prev => prev.map(a => a.id === currentUser.agencyId ? {
+            ...a,
+            logo_url: editLogoUrl,
+            email: editEmail
+          } : a));
+        }
+        alert("프로필 및 랜딩페이지 설정이 실시간으로 저장되었습니다. 즉시 내 홈페이지에 반영됩니다. (데모 모드)");
+        return;
+      }
+
       const { error } = await supabase
         .from('planners')
         .update({
@@ -1897,6 +2847,13 @@ export default function AdminDashboard() {
   const handleUpdateRouting = async (newType: string) => {
     if (!currentUser.agencyId) return;
     try {
+      const isDemo = currentUser.plannerCode === 'test' || currentUser.plannerCode === 'test_planner' || currentUser.agencyId === '88888888-8888-4888-a888-888888888888';
+      if (isDemo) {
+        sessionStorage.setItem('demo_lead_routing_type', newType);
+        setAgencies(prev => prev.map(a => a.id === currentUser.agencyId ? { ...a, lead_routing_type: newType } : a));
+        alert("DB 분배 설정이 변경되었습니다. (데모 모드 - 세션에 임시 저장됨)");
+        return;
+      }
       const { error } = await supabase
         .from('agencies')
         .update({ lead_routing_type: newType })
@@ -1919,6 +2876,17 @@ export default function AdminDashboard() {
       const currentExpiry = currentUser.expiresAt ? new Date(currentUser.expiresAt) : new Date();
       currentExpiry.setDate(currentExpiry.getDate() + 30);
       const newExpiryStr = currentExpiry.toISOString();
+
+      if (currentUser.plannerCode === 'test' || currentUser.plannerCode === 'test_planner') {
+        setCurrentUser(prev => ({
+          ...prev,
+          subscriptionStatus: 'active',
+          expiresAt: newExpiryStr
+        }));
+        setAgencies(prev => prev.map(a => a.id === currentUser.agencyId ? { ...a, subscription_status: 'active', subscription_expires_at: newExpiryStr } : a));
+        setPaymentSuccess(true);
+        return;
+      }
 
       if (currentUser.role === 'planner' && currentUser.plannerId) {
         const { error } = await supabase
@@ -2454,7 +3422,7 @@ export default function AdminDashboard() {
 
       {/* ── GUEST / ONBOARDING SIGNUP VIEW ── */}
       {currentUser.role === 'guest' ? (
-        <div className="max-w-5xl mx-auto px-4 py-16 flex flex-col items-center gap-12">
+        <div className="max-w-[1400px] mx-auto px-4 lg:px-8 py-16 flex flex-col items-center gap-12">
           
           {/* Header */}
           <div className="text-center space-y-4 max-w-3xl">
@@ -2525,11 +3493,341 @@ export default function AdminDashboard() {
             </div>
 
             <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 p-4 rounded-2xl text-center text-xs font-black">
-              "고객이 직접 내 브랜드 비교 사이트에서 0.1초 분석을 마치고 자발적으로 요청한 상담은 성약률이 3배 이상 높습니다."
+              "고객이 직접 내 브랜드 비교 사이체서 0.1초 분석을 마치고 자발적으로 요청한 상담은 성약률이 3배 이상 높습니다."
             </div>
           </div>
 
-          <div className="w-full bg-slate-900/80 border border-slate-800/80 rounded-[2.5rem] shadow-2xl overflow-hidden backdrop-blur-xl">
+          {/* ── 4-TIER PREMIUM PRICING PLANS ── */}
+          <div className="w-full space-y-8 mt-4">
+            <div className="text-center space-y-3">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-500/10 border border-orange-500/20 text-orange-400 rounded-full text-[10px] font-black uppercase tracking-widest">
+                Choose Your Plan
+              </div>
+              <h2 className="text-3xl font-black text-white tracking-tight">
+                💰 대표님과 대리점에 맞춤형 4단계 요금제
+              </h2>
+              <p className="text-xs text-slate-400 font-bold max-w-xl mx-auto break-keep">
+                개인 영업 활성화부터 대리점 통합 분배 및 대형 GA 맞춤형 도메인 연동까지, 성장에 필요한 최고의 마케팅 무기를 장착하세요.
+              </p>
+            </div>
+
+            {/* 리크루팅 치트키 안내 배너 */}
+            <div className="max-w-4xl mx-auto bg-gradient-to-r from-orange-500/10 via-amber-500/5 to-orange-500/10 border border-orange-500/25 rounded-2xl p-4 md:p-5 text-center backdrop-blur-sm space-y-1">
+              <div className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-orange-500/20 text-orange-300 rounded-md text-[9px] font-black uppercase tracking-wider">
+                💡 대리점 대표님을 위한 리크루팅 치트키
+              </div>
+              <p className="text-[11px] md:text-xs text-slate-200 font-bold leading-relaxed break-keep">
+                "신입 설계사 채용 시 <span className="text-orange-400 font-extrabold">'우리 대리점은 설계사 개인 홈페이지와 AI 자동 분석 툴을 지급해, 개인이 고객 DB를 무료로 평생 직접 수집하는 환경을 제공한다'</span>는 차별화된 이미지를 어필하여 신규 설계사 도입 성공률을 극대화하세요!"
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              
+              {/* Card 1: 개인 설계사 */}
+              <div className="bg-slate-900/60 border border-slate-800/80 rounded-3xl p-6 flex flex-col justify-between hover:border-orange-500/30 transition-all duration-300 group">
+                <div className="space-y-5">
+                  <div className="space-y-1 text-left">
+                    <span className="text-[9px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded-md font-bold uppercase tracking-wider">B2C 1인 전용</span>
+                    <h3 className="text-lg font-black text-white group-hover:text-orange-400 transition-colors">개인 설계사 플랜</h3>
+                  </div>
+                  <div className="border-b border-slate-800/80 pb-4 text-left">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-2xl font-black text-white">월 5만 원</span>
+                    </div>
+                    <p className="text-[10px] text-slate-500 font-bold mt-1">설계사 1인 전용 독립 브랜딩 제공</p>
+                  </div>
+                  <ul className="space-y-3.5 text-[11px] text-slate-400 font-bold text-left">
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>개인 홈페이지 제공 (Personal URL) 🔗</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">설계사 이름, 프로필 사진, 연락처, 개인 인사말이 적용된 단독 주소(.../?planner=코드) 제공.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>0.1초 AI 실시간 보장 진단 무제한 ⚡</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">고객이 접속하여 스스로 보험료를 시뮬레이션하고 비교 진단받을 수 있는 AI 엔진 전체 개방.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>실시간 고객 리드(DB) 대시보드 📋</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">고객이 진단을 마치거나 상담을 신청하면 성별, 나이, 입력값, 점수 등을 0.1초 만에 전용 관리자 화면에서 즉시 확인.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>1:1 카톡 및 전화 상담 다이렉트 연동 💬</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">고객용 결과 화면 하단에 설계사 개인 카톡(오픈채팅 등) 및 전화 연결 버튼 상시 노출.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>PWA 홈화면 바로가기 앱 설치 지원 📱</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">설계사 및 고객의 스마트폰 홈화면에 앱 아이콘(바로가기)을 설치하여 모바일 앱처럼 즉시 실행 가능.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>고객 안심 상담 시스템 (익명 상담 지원) 🔒</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">고객이 개인정보 유출 걱정 없이 안심하고 첫 문의를 남길 수 있도록 돕는 3대 안심 배너 및 시스템 기본 탑재.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>설계 코드(Simulation Code) 연동 🔑</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">고객이 직접 만져본 보장 리모델링 설계안을 고유 코드로 복사하여 설계사와 즉시 공유하는 연동 기능.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>내 보험 정밀 분석 데이터 & 업데이트 📊</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">내보험 정밀 분석 데이터 제공 및 매월 업데이트 되는 보험 분석 비교 엔진 제공.</p>
+                    </li>
+                  </ul>
+                </div>
+                <button 
+                  onClick={() => { 
+                    setSignupTab('register'); 
+                    setSignupType('planner');
+                    setTimeout(() => {
+                      document.getElementById('auth-card-container')?.scrollIntoView({ behavior: 'smooth' });
+                    }, 50);
+                  }} 
+                  className="w-full bg-slate-800 hover:bg-slate-700 text-white text-xs font-black py-3 rounded-xl mt-6 transition-all cursor-pointer"
+                >
+                  개인 플랜 신청하기
+                </button>
+              </div>
+
+              {/* Card 2: 대리점 Basic */}
+              <div className="bg-slate-900/60 border border-slate-800/80 rounded-3xl p-6 flex flex-col justify-between hover:border-orange-500/30 transition-all duration-300 group">
+                <div className="space-y-5">
+                  <div className="space-y-1 text-left">
+                    <span className="text-[9px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded-md font-bold uppercase tracking-wider">B2B 소규모</span>
+                    <h3 className="text-lg font-black text-white group-hover:text-orange-400 transition-colors">대리점 Basic</h3>
+                  </div>
+                  <div className="border-b border-slate-800/80 pb-4 text-left">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-2xl font-black text-white">월 50만 원</span>
+                    </div>
+                    <p className="text-[10px] text-slate-500 font-bold mt-1">등록 가능 인원: 최대 13명</p>
+                  </div>
+                  <ul className="space-y-3.5 text-[11px] text-slate-400 font-bold text-left">
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>개인 설계사 핵심 기능 8가지 전체 제공 ✨</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">소속 설계사 전원에게 개별 전용 홈페이지 및 AI 엔진 전체 개방.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>소속 설계사 최대 13명 등록 관리 👥</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">대리점 규모에 최적화된 소속 설계사 등록 및 관리자 승인 시스템.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>개인 홍보 직접배정형 (Direct) 지원 🔗</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">소속 설계사가 개별적으로 유치한 고객 DB를 대리점 개입 없이 즉시 본인에게 단독 노출.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>대리점 수동 분배형 (Manual Pool) 지원 📢</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">공용 유입 DB를 대표 대기 풀에 두고 검토 후 적합한 설계사에게 수동 지정 배정.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>지점 통합 브랜딩 & 로고 커스텀 🏢</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">지점 단독 로고 및 메인 슬로건 설정으로 자사 고유의 브랜드 정체성 표출.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>실시간 리드 지점장 통합 관리 📊</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">소속 설계사들의 상담 리드 수집 현황 및 상세 보장 데이터를 실시간 통합 조회.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5 text-amber-400"><Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" /> <span>설계사 채용 무기화 (Recruiting Advantage) 💎</span></div>
+                      <p className="pl-5 text-[10px] text-amber-500/80 leading-normal">소속 설계사 전원에게 "고객 DB 평생 무료 수집 환경"을 지급하여 리크루팅 매력도 극대화.</p>
+                    </li>
+                  </ul>
+                </div>
+                <button 
+                  onClick={() => { 
+                    setSignupTab('register'); 
+                    setSignupType('agency');
+                    setRegAgencyTier('basic');
+                    setTimeout(() => {
+                      document.getElementById('auth-card-container')?.scrollIntoView({ behavior: 'smooth' });
+                    }, 50);
+                  }} 
+                  className="w-full bg-slate-800 hover:bg-slate-700 text-white text-xs font-black py-3 rounded-xl mt-6 transition-all cursor-pointer"
+                >
+                  Basic 신청하기
+                </button>
+              </div>
+
+              {/* Card 3: 대리점 Pro (Most Popular) */}
+              <div className="bg-slate-900/60 border-2 border-orange-500/40 rounded-3xl p-6 flex flex-col justify-between hover:border-orange-500 transition-all duration-300 group relative shadow-2xl shadow-orange-500/5">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-[9px] font-black uppercase tracking-widest px-3.5 py-1 rounded-full shadow-lg">
+                  ★ 가장 인기
+                </div>
+                <div className="space-y-5">
+                  <div className="space-y-1 text-left">
+                    <span className="text-[9px] bg-orange-500/10 text-orange-400 px-2 py-0.5 rounded-md font-bold uppercase tracking-wider">B2B 중대형</span>
+                    <h3 className="text-lg font-black text-white group-hover:text-orange-400 transition-colors">대리점 Pro</h3>
+                  </div>
+                  <div className="border-b border-slate-800/80 pb-4 text-left">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-2xl font-black text-orange-400">월 100만 원</span>
+                    </div>
+                    <p className="text-[10px] text-slate-500 font-bold mt-1">등록 가능 인원: 최대 28명</p>
+                  </div>
+                  <ul className="space-y-3.5 text-[11px] text-slate-300 font-bold text-left">
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>Basic 요금제 기능 전체 포함 ✨</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">개인 기능 8가지 및 지점 통합 관리 기능을 기본으로 탑재.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>소속 설계사 최대 28명 등록 관리 👥</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">중대형 지사를 여유 있게 지원하는 넉넉한 설계사 등록 한도 제공.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>실시간 자동 분배형 (Auto-Routing) 지원 ⚡</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">통합 광고 유입 DB를 대리점 개입 없이 0.1초 만에 최적의 설계사에게 자동 분배.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>균등 순차 분배 (Round Robin) 🔄</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">소속 설계사 전원에게 순서대로 기회를 균등하게 배정하는 표준 알고리즘.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>가중치 비율 분배 (Weighted) ⚖️</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">설계사 개인별 기여도나 레벨에 맞추어 맞춤 비율로 DB를 차등 자동 분배.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>미계약 리드 자동 회수 및 재분배 ⏱️</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">분배된 고객 리드가 일정 시간 상담 진행이 안 될 경우, 회수 후 타 설계사에게 즉시 재지정.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5 text-amber-400"><Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" /> <span>설계사 채용 무기화 (Recruiting Advantage) 💎</span></div>
+                      <p className="pl-5 text-[10px] text-amber-400/80 leading-normal">소속 설계사 전원에게 "고객 DB 평생 무료 수집 환경"을 지급하여 리크루팅 매력도 극대화.</p>
+                    </li>
+                  </ul>
+                </div>
+                <button 
+                  onClick={() => { 
+                    setSignupTab('register'); 
+                    setSignupType('agency');
+                    setRegAgencyTier('pro');
+                    setTimeout(() => {
+                      document.getElementById('auth-card-container')?.scrollIntoView({ behavior: 'smooth' });
+                    }, 50);
+                  }} 
+                  className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-xs font-black py-3 rounded-xl mt-6 transition-all shadow-lg shadow-orange-500/20 cursor-pointer"
+                >
+                  Pro 요금제로 신청하기 🚀
+                </button>
+              </div>
+
+              {/* Card 4: 대리점 Enterprise */}
+              <div className="bg-slate-900/60 border border-slate-800/80 rounded-3xl p-6 flex flex-col justify-between hover:border-orange-500/30 transition-all duration-300 group">
+                <div className="space-y-5">
+                  <div className="space-y-1 text-left">
+                    <span className="text-[9px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded-md font-bold uppercase tracking-wider">B2B 대형 GA</span>
+                    <h3 className="text-lg font-black text-white group-hover:text-orange-400 transition-colors">대리점 Enterprise</h3>
+                  </div>
+                  <div className="border-b border-slate-800/80 pb-4 text-left">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-2xl font-black text-white">월 500만 원</span>
+                    </div>
+                    <p className="text-[10px] text-slate-500 font-bold mt-1">등록 가능 인원: 최대 150명</p>
+                  </div>
+                  <ul className="space-y-3.5 text-[11px] text-slate-400 font-bold text-left">
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>Pro 요금제 기능 전체 포함 ✨</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">자동 분배, 가중치 배정 및 리드 회수 등 최상위 라우팅 엔진 탑재.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>소속 설계사 최대 150명 등록 관리 👥</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">대형 GA 지사 및 전체 본부 수용을 위한 메머드급 인원 관리 용량 제공.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>실적/활동량 기반 배정 (Performance) 📈</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">실제 실적이 우수하거나 실시간 온라인 상담 대기 중인 설계사에게 가중 가점 자동 지정.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>독립 브랜드 도메인 연동 (White-Label) 🌐</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">자사 단독 도메인을 연동하여 완벽한 자체 개발 핀테크 플랫폼처럼 독점 브랜딩.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>1:1 전담 마케팅 기술 컨설팅 🤝</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">대리점 전용 광고 효율화, 서버 관리 및 커스텀 개발을 위한 전문 파트너십 구축.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5 text-amber-400"><Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" /> <span>설계사 채용 무기화 (Recruiting Advantage) 💎</span></div>
+                      <p className="pl-5 text-[10px] text-amber-400/80 leading-normal">소속 설계사 전원에게 "고객 DB 평생 무료 수집 환경"을 지급하여 리크루팅 매력도 극대화.</p>
+                    </li>
+                  </ul>
+                </div>
+                <button 
+                  onClick={() => { 
+                    setSignupTab('register'); 
+                    setSignupType('agency');
+                    setRegAgencyTier('enterprise');
+                    setTimeout(() => {
+                      document.getElementById('auth-card-container')?.scrollIntoView({ behavior: 'smooth' });
+                    }, 50);
+                  }} 
+                  className="w-full bg-slate-800 hover:bg-slate-700 text-white text-xs font-black py-3 rounded-xl mt-6 transition-all cursor-pointer"
+                >
+                  Enterprise 신청하기
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+          {/* 1-Second Demo Experience Zone */}
+          <div className="w-full bg-gradient-to-r from-violet-950/20 via-slate-900 to-violet-950/20 border border-orange-500/20 rounded-[2.5rem] p-8 md:p-10 shadow-2xl space-y-6 text-center backdrop-blur-xl relative overflow-hidden my-10 animate-in fade-in duration-500">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-orange-500/5 rounded-full blur-3xl -z-10" />
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-violet-500/5 rounded-full blur-3xl -z-10" />
+            
+            <div className="space-y-2 max-w-2xl mx-auto">
+              <span className="px-3 py-1 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-full text-[10px] font-black uppercase tracking-wider inline-block shadow-md">
+                ⚡ 1초 간편 데모 체험
+              </span>
+              <h3 className="text-xl md:text-2xl font-black text-white leading-normal break-keep">
+                가입 전, 관리자 대시보드를 먼저 확인해 보세요!
+              </h3>
+              <p className="text-xs md:text-sm text-slate-400 font-bold leading-relaxed break-keep">
+                가입이나 신용카드 등록 없이 실제 가상 데이터가 주입된 대리점 관리자 뷰와 개인 설계사 대시보드 뷰를 즉시 체험해 보실 수 있습니다.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto pt-2">
+              
+              {/* Agency View Demo Button */}
+              <button 
+                type="button"
+                onClick={() => handleLogin(undefined, 'test', '1234')}
+                className="group p-6 bg-slate-950/40 hover:bg-slate-950/80 border border-slate-800 hover:border-orange-500/50 rounded-2xl text-left transition-all duration-300 shadow-lg cursor-pointer flex gap-4 items-start relative overflow-hidden"
+              >
+                <div className="absolute top-0 right-0 bg-orange-500/10 text-orange-400 px-2.5 py-1 rounded-bl-xl text-[9px] font-black tracking-wide group-hover:bg-orange-500 group-hover:text-white transition-all">
+                  추천체험
+                </div>
+                <div className="w-12 h-12 rounded-xl bg-orange-500/10 text-orange-400 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                  <Building className="w-6 h-6" />
+                </div>
+                <div className="space-y-1.5">
+                  <h4 className="font-extrabold text-sm text-white flex items-center gap-1.5">
+                    대리점(GA) 대표용 뷰 체험하기
+                  </h4>
+                  <p className="text-[11px] text-slate-450 font-bold leading-normal break-keep">
+                    소속 설계사 등록 현황, 실시간 정원 게이지 바(Gauge Bar), DB 자동 배분(Auto-Routing) 설정 및 대리점 분배 통계를 확인해 볼 수 있습니다.
+                  </p>
+                </div>
+              </button>
+
+              {/* Planner View Demo Button */}
+              <button 
+                type="button"
+                onClick={() => handleLogin(undefined, 'test_planner', '1234')}
+                className="group p-6 bg-slate-950/40 hover:bg-slate-950/80 border border-slate-800 hover:border-orange-500/50 rounded-2xl text-left transition-all duration-300 shadow-lg cursor-pointer flex gap-4 items-start relative overflow-hidden"
+              >
+                <div className="w-12 h-12 rounded-xl bg-orange-500/10 text-orange-400 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                  <User className="w-6 h-6" />
+                </div>
+                <div className="space-y-1.5">
+                  <h4 className="font-extrabold text-sm text-white flex items-center gap-1.5">
+                    개인 설계사용 뷰 체험하기
+                  </h4>
+                  <p className="text-[11px] text-slate-450 font-bold leading-normal break-keep">
+                    나만의 전용 0.1초 AI 진단 페이지 링크 생성, 카카오톡 상담 연동 및 실시간 독점 고객 리드(DB) 관리 대시보드를 확인해 볼 수 있습니다.
+                  </p>
+                </div>
+              </button>
+
+            </div>
+          </div>
+
+          <div id="auth-card-container" className="w-full bg-slate-900/80 border border-slate-800/80 rounded-[2.5rem] shadow-2xl overflow-hidden backdrop-blur-xl">
             {/* Tabs */}
             <div className="flex border-b border-slate-800/80">
               <button 
@@ -2554,13 +3852,13 @@ export default function AdminDashboard() {
                     <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block">설계사 고유코드</label>
                     <input 
                       type="text" 
-                      placeholder="가입 시 입력한 고유코드를 입력하세요 (예: planner_test_1)" 
+                      placeholder="가입 시 입력한 고유코드를 입력하세요 (예: test_planner)" 
                       value={loginCode}
                       onChange={(e) => setLoginCode(e.target.value)}
                       className="w-full bg-slate-950 border border-slate-800 focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/10 rounded-xl py-3 px-4 outline-none transition-all text-sm text-white font-bold"
                     />
                     <p className="text-[10px] text-slate-500 leading-normal font-medium">
-                      💡 데모 가입된 기본 테스트 설계사 코드는 <strong>planner_test_1</strong> 입니다.
+                      💡 데모 가입된 기본 테스트 설계사 코드는 <strong>test_planner</strong> 입니다.
                     </p>
                   </div>
 
@@ -2638,7 +3936,7 @@ export default function AdminDashboard() {
                         {/* Individual Planner */}
                         <div 
                           onClick={() => setSignupType('planner')}
-                          className={`p-6 rounded-2xl border-2 transition-all cursor-pointer relative overflow-hidden flex flex-col justify-between h-44 ${signupType === 'planner' ? 'bg-slate-950/40 border-orange-500 shadow-lg' : 'bg-slate-950/10 border-slate-800 hover:border-slate-700'}`}
+                          className={`p-6 rounded-2xl border-2 transition-all cursor-pointer relative overflow-hidden flex flex-col justify-between min-h-[12.5rem] ${signupType === 'planner' ? 'bg-slate-950/40 border-orange-500 shadow-lg' : 'bg-slate-950/10 border-slate-800 hover:border-slate-700'}`}
                         >
                           {signupType === 'planner' && (
                             <div className="absolute top-0 right-0 bg-orange-500 text-white px-3 py-1 rounded-bl-xl text-[10px] font-black uppercase">
@@ -2665,27 +3963,58 @@ export default function AdminDashboard() {
                         {/* Agency Plan */}
                         <div 
                           onClick={() => setSignupType('agency')}
-                          className={`p-6 rounded-2xl border-2 transition-all cursor-pointer relative overflow-hidden flex flex-col justify-between h-44 ${signupType === 'agency' ? 'bg-slate-950/40 border-orange-500 shadow-lg' : 'bg-slate-950/10 border-slate-800 hover:border-slate-700'}`}
+                          className={`p-6 rounded-2xl border-2 transition-all cursor-pointer relative overflow-hidden flex flex-col justify-between min-h-[12.5rem] ${signupType === 'agency' ? 'bg-slate-950/40 border-orange-500 shadow-lg' : 'bg-slate-950/10 border-slate-800 hover:border-slate-700'}`}
                         >
                           {signupType === 'agency' && (
                             <div className="absolute top-0 right-0 bg-orange-500 text-white px-3 py-1 rounded-bl-xl text-[10px] font-black uppercase">
                               선택됨
                             </div>
                           )}
-                          <div className="space-y-2">
-                            <div className="flex items-center gap-2">
-                              <div className="w-8 h-8 rounded-lg bg-orange-500/10 text-orange-400 flex items-center justify-center">
-                                <Building className="w-4 h-4" />
+                          <div className="space-y-3">
+                            <div className="flex items-start justify-between gap-2">
+                              <div className="flex items-center gap-2">
+                                <div className="w-8 h-8 rounded-lg bg-orange-500/10 text-orange-400 flex items-center justify-center">
+                                  <Building className="w-4 h-4" />
+                                </div>
+                                <h3 className="font-extrabold text-base text-white">대리점(GA) 단체 플랜</h3>
                               </div>
-                              <h3 className="font-extrabold text-base text-white">대리점(GA) 단체 플랜</h3>
+                              
+                              {/* inline tier selector */}
+                              <div className="flex bg-slate-900/80 p-0.5 rounded-lg border border-slate-800" onClick={(e) => e.stopPropagation()}>
+                                {(['basic', 'pro', 'enterprise'] as const).map((t) => (
+                                  <button
+                                    key={t}
+                                    type="button"
+                                    onClick={() => {
+                                      setSignupType('agency');
+                                      setRegAgencyTier(t);
+                                    }}
+                                    className={`px-1.5 py-0.5 rounded-md text-[9px] font-black uppercase transition-all ${
+                                      regAgencyTier === t && signupType === 'agency'
+                                        ? 'bg-orange-500 text-white shadow'
+                                        : 'text-slate-400 hover:text-slate-200'
+                                    }`}
+                                  >
+                                    {t === 'basic' ? 'Basic' : t === 'pro' ? 'Pro' : 'Ent'}
+                                  </button>
+                                ))}
+                              </div>
                             </div>
+                            
                             <p className="text-[11px] text-slate-400 font-bold leading-normal break-keep">
-                              대리점 단위 통합 관리자 콘솔을 운영하며, 소속 설계사들을 등록 및 DB 분배 정책을 관리합니다.
+                              {regAgencyTier === 'basic' 
+                                ? '소규모 대리점용. 설계사 최대 13명 등록 가능.' 
+                                : regAgencyTier === 'pro' 
+                                ? '중소형 대리점용 (추천). 설계사 최대 28명. 실시간 자동 분배 지원.' 
+                                : '대형 GA 아웃소싱용. 설계사 최대 150명. 전담 기술 지원.'}
                             </p>
                           </div>
+                          
                           <div className="border-t border-slate-800 pt-3 mt-4 flex items-end justify-between">
                             <span className="text-[10px] bg-orange-500/10 text-orange-400 px-2 py-0.5 rounded-md font-bold">첫 달 무료 혜택</span>
-                            <span className="text-sm font-black text-white">월 500,000 원</span>
+                            <span className="text-sm font-black text-white">
+                              {regAgencyTier === 'basic' ? '월 500,000 원' : regAgencyTier === 'pro' ? '월 1,000,000 원' : '월 5,000,000 원'}
+                            </span>
                           </div>
                         </div>
 
@@ -2851,6 +4180,7 @@ export default function AdminDashboard() {
                   {/* Step 3: Agency Specific Onboarding */}
                   {signupType === 'agency' && (
                     <div className="space-y-8 border-t border-slate-800/80 pt-8 animate-in fade-in duration-300">
+                      
                       <h3 className="font-extrabold text-lg text-white border-l-4 border-orange-500 pl-3">
                         대리점 정보 및 DB 분배 정책 설정
                       </h3>
@@ -2984,6 +4314,32 @@ export default function AdminDashboard() {
         /* ── LOGGED IN DASHBOARD VIEW ── */
         <div className="w-full max-w-full xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-10">
           
+          {(currentUser.plannerCode === 'test' || currentUser.plannerCode === 'test_planner') && (
+            <div className="bg-gradient-to-r from-orange-500/20 via-amber-500/20 to-orange-500/20 border border-orange-500/30 rounded-2xl p-4 mb-8 text-left flex flex-col md:flex-row md:items-center justify-between gap-4 animate-in slide-in-from-top-4 duration-300 relative overflow-hidden shadow-lg">
+              <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+              <div className="space-y-1 pl-2">
+                <h4 className="font-extrabold text-sm text-orange-400 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-orange-500 animate-ping" />
+                  💡 현재는 대시보드 데모 체험 모드입니다
+                </h4>
+                <p className="text-xs text-slate-350 font-bold leading-normal break-keep">
+                  이 화면은 {currentUser.role === 'agency' ? '대리점 대표용 관리자' : '개인 설계사용'} 가상의 데모 페이지입니다. 대표님/설계사님만의 전용 도메인 및 0.1초 AI 진단 툴을 활성화하여 사용하시려면 정식 회원 가입 및 구독을 진행해 주세요.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setCurrentUser({ role: 'guest' });
+                  setTimeout(() => {
+                    document.getElementById('auth-card-container')?.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }}
+                className="px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-black text-xs rounded-xl cursor-pointer shrink-0 transition-all shadow-md text-center hover:scale-105 active:scale-95"
+              >
+                👉 체험 종료 및 정식 구독하기
+              </button>
+            </div>
+          )}
           {invitedAgencyId && (
             <div className="bg-amber-500/10 border border-amber-500/20 rounded-2xl p-4 mb-8 text-left flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-in slide-in-from-top-4 duration-300">
               <div className="space-y-1">
@@ -4188,8 +5544,13 @@ export default function AdminDashboard() {
                             기간제 라이선스
                           </span>
                         </div>
-                        <h3 className="text-xl font-extrabold text-white">
-                          {currentUser.role === 'agency' ? '대리점 통합 단체 구독 플랜' : '개인 설계사 독립형 구독 플랜'}
+                        <h3 className="text-xl font-extrabold text-white flex items-center gap-2">
+                          <span>{currentUser.role === 'agency' ? '대리점 통합 단체 구독 플랜' : '개인 설계사 독립형 구독 플랜'}</span>
+                          {currentUser.role === 'agency' && (
+                            <span className="text-[10px] bg-orange-500/10 text-orange-400 px-2 py-0.5 border border-orange-500/20 rounded font-black uppercase tracking-wider">
+                              {billingTier}
+                            </span>
+                          )}
                         </h3>
                         <p className="text-[11px] text-slate-450 font-bold leading-relaxed">
                           대리점 플랫폼 이용 권한 및 소속 설계사들의 마케팅 랜딩페이지 활성화 상태를 유지하는 월 정기 구독 계약 정보입니다.
@@ -4200,7 +5561,13 @@ export default function AdminDashboard() {
                         <div>
                           <span className="text-[9px] font-bold text-slate-500 block uppercase">정상 요금</span>
                           <span className="text-base font-black text-white">
-                            {currentUser.role === 'agency' ? '월 500,000 원' : '월 50,000 원'}
+                            {currentUser.role === 'agency' 
+                              ? (billingTier === 'basic' 
+                                  ? '월 500,000 원' 
+                                  : billingTier === 'pro' 
+                                    ? '월 1,000,000 원' 
+                                    : '월 5,000,000 원')
+                              : '월 50,000 원'}
                           </span>
                         </div>
                         <div className="h-6 w-px bg-slate-800" />
@@ -4232,6 +5599,40 @@ export default function AdminDashboard() {
                           👉 1개월 구독 연장 결제하기 (시뮬레이터)
                         </button>
                       </div>
+
+                      {/* B2B Agency Capacity Gauge Bar */}
+                      {currentUser.role === 'agency' && (
+                        <div className={`mt-6 p-5 border rounded-2xl ${billingBorderColor} ${billingBgColor} space-y-4`}>
+                          <div className="flex justify-between items-center text-xs font-bold">
+                            <div className="space-y-1">
+                              <span className="text-[10px] uppercase font-black text-slate-400 block tracking-wider">소속 설계사 등록 한도 (Capacity Status)</span>
+                              <h4 className="text-sm font-extrabold text-white">
+                                현재 요금제 등급: <span className="text-orange-400 font-black uppercase">{billingTier} 플랜</span>
+                              </h4>
+                            </div>
+                            <div className="text-right">
+                              <span className="text-[10px] text-slate-400 font-bold block">활성 인원수</span>
+                              <span className={`text-base font-black ${billingTextColor}`}>{billingActivePlanners}</span>
+                              <span className="text-slate-500 text-xs font-bold"> / {billingMaxLimit} 명 ({billingCapacityPercent}%)</span>
+                            </div>
+                          </div>
+
+                          {/* Visual Gauge Bar */}
+                          <div className="w-full bg-slate-950 h-3 rounded-full overflow-hidden border border-slate-900">
+                            <div 
+                              className={`h-full bg-gradient-to-r ${billingGaugeColor} transition-all duration-500 rounded-full`}
+                              style={{ width: `${billingCapacityPercent}%` }}
+                            />
+                          </div>
+
+                          <div className="flex justify-between items-center text-[10px] text-slate-500 font-bold">
+                            <span>0%</span>
+                            <span>70% (경고)</span>
+                            <span>90% (정원 임박)</span>
+                            <span>100% (정원 초과)</span>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
  
@@ -4291,12 +5692,14 @@ export default function AdminDashboard() {
 
                       {(currentUser.role === 'agency' || isIndependentPlanner) && activeBillingAgencyId && (
                         <div className="space-y-4">
-                          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
                             {[
                               { label: '+3,000 크레딧', amount: 3000 },
                               { label: '+10,000 크레딧', amount: 10000 },
                               { label: '+30,000 크레딧', amount: 30000 },
                               { label: '+100,000 크레딧', amount: 100000 },
+                              { label: '+300,000 크레딧', amount: 300000 },
+                              { label: '+1,000,000 크레딧', amount: 1000000 },
                             ].map((item, idx) => (
                               <button
                                 key={idx}
@@ -4349,10 +5752,17 @@ export default function AdminDashboard() {
                                         </button>
                                         <button
                                           disabled={topupLoading}
-                                          onClick={() => handleTopupCredits(agency.id, 50000)}
+                                          onClick={() => handleTopupCredits(agency.id, 100000)}
                                           className="px-2 py-1 bg-slate-900 hover:bg-slate-800 text-amber-500 border border-slate-850 rounded font-black text-[10px]"
                                         >
-                                          +5만
+                                          +10만
+                                        </button>
+                                        <button
+                                          disabled={topupLoading}
+                                          onClick={() => handleTopupCredits(agency.id, 1000000)}
+                                          className="px-2 py-1 bg-slate-900 hover:bg-slate-800 text-amber-500 border border-slate-850 rounded font-black text-[10px]"
+                                        >
+                                          +100만
                                         </button>
                                         <button
                                           disabled={topupLoading}
@@ -4360,6 +5770,13 @@ export default function AdminDashboard() {
                                           className="px-2 py-1 bg-slate-900 hover:bg-slate-800 text-rose-500 border border-slate-850 rounded font-black text-[10px]"
                                         >
                                           -1만
+                                        </button>
+                                        <button
+                                          disabled={topupLoading}
+                                          onClick={() => handleTopupCredits(agency.id, -100000)}
+                                          className="px-2 py-1 bg-slate-900 hover:bg-slate-800 text-rose-500 border border-slate-850 rounded font-black text-[10px]"
+                                        >
+                                          -10만
                                         </button>
                                       </div>
                                     </td>
