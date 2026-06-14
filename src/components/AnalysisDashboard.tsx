@@ -135,6 +135,7 @@ const InsuranceSummary = ({ result }: { result: AnalysisResult }) => {
 
 const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitLead, branding }) => {
   const { scores, efficiency, deficiencies, analysis } = result;
+  const isRemodeling = !!(analysis as any)._allDietOptions && !!(analysis as any)._allUpgradeOptions;
   const cat = analysis.selectedCategory ?? '';
 
   const copyToClipboard = (text: string) => {
@@ -336,17 +337,147 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
   const [consultType, setConsultType] = React.useState<'anonymous' | 'regular'>('regular');
   const [consultName, setConsultName] = React.useState('');
   const [consultPhone, setConsultPhone] = React.useState('');
+  const [consultOtpSent, setConsultOtpSent] = React.useState(false);
+  const [consultOtpCode, setConsultOtpCode] = React.useState('');
+  const [consultVerified, setConsultVerified] = React.useState(false);
+  const [consultOtpLoading, setConsultOtpLoading] = React.useState(false);
+  const [consultOtpTimer, setConsultOtpTimer] = React.useState(180);
+  const [consultOtpError, setConsultOtpError] = React.useState<string | null>(null);
   const [consultSubmitting, setConsultSubmitting] = React.useState(false);
+
+  const [redirectingModal, setRedirectingModal] = React.useState<{
+    isOpen: boolean;
+    code: string;
+    isAnonymous: boolean;
+    targetUrl: string;
+    countdown: number;
+  } | null>(null);
+
+  React.useEffect(() => {
+    let interval: any;
+    if (consultOtpSent && consultOtpTimer > 0 && !consultVerified) {
+      interval = setInterval(() => {
+        setConsultOtpTimer((prev) => prev - 1);
+      }, 1000);
+    } else if (consultOtpTimer === 0) {
+      setConsultOtpError("인증 시간이 만료되었습니다. 인증번호를 다시 받아주세요.");
+    }
+    return () => clearInterval(interval);
+  }, [consultOtpSent, consultOtpTimer, consultVerified]);
+
+  React.useEffect(() => {
+    let interval: any;
+    if (redirectingModal && redirectingModal.isOpen && redirectingModal.countdown > 0) {
+      interval = setInterval(() => {
+        setRedirectingModal(prev => {
+          if (!prev) return null;
+          if (prev.countdown <= 1) {
+            clearInterval(interval);
+            // Change page location instead of popup to bypass popup blockers
+            window.location.href = prev.targetUrl;
+            return null;
+          }
+          return { ...prev, countdown: prev.countdown - 1 };
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [redirectingModal?.isOpen, redirectingModal?.countdown]);
+
+  const handleRequestConsultOtp = async () => {
+    const cleanPhone = consultPhone.replace(/[^0-9]/g, '');
+    if (!cleanPhone || cleanPhone.length < 10) {
+      setConsultOtpError("올바른 휴대폰 번호를 입력해 주세요.");
+      alert("올바른 휴대폰 번호를 입력해 주세요.");
+      return;
+    }
+
+    setConsultOtpLoading(true);
+    setConsultOtpError(null);
+    setConsultOtpCode('');
+    setConsultOtpTimer(180);
+    
+    try {
+      const response = await fetch('/api/send-sms-verification', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          action: 'send',
+          phone: cleanPhone
+        })
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok || !data?.success) {
+        setConsultOtpError(data?.error || "인증번호 발송에 실패했습니다.");
+        alert(data?.error || "인증번호 발송에 실패했습니다.");
+      } else {
+        setConsultOtpSent(true);
+        if (data?.simulated && data?.code) {
+          alert(`[테스트 안내]\n알리고 API IP 제한 우회 모드로 동작합니다.\n\n인증번호: [ ${data.code} ]`);
+        } else {
+          alert("인증번호가 발송되었습니다.");
+        }
+      }
+    } catch (err: any) {
+      console.error(err);
+      setConsultOtpError("인증 요청 중 연결 오류가 발생했습니다.");
+    } finally {
+      setConsultOtpLoading(false);
+    }
+  };
+
+  const handleVerifyConsultOtp = async () => {
+    if (!consultOtpCode.trim() || consultOtpCode.length < 6) {
+      setConsultOtpError("6자리 인증번호를 정확히 입력해 주세요.");
+      return;
+    }
+    
+    if (consultOtpTimer === 0) {
+      setConsultOtpError("인증 시간이 만료되었습니다. 인증번호를 다시 받아주세요.");
+      return;
+    }
+    
+    setConsultOtpLoading(true);
+    setConsultOtpError(null);
+    
+    try {
+      const response = await fetch('/api/send-sms-verification', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          action: 'verify',
+          phone: consultPhone,
+          code: consultOtpCode
+        })
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok || !data?.success) {
+        setConsultOtpError(data?.error || "인증번호가 일치하지 않습니다.");
+      } else {
+        setConsultVerified(true);
+        setConsultOtpError(null);
+        alert("인증에 성공했습니다.");
+      }
+    } catch (err: any) {
+      console.error(err);
+      setConsultOtpError("인증 확인 중 연결 오류가 발생했습니다.");
+    } finally {
+      setConsultOtpLoading(false);
+    }
+  };
 
   const handleConsultSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!consultName.trim()) {
-      alert("이름을 입력해 주세요.");
-      return;
-    }
-    const cleanPhone = consultPhone.replace(/[^0-9]/g, '');
-    if (!cleanPhone || cleanPhone.length < 10) {
-      alert("올바른 휴대폰 번호를 입력해 주세요.");
+    if (!consultVerified) {
+      alert("휴대폰 본인인증을 먼저 완료해 주세요.");
       return;
     }
     if (consultSubmitting) return;
@@ -373,17 +504,17 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
       const clipboardMsg = `안녕하세요! [ ${simCode} ] 설계안으로 정밀 분석 ${typeLabel} 상담 신청합니다. (보험 종류: ${result.analysis.selectedCategory || '일반'})`;
       copyToClipboard(clipboardMsg);
       
-      if (consultType === 'anonymous') {
-        alert(`[익명] 정밀 분석 신청이 완료되었습니다!\n설계 코드 [ ${simCode} ]가 클립보드에 자동 복사되었습니다. 카카오톡 채팅창에 붙여넣기(Ctrl+V)하여 안전하게 상담해 주세요.`);
-      } else {
-        alert(`[정식] 정밀 분석 신청이 완료되었습니다!\n설계 코드 [ ${simCode} ]가 클립보드에 자동 복사되었습니다. 카카오톡 채팅창에 바로 붙여넣기(Ctrl+V)하시면 설계사가 바로 조회하여 신속한 맞춤 상담을 안내해 드립니다.`);
-      }
+      setIsConsultOpen(false);
 
       if (branding?.kakaoLink) {
-        window.open(branding.kakaoLink, '_blank', 'noopener,noreferrer');
+        setRedirectingModal({
+          isOpen: true,
+          code: simCode,
+          isAnonymous: consultType === 'anonymous',
+          targetUrl: branding.kakaoLink,
+          countdown: 3
+        });
       }
-
-      setIsConsultOpen(false);
     } catch (err) {
       console.error(err);
       alert("신청 중 오류가 발생했습니다. 다시 시도해 주세요.");
@@ -461,7 +592,7 @@ ${origin}/?code=${simCode}
 
   const handleUnderwritingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!uwVerified) {
+    if (!isRemodeling && !uwVerified) {
       alert("휴대폰 본인인증을 먼저 완료해 주세요.");
       return;
     }
@@ -502,7 +633,6 @@ ${origin}/?code=${simCode}
       setUwSubmitting(false);
     }
   };
-  const isRemodeling = !!(analysis as any)._allDietOptions && !!(analysis as any)._allUpgradeOptions;
   const allDietOptions = (analysis as any)._allDietOptions || [];
   const allUpgradeOptions = (analysis as any)._allUpgradeOptions || [];
 
@@ -1808,40 +1938,34 @@ ${origin}/?code=${simCode}
               {/* 가로 분할 2 버튼 */}
               <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10 pt-4 border-t border-white/5">
                 <button
-                  onClick={async () => {
-                    setApplied(true);
-                    const simCode = (result as any).simulation_code || '';
-                    if (onSubmitLead) {
-                      await onSubmitLead(result.analysis, `${result.analysis.selectedCategory || 'general'}_consult`, result, 'anonymous');
-                    }
-                    
-                    const clipboardMsg = `안녕하세요! [ ${simCode} ] 설계안으로 익명 상담 신청합니다. (보험 종류: ${result.analysis.selectedCategory || '일반'})`;
-                    copyToClipboard(clipboardMsg);
-                    alert(`[익명] 최저가 설계서 상담 신청이 완료되었습니다!\n설계 코드 [ ${simCode} ]가 클립보드에 자동 복사되었습니다. 카카오톡 채팅창에 붙여넣기(Ctrl+V)하여 안전하게 상담해 주세요.`);
-
-                    if (branding?.kakaoLink) {
-                      window.open(branding.kakaoLink, '_blank', 'noopener,noreferrer');
-                    }
+                  onClick={() => {
+                    setConsultType('anonymous');
+                    if (result.analysis.name) setConsultName(result.analysis.name);
+                    if (result.analysis.mobile) setConsultPhone(result.analysis.mobile);
+                    setConsultOtpSent(false);
+                    setConsultOtpCode('');
+                    setConsultVerified(false);
+                    setConsultOtpLoading(false);
+                    setConsultOtpTimer(180);
+                    setConsultOtpError(null);
+                    setIsConsultOpen(true);
                   }}
                   className="w-full px-6 py-4.5 bg-slate-800 hover:bg-slate-700 text-white font-black text-xs rounded-xl border border-white/10 shadow-md transform hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer text-center"
                 >
                   💬 익명 카톡 상담 신청 (무료)
                 </button>
                 <button
-                  onClick={async () => {
-                    setApplied(true);
-                    const simCode = (result as any).simulation_code || '';
-                    if (onSubmitLead) {
-                      await onSubmitLead(result.analysis, `${result.analysis.selectedCategory || 'general'}_consult`, result, 'regular');
-                    }
-                    
-                    const clipboardMsg = `안녕하세요! [ ${simCode} ] 설계안으로 정식 상담 신청합니다. (보험 종류: ${result.analysis.selectedCategory || '일반'})`;
-                    copyToClipboard(clipboardMsg);
-                    alert(`[정식] 최저가 설계서 상담 신청이 완료되었습니다!\n설계 코드 [ ${simCode} ]가 클립보드에 자동 복사되었습니다. 카카오톡 채팅창에 붙여넣기(Ctrl+V)하시면 더 신속한 맞춤 상담을 안내해 드립니다.`);
-
-                    if (branding?.kakaoLink) {
-                      window.open(branding.kakaoLink, '_blank', 'noopener,noreferrer');
-                    }
+                  onClick={() => {
+                    setConsultType('regular');
+                    if (result.analysis.name) setConsultName(result.analysis.name);
+                    if (result.analysis.mobile) setConsultPhone(result.analysis.mobile);
+                    setConsultOtpSent(false);
+                    setConsultOtpCode('');
+                    setConsultVerified(false);
+                    setConsultOtpLoading(false);
+                    setConsultOtpTimer(180);
+                    setConsultOtpError(null);
+                    setIsConsultOpen(true);
                   }}
                   className="w-full px-6 py-4.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xs rounded-xl shadow-[0_12px_24px_-4px_rgba(255,107,0,0.4)] transform hover:scale-[1.03] active:scale-95 transition-all duration-300 cursor-pointer text-center"
                 >
@@ -1915,22 +2039,70 @@ ${origin}/?code=${simCode}
             {/* 가로 분할 2 버튼 */}
             <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/5">
               <button
-                onClick={() => {
-                  setConsultType('anonymous');
-                  if (result.analysis.name) setConsultName(result.analysis.name);
-                  if (result.analysis.mobile) setConsultPhone(result.analysis.mobile);
-                  setIsConsultOpen(true);
+                onClick={async () => {
+                  setApplied(true);
+                  const simCode = (result as any).simulation_code || '';
+                  if (onSubmitLead) {
+                    const customAnalysis = {
+                      ...result.analysis,
+                      name: result.analysis.name || '고객',
+                      mobile: result.analysis.mobile || ''
+                    };
+                    await onSubmitLead(
+                      customAnalysis,
+                      'remodeling_consult',
+                      result,
+                      'anonymous'
+                    );
+                  }
+                  
+                  const clipboardMsg = `안녕하세요! [ ${simCode} ] 설계안으로 정밀 분석 익명 상담 신청합니다. (보험 종류: ${result.analysis.selectedCategory || '일반'})`;
+                  copyToClipboard(clipboardMsg);
+
+                  if (branding?.kakaoLink) {
+                    setRedirectingModal({
+                      isOpen: true,
+                      code: simCode,
+                      isAnonymous: true,
+                      targetUrl: branding.kakaoLink,
+                      countdown: 3
+                    });
+                  }
                 }}
                 className="w-full px-6 py-4.5 bg-slate-800 hover:bg-slate-700 text-white font-black text-xs rounded-xl border border-white/10 shadow-md transform hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer text-center"
               >
                 💬 익명 정밀 분석 신청 (무료)
               </button>
               <button
-                onClick={() => {
-                  setConsultType('regular');
-                  if (result.analysis.name) setConsultName(result.analysis.name);
-                  if (result.analysis.mobile) setConsultPhone(result.analysis.mobile);
-                  setIsConsultOpen(true);
+                onClick={async () => {
+                  setApplied(true);
+                  const simCode = (result as any).simulation_code || '';
+                  if (onSubmitLead) {
+                    const customAnalysis = {
+                      ...result.analysis,
+                      name: result.analysis.name || '고객',
+                      mobile: result.analysis.mobile || ''
+                    };
+                    await onSubmitLead(
+                      customAnalysis,
+                      'remodeling_consult',
+                      result,
+                      'regular'
+                    );
+                  }
+                  
+                  const clipboardMsg = `안녕하세요! [ ${simCode} ] 설계안으로 정밀 분석 정식 상담 신청합니다. (보험 종류: ${result.analysis.selectedCategory || '일반'})`;
+                  copyToClipboard(clipboardMsg);
+
+                  if (branding?.kakaoLink) {
+                    setRedirectingModal({
+                      isOpen: true,
+                      code: simCode,
+                      isAnonymous: false,
+                      targetUrl: branding.kakaoLink,
+                      countdown: 3
+                    });
+                  }
                 }}
                 className="w-full px-6 py-4.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xs rounded-xl shadow-[0_12px_24px_-4px_rgba(255,107,0,0.4)] transform hover:scale-[1.03] active:scale-95 transition-all duration-300 cursor-pointer text-center"
               >
@@ -1966,37 +2138,50 @@ ${origin}/?code=${simCode}
                 <input 
                   type="text" 
                   required
+                  disabled={isRemodeling}
                   placeholder="홍길동"
                   value={uwName}
                   onChange={(e) => setUwName(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-850 rounded-xl px-4 py-3.5 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors"
+                  className="w-full bg-slate-950 border border-slate-850 rounded-xl px-4 py-3.5 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors disabled:opacity-50"
                 />
               </div>
 
               <div className="space-y-1.5">
                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">연락처 (휴대폰 번호)</label>
-                <div className="flex gap-2">
+                {isRemodeling ? (
                   <input 
                     type="tel" 
                     required
-                    disabled={uwVerified}
+                    disabled={true}
                     placeholder="010-1234-5678"
                     value={uwPhone}
                     onChange={(e) => setUwPhone(e.target.value)}
-                    className="flex-1 bg-slate-950 border border-slate-850 rounded-xl px-4 py-3.5 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors disabled:opacity-50"
+                    className="w-full bg-slate-950 border border-slate-850 rounded-xl px-4 py-3.5 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors disabled:opacity-50"
                   />
-                  <button
-                    type="button"
-                    disabled={uwVerified || uwOtpLoading}
-                    onClick={handleRequestUwOtp}
-                    className="px-4 bg-orange-500 hover:bg-orange-600 disabled:bg-slate-800 text-white font-extrabold text-[10px] rounded-xl transition-all cursor-pointer whitespace-nowrap"
-                  >
-                    {uwOtpSent ? "재전송" : "인증번호 받기"}
-                  </button>
-                </div>
+                ) : (
+                  <div className="flex gap-2">
+                    <input 
+                      type="tel" 
+                      required
+                      disabled={uwVerified}
+                      placeholder="010-1234-5678"
+                      value={uwPhone}
+                      onChange={(e) => setUwPhone(e.target.value)}
+                      className="flex-1 bg-slate-950 border border-slate-850 rounded-xl px-4 py-3.5 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors disabled:opacity-50"
+                    />
+                    <button
+                      type="button"
+                      disabled={uwVerified || uwOtpLoading}
+                      onClick={handleRequestUwOtp}
+                      className="px-4 bg-orange-500 hover:bg-orange-600 disabled:bg-slate-800 text-white font-extrabold text-[10px] rounded-xl transition-all cursor-pointer whitespace-nowrap"
+                    >
+                      {uwOtpSent ? "재전송" : "인증번호 받기"}
+                    </button>
+                  </div>
+                )}
               </div>
 
-              {uwOtpSent && !uwVerified && (
+              {!isRemodeling && uwOtpSent && !uwVerified && (
                 <div className="space-y-1.5 animate-in slide-in-from-top-2 duration-200">
                   <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">인증번호 입력</label>
                   <div className="flex gap-2">
@@ -2026,11 +2211,11 @@ ${origin}/?code=${simCode}
                 </div>
               )}
 
-              {uwOtpError && (
+              {!isRemodeling && uwOtpError && (
                 <p className="text-[11px] text-rose-500 font-bold leading-relaxed">{uwOtpError}</p>
               )}
               
-              {uwVerified && (
+              {!isRemodeling && uwVerified && (
                 <p className="text-[11px] text-emerald-400 font-extrabold flex items-center gap-1 font-bold">
                   <span>✓</span> 휴대폰 인증이 완료되었습니다.
                 </p>
@@ -2111,7 +2296,7 @@ ${origin}/?code=${simCode}
                 </button>
                 <button 
                   type="submit"
-                  disabled={uwSubmitting || !uwVerified}
+                  disabled={uwSubmitting || (!isRemodeling && !uwVerified)}
                   className="flex-1 px-4 py-3.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:opacity-50 text-white font-black text-xs rounded-xl shadow-[0_8px_16px_rgba(255,107,0,0.3)] cursor-pointer text-center font-extrabold"
                 >
                   {uwSubmitting ? "신청 중..." : "사전 심사 신청 완료"}
@@ -2137,7 +2322,7 @@ ${origin}/?code=${simCode}
               </span>
               <h3 className="text-base md:text-lg font-black text-white">{consultType === 'anonymous' ? '익명' : '정식'} 상담 신청</h3>
               <p className="text-[11px] text-slate-400 font-bold leading-relaxed break-keep">
-                1:1 카톡 상담 연결을 위해 상담 받으실 이름과 연락처를 입력해 주세요.
+                1:1 카톡 상담 연결을 위해 상담 받으실 이름과 연락처를 입력하고 본인인증을 완료해 주세요.
               </p>
             </div>
 
@@ -2156,15 +2341,66 @@ ${origin}/?code=${simCode}
 
               <div className="space-y-1.5">
                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">연락처 (휴대폰 번호)</label>
-                <input 
-                  type="tel" 
-                  required
-                  placeholder="010-1234-5678"
-                  value={consultPhone}
-                  onChange={(e) => setConsultPhone(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-850 rounded-xl px-4 py-3.5 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors"
-                />
+                <div className="flex gap-2">
+                  <input 
+                    type="tel" 
+                    required
+                    disabled={consultVerified}
+                    placeholder="010-1234-5678"
+                    value={consultPhone}
+                    onChange={(e) => setConsultPhone(e.target.value)}
+                    className="flex-1 bg-slate-950 border border-slate-850 rounded-xl px-4 py-3.5 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors disabled:opacity-50"
+                  />
+                  <button
+                    type="button"
+                    disabled={consultVerified || consultOtpLoading}
+                    onClick={handleRequestConsultOtp}
+                    className="px-4 bg-orange-500 hover:bg-orange-600 disabled:bg-slate-800 text-white font-extrabold text-[10px] rounded-xl transition-all cursor-pointer whitespace-nowrap"
+                  >
+                    {consultOtpSent ? "재전송" : "인증번호 받기"}
+                  </button>
+                </div>
               </div>
+
+              {consultOtpSent && !consultVerified && (
+                <div className="space-y-1.5 animate-in slide-in-from-top-2 duration-200">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">인증번호 입력</label>
+                  <div className="flex gap-2">
+                    <div className="relative flex-1">
+                      <input 
+                        type="text" 
+                        required
+                        maxLength={6}
+                        placeholder="6자리 인증번호"
+                        value={consultOtpCode}
+                        onChange={(e) => setConsultOtpCode(e.target.value.replace(/[^0-9]/g, ''))}
+                        className="w-full bg-slate-950 border border-slate-850 rounded-xl px-4 py-3.5 pr-12 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors"
+                      />
+                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-black text-orange-400">
+                        {Math.floor(consultOtpTimer / 60)}:{(consultOtpTimer % 60).toString().padStart(2, '0')}
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      disabled={consultOtpLoading}
+                      onClick={handleVerifyConsultOtp}
+                      className="px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-[10px] rounded-xl transition-all cursor-pointer whitespace-nowrap"
+                    >
+                      인증 완료
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {consultOtpError && (
+                <p className="text-[11px] text-rose-500 font-bold leading-relaxed">{consultOtpError}</p>
+              )}
+              
+              {consultVerified && (
+                <p className="text-[11px] text-emerald-400 font-extrabold flex items-center gap-1 font-bold">
+                  <span>✓</span> 휴대폰 인증이 완료되었습니다.
+                </p>
+              )}
 
               <div className="pt-4 border-t border-slate-800 flex justify-between gap-3">
                 <button 
@@ -2176,13 +2412,97 @@ ${origin}/?code=${simCode}
                 </button>
                 <button 
                   type="submit"
-                  disabled={consultSubmitting}
+                  disabled={consultSubmitting || !consultVerified}
                   className="flex-1 px-4 py-3.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:opacity-50 text-white font-black text-xs rounded-xl shadow-[0_8px_16px_rgba(255,107,0,0.3)] cursor-pointer text-center font-extrabold"
                 >
                   {consultSubmitting ? "신청 중..." : "상담 신청 완료 및 카톡 이동"}
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* 🚀 Premium Glassmorphic Redirect Loader & Paste Guide Modal */}
+      {redirectingModal && redirectingModal.isOpen && (
+        <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+          <div className="bg-slate-900/90 border border-orange-500/20 backdrop-blur-xl w-full max-w-md rounded-[2.5rem] p-8 space-y-6 shadow-[0_20px_50px_rgba(255,107,0,0.15)] relative text-center text-white animate-in zoom-in-95 duration-200">
+            {/* Close Button */}
+            <button
+              onClick={() => setRedirectingModal(null)}
+              className="absolute top-6 right-6 text-slate-400 hover:text-white cursor-pointer transition-colors text-base font-extrabold"
+            >
+              ✕
+            </button>
+
+            {/* Glowing Encryption Check Circle */}
+            <div className="mx-auto w-16 h-16 rounded-full bg-orange-500/10 border border-orange-500/30 flex items-center justify-center relative">
+              <span className="absolute inset-0 rounded-full bg-orange-500/20 animate-ping opacity-75" />
+              <svg className="w-8 h-8 text-orange-400 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+
+            <div className="space-y-2">
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 bg-orange-500/20 text-orange-400 border border-orange-500/30 rounded-full text-[9px] font-black uppercase tracking-wider">
+                {redirectingModal.isAnonymous ? '🔒 익명 상담 매칭 완료' : '🚀 정식 상담 매칭 완료'}
+              </span>
+              <h3 className="text-base md:text-lg font-black text-white">카카오톡 안전 연동 중</h3>
+              <p className="text-[11px] text-slate-400 font-bold leading-relaxed break-keep">
+                분석 코드 생성이 완료되었으며, 0.1초 후 설계사 전용 채팅방으로 안전하게 연결됩니다.
+              </p>
+            </div>
+
+            {/* Coupon-style Simulation Code Block */}
+            <div className="bg-slate-950/60 border border-white/5 rounded-2xl p-4 space-y-1 relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-orange-500 via-yellow-500 to-orange-500" />
+              <span className="text-[8px] font-black text-slate-500 uppercase tracking-widest block">보관 및 상담용 고유 코드</span>
+              <span className="text-lg font-black text-orange-400 tracking-wider select-all block">{redirectingModal.code}</span>
+              <span className="text-[9px] text-emerald-400 font-bold block">✓ 클립보드 복사 완료 (붙여넣기 가능)</span>
+            </div>
+
+            {/* Mobile Touch Guidance Block */}
+            <div className="p-3.5 bg-slate-950/30 border border-white/5 rounded-2xl flex items-center gap-3 text-left">
+              <div className="w-10 h-10 rounded-xl bg-slate-800/80 flex items-center justify-center shrink-0 border border-white/5">
+                <svg className="w-5 h-5 text-orange-400 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+                </svg>
+              </div>
+              <p className="text-[10px] text-slate-400 font-bold leading-relaxed">
+                <span className="text-white block font-black mb-0.5">💡 모바일 복사팁:</span>
+                카톡 입장 후 채팅 입력창을 <span className="text-orange-400 font-black">1초간 꾹 눌러 [붙여넣기]</span>를 선택하면 상담 코드가 자동으로 전송됩니다.
+              </p>
+            </div>
+
+            {/* Action & Countdown Bar */}
+            <div className="space-y-4 pt-2">
+              <div className="flex flex-col gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    window.location.href = redirectingModal.targetUrl;
+                    setRedirectingModal(null);
+                  }}
+                  className="w-full py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xs rounded-xl shadow-lg active:scale-95 transition-all duration-300 cursor-pointer"
+                >
+                  지금 즉시 카카오톡 이동하기
+                </button>
+              </div>
+
+              {/* Progress Indicator for Auto-redirect */}
+              <div className="space-y-1">
+                <div className="flex justify-between items-center text-[9px] font-black text-slate-500 uppercase tracking-wider px-1">
+                  <span>자동 연결</span>
+                  <span>{redirectingModal.countdown}초</span>
+                </div>
+                <div className="w-full h-1 bg-slate-950 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-gradient-to-r from-orange-500 to-yellow-500 transition-all duration-1000 ease-linear"
+                    style={{ width: `${(redirectingModal.countdown / 3) * 100}%` }}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
