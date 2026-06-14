@@ -179,7 +179,8 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   const [healthStatus, setHealthStatus] = useState<'standard' | 'simple'>('standard');
   const [preExistingType, setPreExistingType] = useState<'3.0.5' | '3.2.5' | '3.3.5' | '3.5.5'>('3.2.5');
   const [currentPremium, setCurrentPremium] = useState('');
-  const [showAuditInfo, setShowAuditInfo] = useState(false);
+  const [showAuditInfo, setShowAuditInfo] = useState(false);
+  const [validationError, setValidationError] = useState<string | null>(null);
   
   const [dentalLastYear, setDentalLastYear] = useState<'yes' | 'no'>('no');
   const [dentalLast5Years, setDentalLast5Years] = useState<'yes' | 'no'>('no');
@@ -608,9 +609,26 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   }, [selectedDetail, selectedId]);
 
   const handleCalculate = (overrides?: { name?: string; age?: number; gender?: 'M' | 'F'; mobile?: string }) => {
-    const finalName = overrides?.name !== undefined ? overrides.name : name;
+    const finalName = (overrides?.name !== undefined ? overrides.name : name) || '';
     const finalGender = overrides?.gender !== undefined ? overrides.gender : gender;
-    
+    const finalMobile = (overrides?.mobile !== undefined ? overrides.mobile : mobile) || '';
+    const finalBirth = birthDate || '';
+
+    if (!finalName.trim() || !finalGender || finalBirth.length < 8 || !finalMobile.trim()) {
+      const msg = "정확한 보험 비교를 위해 성함, 성별, 생년월일, 연락처를 모두 입력해 주세요.";
+      setValidationError(msg);
+      alert(msg);
+      return;
+    }
+
+    if (!agreedTerms) {
+      const msg = "개인정보수집 및 활용동의에 체크해 주세요.";
+      setValidationError(msg);
+      alert(msg);
+      return;
+    }
+
+    setValidationError(null);
     const isChildProduct = selectedId === 'child' || selectedId === 'pre_family';
     let finalAge = overrides?.age !== undefined ? overrides.age : (calculatedAge || 40);
     if (isChildProduct) {
@@ -1200,12 +1218,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
 
                    <div className="bg-slate-50/40 rounded-[2.2rem] p-7 flex flex-col gap-1 relative focus-within:bg-white focus-within:shadow-2xl transition-all border-2 border-transparent focus-within:border-orange-100/50">
                         <label className="text-[0.55rem] font-black text-slate-400 uppercase tracking-widest mb-1 text-left pl-1">연락처 (Mobile)</label>
-                        <div className="flex justify-between items-center pr-2">
-                          <input type="text" value={mobile} onChange={(e) => setMobile(e.target.value)} placeholder="01012345678" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200 w-full" />
-                          <button className="flex-shrink-0 px-5 py-2.5 bg-slate-900 rounded-[1rem] text-white font-black text-[0.6rem] hover:bg-black transition-all shadow-lg active:scale-95 group flex items-center gap-1">
-                             인증
-                          </button>
-                        </div>
+                        <input type="text" value={mobile} onChange={(e) => setMobile(e.target.value)} placeholder="01012345678" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200 w-full" />
                    </div>
                 </div>
               )}
@@ -1610,6 +1623,16 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                  </label>
               </div>
 
+              {validationError && (
+                <motion.div 
+                  initial={{ opacity: 0, y: -10 }} 
+                  animate={{ opacity: 1, y: 0 }} 
+                  className="text-rose-500 text-base font-black text-center mb-6 bg-rose-50 border border-rose-100 py-3.5 px-6 rounded-2xl shadow-sm max-w-2xl mx-auto flex items-center justify-center gap-2"
+                >
+                  <span>⚠️</span> {validationError}
+                </motion.div>
+              )}
+
               <div className="max-w-2xl mx-auto space-y-6">
                 <motion.button 
                    onClick={() => handleCalculate()}
@@ -1621,31 +1644,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                    <ChevronRight size={28} />
                 </motion.button>
 
-                {/* Social Calculation Buttons */}
-                <div className="grid grid-cols-2 gap-4">
-                  <motion.button 
-                     onClick={() => setAuthModal('naver')}
-                     whileHover={{ scale: 1.02, y: -3 }}
-                     whileTap={{ scale: 0.98 }}
-                     className="py-5 bg-[#03C75A] text-white rounded-[2rem] text-lg font-black shadow-[0_20px_40px_-10px_rgba(3,199,90,0.25)] transition-all flex items-center justify-center gap-2 hover:brightness-95"
-                  >
-                     <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                       <path d="M16.2 3H21v18h-4.8l-7.4-11.2V21H4V3h4.8l7.4 11.2V3z"/>
-                     </svg>
-                     네이버로 계산
-                  </motion.button>
-                  <motion.button 
-                     onClick={() => setAuthModal('kakao')}
-                     whileHover={{ scale: 1.02, y: -3 }}
-                     whileTap={{ scale: 0.98 }}
-                     className="py-5 bg-[#FEE500] text-black rounded-[2rem] text-lg font-black shadow-[0_20px_40px_-10px_rgba(254,229,0,0.25)] transition-all flex items-center justify-center gap-2 hover:brightness-95"
-                  >
-                     <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                       <path d="M12 3c-4.97 0-9 3.185-9 7.115 0 2.553 1.706 4.8 4.315 6.065l-1.096 4.025c-.078.286.088.58.37.66.082.023.167.03.25.022.186-.017.35-.11.44-.275l2.67-4.437c.338.03.682.046 1.05.046 4.97 0 9-3.186 9-7.116C21 6.185 16.97 3 12 3z"/>
-                     </svg>
-                     카카오로 계산
-                  </motion.button>
-                </div>
+
               </div>
            </div>
         </div>

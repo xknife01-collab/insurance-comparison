@@ -5,6 +5,7 @@ import { AdCampaignTab } from './AdCampaignTab';
 import { ChatTab } from './ChatTab';
 import { LeadDistributionSimulator } from './LeadDistributionSimulator';
 import { triggerWelcomeChat } from '../utils/chatHelper';
+import PWAInstallCard from './PWAInstallCard';
 
 import { 
   Users, Settings, CreditCard, FileText, Plus, LogOut, CheckCircle, 
@@ -4517,10 +4518,19 @@ export default function AdminDashboard() {
                   )}
                 </button>
               )}
+
+              {/* PWA Install Guide Card (Sidebar Bottom empty space - Desktop only) */}
+              <div className="hidden lg:block">
+                <PWAInstallCard />
+              </div>
             </div>
 
             {/* Right main panel */}
             <div className="lg:col-span-4 min-w-0 bg-slate-900/60 border border-slate-800/80 rounded-3xl p-6 min-h-[500px]">
+              {/* PWA Install Guide Card (Mobile only) */}
+              <div className="block lg:hidden mb-6">
+                <PWAInstallCard />
+              </div>
               
               {/* Tab 1: Leads view */}
               {activeTab === 'leads' && (

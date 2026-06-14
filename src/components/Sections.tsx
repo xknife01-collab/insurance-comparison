@@ -1344,16 +1344,35 @@ export const Footer = () => {
     <footer className="bg-[#111827] text-white pt-24 pb-12 px-6 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-12 mb-20">
-          <div className="max-w-sm">
-            <p className="text-xs text-slate-400 font-extrabold mb-4 uppercase tracking-widest">무료 전화 상담 센터</p>
-            <p className="text-5xl font-black text-white leading-none mb-8 tracking-tight hover:text-orange-500 transition-colors">
+          {/* Left Side: Logos (with enlarged sizes) */}
+          <div className="flex justify-start items-center gap-5">
+            {branding?.type === 'organic' ? (
+              <>
+                <img src="/logo.png" alt="Incar" className="h-14 opacity-80 hover:opacity-100 transition-opacity object-contain invert brightness-200" />
+                <div className="h-8 w-[1px] bg-slate-700" />
+              </>
+            ) : (
+              branding?.logoUrl && branding.logoUrl !== "/6397187.png" && (
+                <>
+                  <img src={branding.logoUrl} alt={branding.name} className="h-18 opacity-90 hover:opacity-100 transition-opacity object-contain" />
+                  <div className="h-8 w-[1px] bg-slate-700" />
+                </>
+              )
+            )}
+            <img src="/6397187-1.png" alt="보험리밸런스" className="h-18 opacity-90 hover:opacity-100 transition-opacity object-contain" />
+          </div>
+
+          {/* Right Side: Customer Support Info (Right-aligned) */}
+          <div className="max-w-md md:text-right flex flex-col md:items-end gap-1">
+            <p className="text-xs text-slate-400 font-extrabold mb-1 uppercase tracking-widest">무료 전화 상담 센터</p>
+            <p className="text-5xl font-black text-white leading-none mb-6 tracking-tight hover:text-orange-500 transition-colors">
               {branding?.customPhone || "080.808.1088"}
             </p>
-            <div className="space-y-2 text-xs text-slate-400 font-bold">
+            <div className="space-y-2 text-xs text-slate-400 font-bold flex flex-col items-start md:items-end">
               <p className="text-slate-500">고객센터 영업시간</p>
               <p className="text-slate-300">평일 09:00 - 18:00 / 주말 10:00 - 15:00</p>
               {branding?.agencyName && (
-                <p className="text-slate-500 pt-2">
+                <p className="text-slate-500">
                   소속 지점: <span className="text-slate-300">{branding.agencyName}</span>
                 </p>
               )}
@@ -1362,25 +1381,6 @@ export const Footer = () => {
                   지점 주소: <span className="text-slate-300">{branding.agencyAddress}</span>
                 </p>
               )}
-            </div>
-          </div>
-          
-          <div className="flex-1 flex justify-end items-center">
-            <div className="flex items-center gap-3">
-              {branding?.type === 'organic' ? (
-                <>
-                  <img src="/logo.png" alt="Incar" className="h-9 opacity-50 hover:opacity-100 transition-opacity object-contain invert brightness-200" />
-                  <div className="h-5 w-[1px] bg-slate-700" />
-                </>
-              ) : (
-                branding?.logoUrl && branding.logoUrl !== "/6397187.png" && (
-                  <>
-                    <img src={branding.logoUrl} alt={branding.name} className="h-10 opacity-80 hover:opacity-100 transition-opacity object-contain" />
-                    <div className="h-5 w-[1px] bg-slate-700" />
-                  </>
-                )
-              )}
-              <img src="/6397187.png" alt="보험리밸런스" className="h-10 opacity-80 hover:opacity-100 transition-opacity object-contain" />
             </div>
           </div>
         </div>

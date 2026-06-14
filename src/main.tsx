@@ -3,10 +3,14 @@ import {createRoot} from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 import { BrandingProvider } from './hooks/useB2BBranding.tsx';
+import PwaMetaSwitcher from './components/PwaMetaSwitcher.tsx';
+import InAppBrowserBuster from './components/InAppBrowserBuster.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrandingProvider>
+      <PwaMetaSwitcher />
+      <InAppBrowserBuster />
       <App />
     </BrandingProvider>
   </StrictMode>,
