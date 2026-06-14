@@ -331,6 +331,170 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
   const [smsSubmitting, setSmsSubmitting] = React.useState(false);
   const [smsSuccess, setSmsSuccess] = React.useState(false);
 
+  // KakaoTalk Consultation States & Handlers
+  const [isConsultOpen, setIsConsultOpen] = React.useState(false);
+  const [consultType, setConsultType] = React.useState<'anonymous' | 'regular'>('regular');
+  const [consultName, setConsultName] = React.useState('');
+  const [consultPhone, setConsultPhone] = React.useState('');
+  const [consultOtpSent, setConsultOtpSent] = React.useState(false);
+  const [consultOtpCode, setConsultOtpCode] = React.useState('');
+  const [consultVerified, setConsultVerified] = React.useState(false);
+  const [consultOtpLoading, setConsultOtpLoading] = React.useState(false);
+  const [consultOtpTimer, setConsultOtpTimer] = React.useState(180);
+  const [consultOtpError, setConsultOtpError] = React.useState<string | null>(null);
+  const [consultSubmitting, setConsultSubmitting] = React.useState(false);
+
+  React.useEffect(() => {
+    let interval: any;
+    if (consultOtpSent && consultOtpTimer > 0 && !consultVerified) {
+      interval = setInterval(() => {
+        setConsultOtpTimer((prev) => prev - 1);
+      }, 1000);
+    } else if (consultOtpTimer === 0) {
+      setConsultOtpError("인증 시간이 만료되었습니다. 인증번호를 다시 받아주세요.");
+    }
+    return () => clearInterval(interval);
+  }, [consultOtpSent, consultOtpTimer, consultVerified]);
+
+  const handleRequestConsultOtp = async () => {
+    const cleanPhone = consultPhone.replace(/[^0-9]/g, '');
+    if (!cleanPhone || cleanPhone.length < 10) {
+      setConsultOtpError("올바른 휴대폰 번호를 입력해 주세요.");
+      alert("올바른 휴대폰 번호를 입력해 주세요.");
+      return;
+    }
+
+    setConsultOtpLoading(true);
+    setConsultOtpError(null);
+    setConsultOtpCode('');
+    setConsultOtpTimer(180);
+    
+    try {
+      const response = await fetch('/api/send-sms-verification', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          action: 'send',
+          phone: cleanPhone
+        })
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok || !data?.success) {
+        setConsultOtpError(data?.error || "인증번호 발송에 실패했습니다.");
+        alert(data?.error || "인증번호 발송에 실패했습니다.");
+      } else {
+        setConsultOtpSent(true);
+        if (data?.simulated && data?.code) {
+          alert(`[테스트 안내]\n알리고 API IP 제한 우회 모드로 동작합니다.\n\n인증번호: [ ${data.code} ]`);
+        } else {
+          alert("인증번호가 발송되었습니다.");
+        }
+      }
+    } catch (err: any) {
+      console.error(err);
+      setConsultOtpError("인증 요청 중 연결 오류가 발생했습니다.");
+    } finally {
+      setConsultOtpLoading(false);
+    }
+  };
+
+  const handleVerifyConsultOtp = async () => {
+    if (!consultOtpCode.trim() || consultOtpCode.length < 6) {
+      setConsultOtpError("6자리 인증번호를 정확히 입력해 주세요.");
+      return;
+    }
+    
+    if (consultOtpTimer === 0) {
+      setConsultOtpError("인증 시간이 만료되었습니다. 인증번호를 다시 받아주세요.");
+      return;
+    }
+    
+    setConsultOtpLoading(true);
+    setConsultOtpError(null);
+    
+    try {
+      const response = await fetch('/api/send-sms-verification', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          action: 'verify',
+          phone: consultPhone,
+          code: consultOtpCode
+        })
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok || !data?.success) {
+        setConsultOtpError(data?.error || "인증번호가 일치하지 않습니다.");
+      } else {
+        setConsultVerified(true);
+        setConsultOtpError(null);
+        alert("인증에 성공했습니다.");
+      }
+    } catch (err: any) {
+      console.error(err);
+      setConsultOtpError("인증 확인 중 연결 오류가 발생했습니다.");
+    } finally {
+      setConsultOtpLoading(false);
+    }
+  };
+
+  const handleConsultSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!consultVerified) {
+      alert("휴대폰 본인인증을 먼저 완료해 주세요.");
+      return;
+    }
+    if (consultSubmitting) return;
+    setConsultSubmitting(true);
+    try {
+      const category = result.analysis.selectedCategory || 'general';
+      const simCode = (result as any).simulation_code || '';
+      
+      if (onSubmitLead) {
+        const customAnalysis = {
+          ...result.analysis,
+          name: consultName,
+          mobile: consultPhone
+        };
+        await onSubmitLead(
+          customAnalysis,
+          'remodeling_consult',
+          result,
+          consultType
+        );
+      }
+      
+      const typeLabel = consultType === 'anonymous' ? '익명' : '정식';
+      const clipboardMsg = `안녕하세요! [ ${simCode} ] 설계안으로 정밀 분석 ${typeLabel} 상담 신청합니다. (보험 종류: ${result.analysis.selectedCategory || '일반'})`;
+      copyToClipboard(clipboardMsg);
+      
+      if (consultType === 'anonymous') {
+        alert(`[익명] 정밀 분석 신청이 완료되었습니다!\n설계 코드 [ ${simCode} ]가 클립보드에 자동 복사되었습니다. 카카오톡 채팅창에 붙여넣기(Ctrl+V)하여 안전하게 상담해 주세요.`);
+      } else {
+        alert(`[정식] 정밀 분석 신청이 완료되었습니다!\n설계 코드 [ ${simCode} ]가 클립보드에 자동 복사되었습니다. 카카오톡 채팅창에 바로 붙여넣기(Ctrl+V)하시면 설계사가 바로 조회하여 신속한 맞춤 상담을 안내해 드립니다.`);
+      }
+
+      if (branding?.kakaoLink) {
+        window.open(branding.kakaoLink, '_blank', 'noopener,noreferrer');
+      }
+
+      setIsConsultOpen(false);
+    } catch (err) {
+      console.error(err);
+      alert("신청 중 오류가 발생했습니다. 다시 시도해 주세요.");
+    } finally {
+      setConsultSubmitting(false);
+    }
+  };
+
   const handleSmsSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (smsSubmitting) return;
@@ -1854,38 +2018,34 @@ ${origin}/?code=${simCode}
             {/* 가로 분할 2 버튼 */}
             <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/5">
               <button
-                onClick={async () => {
-                  const simCode = (result as any).simulation_code || '';
-                  if (onSubmitLead) {
-                    await onSubmitLead(result.analysis, 'remodeling_consult', result, 'anonymous');
-                  }
-
-                  const clipboardMsg = `안녕하세요! [ ${simCode} ] 설계안으로 정밀 분석 익명 상담 신청합니다. (보험 종류: ${result.analysis.selectedCategory || '일반'})`;
-                  copyToClipboard(clipboardMsg);
-                  alert(`[익명] 정밀 분석 신청이 완료되었습니다!\n설계 코드 [ ${simCode} ]가 클립보드에 자동 복사되었습니다. 카카오톡 채팅창에 붙여넣기(Ctrl+V)하여 안전하게 상담해 주세요.`);
-
-                  if (branding?.kakaoLink) {
-                    window.open(branding.kakaoLink, '_blank', 'noopener,noreferrer');
-                  }
+                onClick={() => {
+                  setConsultType('anonymous');
+                  if (result.analysis.name) setConsultName(result.analysis.name);
+                  if (result.analysis.mobile) setConsultPhone(result.analysis.mobile);
+                  setConsultOtpSent(false);
+                  setConsultOtpCode('');
+                  setConsultVerified(false);
+                  setConsultOtpLoading(false);
+                  setConsultOtpTimer(180);
+                  setConsultOtpError(null);
+                  setIsConsultOpen(true);
                 }}
                 className="w-full px-6 py-4.5 bg-slate-800 hover:bg-slate-700 text-white font-black text-xs rounded-xl border border-white/10 shadow-md transform hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer text-center"
               >
                 💬 익명 정밀 분석 신청 (무료)
               </button>
               <button
-                onClick={async () => {
-                  const simCode = (result as any).simulation_code || '';
-                  if (onSubmitLead) {
-                    await onSubmitLead(result.analysis, 'remodeling_consult', result, 'regular');
-                  }
-
-                  const clipboardMsg = `안녕하세요! [ ${simCode} ] 설계안으로 정밀 분석 정식 상담 신청합니다. (보험 종류: ${result.analysis.selectedCategory || '일반'})`;
-                  copyToClipboard(clipboardMsg);
-                  alert(`[정식] 정밀 분석 신청이 완료되었습니다!\n설계 코드 [ ${simCode} ]가 클립보드에 자동 복사되었습니다. 카카오톡 채팅창에 붙여넣기(Ctrl+V)하시면 설계사가 바로 조회하여 신속한 맞춤 상담을 안내해 드립니다.`);
-
-                  if (branding?.kakaoLink) {
-                    window.open(branding.kakaoLink, '_blank', 'noopener,noreferrer');
-                  }
+                onClick={() => {
+                  setConsultType('regular');
+                  if (result.analysis.name) setConsultName(result.analysis.name);
+                  if (result.analysis.mobile) setConsultPhone(result.analysis.mobile);
+                  setConsultOtpSent(false);
+                  setConsultOtpCode('');
+                  setConsultVerified(false);
+                  setConsultOtpLoading(false);
+                  setConsultOtpTimer(180);
+                  setConsultOtpError(null);
+                  setIsConsultOpen(true);
                 }}
                 className="w-full px-6 py-4.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xs rounded-xl shadow-[0_12px_24px_-4px_rgba(255,107,0,0.4)] transform hover:scale-[1.03] active:scale-95 transition-all duration-300 cursor-pointer text-center"
               >
@@ -2070,6 +2230,122 @@ ${origin}/?code=${simCode}
                   className="flex-1 px-4 py-3.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:opacity-50 text-white font-black text-xs rounded-xl shadow-[0_8px_16px_rgba(255,107,0,0.3)] cursor-pointer text-center font-extrabold"
                 >
                   {uwSubmitting ? "신청 중..." : "사전 심사 신청 완료"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {isConsultOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+          <div className="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-[2.5rem] p-6 md:p-8 space-y-6 shadow-2xl relative animate-in zoom-in-95 duration-200 text-left text-white">
+            <button 
+              onClick={() => setIsConsultOpen(false)}
+              className="absolute top-6 right-6 text-slate-400 hover:text-white cursor-pointer transition-colors text-base font-extrabold"
+            >
+              ✕
+            </button>
+            <div className="space-y-1.5">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-orange-500/10 text-orange-400 rounded-lg text-[9px] font-black uppercase border border-orange-500/20">
+                💬 {consultType === 'anonymous' ? '익명' : '정식'} 카톡 상담 신청
+              </span>
+              <h3 className="text-base md:text-lg font-black text-white">{consultType === 'anonymous' ? '익명' : '정식'} 상담을 위해 본인인증을 진행해 주세요</h3>
+              <p className="text-[11px] text-slate-400 font-bold leading-relaxed break-keep">
+                본인인증을 완료하시면 1:1 카톡 상담으로 설계 매칭 제안서를 받아보실 수 있습니다.
+              </p>
+            </div>
+
+            <form onSubmit={handleConsultSubmit} className="space-y-4">
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">고객 이름</label>
+                <input 
+                  type="text" 
+                  required
+                  placeholder="홍길동"
+                  value={consultName}
+                  onChange={(e) => setConsultName(e.target.value)}
+                  className="w-full bg-slate-950 border border-slate-850 rounded-xl px-4 py-3.5 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">연락처 (휴대폰 번호)</label>
+                <div className="flex gap-2">
+                  <input 
+                    type="tel" 
+                    required
+                    disabled={consultVerified}
+                    placeholder="010-1234-5678"
+                    value={consultPhone}
+                    onChange={(e) => setConsultPhone(e.target.value)}
+                    className="flex-1 bg-slate-950 border border-slate-850 rounded-xl px-4 py-3.5 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors disabled:opacity-50"
+                  />
+                  <button
+                    type="button"
+                    disabled={consultVerified || consultOtpLoading}
+                    onClick={handleRequestConsultOtp}
+                    className="px-4 bg-orange-500 hover:bg-orange-600 disabled:bg-slate-800 text-white font-extrabold text-[10px] rounded-xl transition-all cursor-pointer whitespace-nowrap"
+                  >
+                    {consultOtpSent ? "재전송" : "인증번호 받기"}
+                  </button>
+                </div>
+              </div>
+
+              {consultOtpSent && !consultVerified && (
+                <div className="space-y-1.5 animate-in slide-in-from-top-2 duration-200">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">인증번호 입력</label>
+                  <div className="flex gap-2">
+                    <div className="relative flex-1">
+                      <input 
+                        type="text" 
+                        required
+                        maxLength={6}
+                        placeholder="6자리 인증번호"
+                        value={consultOtpCode}
+                        onChange={(e) => setConsultOtpCode(e.target.value.replace(/[^0-9]/g, ''))}
+                        className="w-full bg-slate-950 border border-slate-850 rounded-xl px-4 py-3.5 pr-12 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors"
+                      />
+                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-black text-orange-400">
+                        {Math.floor(consultOtpTimer / 60)}:{(consultOtpTimer % 60).toString().padStart(2, '0')}
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      disabled={consultOtpLoading}
+                      onClick={handleVerifyConsultOtp}
+                      className="px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-[10px] rounded-xl transition-all cursor-pointer whitespace-nowrap"
+                    >
+                      인증 완료
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {consultOtpError && (
+                <p className="text-[11px] text-rose-500 font-bold leading-relaxed">{consultOtpError}</p>
+              )}
+              
+              {consultVerified && (
+                <p className="text-[11px] text-emerald-400 font-extrabold flex items-center gap-1 font-bold">
+                  <span>✓</span> 휴대폰 인증이 완료되었습니다.
+                </p>
+              )}
+
+              <div className="pt-4 border-t border-slate-800 flex justify-between gap-3">
+                <button 
+                  type="button"
+                  onClick={() => setIsConsultOpen(false)}
+                  className="flex-1 px-4 py-3.5 bg-slate-800 hover:bg-slate-750 text-white font-black text-xs rounded-xl border border-white/5 cursor-pointer text-center font-extrabold"
+                >
+                  취소
+                </button>
+                <button 
+                  type="submit"
+                  disabled={consultSubmitting || !consultVerified}
+                  className="flex-1 px-4 py-3.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:opacity-50 text-white font-black text-xs rounded-xl shadow-[0_8px_16px_rgba(255,107,0,0.3)] cursor-pointer text-center font-extrabold"
+                >
+                  {consultSubmitting ? "신청 중..." : "상담 신청 완료 및 카톡 이동"}
                 </button>
               </div>
             </form>
