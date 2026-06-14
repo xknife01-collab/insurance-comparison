@@ -440,6 +440,7 @@ export default function AdminDashboard() {
     role: 'super' | 'agency' | 'planner' | 'guest';
     plannerId?: string;
     agencyId?: string;
+    agencyCode?: string;
     name?: string;
     plannerCode?: string;
     expiresAt?: string;
@@ -1062,6 +1063,7 @@ export default function AdminDashboard() {
           setCurrentUser({
             role: 'agency',
             agencyId: agency.id,
+            agencyCode: agency.code,
             plannerId: repPlanner?.id || '11111111-1111-4111-a111-111111111111',
             name: `${agency.name} 대표자`,
             subscriptionStatus: agency.subscription_status,
@@ -1073,6 +1075,7 @@ export default function AdminDashboard() {
             role: 'agency',
             plannerId: '11111111-1111-4111-a111-111111111111',
             agencyId: '88888888-8888-4888-a888-888888888888',
+            agencyCode: 'demo-agency',
             name: '대리점 체험대표',
             plannerCode: 'test',
             subscriptionStatus: 'active',
@@ -1182,6 +1185,7 @@ export default function AdminDashboard() {
         role: 'agency',
         plannerId: '11111111-1111-4111-a111-111111111111',
         agencyId: '88888888-8888-4888-a888-888888888888',
+        agencyCode: 'demo-agency',
         name: '대리점 체험대표',
         plannerCode: 'test',
         subscriptionStatus: 'active',
@@ -1827,7 +1831,7 @@ export default function AdminDashboard() {
       // Find planner by code
       const { data: planner, error } = await supabase
         .from('planners')
-        .select()
+        .select('*, agencies(code)')
         .eq('planner_code', targetCode)
         .single();
 
@@ -1855,6 +1859,7 @@ export default function AdminDashboard() {
         role: userRole,
         plannerId: planner.id,
         agencyId: planner.agency_id,
+        agencyCode: (planner as any).agencies?.code || undefined,
         name: planner.name,
         plannerCode: planner.planner_code,
         subscriptionStatus: planner.subscription_status,
@@ -6508,7 +6513,7 @@ export default function AdminDashboard() {
                       ? `${window.location.origin}/`
                       : currentUser.role === 'planner'
                         ? `${window.location.origin}/?planner=${currentUser.plannerCode || ''}`
-                        : `${window.location.origin}/?agency=${currentUser.agencyId || ''}`;
+                        : `${window.location.origin}/?agency=${currentUser.agencyCode || currentUser.agencyId || ''}`;
                     return (
                       <div className="space-y-6">
                         <div className={`bg-gradient-to-r from-orange-500/10 via-amber-500/5 to-slate-950 rounded-[2rem] p-8 space-y-4 transition-all duration-300 ${

@@ -316,12 +316,15 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
         }
 
         if (agencyId) {
-          // Fetch agency profile and subscription status
-          const { data: agency, error: aError } = await supabase
-            .from('agencies')
-            .select('*')
-            .eq('id', agencyId)
-            .single();
+          // Fetch agency profile and subscription status (Supports both UUID and short code)
+          const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(agencyId);
+          let query = supabase.from('agencies').select('*');
+          if (isUuid) {
+            query = query.eq('id', agencyId);
+          } else {
+            query = query.eq('code', agencyId);
+          }
+          const { data: agency, error: aError } = await query.single();
 
           if (!aError && agency && agency.subscription_status === 'active') {
             const isDemo = agency.id === '88888888-8888-4888-a888-888888888888';
