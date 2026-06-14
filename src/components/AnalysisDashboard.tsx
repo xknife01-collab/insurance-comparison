@@ -216,6 +216,115 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
   const [uwNone, setUwNone] = React.useState(false);
   const [uwSubmitting, setUwSubmitting] = React.useState(false);
 
+  const [uwOtpSent, setUwOtpSent] = React.useState(false);
+  const [uwOtpCode, setUwOtpCode] = React.useState('');
+  const [uwVerified, setUwVerified] = React.useState(false);
+  const [uwOtpLoading, setUwOtpLoading] = React.useState(false);
+  const [uwOtpTimer, setUwOtpTimer] = React.useState(180);
+  const [uwOtpError, setUwOtpError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    let interval: any;
+    if (uwOtpSent && uwOtpTimer > 0 && !uwVerified) {
+      interval = setInterval(() => {
+        setUwOtpTimer((prev) => prev - 1);
+      }, 1000);
+    } else if (uwOtpTimer === 0) {
+      setUwOtpError("인증 시간이 만료되었습니다. 인증번호를 다시 받아주세요.");
+    }
+    return () => clearInterval(interval);
+  }, [uwOtpSent, uwOtpTimer, uwVerified]);
+
+  const handleRequestUwOtp = async () => {
+    const cleanPhone = uwPhone.replace(/[^0-9]/g, '');
+    if (!cleanPhone || cleanPhone.length < 10) {
+      setUwOtpError("올바른 휴대폰 번호를 입력해 주세요.");
+      alert("올바른 휴대폰 번호를 입력해 주세요.");
+      return;
+    }
+
+    setUwOtpLoading(true);
+    setUwOtpError(null);
+    setUwOtpCode('');
+    setUwOtpTimer(180);
+    
+    try {
+      const response = await fetch('/api/send-sms-verification', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          action: 'send',
+          phone: cleanPhone
+        })
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok || !data?.success) {
+        setUwOtpError(data?.error || "인증번호 발송에 실패했습니다.");
+        alert(data?.error || "인증번호 발송에 실패했습니다.");
+      } else {
+        setUwOtpSent(true);
+        if (data?.simulated && data?.code) {
+          alert(`[테스트 안내]\n알리고 API IP 제한 우회 모드로 동작합니다.\n\n인증번호: [ ${data.code} ]`);
+        } else {
+          alert("인증번호가 발송되었습니다.");
+        }
+      }
+    } catch (err: any) {
+      console.error(err);
+      setUwOtpError("인증 요청 중 연결 오류가 발생했습니다.");
+    } finally {
+      setUwOtpLoading(false);
+    }
+  };
+
+  const handleVerifyUwOtp = async () => {
+    if (!uwOtpCode.trim() || uwOtpCode.length < 6) {
+      setUwOtpError("6자리 인증번호를 정확히 입력해 주세요.");
+      return;
+    }
+    
+    if (uwOtpTimer === 0) {
+      setUwOtpError("인증 시간이 만료되었습니다. 인증번호를 다시 받아주세요.");
+      return;
+    }
+    
+    setUwOtpLoading(true);
+    setUwOtpError(null);
+    
+    try {
+      const response = await fetch('/api/send-sms-verification', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          action: 'verify',
+          phone: uwPhone,
+          code: uwOtpCode
+        })
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok || !data?.success) {
+        setUwOtpError(data?.error || "인증번호가 일치하지 않습니다.");
+      } else {
+        setUwVerified(true);
+        setUwOtpError(null);
+        alert("인증에 성공했습니다.");
+      }
+    } catch (err: any) {
+      console.error(err);
+      setUwOtpError("인증 확인 중 연결 오류가 발생했습니다.");
+    } finally {
+      setUwOtpLoading(false);
+    }
+  };
+
   // SMS Storage Locker States & Handler
   const [smsName, setSmsName] = React.useState('');
   const [smsPhone, setSmsPhone] = React.useState('');
@@ -291,6 +400,10 @@ ${origin}/?code=${simCode}
 
   const handleUnderwritingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!uwVerified) {
+      alert("휴대폰 본인인증을 먼저 완료해 주세요.");
+      return;
+    }
     if (uwSubmitting) return;
     setUwSubmitting(true);
     try {
@@ -1543,6 +1656,12 @@ ${origin}/?code=${simCode}
               onClick={() => {
                 if (result.analysis.name) setUwName(result.analysis.name);
                 if (result.analysis.mobile) setUwPhone(result.analysis.mobile);
+                setUwOtpSent(false);
+                setUwOtpCode('');
+                setUwVerified(false);
+                setUwOtpLoading(false);
+                setUwOtpTimer(180);
+                setUwOtpError(null);
                 setIsUnderwritingOpen(true);
               }}
               className="relative z-10 px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xs md:text-sm rounded-xl shadow-[0_8px_16px_rgba(255,107,0,0.3)] transform hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer whitespace-nowrap self-stretch md:self-auto text-center font-extrabold"
@@ -1811,15 +1930,66 @@ ${origin}/?code=${simCode}
 
               <div className="space-y-1.5">
                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">연락처 (휴대폰 번호)</label>
-                <input 
-                  type="tel" 
-                  required
-                  placeholder="010-1234-5678"
-                  value={uwPhone}
-                  onChange={(e) => setUwPhone(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-850 rounded-xl px-4 py-3.5 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors"
-                />
+                <div className="flex gap-2">
+                  <input 
+                    type="tel" 
+                    required
+                    disabled={uwVerified}
+                    placeholder="010-1234-5678"
+                    value={uwPhone}
+                    onChange={(e) => setUwPhone(e.target.value)}
+                    className="flex-1 bg-slate-950 border border-slate-850 rounded-xl px-4 py-3.5 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors disabled:opacity-50"
+                  />
+                  <button
+                    type="button"
+                    disabled={uwVerified || uwOtpLoading}
+                    onClick={handleRequestUwOtp}
+                    className="px-4 bg-orange-500 hover:bg-orange-600 disabled:bg-slate-800 text-white font-extrabold text-[10px] rounded-xl transition-all cursor-pointer whitespace-nowrap"
+                  >
+                    {uwOtpSent ? "재전송" : "인증번호 받기"}
+                  </button>
+                </div>
               </div>
+
+              {uwOtpSent && !uwVerified && (
+                <div className="space-y-1.5 animate-in slide-in-from-top-2 duration-200">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">인증번호 입력</label>
+                  <div className="flex gap-2">
+                    <div className="relative flex-1">
+                      <input 
+                        type="text" 
+                        required
+                        maxLength={6}
+                        placeholder="6자리 인증번호"
+                        value={uwOtpCode}
+                        onChange={(e) => setUwOtpCode(e.target.value.replace(/[^0-9]/g, ''))}
+                        className="w-full bg-slate-950 border border-slate-850 rounded-xl px-4 py-3.5 pr-12 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors"
+                      />
+                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-black text-orange-400">
+                        {Math.floor(uwOtpTimer / 60)}:{(uwOtpTimer % 60).toString().padStart(2, '0')}
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      disabled={uwOtpLoading}
+                      onClick={handleVerifyUwOtp}
+                      className="px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-[10px] rounded-xl transition-all cursor-pointer whitespace-nowrap"
+                    >
+                      인증 완료
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {uwOtpError && (
+                <p className="text-[11px] text-rose-500 font-bold leading-relaxed">{uwOtpError}</p>
+              )}
+              
+              {uwVerified && (
+                <p className="text-[11px] text-emerald-400 font-extrabold flex items-center gap-1 font-bold">
+                  <span>✓</span> 휴대폰 인증이 완료되었습니다.
+                </p>
+              )}
 
               <div className="space-y-3 pt-2">
                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">최근 5년 내 병력 사항 고지 (단순 체크)</label>
@@ -1896,7 +2066,7 @@ ${origin}/?code=${simCode}
                 </button>
                 <button 
                   type="submit"
-                  disabled={uwSubmitting}
+                  disabled={uwSubmitting || !uwVerified}
                   className="flex-1 px-4 py-3.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:opacity-50 text-white font-black text-xs rounded-xl shadow-[0_8px_16px_rgba(255,107,0,0.3)] cursor-pointer text-center font-extrabold"
                 >
                   {uwSubmitting ? "신청 중..." : "사전 심사 신청 완료"}
