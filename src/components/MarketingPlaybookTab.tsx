@@ -510,7 +510,7 @@ export const MarketingPlaybookTab: React.FC<MarketingPlaybookTabProps> = ({ isSu
   return (
     <div className="space-y-8 relative">
       {/* Header Panel */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-900/60 p-8 rounded-[2.5rem] border border-slate-800 shadow-xl backdrop-blur-md">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-900/60 p-4 sm:p-8 rounded-2xl sm:rounded-[2.5rem] border border-slate-800 shadow-xl backdrop-blur-md">
         <div>
           <div className="flex items-center gap-2 mb-2">
             <div className="w-2.5 h-2.5 bg-orange-500 rounded-full animate-pulse"></div>
@@ -631,7 +631,7 @@ export const MarketingPlaybookTab: React.FC<MarketingPlaybookTabProps> = ({ isSu
                 <div 
                   key={playbook.id}
                   onClick={() => setSelectedPlaybook(playbook)}
-                  className="group bg-slate-900/40 hover:bg-slate-900/70 border border-slate-850 hover:border-slate-700 rounded-[2rem] p-6 cursor-pointer transition-all hover:-translate-y-1 shadow-lg hover:shadow-2xl flex flex-col justify-between h-[280px]"
+                  className="group bg-slate-900/40 hover:bg-slate-900/70 border border-slate-850 hover:border-slate-700 rounded-2xl sm:rounded-[2rem] p-4 sm:p-6 cursor-pointer transition-all hover:-translate-y-1 shadow-lg hover:shadow-2xl flex flex-col justify-between h-[280px]"
                 >
                   <div className="space-y-4">
                     <div className="flex justify-between items-start">
@@ -693,7 +693,7 @@ export const MarketingPlaybookTab: React.FC<MarketingPlaybookTabProps> = ({ isSu
         </>
       ) : (
         /* Block-Based Form Editor (Super Admin) */
-        <form onSubmit={handleSavePlaybook} className="bg-slate-900/40 border border-slate-850 rounded-[2.5rem] p-8 space-y-6">
+        <form onSubmit={handleSavePlaybook} className="bg-slate-900/40 border border-slate-850 rounded-2xl sm:rounded-[2.5rem] p-4 sm:p-8 space-y-6">
           <h3 className="text-lg font-black text-white mb-2">
             {formId ? '비법서 문서 수정' : '새 마케팅 비법서 작성'}
           </h3>

@@ -28,6 +28,7 @@
     "node_modules",
     "dist",
     "scripts",
-    "scratch"
+    "scratch",
+    "supabase"
   ]
 }

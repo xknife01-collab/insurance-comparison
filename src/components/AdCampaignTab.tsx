@@ -420,7 +420,7 @@ export const AdCampaignTab: React.FC<AdCampaignTabProps> = ({ currentUser, isSup
   return (
     <div className="space-y-8 relative text-left">
       {/* Header card */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-900/60 p-8 rounded-[2.5rem] border border-slate-800 shadow-xl backdrop-blur-md">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-900/60 p-4 sm:p-8 rounded-2xl sm:rounded-[2.5rem] border border-slate-800 shadow-xl backdrop-blur-md">
         <div>
           <div className="flex items-center gap-2 mb-2">
             <div className="w-2.5 h-2.5 bg-orange-500 rounded-full animate-pulse"></div>
@@ -459,9 +459,9 @@ export const AdCampaignTab: React.FC<AdCampaignTabProps> = ({ currentUser, isSup
           {/* Ad Campaign Info Banner */}
           <div className={`lg:col-span-2 space-y-6 transition-all duration-300 ${
             showHelpGuide 
-              ? 'border-2 border-dashed border-orange-500/80 animate-pulse bg-slate-900/90 rounded-[2.5rem]' 
-              : 'bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 rounded-[2.5rem]'
-          } p-8`}>
+              ? 'border-2 border-dashed border-orange-500/80 animate-pulse bg-slate-900/90 rounded-2xl sm:rounded-[2.5rem]' 
+              : 'bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 rounded-2xl sm:rounded-[2.5rem]'
+          } p-4 sm:p-8`}>
             {showHelpGuide && (
               <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)] relative z-10">
                 <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
@@ -559,10 +559,10 @@ export const AdCampaignTab: React.FC<AdCampaignTabProps> = ({ currentUser, isSup
           </div>
 
           {/* Ad Request Form Input */}
-          <form onSubmit={handleOpenContract} className={`lg:col-span-3 p-8 space-y-6 transition-all duration-300 ${
+          <form onSubmit={handleOpenContract} className={`lg:col-span-3 p-4 sm:p-8 space-y-6 transition-all duration-300 ${
             showHelpGuide 
-              ? 'border-2 border-dashed border-orange-500/80 animate-pulse bg-slate-900/90 rounded-[2.5rem]' 
-              : 'bg-slate-900/40 border border-slate-850 rounded-[2.5rem]'
+              ? 'border-2 border-dashed border-orange-500/80 animate-pulse bg-slate-900/90 rounded-2xl sm:rounded-[2.5rem]' 
+              : 'bg-slate-900/40 border border-slate-850 rounded-2xl sm:rounded-[2.5rem]'
           }`}>
             {showHelpGuide && (
               <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)] relative z-10">
@@ -791,7 +791,7 @@ export const AdCampaignTab: React.FC<AdCampaignTabProps> = ({ currentUser, isSup
           {/* Details & Signed Contract View (Super Admin) */}
           <div className="lg:col-span-3 space-y-6">
             {selectedRequest ? (
-              <div className="bg-slate-900/40 border border-slate-850 rounded-[2.5rem] p-8 space-y-6 relative">
+              <div className="bg-slate-900/40 border border-slate-850 rounded-2xl sm:rounded-[2.5rem] p-4 sm:p-8 space-y-6 relative">
                 {/* Contract viewer actions */}
                 <div className="flex flex-wrap justify-between items-center gap-4 pb-4 border-b border-slate-850">
                   <div>
@@ -905,7 +905,7 @@ export const AdCampaignTab: React.FC<AdCampaignTabProps> = ({ currentUser, isSup
 
               </div>
             ) : (
-              <div className="bg-slate-900/20 border-2 border-dashed border-slate-850 rounded-[2.5rem] p-12 text-center space-y-3">
+              <div className="bg-slate-900/20 border-2 border-dashed border-slate-850 rounded-2xl sm:rounded-[2.5rem] p-6 sm:p-12 text-center space-y-3">
                 <FileText className="w-12 h-12 text-slate-700 mx-auto" />
                 <h3 className="text-base font-black text-slate-400">신청건을 선택해 주세요</h3>
                 <p className="text-xs text-slate-600 font-bold max-w-xs mx-auto">
@@ -920,7 +920,7 @@ export const AdCampaignTab: React.FC<AdCampaignTabProps> = ({ currentUser, isSup
       {/* Contract & Electronic Signature Modal (Planner submission step) */}
       {showContractModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4 animate-fade-in">
-          <div className="relative w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+          <div className="relative w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
             
             {/* Modal Header */}
             <div className="p-6 border-b border-slate-800 flex justify-between items-center bg-slate-900/80 backdrop-blur-md sticky top-0 z-10">

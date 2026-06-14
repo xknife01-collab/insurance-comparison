@@ -118,6 +118,14 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
               </div>
             </div>
 
+            {/* 고객 안심 보장 배너 */}
+            <div className="max-w-xl mx-auto bg-[#FFF8F0] border-2 border-amber-200/80 rounded-3xl p-5 flex items-center gap-3.5 text-left shadow-xl animate-in fade-in duration-500">
+              <span className="text-xl text-orange-500 flex-shrink-0 animate-pulse">🛡️</span>
+              <p className="text-xs sm:text-sm font-black text-slate-800 leading-relaxed break-keep">
+                저희는 카카오톡 요청 전까지는 절대 전화나 문자를 드리지 않습니다. 안심하시고 비교 분석 하셔도 됩니다.
+              </p>
+            </div>
+
             <form onSubmit={handleStartAnalysis} className="space-y-6 max-w-xl mx-auto w-full">
               {/* Row 1: Name and Gender */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

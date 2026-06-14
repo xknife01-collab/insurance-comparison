@@ -169,11 +169,41 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   const [socialLoading, setSocialLoading] = useState<'naver' | 'kakao' | null>(null);
   const [authModal, setAuthModal] = useState<'naver' | 'kakao' | null>(null);
   const [agreedTerms, setAgreedTerms] = useState(false);
-  
+  const [showTermsModal, setShowTermsModal] = useState(false);
+
   // Input states
   const [name, setName] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [mobile, setMobile] = useState('');
+
+  // SMS Verification States
+  const [isSmsVerified, setIsSmsVerified] = useState(false);
+  const [showSmsModal, setShowSmsModal] = useState(false);
+  const [smsCode, setSmsCode] = useState('');
+  const [smsTimer, setSmsTimer] = useState(180);
+  const [smsLoading, setSmsLoading] = useState(false);
+  const [smsError, setSmsError] = useState<string | null>(null);
+
+  // Reset SMS verification status if mobile number changes
+  React.useEffect(() => {
+    setIsSmsVerified(false);
+  }, [mobile]);
+
+  // SMS Timer Effect
+  React.useEffect(() => {
+    let interval: any = null;
+    if (showSmsModal && smsTimer > 0) {
+      interval = setInterval(() => {
+        setSmsTimer((prev) => prev - 1);
+      }, 1000);
+    } else if (smsTimer === 0) {
+      setSmsError("인증 시간이 초과되었습니다. 재발송을 눌러주세요.");
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [showSmsModal, smsTimer]);
+
   const [triggerHyphenModal, setTriggerHyphenModal] = useState(false);
   const [jobClass, setJobClass] = useState(1); // 1: Office, 2: Driver/Field, 3: High Risk
   const [healthStatus, setHealthStatus] = useState<'standard' | 'simple'>('standard');
@@ -607,6 +637,97 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
       }
     }
   }, [selectedDetail, selectedId]);
+
+  const handleRequestSms = async (targetMobile: string) => {
+    const cleanPhone = targetMobile.replace(/[^0-9]/g, '');
+    if (!cleanPhone || cleanPhone.length < 10) {
+      setSmsError("올바른 휴대폰 번호를 입력해 주세요.");
+      alert("올바른 휴대폰 번호를 입력해 주세요.");
+      return;
+    }
+
+    setSmsLoading(true);
+    setSmsError(null);
+    setSmsCode('');
+    setSmsTimer(180);
+    
+    try {
+      const response = await fetch('/api/send-sms-verification', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          action: 'send',
+          phone: cleanPhone
+        })
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok || !data?.success) {
+        setSmsError(data?.error || "인증번호 발송에 실패했습니다.");
+        alert(data?.error || "인증번호 발송에 실패했습니다.");
+      } else {
+        if (data?.simulated && data?.code) {
+          alert(`[테스트 안내]\n알리고 API IP 제한 우회 모드로 동작합니다.\n\n인증번호: [ ${data.code} ]`);
+        }
+        setShowSmsModal(true);
+      }
+    } catch (err: any) {
+      console.error(err);
+      setSmsError("인증 요청 중 연결 오류가 발생했습니다.");
+    } finally {
+      setSmsLoading(false);
+    }
+  };
+
+  const handleVerifySmsCode = async () => {
+    if (!smsCode.trim() || smsCode.length < 6) {
+      setSmsError("6자리 인증번호를 정확히 입력해 주세요.");
+      return;
+    }
+    
+    if (smsTimer === 0) {
+      setSmsError("인증 시간이 만료되었습니다. 인증번호를 다시 받아주세요.");
+      return;
+    }
+    
+    setSmsLoading(true);
+    setSmsError(null);
+    
+    try {
+      const response = await fetch('/api/send-sms-verification', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          action: 'verify',
+          phone: mobile,
+          code: smsCode
+        })
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok || !data?.success) {
+        setSmsError(data?.error || "인증번호가 일치하지 않습니다.");
+      } else {
+        setIsSmsVerified(true);
+        setShowSmsModal(false);
+        // Automatically run calculation upon successful verification
+        setTimeout(() => {
+          handleCalculate();
+        }, 100);
+      }
+    } catch (err: any) {
+      console.error(err);
+      setSmsError("인증 확인 중 연결 오류가 발생했습니다.");
+    } finally {
+      setSmsLoading(false);
+    }
+  };
 
   const handleCalculate = (overrides?: { name?: string; age?: number; gender?: 'M' | 'F'; mobile?: string }) => {
     const finalName = (overrides?.name !== undefined ? overrides.name : name) || '';
@@ -1149,6 +1270,14 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                 </div>
               </div>
 
+              {/* 고객 안심 보장 배너 */}
+              <div className="max-w-xl mx-auto mb-10 bg-gradient-to-r from-orange-500/10 to-amber-500/10 border border-orange-500/20 rounded-3xl p-5 flex items-center gap-3.5 text-left shadow-sm animate-in fade-in duration-500">
+                <span className="text-xl text-orange-500 flex-shrink-0 animate-pulse">🛡️</span>
+                <p className="text-xs sm:text-sm font-black text-slate-800 leading-relaxed break-keep">
+                  저희는 카카오톡 요청 전까지는 절대 전화나 문자를 드리지 않습니다. 안심하시고 비교 분석 하셔도 됩니다.
+                </p>
+              </div>
+
               {selectedId === 'car' ? (
                 <>
                   {/* 자동차 전용 고객 정보 입력 폼 (인증 버튼 없음) */}
@@ -1618,8 +1747,18 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                    onChange={(e) => setAgreedTerms(e.target.checked)}
                    className="w-5 h-5 rounded-lg accent-orange-500" 
                  />
-                 <label htmlFor="terms" className="text-[0.7rem] font-bold text-slate-400 cursor-pointer">
-                    개인정보수집 및 활용동의 <span className="underline ml-1 font-black opacity-40">자세히 보기</span>
+                 <label htmlFor="terms" className="text-[0.7rem] font-bold text-slate-400 cursor-pointer select-none">
+                    개인정보수집 및 활용동의 
+                    <span 
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setShowTermsModal(true);
+                      }}
+                      className="underline ml-1 font-black opacity-60 hover:opacity-100 transition-opacity"
+                    >
+                      자세히 보기
+                    </span>
                  </label>
               </div>
 
@@ -1921,6 +2060,167 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                   transition={{ duration: 1.1, ease: "easeInOut" }}
                   className="h-full bg-gradient-to-r from-orange-600 to-orange-400 rounded-full"
                 />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showTermsModal && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4"
+          >
+            <motion.div 
+              initial={{ scale: 0.95, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 20 }}
+              className="bg-white rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-slate-100 flex flex-col max-h-[80vh] relative text-left"
+            >
+              <div className="flex justify-between items-center pb-4 border-b border-slate-100">
+                <h3 className="text-lg font-black text-slate-950">
+                  개인정보 수집 및 이용 동의 (표준약관)
+                </h3>
+                <button 
+                  onClick={() => setShowTermsModal(false)}
+                  className="p-1.5 hover:bg-slate-100 text-slate-500 hover:text-slate-700 rounded-lg transition-colors"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="flex-1 overflow-y-auto my-6 space-y-4 pr-1 text-[11px] sm:text-xs text-slate-600 leading-relaxed font-medium">
+                <div>
+                  <h4 className="font-extrabold text-slate-950 mb-1">1. 개인정보 수집 및 이용 목적</h4>
+                  <p>
+                    보험리밸런스는 고객님께 실시간 보험 비교 분석 서비스 및 맞춤형 리밸런싱 포트폴리오를 제공하고, 관련 1:1 상담(전화, 문자, 카카오톡 상담 포함)을 진행하기 위해 개인정보를 수집 및 이용합니다.
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="font-extrabold text-slate-950 mb-1">2. 수집하는 개인정보 항목</h4>
+                  <p>
+                    - 필수항목: 성명, 생년월일, 성별, 휴대전화번호, 직업급수<br />
+                    - 선택항목: 기존 보유 보험 내역 및 납입 보험료 정보
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="font-extrabold text-slate-950 mb-1">3. 개인정보의 보유 및 이용 기간</h4>
+                  <p>
+                    수집된 개인정보는 **이용 목적 달성 후 즉시 파기**하는 것을 원칙으로 합니다. 단, 고객 동의 하에 상담 관리를 위해 최대 **1년간 보관** 후 안전한 방법으로 영구 파기합니다.
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="font-extrabold text-slate-950 mb-1">4. 동의를 거부할 권리 및 불이익</h4>
+                  <p>
+                    고객님은 본 개인정보 수집 및 이용 동의를 거부할 권리가 있습니다. 단, 필수 정보 수집에 동의하지 않으시는 경우 0.1초 실시간 보험 비교 분석 및 맞춤 포트폴리오 분석 결과 제공 서비스의 이용이 제한될 수 있습니다.
+                  </p>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-slate-100 flex gap-3">
+                <button
+                  onClick={() => {
+                    setAgreedTerms(false);
+                    setShowTermsModal(false);
+                  }}
+                  className="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all text-center"
+                >
+                  동의 안함
+                </button>
+                <button
+                  onClick={() => {
+                    setAgreedTerms(true);
+                    setShowTermsModal(false);
+                  }}
+                  className="flex-1 py-3 bg-orange-500 hover:bg-orange-600 text-white text-xs font-black rounded-xl transition-all shadow-md shadow-orange-500/10 text-center"
+                >
+                  동의하고 확인
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showSmsModal && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4"
+          >
+            <motion.div 
+              initial={{ scale: 0.95, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 20 }}
+              className="bg-white rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-8 max-w-md w-full shadow-2xl border border-slate-100 flex flex-col relative text-center gap-6"
+            >
+              <button 
+                onClick={() => setShowSmsModal(false)}
+                className="absolute top-6 right-6 p-1.5 hover:bg-slate-100 text-slate-500 hover:text-slate-700 rounded-lg transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+
+              <div className="space-y-2">
+                <h3 className="text-xl font-black text-slate-950">
+                  휴대폰 번호 인증
+                </h3>
+                <p className="text-xs font-bold text-slate-500">
+                  {mobile.replace(/(\d{3})(\d{4})(\d{4})/, '$1-****-$3')} 번호로 인증문자가 발송되었습니다.<br/>
+                  수신된 6자리 인증번호를 3분 내에 입력해 주세요.
+                </p>
+              </div>
+
+              <div className="relative w-full max-w-xs mx-auto">
+                <input 
+                  type="text" 
+                  value={smsCode}
+                  onChange={(e) => setSmsCode(e.target.value.replace(/[^0-9]/g, ''))}
+                  maxLength={6}
+                  placeholder="인증번호 6자리"
+                  className="w-full text-center py-4 text-2xl font-black tracking-[0.5em] bg-slate-50 rounded-2xl border border-slate-200 outline-none focus:border-orange-300 focus:bg-white transition-all text-slate-800 placeholder:text-slate-300 placeholder:tracking-normal"
+                />
+                
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-black text-rose-500 bg-rose-50 px-2.5 py-1 rounded-lg">
+                  {Math.floor(smsTimer / 60)}:{String(smsTimer % 60).padStart(2, '0')}
+                </div>
+              </div>
+
+              {smsError && (
+                <div className="text-rose-500 text-xs font-bold bg-rose-50/60 border border-rose-100 py-2.5 px-4 rounded-xl">
+                  ⚠️ {smsError}
+                </div>
+              )}
+
+              <div className="flex gap-3 mt-2">
+                <button
+                  onClick={() => handleRequestSms(mobile)}
+                  disabled={smsLoading}
+                  className="flex-1 py-4 bg-slate-100 hover:bg-slate-200 disabled:opacity-50 text-slate-700 text-sm font-extrabold rounded-xl transition-all text-center"
+                >
+                  재발송
+                </button>
+                <button
+                  onClick={handleVerifySmsCode}
+                  disabled={smsLoading}
+                  className="flex-1 py-4 bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white text-sm font-black rounded-xl transition-all shadow-md shadow-orange-500/10 text-center flex items-center justify-center gap-2"
+                >
+                  {smsLoading ? (
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  ) : "인증 완료"}
+                </button>
               </div>
             </motion.div>
           </motion.div>

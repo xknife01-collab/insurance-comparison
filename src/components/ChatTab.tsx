@@ -570,7 +570,7 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide 
   });
 
   return (
-    <div className={`flex flex-col h-[680px] bg-slate-950/80 rounded-3xl overflow-hidden shadow-2xl shadow-violet-950/10 text-left transition-all duration-300 ${
+    <div className={`flex flex-col h-[600px] sm:h-[680px] bg-slate-950/80 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl shadow-violet-950/10 text-left transition-all duration-300 ${
       showHelpGuide ? 'help-guide-glow bg-slate-900/10' : 'border border-violet-500/20'
     }`}>
       
@@ -614,10 +614,10 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide 
       </div>
 
       {/* Main content grid */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
         
         {/* Left Side: Directory or Rooms list */}
-        <div className="w-80 border-r border-slate-800/80 flex flex-col bg-slate-950/40 overflow-y-auto">
+        <div className={`${selectedRoom ? 'hidden md:flex' : 'flex'} w-full md:w-80 border-r border-slate-800/80 flex-col bg-slate-950/40 overflow-y-auto`}>
           
           {subTab === 'contacts' ? (
             <div className="p-4 flex flex-col gap-4">
@@ -737,13 +737,23 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide 
         </div>
 
         {/* Right Side: Message Window */}
-        <div className="flex-1 flex flex-col bg-slate-950/20 relative overflow-hidden">
+        <div className={`${selectedRoom ? 'flex' : 'hidden md:flex'} flex-1 flex-col bg-slate-950/20 relative overflow-hidden`}>
           {selectedRoom ? (
             <>
               {/* Message Header */}
-              <div className="px-6 py-4 border-b border-slate-800/80 bg-slate-900/30 flex items-center justify-between shrink-0">
-                <div className="flex items-center gap-3">
-                  <div className="relative">
+              <div className="px-3 sm:px-6 py-4 border-b border-slate-800/80 bg-slate-900/30 flex items-center justify-between shrink-0">
+                <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                  {/* Back button on mobile */}
+                  <button 
+                    type="button" 
+                    onClick={() => setSelectedRoom(null)}
+                    className="block md:hidden text-slate-400 hover:text-white p-1 shrink-0"
+                    title="목록으로 돌아가기"
+                  >
+                    <ArrowLeft className="w-5 h-5" />
+                  </button>
+
+                  <div className="relative shrink-0">
                     <img 
                       src={selectedRoom.otherMember?.profile_image_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&q=80'} 
                       alt={selectedRoom.otherMember?.name}
@@ -775,7 +785,7 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide 
                   >
                     <span>💡 자주 묻는 질문 (FAQ)</span>
                   </button>
-                  <span className="text-[10px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
+                  <span className="hidden sm:flex text-[10px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full font-bold items-center gap-1">
                     <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
                     실시간 연결됨
                   </span>
@@ -852,7 +862,7 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide 
 
                 {/* Right Side: Interactive Sliding FAQ Drawer */}
                 {showFaqDrawer && (
-                  <div className="w-80 border-l border-slate-800/80 bg-slate-950/60 flex flex-col p-4 overflow-y-auto animate-in slide-in-from-right duration-350 shrink-0">
+                  <div className="absolute md:relative right-0 top-0 bottom-0 z-30 w-full md:w-80 border-l border-slate-800/80 bg-slate-950/95 md:bg-slate-950/60 flex flex-col p-4 overflow-y-auto animate-in slide-in-from-right duration-350 shrink-0">
                     <div className="flex justify-between items-center mb-4 border-b border-slate-800 pb-2">
                       <h4 className="text-xs font-black text-slate-400 uppercase tracking-wider">
                         💡 자주 묻는 질문 (FAQ)

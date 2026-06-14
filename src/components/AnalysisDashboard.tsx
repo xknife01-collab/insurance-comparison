@@ -230,6 +230,37 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
       const category = result.analysis.selectedCategory || 'general';
       const simCode = (result as any).simulation_code || '';
       
+      let simulated = false;
+      try {
+        const origin = window.location.origin;
+        const msg = `[보험리밸런스]
+안녕하세요, ${smsName} 고객님.
+요청하신 비교 설계안 보관 링크입니다.
+
+🔑 고유 코드: ${simCode}
+🔗 모바일 보고서 링크:
+${origin}/?code=${simCode}
+
+보안된 서버에 안전하게 보관되었습니다. 언제든 분석 결과를 다시 확인하실 수 있습니다.`;
+
+        const smsRes = await fetch('/api/send-sms-verification', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'send-link',
+            phone: smsPhone,
+            message: msg
+          })
+        });
+
+        const smsData = await smsRes.json();
+        if (smsData?.simulated) {
+          simulated = true;
+        }
+      } catch (smsErr) {
+        console.error("SMS transmission error:", smsErr);
+      }
+
       if (onSubmitLead) {
         const customAnalysis = {
           ...result.analysis,
@@ -245,7 +276,11 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
       }
       
       setSmsSuccess(true);
-      alert(`[알림톡/SMS 발송 완료]\n\n고유 설계 코드: [ ${simCode} ]\n모바일 링크: http://localhost:3000/?code=${simCode}\n\n${smsName} 고객님(${smsPhone})께 모바일 비교 보고서 보관용 링크가 발송되었습니다.`);
+      if (simulated) {
+        alert(`[시뮬레이션 안내]\n알리고 API IP 제한으로 인해 SMS가 발송된 것으로 시뮬레이션 처리되었습니다.\n\n고객명: ${smsName}\n연락처: ${smsPhone}\n설계 코드: ${simCode}\n링크: ${window.location.origin}/?code=${simCode}`);
+      } else {
+        alert(`[알림톡/SMS 발송 완료]\n\n고유 설계 코드: [ ${simCode} ]\n\n${smsName} 고객님(${smsPhone})께 모바일 비교 보고서 보관용 링크가 발송되었습니다.`);
+      }
     } catch (err) {
       console.error(err);
       alert("전송 중 오류가 발생했습니다. 다시 시도해 주세요.");

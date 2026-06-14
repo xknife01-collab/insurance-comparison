@@ -6,6 +6,7 @@ import { ChatTab } from './ChatTab';
 import { LeadDistributionSimulator } from './LeadDistributionSimulator';
 import { triggerWelcomeChat } from '../utils/chatHelper';
 import PWAInstallCard from './PWAInstallCard';
+import { registerPushSubscription, triggerTestPushNotification } from '../utils/pushNotification';
 
 import { 
   Users, Settings, CreditCard, FileText, Plus, LogOut, CheckCircle, 
@@ -447,6 +448,9 @@ export default function AdminDashboard() {
     subscriptionStatus?: string;
   }>({ role: 'guest' });
 
+  const [pushStatus, setPushStatus] = useState<'unsupported' | 'loading' | 'default' | 'granted' | 'denied' | 'registered'>('loading');
+  const [isTestPushSending, setIsTestPushSending] = useState(false);
+
   // DB Data state
   const [leads, setLeads] = useState<Lead[]>([]);
   const [planners, setPlanners] = useState<Planner[]>([]);
@@ -628,6 +632,80 @@ export default function AdminDashboard() {
       supabase.removeChannel(channel);
     };
   }, [currentUser.plannerId, currentUser.agencyId, currentUser.role]);
+
+  // Synchronize push notification subscription and permission status
+  useEffect(() => {
+    const checkPushStatus = async () => {
+      if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+        setPushStatus('unsupported');
+        return;
+      }
+      
+      const permission = Notification.permission;
+      if (permission === 'default') {
+        setPushStatus('default');
+      } else if (permission === 'denied') {
+        setPushStatus('denied');
+      } else if (permission === 'granted') {
+        try {
+          const reg = await navigator.serviceWorker.ready;
+          const sub = await reg.pushManager.getSubscription();
+          if (sub) {
+            setPushStatus('registered');
+          } else {
+            setPushStatus('granted');
+          }
+        } catch (e) {
+          setPushStatus('granted');
+        }
+      }
+    };
+
+    if (currentUser.plannerId) {
+      checkPushStatus();
+    }
+  }, [currentUser.plannerId, activeTab]);
+
+  const handleSubscribePush = async () => {
+    if (!currentUser.plannerId) return;
+    setPushStatus('loading');
+    try {
+      const sub = await registerPushSubscription(currentUser.plannerId);
+      if (sub) {
+        setPushStatus('registered');
+        alert('🔔 실시간 푸시 알림 수신이 성공적으로 설정되었습니다!');
+      } else {
+        const permission = Notification.permission;
+        if (permission === 'denied') {
+          setPushStatus('denied');
+          alert('❌ 알림 권한이 거부되었습니다. 브라우저 주소창 설정 아이콘을 눌러 알림 권한을 [허용]으로 변경해 주세요.');
+        } else {
+          setPushStatus('default');
+          alert('❌ 알림 수신 설정에 실패했습니다. 다시 시도해 주세요.');
+        }
+      }
+    } catch (e: any) {
+      setPushStatus('default');
+      alert('오류가 발생했습니다: ' + e.message);
+    }
+  };
+
+  const handleSendTestPush = async () => {
+    if (!currentUser.plannerId) return;
+    setIsTestPushSending(true);
+    try {
+      const res = await triggerTestPushNotification(currentUser.plannerId);
+      if (res.success) {
+        alert('🚀 테스트 알림이 발송되었습니다! 기기를 확인해 보세요.');
+      } else {
+        alert('❌ 테스트 알림 발송 실패: ' + (res.error || '알 수 없는 오류'));
+      }
+    } catch (e: any) {
+      alert('오류가 발생했습니다: ' + e.message);
+    } finally {
+      setIsTestPushSending(false);
+    }
+  };
 
   const [visitorLogs, setVisitorLogs] = useState<any[]>([]);
   const [marketingPeriod, setMarketingPeriod] = useState<'today' | '7days' | 'all'>('all');
@@ -1191,6 +1269,15 @@ export default function AdminDashboard() {
         subscriptionStatus: 'active',
         expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
       });
+      
+      // Auto-register push subscription for demo after login succeeds
+      setTimeout(async () => {
+        try {
+          await registerPushSubscription('11111111-1111-4111-a111-111111111111');
+        } catch (e) {
+          console.warn('Auto-registering push subscription failed for demo:', e);
+        }
+      }, 1000);
       
       setAgencies(prev => {
         if (!prev.some(a => a.id === '88888888-8888-4888-a888-888888888888')) {
@@ -1865,6 +1952,18 @@ export default function AdminDashboard() {
         subscriptionStatus: planner.subscription_status,
         expiresAt: planner.subscription_expires_at
       });
+
+      // Auto-register push subscription after login succeeds
+      if (planner.id) {
+        setTimeout(async () => {
+          try {
+            await registerPushSubscription(planner.id);
+          } catch (e) {
+            console.warn('Auto-registering push subscription failed:', e);
+          }
+        }, 1000);
+      }
+      
       setActiveTab('leads');
     } catch (err) {
       setLoginError('로그인 중 오류가 발생했습니다.');
@@ -4318,7 +4417,7 @@ export default function AdminDashboard() {
       ) : (
         
         /* ── LOGGED IN DASHBOARD VIEW ── */
-        <div className="w-full max-w-full xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="w-full mx-auto px-2 sm:px-6 lg:px-8 py-4 sm:py-10">
           
           {(currentUser.plannerCode === 'test' || currentUser.plannerCode === 'test_planner') && (
             <div className="bg-gradient-to-r from-orange-500/20 via-amber-500/20 to-orange-500/20 border border-orange-500/30 rounded-2xl p-4 mb-8 text-left flex flex-col md:flex-row md:items-center justify-between gap-4 animate-in slide-in-from-top-4 duration-300 relative overflow-hidden shadow-lg">
@@ -4531,7 +4630,7 @@ export default function AdminDashboard() {
             </div>
 
             {/* Right main panel */}
-            <div className="lg:col-span-4 min-w-0 bg-slate-900/60 border border-slate-800/80 rounded-3xl p-6 min-h-[500px]">
+            <div className="lg:col-span-4 min-w-0 bg-slate-900/60 border border-slate-800/80 rounded-2xl sm:rounded-3xl p-3 sm:p-6 min-h-[500px]">
               {/* PWA Install Guide Card (Mobile only) */}
               <div className="block lg:hidden mb-6">
                 <PWAInstallCard />
@@ -4611,7 +4710,7 @@ export default function AdminDashboard() {
                   </div>
 
                   {/* ── CARD 1: 실시간 보험 분석 & 다이어트 시도 목록 (잠재고객 DB) ── */}
-                  <div className={`p-6 rounded-[2rem] space-y-6 relative overflow-hidden transition-all duration-300 ${
+                  <div className={`p-3 sm:p-6 rounded-2xl sm:rounded-[2rem] space-y-6 relative overflow-hidden transition-all duration-300 ${
                     showHelpGuide 
                       ? 'help-guide-glow bg-slate-900/20 shadow-[0_20px_50px_-12px_rgba(255,107,0,0.25)]' 
                       : 'bg-slate-900/40 border border-slate-800/80 shadow-none'
@@ -4689,7 +4788,7 @@ export default function AdminDashboard() {
                   </div>
 
                   {/* ── CARD 2: 🔥 카카오톡 정밀설계 신청 목록 (초고관여 상담 DB) ── */}
-                  <div className={`p-6 rounded-[2rem] space-y-6 relative overflow-hidden transition-all duration-300 ${
+                  <div className={`p-3 sm:p-6 rounded-2xl sm:rounded-[2rem] space-y-6 relative overflow-hidden transition-all duration-300 ${
                     showHelpGuide 
                       ? 'help-guide-glow bg-slate-950/90 shadow-[0_20px_50px_-12px_rgba(255,107,0,0.25)]' 
                       : 'bg-slate-950 border-2 border-orange-500/30 shadow-[0_20px_50px_-12px_rgba(255,107,0,0.15)]'
@@ -5194,7 +5293,7 @@ export default function AdminDashboard() {
 
                   {/* 분배형 분기 화면 */}
                   {getCurrentRoutingType() === 'direct' && (
-                    <div className="bg-slate-900/60 border border-slate-800 rounded-[2rem] p-8 space-y-6 text-left mt-6">
+                    <div className="bg-slate-900/60 border border-slate-800 rounded-2xl sm:rounded-[2rem] p-4 sm:p-8 space-y-6 text-left mt-6">
                       <div className="flex items-center gap-3 border-b border-slate-800/80 pb-4">
                         <span className="text-2xl">👤</span>
                         <div>
@@ -5240,7 +5339,7 @@ export default function AdminDashboard() {
                   )}
 
                   {getCurrentRoutingType() === 'distribute' && (
-                    <div className="bg-slate-900/60 border border-slate-800 rounded-[2rem] p-8 space-y-6 text-left mt-6">
+                    <div className="bg-slate-900/60 border border-slate-800 rounded-2xl sm:rounded-[2rem] p-4 sm:p-8 space-y-6 text-left mt-6">
                       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800/80 pb-4">
                         <div>
                           <h3 className="text-base font-extrabold text-white flex items-center gap-2">
@@ -5315,7 +5414,7 @@ export default function AdminDashboard() {
 
                   {getCurrentRoutingType() === 'distribute_auto' && (
                     <div className="space-y-6 mt-6">
-                      <div className="bg-slate-900/60 border border-slate-800 rounded-[2rem] p-8 space-y-8 text-left">
+                      <div className="bg-slate-900/60 border border-slate-800 rounded-2xl sm:rounded-[2rem] p-4 sm:p-8 space-y-8 text-left">
                         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800/80 pb-4">
                           <div>
                             <h3 className="text-base font-extrabold text-white flex items-center gap-2">
@@ -5456,7 +5555,7 @@ export default function AdminDashboard() {
                   )}
 
                   {/* 자주 묻는 질문 (FAQ) 섹션 */}
-                  <div className="bg-slate-900/40 border border-slate-800/80 rounded-[2rem] p-8 space-y-6 text-left mt-8">
+                  <div className="bg-slate-900/40 border border-slate-800/80 rounded-2xl sm:rounded-[2rem] p-4 sm:p-8 space-y-6 text-left mt-8">
                     <div className="flex items-center justify-between border-b border-slate-850 pb-4">
                       <div className="flex items-center gap-2">
                         <span className="text-xl">❓</span>
@@ -5531,10 +5630,10 @@ export default function AdminDashboard() {
                   </div>
 
                   {/* 1. Subscription card */}
-                  <div className={`p-8 space-y-6 text-left relative overflow-hidden transition-all duration-300 ${
+                  <div className={`p-4 sm:p-8 space-y-6 text-left relative overflow-hidden transition-all duration-300 ${
                     showHelpGuide 
-                      ? 'help-guide-glow bg-slate-900/90 shadow-[0_20px_50px_-12px_rgba(255,107,0,0.25)] rounded-[2rem]' 
-                      : 'bg-gradient-to-br from-slate-900 to-slate-950 border-2 border-orange-500/20 rounded-[2rem] shadow-[0_20px_50px_-12px_rgba(255,107,0,0.08)]'
+                      ? 'help-guide-glow bg-slate-900/90 shadow-[0_20px_50px_-12px_rgba(255,107,0,0.25)] rounded-2xl sm:rounded-[2rem]' 
+                      : 'bg-gradient-to-br from-slate-900 to-slate-950 border-2 border-orange-500/20 rounded-2xl sm:rounded-[2rem] shadow-[0_20px_50px_-12px_rgba(255,107,0,0.08)]'
                   }`}>
                     {showHelpGuide && (
                       <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)] relative z-10">
@@ -5653,10 +5752,10 @@ export default function AdminDashboard() {
  
                   {/* 2. Prepaid Credits Card */}
                   {(currentUser.role === 'agency' || currentUser.role === 'super' || currentUser.role === 'planner') && (
-                    <div className={`p-8 space-y-6 text-left relative overflow-hidden transition-all duration-300 ${
+                    <div className={`p-4 sm:p-8 space-y-6 text-left relative overflow-hidden transition-all duration-300 ${
                       showHelpGuide 
-                        ? 'help-guide-glow bg-slate-900/90 shadow-[0_20px_50px_-12px_rgba(245,158,11,0.25)] rounded-[2rem]' 
-                        : 'bg-gradient-to-br from-slate-900 to-slate-950 border-2 border-amber-500/20 rounded-[2rem] shadow-[0_20px_50px_-12px_rgba(245,158,11,0.08)]'
+                        ? 'help-guide-glow bg-slate-900/90 shadow-[0_20px_50px_-12px_rgba(245,158,11,0.25)] rounded-2xl sm:rounded-[2rem]' 
+                        : 'bg-gradient-to-br from-slate-900 to-slate-950 border-2 border-amber-500/20 rounded-2xl sm:rounded-[2rem] shadow-[0_20px_50px_-12px_rgba(245,158,11,0.08)]'
                     }`}>
                       {showHelpGuide && (
                         <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)] relative z-10">
@@ -5848,7 +5947,7 @@ export default function AdminDashboard() {
 
                   {/* 4. Low Credit Alerts Config Card */}
                   {currentUser.role === 'agency' && (
-                    <div className={`rounded-[2rem] p-8 text-left space-y-6 transition-all duration-300 ${
+                    <div className={`rounded-2xl sm:rounded-[2rem] p-4 sm:p-8 text-left space-y-6 transition-all duration-300 ${
                       showHelpGuide 
                         ? 'help-guide-glow bg-slate-900/90' 
                         : 'bg-slate-900 border border-slate-800'
@@ -5902,10 +6001,10 @@ export default function AdminDashboard() {
 
                   {/* 5. Planner Quotas Card */}
                   {currentUser.role === 'agency' && (
-                    <div className={`p-8 text-left space-y-6 transition-all duration-300 ${
+                    <div className={`p-4 sm:p-8 text-left space-y-6 transition-all duration-300 ${
                       showHelpGuide 
-                        ? 'help-guide-glow bg-slate-900/90 rounded-[2rem]' 
-                        : 'bg-slate-900 border border-slate-800 rounded-[2rem]'
+                        ? 'help-guide-glow bg-slate-900/90 rounded-2xl sm:rounded-[2rem]' 
+                        : 'bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-[2rem]'
                     }`}>
                       {showHelpGuide && (
                         <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)] relative z-10">
@@ -5961,10 +6060,10 @@ export default function AdminDashboard() {
 
                   {/* 6. Transaction Log Table Card */}
                   {(currentUser.role === 'agency' || currentUser.role === 'super' || currentUser.role === 'planner') && (
-                    <div className={`p-8 text-left space-y-6 transition-all duration-300 ${
+                    <div className={`p-4 sm:p-8 text-left space-y-6 transition-all duration-300 ${
                       showHelpGuide 
-                        ? 'help-guide-glow bg-slate-900/90 rounded-[2rem]' 
-                        : 'bg-slate-900 border border-slate-800 rounded-[2rem]'
+                        ? 'help-guide-glow bg-slate-900/90 rounded-2xl sm:rounded-[2rem]' 
+                        : 'bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-[2rem]'
                     }`}>
                       {showHelpGuide && (
                         <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)] relative z-10">
@@ -6219,10 +6318,10 @@ export default function AdminDashboard() {
                   })()}
 
                   {/* Channel Breakdown Breakdown */}
-                  <div className={`p-8 space-y-6 transition-all duration-300 ${
+                  <div className={`p-4 sm:p-8 space-y-6 transition-all duration-300 ${
                     showHelpGuide 
-                      ? 'border-2 border-dashed border-orange-500/80 animate-pulse bg-slate-900/90 rounded-[2rem]' 
-                      : 'bg-slate-950/40 border border-slate-850 rounded-[2rem]'
+                      ? 'border-2 border-dashed border-orange-500/80 animate-pulse bg-slate-900/90 rounded-2xl sm:rounded-[2rem]' 
+                      : 'bg-slate-950/40 border border-slate-850 rounded-2xl sm:rounded-[2rem]'
                   }`}>
                     {showHelpGuide && (
                       <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)] relative z-10">
@@ -6336,10 +6435,10 @@ export default function AdminDashboard() {
                   <div className="grid lg:grid-cols-3 gap-6">
                     
                     {/* 1. Planner performance table */}
-                    <div className={`lg:col-span-2 p-8 space-y-6 transition-all duration-300 ${
+                    <div className={`lg:col-span-2 p-4 sm:p-8 space-y-6 transition-all duration-300 ${
                       showHelpGuide 
-                        ? 'border-2 border-dashed border-orange-500/80 animate-pulse bg-slate-900/90 rounded-[2rem]' 
-                        : 'bg-slate-950/40 border border-slate-850 rounded-[2rem]'
+                        ? 'border-2 border-dashed border-orange-500/80 animate-pulse bg-slate-900/90 rounded-2xl sm:rounded-[2rem]' 
+                        : 'bg-slate-950/40 border border-slate-850 rounded-2xl sm:rounded-[2rem]'
                     }`}>
                       {showHelpGuide && (
                         <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)] relative z-10">
@@ -6516,7 +6615,7 @@ export default function AdminDashboard() {
                         : `${window.location.origin}/?agency=${currentUser.agencyCode || currentUser.agencyId || ''}`;
                     return (
                       <div className="space-y-6">
-                        <div className={`bg-gradient-to-r from-orange-500/10 via-amber-500/5 to-slate-950 rounded-[2rem] p-8 space-y-4 transition-all duration-300 ${
+                        <div className={`bg-gradient-to-r from-orange-500/10 via-amber-500/5 to-slate-950 rounded-2xl sm:rounded-[2rem] p-4 sm:p-8 space-y-4 transition-all duration-300 ${
                           showHelpGuide 
                             ? 'border-2 border-dashed border-orange-500/80 animate-pulse' 
                             : 'border border-orange-500/20'
@@ -6570,7 +6669,7 @@ export default function AdminDashboard() {
                         )}
 
                         {/* 광고심의 안내 배너 */}
-                        <div className="bg-slate-950 border border-orange-500/20 rounded-[2rem] p-8 space-y-3 relative overflow-hidden">
+                        <div className="bg-slate-950 border border-orange-500/20 rounded-2xl sm:rounded-[2rem] p-4 sm:p-8 space-y-3 relative overflow-hidden">
                           <div className="flex items-center gap-2 text-orange-400 font-extrabold text-xs">
                             <AlertCircle className="w-4 h-4" />
                             <span>[필독] 링크 배포 및 외부 광고 시 광고 심의 준수 안내</span>
@@ -6598,7 +6697,7 @@ export default function AdminDashboard() {
                     );
                   })()}
 
-                  <div className={`bg-slate-950/40 rounded-[2rem] p-8 space-y-6 transition-all duration-300 ${
+                  <div className={`bg-slate-950/40 rounded-2xl sm:rounded-[2rem] p-4 sm:p-8 space-y-6 transition-all duration-300 ${
                     showHelpGuide 
                       ? 'border-2 border-dashed border-orange-500/80 animate-pulse' 
                       : 'border border-slate-850'
@@ -6829,6 +6928,103 @@ export default function AdminDashboard() {
                         />
                       </div>
 
+                    </div>
+                  </div>
+
+                  {/* 실시간 푸시 알림 설정 카드 */}
+                  <div className="bg-slate-950 border border-slate-800 rounded-2xl sm:rounded-[2rem] p-4 sm:p-8 space-y-6 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-orange-500 to-amber-500" />
+                    <div className="pl-4 space-y-4">
+                      <div className="flex items-center gap-2.5">
+                        <span className="px-2 py-0.5 bg-orange-500/10 border border-orange-500/20 text-orange-400 rounded text-[9px] font-black uppercase">
+                          PUSH NOTIFICATION
+                        </span>
+                        <h4 className="font-extrabold text-sm text-white">신규 고객(리드) 실시간 푸시 알림 설정</h4>
+                      </div>
+                      <p className="text-xs text-slate-400 font-bold leading-relaxed break-keep">
+                        고객이 대표님 전용 랜딩페이지에서 진단 신청을 완료하면, **0.1초 만에 스마트폰 및 브라우저 백그라운드로 즉시 푸시 알림이 발송**됩니다. PC 브라우저와 PWA가 지원되는 모바일 환경에서 모두 실시간 수신이 가능합니다.
+                      </p>
+
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900/40 p-5 rounded-2xl border border-slate-850">
+                        <div className="flex items-center gap-3">
+                          {pushStatus === 'registered' && (
+                            <>
+                              <span className="w-3.5 h-3.5 rounded-full bg-emerald-500 animate-pulse" />
+                              <div>
+                                <span className="text-xs font-black text-white block">실시간 알림 수신 상태: ON</span>
+                                <span className="text-[10px] text-slate-500 font-bold block">이 기기로 신규 리드 실시간 팝업 및 진동 알림이 도착합니다.</span>
+                              </div>
+                            </>
+                          )}
+                          {pushStatus === 'granted' && (
+                            <>
+                              <span className="w-3.5 h-3.5 rounded-full bg-amber-400 animate-pulse" />
+                              <div>
+                                <span className="text-xs font-black text-white block">알림 권한은 허용되었으나 수신 미설정 상태</span>
+                                <span className="text-[10px] text-slate-500 font-bold block">아래 [활성화] 버튼을 클릭하면 수신이 완료됩니다.</span>
+                              </div>
+                            </>
+                          )}
+                          {(pushStatus === 'default' || pushStatus === 'loading') && (
+                            <>
+                              <span className="w-3.5 h-3.5 rounded-full bg-slate-600 animate-pulse" />
+                              <div>
+                                <span className="text-xs font-black text-slate-350 block">알림 수신 비활성화 상태</span>
+                                <span className="text-[10px] text-slate-500 font-bold block">신규 리드를 놓치지 않으려면 실시간 푸시 알림을 활성화하세요.</span>
+                              </div>
+                            </>
+                          )}
+                          {pushStatus === 'denied' && (
+                            <>
+                              <span className="w-3.5 h-3.5 rounded-full bg-red-500" />
+                              <div>
+                                <span className="text-xs font-black text-red-400 block">알림 권한 차단됨</span>
+                                <span className="text-[10px] text-slate-500 font-bold block">브라우저의 사이트 설정에서 알림 권한을 [허용]으로 재설정해야 합니다.</span>
+                              </div>
+                            </>
+                          )}
+                          {pushStatus === 'unsupported' && (
+                            <>
+                              <span className="w-3.5 h-3.5 rounded-full bg-red-650" />
+                              <div>
+                                <span className="text-xs font-black text-slate-400 block">미지원 환경</span>
+                                <span className="text-[10px] text-slate-500 font-bold block">이 브라우저 혹은 앱에서는 웹 푸시 알림 기능이 작동하지 않습니다.</span>
+                              </div>
+                            </>
+                          )}
+                        </div>
+
+                        <div className="flex gap-2">
+                          {(pushStatus === 'default' || pushStatus === 'granted') && (
+                            <button
+                              type="button"
+                              onClick={handleSubscribePush}
+                              className="px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-black text-xs rounded-xl cursor-pointer transition-all shadow-md active:scale-95"
+                            >
+                              🔔 실시간 알림 활성화
+                            </button>
+                          )}
+                          {pushStatus === 'registered' && (
+                            <>
+                              <button
+                                type="button"
+                                onClick={handleSendTestPush}
+                                disabled={isTestPushSending}
+                                className="px-5 py-2.5 bg-slate-800 hover:bg-slate-750 text-slate-300 font-black text-xs rounded-xl cursor-pointer transition-all shadow-md active:scale-95 disabled:opacity-50 flex items-center gap-1.5"
+                              >
+                                🚀 {isTestPushSending ? '전송 중...' : '알림 수신 테스트 전송'}
+                              </button>
+                              <button
+                                type="button"
+                                onClick={handleSubscribePush}
+                                className="px-3.5 py-2.5 bg-slate-900 hover:bg-slate-850 text-slate-400 font-black text-xs rounded-xl cursor-pointer transition-all border border-slate-800 active:scale-95"
+                              >
+                                기기 갱신
+                              </button>
+                            </>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
 
