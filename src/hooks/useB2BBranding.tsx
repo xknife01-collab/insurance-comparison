@@ -104,6 +104,7 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
   });
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [showInAppGuide, setShowInAppGuide] = useState(false);
+  const autoTriggerRef = React.useRef(false);
 
   // User Agent Detections for In-App browsers and OS
   const ua = typeof navigator !== 'undefined' ? navigator.userAgent : '';
@@ -122,6 +123,13 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
       e.preventDefault();
       setDeferredPrompt(e);
       console.log('beforeinstallprompt event triggered and captured in BrandingProvider');
+      
+      if (autoTriggerRef.current) {
+        autoTriggerRef.current = false;
+        setTimeout(() => {
+          (e as any).prompt();
+        }, 100);
+      }
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -129,6 +137,28 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
     };
   }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('install_pwa') === 'true') {
+      params.delete('install_pwa');
+      const newSearch = params.toString();
+      const newUrl = window.location.pathname + (newSearch ? '?' + newSearch : '');
+      window.history.replaceState({}, '', newUrl);
+
+      if (!isInAppBrowser) {
+        if (isIOS) {
+          setShowInAppGuide(true);
+        } else {
+          autoTriggerRef.current = true;
+          if (deferredPrompt) {
+            deferredPrompt.prompt();
+            autoTriggerRef.current = false;
+          }
+        }
+      }
+    }
+  }, [isInAppBrowser, isIOS, deferredPrompt]);
 
   // Capture when app is successfully installed and store the planner code permanently
   useEffect(() => {
@@ -152,7 +182,36 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const handleInstallApp = async () => {
-    if (!deferredPrompt) return;
+    if (isInAppBrowser) {
+      const currentUrl = window.location.href;
+      const separator = currentUrl.includes('?') ? '&' : '?';
+      const targetUrl = currentUrl + separator + 'install_pwa=true';
+
+      if (isIOS) {
+        if (isKakao) {
+          const kakaoSafariLink = `kakaotalk://web/openExternalApp?url=${encodeURIComponent(targetUrl)}`;
+          window.location.href = kakaoSafariLink;
+        } else {
+          setShowInAppGuide(true);
+        }
+      } else {
+        const cleanUrl = targetUrl.replace(/https?:\/\//, '');
+        const chromeIntent = `intent://${cleanUrl}#Intent;scheme=https;package=com.android.chrome;end`;
+        window.location.href = chromeIntent;
+      }
+      return;
+    }
+
+    if (isIOS) {
+      setShowInAppGuide(true);
+      return;
+    }
+
+    if (!deferredPrompt) {
+      alert('앱 설치를 지원하지 않거나 이미 설치되어 있습니다. 크롬/사파리 브라우저의 메뉴에서 [홈 화면에 추가]를 선택해 주세요.');
+      return;
+    }
+
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
     console.log(`PWA install prompt outcome: ${outcome}`);
@@ -167,8 +226,8 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem('pwa_saved_agency', agencyId);
         localStorage.removeItem('pwa_saved_planner');
       }
+      setDeferredPrompt(null);
     }
-    setDeferredPrompt(null);
   };
 
   useEffect(() => {

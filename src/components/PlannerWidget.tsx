@@ -110,7 +110,7 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
               </button>
               {!isStandalone && (deferredPrompt || isInAppBrowser || isIOS) && (
                 <button
-                  onClick={(isInAppBrowser || isIOS) ? () => setShowInAppGuide(true) : onInstallClick}
+                  onClick={onInstallClick}
                   className="w-full py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xs rounded-2xl flex items-center justify-center gap-2 shadow-[0_10px_20px_rgba(249,115,22,0.15)] transform hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer border border-orange-400/20"
                 >
                   📱 내 휴대폰에 앱 설치하기
@@ -126,7 +126,7 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
             <motion.button
               initial={{ opacity: 0, scale: 0.8, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              onClick={(isInAppBrowser || isIOS) ? () => setShowInAppGuide(true) : onInstallClick}
+              onClick={onInstallClick}
               className="pointer-events-auto px-5 py-3.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full border border-orange-400/30 shadow-[0_10px_25px_rgba(249,115,22,0.35)] hover:border-orange-400 flex items-center gap-2 transform hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
             >
               <span className="text-sm">📱</span>

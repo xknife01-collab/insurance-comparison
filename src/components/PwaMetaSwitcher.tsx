@@ -35,6 +35,23 @@ export default function PwaMetaSwitcher() {
       if (themeMeta.getAttribute('content') !== targetColor) {
         themeMeta.setAttribute('content', targetColor);
       }
+
+      // 3. Dynamic Icon Swapping (favicon & apple-touch-icon)
+      const faviconLink = document.querySelector('link[rel="icon"]') as HTMLLinkElement;
+      const shortcutIconLink = document.querySelector('link[rel="shortcut icon"]') as HTMLLinkElement;
+      const appleTouchLink = document.querySelector('link[rel="apple-touch-icon"]') as HTMLLinkElement;
+
+      const targetIcon = isConfiguringAdmin ? '/6397187-1.png' : '/6397187.png';
+
+      if (faviconLink && faviconLink.getAttribute('href') !== targetIcon) {
+        faviconLink.setAttribute('href', targetIcon);
+      }
+      if (shortcutIconLink && shortcutIconLink.getAttribute('href') !== targetIcon) {
+        shortcutIconLink.setAttribute('href', targetIcon);
+      }
+      if (appleTouchLink && appleTouchLink.getAttribute('href') !== targetIcon) {
+        appleTouchLink.setAttribute('href', targetIcon);
+      }
     };
 
     // Run on mount

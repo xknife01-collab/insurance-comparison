@@ -405,7 +405,7 @@ export default function App() {
           {/* Logo Symbol Container */}
           <div className="w-24 h-24 bg-white/5 border border-white/10 rounded-[2rem] flex items-center justify-center shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-md relative overflow-hidden">
             <img 
-              src="/6397187.png" 
+              src="/6397187-1.png" 
               alt="보험리밸런스" 
               className="w-16 h-16 object-contain"
             />

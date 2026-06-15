@@ -431,7 +431,7 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
               </div>
               {!isStandalone && (deferredPrompt || isInAppBrowser || isIOS) && (
                 <button 
-                  onClick={(isInAppBrowser || isIOS) ? () => setShowInAppGuide(true) : onInstallClick}
+                  onClick={onInstallClick}
                   className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3.5 rounded-2xl font-black text-sm hover:from-orange-600 hover:to-orange-700 transition-all cursor-pointer flex items-center justify-center gap-2 shadow-[0_5px_15px_rgba(249,115,22,0.2)]"
                 >
                   📱 1초 만에 앱 설치하기

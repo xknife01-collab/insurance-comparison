@@ -453,6 +453,7 @@ export default function AdminDashboard() {
 
   // DB Data state
   const [leads, setLeads] = useState<Lead[]>([]);
+  const [expandedLeadId, setExpandedLeadId] = useState<number | null>(null);
   const [planners, setPlanners] = useState<Planner[]>([]);
   const [agencies, setAgencies] = useState<Agency[]>([]);
   const [loading, setLoading] = useState(false);
@@ -3224,142 +3225,320 @@ export default function AdminDashboard() {
 
   const renderLeadsTable = (leadsList: Lead[]) => {
     return (
-      <div className="overflow-x-auto max-h-[450px] overflow-y-auto pr-1">
-        <table className="w-full min-w-[900px] text-left border-collapse">
-          <thead>
-            <tr className="border-b border-slate-800 text-[10px] text-slate-400 font-bold uppercase tracking-wider">
-              <th className="py-3 px-4">고객 정보</th>
-              <th className="py-3 px-4">보험 종류</th>
-              <th className="py-3 px-4">월 보험료</th>
-              <th className="py-3 px-4">유입 소스</th>
-              <th className="py-3 px-4">담당 설계사</th>
-              <th className="py-3 px-4">처리 현황</th>
-              <th className="py-3 px-4 text-right">상세진단</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-800/60 text-xs font-semibold">
-            {leadsList.map((lead) => (
-              <tr key={lead.id} className="hover:bg-slate-800/20 transition-all">
-                <td className="py-4.5 px-4 space-y-1">
-                  <div className="flex items-center gap-1.5">
-                    <p className="font-extrabold text-sm text-white">{lead.name}</p>
-                    {lead.raw_payload?.simulation_code && (
-                      <span className="px-1.5 py-0.5 bg-orange-500/10 text-orange-400 border border-orange-500/20 rounded text-[9px] font-black uppercase tracking-wider">
-                        {lead.raw_payload.simulation_code}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-[10px] text-slate-400 font-bold">
-                    {(() => {
-                      const isConsult = isLeadConsult(lead.insurance_type);
-                      const isUnderwriting = lead.insurance_type?.includes('_underwriting');
-                      return (isConsult || isUnderwriting) ? lead.phone : maskPhoneNumber(lead.phone);
-                    })()} • {lead.age}세
-                  </p>
-                  <p className="text-[9px] text-slate-500 font-black">
-                    ⏱️ 비교: {new Date(lead.created_at).toLocaleString('ko-KR')}
-                  </p>
-                </td>
-                <td className="py-4.5 px-4 font-bold text-slate-300">
-                  <div className="flex flex-col gap-1.5 items-start">
-                    {(() => {
-                      const isPrecision = lead.insurance_type?.includes('remodeling');
-                      return (
-                        <span className={`px-1.5 py-0.5 rounded text-[8px] font-black uppercase border ${
-                          isPrecision 
-                            ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' 
-                            : 'bg-blue-500/10 text-blue-400 border-blue-500/20'
-                        }`}>
-                          {isPrecision ? '내보험 정밀분석 🔍' : '실시간 가격비교 📊'}
+      <div className="space-y-4 pr-1">
+        {/* PC (Desktop) View: Table Layout */}
+        <div className="hidden md:block overflow-x-auto max-h-[450px] overflow-y-auto pr-1">
+          <table className="w-full min-w-[900px] text-left border-collapse">
+            <thead>
+              <tr className="border-b border-slate-800 text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                <th className="py-3 px-4">고객 정보</th>
+                <th className="py-3 px-4">비교 상품</th>
+                <th className="py-3 px-4">월 보험료</th>
+                <th className="py-3 px-4">유입 소스</th>
+                <th className="py-3 px-4">담당 설계사</th>
+                <th className="py-3 px-4">처리 현황</th>
+                <th className="py-3 px-4 text-right">상세진단</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-800/60 text-xs font-semibold">
+              {leadsList.map((lead) => (
+                <tr key={lead.id} className="hover:bg-slate-800/20 transition-all">
+                  <td className="py-4.5 px-4 space-y-1">
+                    <div className="flex items-center gap-1.5">
+                      <p className="font-extrabold text-sm text-white">{lead.name}</p>
+                      {lead.raw_payload?.simulation_code && (
+                        <span className="px-1.5 py-0.5 bg-orange-500/10 text-orange-400 border border-orange-500/20 rounded text-[9px] font-black uppercase tracking-wider">
+                          {lead.raw_payload.simulation_code}
                         </span>
-                      );
-                    })()}
+                      )}
+                    </div>
+                    <p className="text-[10px] text-slate-400 font-bold">
+                      {(() => {
+                        const isConsult = isLeadConsult(lead.insurance_type);
+                        const isUnderwriting = lead.insurance_type?.includes('_underwriting');
+                        return (isConsult || isUnderwriting) ? lead.phone : maskPhoneNumber(lead.phone);
+                      })()} • {lead.age}세
+                    </p>
+                    <p className="text-[9px] text-slate-500 font-black">
+                      ⏱️ 비교: {new Date(lead.created_at).toLocaleString('ko-KR')}
+                    </p>
+                  </td>
+                  <td className="py-4.5 px-4 font-bold text-slate-300">
+                    <div className="flex flex-col gap-1.5 items-start">
+                      {(() => {
+                        const isPrecision = lead.insurance_type?.includes('remodeling');
+                        return (
+                          <span className={`px-1.5 py-0.5 rounded text-[8px] font-black uppercase border ${
+                            isPrecision 
+                              ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' 
+                              : 'bg-blue-500/10 text-blue-400 border-blue-500/20'
+                          }`}>
+                            {isPrecision ? '내보험 정밀분석 🔍' : '실시간 가격비교 📊'}
+                          </span>
+                        );
+                      })()}
+                      {(() => {
+                        const badge = getInsuranceTypeName(lead.insurance_type || '');
+                        return (
+                          <span className={`px-2.5 py-1 rounded-md text-[10px] border font-black ${badge.bgClass} ${badge.textClass}`}>
+                            {badge.label}
+                          </span>
+                        );
+                      })()}
+                      {(() => {
+                        if (!isLeadConsult(lead.insurance_type) || lead.insurance_type === 'support_consult') return null;
+                        const consultType = lead.raw_payload?.consult_type;
+                        if (consultType === 'anonymous') {
+                          return (
+                            <span className="px-1.5 py-0.5 rounded bg-red-500/10 text-red-400 border border-red-500/20 text-[9px] font-black uppercase flex items-center gap-1 select-none">
+                              익명 상담 🔒
+                            </span>
+                          );
+                        }
+                        return (
+                          <span className="px-1.5 py-0.5 rounded bg-orange-500/10 text-orange-400 border border-orange-500/20 text-[9px] font-black uppercase flex items-center gap-1 select-none">
+                            정식 상담 🔑
+                          </span>
+                        );
+                      })()}
+                    </div>
+                  </td>
+                  <td className="py-4.5 px-4 font-black text-orange-400">
+                    {lead.insurance_type === 'support_consult' ? '-' : `${lead.monthly_premium?.toLocaleString() || 0} 원`}
+                  </td>
+                  <td className="py-4.5 px-4 space-y-1.5">
+                    <div className="text-slate-400 font-bold text-[10px] uppercase">
+                      {lead.lead_source === 'direct' && '개인직송 (Direct)'}
+                      {lead.lead_source === 'distribute' && '본사분배 (Central)'}
+                      {lead.lead_source === 'organic' && '오가닉 유입'}
+                    </div>
                     {(() => {
-                      const badge = getInsuranceTypeName(lead.insurance_type || '');
+                      const utmSource = lead.raw_payload?.utm_source;
+                      const badge = getUtmSourceBadge(utmSource);
                       return (
-                        <span className={`px-2.5 py-1 rounded-md text-[10px] border font-black ${badge.bgClass} ${badge.textClass}`}>
+                        <span className={`inline-block px-1.5 py-0.5 rounded border text-[9px] font-black tracking-tight ${badge.bgClass}`}>
                           {badge.label}
                         </span>
                       );
                     })()}
-                    {(() => {
-                      if (!isLeadConsult(lead.insurance_type) || lead.insurance_type === 'support_consult') return null;
-                      const consultType = lead.raw_payload?.consult_type;
-                      if (consultType === 'anonymous') {
+                  </td>
+                  <td className="py-4.5 px-4">
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-bold text-slate-300">{lead.planner_name}</span>
+                      {currentUser.role === 'agency' && (
+                        <button 
+                          onClick={() => setAssigningLead(lead)}
+                          className="px-1.5 py-0.5 bg-slate-800 hover:bg-slate-700 text-[9px] font-black rounded-md text-slate-300 cursor-pointer"
+                        >
+                          재지정
+                        </button>
+                      )}
+                    </div>
+                  </td>
+                  <td className="py-4.5 px-4">
+                    <select 
+                      value={lead.status}
+                      onChange={(e) => handleUpdateStatus(lead.id, e.target.value)}
+                      className="bg-slate-950 border border-slate-800 rounded-lg text-xs py-1 px-2 text-white font-bold outline-none cursor-pointer focus:border-orange-500/40"
+                    >
+                      <option value="new">신규 (New)</option>
+                      <option value="calling">상담중 (Calling)</option>
+                      <option value="completed">계약완료 (Completed)</option>
+                      <option value="canceled">취소/부재 (Canceled)</option>
+                    </select>
+                  </td>
+                  <td className="py-4.5 px-4 text-right">
+                    <button 
+                      onClick={() => setSelectedLead(lead)}
+                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-orange-500/10 hover:bg-orange-500 text-orange-400 hover:text-white border border-orange-500/20 hover:border-transparent rounded-lg font-black transition-all cursor-pointer text-[10px]"
+                    >
+                      {lead.insurance_type === 'support_consult' ? '문의 내용' : '결과지 열람'}
+                      <ExternalLink className="w-3 h-3" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Mobile View: Accordion Card Layout */}
+        <div className="md:hidden space-y-3 max-h-[500px] overflow-y-auto pr-1">
+          {leadsList.map((lead) => {
+            const isExpanded = expandedLeadId === lead.id;
+            const isPrecision = lead.insurance_type?.includes('remodeling');
+            const badge = getInsuranceTypeName(lead.insurance_type || '');
+            const utmSource = lead.raw_payload?.utm_source;
+            const utmBadge = getUtmSourceBadge(utmSource);
+            const isConsult = isLeadConsult(lead.insurance_type);
+            const isUnderwriting = lead.insurance_type?.includes('_underwriting');
+            const phone = (isConsult || isUnderwriting) ? lead.phone : maskPhoneNumber(lead.phone);
+
+            return (
+              <div 
+                key={lead.id} 
+                className={`bg-slate-900/60 border rounded-2xl p-4 space-y-3 transition-all cursor-pointer ${
+                  isExpanded ? 'border-orange-500/45 bg-slate-900/90 shadow-md shadow-orange-500/5' : 'border-slate-800/80 hover:border-slate-700'
+                }`}
+                onClick={() => setExpandedLeadId(isExpanded ? null : lead.id)}
+              >
+                {/* Header: Name, Badge, Status Select */}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <p className="font-extrabold text-sm text-white">{lead.name}</p>
+                      {lead.raw_payload?.simulation_code && (
+                        <span className="px-1.5 py-0.5 bg-orange-500/10 text-orange-400 border border-orange-500/20 rounded text-[9px] font-black uppercase tracking-wider">
+                          {lead.raw_payload.simulation_code}
+                        </span>
+                      )}
+                      {(() => {
+                        if (!isLeadConsult(lead.insurance_type) || lead.insurance_type === 'support_consult') return null;
+                        const consultType = lead.raw_payload?.consult_type;
                         return (
-                          <span className="px-1.5 py-0.5 rounded bg-red-500/10 text-red-400 border border-red-500/20 text-[9px] font-black uppercase flex items-center gap-1 select-none">
-                            익명 상담 🔒
+                          <span className={`px-1 py-0.5 rounded text-[8px] font-black uppercase ${
+                            consultType === 'anonymous' ? 'bg-red-500/10 text-red-400 border border-red-500/20' : 'bg-orange-500/10 text-orange-400 border-orange-500/20'
+                          }`}>
+                            {consultType === 'anonymous' ? '익명' : '정식'}
                           </span>
                         );
-                      }
-                      return (
-                        <span className="px-1.5 py-0.5 rounded bg-orange-500/10 text-orange-400 border border-orange-500/20 text-[9px] font-black uppercase flex items-center gap-1 select-none">
-                          정식 상담 🔑
-                        </span>
-                      );
-                    })()}
-                  </div>
-                </td>
-                <td className="py-4.5 px-4 font-black text-orange-400">
-                  {lead.monthly_premium?.toLocaleString() || 0} 원
-                </td>
-                <td className="py-4.5 px-4 space-y-1.5">
-                  <div className="text-slate-400 font-bold text-[10px] uppercase">
-                    {lead.lead_source === 'direct' && '개인직송 (Direct)'}
-                    {lead.lead_source === 'distribute' && '본사분배 (Central)'}
-                    {lead.lead_source === 'organic' && '오가닉 유입'}
-                  </div>
-                  {(() => {
-                    const utmSource = lead.raw_payload?.utm_source;
-                    const badge = getUtmSourceBadge(utmSource);
-                    return (
-                      <span className={`inline-block px-1.5 py-0.5 rounded border text-[9px] font-black tracking-tight ${badge.bgClass}`}>
-                        {badge.label}
+                      })()}
+                    </div>
+                    
+                    <div className="flex flex-wrap items-center gap-1 pt-0.5">
+                      <span className={`px-1 py-0.5 rounded text-[8px] font-black uppercase border ${
+                        isPrecision ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' : 'bg-blue-500/10 text-blue-400 border-blue-500/20'
+                      }`}>
+                        {isPrecision ? '정밀분석' : '가격비교'}
                       </span>
-                    );
-                  })()}
-                </td>
-                <td className="py-4.5 px-4">
-                  <div className="flex items-center gap-1.5">
-                    <span className="font-bold text-slate-300">{lead.planner_name}</span>
-                    {currentUser.role === 'agency' && (
-                      <button 
-                        onClick={() => setAssigningLead(lead)}
-                        className="px-1.5 py-0.5 bg-slate-800 hover:bg-slate-700 text-[9px] font-black rounded-md text-slate-300 cursor-pointer"
-                      >
-                        재지정
-                      </button>
-                    )}
+                      <span className={`px-1.5 py-0.5 rounded text-[9px] border font-black ${badge.bgClass} ${badge.textClass}`}>
+                        {badge.label.replace(' 비교분석', '').replace(' 다이어트', '')}
+                      </span>
+                    </div>
                   </div>
-                </td>
-                <td className="py-4.5 px-4">
-                  <select 
-                    value={lead.status}
-                    onChange={(e) => handleUpdateStatus(lead.id, e.target.value)}
-                    className="bg-slate-950 border border-slate-800 rounded-lg text-xs py-1 px-2 text-white font-bold outline-none cursor-pointer focus:border-orange-500/40"
-                  >
-                    <option value="new">신규 (New)</option>
-                    <option value="calling">상담중 (Calling)</option>
-                    <option value="completed">계약완료 (Completed)</option>
-                    <option value="canceled">취소/부재 (Canceled)</option>
-                  </select>
-                </td>
-                <td className="py-4.5 px-4 text-right">
-                  <button 
-                    onClick={() => setSelectedLead(lead)}
-                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-orange-500/10 hover:bg-orange-500 text-orange-400 hover:text-white border border-orange-500/20 hover:border-transparent rounded-lg font-black transition-all cursor-pointer text-[10px]"
-                  >
-                    결과지 열람
-                    <ExternalLink className="w-3 h-3" />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+
+                  <div className="flex items-center gap-2 shrink-0" onClick={(e) => e.stopPropagation()}>
+                    <select 
+                      value={lead.status}
+                      onChange={(e) => handleUpdateStatus(lead.id, e.target.value)}
+                      className="bg-slate-950 border border-slate-800 rounded-lg text-[10px] py-1.5 px-2 text-white font-bold outline-none cursor-pointer focus:border-orange-500/40"
+                    >
+                      <option value="new">신규 (New)</option>
+                      <option value="calling">상담중 (Calling)</option>
+                      <option value="completed">계약완료 (Completed)</option>
+                      <option value="canceled">취소/부재 (Canceled)</option>
+                    </select>
+                    <ChevronRight className={`w-4 h-4 text-slate-500 transform transition-transform duration-200 ${isExpanded ? 'rotate-90 text-orange-400' : ''}`} />
+                  </div>
+                </div>
+
+                {/* Sub-Header: Contact & Date */}
+                <div className="flex items-center justify-between text-[10px] text-slate-400 font-bold border-t border-slate-800/40 pt-2.5">
+                  <p>{phone} • {lead.age}세</p>
+                  <p className="text-slate-500 text-[9px] font-medium">{new Date(lead.created_at).toLocaleString('ko-KR')}</p>
+                </div>
+
+                {/* Collapsible content (0.1s responsive animation) */}
+                {isExpanded && (
+                  <div className="pt-3 border-t border-slate-800/60 space-y-3.5 text-[11px] text-slate-300" onClick={(e) => e.stopPropagation()}>
+                    {lead.insurance_type === 'support_consult' ? (
+                      /* 1:1 고객센터 문의: display subject and message directly on card */
+                      <div className="space-y-3.5 bg-slate-950/40 p-3 rounded-xl border border-slate-800/30">
+                        <div>
+                          <span className="text-slate-500 font-black block text-[8px] uppercase tracking-wider">문의 제목</span>
+                          <span className="font-extrabold text-white text-xs">
+                            [{lead.analysis_result?.subject || lead.raw_payload?.subject || '일반 문의'}]
+                          </span>
+                        </div>
+                        <div>
+                          <span className="text-slate-500 font-black block text-[8px] uppercase tracking-wider">문의 내용</span>
+                          <p className="font-semibold text-slate-300 whitespace-pre-wrap break-all mt-0.5 leading-relaxed bg-slate-950/60 p-2.5 rounded-lg border border-slate-850/40">
+                            {lead.analysis_result?.message || lead.raw_payload?.message || '문의 내용이 존재하지 않습니다.'}
+                          </p>
+                        </div>
+                        <div className="grid grid-cols-2 gap-3 pt-1 border-t border-slate-800/20">
+                          <div>
+                            <span className="text-slate-500 font-black block text-[8px] uppercase tracking-wider">담당 설계사</span>
+                            <span className="font-extrabold text-white text-[11px] flex items-center gap-1.5 flex-wrap">
+                              {lead.planner_name}
+                              {currentUser.role === 'agency' && (
+                                <button 
+                                  onClick={() => setAssigningLead(lead)}
+                                  className="px-1.5 py-0.5 bg-slate-800 hover:bg-slate-700 text-[8px] font-black rounded text-slate-300 cursor-pointer"
+                                >
+                                  재지정
+                                </button>
+                              )}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="text-slate-500 font-black block text-[8px] uppercase tracking-wider">UTM 소스</span>
+                            <div className="mt-0.5">
+                              <span className={`inline-block px-1.5 py-0.5 rounded border text-[9px] font-black tracking-tight ${utmBadge.bgClass}`}>
+                                {utmBadge.label}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      /* standard simulation leads */
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-3 bg-slate-950/40 p-3 rounded-xl border border-slate-800/30">
+                        <div>
+                          <span className="text-slate-500 font-black block text-[8px] uppercase tracking-wider">월 보험료</span>
+                          <span className="font-extrabold text-orange-400 text-xs">{lead.monthly_premium?.toLocaleString() || 0} 원</span>
+                        </div>
+                        <div>
+                          <span className="text-slate-500 font-black block text-[8px] uppercase tracking-wider">담당 설계사</span>
+                          <span className="font-extrabold text-white text-xs flex items-center gap-1.5 flex-wrap">
+                            {lead.planner_name}
+                            {currentUser.role === 'agency' && (
+                              <button 
+                                onClick={() => setAssigningLead(lead)}
+                                className="px-1.5 py-0.5 bg-slate-800 hover:bg-slate-700 text-[8px] font-black rounded text-slate-300 cursor-pointer"
+                              >
+                                재지정
+                              </button>
+                            )}
+                          </span>
+                        </div>
+                        <div>
+                          <span className="text-slate-500 font-black block text-[8px] uppercase tracking-wider">유입 방식</span>
+                          <span className="font-extrabold text-white">
+                            {lead.lead_source === 'direct' && '개인직송 (Direct)'}
+                            {lead.lead_source === 'distribute' && '본사분배 (Central)'}
+                            {lead.lead_source === 'organic' && '오가닉 유입'}
+                          </span>
+                        </div>
+                        <div>
+                          <span className="text-slate-500 font-black block text-[8px] uppercase tracking-wider">UTM 소스</span>
+                          <div className="mt-0.5">
+                            <span className={`inline-block px-1.5 py-0.5 rounded border text-[9px] font-black tracking-tight ${utmBadge.bgClass}`}>
+                              {utmBadge.label}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="pt-1">
+                      <button 
+                        onClick={() => setSelectedLead(lead)}
+                        className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white border border-transparent rounded-xl font-black transition-all cursor-pointer text-xs shadow-md shadow-orange-500/10"
+                      >
+                        {lead.insurance_type === 'support_consult' ? '상세 문의 확인' : '결과지 열람'}
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
-  };
+  }
 
   const getTodayVisitors = () => {
     return visitorLogs.filter(log => isInKstDateRange(log.created_at, 'today')).length;
@@ -3553,7 +3732,8 @@ export default function AdminDashboard() {
               </h2>
             </div>
 
-            <div className="overflow-x-auto">
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-x-auto">
               <table className="w-full min-w-[800px] border-collapse text-xs text-left">
                 <thead>
                   <tr className="border-b border-slate-800 text-slate-500 font-bold uppercase tracking-wider text-[10px]">
@@ -3597,6 +3777,69 @@ export default function AdminDashboard() {
               </table>
             </div>
 
+            {/* Mobile Card-based Comparison View */}
+            <div className="block md:hidden space-y-6">
+              {/* Card 1: 시중 DB */}
+              <div className="bg-red-500/5 border border-red-500/10 rounded-2xl p-5 space-y-4">
+                <h3 className="font-extrabold text-sm text-red-400 flex items-center gap-1.5 pb-2 border-b border-red-500/15">
+                  <span>❌</span> 시중에서 비싸게 구매하는 DB
+                </h3>
+                <div className="space-y-4">
+                  <div>
+                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider block mb-1">유입 경로</span>
+                    <p className="text-xs text-slate-300 leading-relaxed font-semibold">경품 응모, 단순 동의 등으로 영혼 없이 수집됨</p>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider block mb-1">신뢰 관계</span>
+                    <p className="text-xs text-slate-300 leading-relaxed font-semibold">누군지도 모르고 전화가 오기 때문에 거절률 95%</p>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider block mb-1">DB 퀄리티</span>
+                    <p className="text-xs text-slate-300 leading-relaxed font-semibold">단순 이름, 연령, 연락처가 정보의 전부</p>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider block mb-1">비용 한계</span>
+                    <p className="text-xs text-slate-300 leading-relaxed font-semibold">한 건당 수만 원의 고비용 지출, 누적 구매 부담</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 2: 내 플랫폼 DB */}
+              <div className="bg-emerald-500/5 border border-emerald-500/10 rounded-2xl p-5 space-y-4">
+                <h3 className="font-extrabold text-sm text-emerald-400 flex items-center gap-1.5 pb-2 border-b border-emerald-500/15">
+                  <span>✨</span> 내 플랫폼으로 수집하는 자발적 DB
+                </h3>
+                <div className="space-y-4">
+                  <div>
+                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider block mb-1">유입 경로</span>
+                    <p className="text-xs text-slate-300 leading-relaxed font-semibold">고객이 본인의 이름과 번호를 넣고 비교 결과를 직접 확인</p>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider block mb-1">신뢰 관계</span>
+                    <p className="text-xs text-slate-300 leading-relaxed font-semibold">이미 내 이름과 프로필이 박힌 진단 화면을 본 상태에서 상담 신청</p>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider block mb-1">DB 퀄리티</span>
+                    <div className="space-y-2">
+                      <p className="text-xs font-extrabold text-white leading-relaxed">이름/연락처는 기본, 고객의 상세 보장 분석 데이터 완벽 탑재!</p>
+                      <div className="bg-slate-950/80 border border-slate-850 rounded-xl p-3.5 space-y-1.5 font-mono text-[10px] text-slate-400">
+                        <p className="text-orange-400 font-extrabold border-b border-slate-900 pb-1.5 mb-1.5">[예: 암보험 상담 신청 시 어드민 자동 연동 정보]</p>
+                        <p>• 일반암 진단비: <span className="text-emerald-400 font-bold">정상 (5,000만 원)</span></p>
+                        <p>• 표적항암 치료비: <span className="text-emerald-400 font-bold">우수 (포함)</span></p>
+                        <p>• 재발/전이암 보장: <span className="text-orange-400 font-bold">권장 (미포함)</span></p>
+                        <p>• 납입/갱신 유형: <span className="text-emerald-400 font-bold">정상 (비갱신형)</span></p>
+                        <p className="text-[9px] text-slate-500 pt-1 border-t border-slate-900 mt-1">※ 0.1초 만에 고객의 보험 보장 구멍을 파악하고 시작하는 진짜 DB</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider block mb-1">비용 한계</span>
+                    <p className="text-xs text-slate-300 leading-relaxed font-semibold">내 플랫폼이므로 추가 비용 제로, 무제한 리드 수집 가능</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 p-4 rounded-2xl text-center text-xs font-black">
               "고객이 직접 내 브랜드 비교 사이체서 0.1초 분석을 마치고 자발적으로 요청한 상담은 성약률이 3배 이상 높습니다."
             </div>
@@ -3614,6 +3857,17 @@ export default function AdminDashboard() {
               <p className="text-xs text-slate-400 font-bold max-w-xl mx-auto break-keep">
                 개인 영업 활성화부터 대리점 통합 분배 및 대형 GA 맞춤형 도메인 연동까지, 성장에 필요한 최고의 마케팅 무기를 장착하세요.
               </p>
+              
+              {/* 🎁 Glowing/Pulsing 30-Day Free Trial Badge */}
+              <div className="inline-flex items-center gap-2.5 px-6 py-3 bg-emerald-500/10 border border-emerald-500/25 rounded-full shadow-[0_0_20px_rgba(16,185,129,0.15)] mt-3">
+                <span className="flex h-2.5 w-2.5 relative">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                </span>
+                <span className="text-xs sm:text-sm md:text-base font-black text-emerald-400 tracking-tight">
+                  🎁 신규 가입 시 첫 30일간 전 기능 100% 무료 체험 지원 (자동 결제 없음)
+                </span>
+              </div>
             </div>
 
             {/* 리크루팅 치트키 안내 배너 */}
@@ -5477,7 +5731,8 @@ export default function AdminDashboard() {
                             <p className="text-[11px] text-slate-450 font-bold">각 설계사의 자동 분배 배제 여부(Disabled) 및 가중치(Weight)를 실시간으로 제어합니다.</p>
                           </div>
 
-                          <div className="overflow-x-auto border border-slate-800 rounded-xl bg-slate-950">
+                          {/* PC View: Table */}
+                          <div className="hidden md:block overflow-x-auto border border-slate-800 rounded-xl bg-slate-950">
                             <table className="w-full min-w-[800px] text-xs font-bold text-slate-350">
                               <thead>
                                 <tr className="border-b border-slate-800 bg-slate-900 text-[10px] text-slate-450 text-left">
@@ -5507,8 +5762,8 @@ export default function AdminDashboard() {
                                     return (
                                       <tr key={planner.id} className="border-b border-slate-800/60 hover:bg-slate-900/40">
                                         <td className="py-3 px-4 text-slate-200">{planner.name} ({planner.planner_code})</td>
-                                        <td className="py-3 px-4 text-slate-450">{planner.phone}</td>
-                                        <td className="py-3 px-4 text-center text-slate-455">
+                                        <td className="py-3 px-4 text-slate-455">{planner.phone}</td>
+                                        <td className="py-3 px-4 text-center text-slate-450">
                                           {stats.count}건 <span className="text-[10px] text-slate-500">({stats.ratio}%)</span>
                                         </td>
                                         <td className="py-3 px-4 text-center">
@@ -5539,6 +5794,82 @@ export default function AdminDashboard() {
                                   })}
                               </tbody>
                             </table>
+                          </div>
+
+                          {/* Mobile View: Card List */}
+                          <div className="md:hidden space-y-3">
+                            {planners
+                              .filter(p => p.agency_id === currentUser.agencyId && p.subscription_status === 'active')
+                              .map(planner => {
+                                const stats = getPlannerAssignmentStats(planner.id);
+                                const regNum = planner.registration_number || '';
+                                const isDisabled = regNum === 'dist_disabled';
+                                
+                                // Parse weight
+                                let weight = 5;
+                                if (regNum.startsWith('dist_weight:')) {
+                                  const w = parseInt(regNum.split(':')[1]);
+                                  weight = isNaN(w) ? 5 : w;
+                                }
+
+                                return (
+                                  <div 
+                                    key={planner.id}
+                                    className={`bg-slate-900/60 border rounded-2xl p-4 space-y-3.5 transition-all ${
+                                      isDisabled ? 'border-rose-500/20 opacity-80' : 'border-slate-800/80 hover:border-slate-700'
+                                    }`}
+                                  >
+                                    {/* Planner Profile Header */}
+                                    <div className="flex items-center justify-between gap-3">
+                                      <div>
+                                        <h4 className="font-extrabold text-sm text-white">{planner.name}</h4>
+                                        <p className="text-[10px] text-slate-500 font-bold mt-0.5">
+                                          코드: {planner.planner_code} • {planner.phone}
+                                        </p>
+                                      </div>
+                                      
+                                      {/* Status Button */}
+                                      <button
+                                        onClick={() => handleTogglePlannerDistribution(planner.id, regNum)}
+                                        className={`px-3 py-1.5 rounded-xl text-[10px] font-black transition-all cursor-pointer shrink-0 ${
+                                          isDisabled 
+                                            ? 'bg-rose-500/10 border border-rose-500/20 text-rose-400 hover:bg-rose-500/20' 
+                                            : 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20'
+                                        }`}
+                                      >
+                                        {isDisabled ? '❌ 제외됨' : '🟢 배정중'}
+                                      </button>
+                                    </div>
+
+                                    {/* Divider */}
+                                    <div className="w-full h-px bg-slate-800/40" />
+
+                                    {/* Info and weight input */}
+                                    <div className="grid grid-cols-2 gap-3 items-center">
+                                      <div className="space-y-1">
+                                        <span className="text-slate-500 font-black block text-[8px] uppercase tracking-wider">배정 및 실적</span>
+                                        <p className="text-[11px] font-semibold text-slate-350">
+                                          {stats.count}건 ({stats.ratio}%) • <span className="text-emerald-400 font-extrabold">{planner.monthly_credit_used || 0}점</span>
+                                        </p>
+                                      </div>
+                                      
+                                      <div className="flex flex-col items-end gap-1">
+                                        <span className="text-slate-500 font-black block text-[8px] uppercase tracking-wider">영업 가중치 (Weight)</span>
+                                        <input
+                                          type="number"
+                                          disabled={isDisabled}
+                                          defaultValue={isDisabled ? '' : weight}
+                                          onBlur={(e) => handleUpdatePlannerWeight(planner.id, Number(e.target.value))}
+                                          placeholder="5"
+                                          min="1"
+                                          max="100"
+                                          className="w-16 bg-slate-950 border border-slate-800 disabled:opacity-30 rounded-lg py-1 px-2 text-center text-xs font-black text-white focus:outline-none focus:border-orange-500/40"
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                );
+                              })}
                           </div>
                         </div>
                       </div>

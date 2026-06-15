@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Download, Smartphone, X, Info } from 'lucide-react';
+import { useB2BBranding } from '../hooks/useB2BBranding';
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: Array<string>;
@@ -11,6 +12,7 @@ interface BeforeInstallPromptEvent extends Event {
 }
 
 export default function PWAInstallCard() {
+  const { onInstallClick, isInAppBrowser } = useB2BBranding();
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isIOS, setIsIOS] = useState(false);
   const [isStandalone, setIsStandalone] = useState(false);
@@ -44,6 +46,11 @@ export default function PWAInstallCard() {
   }, []);
 
   const handleInstallClick = async () => {
+    if (isInAppBrowser) {
+      await onInstallClick();
+      return;
+    }
+
     if (isIOS) {
       // Show Apple manual install guide modal
       setShowIOSModal(true);

@@ -1,21 +1,21 @@
 {
-  "name": "보험리밸런스 관리자",
-  "short_name": "보험리밸런스 관리자",
-  "description": "보험리밸런스 어드민 관리자 대시보드",
-  "start_url": "/admin",
+  "name": "보험리밸런스",
+  "short_name": "보험리밸런스",
+  "description": "0.1초 AI 빅데이터 보험 보장 진단",
+  "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#0f172a",
-  "theme_color": "#ea580c",
+  "background_color": "#ffffff",
+  "theme_color": "#f97316",
   "icons": [
     {
-      "src": "/admin-icon-192.png",
+      "src": "/user-icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/admin-icon-512.png",
+      "src": "/user-icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
