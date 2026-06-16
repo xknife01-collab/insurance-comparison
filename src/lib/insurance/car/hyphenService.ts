@@ -11,6 +11,11 @@ const HKEY =
   (typeof process !== 'undefined' && process.env && process.env.VITE_HYPHEN_HKEY) || 
   'bebc2c0dfab3266b';
 
+const GUSTATION = 
+  (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_HYPHEN_GUSTATION) || 
+  (typeof process !== 'undefined' && process.env && process.env.VITE_HYPHEN_GUSTATION) || 
+  '';
+
 export interface HyphenCommonResponse {
   errYn: 'Y' | 'N';
   errCd: string;
@@ -59,13 +64,18 @@ export interface HyphenSmsData {
 
 async function callHyphenAPI<T>(body: any): Promise<HyphenResponse<T>> {
   try {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      'User-Id': USER_ID,
+      'Hkey': HKEY
+    };
+    if (GUSTATION) {
+      headers['hyphen-gustation'] = GUSTATION;
+    }
+
     const response = await fetch('/in0112001211', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'User-Id': USER_ID,
-        'Hkey': HKEY
-      },
+      headers,
       body: JSON.stringify(body),
     });
 
