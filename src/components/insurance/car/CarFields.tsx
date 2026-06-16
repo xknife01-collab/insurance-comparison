@@ -241,6 +241,38 @@ export const CarFields: React.FC<CarFieldsProps> = ({
     return `data:${mime};base64,${base64}`;
   };
 
+  const handleBypassWithMockData = () => {
+    setHyphenLoading(true);
+    setHyphenError('');
+    setTimeout(() => {
+      const mockCarInfo = {
+        CNM: '그랜저 IG 2.4 하이브리드',
+        PRYE: '2019',
+        FRST_REGIST_DE: '20190412',
+        VHRNO: vhrno || '334나8464',
+        PRPOS_SE_NM: '개인용',
+        TRVL_DSTNC: '48500',
+        TRANSR_REGIST_CO: '1',
+        ATLOS_PROCESS_RESN_NM: '해당없음'
+      };
+      const mockInsuranceInfo = [
+        {
+          SBSCRB_CMPNY_NM: '삼성화재',
+          INSRNC_ITEM_NM: '자동차보험',
+          PRSNL_DTA_SE_NM: '정상',
+          PRSNL_BGNDE: '20250412',
+          PRSNL_ENDDE: '20260412'
+        }
+      ];
+
+      setRetrievedCarInfo(mockCarInfo);
+      setRetrievedInsuranceInfo(mockInsuranceInfo);
+      applyRetrievedCar(mockCarInfo);
+      setHyphenStep('success');
+      setHyphenLoading(false);
+    }, 600);
+  };
+
   const handleHyphenInit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!userName || !ssnFront || !ssnBack || !mobileCo) {
@@ -1385,9 +1417,19 @@ export const CarFields: React.FC<CarFieldsProps> = ({
             </div>
 
             {hyphenError && (
-              <div className="mb-4 p-4 bg-rose-50 border border-rose-100 rounded-2xl text-rose-600 text-xs font-bold flex items-center gap-2">
-                <AlertTriangle size={14} className="shrink-0" />
-                <span>{hyphenError}</span>
+              <div className="mb-4 space-y-3">
+                <div className="p-4 bg-rose-50 border border-rose-100 rounded-2xl text-rose-600 text-xs font-bold flex items-center gap-2">
+                  <AlertTriangle size={14} className="shrink-0" />
+                  <span>{hyphenError}</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleBypassWithMockData}
+                  className="w-full py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl font-black text-xs transition-all border border-slate-200 flex items-center justify-center gap-2 shadow-sm active:scale-98"
+                >
+                  <Sparkles size={12} className="text-indigo-600 animate-pulse" />
+                  테스트용 차량 정보로 우회하여 연동하기 (데모 모드)
+                </button>
               </div>
             )}
 
