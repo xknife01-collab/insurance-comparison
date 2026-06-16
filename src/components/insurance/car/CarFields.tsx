@@ -279,8 +279,34 @@ export const CarFields: React.FC<CarFieldsProps> = ({
       setHyphenError('모든 필수 정보를 입력해 주세요.');
       return;
     }
-    setHyphenLoading(true);
     setHyphenError('');
+
+    // --- CACHE CHECK ---
+    const cacheKey = `car365_cache_${userName}_${ssnFront}`;
+    const cached = localStorage.getItem(cacheKey);
+    if (cached) {
+      try {
+        const parsed = JSON.parse(cached);
+        const isExpired = Date.now() - parsed.timestamp > 12 * 60 * 60 * 1000; // 12 hours
+        if (!isExpired && parsed.ssnBack === ssnBack) {
+          console.log('✅ Using cached Car365 data to save API costs');
+          setHyphenLoading(true);
+          
+          setRetrievedCarInfo(parsed.carInfo);
+          if (parsed.insuranceInfo) {
+            setRetrievedInsuranceInfo(parsed.insuranceInfo);
+          }
+          applyRetrievedCar(parsed.carInfo);
+          setHyphenStep('success');
+          setHyphenLoading(false);
+          return;
+        }
+      } catch (e) {
+        localStorage.removeItem(cacheKey);
+      }
+    }
+
+    setHyphenLoading(true);
     try {
       const res = await requestHyphenInit({ userName, ssnFront, ssnBack, mobileCo });
       if (res.common.errYn === 'Y') {
@@ -357,7 +383,7 @@ export const CarFields: React.FC<CarFieldsProps> = ({
         const targetVhrno = vhrno || '차량번호 미입력';
         const deduction = await checkAndDeductCredits(
           activeAgencyId,
-          300,
+          100,
           branding.plannerId || undefined,
           'car',
           `고객 [${targetUser}] 차량 [${targetVhrno}] 실시간 자동차 비교`
@@ -374,6 +400,20 @@ export const CarFields: React.FC<CarFieldsProps> = ({
         if (res.data.INSRNCHISTLIST) {
           setRetrievedInsuranceInfo(res.data.INSRNCHISTLIST);
         }
+
+        // --- WRITE CACHE ---
+        const cacheKey = `car365_cache_${userName}_${ssnFront}`;
+        try {
+          localStorage.setItem(cacheKey, JSON.stringify({
+            timestamp: Date.now(),
+            ssnBack,
+            carInfo,
+            insuranceInfo: res.data.INSRNCHISTLIST || []
+          }));
+        } catch (e) {
+          console.error('Failed to save car cache', e);
+        }
+
         applyRetrievedCar(carInfo);
         setHyphenStep('success');
       } else {

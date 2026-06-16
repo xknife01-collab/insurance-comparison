@@ -903,6 +903,21 @@ export default function AdminDashboard() {
 
   const handleTopupCredits = async (agencyId: string, amount: number) => {
     try {
+      if (amount > 0) {
+        const vatAmount = Math.round(amount * 0.1);
+        const totalPayment = amount + vatAmount;
+        const confirmMsg = `⚡ [실시간 API 크레딧 충전 결제 승인]\n\n` +
+          `• 충전 크레딧: ${amount.toLocaleString()} 크레딧\n` +
+          `• 결제 요청액: ${amount.toLocaleString()} 원\n` +
+          `• 부가세 (10%): ${vatAmount.toLocaleString()} 원\n` +
+          `• 최종 카드 결제액: ${totalPayment.toLocaleString()} 원 (부가세 포함)\n\n` +
+          `모의 카드 결제를 진행하고 즉시 크레딧을 충전하시겠습니까?`;
+        
+        if (!window.confirm(confirmMsg)) {
+          return;
+        }
+      }
+
       setTopupLoading(true);
       if (currentUser.plannerCode === 'test' || currentUser.plannerCode === 'test_planner') {
         setAgencies(prev => prev.map(a => {
@@ -915,7 +930,7 @@ export default function AdminDashboard() {
         
         const txType = amount > 0 ? 'topup' : 'adjust';
         const txDesc = amount > 0 
-          ? `대시보드 모의 크레딧 충전 (${amount.toLocaleString()})`
+          ? `대시보드 크레딧 충전 (${amount.toLocaleString()} 크레딧, 실결제액: ${(amount * 1.1).toLocaleString()}원 부가세 포함)`
           : `관리자 크레딧 조정 수동 차감 (${Math.abs(amount).toLocaleString()})`;
         
         setTransactions(prev => [
@@ -931,7 +946,10 @@ export default function AdminDashboard() {
           ...prev
         ]);
         
-        alert(`성공적으로 ${amount.toLocaleString()} 크레딧이 조정되었습니다. (데모 모드)`);
+        alert(amount > 0 
+          ? `성공적으로 ${(amount * 1.1).toLocaleString()}원이 가상 승인 결제되었으며, ${amount.toLocaleString()} 크레딧이 충전되었습니다. (데모 모드)`
+          : `성공적으로 ${Math.abs(amount).toLocaleString()} 크레딧이 조정(차감)되었습니다.`
+        );
         return;
       }
 
@@ -961,7 +979,7 @@ export default function AdminDashboard() {
       // Record transaction history log
       const txType = amount > 0 ? 'topup' : 'adjust';
       const txDesc = amount > 0 
-        ? `대시보드 모의 크레딧 충전 (${amount.toLocaleString()})`
+        ? `대시보드 크레딧 충전 (${amount.toLocaleString()} 크레딧, 실결제액: ${(amount * 1.1).toLocaleString()}원 부가세 포함)`
         : `관리자 크레딧 조정 수동 차감 (${Math.abs(amount).toLocaleString()})`;
       await supabase.from('credit_transactions').insert({
         agency_id: agencyId,
@@ -970,7 +988,10 @@ export default function AdminDashboard() {
         description: txDesc
       });
       
-      alert(`성공적으로 ${amount.toLocaleString()} 크레딧이 조정되었습니다.`);
+      alert(amount > 0 
+        ? `성공적으로 ${(amount * 1.1).toLocaleString()}원이 승인 결제되었으며, ${amount.toLocaleString()} 크레딧이 충전되었습니다.`
+        : `성공적으로 ${Math.abs(amount).toLocaleString()} 크레딧이 조정(차감)되었습니다.`
+      );
       await fetchData();
     } catch (err: any) {
       alert('오류가 발생했습니다: ' + err.message);
@@ -6094,7 +6115,7 @@ export default function AdminDashboard() {
                           <div className="pl-2 space-y-1">
                             <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 실시간 API 크레딧 충전 및 잔액 관리</span>
                             <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
-                              "⚡ 보험 보장 분석(400크레딧) 및 자동차 보험료 계산(300크레딧)을 수행할 때 API 서버 통신 원가로 실시간 차감되는 선불제 크레딧입니다. 버튼을 클릭해 충전이 가능합니다."
+                              "⚡ 보험 보장 분석(300크레딧) 및 자동차 보험료 계산(100크레딧)을 수행할 때 API 서버 통신 원가로 실시간 차감되는 선불제 크레딧입니다. 버튼을 클릭해 충전이 가능합니다."
                             </p>
                           </div>
                         </div>
@@ -6119,7 +6140,9 @@ export default function AdminDashboard() {
                           <p className="text-[11px] text-slate-450 font-bold leading-relaxed">
                             고객이 내보험 분석을 하면 보험다모아에서 API를 통해 실시간으로 자료를 가져오는데 쓰이며, 자동차 보험의 내 차량정보 조회를 하면 car365에서 API를 통해 실시간 분석을 위해 쓰여 집니다.
                             <br />
-                            (내 보험 분석 400크레딧, 실시간 자동차 비교 300크레딧) API 연동 시 실시간 차감되는 선불금 잔액입니다.
+                            (내 보험 분석 300크레딧, 실시간 자동차 비교 100크레딧) API 연동 시 실시간 차감되는 선불금 잔액입니다.
+                            <br />
+                            <span className="text-orange-400 font-extrabold">※ 모든 크레딧 결제금액은 부가세(10%) 별도입니다. (예: 10만 크레딧 충전 시 110,000원 결제)</span>
                           </p>
                         </div>
 

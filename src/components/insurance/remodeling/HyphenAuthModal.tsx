@@ -103,15 +103,49 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
       return;
     }
     setError('');
+
+    // --- CACHE CHECK ---
+    const cacheKey = `hyphen_id_dup_${newUserId}`;
+    const cached = localStorage.getItem(cacheKey);
+    if (cached) {
+      if (cached === 'available') {
+        setIsIdChecked(true);
+        setError('');
+      } else {
+        setError(cached || '이미 사용 중이거나 유효하지 않은 아이디입니다.');
+        setIsIdChecked(false);
+      }
+      return;
+    }
+
     setIdCheckLoading(true);
     try {
+      // --- CREDIT DEDUCTION GATE ---
+      const activeAgencyId = branding.agencyId || '88888888-8888-4888-a888-888888888888';
+      const deduction = await checkAndDeductCredits(
+        activeAgencyId,
+        100,
+        branding.plannerId || undefined,
+        'remodeling_dup_check',
+        `고객 아이디 중복 확인: ${newUserId}`
+      );
+      if (!deduction.success) {
+        setError(deduction.message);
+        setIsIdChecked(false);
+        setIdCheckLoading(false);
+        return;
+      }
+
       const res = await checkHyphenIdDuplicate({ userId: newUserId });
       if (res.common.errYn === 'Y') {
-        setError(res.common.errMsg || '이미 사용 중이거나 유효하지 않은 아이디입니다.');
+        const errorMsg = res.common.errMsg || '이미 사용 중이거나 유효하지 않은 아이디입니다.';
+        setError(errorMsg);
         setIsIdChecked(false);
+        localStorage.setItem(cacheKey, errorMsg);
       } else {
         setIsIdChecked(true);
         setError('');
+        localStorage.setItem(cacheKey, 'available');
       }
     } catch (err: any) {
       setError(err.message || '아이디 중복확인 중 오류가 발생했습니다.');
@@ -451,16 +485,16 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
     }
   };
 
-  const runAnalysisAnimation = async (coverage: StandardizedCoverage, isDemo = false) => {
+  const runAnalysisAnimation = async (coverage: StandardizedCoverage, isDemo = false, isCached = false) => {
     setLoading(true);
     
-    if (!isDemo) {
+    if (!isDemo && !isCached) {
       setLoadingStatus('💳 대리점 API 크레딧 검증 중...');
       const activeAgencyId = branding.agencyId || '88888888-8888-4888-a888-888888888888';
       const customerName = initialData?.userName || '고객 미입력';
       const deduction = await checkAndDeductCredits(
         activeAgencyId,
-        400,
+        300,
         branding.plannerId || undefined,
         'remodeling',
         `고객 [${customerName}] 내보험 비교분석`
@@ -508,6 +542,31 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
     setLoading(true);
     setLoadingStatus('내보험다보여 로그인 진행 중...');
 
+    // --- CACHE CHECK ---
+    const cacheKey = `hyphen_login_cache_${loginId}`;
+    const cached = localStorage.getItem(cacheKey);
+    if (cached && loginStep === 'init') {
+      try {
+        const parsed = JSON.parse(cached);
+        const isExpired = Date.now() - parsed.timestamp > 12 * 60 * 60 * 1000; // 12 hours
+        if (!isExpired && parsed.userPw === loginPw) {
+          console.log('✅ Using cached Hyphen insurance data to save API costs');
+          setLoadingStatus('실시간 계약 수집 중 (캐시 사용)...');
+          
+          const statusRes = parsed.statusRes;
+          const rawPolicies = parseApiListToPolicies(statusRes, { data: { list: [] } }, { data: { list: [] } });
+          const finalAge = initialData?.age || 40;
+          const finalGender = initialData?.gender || 'M';
+          const standardized = await parsePoliciesToStandardized(finalAge, finalGender, rawPolicies);
+          
+          await runAnalysisAnimation(standardized, false, true);
+          return;
+        }
+      } catch (e) {
+        localStorage.removeItem(cacheKey);
+      }
+    }
+
     try {
       if (loginStep === 'init') {
         const statusRes = await fetchContractStatus({
@@ -539,6 +598,18 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
 
         // 바로 조회가 완료되었을 때
         setLoadingStatus('실시간 계약 수집 중...');
+
+        // Save to cache!
+        try {
+          localStorage.setItem(cacheKey, JSON.stringify({
+            timestamp: Date.now(),
+            userPw: loginPw,
+            statusRes
+          }));
+        } catch (e) {
+          console.error('Failed to save login cache', e);
+        }
+
         const rawPolicies = parseApiListToPolicies(statusRes, { data: { list: [] } }, { data: { list: [] } });
         const finalAge = initialData?.age || 40;
         const finalGender = initialData?.gender || 'M';
@@ -567,6 +638,17 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
           }
           setLoading(false);
           return;
+        }
+
+        // Save to cache!
+        try {
+          localStorage.setItem(cacheKey, JSON.stringify({
+            timestamp: Date.now(),
+            userPw: loginPw,
+            statusRes
+          }));
+        } catch (e) {
+          console.error('Failed to save login cache', e);
         }
 
         const rawPolicies = parseApiListToPolicies(statusRes, { data: { list: [] } }, { data: { list: [] } });
@@ -662,6 +744,21 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
     setLoadingStatus('캡차 인증 데이터 요청 중...');
 
     try {
+      // --- CREDIT DEDUCTION GATE ---
+      const activeAgencyId = branding.agencyId || '88888888-8888-4888-a888-888888888888';
+      const deduction = await checkAndDeductCredits(
+        activeAgencyId,
+        100,
+        branding.plannerId || undefined,
+        'remodeling_signup_init',
+        `고객 [${userName}] 회원가입 1단계(init)`
+      );
+      if (!deduction.success) {
+        setError(deduction.message);
+        setLoading(false);
+        return;
+      }
+
       const res = await requestHyphenRegister({
         step: 'init',
         userName,
@@ -699,6 +796,21 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
     setLoadingStatus('캡차 검증 및 SMS 발송 요청 중...');
 
     try {
+      // --- CREDIT DEDUCTION GATE ---
+      const activeAgencyId = branding.agencyId || '88888888-8888-4888-a888-888888888888';
+      const deduction = await checkAndDeductCredits(
+        activeAgencyId,
+        100,
+        branding.plannerId || undefined,
+        'remodeling_signup_captcha',
+        `고객 [${userName}] 회원가입 2단계(captcha)`
+      );
+      if (!deduction.success) {
+        setError(deduction.message);
+        setLoading(false);
+        return;
+      }
+
       const res = await requestHyphenRegister({
         step: 'captcha',
         userName,
@@ -741,6 +853,21 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
     setLoadingStatus('본인인증 처리 및 이메일 인증 발송 중...');
 
     try {
+      // --- CREDIT DEDUCTION GATE ---
+      const activeAgencyId = branding.agencyId || '88888888-8888-4888-a888-888888888888';
+      const deduction = await checkAndDeductCredits(
+        activeAgencyId,
+        100,
+        branding.plannerId || undefined,
+        'remodeling_signup_sms',
+        `고객 [${userName}] 회원가입 3단계(sms)`
+      );
+      if (!deduction.success) {
+        setError(deduction.message);
+        setLoading(false);
+        return;
+      }
+
       const res = await requestHyphenRegister({
         step: 'sms',
         userName,
@@ -782,6 +909,21 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
     setLoadingStatus('이메일 인증 완료 및 회원가입 최종 처리 중...');
 
     try {
+      // --- CREDIT DEDUCTION GATE ---
+      const activeAgencyId = branding.agencyId || '88888888-8888-4888-a888-888888888888';
+      const deduction = await checkAndDeductCredits(
+        activeAgencyId,
+        100,
+        branding.plannerId || undefined,
+        'remodeling_signup_email',
+        `고객 [${userName}] 회원가입 4단계(email)`
+      );
+      if (!deduction.success) {
+        setError(deduction.message);
+        setLoading(false);
+        return;
+      }
+
       const res = await requestHyphenRegister({
         step: 'email',
         userName,
