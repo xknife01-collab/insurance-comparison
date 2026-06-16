@@ -207,7 +207,7 @@ export const AdCampaignTab: React.FC<AdCampaignTabProps> = ({ currentUser, isSup
 제3조 (광고비 및 대행 수수료)
 1. 본 계약에 따른 월간 광고 예산 총액은 최소 3,000,000원(금 삼백만원) 이상으로 제한한다.
 2. "갑"이 신청한 본 약정의 월 광고 예산 총액은 금 ${finalBudget.toLocaleString()}원(보유 광고 캐시 선결제 차감)으로 하며, 이는 "을"의 대행 수수료가 포함된 금액이다.
-3. 광고 대행 수수료는 예산 총액의 20%에 해당하는 금 ${fee.toLocaleString()}원(VAT 포함)으로 약정하며, 이를 제외한 실제 집행 광고 매체 비용은 금 ${netAdSpend.toLocaleString()}원으로 규정한다.
+3. 광고 대행 수수료는 예산 총액의 20%에 해당하는 금 ${fee.toLocaleString()}원(부가세 별도)으로 약정하며, 이를 제외한 실제 집행 광고 매체 비용은 금 ${netAdSpend.toLocaleString()}원(부가세 별도)으로 규정한다.
 4. "갑"이 본 약관에 동의하고 계약을 전송하는 즉시 플랫폼 보유 광고 캐시에서 총 예산 ${finalBudget.toLocaleString()}원이 자동 차감 및 집행 대기 상태로 예치된다.
 
 제4조 (계약 기간 및 연장)
@@ -288,7 +288,7 @@ export const AdCampaignTab: React.FC<AdCampaignTabProps> = ({ currentUser, isSup
         finalBudget,
         currentUser.id,
         'ad_campaign',
-        `B2B 광고대행 신청 선결제 (총액: ${finalBudget.toLocaleString()}원, 수수료 20% 포함)`
+        `B2B 광고대행 신청 선결제 (총액: ${finalBudget.toLocaleString()}원, 수수료 20% 및 부가세 별도)`
       );
 
       if (!deduction.success) {
@@ -371,7 +371,7 @@ export const AdCampaignTab: React.FC<AdCampaignTabProps> = ({ currentUser, isSup
         -request.monthly_budget,
         request.planner_id,
         'ad_campaign_refund',
-        `광고 대행 신청 취소 환불 (총액: ${request.monthly_budget.toLocaleString()}원)`
+        `광고 대행 신청 취소 환불 (총액: ${request.monthly_budget.toLocaleString()}원, 부가세 별도)`
       );
 
       if (!refundResult.success) {
@@ -502,7 +502,7 @@ export const AdCampaignTab: React.FC<AdCampaignTabProps> = ({ currentUser, isSup
                 <div>
                   <h4 className="text-xs font-black text-white">최소 집행 예산 및 대행 수수료</h4>
                   <p className="text-[11px] text-slate-400 font-bold mt-1 leading-normal">
-                    월 광고 예산 최소 **3,000,000원** 이상 진행 가능하며, 대행 및 기획 관리 수수료는 **예산 총액의 20%(포함)**입니다.
+                    월 광고 예산 최소 **3,000,000원(부가세 별도)** 이상 진행 가능하며, 대행 및 기획 관리 수수료는 **예산 총액의 20% (부가세 별도)**입니다.
                   </p>
                 </div>
               </div>
@@ -577,10 +577,9 @@ export const AdCampaignTab: React.FC<AdCampaignTabProps> = ({ currentUser, isSup
             )}
             <h3 className="text-lg font-black text-white">광고 대행 서비스 신청서</h3>
 
-            {/* Budget options */}
             <div className="space-y-3">
               <label className="text-xs font-black text-slate-400 uppercase tracking-wider block">
-                선택 광고 예산 (대행 수수료 20% 포함)
+                선택 광고 예산 (대행 수수료 20% 및 부가세 별도)
               </label>
               <div className="grid grid-cols-3 gap-2">
                 {[3000000, 5000000, 10000000].map(val => (
@@ -618,19 +617,19 @@ export const AdCampaignTab: React.FC<AdCampaignTabProps> = ({ currentUser, isSup
               {/* Dynamic Fee Breakdown Box */}
               <div className="bg-slate-950/60 border border-slate-850 p-4 rounded-xl space-y-2 text-xs">
                 <div className="flex justify-between items-center text-slate-400">
-                  <span>총 차감 예산 (보유 캐시에서 차감)</span>
+                  <span>총 차감 예산 (부가세 별도)</span>
                   <span className="font-bold text-white">
                     {(customBudgetInput ? parseInt(customBudgetInput.replace(/[^0-9]/g, '')) || 3000000 : budget).toLocaleString()} 원
                   </span>
                 </div>
                 <div className="flex justify-between items-center text-slate-500 text-[11px] pt-1.5 border-t border-slate-900">
-                  <span>실제 집행 광고비 (80%)</span>
+                  <span>실제 집행 광고비 (80%, 부가세 별도)</span>
                   <span className="font-bold text-emerald-400">
                     {Math.floor((customBudgetInput ? parseInt(customBudgetInput.replace(/[^0-9]/g, '')) || 3000000 : budget) * 0.8).toLocaleString()} 원
                   </span>
                 </div>
                 <div className="flex justify-between items-center text-slate-500 text-[11px]">
-                  <span>더윤컴퍼니 대행 수수료 (20%)</span>
+                  <span>더윤컴퍼니 대행 수수료 (20%, 부가세 별도)</span>
                   <span className="font-bold text-orange-400">
                     {Math.floor((customBudgetInput ? parseInt(customBudgetInput.replace(/[^0-9]/g, '')) || 3000000 : budget) * 0.2).toLocaleString()} 원
                   </span>
@@ -849,8 +848,8 @@ export const AdCampaignTab: React.FC<AdCampaignTabProps> = ({ currentUser, isSup
                     <p className="text-[11px] text-slate-400">{selectedRequest.planner?.company_name || '보험대리점'}</p>
                   </div>
                   <div className="space-y-1">
-                    <span className="text-[10px] text-slate-500 uppercase">예산 및 수수료 (20% 포함)</span>
-                    <p className="text-orange-400 font-extrabold">월 {selectedRequest.monthly_budget.toLocaleString()} 원</p>
+                    <span className="text-[10px] text-slate-500 uppercase">예산 및 수수료 (20% 포함, 부가세 별도)</span>
+                    <p className="text-orange-400 font-extrabold">월 {selectedRequest.monthly_budget.toLocaleString()} 원 (부가세 별도)</p>
                     <p className="text-[11px] text-slate-400">
                       실제 광고비: {(selectedRequest.monthly_budget * 0.8).toLocaleString()} 원 / 
                       수수료: {(selectedRequest.monthly_budget * 0.2).toLocaleString()} 원
