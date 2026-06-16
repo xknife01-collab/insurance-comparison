@@ -2,6 +2,38 @@
   "cleanUrls": true,
   "rewrites": [
     {
+      "source": "/in0112001211",
+      "destination": "https://api.hyphen.im/in0112001211"
+    },
+    {
+      "source": "/in0017000781",
+      "destination": "https://api.hyphen.im/in0017000781"
+    },
+    {
+      "source": "/in0017000047",
+      "destination": "https://api.hyphen.im/in0017000047"
+    },
+    {
+      "source": "/in0017000050",
+      "destination": "https://api.hyphen.im/in0017000050"
+    },
+    {
+      "source": "/in0017000048",
+      "destination": "https://api.hyphen.im/in0017000048"
+    },
+    {
+      "source": "/in0017000779",
+      "destination": "https://api.hyphen.im/in0017000779"
+    },
+    {
+      "source": "/in0017000778",
+      "destination": "https://api.hyphen.im/in0017000778"
+    },
+    {
+      "source": "/in0017000780",
+      "destination": "https://api.hyphen.im/in0017000780"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
