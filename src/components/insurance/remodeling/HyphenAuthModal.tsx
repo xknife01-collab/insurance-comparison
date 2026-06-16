@@ -181,6 +181,11 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
       setError('모든 필수 입력 값을 기재해주세요.');
       return;
     }
+    const cleanBirth = findBirth.replace(/[^0-9]/g, '');
+    if (cleanBirth.length !== 8) {
+      setError('생년월일은 YYYYMMDD 형식의 8자리 숫자로 입력해야 합니다. (예: 19820308)');
+      return;
+    }
     setError('');
     setLoading(true);
     setLoadingStatus('보안 문자 요청 중...');
@@ -294,6 +299,11 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
     e.preventDefault();
     if (!findUserName || !findBirth || !findMobileNo) {
       setError('모든 필수 입력 값을 기재해주세요.');
+      return;
+    }
+    const cleanBirth = findBirth.replace(/[^0-9]/g, '');
+    if (cleanBirth.length !== 8) {
+      setError('생년월일은 YYYYMMDD 형식의 8자리 숫자로 입력해야 합니다. (예: 19820308)');
       return;
     }
     setError('');
@@ -640,6 +650,11 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
     e.preventDefault();
     if (!userName || !birth || !ssnBack || !mobileNo) {
       setError('모든 필수 입력 값을 기재해주세요.');
+      return;
+    }
+    const cleanBirth = birth.replace(/[^0-9]/g, '');
+    if (cleanBirth.length !== 8) {
+      setError('생년월일은 YYYYMMDD 형식의 8자리 숫자로 입력해야 합니다. (예: 19820308)');
       return;
     }
     setError('');
@@ -1075,8 +1090,9 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
                               <input
                                 type="text"
                                 placeholder="예: 19880101"
+                                maxLength={8}
                                 value={findBirth}
-                                onChange={(e) => setFindBirth(e.target.value)}
+                                onChange={(e) => setFindBirth(e.target.value.replace(/[^0-9]/g, '').slice(0, 8))}
                                 className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-3 px-4 text-xs font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
                               />
                             </div>
@@ -1118,8 +1134,9 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
                             <input
                               type="text"
                               placeholder="숫자만 입력"
+                              maxLength={11}
                               value={findMobileNo}
-                              onChange={(e) => setFindMobileNo(e.target.value)}
+                              onChange={(e) => setFindMobileNo(e.target.value.replace(/[^0-9]/g, '').slice(0, 11))}
                               className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-3 px-4 text-xs font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
                             />
                           </div>
@@ -1298,8 +1315,9 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
                           <input
                             type="text"
                             placeholder="예: 19880101"
+                            maxLength={8}
                             value={birth}
-                            onChange={(e) => setBirth(e.target.value)}
+                            onChange={(e) => setBirth(e.target.value.replace(/[^0-9]/g, '').slice(0, 8))}
                             className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-3 px-4 text-xs font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
                           />
                         </div>
@@ -1311,8 +1329,9 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
                           <input
                             type="password"
                             placeholder="주민번호 뒷자리"
+                            maxLength={7}
                             value={ssnBack}
-                            onChange={(e) => setSsnBack(e.target.value)}
+                            onChange={(e) => setSsnBack(e.target.value.replace(/[^0-9]/g, '').slice(0, 7))}
                             className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-3 px-4 text-xs font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
                           />
                         </div>
@@ -1338,8 +1357,9 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
                         <input
                           type="text"
                           placeholder="숫자만 입력"
+                          maxLength={11}
                           value={mobileNo}
-                          onChange={(e) => setMobileNo(e.target.value)}
+                          onChange={(e) => setMobileNo(e.target.value.replace(/[^0-9]/g, '').slice(0, 11))}
                           className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-3 px-4 text-xs font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
                         />
                       </div>
