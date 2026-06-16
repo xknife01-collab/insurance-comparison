@@ -11,6 +11,11 @@ const HKEY =
   (typeof process !== 'undefined' && process.env && process.env.VITE_HYPHEN_HKEY) || 
   'bebc2c0dfab3266b';
 
+const GUSTATION = 
+  (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_HYPHEN_GUSTATION) || 
+  (typeof process !== 'undefined' && process.env && process.env.VITE_HYPHEN_GUSTATION) || 
+  '';
+
 export interface HyphenCommonResponse {
   errYn: 'Y' | 'N';
   errCd: string;
@@ -157,13 +162,18 @@ export const MOCK_REMODELING_DATA: Record<'overpaying' | 'underinsured' | 'optim
 
 async function callHyphenAPI<T>(endpoint: string, body: any): Promise<HyphenResponse<T>> {
   try {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      'User-Id': USER_ID,
+      'Hkey': HKEY
+    };
+    if (GUSTATION) {
+      headers['hyphen-gustation'] = GUSTATION;
+    }
+
     const response = await fetch(endpoint, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'User-Id': USER_ID,
-        'Hkey': HKEY
-      },
+      headers,
       body: JSON.stringify(body),
     });
 
@@ -248,12 +258,12 @@ export async function fetchFixedContract(req: {
 }
 
 /**
- * 5. 아이디 중복체크 API (엔드포인트: /in0017000779)
+ * 5. 아이디 중복체크 API (엔드포인트: /in0017000777)
  */
 export async function checkHyphenIdDuplicate(req: {
   userId: string;
 }): Promise<HyphenResponse<any>> {
-  return callHyphenAPI<any>('/in0017000779', req);
+  return callHyphenAPI<any>('/in0017000777', req);
 }
 
 /**

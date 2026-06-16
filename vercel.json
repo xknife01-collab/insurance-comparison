@@ -34,6 +34,10 @@
       "destination": "https://api.hyphen.im/in0017000780"
     },
     {
+      "source": "/in0017000777",
+      "destination": "https://api.hyphen.im/in0017000777"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
