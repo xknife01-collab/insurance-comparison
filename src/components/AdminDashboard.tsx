@@ -6035,6 +6035,7 @@ export default function AdminDashboard() {
                                     : '월 5,000,000 원')
                               : '월 50,000 원'}
                           </span>
+                          <span className="text-[9px] text-slate-500 font-bold block">(부가세 10% 별도)</span>
                         </div>
                         <div className="h-6 w-px bg-slate-800" />
                         <div>
@@ -8244,16 +8245,50 @@ export default function AdminDashboard() {
                 <div className="bg-slate-950 p-4 rounded-xl border border-slate-850 text-xs font-bold space-y-2.5">
                   <div className="flex justify-between">
                     <span className="text-slate-500">결제 요금제</span>
-                    <span className="text-white">{currentUser.role === 'agency' ? '대리점 단체 플랜' : '개인 설계사 독립 플랜'}</span>
+                    <span className="text-white">
+                      {currentUser.role === 'agency' 
+                        ? `대리점 단체 플랜 (${billingTier === 'basic' ? 'Basic' : billingTier === 'pro' ? 'Pro' : 'Enterprise'})` 
+                        : '개인 설계사 독립 플랜'}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-slate-500">연장 기간</span>
                     <span className="text-white">+ 30 일</span>
                   </div>
+                  <div className="flex justify-between border-t border-slate-900 pt-2">
+                    <span className="text-slate-500">공급가액</span>
+                    <span className="text-slate-300 font-extrabold">
+                      {currentUser.role === 'agency' 
+                        ? (billingTier === 'basic' 
+                            ? '500,000 원' 
+                            : billingTier === 'pro' 
+                              ? '1,000,000 원' 
+                              : '5,000,000 원')
+                        : '50,000 원'}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-500">부가세 (10%)</span>
+                    <span className="text-slate-300 font-extrabold">
+                      {currentUser.role === 'agency' 
+                        ? (billingTier === 'basic' 
+                            ? '50,000 원' 
+                            : billingTier === 'pro' 
+                              ? '100,000 원' 
+                              : '500,000 원')
+                        : '5,000 원'}
+                    </span>
+                  </div>
                   <div className="flex justify-between border-t border-slate-900 pt-2 text-sm">
-                    <span className="text-slate-500">총 결제금액</span>
+                    <span className="text-slate-500">총 결제금액 (부가세 포함)</span>
                     <span className="text-orange-400 font-black">
-                      {currentUser.role === 'agency' ? '500,000 원' : '50,000 원'}
+                      {currentUser.role === 'agency' 
+                        ? (billingTier === 'basic' 
+                            ? '550,000 원' 
+                            : billingTier === 'pro' 
+                              ? '1,100,000 원' 
+                              : '5,500,000 원')
+                        : '55,000 원'}
                     </span>
                   </div>
                 </div>
@@ -8305,7 +8340,7 @@ export default function AdminDashboard() {
                 <div className="space-y-2">
                   <h4 className="font-extrabold text-base text-white">가상 카드 결제가 승인되었습니다!</h4>
                   <p className="text-[11px] text-slate-400 font-bold leading-normal break-keep">
-                    Supabase 데이터베이스의 구독 기간이 **성공적으로 30일 연장**되었습니다. <br />
+                    총 결제금액 **{currentUser.role === 'agency' ? (billingTier === 'basic' ? '550,000원' : billingTier === 'pro' ? '1,100,000원' : '5,500,000원') : '55,000원'} (부가세 10% 포함)**의 가상 카드 승인이 완료되었으며, 구독 기간이 **성공적으로 30일 연장**되었습니다. <br />
                     연장된 만료 날짜를 어드민 화면에서 확인하실 수 있습니다.
                   </p>
                 </div>
