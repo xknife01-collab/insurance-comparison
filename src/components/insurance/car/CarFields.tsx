@@ -342,6 +342,8 @@ export const CarFields: React.FC<CarFieldsProps> = ({
         userName,
         ssnFront,
         ssnBack,
+        mobileCo,
+        mobileNo,
         step_data: stepData,
         step_input: smsInput,
         vhrno

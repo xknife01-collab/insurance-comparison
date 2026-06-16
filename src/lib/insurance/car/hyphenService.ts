@@ -119,6 +119,7 @@ export async function requestHyphenCaptcha(req: {
 }): Promise<HyphenResponse<HyphenCaptchaData>> {
   return callHyphenAPI<HyphenCaptchaData>({
     step: 'captcha',
+    authType: 'mobile',
     userName: req.userName,
     ssnFront: req.ssnFront,
     ssnBack: req.ssnBack,
@@ -136,15 +137,20 @@ export async function requestHyphenSms(req: {
   userName: string;
   ssnFront: string;
   ssnBack: string;
+  mobileCo: string;
+  mobileNo: string;
   step_data: string;
   step_input: string; // SMS 인증번호
   vhrno: string;      // 차량번호 (예: 12가3456)
 }): Promise<HyphenResponse<HyphenSmsData>> {
   return callHyphenAPI<HyphenSmsData>({
     step: 'sms',
+    authType: 'mobile',
     userName: req.userName,
     ssnFront: req.ssnFront,
     ssnBack: req.ssnBack,
+    mobileCo: req.mobileCo,
+    mobileNo: req.mobileNo,
     step_data: req.step_data,
     step_input: req.step_input,
     vhrno: req.vhrno,
