@@ -1,5 +1,6 @@
 import { InsuranceAnalysis, AnalysisResult } from '../types/insurance';
 import { analyzeHealth } from './engines/healthEngine';
+import { analyzeRemodeling } from './remodeling/remodelingEngine';
 import { fetchSilsonPremium } from './insurance/silson/silsonLoader';
 import { analyzeSilson } from './insurance/silson/silsonEngine';
 import { fetchCaregivingPremium } from './insurance/caregiving/caregivingLoader';
@@ -57,7 +58,6 @@ export const runAnalysis = async (analysis: InsuranceAnalysis): Promise<any> => 
   const category = analysis.selectedCategory || '';
   
   if (category === 'remodeling' || analysis._remodelingCoverage) {
-    const { analyzeRemodeling } = await import('./remodeling/remodelingEngine');
     return analyzeRemodeling(analysis);
   }
 
