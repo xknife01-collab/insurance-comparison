@@ -1,7 +1,7 @@
-const { createClient } = require('@supabase/supabase-js');
-const axios = require('axios');
+import { createClient } from '@supabase/supabase-js';
+import axios from 'axios';
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   // CORS Headers
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -217,4 +217,4 @@ module.exports = async function handler(req, res) {
     console.error('🔴 Serverless Function Crash:', err);
     return res.status(500).json({ success: false, error: err.message || String(err) });
   }
-};
+}
