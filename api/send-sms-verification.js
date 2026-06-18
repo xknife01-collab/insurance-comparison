@@ -114,7 +114,10 @@ export default async function handler(req, res) {
 
       if (dbErr) {
         console.error('🔴 DB Insert Error:', dbErr);
-        return res.status(500).json({ success: false, error: '인증번호 생성 중 오류가 발생했습니다.' });
+        return res.status(500).json({ 
+          success: false, 
+          error: `인증번호 생성 중 DB 오류가 발생했습니다: ${dbErr.message || JSON.stringify(dbErr)}` 
+        });
       }
 
       const apiKey = process.env.ALIGO_API_KEY || '8oikzy8391zwuczt60s1tl0a11s0rv5z';
