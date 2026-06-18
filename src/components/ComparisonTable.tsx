@@ -7,9 +7,10 @@ import disclosureDates from '../lib/insurance/disclosure_dates.json';
 interface ComparisonTableProps {
   analysis: InsuranceAnalysis;
   recommendation: RecommendationPlan;
+  isUnlocked?: boolean;
 }
 
-const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendation }) => {
+const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendation, isUnlocked }) => {
   const savings = analysis.monthlyPremium - recommendation.estimatedPremium;
 
   const formatAmt = (amt: number) => {
@@ -249,7 +250,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     { 
       label: '자기차량손해 (자차) 보장 방식', 
       current: carOwnDamage === 'join' ? '자차 가입 (종합 보장)' : (carOwnDamage === 'exclude_single' ? '단독사고 제외 가입' : '자차 미가입'), 
-      recommended: carOwnDamage === 'none' ? '침수·단독 사고 대비 종합 보장 권장' : '자기차량손해 완벽 보장', 
+      recommended: carOwnDamage === 'none' ? '침수·단독 사고 대비 종합 보장 권장' : '자기차량손해 든든하게 보장', 
       icon: <ShieldCheck className="w-4 h-4 text-blue-600" /> 
     },
     { 
@@ -342,7 +343,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     { 
       label: '선천이상 수술비 (혀유착 등)', 
       current: '없음', 
-      recommended: '1회당 최대 500만 원 (다지증, 선천성 모반 등 사소한 이상 완벽 보장)', 
+      recommended: '1회당 최대 500만 원 (다지증, 선천성 모반 등 사소한 이상 든든하게 보장)', 
       icon: <HeartPulse className="w-4 h-4 text-emerald-600" /> 
     },
   ];
@@ -428,7 +429,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
       current: formatAmt(analysis.cardiovascular?.currentAmount ?? 10000000), 
       recommended: isRemodeling 
         ? `${formatAmt(analysis.cardiovascular?.currentAmount ?? 10000000)} (동일 보장 유지 및 보험료 절감)` 
-        : '최대 3,000만 원 (협심증 및 급성심근경색 완벽 보장)', 
+        : '최대 3,000만 원 (협심증 및 급성심근경색 든든하게 보장)', 
       icon: <Heart className="w-4 h-4 text-red-500" /> 
     },
     { 
@@ -528,7 +529,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     { 
       label: '화재 배상책임 (이웃집 피해보상)', 
       current: fireOpts.hasLiabilityRider ? '가입 완료' : '미보장', 
-      recommended: fireOpts.occupancyType === 'owner' ? '대물 20억 / 대인 1.5억 최고한도 설정' : '임차자 배상책임 1억 완벽 설정', 
+      recommended: fireOpts.occupancyType === 'owner' ? '대물 20억 / 대인 1.5억 최고한도 설정' : '임차자 배상책임 1억 든든하게 설정', 
       icon: <Scale className="w-4 h-4 text-red-600" /> 
     },
     { 
@@ -581,7 +582,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     { 
       label: '시설소유자 및 업종 배상책임', 
       current: propertyOpts.hasPremisesLiability ? '가입 완료' : '미보장', 
-      recommended: '가입 (매장 내 고객 미끄러짐 및 식중독 등 법적 배상책임 완벽 보장)', 
+      recommended: '가입 (매장 내 고객 미끄러짐 및 식중독 등 법적 배상책임 든든하게 보장)', 
       icon: <Scale className="w-4 h-4 text-orange-500" /> 
     },
     { 

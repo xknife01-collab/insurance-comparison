@@ -1,11 +1,12 @@
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import {
   ShieldCheck, ShieldAlert, Sparkles, Brain, Heart,
   Clock, Activity, AlertTriangle, CheckCircle, Star,
   Stethoscope, UserCheck, Quote, ChevronRight, Zap
 } from 'lucide-react';
 
-export const ChildSickSection = ({ onAction }: { onAction: () => void }) => (
+export const ChildSickSection = ({ onAction, isUnlocked }: { onAction: () => void, isUnlocked?: boolean }) => (
   <section className="py-32 bg-blue-50/20 px-2 sm:px-4 relative overflow-hidden" id="child-sick-detail">
     <div className="max-w-7xl mx-auto">
 
@@ -76,7 +77,7 @@ export const ChildSickSection = ({ onAction }: { onAction: () => void }) => (
                 <CheckCircle className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
                 <div>
                   <p className="font-black text-slate-800 text-sm">{item.q}</p>
-                  <p className="text-[11px] text-slate-500 font-bold mt-1">{item.desc}</p>
+                  <p className="text-[11px] text-slate-500 font-bold mt-1">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -265,11 +266,11 @@ export const ChildSickSection = ({ onAction }: { onAction: () => void }) => (
               <div key={i} className="flex flex-col md:flex-row items-start md:items-center justify-between p-5 md:p-6 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors gap-4">
                 <div className="flex-1">
                   <p className="font-black text-base">
-                    {item.company}{' '}
-                    <span className="text-blue-300 text-sm font-bold ml-1">{item.product}</span>
+                    {maskCompany(item.company, isUnlocked)}{' '}
+                    <span className="text-blue-300 text-sm font-bold ml-1">{maskProductName(item.product, isUnlocked)}</span>
                   </p>
                   <p className="text-xs text-slate-400 font-bold mt-1">{item.strong}</p>
-                  <p className="text-[11px] text-slate-500 font-bold mt-1 italic">{item.note}</p>
+                  <p className="text-[11px] text-slate-500 font-bold mt-1 italic">{maskText(item.note, isUnlocked)}</p>
                 </div>
                 <div className="flex flex-wrap gap-2 shrink-0">
                   {item.badges.map((b) => (
@@ -301,7 +302,7 @@ export const ChildSickSection = ({ onAction }: { onAction: () => void }) => (
               <div key={i} className="flex items-center gap-5 p-5 bg-blue-50/30 rounded-3xl border border-blue-100/50 hover:border-blue-200 transition-colors">
                 <div className="shrink-0 font-black text-blue-700 text-sm w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}

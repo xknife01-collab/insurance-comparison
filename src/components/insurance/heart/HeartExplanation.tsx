@@ -1,14 +1,16 @@
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import { 
   Activity, Search, ShieldCheck, HeartPulse, ChevronRight, 
   HelpCircle, AlertCircle, RefreshCw, Award, CheckCircle2, Heart, Sparkles
 } from 'lucide-react';
 
 interface Props {
+  isUnlocked?: boolean;
   onAction?: () => void;
 }
 
-export const HeartExplanation: React.FC<Props> = ({ onAction }) => {
+export const HeartExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => {
   return (
     <div className="mt-16 space-y-24 animate-in fade-in slide-in-from-bottom-8 duration-1000">
       
@@ -29,7 +31,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction }) => {
             </span>
           </h2>
           <p className="text-red-200/80 font-semibold text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            급성심근경색(9%)과 허혈성(60~70%)만 보장받고 계셨나요? 직장인 건강검진 시 흔히 진단 소견을 받는 심장 부정맥(I49), 심방세동(I48) 및 심부전(I50)까지 포함해 심장 질환을 100% 완벽히 보장하는 프리미엄 설계 가이드입니다.
+            급성심근경색(9%)과 허혈성(60~70%)만 보장받고 계셨나요? 직장인 건강검진 시 흔히 진단 소견을 받는 심장 부정맥(I49), 심방세동(I48) 및 심부전(I50)까지 포함해 심장 질환을 100% 든든하게 보장하는 프리미엄 설계 가이드입니다.
           </p>
         </div>
       </div>
@@ -168,7 +170,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction }) => {
               </div>
             </div>
             <div className="p-3 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded-lg text-center">
-              🛡️ 부정맥, 심부전까지 완벽 방어막 구축 개시!
+              🛡️ 부정맥, 심부전까지 안정적 방어막 구축 개시!
             </div>
           </div>
 
@@ -314,14 +316,14 @@ export const HeartExplanation: React.FC<Props> = ({ onAction }) => {
               badge: '신의료 판막 우수',
               badgeColor: 'bg-orange-50 text-orange-700 border-orange-200',
               highlight: '경피적 심장판막/인공심박동기 한도 업계 최다',
-              desc: '부정맥 환자의 필수 시술인 인공심박동기(Pacemaker) 이식 한도를 업계 최고치로 보강 설계할 수 있어 고령 환자들의 실버 플랜 연계 계약에서 두각을 나타냅니다.',
+              desc: '부정맥 환자의 필수 시술인 인공심박동기(Pacemaker) 이식 한도를 업계 우수치로 보강 설계할 수 있어 고령 환자들의 실버 플랜 연계 계약에서 두각을 나타냅니다.',
               strength: '고액의 심장 판막 및 심박 조율 장치 특약 최다 확보'
             },
             {
               company: '메리츠화재',
               badge: '부정맥 한도 특화',
               badgeColor: 'bg-rose-50 text-rose-700 border-rose-200',
-              highlight: '기타 심장 부정맥(I49) 진단비 최고 한도 세팅',
+              highlight: '기타 심장 부정맥(I49) 진단비 최대 한도 세팅',
               desc: '타 손해사가 가입 나이 제한을 걸어 부정맥 진단금을 축소 설계하는 반면, 메리츠는 다이렉트 간편 심사를 통해 부정맥 보장 한도를 상대적으로 가장 두껍게 보완하도록 지원합니다.',
               strength: '기타 심장 부정맥(I49) 집중형 고액 설계 최적'
             },
@@ -329,8 +331,8 @@ export const HeartExplanation: React.FC<Props> = ({ onAction }) => {
               company: 'KB손해보험',
               badge: '산정특례 한도 1위',
               badgeColor: 'bg-amber-50 text-amber-700 border-amber-200',
-              highlight: '중증 산정특례 진단금 매년 최고 한도 리필',
-              desc: '심장 질환으로 중증 환자 등록 및 산정특례 상태를 유지할 경우, 매년 특례 조건 갱신 시마다 연간 반복 지급하는 위로금 가입 한도를 업계 최고 금액으로 세팅해 줍니다.',
+              highlight: '중증 산정특례 진단금 매년 최대 한도 리필',
+              desc: '심장 질환으로 중증 환자 등록 및 산정특례 상태를 유지할 경우, 매년 특례 조건 갱신 시마다 연간 반복 지급하는 위로금 가입 한도를 업계 우수 금액으로 세팅해 줍니다.',
               strength: '재발이 잦은 환자를 위한 매년 산정특례 위로금 우세'
             },
             {
@@ -348,22 +350,22 @@ export const HeartExplanation: React.FC<Props> = ({ onAction }) => {
             >
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-base font-black text-gray-900">{item.company}</span>
+                  <span className="text-base font-black text-gray-900">{maskCompany(item.company, isUnlocked)}</span>
                   <span className={`text-[9px] font-black px-2.5 py-1 rounded-full border ${item.badgeColor}`}>
                     {item.badge}
                   </span>
                 </div>
                 <div className="pt-2">
-                  <p className="text-[11px] text-red-600 font-black">{item.highlight}</p>
+                  <p className="text-[11px] text-red-600 font-black">{maskText(item.highlight, isUnlocked)}</p>
                   <p className="text-xs text-gray-500 font-bold mt-2 leading-relaxed">
-                    {item.desc}
+                    {maskText(item.desc, isUnlocked)}
                   </p>
                 </div>
               </div>
               <div className="pt-4 border-t border-gray-50">
                 <p className="text-[9px] text-gray-400 font-bold uppercase tracking-wider">강력 추천 매칭</p>
                 <p className="text-xs text-gray-700 font-black mt-1 flex items-center gap-1.5">
-                  🛡️ {item.strength}
+                  🛡️ {maskText(item.strength, isUnlocked)}
                 </p>
               </div>
             </div>
@@ -403,7 +405,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction }) => {
               <span className="text-3xl font-black text-red-100 leading-none">{item.step}</span>
               <div className="space-y-2">
                 <h5 className="text-base font-black text-slate-900">{item.title}</h5>
-                <p className="text-xs text-slate-500 font-bold leading-relaxed">{item.desc}</p>
+                <p className="text-xs text-slate-500 font-bold leading-relaxed">{maskText(item.desc, isUnlocked)}</p>
               </div>
             </div>
           ))}

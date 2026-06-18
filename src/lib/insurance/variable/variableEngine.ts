@@ -127,7 +127,7 @@ export const analyzeVariable = (analysis: any): any => {
     const upgradePremium = 500000;
     const upgrade: RecommendationPlan = {
       title: `[${opt2.companyName}] 글로벌 자산배분 인공지능 매칭 플랜`,
-      description: `미국 주식 및 글로벌 우량 자산 투입 비중을 70%로 높여 인플레이션을 완벽하게 상회하는 수익형 연금 자산 마련 플랜입니다.`,
+      description: `미국 주식 및 글로벌 우량 자산 투입 비중을 70%로 높여 인플레이션을 안정적으로 상회하는 수익형 연금 자산 마련 플랜입니다.`,
       estimatedPremium: upgradePremium,
       companyName: opt2.companyName,
       productName: opt2.productName,
@@ -314,7 +314,7 @@ export const analyzeVariable = (analysis: any): any => {
       // term_pure or term
       diet = {
         title: `[${opt1.companyName}] 초가성비 실속 정기 플랜`,
-        description: `종신보험 대비 보험료를 85% 이상 다이어트! 자녀 독립 시점인 60세까지 핵심 사망 1억 원을 완벽히 보호하는 초실속 플랜입니다.`,
+        description: `종신보험 대비 보험료를 85% 이상 다이어트! 자녀 독립 시점인 60세까지 핵심 사망 1억 원을 든든하게 보호하는 초실속 플랜입니다.`,
         estimatedPremium: dietPremium,
         companyName: opt1.companyName,
         productName: opt1.productName,

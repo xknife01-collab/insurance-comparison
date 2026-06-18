@@ -3,12 +3,13 @@
  */
 
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import {
   Brain, Target, Zap, HeartHandshake, Pill, Sparkles,
   UserCheck, Clock, Quote
 } from 'lucide-react';
 
-export const DementiaGuideSection = ({ onAction }: { onAction: () => void }) => (
+export const DementiaGuideSection = ({ onAction, isUnlocked }: { onAction: () => void, isUnlocked?: boolean }) => (
   <section className="py-32 bg-amber-50/30 px-2 sm:px-4 relative overflow-hidden" id="dementia-detail">
     <div className="max-w-7xl mx-auto">
 
@@ -27,7 +28,7 @@ export const DementiaGuideSection = ({ onAction }: { onAction: () => void }) => 
         <div className="max-w-md text-right hidden lg:block opacity-60">
           <p className="text-sm font-bold text-slate-500 leading-relaxed">
             전국 65세 이상 10명 중 1명이 치매인 시대.<br />
-            복잡한 CDR 척도부터 생활자금 플랜까지 전문가가 완벽히 정리했습니다.
+            복잡한 CDR 척도부터 생활자금 플랜까지 전문가가 든든하게 정리했습니다.
           </p>
         </div>
       </div>
@@ -81,7 +82,7 @@ export const DementiaGuideSection = ({ onAction }: { onAction: () => void }) => 
                 <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 ${item.badge}`}>{item.score}</div>
                 <div className="flex-1 min-w-0">
                   <p className="font-black text-slate-800 text-sm">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold">{item.desc}</p>
+                  <p className="text-[11px] text-slate-400 font-bold">{maskText(item.desc, isUnlocked)}</p>
                 </div>
                 <div className={`w-2.5 h-2.5 rounded-full shrink-0 ${item.dot ? 'bg-amber-400' : 'bg-gray-200'}`} />
               </div>
@@ -193,12 +194,12 @@ export const DementiaGuideSection = ({ onAction }: { onAction: () => void }) => 
               <div key={i} className="flex items-center justify-between p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
-                    {item.company}{' '}
-                    <span className="text-amber-300 text-xs font-bold ml-1">{item.product}</span>
+                    {maskCompany(item.company, isUnlocked)}{' '}
+                    <span className="text-amber-300 text-xs font-bold ml-1">{maskProductName(item.product, isUnlocked)}</span>
                   </p>
-                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.note}</p>
+                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{maskText(item.note, isUnlocked)}</p>
                 </div>
-                <p className="font-black text-amber-400 text-sm shrink-0 ml-4">{item.limit}</p>
+                <p className="font-black text-amber-400 text-sm shrink-0 ml-4">{maskText(item.limit, isUnlocked)}</p>
               </div>
             ))}
           </div>
@@ -224,7 +225,7 @@ export const DementiaGuideSection = ({ onAction }: { onAction: () => void }) => 
                   <p className="text-[10px] text-amber-500 font-bold">{item.tag}</p>
                 </div>
                 <div className="flex-1">
-                  <p className="font-black text-slate-800 text-sm">{item.desc}</p>
+                  <p className="font-black text-slate-800 text-sm">{maskText(item.desc, isUnlocked)}</p>
                   <p className="text-xs text-slate-400 font-bold mt-0.5">주요 서비스: {item.service}</p>
                 </div>
               </div>
@@ -270,9 +271,9 @@ export const DementiaGuideSection = ({ onAction }: { onAction: () => void }) => 
             { company: '교보생명',   product: '교보더안심치매·간병',       highlight: '정밀검사비 연 1회 지원',  badges: ['레켐비 2500만', '생명보험']  },
           ].map((item, i) => (
             <div key={i} className="p-5 md:p-8 bg-amber-50/40 rounded-2xl md:rounded-[2.5rem] border border-amber-100 hover:border-amber-300 hover:shadow-lg transition-all">
-              <p className="text-xs font-black text-amber-600 mb-1">{item.company}</p>
-              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
-              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>
+              <p className="text-xs font-black text-amber-600 mb-1">{maskCompany(item.company, isUnlocked)}</p>
+              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{maskProductName(item.product, isUnlocked)}</p>
+              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{maskText(item.highlight, isUnlocked)}</p>
               <div className="flex flex-wrap gap-2">
                 {item.badges.map((b) => (
                   <span

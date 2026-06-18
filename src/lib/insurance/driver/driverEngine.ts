@@ -65,7 +65,7 @@ export const analyzeDriver = (analysis: InsuranceAnalysis): AnalysisResult => {
     deficiencies.push('교통사고처리지원금(형사합의금) 한도가 1억 원으로, 피해자 중상해 시 형사합의금 부족 리스크 존재');
     deficiencies.push('변호사 선임비용이 3,000만 원으로 제한되며 경찰조사단계 동행 보장 혜택 미반영');
   } else if (planType === 'standard') {
-    deficiencies.push('변호사 선임비용이 경찰조사 불기소 단계까지 완벽 선지원되는지 약관 점검 권장');
+    deficiencies.push('변호사 선임비용이 경찰조사 불기소 단계까지 든든하게 지원되는지 약관 점검 권장');
   }
   
   if (drivingPurpose === 'commercial' && jobClass < 3) {
@@ -132,7 +132,7 @@ export const analyzeDriver = (analysis: InsuranceAnalysis): AnalysisResult => {
         title: 'VIP 2026 안심 무적 플랜 (보장 극대화)',
         companyName: upgradeOption.companyName,
         productName: cleanName(upgradeOption.productName),
-        description: '경찰 첫 출석 단계부터 변호사가 동행하는 2026 최신 트렌드 특약과 상해 치료 14급 최상위 정액 보장을 아낌없이 탑재한 최고존엄 안심 플랜',
+        description: '경찰 첫 출석 단계부터 변호사가 동행하는 2026 최신 트렌드 특약과 상해 치료 14급 최상위 정액 보장을 아낌없이 탑재한 프리미엄 안심 플랜',
         estimatedPremium: upgradeOption.premium,
         coverageChanges: [
           '교통사고처리지원금(형사합의금) 2억 원으로 전격 상향',

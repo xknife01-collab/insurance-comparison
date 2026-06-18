@@ -3,12 +3,13 @@
  */
 
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import {
   Home, Building2, HeartHandshake, ShieldCheck, BadgeAlert, Sparkles,
   UserCheck, Clock, Quote, ClipboardCheck
 } from 'lucide-react';
 
-export const NursingSection = ({ onAction }: { onAction: () => void }) => (
+export const NursingSection = ({ onAction, isUnlocked }: { onAction: () => void, isUnlocked?: boolean }) => (
   <section className="py-32 bg-pink-50/20 px-2 sm:px-4 relative overflow-hidden" id="nursing-detail">
     <div className="max-w-7xl mx-auto">
 
@@ -80,7 +81,7 @@ export const NursingSection = ({ onAction }: { onAction: () => void }) => (
                 <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 ${item.badge}`}>{item.grade}</div>
                 <div className="flex-1 min-w-0">
                   <p className="font-black text-slate-800 text-sm">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold">{item.desc}</p>
+                  <p className="text-[11px] text-slate-400 font-bold">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -186,17 +187,17 @@ export const NursingSection = ({ onAction }: { onAction: () => void }) => (
             {[
               { company: 'DB손해보험', product: '참좋은재가시설요양', limit: '매년 5% 복리 체증', note: '가입 10년 후 지급액 1.5배 돌파' },
               { company: '흥국화재',   product: '흥국재가케어간병',   limit: '단기요양 일당 체증 추가', note: '가장 저렴한 기본형 대비 고효율' },
-              { company: 'KB손해보험', product: 'KB요양방문케어보험', limit: '재가 월 최대 100만 원', note: '업계 최고 한도 일시적 운영' },
+              { company: 'KB손해보험', product: 'KB요양방문케어보험', limit: '재가 월 최대 100만 원', note: '업계 최대 한도 일시적 운영' },
             ].map((item, i) => (
               <div key={i} className="flex items-center justify-between p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
-                    {item.company}{' '}
-                    <span className="text-pink-300 text-xs font-bold ml-1">{item.product}</span>
+                    {maskCompany(item.company, isUnlocked)}{' '}
+                    <span className="text-pink-300 text-xs font-bold ml-1">{maskProductName(item.product, isUnlocked)}</span>
                   </p>
-                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.note}</p>
+                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{maskText(item.note, isUnlocked)}</p>
                 </div>
-                <p className="font-black text-pink-400 text-sm shrink-0 ml-4">{item.limit}</p>
+                <p className="font-black text-pink-400 text-sm shrink-0 ml-4">{maskText(item.limit, isUnlocked)}</p>
               </div>
             ))}
           </div>
@@ -219,7 +220,7 @@ export const NursingSection = ({ onAction }: { onAction: () => void }) => (
               <div key={i} className="flex items-center gap-5 p-5 bg-pink-50/30 rounded-3xl border border-pink-100/50 hover:border-pink-200 transition-colors">
                 <div className="shrink-0 font-black text-pink-700 text-sm w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -263,9 +264,9 @@ export const NursingSection = ({ onAction }: { onAction: () => void }) => (
             { company: '교보생명',   product: '교보더안심LTC간병',       highlight: '생명보험 특유의 매월 연금식', badges: ['종신연금형', '대리청구'] },
           ].map((item, i) => (
             <div key={i} className="p-5 md:p-8 bg-pink-50/20 rounded-2xl md:rounded-[2.5rem] border border-pink-100 hover:border-pink-300 hover:shadow-lg transition-all">
-              <p className="text-xs font-black text-pink-600 mb-1">{item.company}</p>
-              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
-              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>
+              <p className="text-xs font-black text-pink-600 mb-1">{maskCompany(item.company, isUnlocked)}</p>
+              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{maskProductName(item.product, isUnlocked)}</p>
+              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{maskText(item.highlight, isUnlocked)}</p>
               <div className="flex flex-wrap gap-2">
                 {item.badges.map((b) => (
                   <span

@@ -91,10 +91,10 @@ export const analyzeChild = (analysis: any): any => {
     // 유병력아 타겟별 특수 결손 진단 및 팁
     if (illnessType === 'development') {
       deficiencies.push('발달지연 놀이/언어치료 이력으로 표준체 일반 어린이보험 거절 상태');
-      recommendationsTips.push('발달지연 이력은 일반보험에서 거절 1순위이지만, 간편 어린이보험의 3개월 고지만 패스하면 현대해상/KB에서 일반 아이들과 완벽하게 동일한 3대 진단비를 세팅할 수 있습니다.');
+      recommendationsTips.push('발달지연 이력은 일반보험에서 거절 1순위이지만, 간편 어린이보험의 3개월 고지만 패스하면 현대해상/KB에서 일반 아이들과 안정적으로 동일한 3대 진단비를 세팅할 수 있습니다.');
     } else if (illnessType === 'adhd') {
       deficiencies.push('ADHD 장기 약물 처방으로 인한 정신과 진료 거절 위험');
-      recommendationsTips.push('ADHD 치료제를 매일 복용 중이더라도, 3개월 이내에 입원/수술/추가 소견이 없었다면 유병력자 3대 진단비 한도를 최고 한도(암 5천, 뇌/심 각 3천)로 안정적으로 보강할 수 있습니다.');
+      recommendationsTips.push('ADHD 치료제를 매일 복용 중이더라도, 3개월 이내에 입원/수술/추가 소견이 없었다면 유병력자 3대 진단비 한도를 최대 한도(암 5천, 뇌/심 각 3천)로 안정적으로 보강할 수 있습니다.');
     } else if (illnessType === 'puberty') {
       deficiencies.push('성조숙증 호르몬 억제 주사 투여로 인한 인과 부위 부담보 우려');
       recommendationsTips.push('호르몬 치료 중이라 하더라도 메리츠화재 등 유병자 종합 플랜을 적용하면, 자궁/난소 부위에 부담보(치료 기간 보장 제외) 조건 없이 깨끗하게 승인받는 것이 유리합니다.');
@@ -181,7 +181,7 @@ export const analyzeChild = (analysis: any): any => {
 
     hybrid = {
       title: '질병수술비 보강 부담보 제로형',
-      description: `소아 빈번 통원 질환에 대해 가입 제한이나 특정 신체부위 부담보(보장 제외) 조건 없이 완벽하게 전신 인수를 승인받고, 질병 수술 시 반복해서 수술비를 돌려받는 최고급 종합 절충형입니다.`,
+      description: `소아 빈번 통원 질환에 대해 가입 제한이나 특정 신체부위 부담보(보장 제외) 조건 없이 안정적으로 전신 인수를 승인받고, 질병 수술 시 반복해서 수술비를 돌려받는 프리미엄 종합 절충형입니다.`,
       estimatedPremium: hybridOption ? (hybridOption === dietOption || hybridOption === upgradeOption ? Math.round(hybridOption.premium * 1.3) : hybridOption.premium) : 68000,
       companyName: hybridOption?.companyName || '메리츠화재',
       productName: hybridOption?.productName || `간편한 3.${noAccidentYears}.5 어른이종합보험`,

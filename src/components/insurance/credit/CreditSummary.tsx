@@ -118,7 +118,7 @@ export const CreditSummary: React.FC<Props> = ({ result }) => {
               </div>
               <p className="text-xs text-slate-300 font-bold leading-relaxed">
                 차주 본인에게 유고 발생 시, 남겨진 유가족에게 빚이 상속되거나 담보 주택이 경매 처리되는 것을 막고, 
-                <strong> 보험회사가 즉시 남은 대출금 {formatAmount(loanAmount)}을 대신 전액 상환</strong>하여 주거 안정성을 완벽히 수호합니다.
+                <strong> 보험회사가 즉시 남은 대출금 {formatAmount(loanAmount)}을 대신 전액 상환</strong>하여 주거 안정성을 든든하게 수호합니다.
               </p>
             </div>
 

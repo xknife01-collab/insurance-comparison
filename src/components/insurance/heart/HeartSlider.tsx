@@ -10,7 +10,7 @@ export const HeartSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =>
   
   const dietPremium = result.recommendations?.diet?.estimatedPremium || Math.floor(currentPremium * 0.4);
   
-  // 최고급 플랜 가격이 최저가와 똑같이 잡히는 것을 방지하기 위해, 항상 최저가보다 최소 20,000원 이상 비싸도록 안전장치 마련
+  // 프리미엄 플랜 가격이 최저가와 똑같이 잡히는 것을 방지하기 위해, 항상 최저가보다 최소 20,000원 이상 비싸도록 안전장치 마련
   const baseLuxury = result.recommendations?.upgrade?.estimatedPremium || Math.floor(currentPremium * 1.5);
   const luxuryPremium = Math.max(baseLuxury, dietPremium + 20000);
   

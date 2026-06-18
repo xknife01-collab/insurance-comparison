@@ -1,14 +1,16 @@
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import {
   TrendingUp, ShieldCheck, Scale, Award, Sparkles,
   CheckCircle, Clock, Quote, Compass, AlertTriangle
 } from 'lucide-react';
 
 interface Props {
+  isUnlocked?: boolean;
   onAction?: () => void;
 }
 
-export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
+export const VariableExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
   <section className="py-24 bg-indigo-50/10 px-2 sm:px-4 relative overflow-hidden text-left" id="variable-detail">
     <div className="max-w-7xl mx-auto">
 
@@ -17,7 +19,7 @@ export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
         <div>
           <div className="inline-flex items-center gap-2 bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-xs font-black mb-6 border border-indigo-200 shadow-sm">
             <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full" />
-            자산 증식을 위한 변액 투자 및 지출 다이어트를 위한 정기보험 완벽 분석
+            자산 증식을 위한 변액 투자 및 지출 다이어트를 위한 정기보험 정밀 분석
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[1.1]">
             고비용 종신에서 실속형 정기로 다이어트,<br />
@@ -78,7 +80,7 @@ export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
                 <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
                   <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -163,7 +165,7 @@ export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm text-left">{item.title}</p>
-                  <p className="text-[11px] text-slate-400 font-bold mt-0.5 text-left">{item.note}</p>
+                  <p className="text-[11px] text-slate-400 font-bold mt-0.5 text-left">{maskText(item.note, isUnlocked)}</p>
                 </div>
                 <p className="font-black text-indigo-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.val}</p>
               </div>
@@ -188,7 +190,7 @@ export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
               <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-indigo-50/30 rounded-3xl border border-indigo-100/50 hover:border-indigo-200 transition-colors">
                 <div className="shrink-0 font-black text-indigo-700 text-sm w-full sm:w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -226,15 +228,15 @@ export const VariableExplanation: React.FC<Props> = ({ onAction }) => (
           {[
             { company: '메트라이프생명', product: '(무)메트라이프 e-변액적립보험', highlight: '다이렉트 전용 보험사로 수수료가 업계 최저 수준이며, 다양한 글로벌 주식형 펀드로 공격적인 복리 적립에 최적', badges: ['글로벌 투자 특화', '다이렉트 최저수수료'] },
             { company: '미래에셋생명', product: '(무)미래에셋 변액저축보험 글로벌형', highlight: '미국 테크, 글로벌 자산배분 펀드 라인업의 절대 강자이며 장기 운용 수익률 지표 업계 최상위권 달성', badges: ['미국 주식형', '자산배분 1위'] },
-            { company: '신한라이프', product: '(무)신한 e-변액연금보험', highlight: '원금 100% 최저연금보증 기능 제공하여 안정 지향의 투자 성향을 지닌 고객에게 완벽한 대안 제시', badges: ['원금 100% 보증', '안심 운용'] },
+            { company: '신한라이프', product: '(무)신한 e-변액연금보험', highlight: '원금 100% 최저연금보증 기능 제공하여 안정 지향의 투자 성향을 지닌 고객에게 균형 잡힌 대안 제시', badges: ['원금 100% 보증', '안심 운용'] },
             { company: '교보라이프플래닛', product: '(무)라이프플래닛 e정기보험', highlight: '순수보장형 초가성비 정기보험의 원조 격. 비흡연/우량체 할인률이 최대 18%에 달해 가장 저렴함', badges: ['우량체 최고할인', '다이렉트 원조'] },
             { company: '한화생명', product: '(무)한화생명 e다이렉트 정기보험', highlight: '다이렉트 전용 스마트 시스템 탑재, 사망보장 한도를 최고 5억원까지 간편 모바일 심사로 보장 설계', badges: ['사망 5억 간편심사', '모바일 청약'] },
             { company: '삼성생명', product: '(무)삼성생명 다이렉트 정기보험', highlight: '대한민국 최대 자본 규모의 안정성, 전국 단위 청구 지원 및 비우량체 판정 시에도 합리적인 표준 요율 제공', badges: ['신속 청구 지원', '자본력 1위'] },
           ].map((item, i) => (
             <div key={i} className="p-5 md:p-8 bg-indigo-50/20 rounded-2xl md:rounded-[2.5rem] border border-indigo-100 hover:border-indigo-300 hover:shadow-lg transition-all text-left">
-              <p className="text-xs font-black text-indigo-600 mb-1">{item.company}</p>
-              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
-              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>
+              <p className="text-xs font-black text-indigo-600 mb-1">{maskCompany(item.company, isUnlocked)}</p>
+              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{maskProductName(item.product, isUnlocked)}</p>
+              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{maskText(item.highlight, isUnlocked)}</p>
               <div className="flex flex-wrap gap-2">
                 {item.badges.map((b) => (
                   <span

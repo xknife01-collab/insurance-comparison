@@ -1,15 +1,17 @@
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import {
   Heart, ShieldCheck, Activity, Award, Sparkles,
   CheckCircle, Clock, Quote, Compass, AlertTriangle
 } from 'lucide-react';
 
 interface Props {
+  isUnlocked?: boolean;
   onAction?: () => void;
   gameType?: 'amateur' | 'professional';
 }
 
-export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
+export const GolfExplanation: React.FC<Props> = ({ onAction, gameType, isUnlocked }) => (
   <section className="py-24 bg-emerald-50/10 px-2 sm:px-4 relative overflow-hidden" id="golf-detail">
     <div className="max-w-7xl mx-auto">
 
@@ -80,7 +82,7 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
                 <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
                   <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -169,12 +171,12 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
-                    {item.company}{' '}
-                    <span className="text-emerald-300 text-xs font-bold ml-1">{item.product}</span>
+                    {maskCompany(item.company, isUnlocked)}{' '}
+                    <span className="text-emerald-300 text-xs font-bold ml-1">{maskProductName(item.product, isUnlocked)}</span>
                   </p>
-                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.note}</p>
+                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{maskText(item.note, isUnlocked)}</p>
                 </div>
-                <p className="font-black text-emerald-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.limit}</p>
+                <p className="font-black text-emerald-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{maskText(item.limit, isUnlocked)}</p>
               </div>
             ))}
           </div>
@@ -197,7 +199,7 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
               <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-emerald-50/30 rounded-3xl border border-emerald-100/50 hover:border-emerald-200 transition-colors">
                 <div className="shrink-0 font-black text-emerald-700 text-sm w-full sm:w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -233,7 +235,7 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { company: 'DB손해보험', product: '다이렉트 오잘공 골프보험', highlight: '다이렉트 베스트셀러 상품, 업계 최고 수준의 홀인원 실비 지원 및 가성비 위주 요율 설계', badges: ['시장 대표 상품', '가성비 최우수'] },
+            { company: 'DB손해보험', product: '다이렉트 오잘공 골프보험', highlight: '다이렉트 베스트셀러 상품, 업계 우수한 수준의 홀인원 실비 지원 및 가성비 위주 요율 설계', badges: ['시장 대표 상품', '가성비 최우수'] },
             { company: '삼성화재', product: '다이렉트 착한골프보험', highlight: '간편 모바일 청구 연동, 골프웨어 등 보장 품목 다양화 및 대인 배상책임 보장 옵션 최적화', badges: ['착한 다이렉트', '웨어 파손 보장'] },
             { company: '한화손해보험', product: '다이렉트 굿샷 골프보험', highlight: '원데이 플랜 지원에 특화되어 저렴한 하루 보험료 제공, 신속한 파손 영수증 승인 속도', badges: ['원데이 전문', '빠른 실손 보상'] },
             { company: 'KB손해보험', product: 'KB 다이렉트 골프안심보험', highlight: '단체(4인) 가입 시스템이 직관적으로 모바일에 빌딩되어 동반 가입자 입력 및 결제가 매우 간편', badges: ['4인 동반 편의', '단체 할인 연계'] },
@@ -241,9 +243,9 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType }) => (
             { company: '현대해상', product: '현대해상 다이렉트 골프보험', highlight: '골프 카트 탑승 중 상해 사고 및 골프 경기장 외의 일반 스포츠 상해 손해까지 확장 설계 가능', badges: ['카트 상해 지원', '레저 상해 연계'] },
           ].map((item, i) => (
             <div key={i} className="p-5 md:p-8 bg-emerald-50/20 rounded-2xl md:rounded-[2.5rem] border border-emerald-100 hover:border-emerald-300 hover:shadow-lg transition-all">
-              <p className="text-xs font-black text-emerald-600 mb-1">{item.company}</p>
-              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
-              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>
+              <p className="text-xs font-black text-emerald-600 mb-1">{maskCompany(item.company, isUnlocked)}</p>
+              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{maskProductName(item.product, isUnlocked)}</p>
+              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{maskText(item.highlight, isUnlocked)}</p>
               <div className="flex flex-wrap gap-2">
                 {item.badges.map((b) => (
                   <span

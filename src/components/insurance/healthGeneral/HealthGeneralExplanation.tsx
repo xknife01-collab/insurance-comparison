@@ -1,14 +1,16 @@
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import {
   Heart, ShieldCheck, Activity, Award, Sparkles,
   CheckCircle, Clock, Quote, Compass, AlertTriangle, Shield, Zap
 } from 'lucide-react';
 
 interface Props {
+  isUnlocked?: boolean;
   onAction?: () => void;
 }
 
-export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
+export const HealthGeneralExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
   <section className="py-24 bg-orange-50/10 px-2 sm:px-4 relative overflow-hidden" id="health-general-detail">
     {/* Background glowing decorations */}
     <div className="absolute top-1/4 -left-20 w-96 h-96 bg-orange-200/20 rounded-full blur-3xl pointer-events-none"></div>
@@ -24,7 +26,7 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
             0.1초 만에 전 보험사 맞춤 조립 플랜 실시간 산출
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[1.15]">
-            가장 웅장하고 완벽한 보장 자산의 완성,<br />
+            가장 웅장하고 균형 잡힌 보장 자산의 완성,<br />
             <span className="text-orange-500">종합건강보험의 올바른 기준</span>을 선사합니다.
           </h2>
         </div>
@@ -77,13 +79,13 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
             {[
               { title: '일반암 진단비', label: '소액암/유사암 제외 여부 확인', color: 'bg-orange-50/50 border-orange-100', badge: 'text-orange-700 bg-orange-100', desc: '유방암, 자궁암, 대장점막내암, 전립선암 등이 축소 보장되지 않고 일반암 진단비와 100% 동일하게 지급되는 사 매칭' },
               { title: '뇌질환 보장 범위', label: '뇌출혈/뇌졸중 ❌ 뇌혈관질환 ⭕', color: 'bg-amber-50/50 border-amber-100', badge: 'text-amber-700 bg-amber-100', desc: '뇌출혈(전체 뇌질환 중 9%만 보장)보다 뇌경색과 협착증을 모두 포함하는 전체 뇌혈관질환 특약으로 빈틈없이 충족' },
-              { title: '심장질환 범위', label: '급성심근경색 ❌ 허혈성/심혈관 ⭕', color: 'bg-yellow-50 border-yellow-100', badge: 'text-yellow-700 bg-yellow-100', desc: '가장 빈번한 협심증(허혈성)과 부정맥, 심부전 등 넓은 심혈관질환 진단 특약을 조합하여 완벽한 방어선 구축' },
+              { title: '심장질환 범위', label: '급성심근경색 ❌ 허혈성/심혈관 ⭕', color: 'bg-yellow-50 border-yellow-100', badge: 'text-yellow-700 bg-yellow-100', desc: '가장 빈번한 협심증(허혈성)과 부정맥, 심부전 등 넓은 심혈관질환 진단 특약을 조합하여 균형 잡힌 방어선 구축' },
             ].map((item, i) => (
               <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-5 rounded-3xl border ${item.color}`}>
                 <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
                   <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -126,7 +128,7 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
                   🔒 비갱신형 (Non-renewable) 구조의 안정성
                 </p>
                 <p className="text-[11px] opacity-75 font-bold leading-relaxed">
-                  초기 보험료는 다소 높지만 납입 기간(예: 20년)이 지나면 세액 인상이나 추가금 납입 없이 만기(예: 90세)까지 안전하게 무료 혜택 보장을 유지하므로 노후 생활 고정비 위협을 완벽히 방지합니다.
+                  초기 보험료는 다소 높지만 납입 기간(예: 20년)이 지나면 세액 인상이나 추가금 납입 없이 만기(예: 90세)까지 안전하게 무료 혜택 보장을 유지하므로 노후 생활 고정비 위협을 든든하게 방지합니다.
                 </p>
               </div>
 
@@ -186,9 +188,9 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
                     {item.title}{' '}
                     <span className="text-orange-300 text-xs font-bold ml-1">{item.feature}</span>
                   </p>
-                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.note}</p>
+                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{maskText(item.note, isUnlocked)}</p>
                 </div>
-                <p className="font-black text-orange-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.limit}</p>
+                <p className="font-black text-orange-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{maskText(item.limit, isUnlocked)}</p>
               </div>
             ))}
           </div>
@@ -211,7 +213,7 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
               <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-orange-50/30 rounded-3xl border border-orange-100/50 hover:border-orange-200 transition-colors">
                 <div className="shrink-0 font-black text-orange-700 text-sm w-full sm:w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -255,9 +257,9 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
             { company: '한화손해보험', product: '시그니처 여성/남성 건강보험', highlight: '성별 특화 질환 담보 라인업 강력 세팅, 무해지환급 구조 설계 시 업계 최저 수준 요율 경쟁력 확보', badges: ['성별 특화 보장', '최저 요율 매칭'] },
           ].map((item, i) => (
             <div key={i} className="p-5 md:p-8 bg-orange-50/20 rounded-2xl md:rounded-[2.5rem] border border-orange-100 hover:border-orange-300 hover:shadow-lg transition-all">
-              <p className="text-xs font-black text-orange-600 mb-1">{item.company}</p>
-              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
-              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>
+              <p className="text-xs font-black text-orange-600 mb-1">{maskCompany(item.company, isUnlocked)}</p>
+              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{maskProductName(item.product, isUnlocked)}</p>
+              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{maskText(item.highlight, isUnlocked)}</p>
               <div className="flex flex-wrap gap-2">
                 {item.badges.map((b) => (
                   <span
@@ -280,7 +282,7 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction }) => (
             <Quote className="w-8 h-8 opacity-60 rotate-180" />
           </div>
           <p className="text-2xl font-black text-slate-900 tracking-tight leading-tight">
-            "0.1초 만에 밝혀지는 당신만의 완벽한 보장 조립,<br />
+            "0.1초 만에 밝혀지는 당신만의 균형 잡힌 보장 조립,<br />
             <span className="text-orange-500">낭비 없는 내 집안 경제를 위해 지금 웅장한 여정을 함께 시작해 보세요.</span>"
           </p>
         </div>

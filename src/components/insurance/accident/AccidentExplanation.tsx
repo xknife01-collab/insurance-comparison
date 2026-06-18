@@ -1,14 +1,16 @@
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import {
   Heart, ShieldCheck, Activity, Award, Sparkles,
   CheckCircle, Clock, Quote, Compass, AlertTriangle
 } from 'lucide-react';
 
 interface Props {
+  isUnlocked?: boolean;
   onAction?: () => void;
 }
 
-export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
+export const AccidentExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
   <section className="py-24 bg-red-50/10 px-2 sm:px-4 relative overflow-hidden" id="accident-detail">
     <div className="max-w-7xl mx-auto">
 
@@ -79,7 +81,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
                 <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
                   <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -173,12 +175,12 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
-                    {item.company}{' '}
-                    <span className="text-red-300 text-xs font-bold ml-1">{item.product}</span>
+                    {maskCompany(item.company, isUnlocked)}{' '}
+                    <span className="text-red-300 text-xs font-bold ml-1">{maskProductName(item.product, isUnlocked)}</span>
                   </p>
-                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.note}</p>
+                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{maskText(item.note, isUnlocked)}</p>
                 </div>
-                <p className="font-black text-red-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.limit}</p>
+                <p className="font-black text-red-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{maskText(item.limit, isUnlocked)}</p>
               </div>
             ))}
           </div>
@@ -201,7 +203,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
               <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-red-50/30 rounded-3xl border border-red-100/50 hover:border-red-200 transition-colors">
                 <div className="shrink-0 font-black text-red-700 text-sm w-full sm:w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -238,15 +240,15 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             { company: '삼성화재', product: '다이렉트 상해 안심케어', highlight: '브랜드 인지도 우수, 수술비 및 깁스 보장 한도 넉넉, 일상생활 배상책임 특약 연계 최적', badges: ['가입 신뢰도 1위', '배상책임 연계'] },
-            { company: '현대해상', product: '무배당 현대해상 상해케어', highlight: '레저/스포츠 특약 다양화, 자전거/골프 주말 돌발 사고 추가 지급 조건 업계 최고 수준', badges: ['레저스포츠 강자', '주말 나들이 특화'] },
+            { company: '현대해상', product: '무배당 현대해상 상해케어', highlight: '레저/스포츠 특약 다양화, 자전거/골프 주말 돌발 사고 추가 지급 조건 업계 우수한 수준', badges: ['레저스포츠 강자', '주말 나들이 특화'] },
             { company: 'DB손해보험', product: '참좋은 상해보험', highlight: '직업 위험군별 가입 한도 우대 적용, 중대 후유장해 시 가계 안전을 위한 연금식 분할 지급 지원', badges: ['현장직 인수 우대', '생활자금 옵션'] },
             { company: 'KB손해보험', product: 'KB 다이렉트 상해보험', highlight: '일상 미끄러짐 및 단순 골절/깁스 정액 진단비 최적 요율 매칭, 비운전자 감면 폭 최다', badges: ['골절/깁스 강점', '비운전 할인 우수'] },
             { company: 'Meritz 메리츠화재', product: '메리츠 올바른 상해보험', highlight: '2~3급 고위험군 직무 인수 기준 완화, 다발 사고에 대한 모바일 간편 청구 및 보상금 신속 지급 연동', badges: ['3급 한도 완화', '신속 보상 강자'] },
           ].map((item, i) => (
             <div key={i} className="p-5 md:p-8 bg-red-50/20 rounded-2xl md:rounded-[2.5rem] border border-red-100 hover:border-red-300 hover:shadow-lg transition-all">
-              <p className="text-xs font-black text-red-600 mb-1">{item.company}</p>
-              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
-              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>
+              <p className="text-xs font-black text-red-600 mb-1">{maskCompany(item.company, isUnlocked)}</p>
+              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{maskProductName(item.product, isUnlocked)}</p>
+              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{maskText(item.highlight, isUnlocked)}</p>
               <div className="flex flex-wrap gap-2">
                 {item.badges.map((b) => (
                   <span
@@ -270,7 +272,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction }) => (
           </div>
           <p className="text-2xl font-black text-slate-900 tracking-tight leading-tight">
             "가장 활동적인 오늘부터 노후의 낙상 위험까지,<br />
-            <span className="text-red-600">완벽한 고지와 세밀한 비교 진단을 통해 언제 발생할지 모르는 일상 리스크에 든든한 방패를 세워 드립니다.</span>"
+            <span className="text-red-600">균형 잡힌 고지와 세밀한 비교 진단을 통해 언제 발생할지 모르는 일상 리스크에 든든한 방패를 세워 드립니다.</span>"
           </p>
         </div>
         {onAction && (

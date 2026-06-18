@@ -79,7 +79,7 @@ export const analyzeHealth = (analysis: HealthAnalysis): HealthAnalysisResult =>
       },
       upgrade: {
         title: isSilson ? '가성비 실손 보완형' : '가성비 보장 업그레이드형',
-        description: isSilson ? '실손과 함께 암/뇌/심 진단비를 밸런스 있게 보완하여 완벽하게 방어하는 플랜입니다.' : '현재 보험료와 비슷한 가격대로 부족한 진단비를 평균 수준 이상으로 올리는 플랜입니다.',
+        description: isSilson ? '실손과 함께 암/뇌/심 진단비를 밸런스 있게 보완하여 안정적으로 방어하는 플랜입니다.' : '현재 보험료와 비슷한 가격대로 부족한 진단비를 평균 수준 이상으로 올리는 플랜입니다.',
         estimatedPremium: upgradeOption.premium,
         productName: upgradeOption.productName,
         companyName: upgradeOption.companyName,

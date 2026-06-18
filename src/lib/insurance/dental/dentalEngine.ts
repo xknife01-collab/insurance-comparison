@@ -73,7 +73,7 @@ export const analyzeDental = (analysis: any): any => {
         description: '레진, 인레이 등 잦은 보존 치료에 특화된 가성비 플랜입니다.',
         estimatedPremium: Math.round(bestPlan.premium * 1.1),
         coverageChanges: [
-          '보존 치료 한도 업계 최고 수준 증액',
+          '보존 치료 한도 업계 우수한 수준 증액',
           '치석 제거 등 정기 관리 혜택 포함'
         ],
         switchingLossNotice: '보철 치료 한도가 소폭 조정될 수 있습니다.'

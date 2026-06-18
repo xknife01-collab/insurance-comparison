@@ -203,7 +203,7 @@ export const SavingsFields: React.FC<Props> = ({
               <p className="text-xs font-bold leading-relaxed">
                 {isTaxExempt ? (
                   <>
-                    현재 설정은 **비과세 혜택 충족 조건**을 완벽하게 만족합니다! 만기 인출 또는 해약 시 발생하는 이자소득에 대해 <span className="text-emerald-600 font-black">이자소득세 15.4%가 전액 비과세(0%)</span> 처리됩니다.
+                    현재 설정은 **비과세 혜택 충족 조건**을 안정적으로 만족합니다! 만기 인출 또는 해약 시 발생하는 이자소득에 대해 <span className="text-emerald-600 font-black">이자소득세 15.4%가 전액 비과세(0%)</span> 처리됩니다.
                   </>
                 ) : (
                   <>

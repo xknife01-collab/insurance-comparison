@@ -95,23 +95,23 @@ export const AIPremiumReport: React.FC<AIPremiumReportProps> = ({ analysis, defi
     else if ((isHealthGeneral || !category || category.includes('암')) && age < 40) {
       riskTitle = `🌱 2030 청년기 - 저비용 고효율 무해지 황금기`;
       riskPercent = 45;
-      riskStats = `20대와 30대는 평생 보장의 주춧돌을 세우는 가장 최적의 시기입니다. 연령이 낮아 보험료가 전 생애 중 가장 저렴하며, 면책 기간이나 납입 면제 조건이 가장 유리하게 제공되므로 건강할 때 종신형 보장 자산을 선점하는 것이 금융적으로 절대 이득입니다.`;
+      riskStats = `20대와 30대는 평생 보장의 주춧돌을 세우는 가장 최적의 시기입니다. 연령이 낮아 보험료가 전 생애 중 가장 저렴하며, 면책 기간이나 납입 면제 조건이 가장 유리하게 제공되므로 건강할 때 종신형 보장 자산을 준비하는 것이 합리적인 금융 선택이 될 수 있습니다.`;
       goodPoints = [
         '젊고 건강한 연령대로서 어떠한 보험 상품이든 가장 유리한 표준체 무할증 조건으로 가입이 가능합니다.'
       ];
       badPoints = [
-        '기존 가입 내역이 만기가 지나치게 짧거나(예: 80세 만기 이하), 갱신형 위주로 되어 있어 향후 40~50대에 보험료 갱신 폭탄 리스크가 존재합니다.'
+        '기존 가입 내역이 만기가 지나치게 짧거나(예: 80세 만기 이하), 갱신형 위주로 되어 있어 향후 40~50대에 보험료가 상승할 수 있는 갱신 리스크가 존재합니다.'
       ];
       actionTips = [
         '향후 납입료가 오르지 않는 "비갱신형 세만기(90세 또는 100세)"를 기본 뼈대로 세우세요.',
-        '해지 시 환급금이 없는 대신 월 납입료를 대폭 낮춰주는 "무해지환급형 종합보험"을 활용하여 가성비를 극대화하는 것이 정답입니다.'
+        '해지 시 환급금이 없는 대신 월 납입료를 대폭 낮춰주는 "무해지환급형 종합보험"을 활용하여 가성비를 높이는 데 효과적인 대안이 될 수 있습니다.'
       ];
     }
     // 실손/실비 보험 팁
     else if (isSilbi) {
       riskTitle = `💧 실손의료보험 세대 교체 및 가격 다이어트 전략`;
       riskPercent = 70;
-      riskStats = `실손보험은 가입 시기(1~4세대)에 따라 자기부담금과 갱신율 차이가 매우 큽니다. 연간 병원 방문 횟수가 적은 우량 고객임에도 1~2세대 실비를 유지하며 매년 20~30% 폭증하는 갱신 보험료를 내는 것은 재정 낭비의 주요 원인입니다.`;
+      riskStats = `실손보험은 가입 시기(1~4세대)에 따라 자기부담금과 갱신율 차이가 매우 큽니다. 연간 병원 방문 횟수가 적은 우량 고객임에도 1~2세대 실비를 유지하며 매년 인상될 수 있는 갱신 보험료를 납입하는 것은 장기적인 고정비 부담의 요인이 될 수 있습니다.`;
       goodPoints = [
         '기존 실손 보장의 의료비 보장 한도 및 본인 부담 비율이 매우 낮아 보장의 폭 자체는 뛰어납니다.'
       ];
@@ -210,8 +210,8 @@ export const AIPremiumReport: React.FC<AIPremiumReportProps> = ({ analysis, defi
 
     // 3. 갱신형 선택 여부 연동
     if (isRenewable) {
-      badPoints.push(`현재 설계에 포함된 갱신형 구조는 당장의 월 납입료는 저렴해 보이나, 갱신 시점마다 연령 가산율이 붙어 노년기 유지 시점에 심각한 납입 해지 리스크를 유발합니다.`);
-      actionTips.push(`평생 보험료가 오르지 않는 비갱신형(90세 또는 100세 만기)으로 메인 담보의 중심 뼈대를 재구성할 것을 강력히 권장합니다.`);
+      badPoints.push(`현재 설계에 포함된 갱신형 구조는 초기 보험료는 합리적이나, 갱신 시점마다 보험료가 인상되어 향후 유지 시점에 납입 부담이 상대적으로 커질 수 있습니다.`);
+      actionTips.push(`초기 지출은 크더라도 만기까지 금액이 동일한 비갱신형(90세 또는 100세 만기)을 결합하여 장기 납입 안정성을 확보해 보세요.`);
     }
 
     // 4. 최신 치료비 특약 연동
@@ -230,7 +230,7 @@ export const AIPremiumReport: React.FC<AIPremiumReportProps> = ({ analysis, defi
       } else if (currentAmount >= 50000000 && currentAmount < 100000000) {
         goodPoints.push(`일반암 진단비를 ${(currentAmount / 10000).toLocaleString()}만 원으로 충분히 설계하여 암 치료와 생계 공백을 안정적으로 방어할 준비가 되었습니다.`);
       } else {
-        goodPoints.push(`일반암 진단비 1억 원을 완벽히 확보하여 치료비 및 생계 중단 리스크를 차단하고 최고의 자산 보호를 구축하셨습니다.`);
+        goodPoints.push(`일반암 진단비 1억 원을 든든하게 확보하여 치료비 및 생계 공백에 안정적으로 대비하고 자산을 효율적으로 보호하도록 설계하셨습니다.`);
       }
     }
 
@@ -244,14 +244,14 @@ export const AIPremiumReport: React.FC<AIPremiumReportProps> = ({ analysis, defi
 
     // 결함 항목이 있으면 동적으로 가이드 추가
     const realDeficiencies = deficiencies.filter(d => 
-      !d.includes('완벽한 설계') && 
-      !d.includes('완벽합니다') && 
+      !d.includes('균형 잡힌 설계') && 
+      !d.includes('안정적입니다') && 
       !d.includes('완벽 설계')
     );
     if (realDeficiencies.length > 0) {
       badPoints.push(`현재 긴급 보강이 필요한 항목인 [ ${realDeficiencies.slice(0, 3).join(', ')} ] 담보가 아예 누락되었거나 가입 금액이 기준 미달입니다.`);
     } else if (badPoints.length === 0) {
-      badPoints = ['현재 설계 분석 기준 상 긴급하게 보완이 필요한 보장 공백이 발견되지 않았습니다. 매우 완벽하고 이상적인 보장 설계입니다.'];
+      badPoints = ['현재 설계 분석 기준 상 긴급하게 보완이 필요한 보장 공백이 발견되지 않았습니다. 주요 핵심 보장이 고르게 구성된 균형 있는 설계입니다.'];
     }
 
     return { riskTitle, riskPercent, riskStats, goodPoints, badPoints, actionTips };

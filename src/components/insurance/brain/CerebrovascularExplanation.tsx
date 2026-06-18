@@ -1,14 +1,16 @@
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import { 
   Activity, Search, ShieldCheck, HeartPulse, ChevronRight, 
   HelpCircle, AlertCircle, RefreshCw, Award, CheckCircle2, Heart, Sparkles
 } from 'lucide-react';
 
 interface Props {
+  isUnlocked?: boolean;
   onAction?: () => void;
 }
 
-export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
+export const CerebrovascularExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => {
   return (
     <div className="mt-16 space-y-24 animate-in fade-in slide-in-from-bottom-8 duration-1000">
       
@@ -23,7 +25,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
             <HeartPulse size={14} className="text-indigo-400" /> Cerebrovascular Insurance Guide
           </div>
           <h2 className="text-3xl md:text-5xl font-black text-white tracking-tighter leading-[1.15]">
-            뇌혈관 골든타임을 지키는 완벽한 설계<br />
+            뇌혈관 골든타임을 지키는 균형 잡힌 설계<br />
             <span className="bg-gradient-to-r from-indigo-400 via-sky-300 to-purple-300 bg-clip-text text-transparent">
               뇌혈관질환 진단비와 최신 시술비
             </span>
@@ -39,7 +41,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
         {[
           {
             title: '뇌혈관질환 100% 보장',
-            desc: '지주막하출혈(I60)부터 뇌경색(I63), 뇌동맥류(I67) 및 후유증(I69)까지 전체 뇌혈관 질환을 완벽 보장.',
+            desc: '지주막하출혈(I60)부터 뇌경색(I63), 뇌동맥류(I67) 및 후유증(I69)까지 전체 뇌혈관 질환을 든든하게 보장.',
             tag: '넓은 보장 범위',
             tagBg: 'bg-indigo-50 text-indigo-700 border-indigo-200',
             icon: <Award className="w-5 h-5 text-indigo-600" />
@@ -160,7 +162,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
                 <span className="text-[10px] font-black text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">전체 질환 100% 보장</span>
               </div>
               <p className="text-xs text-indigo-950 font-bold leading-relaxed">
-                뇌출혈, 뇌졸중은 기본이고 건강검진에서 조기 발견되는 뇌동맥류(I67), 협착, 기타 뇌혈관 질환 및 후유증(I69)까지 완벽히 보장합니다.
+                뇌출혈, 뇌졸중은 기본이고 건강검진에서 조기 발견되는 뇌동맥류(I67), 협착, 기타 뇌혈관 질환 및 후유증(I69)까지 든든하게 보장합니다.
               </p>
               <div className="p-4 bg-white rounded-2xl border border-slate-100 space-y-2">
                 <p className="text-[10px] font-black text-indigo-500">보장 코드</p>
@@ -181,7 +183,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
               <Sparkles className="w-5 h-5 text-indigo-600" /> 건강검진 MRI 단골 진단인 '뇌동맥류(I67)'의 중요성
             </h4>
             <p className="text-xs text-gray-500 font-bold leading-relaxed max-w-2xl">
-              뇌동맥류는 뇌혈관 벽이 약해져 꽈리 모양으로 부풀어 오르는 질환입니다. 터지기 전 건강검진 MRA 촬영을 통해 발견되는 사례가 매우 많습니다. 터지면 사망률이 30~50%에 육박하는 시한폭탄이지만, **터지기 전 뇌혈관질환 특약이 없다면 보장 및 진단비를 전혀 받을 수 없습니다.**
+              뇌동맥류는 뇌혈관 벽이 약해져 꽈리 모양으로 부풀어 오르는 질환입니다. 터지기 전 건강검진 MRA 촬영을 통해 발견되는 사례가 매우 많습니다. 터지기 전에는 자각 증상이 거의 없는 중증 질환이지만, **뇌혈관질환 특약이 없다면 보장 및 진단비를 전혀 받을 수 없습니다.**
             </p>
           </div>
           <div className="bg-white px-6 py-4 rounded-2xl border border-indigo-100 text-center shrink-0">
@@ -314,7 +316,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
               badge: '혈전용해제 최다',
               badgeColor: 'bg-orange-50 text-orange-700 border-orange-200',
               highlight: '골든타임 혈전용해 약물 가입 한도 우수',
-              desc: '급성 뇌경색 내원 환자에게 투여하는 비급여 혈전용해제 투여 지원금 한도가 가입 나이 대비 업계 최고치로 보완 설정 가능하여 응급실 내원 치료에 유리합니다.',
+              desc: '급성 뇌경색 내원 환자에게 투여하는 비급여 혈전용해제 투여 지원금 한도가 가입 나이 대비 업계 우수치로 보완 설정 가능하여 응급실 내원 치료에 유리합니다.',
               strength: '응급 혈전 용해 치료 및 비관혈 약제 한도 우위'
             },
             {
@@ -327,7 +329,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
             },
             {
               company: 'KB손해보험',
-              badge: '산정특례 최고 한도',
+              badge: '산정특례 최대 한도',
               badgeColor: 'bg-amber-50 text-amber-700 border-amber-200',
               highlight: '중증 산정특례 진단금 매년 최대 한도 리필',
               desc: '뇌혈관 질환 국가 산정특례 대상자로 분류되어 장기 입원 또는 치료받을 경우, 매년 특례 조건 갱신 시마다 연간 반복 지급하는 위로금 가입 금액을 가장 크게 확보할 수 있습니다.',
@@ -348,22 +350,22 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
             >
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-base font-black text-gray-900">{item.company}</span>
+                  <span className="text-base font-black text-gray-900">{maskCompany(item.company, isUnlocked)}</span>
                   <span className={`text-[9px] font-black px-2.5 py-1 rounded-full border ${item.badgeColor}`}>
                     {item.badge}
                   </span>
                 </div>
                 <div className="pt-2">
-                  <p className="text-[11px] text-indigo-600 font-black">{item.highlight}</p>
+                  <p className="text-[11px] text-indigo-600 font-black">{maskText(item.highlight, isUnlocked)}</p>
                   <p className="text-xs text-gray-500 font-bold mt-2 leading-relaxed">
-                    {item.desc}
+                    {maskText(item.desc, isUnlocked)}
                   </p>
                 </div>
               </div>
               <div className="pt-4 border-t border-gray-50">
                 <p className="text-[9px] text-gray-400 font-bold uppercase tracking-wider">강력 추천 매칭</p>
                 <p className="text-xs text-gray-700 font-black mt-1 flex items-center gap-1.5">
-                  🛡️ {item.strength}
+                  🛡️ {maskText(item.strength, isUnlocked)}
                 </p>
               </div>
             </div>
@@ -403,7 +405,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction }) => {
               <span className="text-3xl font-black text-indigo-100 leading-none">{item.step}</span>
               <div className="space-y-2">
                 <h5 className="text-base font-black text-slate-900">{item.title}</h5>
-                <p className="text-xs text-slate-500 font-bold leading-relaxed">{item.desc}</p>
+                <p className="text-xs text-slate-500 font-bold leading-relaxed">{maskText(item.desc, isUnlocked)}</p>
               </div>
             </div>
           ))}

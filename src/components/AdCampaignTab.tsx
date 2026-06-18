@@ -430,7 +430,7 @@ export const AdCampaignTab: React.FC<AdCampaignTabProps> = ({ currentUser, isSup
           <p className="text-xs text-slate-400 font-bold mt-1">
             {isSuperAdmin 
               ? '보험리밸런스 플랫폼 가입 설계사 및 대리점들이 요청한 실전 광고 대행 신청 리스트와 서명된 계약서를 총괄 관리합니다.'
-              : '월 최소 300만원의 광고 충전 캐시 선결제로, 네이버 롱테일, 인스타 메타 릴스 광고 등 완벽히 대행해 드리는 플랫폼 연계 서비스입니다.'}
+              : '월 최소 300만원의 광고 충전 캐시 선결제로, 네이버 롱테일, 인스타 메타 릴스 광고 등 든든하게 대행해 드리는 플랫폼 연계 서비스입니다.'}
           </p>
         </div>
 

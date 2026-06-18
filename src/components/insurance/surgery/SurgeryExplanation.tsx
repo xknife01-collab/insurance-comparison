@@ -1,14 +1,16 @@
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import { 
   Activity, Search, ShieldCheck, Heart, ChevronRight, 
   HelpCircle, AlertCircle, RefreshCw, Award, CheckCircle2, HeartPulse, Sparkles
 } from 'lucide-react';
 
 interface Props {
+  isUnlocked?: boolean;
   onAction?: () => void;
 }
 
-export const SurgeryExplanation: React.FC<Props> = ({ onAction }) => {
+export const SurgeryExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => {
   return (
     <div className="mt-16 space-y-24 animate-in fade-in slide-in-from-bottom-8 duration-1000">
       
@@ -29,7 +31,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction }) => {
             </span>
           </h2>
           <p className="text-orange-200/80 font-semibold text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            나이가 들수록 급증하는 수술 리스크. 1~5종 수술 분류표의 핵심 약관을 완벽히 마스터하고, 4세대 실손의 비급여 자기부담금(최대 30%) 구멍을 철저히 방어하는 고품격 가이드입니다.
+            나이가 들수록 급증하는 수술 리스크. 1~5종 수술 분류표의 핵심 약관을 든든하게 마스터하고, 4세대 실손의 비급여 자기부담금(최대 30%) 구멍을 철저히 방어하는 고품격 가이드입니다.
           </p>
         </div>
       </div>
@@ -86,7 +88,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction }) => {
         ))}
       </div>
 
-      {/* ── 3. GUIDE 01: 1~5종 수술 분류표 완벽 마스터 ── */}
+      {/* ── 3. GUIDE 01: 1~5종 수술 분류표 상세 가이드 ── */}
       <div className="bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-8 md:p-16 border border-gray-100 shadow-xl space-y-12">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-gray-100">
           <div className="flex items-center gap-4">
@@ -152,7 +154,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction }) => {
                 </div>
                 <div>
                   <p className="text-[10px] text-gray-400 font-bold">평균 보장 한도</p>
-                  <p className="text-base font-black text-gray-900">{item.limit}</p>
+                  <p className="text-base font-black text-gray-900">{maskText(item.limit, isUnlocked)}</p>
                 </div>
                 <p className="text-[11px] text-slate-700 font-black leading-snug">{item.title}</p>
                 <div className="pt-2 border-t border-slate-100 space-y-1.5">
@@ -279,7 +281,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction }) => {
               badge: '상급병실 특화',
               badgeColor: 'bg-blue-50 text-blue-700 border-blue-200',
               highlight: '1인실 입원일당 높은 가입 한도',
-              desc: '상급종합병원 1인실 입원 시 지원하는 하루당 입원일당 한도가 업계 최고 수준으로 설정 가능하여, 쾌적하고 조용한 입원 치료환경을 희망하는 고객에게 안성맞춤입니다.',
+              desc: '상급종합병원 1인실 입원 시 지원하는 하루당 입원일당 한도가 업계 우수한 수준으로 설정 가능하여, 쾌적하고 조용한 입원 치료환경을 희망하는 고객에게 안성맞춤입니다.',
               strength: '상급병실 입원 보장 & 대형 수술 한도 우위'
             },
             {
@@ -302,7 +304,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction }) => {
               company: '메리츠화재',
               badge: '매회 종수술비 강자',
               badgeColor: 'bg-rose-50 text-rose-700 border-rose-200',
-              highlight: '반복 지급 종수술비 업계 최고 요율',
+              highlight: '반복 지급 종수술비 업계 우수 요율',
               desc: '연간 제한이 절대 없는 순수 매회 지급형 질병 1~5종 수술비 특약이 매우 튼튼하게 설계됩니다. 심사 절차가 신속하여 간편 고지 유병자 수술비로도 우수합니다.',
               strength: '질병 종수술비 매회 한도 중심의 튼튼한 설계'
             },
@@ -329,22 +331,22 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction }) => {
             >
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-base font-black text-gray-900">{item.company}</span>
+                  <span className="text-base font-black text-gray-900">{maskCompany(item.company, isUnlocked)}</span>
                   <span className={`text-[9px] font-black px-2.5 py-1 rounded-full border ${item.badgeColor}`}>
                     {item.badge}
                   </span>
                 </div>
                 <div className="pt-2">
-                  <p className="text-[11px] text-orange-600 font-black">{item.highlight}</p>
+                  <p className="text-[11px] text-orange-600 font-black">{maskText(item.highlight, isUnlocked)}</p>
                   <p className="text-xs text-gray-500 font-bold mt-2 leading-relaxed">
-                    {item.desc}
+                    {maskText(item.desc, isUnlocked)}
                   </p>
                 </div>
               </div>
               <div className="pt-4 border-t border-gray-50">
                 <p className="text-[9px] text-gray-400 font-bold uppercase tracking-wider">강력 추천 매칭</p>
                 <p className="text-xs text-gray-700 font-black mt-1 flex items-center gap-1.5">
-                  🛡️ {item.strength}
+                  🛡️ {maskText(item.strength, isUnlocked)}
                 </p>
               </div>
             </div>
@@ -384,7 +386,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction }) => {
               <span className="text-3xl font-black text-orange-100 leading-none">{item.step}</span>
               <div className="space-y-2">
                 <h5 className="text-base font-black text-slate-900">{item.title}</h5>
-                <p className="text-xs text-slate-500 font-bold leading-relaxed">{item.desc}</p>
+                <p className="text-xs text-slate-500 font-bold leading-relaxed">{maskText(item.desc, isUnlocked)}</p>
               </div>
             </div>
           ))}

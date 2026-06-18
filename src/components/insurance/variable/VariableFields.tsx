@@ -1,5 +1,6 @@
 import React from 'react';
 import { TrendingUp, ShieldAlert, Coins, Clock, UserCheck, Flame, Scale, Landmark, ShieldCheck } from 'lucide-react';
+import { maskProductName } from '../../../utils/compliance';
 
 interface Props {
   subType: 'term_pure' | 'term_ceo' | 'variable_term' | 'variable_saving' | 'investment' | 'term';
@@ -22,6 +23,7 @@ interface Props {
   setCoveragePeriod: (v: number) => void;
   isHealthyDiscount: boolean;
   setIsHealthyDiscount: (v: boolean) => void;
+  isUnlocked?: boolean;
 }
 
 export const VariableFields: React.FC<Props> = ({
@@ -43,6 +45,7 @@ export const VariableFields: React.FC<Props> = ({
   setCoveragePeriod,
   isHealthyDiscount,
   setIsHealthyDiscount,
+  isUnlocked,
 }) => {
   return (
     <div className="space-y-12 animate-in fade-in duration-500">
@@ -79,7 +82,7 @@ export const VariableFields: React.FC<Props> = ({
               </div>
               <span className="font-black text-lg text-white mb-2">🛡️ 실속 순수보장형 정기보험</span>
               <p className="text-xs text-slate-400 font-semibold leading-relaxed">
-                종신보험 대비 월 90% 저렴한 비용! 만기 시 소멸하지만, 가족의 경제적 자립이 필요한 시기만 골라 저렴하게 사망보금 1억원을 세팅합니다. (예: 흥국생명 온라인정기보험 등)
+                종신보험 대비 월 90% 저렴한 비용! 만기 시 소멸하지만, 가족의 경제적 자립이 필요한 시기만 골라 저렴하게 사망보금 1억원을 세팅합니다. (예: {maskProductName('흥국생명 온라인정기보험', !!isUnlocked)} 등)
               </p>
             </button>
 
@@ -101,7 +104,7 @@ export const VariableFields: React.FC<Props> = ({
               </div>
               <span className="font-black text-lg text-white mb-2">🏢 CEO 경영인 절세형 정기보험</span>
               <p className="text-xs text-slate-400 font-semibold leading-relaxed">
-                사망보장이 매년 증가하는 체증형 구조! 납입액 비용 처리를 통한 법인세 절세 및 은퇴 시 높은 해약환급금으로 CEO 퇴직금을 합법적으로 준비합니다. (예: 메트라이프 Classic 달러경영인 등)
+                사망보장이 매년 증가하는 체증형 구조! 납입액 비용 처리를 통한 법인세 절세 및 은퇴 시 높은 해약환급금으로 CEO 퇴직금을 합법적으로 준비합니다. (예: {maskProductName('메트라이프 Classic 달러경영인', !!isUnlocked)} 등)
               </p>
             </button>
 
@@ -123,7 +126,7 @@ export const VariableFields: React.FC<Props> = ({
               </div>
               <span className="font-black text-lg text-white mb-2">📈 변액 정기보험</span>
               <p className="text-xs text-slate-400 font-semibold leading-relaxed">
-                가성비 정기보험에 펀드 투자 기능을 탑재! 펀드 성과에 따라 사망보장금이 증액될 수 있으며, 투자와 합리적인 보장을 동시에 설계합니다. (예: AIA생명 변액정기 등)
+                가성비 정기보험에 펀드 투자 기능을 탑재! 펀드 성과에 따라 사망보장금이 증액될 수 있으며, 투자와 합리적인 보장을 동시에 설계합니다. (예: {maskProductName('AIA생명 변액정기', !!isUnlocked)} 등)
               </p>
             </button>
 
@@ -145,7 +148,7 @@ export const VariableFields: React.FC<Props> = ({
               </div>
               <span className="font-black text-lg text-white mb-2">💰 변액 적립/저축보험</span>
               <p className="text-xs text-slate-400 font-semibold leading-relaxed">
-                사망 보장 목적이 아닌 펀드 수익 극대화 목적! 글로벌 자산배분 펀드로 물가상승률을 초과하는 성과를 내며, 10년 시점 비과세 혜택을 챙깁니다. (예: 미래에셋생명 변액저축 등)
+                사망 보장 목적이 아닌 펀드 수익 극대화 목적! 글로벌 자산배분 펀드로 물가상승률을 초과하는 성과를 내며, 10년 시점 비과세 혜택을 챙깁니다. (예: {maskProductName('미래에셋생명 변액저축', !!isUnlocked)} 등)
               </p>
             </button>
           </div>

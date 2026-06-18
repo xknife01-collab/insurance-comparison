@@ -264,7 +264,7 @@ export const WholeLifeFields: React.FC<Props> = ({
             {isStepUp ? (
               <p className="text-[11px] text-slate-600 font-bold leading-relaxed">
                 💡 <span className="font-black text-indigo-600">체증형(Step-up) 설계 완료</span><br />
-                가입 후 특정 시점(예: 만 60세)부터 사망보험금이 <span className="text-indigo-600 font-black">매년 5%씩 20년간 단계적으로 체증(증액)</span>하여, 미래의 심각한 화폐 가치 하락과 물가상승으로부터 보장 자산의 실질적 가치를 완벽히 지켜냅니다.
+                가입 후 특정 시점(예: 만 60세)부터 사망보험금이 <span className="text-indigo-600 font-black">매년 5%씩 20년간 단계적으로 체증(증액)</span>하여, 미래의 심각한 화폐 가치 하락과 물가상승으로부터 보장 자산의 실질적 가치를 든든하게 지켜냅니다.
               </p>
             ) : (
               <p className="text-[11px] text-slate-600 font-bold leading-relaxed">

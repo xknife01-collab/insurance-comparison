@@ -15,6 +15,7 @@ import ComparisonSection from './components/ComparisonSection';
 import AnalysisSection from './components/AnalysisSection';
 import AnalysisDashboard from './components/AnalysisDashboard';
 import { PerPolicyDashboard } from './components/insurance/remodeling/PerPolicyDashboard';
+import { maskCompany, maskProductName } from './utils/compliance';
 import SimulationSlider from './components/SimulationSlider';
 import { ProblemSection, PreExistingSection, CaregivingSection, CaregivingOldSection, NursingSection, SurgerySection, CancerSection, CerebrovascularSection, HeartSection, PhilosophySection, Footer, ChildPrenatalSection, ChildSickSection } from './components/Sections';
 import { InsuranceAnalysis, AnalysisResult } from './types/insurance';
@@ -61,6 +62,32 @@ export default function App() {
   const [submittedLeads, setSubmittedLeads] = useState<string[]>([]);
   const [lastSubmittedLeadId, setLastSubmittedLeadId] = useState<number | null>(null);
   const [currentSimulationCode, setCurrentSimulationCode] = useState<string>('');
+  const [isUnlocked, setIsUnlocked] = useState<boolean>(() => {
+    if (window.location.search.includes('reset')) {
+      localStorage.removeItem('ins_unlocked');
+      return false;
+    }
+    return localStorage.getItem('ins_unlocked') === 'true';
+  });
+
+  useEffect(() => {
+    if (window.location.search.includes('reset')) {
+      localStorage.removeItem('ins_unlocked');
+      setIsUnlocked(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    const hasHighIntentLead = submittedLeads.some(leadKey => {
+      const parts = leadKey.split('_');
+      const cat = parts[parts.length - 1];
+      return cat === 'remodeling_consult' || cat.endsWith('_consult') || cat.endsWith('_underwriting');
+    });
+    if (hasHighIntentLead) {
+      setIsUnlocked(true);
+      localStorage.setItem('ins_unlocked', 'true');
+    }
+  }, [submittedLeads]);
 
   const generateSimulationCode = () => {
     const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -474,7 +501,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <SilsonExplanation onAction={() => { setCalcTarget('silson'); setView('home'); }} />
+           <SilsonExplanation isUnlocked={isUnlocked} onAction={() => { setCalcTarget('silson'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -495,7 +522,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <PreExistingExplanation onAction={() => { setCalcTarget('pre'); setView('home'); }} />
+           <PreExistingExplanation isUnlocked={isUnlocked} onAction={() => { setCalcTarget('pre'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -516,7 +543,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <DentalExplanation onAction={() => { setCalcTarget('dental'); setView('home'); }} />
+           <DentalExplanation isUnlocked={isUnlocked} onAction={() => { setCalcTarget('dental'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -537,7 +564,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <CaregivingExplanation onAction={() => { setCalcTarget('care_svc'); setView('home'); }} />
+           <CaregivingExplanation isUnlocked={isUnlocked} onAction={() => { setCalcTarget('care_svc'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -557,7 +584,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <CaregivingOldSection onAction={() => { setCalcTarget('care_old'); setView('home'); }} />
+           <CaregivingOldSection isUnlocked={isUnlocked} onAction={() => { setCalcTarget('care_old'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -578,7 +605,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <SurgeryExplanation onAction={() => { setCalcTarget('surgery'); setView('home'); }} />
+           <SurgeryExplanation isUnlocked={isUnlocked} onAction={() => { setCalcTarget('surgery'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -598,7 +625,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <CerebrovascularExplanation onAction={() => { setCalcTarget('brain'); setView('home'); }} />
+           <CerebrovascularExplanation isUnlocked={isUnlocked} onAction={() => { setCalcTarget('brain'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -618,7 +645,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <HeartExplanation onAction={() => { setCalcTarget('heart'); setView('home'); }} />
+           <HeartExplanation isUnlocked={isUnlocked} onAction={() => { setCalcTarget('heart'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -639,7 +666,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <CancerExplanation onAction={() => { setCalcTarget('cancer'); setView('home'); }} />
+           <CancerExplanation isUnlocked={isUnlocked} onAction={() => { setCalcTarget('cancer'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -660,7 +687,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <NursingSection onAction={() => { setCalcTarget('nursing'); setView('home'); }} />
+           <NursingSection isUnlocked={isUnlocked} onAction={() => { setCalcTarget('nursing'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -681,7 +708,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <ChildSickSection onAction={() => { setCalcTarget('pre_family'); setView('home'); }} />
+           <ChildSickSection isUnlocked={isUnlocked} onAction={() => { setCalcTarget('pre_family'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -702,7 +729,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <ChildPrenatalSection onAction={() => { setCalcTarget('child'); setView('home'); }} />
+           <ChildPrenatalSection isUnlocked={isUnlocked} onAction={() => { setCalcTarget('child'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -723,7 +750,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <CarExplanation onAction={() => { setCalcTarget('car'); setView('home'); }} />
+           <CarExplanation isUnlocked={isUnlocked} onAction={() => { setCalcTarget('car'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -744,7 +771,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <DriverExplanation onAction={() => { setCalcTarget('driver'); setView('home'); }} />
+           <DriverExplanation isUnlocked={isUnlocked} onAction={() => { setCalcTarget('driver'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -765,7 +792,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <PetExplanation onAction={() => { setCalcTarget('pet'); setView('home'); }} />
+           <PetExplanation isUnlocked={isUnlocked} onAction={() => { setCalcTarget('pet'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -786,7 +813,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <HealthGeneralExplanation onAction={() => { setCalcTarget('health_general'); setView('home'); }} />
+           <HealthGeneralExplanation isUnlocked={isUnlocked} onAction={() => { setCalcTarget('health_general'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -807,7 +834,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <AccidentExplanation onAction={() => { setCalcTarget('accident'); setView('home'); }} />
+           <AccidentExplanation isUnlocked={isUnlocked} onAction={() => { setCalcTarget('accident'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -828,7 +855,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <CreditExplanation onAction={() => { setCalcTarget('credit'); setView('home'); }} />
+           <CreditExplanation isUnlocked={isUnlocked} onAction={() => { setCalcTarget('credit'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -849,7 +876,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <GolfExplanation onAction={() => { setCalcTarget('golf'); setView('home'); }} />
+           <GolfExplanation isUnlocked={isUnlocked} onAction={() => { setCalcTarget('golf'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -870,7 +897,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <FireExplanation onAction={() => { setCalcTarget('fire_real'); setView('home'); }} />
+           <FireExplanation isUnlocked={isUnlocked} onAction={() => { setCalcTarget('fire_real'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -891,7 +918,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <PropertyExplanation onAction={() => { setCalcTarget('property'); setView('home'); }} />
+           <PropertyExplanation isUnlocked={isUnlocked} onAction={() => { setCalcTarget('property'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -912,7 +939,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <AnnuityExplanation onAction={() => { setCalcTarget('pension'); setView('home'); }} />
+           <AnnuityExplanation isUnlocked={isUnlocked} onAction={() => { setCalcTarget('pension'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -933,7 +960,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <WholeLifeExplanation onAction={() => { setCalcTarget('whole'); setView('home'); }} />
+           <WholeLifeExplanation isUnlocked={isUnlocked} onAction={() => { setCalcTarget('whole'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -954,7 +981,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <LegalExplanation onAction={() => { setCalcTarget('legal'); setView('home'); }} />
+           <LegalExplanation isUnlocked={isUnlocked} onAction={() => { setCalcTarget('legal'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -975,7 +1002,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <VariableExplanation onAction={() => { setCalcTarget('variable'); setView('home'); }} />
+           <VariableExplanation isUnlocked={isUnlocked} onAction={() => { setCalcTarget('variable'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -996,7 +1023,7 @@ export default function App() {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" size={16} />
               </button>
            </div>
-           <SavingsExplanation onAction={() => { setCalcTarget('savings_general'); setView('home'); }} />
+           <SavingsExplanation isUnlocked={isUnlocked} onAction={() => { setCalcTarget('savings_general'); setView('home'); }} />
         </main>
         <Footer />
       </div>
@@ -1012,7 +1039,7 @@ export default function App() {
         {/* Section 1: Insurance Hero & Quick Match (Moved to top) */}
         <ComparisonSection />
 
-        <InsuranceCalculator onCalculate={handleAnalyze} initialTarget={calcTarget} />
+        <InsuranceCalculator onCalculate={handleAnalyze} initialTarget={calcTarget} isUnlocked={isUnlocked} />
 
         <AnimatePresence>
           {analysisResult && (
@@ -1039,7 +1066,7 @@ export default function App() {
 
                 return (
                   <>
-                    <AnalysisDashboard result={analysisResult} onSubmitLead={submitLead} branding={branding} />
+                    <AnalysisDashboard result={analysisResult} onSubmitLead={submitLead} branding={branding} isUnlocked={isUnlocked} />
 
                     {currentAnalysis && (
                       <div className="mt-40">
@@ -1108,7 +1135,7 @@ export default function App() {
                           📢 AI 종합 분석 리포트 요약
                         </div>
                         <h4 className="text-xl md:text-2xl font-black text-slate-800 tracking-tight">
-                          매달 불필요하게 낭비되는 보험료 <span className="text-orange-500 underline underline-offset-4 font-black">{savingAmount.toLocaleString()}원</span>을 찾아냈습니다!
+                          매달 합리적으로 조정 가능한 보험료 <span className="text-orange-500 underline underline-offset-4 font-black">{savingAmount.toLocaleString()}원</span>을 찾아냈습니다!
                         </h4>
                         <p className="text-sm text-slate-500 font-bold leading-relaxed break-keep">
                           고객님은 현재 총 <span className="text-slate-800 font-extrabold">{policies.length}건</span>의 보험을 유지 중이시며, 이 중 <span className="text-red-500 font-extrabold">{dups.size}건의 중복 가입 상품</span>이 확인되었습니다. 
@@ -1207,10 +1234,10 @@ export default function App() {
                             <div className="flex items-start justify-between gap-4">
                               <div className="space-y-1">
                                 <span className="inline-block px-2.5 py-1 bg-slate-100 text-slate-600 rounded-lg text-[10px] font-black">
-                                  {policy.insurance_company}
+                                  {maskCompany(policy.insurance_company, isUnlocked)}
                                 </span>
                                 <h4 className="text-base font-bold text-slate-800 group-hover:text-orange-600 transition-colors">
-                                  {policy.product_name}
+                                  {maskProductName(policy.product_name, isUnlocked)}
                                 </h4>
                               </div>
                               <div className="text-right shrink-0">
@@ -1254,7 +1281,7 @@ export default function App() {
                   💡 본 분석은 한국신용정보원의 상품명과 월 납입 보험료 정보를 기반으로, AI가 표준 보험 요율에 맞춰 가입 특약 및 보장 금액을 정교하게 역산한 추정치입니다. 실제 가입하신 보험 증권의 세부 구성에 따라 차이가 있을 수 있으므로 정확한 진단은 전문 설계사의 정밀 상담을 권장합니다.
                 </p>
               </div>
-              <AnalysisDashboard result={remodelingResult} onSubmitLead={submitLead} branding={branding} />
+              <AnalysisDashboard result={remodelingResult} onSubmitLead={submitLead} branding={branding} isUnlocked={isUnlocked} />
 
 
             </motion.section>

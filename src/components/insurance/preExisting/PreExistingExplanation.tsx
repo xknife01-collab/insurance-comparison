@@ -1,14 +1,16 @@
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import { 
   Stethoscope, Search, ShieldCheck, Activity, ChevronRight, 
   HelpCircle, AlertCircle, RefreshCw, Award, CheckCircle2, HeartPulse, Sparkles
 } from 'lucide-react';
 
 interface Props {
+  isUnlocked?: boolean;
   onAction?: () => void;
 }
 
-export const PreExistingExplanation: React.FC<Props> = ({ onAction }) => {
+export const PreExistingExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => {
   return (
     <div className="mt-16 space-y-24 animate-in fade-in slide-in-from-bottom-8 duration-1000">
       
@@ -29,7 +31,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction }) => {
             </span>
           </h2>
           <p className="text-indigo-200/80 font-semibold text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            고혈압·당뇨 약 복용부터 최근 수술 이력까지. 복잡한 3.X.5 숫자의 원리를 파악하면, 일반 표준체 보험 대비 불필요하게 비싼 보험료 낭비를 완벽히 차단할 수 있습니다.
+            고혈압·당뇨 약 복용부터 최근 수술 이력까지. 복잡한 3.X.5 숫자의 원리를 파악하면, 일반 표준체 보험 대비 불필요하게 비싼 보험료 부담을 든든하게 덜어내실 수 있습니다.
           </p>
         </div>
       </div>
@@ -95,7 +97,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction }) => {
             </div>
             <div>
               <p className="text-xs text-indigo-600 font-black tracking-widest uppercase">Guide 01</p>
-              <h3 className="text-2xl font-black text-gray-900 tracking-tight">간편고지 3.X.5 완벽 마스터</h3>
+              <h3 className="text-2xl font-black text-gray-900 tracking-tight">간편고지 3.X.5 상세 가이드</h3>
             </div>
           </div>
           <p className="text-xs text-gray-400 font-bold max-w-md">
@@ -137,7 +139,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction }) => {
                   {item.period}
                 </div>
                 <h4 className="text-lg font-black text-gray-900">{item.title}</h4>
-                <p className="text-xs text-gray-500 font-bold leading-relaxed">{item.desc}</p>
+                <p className="text-xs text-gray-500 font-bold leading-relaxed">{maskText(item.desc, isUnlocked)}</p>
               </div>
               <div className="p-4 bg-indigo-50/50 rounded-2xl border border-indigo-100 relative z-10">
                 <p className="text-[10px] text-indigo-700 font-black leading-relaxed">
@@ -341,22 +343,22 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction }) => {
             >
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-base font-black text-gray-900">{item.company}</span>
+                  <span className="text-base font-black text-gray-900">{maskCompany(item.company, isUnlocked)}</span>
                   <span className={`text-[9px] font-black px-2.5 py-1 rounded-full border ${item.badgeColor}`}>
                     {item.badge}
                   </span>
                 </div>
                 <div className="pt-2">
-                  <p className="text-[11px] text-indigo-600 font-black">{item.highlight}</p>
+                  <p className="text-[11px] text-indigo-600 font-black">{maskText(item.highlight, isUnlocked)}</p>
                   <p className="text-xs text-gray-500 font-bold mt-2 leading-relaxed">
-                    {item.desc}
+                    {maskText(item.desc, isUnlocked)}
                   </p>
                 </div>
               </div>
               <div className="pt-4 border-t border-gray-50">
                 <p className="text-[9px] text-gray-400 font-bold uppercase tracking-wider">강력 추천 매칭</p>
                 <p className="text-xs text-gray-700 font-black mt-1 flex items-center gap-1.5">
-                  🛡️ {item.strength}
+                  🛡️ {maskText(item.strength, isUnlocked)}
                 </p>
               </div>
             </div>
@@ -379,7 +381,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction }) => {
             {
               step: '02',
               title: '가장 까다로운 3.5.5부터 우선 심사 넣기',
-              desc: '지레 겁먹고 비싼 3.2.5 요금제에 덜컥 가입하지 마세요. 가장 저렴한 3.5.5부터 심사를 넣고, 거절될 경우 한 단계씩 낮춰 심사를 넣는 역순 공략이 보험료를 30% 절감하는 정답입니다.'
+              desc: '지레 겁먹고 비싼 3.2.5 요금제에 덜컥 가입하지 마세요. 가장 저렴한 3.5.5부터 심사를 넣고, 거절될 경우 한 단계씩 낮춰 심사를 넣는 역순 공략이 보험료를 30% 절감할 수 있는 합리적인 방법이 될 수 있습니다.'
             },
             {
               step: '03',
@@ -396,7 +398,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction }) => {
               <span className="text-3xl font-black text-indigo-100 leading-none">{item.step}</span>
               <div className="space-y-2">
                 <h5 className="text-base font-black text-slate-900">{item.title}</h5>
-                <p className="text-xs text-slate-500 font-bold leading-relaxed">{item.desc}</p>
+                <p className="text-xs text-slate-500 font-bold leading-relaxed">{maskText(item.desc, isUnlocked)}</p>
               </div>
             </div>
           ))}

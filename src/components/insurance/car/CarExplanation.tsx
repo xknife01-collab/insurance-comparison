@@ -1,14 +1,16 @@
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import {
   Car, ShieldCheck, Calculator, ShieldAlert, Sparkles,
   UserCheck, Clock, Quote, ClipboardCheck, Star, Activity, AlertTriangle, Compass
 } from 'lucide-react';
 
 interface Props {
+  isUnlocked?: boolean;
   onAction?: () => void;
 }
 
-export const CarExplanation: React.FC<Props> = ({ onAction }) => (
+export const CarExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
   <section className="py-24 bg-blue-50/10 px-2 sm:px-4 relative overflow-hidden" id="car-detail">
     <div className="max-w-7xl mx-auto">
 
@@ -20,7 +22,7 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
             도로 위의 가장 든든한 동반자, 평생 자산 보호의 시작
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[1.1]">
-            가장 합리적인 운행을 위한 <span className="text-blue-600">완벽한 울타리</span>,<br />
+            가장 합리적인 운행을 위한 <span className="text-blue-600">균형 잡힌 울타리</span>,<br />
             우리 차 보험의 해답을 제시합니다.
           </h2>
         </div>
@@ -64,7 +66,7 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
           </div>
 
           <p className="text-sm font-bold text-slate-400 mb-8 leading-relaxed">
-            교통사고 시 형사적 책임 면제와 내 가족의 완벽한 치료비 확보를 위해{' '}
+            교통사고 시 형사적 책임 면제와 내 가족의 균형 잡힌 치료비 확보를 위해{' '}
             <span className="text-blue-600 font-black">반드시 구성해야 할 핵심 담보</span>
              설계의 정석입니다.
           </p>
@@ -79,7 +81,7 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
                 <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
                   <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -176,12 +178,12 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
-                    {item.company}{' '}
-                    <span className="text-blue-300 text-xs font-bold ml-1">{item.product}</span>
+                    {maskCompany(item.company, isUnlocked)}{' '}
+                    <span className="text-blue-300 text-xs font-bold ml-1">{maskProductName(item.product, isUnlocked)}</span>
                   </p>
-                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.note}</p>
+                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{maskText(item.note, isUnlocked)}</p>
                 </div>
-                <p className="font-black text-blue-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.limit}</p>
+                <p className="font-black text-blue-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{maskText(item.limit, isUnlocked)}</p>
               </div>
             ))}
           </div>
@@ -204,7 +206,7 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
               <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-blue-50/30 rounded-3xl border border-blue-100/50 hover:border-blue-200 transition-colors">
                 <div className="shrink-0 font-black text-blue-700 text-sm w-full sm:w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -242,15 +244,15 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
           {[
             { company: '현대해상', product: '하이카 자동차보험', highlight: '신속 보상망 1위, 자녀 할인 연계 특화', badges: ['신속출동 강점', '커넥티드 할인'] },
             { company: 'KB손해보험', product: 'KB 자동차보험', highlight: '대중교통 할인 특약 및 안전운전 연동 할인', badges: ['안전점수 특화', '대중교통 중복'] },
-            { company: 'DB손해보험', product: '프로미 자동차보험', highlight: 'Tmap 안전운전 최고 할인율 지원, 가격 가성비', badges: ['Tmap 할인최고', '가성비 우수'] },
+            { company: 'DB손해보험', product: '프로미 자동차보험', highlight: 'Tmap 안전운전 최대 할인율 지원, 가격 가성비', badges: ['Tmap 할인최고', '가성비 우수'] },
             { company: '삼성화재', product: '애니카 자동차보험', highlight: '전국 촘촘한 긴급출동 네트워크 및 네임드 보상', badges: ['신속 보상', '네임드 출동망'] },
             { company: '메리츠화재', product: '메리츠 자동차보험', highlight: '주행거리 마일리지 환급 구간 설계가 합리적', badges: ['단거리 최적화', '마일리지 우수'] },
             { company: '한화손해보험', product: '한화 자동차보험', highlight: '연간 운행이 극단적으로 적은 유저를 위한 가성비', badges: ['초실속 요율', '실속형 마일리지'] },
           ].map((item, i) => (
             <div key={i} className="p-5 md:p-8 bg-blue-50/20 rounded-2xl md:rounded-[2.5rem] border border-blue-100 hover:border-blue-300 hover:shadow-lg transition-all">
-              <p className="text-xs font-black text-blue-600 mb-1">{item.company}</p>
-              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
-              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>
+              <p className="text-xs font-black text-blue-600 mb-1">{maskCompany(item.company, isUnlocked)}</p>
+              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{maskProductName(item.product, isUnlocked)}</p>
+              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{maskText(item.highlight, isUnlocked)}</p>
               <div className="flex flex-wrap gap-2">
                 {item.badges.map((b) => (
                   <span
@@ -273,7 +275,7 @@ export const CarExplanation: React.FC<Props> = ({ onAction }) => (
             <Quote className="w-8 h-8 opacity-60 rotate-180" />
           </div>
           <p className="text-2xl font-black text-slate-900 tracking-tight leading-tight">
-            "도로 위에서 만날 수 있는 모든 위험에 대한 완벽한 방패,<br />
+            "도로 위에서 만날 수 있는 모든 위험에 대한 균형 잡힌 방패,<br />
             <span className="text-blue-600">안전한 주행을 지키는 가장 현명한 부모와 운전자의 선택입니다.</span>"
           </p>
         </div>

@@ -1,13 +1,15 @@
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import { 
   Building, Flame, ShieldAlert, CheckCircle, Clock, Quote, Compass, Activity, Sparkles 
 } from 'lucide-react';
 
 interface Props {
+  isUnlocked?: boolean;
   onAction?: () => void;
 }
 
-export const PropertyExplanation: React.FC<Props> = ({ onAction }) => (
+export const PropertyExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
   <section className="py-24 bg-orange-50/10 px-2 sm:px-4 relative overflow-hidden" id="property-detail">
     <div className="max-w-7xl mx-auto">
 
@@ -34,7 +36,7 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction }) => (
       {/* ── 통계 배너 ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
         {[
-          { num: '1급 건물 할인', label: '콘크리트 구조 최고 할인', sub: '목조/판넬 대비 40% 이상 보험료 감면' },
+          { num: '1급 건물 할인', label: '콘크리트 구조 최대 할인', sub: '목조/판넬 대비 40% 이상 보험료 감면' },
           { num: '실손보상 특약', label: '비례보상 없는 안심 보장', sub: '설정한 가입 한도 내 실제 손해액 전액 지급' },
           { num: '의무 배상책임', label: '다중이용업소 화재/재난 의무', sub: '미가입 시 과태료 발생 대상 항목 완벽 매칭' },
           { num: '점포 휴업손해', label: '화재 복구 기간 임대료 지원', sub: '영업중단 손실액 매일 정액 보상' },
@@ -78,7 +80,7 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction }) => (
                 <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
                   <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -163,12 +165,12 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction }) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
-                    {item.company}{' '}
-                    <span className="text-orange-300 text-xs font-bold ml-1">{item.product}</span>
+                    {maskCompany(item.company, isUnlocked)}{' '}
+                    <span className="text-orange-300 text-xs font-bold ml-1">{maskProductName(item.product, isUnlocked)}</span>
                   </p>
-                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.note}</p>
+                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{maskText(item.note, isUnlocked)}</p>
                 </div>
-                <p className="font-black text-orange-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.limit}</p>
+                <p className="font-black text-orange-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{maskText(item.limit, isUnlocked)}</p>
               </div>
             ))}
           </div>
@@ -191,7 +193,7 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction }) => (
               <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-orange-50/30 rounded-3xl border border-orange-100/50 hover:border-orange-200 transition-colors">
                 <div className="shrink-0 font-black text-orange-700 text-sm w-full sm:w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -235,9 +237,9 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction }) => (
             { company: '한화손해보험', product: '세이프투게더재물종합', highlight: '사무실 및 학원 전용 최저 요율 플랜 지원, 초경량 실속 가입 희망 매장에 유리', badges: ['초경량 요율', '학원/사무실 추천'] },
           ].map((item, i) => (
             <div key={i} className="p-5 md:p-8 bg-orange-50/20 rounded-2xl md:rounded-[2.5rem] border border-orange-100 hover:border-orange-300 hover:shadow-lg transition-all">
-              <p className="text-xs font-black text-orange-600 mb-1">{item.company}</p>
-              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
-              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>
+              <p className="text-xs font-black text-orange-600 mb-1">{maskCompany(item.company, isUnlocked)}</p>
+              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{maskProductName(item.product, isUnlocked)}</p>
+              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{maskText(item.highlight, isUnlocked)}</p>
               <div className="flex flex-wrap gap-2">
                 {item.badges.map((b) => (
                   <span

@@ -150,13 +150,13 @@ export const analyzeAnnuity = (analysis: any): any => {
 
   const hybrid: RecommendationPlan = {
     title: `[${opt3.companyName}] 1:1 하이브리드 연금 자산 플랜`,
-    description: `연금저축(월 50만)과 IRP 퇴직연금(월 25만)을 매칭하여 세액공제 통합 한도 연 900만 원을 완벽히 소화하는 상위 5% 프리미엄 은퇴 세팅입니다.`,
+    description: `연금저축(월 50만)과 IRP 퇴직연금(월 25만)을 매칭하여 세액공제 통합 한도 연 900만 원을 든든하게 소화하는 상위 5% 프리미엄 은퇴 세팅입니다.`,
     estimatedPremium: hybridPremium,
     companyName: opt3.companyName,
     productName: opt3.productName,
     coverageChanges: [
       `연금저축 연 600만 원 + IRP 연 300만 원 복합 구성`,
-      `매년 최고 한도 ${Math.round(hybridRefund).toLocaleString()}원 환급 세이브`,
+      `매년 최대 한도 ${Math.round(hybridRefund).toLocaleString()}원 환급 세이브`,
       `수령 개시 시 70세 이후 설정으로 연금소득세 3.3% 절세 극대화`
     ],
     switchingLossNotice: 'IRP는 퇴직연금 특성상 법에서 정한 일부 조건 외에는 중도 인출이 전면 불가능하여 계좌가 폐쇄될 수 있습니다.',

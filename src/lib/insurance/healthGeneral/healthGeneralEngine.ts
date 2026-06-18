@@ -162,12 +162,12 @@ export const analyzeHealthGeneral = (analysis: any): any => {
   // Hybrid: 최대 진단비 한도, 전체 특약 풀패키지 탑재
   const hybrid: RecommendationPlan = {
     title: `[${hybridPlan.companyName}] 프리미엄 마스터 플랜`,
-    description: '암·뇌·심장 최고 수준 한도는 물론이고 부정맥 진단비, 혈전용해, 가족일상배책까지 빈틈없이 꽉 채운 완벽 보장형 플랜입니다.',
+    description: '암·뇌·심장 우수한 수준 한도는 물론이고 부정맥 진단비, 혈전용해, 가족일상배책까지 빈틈없이 꽉 채운 든든한 보장형 플랜입니다.',
     estimatedPremium: hybridPlan.premium,
     companyName: hybridPlan.companyName,
     productName: hybridPlan.productName,
     coverageChanges: [
-      `일반암 최고 ${(hybridCancer / 10000).toLocaleString()}만 원 및 유사암 ${(hybridSimilar / 10000).toLocaleString()}만 원 최고 한도 확보`,
+      `일반암 최고 ${(hybridCancer / 10000).toLocaleString()}만 원 및 유사암 ${(hybridSimilar / 10000).toLocaleString()}만 원 최대 한도 확보`,
       `뇌혈관 ${(hybridBrain / 10000).toLocaleString()}만 원 / 허혈성 심장 ${(hybridHeart / 10000).toLocaleString()}만 원 / 심혈관 ${(hybridCardio / 10000).toLocaleString()}만 원 풀 케어`,
       '1-5종 수술비 + 표적항암 + 혈전용해 + 가족일상배상책임 풀 패키지'
     ],

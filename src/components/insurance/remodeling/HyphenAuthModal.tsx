@@ -1680,7 +1680,7 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
                       {
                         type: 'optimal',
                         title: '✨ 최적 설계형 (Optimal)',
-                        desc: '3대 질환 진단비가 넉넉히 설계되어 있으며 불필요한 적립금이 최소화된 완벽한 건강/가성비 밸런스 포트폴리오',
+                        desc: '3대 질환 진단비가 넉넉히 설계되어 있으며 불필요한 적립금이 최소화된 균형 잡힌 건강/가성비 밸런스 포트폴리오',
                         specs: '38세 남성 · 월 12.0만 원 · 1개 상품 가입',
                         accent: 'border-emerald-100 hover:border-emerald-300 bg-emerald-50/20 text-emerald-600',
                         badge: '✓ 유지 추천 (최적)'

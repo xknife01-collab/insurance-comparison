@@ -1,14 +1,16 @@
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import {
   Car, ShieldCheck, Scale, ShieldAlert, Sparkles,
   UserCheck, Clock, Quote, Activity, Compass, HelpCircle, AlertOctagon
 } from 'lucide-react';
 
 interface Props {
+  isUnlocked?: boolean;
   onAction?: () => void;
 }
 
-export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
+export const DriverExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
   <section className="py-24 bg-purple-50/10 px-2 sm:px-4 relative overflow-hidden" id="driver-detail">
     <div className="max-w-7xl mx-auto">
 
@@ -73,13 +75,13 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
             {[
               { title: '교통사고처리지원금', label: '형사합의금 최대 2억 원 한도 실손 보장', color: 'bg-purple-50/50 border-purple-100', badge: 'text-purple-700 bg-purple-100', desc: '피해자 사망, 6주 이상 치료 필요 상해, 또는 12대 중과실 사고 시 형사합의비 부담 전담' },
               { title: '변호사 선임비용', label: '경찰조사 단계부터 선지원 탑재 필수', color: 'bg-indigo-50/50 border-indigo-100', badge: 'text-indigo-700 bg-indigo-100', desc: '과거 약식기소 후에만 나오던 담보에서 개선되어, 경찰 첫 출석(조사) 단계부터 5천만 원 즉각 지원' },
-              { title: '대인/대물 벌금', label: '스쿨존 민식이법 3천만 원 한도 최고치 설계', color: 'bg-emerald-50 border-emerald-100', badge: 'text-emerald-700 bg-emerald-100', desc: '어린이보호구역 벌금 인상안 완벽 대비 및 도로 시설물 훼손 벌금 최대 500만 원 보장' },
+              { title: '대인/대물 벌금', label: '스쿨존 민식이법 3천만 원 한도 최고치 설계', color: 'bg-emerald-50 border-emerald-100', badge: 'text-emerald-700 bg-emerald-100', desc: '어린이보호구역 벌금 인상안 든든하게 대비 및 도로 시설물 훼손 벌금 최대 500만 원 보장' },
             ].map((item, i) => (
               <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-5 rounded-3xl border ${item.color}`}>
                 <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
                   <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -106,7 +108,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
               </div>
               <div>
                 <p className="text-sm text-purple-400 font-black">GUIDE 02</p>
-                <h3 className="text-3xl font-black tracking-tight">민사 책임과 형사 책임의 완벽한 분리</h3>
+                <h3 className="text-3xl font-black tracking-tight">민사 책임과 형사 책임의 균형 잡힌 분리</h3>
               </div>
             </div>
 
@@ -154,7 +156,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
             </div>
             <h3 className="text-3xl font-black mb-4 tracking-tight">수사 초기 단계 방어를 위한 경찰 조사 특약의 진화</h3>
             <p className="text-sm opacity-70 font-bold leading-relaxed">
-              최근 대법원 판례 및 검경 수사권 조정에 따라 초기 수사기관 진술의 중요성이 극대화되었습니다. 이에 발맞추어 기소 이전 경찰서 출석 단계부터 변호사가 동행해 법적 불이익을 완전히 차단하는 특약 가입이 완벽한 정석으로 자리 잡았습니다.
+              최근 대법원 판례 및 검경 수사권 조정에 따라 초기 수사기관 진술의 중요성이 극대화되었습니다. 이에 발맞추어 기소 이전 경찰서 출석 단계부터 변호사가 동행해 법적 불이익을 완전히 차단하는 특약 가입이 균형 잡힌 정석으로 자리 잡았습니다.
             </p>
           </div>
           <div className="space-y-4">
@@ -166,12 +168,12 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
-                    {item.company}{' '}
-                    <span className="text-purple-300 text-xs font-bold ml-1">{item.product}</span>
+                    {maskCompany(item.company, isUnlocked)}{' '}
+                    <span className="text-purple-300 text-xs font-bold ml-1">{maskProductName(item.product, isUnlocked)}</span>
                   </p>
-                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.note}</p>
+                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{maskText(item.note, isUnlocked)}</p>
                 </div>
-                <p className="font-black text-purple-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.limit}</p>
+                <p className="font-black text-purple-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{maskText(item.limit, isUnlocked)}</p>
               </div>
             ))}
           </div>
@@ -194,7 +196,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
               <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-purple-50/30 rounded-3xl border border-purple-100/50 hover:border-purple-200 transition-colors">
                 <div className="shrink-0 font-black text-purple-700 text-sm w-full sm:w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -238,9 +240,9 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
             { company: '한화손해보험', product: '차도리 운전자보험', highlight: '주말 상해사고 집중 보강 특약 및 직장인 출퇴근길 안심 보장 특화', badges: ['주말사고 특약', '직장인 맞춤형'] },
           ].map((item, i) => (
             <div key={i} className="p-5 md:p-8 bg-purple-50/20 rounded-2xl md:rounded-[2.5rem] border border-purple-100 hover:border-purple-300 hover:shadow-lg transition-all">
-              <p className="text-xs font-black text-purple-600 mb-1">{item.company}</p>
-              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
-              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>
+              <p className="text-xs font-black text-purple-600 mb-1">{maskCompany(item.company, isUnlocked)}</p>
+              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{maskProductName(item.product, isUnlocked)}</p>
+              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{maskText(item.highlight, isUnlocked)}</p>
               <div className="flex flex-wrap gap-2">
                 {item.badges.map((b) => (
                   <span
@@ -264,7 +266,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction }) => (
           </div>
           <p className="text-2xl font-black text-slate-900 tracking-tight leading-tight">
             "가장 완전한 형태의 운전 권리 보호 장벽,<br />
-            <span className="text-purple-600">가정과 나의 인생을 완벽하게 지키는 현명한 설계사와 운전자의 파트너십입니다.</span>"
+            <span className="text-purple-600">가정과 나의 인생을 안정적으로 지키는 현명한 설계사와 운전자의 파트너십입니다.</span>"
           </p>
         </div>
         {onAction && (

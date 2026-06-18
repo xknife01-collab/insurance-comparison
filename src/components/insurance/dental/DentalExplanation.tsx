@@ -1,14 +1,16 @@
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import {
   Heart, ShieldCheck, Activity, Award, Sparkles,
   CheckCircle, Clock, Quote, Compass, Gem
 } from 'lucide-react';
 
 interface Props {
+  isUnlocked?: boolean;
   onAction?: () => void;
 }
 
-export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
+export const DentalExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
   <section className="py-24 bg-teal-50/10 px-2 sm:px-4 relative overflow-hidden" id="dental-detail">
     <div className="max-w-7xl mx-auto">
 
@@ -27,7 +29,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
         <div className="max-w-md text-right hidden lg:block opacity-60">
           <p className="text-sm font-bold text-slate-500 leading-relaxed">
             나에게 맞는 보존치료(크라운/레진)부터 임플란트 고액 보철치료까지!<br />
-            면책/감액기간을 완벽히 계산한 안심 치아 비교 설계.
+            면책/감액기간을 든든하게 계산한 안심 치아 비교 설계.
           </p>
         </div>
       </div>
@@ -79,7 +81,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
                 <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
                   <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -166,7 +168,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
                   <p className="font-black text-sm">
                     {item.title}
                   </p>
-                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.desc}</p>
+                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{maskText(item.desc, isUnlocked)}</p>
                 </div>
                 <p className="font-black text-teal-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.info}</p>
               </div>
@@ -191,7 +193,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
               <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-teal-50/30 rounded-3xl border border-teal-100/50 hover:border-teal-200 transition-colors">
                 <div className="shrink-0 font-black text-teal-700 text-sm w-full sm:w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -227,7 +229,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { company: '라이나생명', product: 'THE건강한치아보험', highlight: '국내 최초 치아보험 출시 브랜드로, 업계 최고의 지급 실적과 가장 방대한 임플란트 고액 지원 및 신속 정산 프로세스 제공', badges: ['가입자 수 1위', '보철 지원 독보적'] },
+            { company: '라이나생명', product: 'THE건강한치아보험', highlight: '국내 최초 치아보험 출시 브랜드로, 업계 우수의 지급 실적과 가장 방대한 임플란트 고액 지원 및 신속 정산 프로세스 제공', badges: ['가입자 수 1위', '보철 지원 독보적'] },
             { company: '삼성화재', product: '다이렉트 치아보험', highlight: '간편한 모바일 사진 촬영 접수 및 개수 제한 없는 크라운/보존치료 개수 무제한 연계 혜택을 통한 가성비 최적화 상품', badges: ['대형사 신뢰', '크라운 무제한'] },
             { company: 'DB손해보험', product: '다이렉트 참좋은치아보험', highlight: '설계사 대면 수수료가 전액 절감된 초저가 다이렉트 전용 기본 보험료 책정으로 가벼운 월 부담금 제시', badges: ['최저 보험료', '실속 지향'] },
             { company: '메리츠화재', product: '다이렉트 이목구비보험', highlight: '치과 충치 치료뿐만 아니라 백내장 등 안과 질환, 이비인후과 질환 수술 비용까지 특약으로 폭넓게 동시 구성 가능', badges: ['이목구비 종합', '신속 심사'] },
@@ -235,9 +237,9 @@ export const DentalExplanation: React.FC<Props> = ({ onAction }) => (
             { company: '한화손해보험', product: '다이렉트 하얀이치아보험', highlight: '자연치아 보존 치료 한도 최적화를 통해 충치 레진, 인레이 다수 치료 필요 고객에게 가장 매력적인 가격 제시', badges: ['보존치료 강자', '다이어트 요율'] },
           ].map((item, i) => (
             <div key={i} className="p-5 md:p-8 bg-teal-50/20 rounded-2xl md:rounded-[2.5rem] border border-teal-100 hover:border-teal-300 hover:shadow-lg transition-all">
-              <p className="text-xs font-black text-teal-600 mb-1">{item.company}</p>
-              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
-              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>
+              <p className="text-xs font-black text-teal-600 mb-1">{maskCompany(item.company, isUnlocked)}</p>
+              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{maskProductName(item.product, isUnlocked)}</p>
+              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{maskText(item.highlight, isUnlocked)}</p>
               <div className="flex flex-wrap gap-2">
                 {item.badges.map((b) => (
                   <span

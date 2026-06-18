@@ -146,14 +146,14 @@ export const analyzeAccident = (analysis: any): any => {
       ? `[${hybridPlan.companyName}] 장해 프리미엄 마스터 플랜`
       : `[${hybridPlan.companyName}] 치료 프리미엄 마스터 플랜`,
     description: isDisability
-      ? '상해사망 2억, 후유장해 1.5억의 업계 최고 한도를 구성하고 주말/레저 재해 장해까지 빈틈없이 커버하는 최고급 보장 자산 플랜입니다.'
+      ? '상해사망 2억, 후유장해 1.5억의 업계 최대 한도를 구성하고 주말/레저 재해 장해까지 빈틈없이 커버하는 프리미엄 보장 자산 플랜입니다.'
       : '치아파절 포함 골절 진단 100만 원, 상해수술 200만 원, 깁스 50만 원 등 일상 치료비 한도를 한계까지 극대화한 치료 집중 프리미엄 플랜입니다.',
     estimatedPremium: hybridPlan.premium,
     companyName: hybridPlan.companyName,
     productName: hybridPlan.productName,
     coverageChanges: isDisability
       ? [
-          '상해사망 2억 / 후유장해 1.5억 최고 수준 보장',
+          '상해사망 2억 / 후유장해 1.5억 우수한 수준 보장',
           '중대 장해 진단 시 거액의 대체 소득 확보 가능',
           '안정적인 자산 보존을 위한 하이엔드 솔루션'
         ]

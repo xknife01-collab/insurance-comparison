@@ -34,12 +34,13 @@ import { PropertySummary } from './insurance/property/PropertySummary';
 import { SavingsSummary } from './insurance/savings/SavingsSummary';
 import disclosureDates from '../lib/insurance/disclosure_dates.json';
 import { AIPremiumReport } from './AIPremiumReport';
-
+import { maskCompany, maskProductName, maskText } from '../utils/compliance';
 
 interface AnalysisDashboardProps {
   result: AnalysisResult;
   onSubmitLead?: (analysis: any, category: string, resultData: any, consultType?: 'anonymous' | 'regular') => Promise<any> | void;
   branding?: any;
+  isUnlocked?: boolean;
 }
 
 // ─── 보험 타입별 요약 컴포넌트 1:1 맵 ───────────────────────────────────────
@@ -133,7 +134,7 @@ const InsuranceSummary = ({ result }: { result: AnalysisResult }) => {
   return <HealthSummary result={result as any} formatAmount={formatAmountUtil} />;
 };
 
-const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitLead, branding }) => {
+const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitLead, branding, isUnlocked: parentIsUnlocked }) => {
   const { scores, efficiency, deficiencies, analysis } = result;
   const isRemodeling = !!(analysis as any)._allDietOptions && !!(analysis as any)._allUpgradeOptions;
   const cat = analysis.selectedCategory ?? '';
@@ -352,6 +353,22 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
     targetUrl: string;
     countdown: number;
   } | null>(null);
+
+  const [localUnlocked, setLocalUnlocked] = React.useState(false);
+  const isUnlocked = !!parentIsUnlocked || localUnlocked || consultVerified || uwVerified || smsSuccess || localStorage.getItem('ins_unlocked') === 'true';
+
+  React.useEffect(() => {
+    if (isUnlocked) {
+      localStorage.setItem('ins_unlocked', 'true');
+    }
+  }, [isUnlocked]);
+
+  React.useEffect(() => {
+    if (consultVerified || uwVerified || smsSuccess) {
+      setLocalUnlocked(true);
+      localStorage.setItem('ins_unlocked', 'true');
+    }
+  }, [consultVerified, uwVerified, smsSuccess]);
 
   React.useEffect(() => {
     let interval: any;
@@ -929,19 +946,19 @@ ${origin}/?code=${simCode}
                   : isChild
                   ? '"방사형 그래프가 원형에 가까울수록 빈틈없는 어린이/태아 보장 상태입니다."'
                   : isAccident
-                  ? '"방사형 그래프가 원형에 가까울수록 직무 및 일상 리스크에 완벽히 방어된 상태입니다."'
+                  ? '"방사형 그래프가 원형에 가까울수록 직무 및 일상 리스크에 든든하게 방어된 상태입니다."'
                   : isCar
                   ? '"방사형 그래프가 원형에 가까울수록 안전하고 가성비 높은 자동차 보장 상태입니다."'
                   : isSurgeryHospital
                   ? '"뇌/심장/암 등 주요 질환과 수술/입원 담보를 집중 분석했습니다."'
                   : isPet
-                  ? '"방사형 그래프가 6각형 모양에 가까울수록 아이를 위한 펫보험 보장이 완벽한 상태입니다."'
+                  ? '"방사형 그래프가 6각형 모양에 가까울수록 아이를 위한 펫보험 보장이 균형 잡힌 상태입니다."'
                   : isGolf
-                  ? '"방사형 그래프가 6각형 모양에 가까울수록 홀인원 및 필드 사고 배상책임 보장이 완벽한 상태입니다."'
+                  ? '"방사형 그래프가 6각형 모양에 가까울수록 홀인원 및 필드 사고 배상책임 보장이 균형 잡힌 상태입니다."'
                   : isCredit
                   ? '"방사형 그래프가 육각형에 가까울수록 가계 대출 채무 불이행 위험으로부터 안전한 상태입니다."'
                   : isLegal
-                  ? '"방사형 그래프가 육각형에 가까울수록 일상 법률 분쟁 및 송사 비용 리스크를 완벽하게 방어한 상태입니다."'
+                  ? '"방사형 그래프가 육각형에 가까울수록 일상 법률 분쟁 및 송사 비용 리스크를 안정적으로 방어한 상태입니다."'
                   : isProperty
                   ? '"방사형 그래프가 육각형에 가까울수록 매장 및 사업장의 자산 손실과 화재 배상 리스크로부터 안전한 상태입니다."'
                   : isSavingsGeneral
@@ -1029,7 +1046,7 @@ ${origin}/?code=${simCode}
                    </span>
                  )) : (
                    <span className={`bg-white px-5 py-3 rounded-2xl text-sm font-black shadow-sm border ${isDental || isSilbi ? 'text-emerald-600 border-emerald-100' : 'text-green-600 border-green-100'}`}>
-                     {isDental || isSilbi ? '실손 보장이 완벽합니다!' : '모든 보장이 완벽합니다!'}
+                     {isDental || isSilbi ? '실손 보장이 안정적입니다!' : '모든 보장이 안정적입니다!'}
                    </span>
                  )}
                </div>
@@ -1047,6 +1064,7 @@ ${origin}/?code=${simCode}
       <ComparisonTable 
         analysis={result.analysis}
         recommendation={isRemodeling ? result.recommendations.diet : result.recommendations.upgrade} 
+        isUnlocked={isUnlocked}
       />
 
       {/* 보험별 개별 분석 (전체 종합 분석 테이블 아래, 매직 다이어트 가이드 위에 위치) */}
@@ -1063,6 +1081,7 @@ ${origin}/?code=${simCode}
             policies={(analysis as any)._remodelingCoverage.policies}
             age={(analysis as any).age || 40}
             gender={(analysis as any).gender || 'M'}
+            isUnlocked={isUnlocked}
           />
         </div>
       )}
@@ -1165,7 +1184,8 @@ ${origin}/?code=${simCode}
           </div>
         </div>
 
-        <div className="text-[10px] text-slate-500 mt-10 text-center relative z-10">
+        <div className="text-[10px] text-slate-500 mt-10 text-center relative z-10 leading-relaxed">
+          * 상기 예상 보험료는 가입자의 실제 연령, 성별, 직업, 과거 병력 등에 따라 실제 청약 시 달라질 수 있습니다.<br />
           * 본 시뮬레이션은 불필요한 보장 리밸런싱을 통한 고정비 절감 효과의 예시이며, 실제 가입/해지 시 개별 요율 및 보장 내용에 따라 실제 적용 효과는 달라질 수 있습니다.
         </div>
       </section>
@@ -1238,7 +1258,7 @@ ${origin}/?code=${simCode}
                       {hasKBDup && (
                         <li className="flex items-center gap-3 text-sm font-bold text-amber-700 bg-amber-50 rounded-xl px-3 py-2 border border-amber-100">
                           <span className="w-6 h-6 rounded-full bg-amber-200 flex items-center justify-center flex-shrink-0 text-xs">⚠️</span>
-                          KB손해보험 동일 상품 2개 중복 → 1개 정리 시 추가 절감 가능
+                          {maskText('KB손해보험 동일 상품 2개 중복 → 1개 정리 시 추가 절감 가능', isUnlocked)}
                         </li>
                       )}
                     </ul>
@@ -1248,14 +1268,14 @@ ${origin}/?code=${simCode}
                 <>
                   <div className="absolute top-0 right-0 p-8 opacity-10 rotate-45 transform"><Zap className="w-32 h-32 text-blue-500" /></div>
                   <div className="w-16 h-16 bg-blue-600 text-white rounded-3xl flex items-center justify-center mb-10 shadow-lg shadow-blue-200 group-hover:rotate-[360deg] transition-transform duration-1000 relative z-10"><Zap className="w-8 h-8 fill-current" /></div>
-                  <h4 className="text-2xl font-black mb-1 tracking-tighter text-blue-900 group-hover:text-blue-600 transition-colors uppercase">{result.recommendations.diet.title}</h4>
+                  <h4 className="text-2xl font-black mb-1 tracking-tighter text-blue-900 group-hover:text-blue-600 transition-colors uppercase">{maskText(result.recommendations.diet.title, isUnlocked)}</h4>
                   {result.recommendations.diet.companyName && (
                     <div className="flex flex-wrap items-center gap-y-1.5 mb-4">
-                      <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-lg text-[0.6rem] font-black mr-2 uppercase tracking-widest">{result.recommendations.diet.companyName}</span>
-                      <span className="text-xs font-bold text-slate-500 italic break-keep">{result.recommendations.diet.productName}</span>
+                      <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-lg text-[0.6rem] font-black mr-2 uppercase tracking-widest">{maskCompany(result.recommendations.diet.companyName, isUnlocked)}</span>
+                      <span className="text-xs font-bold text-slate-500 italic break-keep">{maskProductName(result.recommendations.diet.productName, isUnlocked)}</span>
                     </div>
                   )}
-                  <p className="text-sm text-gray-400 font-bold leading-relaxed mb-10 min-h-[4rem]">{result.recommendations.diet.description}</p>
+                  <p className="text-sm text-gray-400 font-bold leading-relaxed mb-10 min-h-[4rem]">{maskText(result.recommendations.diet.description, isUnlocked)}</p>
                   <div className="mb-10 border-b border-gray-50 pb-10">
                     <span className="text-[0.65rem] font-black text-gray-300 uppercase tracking-widest block mb-3">{isCar ? '연 예상 보험료' : '월 예상 보험료'}</span>
                     <div className="flex items-baseline gap-1">
@@ -1288,10 +1308,10 @@ ${origin}/?code=${simCode}
                     : 0.76;
                   const dietPrem = Math.round(p.monthly_premium * ratio);
                   const saving = p.monthly_premium - dietPrem;
-                  const company = REPLACE_COMPANIES[i % REPLACE_COMPANIES.length];
-                  const prodType = p.product_name.includes('종신') ? '무배당 종신 다이어트 보험'
+                  const company = maskCompany(REPLACE_COMPANIES[i % REPLACE_COMPANIES.length], isUnlocked);
+                  const prodType = maskProductName(p.product_name.includes('종신') ? '무배당 종신 다이어트 보험'
                     : p.product_name.includes('운전자') ? '무배당 운전자 다이어트 보험'
-                    : '무배당 간편건강 다이어트 보험';
+                    : '무배당 간편건강 다이어트 보험', isUnlocked);
                   return { orig: p, dietPrem, saving, company, prodType };
                 });
 
@@ -1307,8 +1327,8 @@ ${origin}/?code=${simCode}
                         {/* 기존 보험 */}
                         <div className="flex-1 bg-red-50 border border-red-100 rounded-2xl px-4 py-3">
                           <span className="text-[8px] font-black text-red-400 block uppercase mb-0.5">❌ 기존 보험</span>
-                          <span className="text-[9px] font-black text-red-500 block">{r.orig.insurance_company}</span>
-                          <span className="text-xs font-bold text-slate-700 leading-snug line-clamp-2">{r.orig.product_name.split('(')[0].trim()}</span>
+                          <span className="text-[9px] font-black text-red-500 block">{maskCompany(r.orig.insurance_company, isUnlocked)}</span>
+                          <span className="text-xs font-bold text-slate-700 leading-snug line-clamp-2">{maskProductName(r.orig.product_name, isUnlocked).split('(')[0].trim()}</span>
                           <span className="text-sm font-black text-red-600 mt-1 block">{r.orig.monthly_premium.toLocaleString()}원</span>
                         </div>
 
@@ -1391,10 +1411,10 @@ ${origin}/?code=${simCode}
                const rows = policies.map((p: any, i: number) => {
                  const isDriver = p.product_name.includes('운전자');
                  const isWhole = p.product_name.includes('종신');
-                 const company = UPCO[i % UPCO.length];
-                 const prodType = isWhole ? '무배당 VIP 종신 업그레이드 보험'
+                 const company = maskCompany(UPCO[i % UPCO.length], isUnlocked);
+                 const prodType = maskProductName(isWhole ? '무배당 VIP 종신 업그레이드 보험'
                    : isDriver ? '무배당 VIP 운전자 업그레이드 보험'
-                   : '무배당 VIP 마스터 업그레이드 건강보험';
+                   : '무배당 VIP 마스터 업그레이드 건강보험', isUnlocked);
                  const cancerBonus = isWhole || isDriver ? 0 : [2000,1800,1600,1400,1200,1000][i % 6] * 10000;
                  const brainBonus  = isWhole || isDriver ? 0 : [1000,900,800,700,600,500][i % 6] * 10000;
                  const heartBonus  = isWhole || isDriver ? 0 : [1000,900,800,700,600,500][i % 6] * 10000;
@@ -1408,7 +1428,7 @@ ${origin}/?code=${simCode}
                        <Zap className="w-8 h-8 fill-current" />
                      </div>
                      <div>
-                       <h4 className="text-xl font-black tracking-tighter text-orange-400 uppercase">7개 보험 동시 업그레이드</h4>
+                       <h4 className="text-xl font-black tracking-tighter text-orange-400 uppercase">'7개 보험 동시 업그레이드'</h4>
                        <p className="text-sm text-slate-400 font-bold">보험료는 그대로 · 보장만 더 든든하게</p>
                      </div>
                    </div>
@@ -1453,8 +1473,8 @@ ${origin}/?code=${simCode}
                            {/* 기존 보험 */}
                            <div className="flex-1 bg-white/5 border border-white/10 rounded-2xl px-4 py-3">
                              <span className="text-[8px] font-black text-red-400 block uppercase mb-0.5">❌ 기존 보험</span>
-                             <span className="text-[9px] font-black text-slate-400 block">{r.orig.insurance_company}</span>
-                             <span className="text-xs font-bold text-slate-300 leading-snug line-clamp-2">{r.orig.product_name.split('(')[0].trim()}</span>
+                             <span className="text-[9px] font-black text-slate-400 block">{maskCompany(r.orig.insurance_company, isUnlocked)}</span>
+                             <span className="text-xs font-bold text-slate-300 leading-snug line-clamp-2">{maskProductName(r.orig.product_name, isUnlocked).split('(')[0].trim()}</span>
                              <span className="text-sm font-black text-slate-400 mt-1 block">{r.orig.monthly_premium.toLocaleString()}원</span>
                            </div>
 
@@ -1519,14 +1539,14 @@ ${origin}/?code=${simCode}
              })() : (
                <>
                  <div className="w-16 h-16 bg-orange-500 text-white rounded-3xl flex items-center justify-center mb-10 shadow-[0_15px_30px_-5px_rgba(255,107,0,0.5)] animate-pulse"><Zap className="w-8 h-8 fill-current" /></div>
-                 <h4 className="text-2xl font-black mb-1 tracking-tighter text-orange-400 uppercase">{result.recommendations.upgrade.title}</h4>
+                 <h4 className="text-2xl font-black mb-1 tracking-tighter text-orange-400 uppercase">{maskText(result.recommendations.upgrade.title, isUnlocked)}</h4>
                  {result.recommendations.upgrade.companyName && (
                    <div className="flex flex-wrap items-center gap-y-1.5 mb-4 animate-in fade-in slide-in-from-left-2 transition-all">
-                     <span className="inline-block px-3 py-1 bg-orange-500 text-white rounded-lg text-[0.6rem] font-black mr-2 uppercase tracking-widest">{result.recommendations.upgrade.companyName}</span>
-                     <span className="text-xs font-bold text-slate-400 italic break-keep">{result.recommendations.upgrade.productName}</span>
+                     <span className="inline-block px-3 py-1 bg-orange-500 text-white rounded-lg text-[0.6rem] font-black mr-2 uppercase tracking-widest">{maskCompany(result.recommendations.upgrade.companyName, isUnlocked)}</span>
+                     <span className="text-xs font-bold text-slate-400 italic break-keep">{maskProductName(result.recommendations.upgrade.productName, isUnlocked)}</span>
                    </div>
                  )}
-                 <p className="text-sm text-slate-400 font-bold leading-relaxed mb-10 min-h-[4rem]">{result.recommendations.upgrade.description}</p>
+                 <p className="text-sm text-slate-400 font-bold leading-relaxed mb-10 min-h-[4rem]">{maskText(result.recommendations.upgrade.description, isUnlocked)}</p>
                  <div className="mb-10 border-b border-white/5 pb-10">
                    <span className="text-[0.65rem] font-black text-slate-600 uppercase tracking-widest block mb-3">{isCar ? '연 예상 보험료' : '월 예상 보험료'}</span>
                    <div className="flex items-baseline gap-1">
@@ -1577,15 +1597,15 @@ ${origin}/?code=${simCode}
              <div className="w-16 h-16 bg-violet-600 text-white rounded-3xl flex items-center justify-center mb-10 shadow-lg shadow-purple-200 group-hover:rotate-[-360deg] transition-transform duration-1000 relative z-10">
                <Zap className="w-8 h-8 fill-current" />
              </div>
-              <h4 className="text-2xl font-black mb-1 tracking-tighter text-purple-900 relative z-10 uppercase">{result.recommendations.hybrid.title}</h4>
+              <h4 className="text-2xl font-black mb-1 tracking-tighter text-purple-900 relative z-10 uppercase">{maskText(result.recommendations.hybrid.title, isUnlocked)}</h4>
               {result.recommendations.hybrid.companyName && (
                 <div className="flex flex-wrap items-center gap-y-1.5 mb-4 animate-in fade-in slide-in-from-left-2 transition-all relative z-10">
-                  <span className="inline-block px-3 py-1 bg-purple-200 text-purple-800 rounded-lg text-[0.6rem] font-black mr-2 uppercase tracking-widest">{result.recommendations.hybrid.companyName}</span>
-                  <span className="text-xs font-bold text-purple-400 italic break-keep">{result.recommendations.hybrid.productName}</span>
+                  <span className="inline-block px-3 py-1 bg-purple-200 text-purple-800 rounded-lg text-[0.6rem] font-black mr-2 uppercase tracking-widest">{maskCompany(result.recommendations.hybrid.companyName, isUnlocked)}</span>
+                  <span className="text-xs font-bold text-purple-400 italic break-keep">{maskProductName(result.recommendations.hybrid.productName, isUnlocked)}</span>
                 </div>
               )}
               <p className="text-sm text-gray-400 font-bold leading-relaxed mb-10 min-h-[4rem] relative z-10">
-                {result.recommendations.hybrid.description}
+                {maskText(result.recommendations.hybrid.description, isUnlocked)}
               </p>
 
              <div className="mb-10 border-b border-gray-50 pb-10">
@@ -1711,6 +1731,31 @@ ${origin}/?code=${simCode}
           </div>
         )}
 
+        {!isUnlocked && (
+          <div className="bg-orange-500/10 backdrop-blur-md border border-orange-500/20 rounded-[2rem] p-6 text-center shadow-lg relative overflow-hidden group mb-6 max-w-7xl mx-auto">
+            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 via-orange-600/5 to-orange-500/5 opacity-50 group-hover:scale-105 transition-transform duration-1000"></div>
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-3 text-left">
+                <div className="w-10 h-10 rounded-2xl bg-orange-500/20 flex items-center justify-center flex-shrink-0">
+                  <AlertCircle className="w-5 h-5 text-orange-500" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-black text-slate-800 tracking-tight">🔒 심의 규정에 따라 실제 회사명/상품명이 마스킹 처리되어 있습니다.</h4>
+                  <p className="text-xs text-slate-500 font-bold mt-0.5">본인 인증 및 상담 신청(0.1초 무료) 완료 즉시 실명 상품 정보 잠금이 해제됩니다.</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsConsultOpen(true);
+                }}
+                className="px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-black text-xs rounded-xl shadow-md transition-all active:scale-95 whitespace-nowrap cursor-pointer font-extrabold"
+              >
+                🔒 0.1초 만에 무료로 실제 이름 잠금 해제하기
+              </button>
+            </div>
+          </div>
+        )}
 
         <div className="bg-white rounded-[3rem] border border-gray-100 shadow-xl overflow-hidden">
           <div className="grid grid-cols-12 bg-gray-50 p-8 text-[10px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-100">
@@ -1727,11 +1772,11 @@ ${origin}/?code=${simCode}
                    <span className={`text-sm font-black ${idx < 3 ? 'text-orange-500' : 'text-gray-300'}`}>0{idx + 1}</span>
                 </div>
                 <div className="col-span-3">
-                   <span className="text-base font-black text-gray-900">{opt.companyName}</span>
+                   <span className="text-base font-black text-gray-900">{maskCompany(opt.companyName, isUnlocked)}</span>
                 </div>
                 <div className="col-span-5">
                    <div className="flex flex-col gap-1">
-                      <p className="text-sm text-gray-500 font-bold group-hover:text-gray-900 transition-colors">{opt.productName}</p>
+                      <p className="text-sm text-gray-500 font-bold group-hover:text-gray-900 transition-colors">{maskProductName(opt.productName, isUnlocked)}</p>
                       <div className="flex flex-wrap gap-1.5 mt-1">
                         {isVariable && (
                           <>
@@ -1820,160 +1865,165 @@ ${origin}/?code=${simCode}
             )}
           </div>
 
-          {/* 과거 병력 가입 사전 심사 신청 (비교표 하단 통합 섹션) */}
-          <div className="relative mt-8 overflow-hidden rounded-[2rem] bg-gradient-to-br from-slate-900 via-slate-900/95 to-slate-950 p-6 sm:p-8 shadow-lg border-2 border-orange-500/40 text-white flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="absolute -inset-x-40 -inset-y-40 bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.1)_0,transparent_60%)] blur-3xl pointer-events-none" />
-            
-            <div className="relative z-10 space-y-2.5 text-left">
+          {/* CTA 버튼 / 신청 완료 상태 (웅장한 프리미엄 배너 스타일 - 비교표 내부 하단) */}
+          <div className="p-6 sm:p-8 border-t border-gray-100 bg-gray-50/30">
+            {applied ? (
+              <div className="p-8 bg-emerald-500 text-white rounded-[2.5rem] text-center shadow-lg shadow-emerald-500/20 animate-in fade-in duration-300">
+                <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white text-emerald-500 text-xl font-black mb-3">✓</span>
+                <h4 className="text-lg font-black">최저가 설계안 신청이 성공적으로 접수되었습니다!</h4>
+                <p className="text-xs text-emerald-100 font-bold mt-1">배정된 전담 설계사가 카카오톡으로 상세 맞춤 설계서를 0.1초 만에 전송해 드리겠습니다.</p>
+              </div>
+            ) : (
+              <div className="bg-gradient-to-br from-indigo-950 via-slate-900 to-purple-950 border-2 border-orange-500/40 rounded-[2.5rem] p-8 md:p-10 shadow-[0_25px_60px_-15px_rgba(124,58,237,0.3)] flex flex-col gap-6 text-left relative overflow-hidden text-white">
+                <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none">
+                  <ShieldCheck className="w-48 h-48 text-orange-500" />
+                </div>
+                
+                {/* 법적 고지/안내 상단 배치 (웅장하고 눈에 띄는 스타일) */}
+                <div className="relative z-10 p-5 bg-orange-500/10 border border-orange-500/25 rounded-2xl text-xs font-semibold text-orange-200 leading-relaxed break-keep">
+                  🛡️ <span className="font-extrabold text-orange-400">안내:</span> 금융소비자보호법 및 보험 광고 심의 기준에 따라 미인증 상태에서는 모든 보험사명 및 상품명이 비식별(숨김) 처리됩니다. 카카오톡 상담/리포트 신청진행 시 본인 확인과 동시에 0.1초 만에 모든 실명 정보가 안전하게 잠금해제되어 실제 제안서를 확인하실 수 있습니다.
+                </div>
+
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
+                  <div className="space-y-2">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-500/10 text-orange-400 rounded-lg text-[9px] font-black uppercase tracking-widest border border-orange-500/20">
+                      🎁 최저가 매칭 보증
+                    </div>
+                    <h4 className="text-lg md:text-xl font-black text-white tracking-tight">
+                      내가 선택한 맞춤 보장, 최저가 설계서 카톡 받기
+                    </h4>
+                    <p className="text-xs text-slate-400 font-bold leading-relaxed max-w-lg">
+                      입력하신 설계 조건 그대로 가성비가 가장 우수한 보험사의 실제 가입 제안서를 카카오톡 전송해 드립니다. (별도 추가 가입 권유 없음)
+                    </p>
+                  </div>
+                  
+                  {/* 3대 안심 약속 미니 배너 */}
+                  <div className="w-full md:max-w-sm bg-slate-800/95 border border-slate-700/70 rounded-2xl p-5 text-left space-y-3 relative z-10">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-base">🛡️</span>
+                      <span className="text-xs font-black text-white uppercase tracking-wider">고객 안심 3대 약속</span>
+                      <span className="px-2 py-0.5 bg-orange-500/25 text-orange-400 rounded-md text-[8px] font-black uppercase tracking-widest border border-orange-500/30">Verified</span>
+                    </div>
+                    <div className="space-y-2 text-[11px] font-bold text-slate-200">
+                      <p className="flex items-center gap-1.5"><span className="text-orange-500 text-xs">✓</span> 동의 없는 무단 전화 일절 금지</p>
+                      <p className="flex items-center gap-1.5"><span className="text-orange-500 text-xs">✓</span> 자가진단시 연락처 완벽 마스킹</p>
+                      <p className="flex items-center gap-1.5"><span className="text-orange-500 text-xs">✓</span> 코드를 통한 1:1 카톡 익명 상담 가능</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 가로 분할 2 버튼 */}
+                <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10 pt-4 border-t border-white/5">
+                  <button
+                    onClick={() => {
+                      setConsultType('anonymous');
+                      if (result.analysis.name) setConsultName(result.analysis.name);
+                      if (result.analysis.mobile) setConsultPhone(result.analysis.mobile);
+                      setConsultOtpSent(false);
+                      setConsultOtpCode('');
+                      setConsultVerified(false);
+                      setConsultOtpLoading(false);
+                      setConsultOtpTimer(180);
+                      setConsultOtpError(null);
+                      setIsConsultOpen(true);
+                    }}
+                    className="w-full px-6 py-4.5 bg-slate-800 hover:bg-slate-700 text-white font-black text-xs rounded-xl border border-white/10 shadow-md transform hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer text-center"
+                  >
+                    💬 익명 카톡 상담 신청 (무료)
+                  </button>
+                  <button
+                    onClick={() => {
+                      setConsultType('regular');
+                      if (result.analysis.name) setConsultName(result.analysis.name);
+                      if (result.analysis.mobile) setConsultPhone(result.analysis.mobile);
+                      setConsultOtpSent(false);
+                      setConsultOtpCode('');
+                      setConsultVerified(false);
+                      setConsultOtpLoading(false);
+                      setConsultOtpTimer(180);
+                      setConsultOtpError(null);
+                      setIsConsultOpen(true);
+                    }}
+                    className="w-full px-6 py-4.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xs rounded-xl shadow-[0_12px_24px_-4px_rgba(255,107,0,0.4)] transform hover:scale-[1.03] active:scale-95 transition-all duration-300 cursor-pointer text-center"
+                  >
+                    🚀 정식 카톡 상담 신청 (무료)
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="relative mt-8 overflow-hidden rounded-[2rem] bg-gradient-to-br from-orange-50/60 via-amber-50/40 to-white p-6 sm:p-8 shadow-lg border-2 border-orange-500/40 group">
+          {/* Soft Warm Radial Glow */}
+          <div className="absolute -inset-x-40 -inset-y-40 bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.08)_0,transparent_60%)] blur-3xl pointer-events-none" />
+          
+          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div className="space-y-3 max-w-2xl text-left">
               <div className="flex items-center gap-2.5">
                 <span className="flex h-2.5 w-2.5 rounded-full bg-orange-500 animate-pulse" />
-                <span className="text-[10.5px] font-black text-orange-400 uppercase tracking-[0.2em]">🔍 가입 가능 여부 사전 필터링</span>
+                <span className="text-[10px] font-black text-orange-600 uppercase tracking-[0.2em]">Real-Time Optimized Analysis</span>
               </div>
               
               <div className="space-y-2">
-                <h4 className="text-sm sm:text-base font-extrabold text-white leading-normal">
-                  잠깐! 이 가격으로 실제 가입이 가능할까요?
-                </h4>
-                <p className="text-xs md:text-sm text-slate-400 font-bold leading-relaxed max-w-xl break-keep">
-                  과거 병력(수술/입원/약 복용 등)에 따른 가입 승인 여부를 무료로 사전 심사 받아보세요.
+                <p className="text-slate-800 text-xs sm:text-sm font-bold leading-relaxed">
+                  * 본 보험료 비교 데이터는 생명보험협회 및 손해보험협회 공시자료(수집 기준: <span className="text-orange-600 font-extrabold underline decoration-orange-500/30 decoration-2 underline-offset-2">{getDisclosureDate()}</span>)를 토대로 <span className="bg-orange-500 text-white px-1.5 py-0.5 rounded-md font-black mx-0.5">0.1초 만에</span> 실시간 최적화 분석되었습니다.
                 </p>
-                <p className="text-[11px] md:text-xs text-emerald-400 font-black flex items-center gap-1 mt-1 break-keep">
-                  <span>🛡️</span> 본 심사는 신용도나 개인정보 오남용 우려가 전혀 없는 안심 사전 필터링 서비스입니다.
+                <p className="text-slate-500 text-[11px] sm:text-xs font-semibold leading-relaxed border-t border-orange-100 pt-2">
+                  💡 <span className="text-orange-600 font-bold">다만,</span> 가입자의 개별 조건(직업, 건강 상태 등)에 따라 실제 보험료 및 가입 가능 여부는 변동될 수 있으므로, 상세한 내용은 전문 상담사와의 맞춤 설계를 통해 확인하시기 바랍니다.
                 </p>
               </div>
             </div>
             
-            <button
-              onClick={() => {
-                if (result.analysis.name) setUwName(result.analysis.name);
-                if (result.analysis.mobile) setUwPhone(result.analysis.mobile);
-                setUwOtpSent(false);
-                setUwOtpCode('');
-                setUwVerified(false);
-                setUwOtpLoading(false);
-                setUwOtpTimer(180);
-                setUwOtpError(null);
-                setIsUnderwritingOpen(true);
-              }}
-              className="relative z-10 px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xs md:text-sm rounded-xl shadow-[0_8px_16px_rgba(255,107,0,0.3)] transform hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer whitespace-nowrap self-stretch md:self-auto text-center font-extrabold"
-            >
-              사전 심사 신청하기
-            </button>
-          </div>
-
-          <div className="relative mt-8 overflow-hidden rounded-[2rem] bg-gradient-to-br from-orange-50/60 via-amber-50/40 to-white p-6 sm:p-8 shadow-lg border-2 border-orange-500/40 group">
-            {/* Soft Warm Radial Glow */}
-            <div className="absolute -inset-x-40 -inset-y-40 bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.08)_0,transparent_60%)] blur-3xl pointer-events-none" />
-            
-            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-              <div className="space-y-3 max-w-2xl text-left">
-                <div className="flex items-center gap-2.5">
-                  <span className="flex h-2.5 w-2.5 rounded-full bg-orange-500 animate-pulse" />
-                  <span className="text-[10px] font-black text-orange-600 uppercase tracking-[0.2em]">Real-Time Optimized Analysis</span>
-                </div>
-                
-                <div className="space-y-2">
-                  <p className="text-slate-800 text-xs sm:text-sm font-bold leading-relaxed">
-                    * 본 보험료 비교 데이터는 생명보험협회 및 손해보험협회 공시자료(수집 기준: <span className="text-orange-600 font-extrabold underline decoration-orange-500/30 decoration-2 underline-offset-2">{getDisclosureDate()}</span>)를 토대로 <span className="bg-orange-500 text-white px-1.5 py-0.5 rounded-md font-black mx-0.5">0.1초 만에</span> 실시간 최적화 분석되었습니다.
-                  </p>
-                  <p className="text-slate-500 text-[11px] sm:text-xs font-semibold leading-relaxed border-t border-orange-100 pt-2">
-                    💡 <span className="text-orange-600 font-bold">다만,</span> 가입자의 개별 조건(직업, 건강 상태 등)에 따라 실제 보험료 및 가입 가능 여부는 변동될 수 있으므로, 상세한 내용은 전문 상담사와의 맞춤 설계를 통해 확인하시기 바랍니다.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-4 shrink-0 bg-gradient-to-br from-orange-500 to-amber-600 px-6 py-4 rounded-2xl shadow-md border border-orange-400/20">
-                <Clock className="w-6 h-6 text-white animate-bounce" />
-                <div className="text-left">
-                  <p className="text-[9px] font-bold text-orange-100 uppercase tracking-widest leading-none">최적화 처리속도</p>
-                  <p className="text-sm sm:text-base font-black text-white mt-1">0.1초 분석 완료</p>
-                </div>
+            <div className="flex items-center gap-4 shrink-0 bg-gradient-to-br from-orange-500 to-amber-600 px-6 py-4 rounded-2xl shadow-md border border-orange-400/20">
+              <Clock className="w-6 h-6 text-white animate-bounce" />
+              <div className="text-left">
+                <p className="text-[9px] font-bold text-orange-100 uppercase tracking-widest leading-none">최적화 처리속도</p>
+                <p className="text-sm sm:text-base font-black text-white mt-1">0.1초 분석 완료</p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* CTA 버튼 / 신청 완료 상태 (웅장한 프리미엄 배너 스타일) */}
-        <div className="mt-12 w-full max-w-4xl mx-auto">
-          {applied ? (
-            <div className="p-8 bg-emerald-500 text-white rounded-[2.5rem] text-center shadow-lg shadow-emerald-500/20 animate-in fade-in duration-300">
-              <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white text-emerald-500 text-xl font-black mb-3">✓</span>
-              <h4 className="text-lg font-black">최저가 설계안 신청이 성공적으로 접수되었습니다!</h4>
-              <p className="text-xs text-emerald-100 font-bold mt-1">배정된 전담 설계사가 카카오톡으로 상세 맞춤 설계서를 0.1초 만에 전송해 드리겠습니다.</p>
+        {/* 과거 병력 가입 사전 심사 신청 (비교표 하단 통합 섹션) */}
+        <div className="relative mt-8 max-w-4xl mx-auto overflow-hidden rounded-[2rem] bg-gradient-to-br from-slate-900 via-slate-900/95 to-slate-950 p-6 sm:p-8 shadow-lg border-2 border-orange-500/40 text-white flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="absolute -inset-x-40 -inset-y-40 bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.1)_0,transparent_60%)] blur-3xl pointer-events-none" />
+          
+          <div className="relative z-10 space-y-2.5 text-left">
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-2.5 w-2.5 rounded-full bg-orange-500 animate-pulse" />
+              <span className="text-[10.5px] font-black text-orange-400 uppercase tracking-[0.2em]">🔍 가입 가능 여부 사전 필터링</span>
             </div>
-          ) : (
-            <div className="bg-slate-900 border-2 border-orange-500/40 rounded-[2.5rem] p-8 md:p-10 shadow-[0_25px_60px_-15px_rgba(255,107,0,0.25)] flex flex-col gap-6 text-left relative overflow-hidden text-white">
-              <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none">
-                <ShieldCheck className="w-48 h-48 text-orange-500" />
-              </div>
-              
-              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
-                <div className="space-y-2">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-500/10 text-orange-400 rounded-lg text-[9px] font-black uppercase tracking-widest border border-orange-500/20">
-                    🎁 최저가 매칭 보증
-                  </div>
-                  <h4 className="text-lg md:text-xl font-black text-white tracking-tight">
-                    내가 선택한 맞춤 보장, 최저가 설계서 카톡 받기
-                  </h4>
-                  <p className="text-xs text-slate-400 font-bold leading-relaxed max-w-lg">
-                    입력하신 설계 조건 그대로 가성비가 가장 우수한 보험사의 실제 가입 제안서를 카카오톡 전송해 드립니다. (별도 추가 가입 권유 없음)
-                  </p>
-                </div>
-                
-                {/* 3대 안심 약속 미니 배너 */}
-                <div className="w-full md:max-w-xs bg-slate-800/80 border border-slate-700/50 rounded-2xl p-4 text-left space-y-2 relative z-10">
-                  <div className="flex items-center gap-1.5 mb-1">
-                    <span className="text-sm">🛡️</span>
-                    <span className="text-[10px] font-black text-slate-300">고객 안심 3대 약속</span>
-                    <span className="px-1.5 py-0.5 bg-orange-500/20 text-orange-400 rounded-md text-[7px] font-black uppercase tracking-wider border border-orange-500/20">Verified</span>
-                  </div>
-                  <div className="space-y-1.5 text-[9px] font-bold text-slate-400">
-                    <p className="flex items-center gap-1"><span className="text-orange-500">✓</span> 동의 없는 무단 전화 일절 금지</p>
-                    <p className="flex items-center gap-1"><span className="text-orange-500">✓</span> 자가진단시 연락처 완벽 마스킹</p>
-                    <p className="flex items-center gap-1"><span className="text-orange-500">✓</span> 코드를 통한 1:1 카톡 익명 상담 가능</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* 가로 분할 2 버튼 */}
-              <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10 pt-4 border-t border-white/5">
-                <button
-                  onClick={() => {
-                    setConsultType('anonymous');
-                    if (result.analysis.name) setConsultName(result.analysis.name);
-                    if (result.analysis.mobile) setConsultPhone(result.analysis.mobile);
-                    setConsultOtpSent(false);
-                    setConsultOtpCode('');
-                    setConsultVerified(false);
-                    setConsultOtpLoading(false);
-                    setConsultOtpTimer(180);
-                    setConsultOtpError(null);
-                    setIsConsultOpen(true);
-                  }}
-                  className="w-full px-6 py-4.5 bg-slate-800 hover:bg-slate-700 text-white font-black text-xs rounded-xl border border-white/10 shadow-md transform hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer text-center"
-                >
-                  💬 익명 카톡 상담 신청 (무료)
-                </button>
-                <button
-                  onClick={() => {
-                    setConsultType('regular');
-                    if (result.analysis.name) setConsultName(result.analysis.name);
-                    if (result.analysis.mobile) setConsultPhone(result.analysis.mobile);
-                    setConsultOtpSent(false);
-                    setConsultOtpCode('');
-                    setConsultVerified(false);
-                    setConsultOtpLoading(false);
-                    setConsultOtpTimer(180);
-                    setConsultOtpError(null);
-                    setIsConsultOpen(true);
-                  }}
-                  className="w-full px-6 py-4.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xs rounded-xl shadow-[0_12px_24px_-4px_rgba(255,107,0,0.4)] transform hover:scale-[1.03] active:scale-95 transition-all duration-300 cursor-pointer text-center"
-                >
-                  🚀 정식 카톡 상담 신청 (무료)
-                </button>
-              </div>
+            
+            <div className="space-y-2">
+              <h4 className="text-sm sm:text-base font-extrabold text-white leading-normal">
+                잠깐! 이 가격으로 실제 가입이 가능할까요?
+              </h4>
+              <p className="text-xs md:text-sm text-slate-400 font-bold leading-relaxed max-w-xl break-keep">
+                과거 병력(수술/입원/약 복용 등)에 따른 가입 승인 여부를 무료로 사전 심사 받아보세요.
+              </p>
+              <p className="text-[11px] md:text-xs text-emerald-400 font-black flex items-center gap-1 mt-1 break-keep">
+                <span>🛡️</span> 본 심사는 신용도나 개인정보 오남용 우려가 전혀 없는 안심 사전 필터링 서비스입니다.
+              </p>
             </div>
-          )}
+          </div>
+          
+          <button
+            onClick={() => {
+              if (result.analysis.name) setUwName(result.analysis.name);
+              if (result.analysis.mobile) setUwPhone(result.analysis.mobile);
+              setUwOtpSent(false);
+              setUwOtpCode('');
+              setUwVerified(false);
+              setUwOtpLoading(false);
+              setUwOtpTimer(180);
+              setUwOtpError(null);
+              setIsUnderwritingOpen(true);
+            }}
+            className="relative z-10 px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xs md:text-sm rounded-xl shadow-[0_8px_16px_rgba(255,107,0,0.3)] transform hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer whitespace-nowrap self-stretch md:self-auto text-center font-extrabold"
+          >
+            사전 심사 신청하기
+          </button>
         </div>
       </section>
       )}
@@ -1993,7 +2043,7 @@ ${origin}/?code=${simCode}
                 <span className="px-3 py-1 bg-white/10 text-orange-400 rounded-lg text-[9px] font-black uppercase tracking-widest">📢 필독 안내</span>
               </div>
               <h3 className="text-xl md:text-2xl font-black tracking-tight text-white mt-2">
-                AI 추정치만으로는 나의 소중한 자산을 완벽히 지킬 수 없습니다.
+                AI 추정치만으로는 나의 소중한 자산을 든든하게 지킬 수 없습니다.
               </h3>
             </div>
           </div>
@@ -2506,6 +2556,45 @@ ${origin}/?code=${simCode}
           </div>
         </div>
       )}
+
+      {/* 📜 생보/손보 광고 심의 규정 기준 통합 안내 문구 */}
+      <footer className="mt-24 pt-12 border-t border-slate-100/80 text-left">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 space-y-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-[10px] md:text-[11px] leading-relaxed text-slate-400 font-medium">
+            <div className="space-y-3">
+              <p className="font-bold text-slate-500 text-xs">⚠️ 중도 해지 시 환급금에 관한 안내</p>
+              <p className="break-keep">
+                보험계약을 중도에 해지할 경우 해약환급금은 이미 납입한 보험료보다 적거나 없을 수 있습니다. 이는 납입한 보험료 중 사업비 및 모집수수료 등 위험보장에 사용되는 비용이 차감된 후 적립되기 때문입니다.
+              </p>
+              <p className="break-keep">
+                기존 보험 계약을 해지하고 새로운 보험 계약을 체결하는 경우, 피보험자의 연령 증가나 건강 상태 변화로 인해 가입이 거절되거나 보험료가 인상될 수 있으며, 보장 내용이 달라질 수 있으므로 기존 계약의 유지 및 전환 조건을 면밀히 확인하시기 바랍니다.
+              </p>
+            </div>
+            <div className="space-y-3">
+              <p className="font-bold text-slate-500 text-xs">📊 비교 공시 및 예상 요율 기준 안내</p>
+              <p className="break-keep">
+                본 분석 리포트의 비교 기준일은 <span className="font-black text-slate-500">{getDisclosureDate()}</span> 기준이며, 각 손해/생명보험협회의 비교 공시 자료 및 상품 공시실 정보를 토대로 제작되었습니다. 개별 보험회사의 연령, 성별, 직업, 가입 한도 및 건강 상태 등에 따라 실제 가입 시 적용되는 보험 요율 및 심사 결과는 상이하거나 변동될 수 있습니다.
+              </p>
+              <p className="break-keep">
+                본 분석 자료는 고객의 이해를 돕기 위한 시뮬레이션 결과로, 청약 시 반드시 해당 상품의 약관 및 상품설명서를 참조하시기 바랍니다. 
+              </p>
+            </div>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pt-6 border-t border-slate-100 text-[10px] text-slate-450 font-bold pb-12">
+            <div className="space-y-1">
+              <p>보험대리점명: 주식회사 아이지에이수수 (등록번호: 제2026068888호)</p>
+              <p className="text-slate-400">본 광고는 상품 광고가 아닌 회사 브랜딩 목적의 업무광고이며, 손해/생명보험협회 심의 규정을 준수합니다.</p>
+              <p className="text-slate-500 border border-slate-100 p-2.5 rounded bg-slate-50 mt-2 font-bold leading-relaxed">
+                ※ 상기 분석 및 추천 설계 내용은 모집종사자(또는 AI 분석 엔진)의 개인적인 의견이며, 계약체결에 따른 이익 또는 손실은 보험계약자 및 피보험자에게 귀속됩니다.
+              </p>
+            </div>
+            <div className="px-3 py-1.5 bg-slate-50 rounded text-slate-400 border border-slate-100 whitespace-nowrap">
+              생명보험협회 심의필 제 2026-00000호 (유효기간: 2026.06.18 ~ 2027.06.17)
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };

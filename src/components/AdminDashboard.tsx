@@ -3738,7 +3738,7 @@ export default function AdminDashboard() {
               나만의 독점 핀테크 플랫폼을 <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500 font-black">즉시 구축</span>하세요
             </h1>
             <p className="text-sm text-slate-400 leading-relaxed font-bold break-keep">
-              대리점과 설계사의 이름으로 즉시 생성되는 국내 유일의 초고속 보험 비교 엔진. 상담 현장에서 태블릿으로 0.1초 만에 보장을 진단해 신뢰를 얻고, 내 브랜드 플랫폼으로 직접 마케팅하여 고품질 DB를 만드세요. 신규 가입 시 첫 30일간 기능 제약 없이 100% 무료 체험
+              대리점과 설계사의 이름으로 즉시 생성되는 최첨단 초고속 보험 비교 엔진. 상담 현장에서 태블릿으로 0.1초 만에 보장을 진단해 신뢰를 얻고, 내 브랜드 플랫폼으로 직접 마케팅하여 자발적인 상담 신청 리드를 수집하세요. 신규 가입 시 첫 30일간 기능 제약 없이 100% 무료 체험
             </p>
           </div>
 
@@ -3749,7 +3749,7 @@ export default function AdminDashboard() {
                 실시간 비교 분석
               </span>
               <h2 className="text-lg md:text-xl font-black text-white">
-                💸 아직도 비싼 돈을 주고 전화조차 안 받는 저품질 DB를 사고 계십니까?
+                💸 아직도 제3자 단순 동의 방식으로 수집된 단순 연락처 기반 DB에 의존하고 계십니까?
               </h2>
             </div>
 
@@ -3759,24 +3759,24 @@ export default function AdminDashboard() {
                 <thead>
                   <tr className="border-b border-slate-800 text-slate-500 font-bold uppercase tracking-wider text-[10px]">
                     <th className="py-3 px-4 w-1/4">구분</th>
-                    <th className="py-3 px-4 w-3/8 text-red-400 bg-red-500/5">❌ 시중에서 비싸게 구매하는 DB</th>
-                    <th className="py-3 px-4 w-3/8 text-emerald-400 bg-emerald-500/5">✨ 내 플랫폼으로 수집하는 자발적 DB</th>
+                    <th className="py-3 px-4 w-3/8 text-red-400 bg-red-500/5">❌ 일반 마케팅 단순 수집 DB</th>
+                    <th className="py-3 px-4 w-3/8 text-emerald-400 bg-emerald-500/5">✨ 내 플랫폼으로 접수되는 자발적 상담 신청</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/60 font-semibold text-slate-300">
                   <tr className="hover:bg-slate-800/10">
                     <td className="py-4 px-4 font-bold text-white">유입 경로</td>
-                    <td className="py-4 px-4 bg-red-500/5 text-slate-400">경품 응모, 단순 동의 등으로 영혼 없이 수집됨</td>
+                    <td className="py-4 px-4 bg-red-500/5 text-slate-400">경품 응모 및 제3자 마케팅 제공 단순 동의로 수집됨</td>
                     <td className="py-4 px-4 bg-emerald-500/5">고객이 본인의 이름과 번호를 넣고 비교 결과를 직접 확인</td>
                   </tr>
                   <tr className="hover:bg-slate-800/10">
                     <td className="py-4 px-4 font-bold text-white">신뢰 관계</td>
-                    <td className="py-4 px-4 bg-red-500/5 text-slate-400">누군지도 모르고 전화가 오기 때문에 거절률 95%</td>
+                    <td className="py-4 px-4 bg-red-500/5 text-slate-400">사전 인지가 부족한 상태에서 전화를 받으므로 상담 진행이 어려움</td>
                     <td className="py-4 px-4 bg-emerald-500/5">이미 내 이름과 프로필이 박힌 진단 화면을 본 상태에서 상담 신청</td>
                   </tr>
                   <tr className="hover:bg-slate-800/10">
                     <td className="py-4 px-4 font-bold text-white">DB 퀄리티</td>
-                    <td className="py-4 px-4 bg-red-500/5 text-slate-400">단순 이름, 연령, 연락처가 정보의 전부</td>
+                    <td className="py-4 px-4 bg-red-500/5 text-slate-400">기본적인 인적 사항 위주의 한정적인 정보</td>
                     <td className="py-4 px-4 bg-emerald-500/5 space-y-3">
                       <p className="font-extrabold text-white">이름/연락처는 기본, 고객의 상세 보장 분석 데이터 완벽 탑재!</p>
                       <div className="bg-slate-950/80 border border-slate-850 rounded-xl p-3.5 space-y-1.5 font-mono text-[10px] text-slate-400">
@@ -3785,14 +3785,14 @@ export default function AdminDashboard() {
                         <p>• 표적항암 치료비: <span className="text-emerald-400 font-bold">우수 (포함)</span></p>
                         <p>• 재발/전이암 보장: <span className="text-orange-400 font-bold">권장 (미포함)</span></p>
                         <p>• 납입/갱신 유형: <span className="text-emerald-400 font-bold">정상 (비갱신형)</span></p>
-                        <p className="text-[9px] text-slate-500 pt-1 border-t border-slate-900 mt-1">※ 0.1초 만에 고객의 보험 보장 구멍을 파악하고 시작하는 진짜 DB</p>
+                        <p className="text-[9px] text-slate-500 pt-1 border-t border-slate-900 mt-1">※ 고객의 보장 부족분을 사전에 객관적으로 확인하여 진정성 있는 상담 지원</p>
                       </div>
                     </td>
                   </tr>
                   <tr className="hover:bg-slate-800/10">
                     <td className="py-4 px-4 font-bold text-white">비용 한계</td>
-                    <td className="py-4 px-4 bg-red-500/5 text-slate-400">한 건당 수만 원의 고비용 지출, 누적 구매 부담</td>
-                    <td className="py-4 px-4 bg-emerald-500/5">내 플랫폼이므로 추가 비용 제로, 무제한 리드 수집 가능</td>
+                    <td className="py-4 px-4 bg-red-500/5 text-slate-400">건당 구매 비용 소모 및 지속적인 누적 지출 부담</td>
+                    <td className="py-4 px-4 bg-emerald-500/5">자사 단독 플랫폼 운영으로 추가 건당 구매 비용 없음</td>
                   </tr>
                 </tbody>
               </table>
@@ -3803,24 +3803,24 @@ export default function AdminDashboard() {
               {/* Card 1: 시중 DB */}
               <div className="bg-red-500/5 border border-red-500/10 rounded-2xl p-5 space-y-4">
                 <h3 className="font-extrabold text-sm text-red-400 flex items-center gap-1.5 pb-2 border-b border-red-500/15">
-                  <span>❌</span> 시중에서 비싸게 구매하는 DB
+                  <span>❌</span> 일반 마케팅 단순 수집 DB
                 </h3>
                 <div className="space-y-4">
                   <div>
                     <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider block mb-1">유입 경로</span>
-                    <p className="text-xs text-slate-300 leading-relaxed font-semibold">경품 응모, 단순 동의 등으로 영혼 없이 수집됨</p>
+                    <p className="text-xs text-slate-300 leading-relaxed font-semibold">경품 응모 및 제3자 마케팅 제공 단순 동의로 수집됨</p>
                   </div>
                   <div>
                     <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider block mb-1">신뢰 관계</span>
-                    <p className="text-xs text-slate-300 leading-relaxed font-semibold">누군지도 모르고 전화가 오기 때문에 거절률 95%</p>
+                    <p className="text-xs text-slate-300 leading-relaxed font-semibold">사전 인지가 부족한 상태에서 전화를 받으므로 상담 진행이 어려움</p>
                   </div>
                   <div>
                     <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider block mb-1">DB 퀄리티</span>
-                    <p className="text-xs text-slate-300 leading-relaxed font-semibold">단순 이름, 연령, 연락처가 정보의 전부</p>
+                    <p className="text-xs text-slate-300 leading-relaxed font-semibold">기본적인 인적 사항 위주의 한정적인 정보</p>
                   </div>
                   <div>
                     <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider block mb-1">비용 한계</span>
-                    <p className="text-xs text-slate-300 leading-relaxed font-semibold">한 건당 수만 원의 고비용 지출, 누적 구매 부담</p>
+                    <p className="text-xs text-slate-300 leading-relaxed font-semibold">건당 구매 비용 소모 및 지속적인 누적 지출 부담</p>
                   </div>
                 </div>
               </div>
@@ -3828,7 +3828,7 @@ export default function AdminDashboard() {
               {/* Card 2: 내 플랫폼 DB */}
               <div className="bg-emerald-500/5 border border-emerald-500/10 rounded-2xl p-5 space-y-4">
                 <h3 className="font-extrabold text-sm text-emerald-400 flex items-center gap-1.5 pb-2 border-b border-emerald-500/15">
-                  <span>✨</span> 내 플랫폼으로 수집하는 자발적 DB
+                  <span>✨</span> 내 플랫폼으로 접수되는 자발적 상담 신청
                 </h3>
                 <div className="space-y-4">
                   <div>
@@ -3849,20 +3849,20 @@ export default function AdminDashboard() {
                         <p>• 표적항암 치료비: <span className="text-emerald-400 font-bold">우수 (포함)</span></p>
                         <p>• 재발/전이암 보장: <span className="text-orange-400 font-bold">권장 (미포함)</span></p>
                         <p>• 납입/갱신 유형: <span className="text-emerald-400 font-bold">정상 (비갱신형)</span></p>
-                        <p className="text-[9px] text-slate-500 pt-1 border-t border-slate-900 mt-1">※ 0.1초 만에 고객의 보험 보장 구멍을 파악하고 시작하는 진짜 DB</p>
+                        <p className="text-[9px] text-slate-500 pt-1 border-t border-slate-900 mt-1">※ 고객의 보장 부족분을 사전에 객관적으로 확인하여 진정성 있는 상담 지원</p>
                       </div>
                     </div>
                   </div>
                   <div>
                     <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider block mb-1">비용 한계</span>
-                    <p className="text-xs text-slate-300 leading-relaxed font-semibold">내 플랫폼이므로 추가 비용 제로, 무제한 리드 수집 가능</p>
+                    <p className="text-xs text-slate-300 leading-relaxed font-semibold">자사 단독 플랫폼 운영으로 추가 건당 구매 비용 없음</p>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 p-4 rounded-2xl text-center text-xs font-black">
-              "고객이 직접 내 브랜드 비교 사이체서 0.1초 분석을 마치고 자발적으로 요청한 상담은 성약률이 3배 이상 높습니다."
+              "고객이 직접 내 브랜드 비교 사이트에서 분석을 마치고 자발적으로 신청한 상담은 신뢰도가 높아 더욱 성공적인 계약 체결로 이어집니다."
             </div>
           </div>
 
@@ -3894,10 +3894,10 @@ export default function AdminDashboard() {
             {/* 리크루팅 치트키 안내 배너 */}
             <div className="max-w-4xl mx-auto bg-gradient-to-r from-orange-500/10 via-amber-500/5 to-orange-500/10 border border-orange-500/25 rounded-2xl p-4 md:p-5 text-center backdrop-blur-sm space-y-1">
               <div className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-orange-500/20 text-orange-300 rounded-md text-[9px] font-black uppercase tracking-wider">
-                💡 대리점 대표님을 위한 리크루팅 치트키
+                💡 대리점 대표님을 위한 리크루팅 경쟁력 강화
               </div>
               <p className="text-[11px] md:text-xs text-slate-200 font-bold leading-relaxed break-keep">
-                "신입 설계사 채용 시 <span className="text-orange-400 font-extrabold">'우리 대리점은 설계사 개인 홈페이지와 AI 자동 분석 툴을 지급해, 개인이 고객 DB를 무료로 평생 직접 수집하는 환경을 제공한다'</span>는 차별화된 이미지를 어필하여 신규 설계사 도입 성공률을 극대화하세요!"
+                "신입 설계사 도입 시 <span className="text-orange-400 font-extrabold">'우리 대리점은 개별 온라인 상담 페이지와 AI 분석 시스템을 기본 지급해, 상담 효율을 한층 끌어올리는 환경을 지원한다'</span>는 차별화된 파트너십을 어필하여 대리점 영업 경쟁력을 극대화하세요!"
               </p>
             </div>
             
@@ -4144,68 +4144,70 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          {/* 1-Second Demo Experience Zone */}
-          <div className="w-full bg-gradient-to-r from-violet-950/20 via-slate-900 to-violet-950/20 border border-orange-500/20 rounded-[2.5rem] p-8 md:p-10 shadow-2xl space-y-6 text-center backdrop-blur-xl relative overflow-hidden my-10 animate-in fade-in duration-500">
-            <div className="absolute top-0 right-0 w-48 h-48 bg-orange-500/5 rounded-full blur-3xl -z-10" />
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-violet-500/5 rounded-full blur-3xl -z-10" />
-            
-            <div className="space-y-2 max-w-2xl mx-auto">
-              <span className="px-3 py-1 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-full text-[10px] font-black uppercase tracking-wider inline-block shadow-md">
-                ⚡ 1초 간편 데모 체험
-              </span>
-              <h3 className="text-xl md:text-2xl font-black text-white leading-normal break-keep">
-                가입 전, 관리자 대시보드를 먼저 확인해 보세요!
-              </h3>
-              <p className="text-xs md:text-sm text-slate-400 font-bold leading-relaxed break-keep">
-                가입이나 신용카드 등록 없이 실제 가상 데이터가 주입된 대리점 관리자 뷰와 개인 설계사 대시보드 뷰를 즉시 체험해 보실 수 있습니다.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto pt-2">
+          {/* 1-Second Demo Experience Zone (심의 기간 임시 숨김) */}
+          {false && (
+            <div className="w-full bg-gradient-to-r from-violet-950/20 via-slate-900 to-violet-950/20 border border-orange-500/20 rounded-[2.5rem] p-8 md:p-10 shadow-2xl space-y-6 text-center backdrop-blur-xl relative overflow-hidden my-10 animate-in fade-in duration-500">
+              <div className="absolute top-0 right-0 w-48 h-48 bg-orange-500/5 rounded-full blur-3xl -z-10" />
+              <div className="absolute bottom-0 left-0 w-48 h-48 bg-violet-500/5 rounded-full blur-3xl -z-10" />
               
-              {/* Agency View Demo Button */}
-              <button 
-                type="button"
-                onClick={() => handleLogin(undefined, 'test', '1234')}
-                className="group p-6 bg-slate-950/40 hover:bg-slate-950/80 border border-slate-800 hover:border-orange-500/50 rounded-2xl text-left transition-all duration-300 shadow-lg cursor-pointer flex gap-4 items-start relative overflow-hidden"
-              >
-                <div className="absolute top-0 right-0 bg-orange-500/10 text-orange-400 px-2.5 py-1 rounded-bl-xl text-[9px] font-black tracking-wide group-hover:bg-orange-500 group-hover:text-white transition-all">
-                  추천체험
-                </div>
-                <div className="w-12 h-12 rounded-xl bg-orange-500/10 text-orange-400 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                  <Building className="w-6 h-6" />
-                </div>
-                <div className="space-y-1.5">
-                  <h4 className="font-extrabold text-sm text-white flex items-center gap-1.5">
-                    대리점(GA) 대표용 뷰 체험하기
-                  </h4>
-                  <p className="text-[11px] text-slate-450 font-bold leading-normal break-keep">
-                    소속 설계사 등록 현황, 실시간 정원 게이지 바(Gauge Bar), DB 자동 배분(Auto-Routing) 설정 및 대리점 분배 통계를 확인해 볼 수 있습니다.
-                  </p>
-                </div>
-              </button>
+              <div className="space-y-2 max-w-2xl mx-auto">
+                <span className="px-3 py-1 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-full text-[10px] font-black uppercase tracking-wider inline-block shadow-md">
+                  ⚡ 1초 간편 데모 체험
+                </span>
+                <h3 className="text-xl md:text-2xl font-black text-white leading-normal break-keep">
+                  가입 전, 관리자 대시보드를 먼저 확인해 보세요!
+                </h3>
+                <p className="text-xs md:text-sm text-slate-400 font-bold leading-relaxed break-keep">
+                  가입이나 신용카드 등록 없이 실제 가상 데이터가 주입된 대리점 관리자 뷰와 개인 설계사 대시보드 뷰를 즉시 체험해 보실 수 있습니다.
+                </p>
+              </div>
 
-              {/* Planner View Demo Button */}
-              <button 
-                type="button"
-                onClick={() => handleLogin(undefined, 'test_planner', '1234')}
-                className="group p-6 bg-slate-950/40 hover:bg-slate-950/80 border border-slate-800 hover:border-orange-500/50 rounded-2xl text-left transition-all duration-300 shadow-lg cursor-pointer flex gap-4 items-start relative overflow-hidden"
-              >
-                <div className="w-12 h-12 rounded-xl bg-orange-500/10 text-orange-400 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                  <User className="w-6 h-6" />
-                </div>
-                <div className="space-y-1.5">
-                  <h4 className="font-extrabold text-sm text-white flex items-center gap-1.5">
-                    개인 설계사용 뷰 체험하기
-                  </h4>
-                  <p className="text-[11px] text-slate-450 font-bold leading-normal break-keep">
-                    나만의 전용 0.1초 AI 진단 페이지 링크 생성, 카카오톡 상담 연동 및 실시간 독점 고객 리드(DB) 관리 대시보드를 확인해 볼 수 있습니다.
-                  </p>
-                </div>
-              </button>
+              <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto pt-2">
+                
+                {/* Agency View Demo Button */}
+                <button 
+                  type="button"
+                  onClick={() => handleLogin(undefined, 'test', '1234')}
+                  className="group p-6 bg-slate-950/40 hover:bg-slate-950/80 border border-slate-800 hover:border-orange-500/50 rounded-2xl text-left transition-all duration-300 shadow-lg cursor-pointer flex gap-4 items-start relative overflow-hidden"
+                >
+                  <div className="absolute top-0 right-0 bg-orange-500/10 text-orange-400 px-2.5 py-1 rounded-bl-xl text-[9px] font-black tracking-wide group-hover:bg-orange-500 group-hover:text-white transition-all">
+                    추천체험
+                  </div>
+                  <div className="w-12 h-12 rounded-xl bg-orange-500/10 text-orange-400 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                    <Building className="w-6 h-6" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <h4 className="font-extrabold text-sm text-white flex items-center gap-1.5">
+                      대리점(GA) 대표용 뷰 체험하기
+                    </h4>
+                    <p className="text-[11px] text-slate-450 font-bold leading-normal break-keep">
+                      소속 설계사 등록 현황, 실시간 정원 게이지 바(Gauge Bar), DB 자동 배분(Auto-Routing) 설정 및 대리점 분배 통계를 확인해 볼 수 있습니다.
+                    </p>
+                  </div>
+                </button>
 
+                {/* Planner View Demo Button */}
+                <button 
+                  type="button"
+                  onClick={() => handleLogin(undefined, 'test_planner', '1234')}
+                  className="group p-6 bg-slate-950/40 hover:bg-slate-950/80 border border-slate-800 hover:border-orange-500/50 rounded-2xl text-left transition-all duration-300 shadow-lg cursor-pointer flex gap-4 items-start relative overflow-hidden"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-orange-500/10 text-orange-400 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                    <User className="w-6 h-6" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <h4 className="font-extrabold text-sm text-white flex items-center gap-1.5">
+                      개인 설계사용 뷰 체험하기
+                    </h4>
+                    <p className="text-[11px] text-slate-450 font-bold leading-normal break-keep">
+                      나만의 전용 0.1초 AI 진단 페이지 링크 생성, 카카오톡 상담 연동 및 실시간 독점 고객 리드(DB) 관리 대시보드를 확인해 볼 수 있습니다.
+                    </p>
+                  </div>
+                </button>
+
+              </div>
             </div>
-          </div>
+          )}
 
           <div id="auth-card-container" className="w-full bg-slate-900/80 border border-slate-800/80 rounded-[2.5rem] shadow-2xl overflow-hidden backdrop-blur-xl">
             {/* Tabs */}

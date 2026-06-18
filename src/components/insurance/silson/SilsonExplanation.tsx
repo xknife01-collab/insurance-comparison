@@ -1,14 +1,16 @@
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import {
   Heart, ShieldCheck, Activity, Award, Sparkles,
   CheckCircle, Clock, Quote, Compass, AlertTriangle
 } from 'lucide-react';
 
 interface Props {
+  isUnlocked?: boolean;
   onAction?: () => void;
 }
 
-export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
+export const SilsonExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
   <section className="py-24 bg-blue-50/10 px-2 sm:px-4 relative overflow-hidden" id="silson-detail">
     <div className="max-w-7xl mx-auto">
 
@@ -72,14 +74,14 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
           <div className="space-y-3">
             {[
               { title: '급여 치료 보장', label: '건강보험 적용 급여 항목의 80% 지원', color: 'bg-blue-50/50 border-blue-100', badge: 'text-blue-700 bg-blue-100', desc: '입원실료, 수술비, 약제비, 통원 외래 비용 등 병원에서 행해지는 대다수 정규 치료 항목 포함' },
-              { title: '비급여 특약 보장', label: '건강보험 비적용 고액 비급여 치료의 70% 지원', color: 'bg-indigo-50/50 border-indigo-100', badge: 'text-indigo-700 bg-indigo-100', desc: '비급여 도수치료·체외충격파·증식치료(연간 350만 한도), 비급여 주사제, 비급여 MRI/MRA 완벽 케어' },
+              { title: '비급여 특약 보장', label: '건강보험 비적용 고액 비급여 치료의 70% 지원', color: 'bg-indigo-50/50 border-indigo-100', badge: 'text-indigo-700 bg-indigo-100', desc: '비급여 도수치료·체외충격파·증식치료(연간 350만 한도), 비급여 주사제, 비급여 MRI/MRA 든든하게 대비' },
               { title: '비급여 차등 할인', label: '안 쓰면 깎아주고, 많이 쓰면 할증되는 구조', color: 'bg-amber-50/50 border-amber-100', badge: 'text-amber-700 bg-amber-100', desc: '직전 1년간 비급여 보험금 수령액이 없는 경우 차기년도 비급여 보험료 최대 10% 추가 할인 혜택 제공' },
             ].map((item, i) => (
               <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-5 rounded-3xl border ${item.color}`}>
                 <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
                   <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -166,7 +168,7 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
                   <p className="font-black text-sm">
                     {item.title}
                   </p>
-                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.desc}</p>
+                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{maskText(item.desc, isUnlocked)}</p>
                 </div>
                 <p className="font-black text-blue-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.info}</p>
               </div>
@@ -191,7 +193,7 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
               <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-blue-50/30 rounded-3xl border border-blue-100/50 hover:border-blue-200 transition-colors">
                 <div className="shrink-0 font-black text-blue-700 text-sm w-full sm:w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -235,9 +237,9 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
             { company: '한화손해보험', product: '다이렉트 실손의료비보험', highlight: '월 납입 비용 다이어트에 초점을 맞춘 합리적이고 매력적인 하루 실비 요율 책정으로 실속 지향 고객에게 우수', badges: ['가성비 집중', '실속 다이어트'] },
           ].map((item, i) => (
             <div key={i} className="p-5 md:p-8 bg-blue-50/20 rounded-2xl md:rounded-[2.5rem] border border-blue-100 hover:border-blue-300 hover:shadow-lg transition-all">
-              <p className="text-xs font-black text-blue-600 mb-1">{item.company}</p>
-              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
-              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>
+              <p className="text-xs font-black text-blue-600 mb-1">{maskCompany(item.company, isUnlocked)}</p>
+              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{maskProductName(item.product, isUnlocked)}</p>
+              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{maskText(item.highlight, isUnlocked)}</p>
               <div className="flex flex-wrap gap-2">
                 {item.badges.map((b) => (
                   <span
@@ -261,7 +263,7 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction }) => (
           </div>
           <p className="text-2xl font-black text-slate-900 tracking-tight leading-tight">
             "가장 기본적인 것이 가장 든든한 방패가 됩니다.<br />
-            <span className="text-blue-600">개인별 병원 이용량과 갱신 인상 리스크를 완벽 분석한 정밀 매칭으로 함께합니다.</span>"
+            <span className="text-blue-600">개인별 병원 이용량과 갱신 인상 리스크를 정밀 분석한 정밀 매칭으로 함께합니다.</span>"
           </p>
         </div>
         {onAction && (

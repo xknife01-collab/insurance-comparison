@@ -106,7 +106,7 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
                     <span className="text-[9px] font-black text-orange-500 uppercase tracking-widest">Promise 2</span>
                     <span className="text-xs font-black text-slate-800 leading-tight">개인정보 암호화</span>
                   </div>
-                  <p className="text-[10.5px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">자가진단 단계에서는 연락처가 완벽히 마스킹 보호 처리됩니다.</p>
+                  <p className="text-[10.5px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">자가진단 단계에서는 연락처가 든든하게 마스킹 보호 처리됩니다.</p>
                 </div>
                 <div className="bg-white p-3.5 rounded-2xl border border-orange-100 flex flex-col gap-0.5 shadow-sm">
                   <div className="flex items-center gap-1.5">
@@ -122,7 +122,7 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
             <div className="max-w-xl mx-auto bg-[#FFF8F0] border-2 border-amber-200/80 rounded-3xl p-5 flex items-center gap-3.5 text-left shadow-xl animate-in fade-in duration-500">
               <span className="text-xl text-orange-500 flex-shrink-0 animate-pulse">🛡️</span>
               <p className="text-xs sm:text-sm font-black text-slate-800 leading-relaxed break-keep">
-                저희는 카카오톡 요청 전까지는 절대 전화나 문자를 드리지 않습니다. 안심하시고 비교 분석 하셔도 됩니다.
+                저희는 고객님의 연락처를 묻지 않습니다. 안심하시고 비교 분석하시고 필요하실 때에만 카카오톡 요청해 주세요.
               </p>
             </div>
 

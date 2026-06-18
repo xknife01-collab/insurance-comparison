@@ -81,7 +81,7 @@ export interface InsuranceAnalysis {
   driver?: {                  // 운전자보험 전용 필드
     drivingPurpose: 'private' | 'commercial'; // 운전 목적 (자가용/영업용)
     jobClass: 1 | 2 | 3;                      // 직업급수 (1~3급)
-    planType: 'saving' | 'standard' | 'premium'; // 희망 플랜 (가성비/표준형/최고급)
+    planType: 'saving' | 'standard' | 'premium'; // 희망 플랜 (가성비/표준형/프리미엄)
   };
   pet?: {                     // 펫보험 전용 필드
     petType: 'dog' | 'cat';

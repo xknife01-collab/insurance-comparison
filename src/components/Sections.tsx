@@ -7,26 +7,27 @@ import React from 'react';
 import { TrendingUp, ShieldCheck, Clock, MessageCircle, Star, Quote, Stethoscope, ChevronRight, Activity, Search, Sparkles, Hotel, HeartHandshake, UserCheck, Zap, Target, Pill, Crosshair, Brain } from 'lucide-react';
 import { CaregivingOldGuide } from './insurance/caregiving/CaregivingOldGuide';
 import { useB2BBranding } from '../hooks/useB2BBranding';
+import { maskCompany } from '../utils/compliance';
 
 
 const REVIEWS = [
   { name: "김*일", age: 45, gender: "M", avatarIdx: 0, job: "사무직", content: "지인 권유로 10년 넘게 납입하던 종신 보험이 있었는데, 여기서 분석해보니 정작 제가 필요한 뇌혈관이나 심장 쪽 진단비가 턱없이 부족하더라고요. 전문가분께서 불필요한 사망 보장은 줄이고 핵심 진단비를 비갱신형으로 리모델링해주셔서 월 보험료는 12만 원이나 줄었는데 보장 한도는 3배나 늘어났습니다. 진작 할 걸 그랬네요!" },
   { name: "이*희", age: 38, gender: "F", avatarIdx: 1, job: "자영업", content: "고혈압약을 복용 중이라 유병자 보험은 무조건 비싼 줄만 알았어요. 그런데 여기서 여러 보험사를 한눈에 비교해주시니 생각보다 훨씬 저렴한 곳이 있더라고요. 제 병력을 꼼꼼히 체크해서 가장 유리한 3.3.5 조건으로 알맞게 매칭해주신 덕분에 월 6만 원대로 든든하게 암 보험 가입했습니다. 데이터로 딱 보여주니 믿음이 가네요." },
-  { name: "박*준", age: 31, gender: "M", avatarIdx: 2, job: "IT개발자", content: "사회초년생 때 가입한 보험이 전부 갱신형이라 나중에 60대 넘어서 보험료 폭탄 맞을 뻔했습니다. 여기 시스템으로 시뮬레이션 돌려보고 깜짝 놀라 바로 비갱신형으로 갈아탔어요. 지금 당장은 몇 천 원 더 내는 것 같아도 20년 납입만 하면 평생 보장받는다고 생각하니 속이 다 시원합니다. 데이터 수치로 미래 보험료 변화를 보여주니까 결정하기가 참 쉬웠어요." },
+  { name: "박*준", age: 31, gender: "M", avatarIdx: 2, job: "IT개발자", content: "사회초년생 때 가입한 보험이 전부 갱신형이라 나중에 60대 넘어서 보험료 상승 부담이 커질 뻔했습니다. 여기 시스템으로 시뮬레이션 돌려보고 깜짝 놀라 바로 비갱신형으로 갈아탔어요. 지금 당장은 몇 천 원 더 내는 것 같아도 20년 납입만 하면 평생 보장받는다고 생각하니 속이 다 시원합니다. 데이터 수치로 미래 보험료 변화를 보여주니까 결정하기가 참 쉬웠어요." },
   { name: "최*윤", age: 52, gender: "F", avatarIdx: 3, job: "주부", content: "아이들 셋 보험료만 합쳐도 생활비에 부담이 컸는데, 여기서 가족 단위 점검을 받았습니다. 겹치는 일상생활 배상책임이나 중복 특약들을 싹 정리했더니 보험료가 한 달에 20만 원 가까이 세이브됐어요! 그 돈으로 아이들 적금을 하나 더 들어줬네요. 꼼꼼하게 차트까지 그려가며 설명해주셔서 보험 문외한인 저도 금방 이해할 수 있었습니다." },
   { name: "정*우", age: 42, gender: "M", avatarIdx: 4, job: "현장직", content: "직업이 위험군이라 가입 거절도 많이 당해보고 가입해도 너무 비싸서 포기했었는데, 여기서 직업 급수를 정확히 다시 조정하고 최적의 상품을 찾아주셨습니다. 사고 났을 때 당장 수입이 끊기는 게 제일 걱정이었는데 상해 후유장해랑 수술비 위주로 실속 있게 설계해주셔서 이제 발 뻗고 잡니다. 현장에서 일하는 동료들한테도 입소문 많이 내고 있어요." },
   { name: "강*은", age: 29, gender: "F", avatarIdx: 5, job: "간호사", content: "병원에서 일하다 보니 큰 병 걸렸을 때의 고통을 누구보다 잘 압니다. 그래서 보장이 빵빵해야 한다고만 생각해서 월급의 절반을 보험에 쏟아붓고 있었거든요. 그런데 분석해보니 오히려 보장은 약하고 환급률만 높은 저축성 보험에 가입되어 있더라고요. 덕분에 거품 싹 빼고 진짜 나를 지켜줄 수 있는 핵심 보장 위주로 가성비 있게 재구성했습니다. 합리적인 소비를 한 것 같아 뿌듯해요." },
   { name: "윤*호", age: 47, gender: "M", avatarIdx: 6, job: "공무원", content: "실손 의료비가 예전 거라 보장은 좋은데 갱신될 때마다 보험료가 너무 가파르게 올라서 유지가 고민이었어요. 4세대 실손으로 전환했을 때의 장단점을 전문가께서 표로 만들어서 비교해주시니까 확신이 생기더라고요. 보험료는 절반 이하로 줄이고, 아낀 돈으로 부족했던 뇌혈관 진단비를 보완했습니다. 전문적인 분석 덕분에 불필요한 고민을 끝낼 수 있었습니다." },
-  { name: "한*지", age: 35, gender: "F", avatarIdx: 7, job: "디자이너", content: "직업병인지 UI가 예쁜 곳을 좋아하는데, 여긴 디자인만 세련된 게 아니라 분석 데이터가 너무 명확해서 놀랐어요. 막연하게 보험이 필요하다는 생각만 있었는데, 제 나이대 평균 보장 범위랑 비교해서 부족한 부분을 빨간색으로 딱 보여주니 바로 체감되더라고요. 디자인만큼이나 깔끔한 상담 서비스 덕분에 군더더기 없는 완벽한 포트폴리오를 짠 기분입니다." },
+  { name: "한*지", age: 35, gender: "F", avatarIdx: 7, job: "디자이너", content: "직업병인지 UI가 예쁜 곳을 좋아하는데, 여긴 디자인만 세련된 게 아니라 분석 데이터가 너무 명확해서 놀랐어요. 막연하게 보험이 필요하다는 생각만 있었는데, 제 나이대 평균 보장 범위랑 비교해서 부족한 부분을 빨간색으로 딱 보여주니 바로 체감되더라고요. 디자인만큼이나 깔끔한 상담 서비스 덕분에 군더더기 없는 균형 잡힌 포트폴리오를 짠 기분입니다." },
   { name: "임*민", age: 40, gender: "M", avatarIdx: 8, job: "운전직", content: "매일 운전하며 지내다 보니 사고 걱정이 늘 있었는데, 운전자 보험이랑 자부상(자동차사고 부상치료비) 특약을 정말 저렴하게 잘 묶어주셨어요. 벌점이나 변호사 선임비용 대비도 예전 보험보다 훨씬 조건이 좋아졌는데 보험료는 오히려 5천 원 정도 저렴해졌네요. 운전자라면 꼭 여기서 확인해보라고 권하고 싶습니다. 상담 과정도 속전속결로 시원시원했습니다." },
   { name: "송*아", age: 44, gender: "F", avatarIdx: 9, job: "교사", content: "복잡한 보장 내용이랑 어려운 보험 용어 때문에 항상 미뤄오던 숙제였는데, 여기서 한 번에 해결했습니다. 설계사분께서 제가 가진 증권들을 일일이 다 분석해서 '이건 꼭 유지하시고 이건 버리세요'라고 냉정하게 말씀해주시는 게 참 좋았어요. 과한 영업 없이 제 입장에서만 생각해주시는 진심이 느껴졌습니다. 덕분에 숙원 사업을 기분 좋게 마무리했네요." },
   { name: "오*현", age: 33, gender: "M", avatarIdx: 10, job: "연구원", content: "직업상 숫자에 민감한데, 여긴 수치와 근거로만 얘기해서 신뢰가 갔습니다. 제가 가입한 보험의 손해율과 향후 보험료 갱신 예상 지표까지 보여주는 곳은 처음이었어요. 덕분에 막연한 불안감이 아니라 확실한 데이터에 기반해서 보험을 선택할 수 있었습니다. 보험도 금융 공학의 영역이라는 것을 제대로 보여주는 훌륭한 시스템입니다." },
   { name: "권*서", age: 55, gender: "M", avatarIdx: 11, job: "제조업", content: "나이가 들면서 여기저기 아픈 데도 생기고 보험료가 부담스러워져서 해지할까도 생각했습니다. 하지만 전문가께서 해지 대신 부분 감액이나 특약 조정을 추천해주셨고, 그 결과 보험료는 30% 줄이면서도 암 진단비는 유지할 수 있었습니다. 하마터면 노후에 무보험 상태로 고생할 뻔했는데 정말 큰 도움 받았습니다. 저 같은 중년층에게 강력 추천합니다." },
   { name: "신*진", age: 37, gender: "F", avatarIdx: 12, job: "프리랜서", content: "불규칙한 수입 때문에 고정 지출인 보험료가 늘 고민이었어요. 그래서 가장 필수적인 보장만 남기면서도 월 보험료는 3만 원대로 맞춘 '다이어트 플랜'을 추천받았는데 정말 대만족입니다. 수입이 적은 달에도 부담 없이 유지할 수 있고, 그러면서도 큰 질병 대비는 되어 있으니 마음이 한결 가볍습니다. 저 같은 프리랜서분들에게 딱 맞는 합리적인 서비스네요." },
   { name: "유*재", age: 28, gender: "M", avatarIdx: 13, job: "취업준비생", content: "부모님이 들어주신 보험만 믿고 있었는데 분석해보니 만기가 너무 짧거나 보장 범위가 좁은 게 많더군요. 아직 젊을 때 비갱신형으로 좋은 담보들을 잘 잡아놓으라는 조언을 듣고 100세 만기로 든든하게 새로 짰습니다. 알바비 수준에서 충분히 감당 가능한 금액이라 만족스럽고, 인생의 첫 보험을 이렇게 공정하게 비교해보고 들게 되어 다행입니다." },
-  { name: "조*미", age: 49, gender: "F", avatarIdx: 14, job: "서비스직", content: "다른 비교 사이트들도 가봤지만 이렇게 구체적으로 제 상황에 맞춰서 최적화해주는 곳은 없었습니다. 상담원분이 정말 친절하게 제 기존 보험들의 허점을 짚어주셨고, 덕분에 제가 암 보험에 가입되어 있음에도 유방암 보장이 약했다는 사실을 처음 알았습니다. 놓칠 뻔한 구멍을 메운 것 같아 정말 안심이 됩니다. 친절하고 꼼꼼한 분석, 최고입니다!" },
+  { name: "조*미", age: 49, gender: "F", avatarIdx: 14, job: "서비스직", content: "다른 비교 사이트들도 가봤지만 이렇게 구체적으로 제 상황에 맞춰서 최적화해주는 곳은 없었습니다. 상담원분이 정말 친절하게 제 기존 보험들의 허점을 짚어주셨고, 덕분에 제가 암 보험에 가입되어 있음에도 유방암 보장이 약했다는 사실을 처음 알았습니다. 놓칠 뻔한 구멍을 메운 것 같아 정말 안심이 됩니다. 친절하고 꼼꼼한 분석, 추천합니다!" },
   { name: "이*석", age: 36, gender: "M", avatarIdx: 15, job: "IT컨설턴트", content: "잦은 업무 스트레스로 건강이 걱정되어 보장 내역을 점검했습니다. 뇌혈관 질환에 대한 가족력이 있었는데 미처 몰랐던 부분을 꼼꼼하게 챙겨주셔서 정말 든든합니다. 복잡한 서류 절차도 간편하게 안내해 주셔서 좋았습니다." },
-  { name: "김*진", age: 41, gender: "F", avatarIdx: 16, job: "초등교사", content: "아이들을 가르치다 보니 제 노후와 건강도 미리 준비해야겠다는 생각이 들더군요. 무해지 환급형 상품을 추천받아 합리적인 가격에 암과 수술비를 완벽히 보완했습니다. 설명이 너무 명확해서 지인들에게도 추천하고 있어요." },
+  { name: "김*진", age: 41, gender: "F", avatarIdx: 16, job: "초등교사", content: "아이들을 가르치다 보니 제 노후와 건강도 미리 준비해야겠다는 생각이 들더군요. 무해지 환급형 상품을 추천받아 합리적인 가격에 암과 수술비를 든든하게 보완했습니다. 설명이 너무 명확해서 지인들에게도 추천하고 있어요." },
   { name: "장*우", age: 30, gender: "M", avatarIdx: 17, job: "신입사원", content: "첫 월급으로 부모님 보험부터 제 보험까지 싹 정리했어요. 전문가께서 사회초년생 눈높이에 맞춰서 설명해 주신 덕분에 보험이 더 이상 어렵지 않게 느껴집니다. 불필요한 지출을 줄여 저축 여력이 늘어난 게 가장 큰 수확입니다." },
   { name: "문*희", age: 58, gender: "F", avatarIdx: 18, job: "주부", content: "갱신 때마다 오르는 실손 보험료 때문에 걱정이 많았는데 4세대 실손으로 똑똑하게 전환했습니다. 아낀 비용으로 간병인 특약을 추가했더니 이제야 마음이 놓이네요. 고연령층을 위한 배려 깊은 상담에 정말 감사드립니다." },
   { name: "배*호", age: 51, gender: "M", avatarIdx: 19, job: "공인중개사", content: "일의 특성상 운전이 잦은데 운전자 보험 혜택이 예전보다 훨씬 좋아졌더라고요. 데이터 기반으로 정확히 비교해 주셔서 최선의 선택을 할 수 있었습니다. 법률 대리인 선임비용 등 실질적인 보장이 강화되어 든든합니다." },
@@ -169,8 +170,8 @@ export const ProblemSection = () => (
         {
           icon: <TrendingUp className="w-7 h-7 text-red-600" />,
           bg: 'bg-red-50 border-red-100',
-          title: '국밥 세 그릇의 낭비',
-          desc: <>보험료 15만 원 중 4만 원이 중복이라면? 당신은 매달 아무 이유 없이 <span className="font-bold text-red-600">국밥 세 그릇 값을 길바닥에 버리고 있는 셈</span>입니다.</>
+          title: '조정 가능한 고정비 차액',
+          desc: <>보험료 15만 원 중 4만 원이 중복 설계되어 있다면? 당신은 매달 아무 이유 없이 <span className="font-bold text-red-600">불필요한 고정비 지출을 감당하고 있는 셈</span>입니다.</>
         },
         {
           icon: <ShieldCheck className="w-7 h-7 text-orange-600" />,
@@ -181,8 +182,8 @@ export const ProblemSection = () => (
         {
           icon: <Clock className="w-7 h-7 text-orange-400" />,
           bg: 'bg-gray-900 text-white border-gray-800',
-          title: '노후의 시한폭탄',
-          desc: <>지금 3만 원인 갱신형 보험, 10년 뒤엔 15만 원이 될 수도 있습니다. <span className="font-bold text-white">노후의 시한폭탄</span>을 지금 확정 지출로 바꾸세요.</>
+          title: '변동 가능한 노후 지출',
+          desc: <>지금 3만 원인 갱신형 보험, 10년 뒤엔 15만 원이 될 수도 있습니다. <span className="font-bold text-white">인상 가능성이 있는 갱신형 보험료 지출</span>을 지금 비갱신형 확정 지출로 전환하여 대비하세요.</>
         }
       ].map((item, i) => (
         <div key={i} className={`p-10 rounded-[3rem] border shadow-sm ${item.bg} hover:scale-[1.03] transition-transform`}>
@@ -343,7 +344,7 @@ export const IndemnitySection = ({ onAction }: { onAction: () => void }) => (
   </section>
 );
 
-export const CaregivingSection = ({ onAction }: { onAction: () => void }) => (
+export const CaregivingSection = ({ onAction, isUnlocked }: { onAction: () => void, isUnlocked?: boolean }) => (
   <section className="py-32 bg-slate-50 px-4 relative overflow-hidden" id="caregiving-detail">
     <div className="max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
@@ -467,7 +468,7 @@ export { NursingSection } from './insurance/nursing/NursingSection';
 export { ChildPrenatalSection } from './insurance/child/ChildPrenatalSection';
 export { ChildSickSection } from './insurance/child/ChildSickSection';
 
-export const PreExistingSection = ({ onAction }: { onAction: () => void }) => (
+export const PreExistingSection = ({ onAction, isUnlocked }: { onAction: () => void, isUnlocked?: boolean }) => (
   <section className="py-32 bg-gray-50 px-4 relative overflow-hidden" id="preexisting-detail">
     <div className="max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
@@ -591,13 +592,13 @@ export const PreExistingSection = ({ onAction }: { onAction: () => void }) => (
 
       <div className="mt-24 grid grid-cols-1 md:grid-cols-3 gap-8">
          <div className="p-10 bg-white border border-gray-100 rounded-[3.5rem] shadow-sm hover:shadow-2xl transition-all">
-            <h4 className="text-xl font-black mb-4">현대 / 삼성 (업계 선두)</h4>
+            <h4 className="text-xl font-black mb-4">{maskCompany('현대', isUnlocked)} / {maskCompany('삼성', isUnlocked)} (업계 선두)</h4>
             <p className="text-xs font-bold text-gray-400 leading-relaxed">
                3.0.5부터 3.5.5까지 가장 촘촘한 라인업을 보유하고 있어 고객 건강 상태에 맞는 '정교한 매칭'이 가능합니다.
             </p>
          </div>
          <div className="p-10 bg-white border border-gray-100 rounded-[3.5rem] shadow-sm hover:shadow-2xl transition-all">
-            <h4 className="text-xl font-black mb-4">DB / 메리츠 (전환권 특화)</h4>
+            <h4 className="text-xl font-black mb-4">{maskCompany('DB', isUnlocked)} / {maskCompany('메리츠', isUnlocked)} (전환권 특화)</h4>
             <p className="text-xs font-bold text-gray-400 leading-relaxed">
                무사고 기간이 1년만 지나도 더 저렴한 플랜으로 자동 안내해 주는 '전환 케어' 시스템이 매우 강력합니다.
             </p>
@@ -631,7 +632,7 @@ export const PreExistingSection = ({ onAction }: { onAction: () => void }) => (
   </section>
 );
 
-export const DentalSection = ({ onAction }: { onAction: () => void }) => (
+export const DentalSection = ({ onAction, isUnlocked }: { onAction: () => void, isUnlocked?: boolean }) => (
   <section className="py-32 bg-white px-4 relative overflow-hidden" id="dental-detail">
     <div className="max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
@@ -718,7 +719,7 @@ export const DentalSection = ({ onAction }: { onAction: () => void }) => (
                  <ShieldCheck className="text-emerald-500" /> 라이나 / 삼성
                </h4>
                <p className="text-sm text-gray-400 font-bold leading-relaxed">
-                 가장 넓은 치과 네트워크와 빠른 보상 처리가 강점입니다. 임플란트 보장 한도가 업계 최고 수준입니다.
+                 가장 넓은 치과 네트워크와 빠른 보상 처리가 강점입니다. 임플란트 보장 한도가 업계 우수한 수준입니다.
                </p>
             </div>
             <div>
@@ -759,7 +760,7 @@ export const SurgerySection = ({ onAction }: { onAction: () => void }) => (
         </div>
         <div className="max-w-md text-right hidden lg:block opacity-60">
            <p className="text-sm font-bold text-gray-500 leading-relaxed">
-             대한민국 국민 4,000만 명이 가입한 국민 보험 실손의 완벽한 파트너.<br />
+             대한민국 국민 4,000만 명이 가입한 국민 보험 실손의 균형 잡힌 파트너.<br />
              복잡한 약관 뒤에 숨겨진 진짜 혜택을 전문가가 직접 정리했습니다.
            </p>
         </div>
@@ -1017,7 +1018,7 @@ export const CerebrovascularSection = ({ onAction }: { onAction: () => void }) =
            </div>
            <h2 className="text-4xl md:text-6xl font-black text-gray-900 tracking-tighter leading-[1.1]">
              뇌혈관의 <span className="text-indigo-600">골든타임</span><br />
-             데이터로 완벽하게 지키세요.
+             데이터로 안정적으로 지키세요.
            </h2>
         </div>
         <div className="max-w-md text-right hidden lg:block opacity-60">
@@ -1100,7 +1101,7 @@ export const CerebrovascularSection = ({ onAction }: { onAction: () => void }) =
          <div className="p-10 bg-white border border-gray-100 rounded-[3.5rem] shadow-sm hover:shadow-2xl transition-all">
             <h4 className="text-xl font-black mb-4">가장 빈번한 '뇌동맥류'</h4>
             <p className="text-xs font-bold text-gray-400 leading-relaxed">
-               터지기 전 발견하면 완치가 쉽지만 수술비가 고가입니다. '뇌혈관 수술비' 특약이 이 시술을 완벽히 포함하는지 확인하세요.
+               터지기 전 발견하면 완치가 쉽지만 수술비가 고가입니다. '뇌혈관 수술비' 특약이 이 시술을 든든하게 포함하는지 확인하세요.
             </p>
          </div>
          <div className="p-10 bg-white border border-gray-100 rounded-[3.5rem] shadow-sm hover:shadow-2xl transition-all">
@@ -1140,7 +1141,7 @@ export const HeartSection = ({ onAction }: { onAction: () => void }) => (
            </div>
            <h2 className="text-4xl md:text-6xl font-black text-gray-900 tracking-tighter leading-[1.1]">
              당신의 <span className="text-red-600">심장</span>을 뛰게 할<br />
-             가장 완벽한 방어선.
+             가장 균형 잡힌 방어선.
            </h2>
         </div>
         <div className="max-w-md text-right hidden lg:block opacity-60">
@@ -1166,7 +1167,7 @@ export const HeartSection = ({ onAction }: { onAction: () => void }) => (
               <div className="bg-red-50/50 p-8 rounded-[2.5rem] border border-red-100 group-hover:-translate-y-2 transition-transform">
                 <p className="font-black text-red-700 mb-2 flex items-center gap-2">❤️ 심혈관질환 (전체 보장)</p>
                 <p className="text-sm text-gray-600 font-bold leading-relaxed">
-                  허혈성 심장질환(협심증)은 물론, 심장 박동에 이상이 생기는 <b>부정맥(I47~I49)</b>과 심장 펌프 기능이 저하되는 <b>심부전(I50)</b>까지 완벽하게 보장합니다.
+                  허혈성 심장질환(협심증)은 물론, 심장 박동에 이상이 생기는 <b>부정맥(I47~I49)</b>과 심장 펌프 기능이 저하되는 <b>심부전(I50)</b>까지 안정적으로 보장합니다.
                 </p>
               </div>
               <div className="bg-white p-8 rounded-[2.5rem] border border-gray-100 group-hover:-translate-y-2 transition-transform">
@@ -1393,6 +1394,9 @@ export const Footer = () => {
               광고심의필: {branding.registrationNumber}
             </p>
           )}
+          <p className="text-slate-400 border border-slate-800 p-3 rounded-xl bg-slate-900/40 leading-relaxed font-bold">
+            ※ 상기 분석 및 추천 설계 내용은 모집종사자(또는 AI 분석 엔진)의 개인적인 의견이며, 계약체결에 따른 이익 또는 손실은 보험계약자 및 피보험자에게 귀속됩니다.
+          </p>
           <p>보험계약자가 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서 질병이력, 연령증가 등으로 가입이 거절되거나 보험료가 인상될 수 있습니다. 또한 해약환급금 손실이 발생할 수 있으니 유의하시기 바랍니다.</p>
           <p className="text-slate-500">© {branding?.name || "보험리밸런스"}. All Rights Reserved.</p>
         </div>

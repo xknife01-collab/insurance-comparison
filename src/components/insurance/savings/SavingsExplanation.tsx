@@ -1,14 +1,16 @@
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import {
   PiggyBank, ShieldCheck, TrendingUp, Sparkles,
   CheckCircle, Clock, Quote, Compass, Gift
 } from 'lucide-react';
 
 interface Props {
+  isUnlocked?: boolean;
   onAction?: () => void;
 }
 
-export const SavingsExplanation: React.FC<Props> = ({ onAction }) => (
+export const SavingsExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
   <section className="py-24 bg-emerald-50/10 px-2 sm:px-4 relative overflow-hidden text-left" id="savings-detail">
     <div className="max-w-7xl mx-auto">
 
@@ -78,7 +80,7 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction }) => (
                 <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
                   <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -156,7 +158,7 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction }) => (
               <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-emerald-50/30 rounded-3xl border border-emerald-100/50 hover:border-emerald-200 transition-colors">
                 <div className="shrink-0 font-black text-emerald-700 text-sm w-32 text-left">{item.step}</div>
                 <div className="flex-1 text-left">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -168,7 +170,7 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction }) => (
             <h4 className="text-xl font-black mb-4">비과세 극대화 핵심 5</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
               ① 월 적립 한도 150만 원 비과세 설계<br />
-              ② 유지 기간 10년 기준 완벽하게 매칭<br />
+              ② 유지 기간 10년 기준 안정적으로 매칭<br />
               ③ 추가납입 제도를 활용한 실질 수수료 인하<br />
               ④ 다이렉트(CM) 상품 선택을 통한 초기 원금 회복 가속<br />
               ⑤ 시중금리 급락에 대비한 최저보증이율 안전망 확보

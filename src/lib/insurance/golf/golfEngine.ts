@@ -133,10 +133,10 @@ export const analyzeGolf = (analysis: any): any => {
 
   const hybrid: RecommendationPlan = {
     title: `[${opt3.companyName}] VIP 프리미엄 플랜`,
-    description: `홀인원 축하비용을 최고 한도(200만)로 증액하고 골프용품 손해 및 골프 카트 탑승 중 상해까지 폭넓게 케어하는 최고급 안심 보장 패키지입니다.`,
+    description: `홀인원 축하비용을 최대 한도(200만)로 증액하고 골프용품 손해 및 골프 카트 탑승 중 상해까지 폭넓게 케어하는 프리미엄 안심 보장 패키지입니다.`,
     estimatedPremium: hybridPremium,
     coverageChanges: [
-      '홀인원 비용 200만 원 업계 최고 보장',
+      '홀인원 비용 200만 원 업계 우수 보장',
       '골프 배상책임 3,000만 원 확장',
       '골프용품 손해 200만 원 및 카트 사고 상해 탑재'
     ],

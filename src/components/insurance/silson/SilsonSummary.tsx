@@ -132,7 +132,7 @@ export const SilsonSummary: React.FC<Props> = ({ result }) => {
               </div>
               <p className="text-[0.7rem] text-slate-400 font-bold mt-4 flex items-center gap-2">
                 <CheckCircle2 size={14} className="text-emerald-500" />
-                실손 보장이 완벽합니다!
+                실손 보장이 안정적입니다!
               </p>
             </div>
           </div>

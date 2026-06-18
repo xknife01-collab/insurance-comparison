@@ -1,4 +1,5 @@
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import {
   Heart, ShieldCheck, Activity, Award, Sparkles,
   CheckCircle, Clock, Quote, Compass, AlertTriangle,
@@ -6,10 +7,11 @@ import {
 } from 'lucide-react';
 
 interface Props {
+  isUnlocked?: boolean;
   onAction?: () => void;
 }
 
-export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
+export const WholeLifeExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
   <section className="py-24 bg-indigo-50/10 px-2 sm:px-4 relative overflow-hidden animate-in fade-in duration-500" id="wholelife-detail">
     <div className="max-w-7xl mx-auto">
 
@@ -80,7 +82,7 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
                 <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
                   <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -165,12 +167,12 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
-                    {item.company}{' '}
-                    <span className="text-indigo-300 text-xs font-bold ml-1">{item.product}</span>
+                    {maskCompany(item.company, isUnlocked)}{' '}
+                    <span className="text-indigo-300 text-xs font-bold ml-1">{maskProductName(item.product, isUnlocked)}</span>
                   </p>
-                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.note}</p>
+                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{maskText(item.note, isUnlocked)}</p>
                 </div>
-                <p className="font-black text-indigo-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.limit}</p>
+                <p className="font-black text-indigo-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{maskText(item.limit, isUnlocked)}</p>
               </div>
             ))}
           </div>
@@ -185,7 +187,7 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
           </h3>
           <div className="space-y-3">
             {[
-              { step: '01. 납기 기간 적절성', desc: '은퇴 시점 이전에 납입이 완벽히 종료될 수 있도록 20년납보다는 5~10년 이내의 단기완납 플랜 설정' },
+              { step: '01. 납기 기간 적절성', desc: '은퇴 시점 이전에 납입이 든든하게 종료될 수 있도록 20년납보다는 5~10년 이내의 단기완납 플랜 설정' },
               { step: '02. 실질 가치 평가', desc: '정액 종신보험의 경우, 인플레이션에 따른 20~30년 후 화폐 가치 폭락을 상쇄할 체증형 특약 가입 검토' },
               { step: '03. 세무 리스크 크로스체크', desc: '상속세 비과세 요건을 채우기 위한 자녀 계좌 실 납입 소득출처와 증여 자진신고 상태 사전 대조' },
               { step: '04. 연금 전환 조건 비교', desc: '전환 시점에 적용되는 경험생명표가 가입 시점 기준인지, 아니면 전환 시점 기준인지 세밀히 체크' },
@@ -193,7 +195,7 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
               <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-indigo-50/30 rounded-3xl border border-indigo-100/50 hover:border-indigo-200 transition-colors">
                 <div className="shrink-0 font-black text-indigo-700 text-sm w-full sm:w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -237,9 +239,9 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction }) => (
             { company: 'KDB생명', product: 'KDB든든단기납종신', highlight: '납입 기간 완료 시점의 책임준비금 및 계약 유지 가산율을 극대화하여 10년 비과세 환급 가치 최적화', badges: ['유지보너스 최상', '환급 가치 우대'] },
           ].map((item, i) => (
             <div key={i} className="p-5 md:p-8 bg-indigo-50/20 rounded-2xl md:rounded-[2.5rem] border border-indigo-100 hover:border-indigo-300 hover:shadow-lg transition-all">
-              <p className="text-xs font-black text-indigo-600 mb-1">{item.company}</p>
-              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
-              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>
+              <p className="text-xs font-black text-indigo-600 mb-1">{maskCompany(item.company, isUnlocked)}</p>
+              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{maskProductName(item.product, isUnlocked)}</p>
+              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{maskText(item.highlight, isUnlocked)}</p>
               <div className="flex flex-wrap gap-2">
                 {item.badges.map((b) => (
                   <span

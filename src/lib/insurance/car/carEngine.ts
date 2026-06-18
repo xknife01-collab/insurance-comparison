@@ -307,7 +307,7 @@ export const analyzeCar = async (analysis: InsuranceAnalysis): Promise<AnalysisR
       },
       upgrade: {
         title: '대물 10억 + 자상 프리미엄 플랜',
-        description: `사고 시 탑승자 및 보행 중 가족까지 100% 보장하는 최고급형 안심 포트폴리오입니다.`,
+        description: `사고 시 탑승자 및 보행 중 가족까지 100% 보장하는 프리미엄형 안심 포트폴리오입니다.`,
         estimatedPremium: Math.round(upgradePremium * 1.02),
         coverageChanges: [
           `${brandLabel} ${modelLabel} (${engineLabel} ${trimLabel}, ${carYear}년식) 자차손해 완전 보장`,
@@ -316,13 +316,13 @@ export const analyzeCar = async (analysis: InsuranceAnalysis): Promise<AnalysisR
           '자기신체사고(자손) ➔ 자동차상해(자상) 전격 교체',
           '무보험차상해 2억 ➔ 5억 확장 + 긴급출동 60km',
         ],
-        switchingLossNotice: '커피 한 잔 가격 차이로 사고 리스크를 완벽하게 제로화합니다.',
+        switchingLossNotice: '커피 한 잔 가격 차이로 사고 리스크를 최대한 최소화합니다.',
         companyName: '삼성화재',
         productName: '다이렉트 애니카 자동차보험 (프리미엄)',
       },
       hybrid: {
         title: '가성비 밸런스 추천 플랜',
-        description: `대물 5억 + 자상 가성비형으로 가격과 보장의 균형을 완벽하게 잡은 추천 플랜입니다.`,
+        description: `대물 5억 + 자상 가성비형으로 가격과 보장의 균형을 안정적으로 잡은 추천 플랜입니다.`,
         estimatedPremium: Math.round(hybridPremium * 1.00),
         coverageChanges: [
           `${brandLabel} ${modelLabel} (${engineLabel} ${trimLabel}) — 단독사고 제외 자차 절약형`,

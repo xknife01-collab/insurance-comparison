@@ -1,14 +1,16 @@
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import { 
   Stethoscope, Search, ShieldCheck, HeartPulse, ChevronRight, 
   HelpCircle, AlertCircle, RefreshCw, Award, CheckCircle2, Heart, Sparkles, Activity
 } from 'lucide-react';
 
 interface Props {
+  isUnlocked?: boolean;
   onAction?: () => void;
 }
 
-export const CancerExplanation: React.FC<Props> = ({ onAction }) => {
+export const CancerExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => {
   return (
     <div className="mt-16 space-y-24 animate-in fade-in slide-in-from-bottom-8 duration-1000">
       
@@ -310,7 +312,7 @@ export const CancerExplanation: React.FC<Props> = ({ onAction }) => {
               company: '현대해상',
               badge: '신의료 한도 최다',
               badgeColor: 'bg-orange-50 text-orange-700 border-orange-200',
-              highlight: '양성자·중입자치료 한도 업계 최고',
+              highlight: '양성자·중입자치료 한도 업계 우수',
               desc: '고액의 첨단 비급여 방사선 치료인 중입자치료와 양성자치료비 한도를 업계에서 가장 높게 설정할 수 있으며, 다빈치 로봇 수술 지원 특약의 적용 범위가 가장 정교합니다.',
               strength: '신의료 기술 방사선/약물 치료비 집중 설계'
             },
@@ -345,22 +347,22 @@ export const CancerExplanation: React.FC<Props> = ({ onAction }) => {
             >
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-base font-black text-gray-900">{item.company}</span>
+                  <span className="text-base font-black text-gray-900">{maskCompany(item.company, isUnlocked)}</span>
                   <span className={`text-[9px] font-black px-2.5 py-1 rounded-full border ${item.badgeColor}`}>
                     {item.badge}
                   </span>
                 </div>
                 <div className="pt-2">
-                  <p className="text-[11px] text-rose-600 font-black">{item.highlight}</p>
+                  <p className="text-[11px] text-rose-600 font-black">{maskText(item.highlight, isUnlocked)}</p>
                   <p className="text-xs text-gray-500 font-bold mt-2 leading-relaxed">
-                    {item.desc}
+                    {maskText(item.desc, isUnlocked)}
                   </p>
                 </div>
               </div>
               <div className="pt-4 border-t border-gray-50">
                 <p className="text-[9px] text-gray-400 font-bold uppercase tracking-wider">강력 추천 매칭</p>
                 <p className="text-xs text-gray-700 font-black mt-1 flex items-center gap-1.5">
-                  🛡️ {item.strength}
+                  🛡️ {maskText(item.strength, isUnlocked)}
                 </p>
               </div>
             </div>
@@ -400,7 +402,7 @@ export const CancerExplanation: React.FC<Props> = ({ onAction }) => {
               <span className="text-3xl font-black text-rose-100 leading-none">{item.step}</span>
               <div className="space-y-2">
                 <h5 className="text-base font-black text-slate-900">{item.title}</h5>
-                <p className="text-xs text-slate-500 font-bold leading-relaxed">{item.desc}</p>
+                <p className="text-xs text-slate-500 font-bold leading-relaxed">{maskText(item.desc, isUnlocked)}</p>
               </div>
             </div>
           ))}

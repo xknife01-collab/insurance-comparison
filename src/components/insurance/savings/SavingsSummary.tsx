@@ -107,7 +107,7 @@ export const SavingsSummary: React.FC<Props> = ({ result }) => {
                 <p className="text-[11px] text-slate-500 font-bold leading-relaxed">
                   {isTaxExempt ? (
                     <>
-                      고객님은 현재 비과세 충족 조건을 완벽하게 만족하고 계십니다! 만기 시점 예상 적립금 {Math.round(accumulated / 10000).toLocaleString()}만 원에 대한 이자 소득세(15.4%)가 전액 면제되며, 예상되는 절세 규모는 약 <span className="text-emerald-600 font-black">{savedTax.toLocaleString()}원</span>입니다.
+                      고객님은 현재 비과세 충족 조건을 안정적으로 만족하고 계십니다! 만기 시점 예상 적립금 {Math.round(accumulated / 10000).toLocaleString()}만 원에 대한 이자 소득세(15.4%)가 전액 면제되며, 예상되는 절세 규모는 약 <span className="text-emerald-600 font-black">{savedTax.toLocaleString()}원</span>입니다.
                     </>
                   ) : (
                     <>

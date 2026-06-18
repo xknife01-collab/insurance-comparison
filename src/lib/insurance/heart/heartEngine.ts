@@ -61,7 +61,7 @@ export const analyzeHeart = (analysis: any) => {
       },
       upgrade: {
         title: '심혈관 풀커버 고급 플랜',
-        description: '부정맥, 심부전은 물론 스텐트 삽입술까지 심장의 모든 위험을 완벽하게 방어하는 프리미엄 플랜입니다.',
+        description: '부정맥, 심부전은 물론 스텐트 삽입술까지 심장의 모든 위험을 안정적으로 방어하는 프리미엄 플랜입니다.',
         estimatedPremium: upgradeOption.premium,
         productName: upgradeOption.productName,
         companyName: upgradeOption.companyName,

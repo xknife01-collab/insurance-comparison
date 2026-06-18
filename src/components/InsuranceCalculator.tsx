@@ -136,9 +136,10 @@ const ALL_CATEGORIES: MajorCategory[] = [
 interface InsuranceCalculatorProps {
   onCalculate?: (analysis: any) => void;
   initialTarget?: string | null;
+  isUnlocked?: boolean;
 }
 
-export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalculate, initialTarget }) => {
+export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalculate, initialTarget, isUnlocked }) => {
   const [selectedId, setSelectedId] = useState(initialTarget || 'cancer');
   const formSectionRef = React.useRef<HTMLDivElement>(null);
 
@@ -209,7 +210,8 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   const [healthStatus, setHealthStatus] = useState<'standard' | 'simple'>('standard');
   const [preExistingType, setPreExistingType] = useState<'3.0.5' | '3.2.5' | '3.3.5' | '3.5.5'>('3.2.5');
   const [currentPremium, setCurrentPremium] = useState('');
-  const [showAuditInfo, setShowAuditInfo] = useState(false);
+  const [showAuditInfo, setShowAuditInfo] = useState(false);
+
   const [validationError, setValidationError] = useState<string | null>(null);
   
   const [dentalLastYear, setDentalLastYear] = useState<'yes' | 'no'>('no');
@@ -735,8 +737,8 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
     const finalMobile = (overrides?.mobile !== undefined ? overrides.mobile : mobile) || '';
     const finalBirth = birthDate || '';
 
-    if (!finalName.trim() || !finalGender || finalBirth.length < 8 || !finalMobile.trim()) {
-      const msg = "정확한 보험 비교를 위해 성함, 성별, 생년월일, 연락처를 모두 입력해 주세요.";
+    if (!finalName.trim() || !finalGender || finalBirth.length < 8) {
+      const msg = "정확한 보험 비교를 위해 성함, 성별, 생년월일을 모두 입력해 주세요.";
       setValidationError(msg);
       alert(msg);
       return;
@@ -1260,7 +1262,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                   <div className="bg-white p-5 rounded-3xl border border-orange-100 flex flex-col gap-1.5 shadow-sm hover:shadow-md transition-all duration-300">
                     <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest">Promise 2</span>
                     <span className="text-sm font-black text-slate-800 leading-tight">개인정보 암호화</span>
-                    <p className="text-[11px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">자가진단 단계에서는 연락처가 완벽히 마스킹 보호 처리됩니다.</p>
+                    <p className="text-[11px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">자가진단 단계에서는 연락처가 든든하게 마스킹 보호 처리됩니다.</p>
                   </div>
                   <div className="bg-white p-5 rounded-3xl border border-orange-100 flex flex-col gap-1.5 shadow-sm hover:shadow-md transition-all duration-300">
                     <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest">Promise 3</span>
@@ -1274,7 +1276,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
               <div className="max-w-xl mx-auto mb-10 bg-gradient-to-r from-orange-500/10 to-amber-500/10 border border-orange-500/20 rounded-3xl p-5 flex items-center gap-3.5 text-left shadow-sm animate-in fade-in duration-500">
                 <span className="text-xl text-orange-500 flex-shrink-0 animate-pulse">🛡️</span>
                 <p className="text-xs sm:text-sm font-black text-slate-800 leading-relaxed break-keep">
-                  저희는 카카오톡 요청 전까지는 절대 전화나 문자를 드리지 않습니다. 안심하시고 비교 분석 하셔도 됩니다.
+                  저희는 고객님의 연락처를 묻지 않습니다. 안심하시고 비교 분석하시고 필요하실 때에만 카카오톡 요청해 주세요.
                 </p>
               </div>
 
@@ -1306,7 +1308,12 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
 
                      <div className="bg-slate-50/40 rounded-[2.2rem] p-7 flex flex-col gap-1 relative focus-within:bg-white focus-within:shadow-2xl transition-all border-2 border-transparent focus-within:border-orange-100/50">
                           <label className="text-[0.55rem] font-black text-slate-400 uppercase tracking-widest mb-1 text-left pl-1">연락처 (Mobile)</label>
-                          <input type="text" value={mobile} onChange={(e) => setMobile(e.target.value)} placeholder="01012345678" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200 w-full" />
+                          <div className="flex justify-between items-center text-left">
+                             <input type="text" value={mobile} onChange={(e) => setMobile(e.target.value)} placeholder="01012345678" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200 w-full" />
+                             <div className="flex-shrink-0 px-4 py-2 rounded-[1rem] font-black text-[0.65rem] transition-all whitespace-nowrap shadow-sm border bg-[#FFF0E5] text-[#FF6B00] border-orange-200">
+                               선택사항
+                             </div>
+                          </div>
                      </div>
                   </div>
 
@@ -1347,7 +1354,12 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
 
                    <div className="bg-slate-50/40 rounded-[2.2rem] p-7 flex flex-col gap-1 relative focus-within:bg-white focus-within:shadow-2xl transition-all border-2 border-transparent focus-within:border-orange-100/50">
                         <label className="text-[0.55rem] font-black text-slate-400 uppercase tracking-widest mb-1 text-left pl-1">연락처 (Mobile)</label>
-                        <input type="text" value={mobile} onChange={(e) => setMobile(e.target.value)} placeholder="01012345678" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200 w-full" />
+                        <div className="flex justify-between items-center text-left">
+                           <input type="text" value={mobile} onChange={(e) => setMobile(e.target.value)} placeholder="01012345678" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200 w-full" />
+                           <div className="flex-shrink-0 px-4 py-2 rounded-[1rem] font-black text-[0.65rem] transition-all whitespace-nowrap shadow-sm border bg-[#FFF0E5] text-[#FF6B00] border-orange-200">
+                             선택사항
+                           </div>
+                        </div>
                    </div>
                 </div>
               )}
@@ -1644,6 +1656,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                 />
               ) : selectedId === 'variable' ? (
                 <VariableFields
+                  isUnlocked={isUnlocked}
                   subType={variableSubType}
                   setSubType={(v) => {
                     setVariableSubType(v);

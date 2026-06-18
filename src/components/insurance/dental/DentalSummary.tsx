@@ -84,7 +84,7 @@ export const DentalSummary: React.FC<Props> = ({ result }) => {
            <div className="relative z-10 pt-8">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full backdrop-blur-sm border border-white/10">
                  <CheckCircle2 size={16} className="text-emerald-200" />
-                 <span className="text-sm font-bold">보장이 완벽한 수준입니다!</span>
+                 <span className="text-sm font-bold">보장이 균형 잡힌 수준입니다!</span>
               </div>
            </div>
         </div>

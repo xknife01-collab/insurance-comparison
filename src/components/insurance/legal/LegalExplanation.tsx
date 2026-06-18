@@ -1,13 +1,15 @@
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import {
   Scale, Shield, FileText, CheckCircle, Clock, Quote, Compass, Activity, Sparkles, Award
 } from 'lucide-react';
 
 interface Props {
+  isUnlocked?: boolean;
   onAction?: () => void;
 }
 
-export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
+export const LegalExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
   <section className="py-24 bg-slate-50/10 px-2 sm:px-4 relative overflow-hidden" id="legal-detail">
     <div className="max-w-7xl mx-auto">
 
@@ -78,7 +80,7 @@ export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
                 <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
                   <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -163,12 +165,12 @@ export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
-                    {item.company}{' '}
-                    <span className="text-indigo-300 text-xs font-bold ml-1">{item.product}</span>
+                    {maskCompany(item.company, isUnlocked)}{' '}
+                    <span className="text-indigo-300 text-xs font-bold ml-1">{maskProductName(item.product, isUnlocked)}</span>
                   </p>
-                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.note}</p>
+                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{maskText(item.note, isUnlocked)}</p>
                 </div>
-                <p className="font-black text-indigo-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.limit}</p>
+                <p className="font-black text-indigo-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{maskText(item.limit, isUnlocked)}</p>
               </div>
             ))}
           </div>
@@ -191,7 +193,7 @@ export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
               <div key={i} className="flex items-center gap-5 p-5 bg-indigo-50/20 rounded-3xl border border-indigo-100/30 hover:border-indigo-200/50 transition-colors">
                 <div className="shrink-0 font-black text-indigo-800 text-sm w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -227,7 +229,7 @@ export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { company: '삼성화재', product: '다이렉트 법률파트너', highlight: '업계 최고 수준의 변호사 선임비 및 대면 상담 지원 연동, 높은 신뢰성의 빠른 실손 청구 지급 처리', badges: ['한도 우수성', '상담 특약 우수'] },
+            { company: '삼성화재', product: '다이렉트 법률파트너', highlight: '업계 우수한 수준의 변호사 선임비 및 대면 상담 지원 연동, 높은 신뢰성의 빠른 실손 청구 지급 처리', badges: ['한도 우수성', '상담 특약 우수'] },
             { company: '현대해상', product: 'H&H 권리보호 법률비용', highlight: '다양한 소송 범위 설계 지원 및 갱신 주기 연장 트렌드 최적화, 비례 공제 할인율 강점', badges: ['소송 범위 특화', '비례 공제 우대'] },
             { company: 'DB손해보험', product: '프로미라이프 법률안심', highlight: '민사 소송 외에도 다양한 행정 소송 및 생활 법률 비용 보전 집중, 가성비 기초요율 설계', badges: ['행정소송 강점', '가성비 요율'] },
             { company: 'KB손해보험', product: '마이케어 법률비용보장', highlight: '급발진 의심 대응 변호사 선임 비용 업계 최초 선제 탑재, 스마트 전자소송 5% 할인 보장', badges: ['급발진 특약', '전자소송 우대'] },
@@ -235,9 +237,9 @@ export const LegalExplanation: React.FC<Props> = ({ onAction }) => (
             { company: '한화손해보험', product: '다이렉트 든든법률비용', highlight: '최저 수준의 기본 월 납입료로 실속 민사 중심의 다이어트형 플랜 조율 적합', badges: ['실속 플랜 지원', '최저 기초료'] },
           ].map((item, i) => (
             <div key={i} className="p-5 md:p-8 bg-indigo-50/20 rounded-2xl md:rounded-[2.5rem] border border-indigo-100/40 hover:border-indigo-300 hover:shadow-lg transition-all">
-              <p className="text-xs font-black text-indigo-600 mb-1">{item.company}</p>
-              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
-              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>
+              <p className="text-xs font-black text-indigo-600 mb-1">{maskCompany(item.company, isUnlocked)}</p>
+              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{maskProductName(item.product, isUnlocked)}</p>
+              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{maskText(item.highlight, isUnlocked)}</p>
               <div className="flex flex-wrap gap-2">
                 {item.badges.map((b) => (
                   <span

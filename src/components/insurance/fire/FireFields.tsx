@@ -312,7 +312,7 @@ export const FireFields: React.FC<Props> = ({
                   <div className="bg-white/95 px-5 py-3 rounded-2xl shadow-lg border border-slate-200/80 max-w-sm">
                     <p className="text-xs font-black text-slate-800 mb-0.5">세입자(임차인) 가입 제외</p>
                     <p className="text-[10px] font-bold text-slate-500 leading-normal">
-                      세입자는 건물 직접 가입 대상이 아닙니다. 대신 **아래 STEP 03의 [임차자배상책임 특약]**으로 집주인의 건물 원상복구 책임(1억)을 완벽히 대체 보장받습니다.
+                      세입자는 건물 직접 가입 대상이 아닙니다. 대신 **아래 STEP 03의 [임차자배상책임 특약]**으로 집주인의 건물 원상복구 책임(1억)을 든든하게 대체 보장받습니다.
                     </p>
                   </div>
                 </div>

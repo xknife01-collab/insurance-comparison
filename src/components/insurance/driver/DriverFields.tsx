@@ -147,7 +147,7 @@ export const DriverFields: React.FC<Props> = ({
             },
             {
               id: 'premium',
-              label: 'VIP 안심형 (최고급 플랜)',
+              label: 'VIP 안심형 (프리미엄 플랜)',
               price: '월 3~4만 원대',
               desc: '2026 최신 트렌드인 경찰 첫 출석 단계 변호인 선임비 선지급 및 최대 한도 보강 설계',
               features: ['교사처(형사합의금) 2억 원', '경찰조사 변호사비 5,000만 원', '대인 3,000만/대물 500만 벌금'],

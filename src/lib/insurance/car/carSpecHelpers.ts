@@ -22,7 +22,7 @@ export const getEngineOptions = (type: string, brandId: string, modelId: string)
   return [
     { id: 'g2_5', label: '⛽ 가솔린 2.0 / 2.5 (기본형)', desc: '부드러운 주행 질감의 기본 가솔린 사양', price: 0 },
     { id: 'g3_5', label: '🚀 가솔린 3.5 / 터보 (+300만원)', desc: '강력한 출력의 V6 / 터보 엔진 사양', price: 3000000 },
-    { id: 'hybrid', label: '⚡ 1.6 터보 하이브리드 (+500만원)', desc: '최고의 연비와 친환경 세제 혜택', price: 5000000 },
+    { id: 'hybrid', label: '⚡ 1.6 터보 하이브리드 (+500만원)', desc: '우수한 연비와 친환경 세제 혜택', price: 5000000 },
     { id: 'lpi', label: '💨 LPi LPG (+100만원)', desc: '친환경적이며 경제적인 충전소 연료 사양', price: 1000000 }
   ];
 };
@@ -34,7 +34,7 @@ export const getTrimOptions = (type: string, brandId: string, modelId: string) =
     return [
       { id: 'standard', label: '🎖️ 스탠다드', desc: '합리적인 전기차 기본 필수 패키지', price: 0 },
       { id: 'premium', label: '💎 프리미엄 (+500만원)', desc: '고급 인테리어와 ADAS 안전 편의 강화 사양', price: 5000000 },
-      { id: 'prestige', label: '👑 프레스티지 (+1000만원)', desc: '최첨단 주행 보조 및 천연가죽 최고급 사양', price: 10000000 }
+      { id: 'prestige', label: '👑 프레스티지 (+1000만원)', desc: '최첨단 주행 보조 및 천연가죽 프리미엄 사양', price: 10000000 }
     ];
   }
 
@@ -52,7 +52,7 @@ export const getTrimOptions = (type: string, brandId: string, modelId: string) =
     return [
       { id: 'standard', label: '🎖️ 기본형 스탠다드', desc: '제네시스 에센셜 기본 패키지', price: 0 },
       { id: 'sds1', label: '💎 시그니처 디자인 셀렉션 I (+300만원)', desc: '고급 천연가죽 시트 및 프라임 인테리어 패키지', price: 3000000 },
-      { id: 'sds2', label: '👑 시그니처 디자인 셀렉션 II (+600만원)', desc: '퀼팅 나파 가죽 및 오픈포어 리얼우드 최고급 패키지', price: 6000000 }
+      { id: 'sds2', label: '👑 시그니처 디자인 셀렉션 II (+600만원)', desc: '퀼팅 나파 가죽 및 오픈포어 리얼우드 프리미엄 패키지', price: 6000000 }
     ];
   }
 
@@ -61,7 +61,7 @@ export const getTrimOptions = (type: string, brandId: string, modelId: string) =
     return [
       { id: 'prestige', label: '🎖️ 프레스티지 (Prestige)', desc: '합리적인 기본 편의 품목을 갖춘 실속형 등급', price: 0 },
       { id: 'noblesse', label: '💎 노블레스 (Noblesse) (+350만원)', desc: '12.3인치 클러스터 및 서라운드 뷰 등 지능형 안전 사양 추가', price: 3500000 },
-      { id: 'signature', label: '👑 시그니처 (Signature) (+650만원)', desc: '퀼팅 가죽 시트, 프리미엄 사운드 등 풀옵션 수준의 최고급 등급', price: 6500000 }
+      { id: 'signature', label: '👑 시그니처 (Signature) (+650만원)', desc: '퀼팅 가죽 시트, 프리미엄 사운드 등 풀옵션 수준의 프리미엄 등급', price: 6500000 }
     ];
   }
 
@@ -70,7 +70,7 @@ export const getTrimOptions = (type: string, brandId: string, modelId: string) =
     return [
       { id: 'ls_lt', label: '🎖️ LS / LT', desc: '실용성과 핵심 주행 가치에 집중한 가성비 기본 사양', price: 0 },
       { id: 'premier', label: '💎 프리미어 (Premier) (+300만원)', desc: '고급 내장재 및 스마트 안전 장비가 보강된 고급 사양', price: 3000000 },
-      { id: 'activ_rs', label: '👑 액티브 / RS (+550만원)', desc: '스포티한 액티브/RS 전용 디자인 및 최고급 편의 장비 풀패키지', price: 5500000 }
+      { id: 'activ_rs', label: '👑 액티브 / RS (+550만원)', desc: '스포티한 액티브/RS 전용 디자인 및 프리미엄 편의 장비 풀패키지', price: 5500000 }
     ];
   }
 
@@ -79,7 +79,7 @@ export const getTrimOptions = (type: string, brandId: string, modelId: string) =
     return [
       { id: 'luxury', label: '🎖️ 럭셔리 / 더 클래스', desc: '동급 최대 적재 공간 및 풍부한 편의 사양의 기본 등급', price: 0 },
       { id: 'prestige', label: '💎 프레스티지 (Prestige) (+320만원)', desc: '지능형 안전 자율 주행 패키지 및 통풍/열선 고급 팩 기본 장착', price: 3200000 },
-      { id: 'noblesse', label: '👑 노블레스 / 더 블랙 (+580만원)', desc: '천연 가죽 퀼팅 시트, 최고급 외장 및 풀패키지 하이엔드 사양', price: 5800000 }
+      { id: 'noblesse', label: '👑 노블레스 / 더 블랙 (+580만원)', desc: '천연 가죽 퀼팅 시트, 프리미엄 외장 및 풀패키지 하이엔드 사양', price: 5800000 }
     ];
   }
 
@@ -96,6 +96,6 @@ export const getTrimOptions = (type: string, brandId: string, modelId: string) =
   return [
     { id: 'premium', label: '🎖️ 프리미엄', desc: '합리적인 기본 핵심 품목 사양', price: 0 },
     { id: 'exclusive', label: '💎 익스클루시브 (+400만원)', desc: '안전/편의 장비가 강화된 고급형 사양', price: 4000000 },
-    { id: 'calligraphy', label: '👑 캘리그래피 (+800만원)', desc: '독보적인 고급 외장과 소재의 최고급 사양', price: 8000000 }
+    { id: 'calligraphy', label: '👑 캘리그래피 (+800만원)', desc: '독보적인 고급 외장과 소재의 프리미엄 사양', price: 8000000 }
   ];
 };

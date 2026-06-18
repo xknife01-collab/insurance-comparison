@@ -150,7 +150,7 @@ export const analyzeCredit = (analysis: any): any => {
     },
     hybrid: {
       title: `[${hybridCompName}] 신용 헬스케어 ${loanLabel} 대출안심 마스터 플랜`,
-      description: `사망 + 3대 질병 + 50% 이상 고도후유장해까지 모든 신용 위험 요소를 완벽하게 커버하고, 개인 신용등급 변동 추이에 맞춘 '신용 관리 헬스케어 서비스'를 매달 모바일로 지원하는 프리미엄 통합 보장 안심 플랜입니다.`,
+      description: `사망 + 3대 질병 + 50% 이상 고도후유장해까지 모든 신용 위험 요소를 안정적으로 커버하고, 개인 신용등급 변동 추이에 맞춘 '신용 관리 헬스케어 서비스'를 매달 모바일로 지원하는 프리미엄 통합 보장 안심 플랜입니다.`,
       estimatedPremium: hybridPremium,
       coverageChanges: [
         `사망 및 50% 이상 장해 시 대출 잔액 최대 ${Math.round(loanAmount / 10000).toLocaleString()}만 원 완납`,

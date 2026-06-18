@@ -60,7 +60,7 @@ export const analyzeCaregiving = (analysis: any): any => {
       diet,
       upgrade: {
         title: '가장 많이 추천하는 플랜',
-        description: '매년 보장 금액이 늘어나는 체증형으로 변경하여 미래 간병 비용에 완벽 대비합니다.',
+        description: '매년 보장 금액이 늘어나는 체증형으로 변경하여 미래 간병 비용에 든든하게 대비합니다.',
         estimatedPremium: upgradeOption ? (upgradeOption === dietOption ? Math.round(upgradeOption.premium * 1.25) : upgradeOption.premium) : Math.round(analysis.monthlyPremium * 1.2 / 100) * 100,
         companyName: upgradeOption?.companyName || 'DB손보',
         productName: upgradeOption?.productName || 'NH올원더풀백년동행간병보험',

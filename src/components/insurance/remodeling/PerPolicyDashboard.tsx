@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import RadarChart from '../../RadarChart';
+import { maskCompany, maskProductName } from '../../../utils/compliance';
 
 interface Rider { rider_name: string; coverage_amount: number; }
 interface Policy { insurance_company: string; product_name: string; monthly_premium: number; riders: Rider[]; }
 
-interface Props { policies: Policy[]; age: number; gender: 'M' | 'F'; }
+interface Props { policies: Policy[]; age: number; gender: 'M' | 'F'; isUnlocked?: boolean; }
 
 const COMPANIES = ['DB손해보험','KB손해보험','한화손해보험','현대해상','삼성화재','메리츠화재'];
 
@@ -97,7 +98,7 @@ function findDups(policies: Policy[]): Set<number> {
   return dups;
 }
 
-function PolicyCard({policy,index,isDup,totalCount}:{policy:Policy;index:number;isDup:boolean;totalCount:number;key?:any}) {
+function PolicyCard({policy,index,isDup,totalCount,isUnlocked}:{policy:Policy;index:number;isDup:boolean;totalCount:number;isUnlocked?:boolean;key?:any}) {
   const [open,setOpen]=useState(index === 0);
   const t=detectType(policy.product_name);
   const cov=extractCov(policy.riders);
@@ -181,7 +182,7 @@ function PolicyCard({policy,index,isDup,totalCount}:{policy:Policy;index:number;
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex flex-wrap items-center gap-1.5 mb-1.5">
-              <span className="px-2 py-0.5 bg-slate-100 text-slate-600 rounded-md text-[10px] font-black">{policy.insurance_company}</span>
+              <span className="px-2 py-0.5 bg-slate-100 text-slate-600 rounded-md text-[10px] font-black">{maskCompany(policy.insurance_company, !!isUnlocked)}</span>
               <span className={`px-2 py-0.5 rounded-md text-[10px] font-black text-white ${typeColor[t]}`}>{typeLabel[t]}</span>
               {isDup&&<span className="px-2 py-0.5 bg-amber-100 text-amber-700 rounded-md text-[10px] font-black">⚠️ 중복</span>}
               {badges.map((b, idx) => (
@@ -190,7 +191,7 @@ function PolicyCard({policy,index,isDup,totalCount}:{policy:Policy;index:number;
                 </span>
               ))}
             </div>
-            <p className="text-sm font-black text-slate-800 leading-snug group-hover:text-orange-600 transition-colors line-clamp-2">{policy.product_name}</p>
+            <p className="text-sm font-black text-slate-800 leading-snug group-hover:text-orange-600 transition-colors line-clamp-2">{maskProductName(policy.product_name, !!isUnlocked)}</p>
             <div className="flex items-center gap-3 mt-2">
               <span className="text-sm font-black text-orange-600">월 {p.toLocaleString()}원</span>
               <span className="text-[10px] text-slate-400 font-bold">특약 {policy.riders.length}개</span>
@@ -259,7 +260,7 @@ function PolicyCard({policy,index,isDup,totalCount}:{policy:Policy;index:number;
                 <div className="flex-1 space-y-4">
                   <div>
                     <p className="text-xs font-black text-slate-800 uppercase tracking-widest mb-1">이 보험의 종합 평가</p>
-                    <p className="text-2xl font-black text-slate-900">{policy.product_name.split('(')[0].trim()}</p>
+                    <p className="text-2xl font-black text-slate-900">{maskProductName(policy.product_name.split('(')[0].trim(), !!isUnlocked)}</p>
                   </div>
                   {probs.length>0&&(
                     <div className="space-y-2">
@@ -289,7 +290,7 @@ function PolicyCard({policy,index,isDup,totalCount}:{policy:Policy;index:number;
                   <div className="space-y-1">
                     {dietOpts.slice(0,4).map((o,i)=>(
                       <div key={i} className="flex justify-between items-center text-xs py-1.5 border-b border-blue-100/50 last:border-0">
-                        <span className="font-bold text-slate-700">{String(i+1).padStart(2,'0')} {o.company}</span>
+                        <span className="font-bold text-slate-700">{String(i+1).padStart(2,'0')} {maskCompany(o.company, !!isUnlocked)}</span>
                         <span className="font-black text-blue-700">{o.premium.toLocaleString()}원</span>
                       </div>
                     ))}
@@ -308,7 +309,7 @@ function PolicyCard({policy,index,isDup,totalCount}:{policy:Policy;index:number;
                       const bonus=[5300,4700,4600,4200][i]||3800;
                       return(
                         <div key={i} className="flex justify-between items-center text-xs py-1.5 border-b border-white/10 last:border-0">
-                          <span className="font-bold text-slate-300">{String(i+1).padStart(2,'0')} {c}</span>
+                          <span className="font-bold text-slate-300">{String(i+1).padStart(2,'0')} {maskCompany(c, !!isUnlocked)}</span>
                           <span className="font-black text-orange-300">암 +{bonus}만</span>
                         </div>
                       );
@@ -330,7 +331,7 @@ function PolicyCard({policy,index,isDup,totalCount}:{policy:Policy;index:number;
                   {dietOpts.map((o,i)=>(
                     <div key={i} className={`grid grid-cols-12 px-5 py-3 text-xs items-center border-b border-slate-50 last:border-0 ${i===0?'bg-emerald-50/30':''}`}>
                       <div className="col-span-1 font-black text-slate-400">{String(i+1).padStart(2,'0')}</div>
-                      <div className="col-span-4 font-black text-slate-800">{o.company}</div>
+                      <div className="col-span-4 font-black text-slate-800">{maskCompany(o.company, !!isUnlocked)}</div>
                       <div className="col-span-5 text-slate-500 truncate">무배당 다이어트 보험</div>
                       <div className="col-span-2 text-right font-black text-blue-600">
                         {o.premium.toLocaleString()}원
@@ -349,7 +350,7 @@ function PolicyCard({policy,index,isDup,totalCount}:{policy:Policy;index:number;
   );
 }
 
-export const PerPolicyDashboard: React.FC<Props> = ({ policies, age, gender }) => {
+export const PerPolicyDashboard: React.FC<Props> = ({ policies, age, gender, isUnlocked }) => {
   const dups = findDups(policies);
   const total = policies.reduce((s,p)=>s+p.monthly_premium,0);
   const hasDups = dups.size > 0;
@@ -383,7 +384,7 @@ export const PerPolicyDashboard: React.FC<Props> = ({ policies, age, gender }) =
 
       {/* Per-Policy Cards */}
       {policies.map((policy,i)=>(
-        <PolicyCard key={i} policy={policy} index={i} isDup={dups.has(i)} totalCount={policies.length}/>
+        <PolicyCard key={i} policy={policy} index={i} isDup={dups.has(i)} totalCount={policies.length} isUnlocked={isUnlocked} />
       ))}
     </div>
   );

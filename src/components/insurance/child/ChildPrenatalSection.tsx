@@ -1,10 +1,11 @@
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import {
   Baby, Calendar, ShieldCheck, ShieldAlert, Sparkles,
   UserCheck, Clock, Quote, ClipboardCheck, Star, Activity, AlertTriangle
 } from 'lucide-react';
 
-export const ChildPrenatalSection = ({ onAction }: { onAction: () => void }) => (
+export const ChildPrenatalSection = ({ onAction, isUnlocked }: { onAction: () => void, isUnlocked?: boolean }) => (
   <section className="py-32 bg-yellow-50/20 px-2 sm:px-4 relative overflow-hidden" id="child-detail">
     <div className="max-w-7xl mx-auto">
 
@@ -16,7 +17,7 @@ export const ChildPrenatalSection = ({ onAction }: { onAction: () => void }) => 
             태아부터 성인까지, 평생의 첫 보장 자산 구축
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[1.1]">
-            가장 순수한 시작을 위한 <span className="text-yellow-600">완벽한 울타리</span>,<br />
+            가장 순수한 시작을 위한 <span className="text-yellow-600">균형 잡힌 울타리</span>,<br />
             우리 아이 보험의 해답을 제시합니다.
           </h2>
         </div>
@@ -75,7 +76,7 @@ export const ChildPrenatalSection = ({ onAction }: { onAction: () => void }) => 
                 <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 ${item.badge}`}>{item.age}</div>
                 <div className="flex-1 min-w-0">
                   <p className="font-black text-slate-800 text-sm">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold">{item.desc}</p>
+                  <p className="text-[11px] text-slate-400 font-bold">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -178,18 +179,18 @@ export const ChildPrenatalSection = ({ onAction }: { onAction: () => void }) => 
           <div className="space-y-4">
             {[
               { company: '현대해상', product: '굿앤굿어린이종합', limit: '선천질환 특화 1위', note: '대한민국 신생아 2명 중 1명 가입 대기' },
-              { company: 'KB손해보험', product: 'KB희망플러스어린이', limit: '3대 진단비 업계 최고 한도', note: '독감 치료비 및 감염병 일당 고액 설계' },
+              { company: 'KB손해보험', product: 'KB희망플러스어린이', limit: '3대 진단비 업계 최대 한도', note: '독감 치료비 및 감염병 일당 고액 설계' },
               { company: 'DB손해보험', product: '아이러브건강보험', limit: '가성비 최적화 비갱신 플랜', note: '납입면제 대상 범위 업계 최다 지원' },
             ].map((item, i) => (
               <div key={i} className="flex items-center justify-between p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
-                    {item.company}{' '}
-                    <span className="text-yellow-300 text-xs font-bold ml-1">{item.product}</span>
+                    {maskCompany(item.company, isUnlocked)}{' '}
+                    <span className="text-yellow-300 text-xs font-bold ml-1">{maskProductName(item.product, isUnlocked)}</span>
                   </p>
-                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{item.note}</p>
+                  <p className="text-[11px] text-slate-400 font-bold mt-0.5">{maskText(item.note, isUnlocked)}</p>
                 </div>
-                <p className="font-black text-yellow-400 text-sm shrink-0 ml-4">{item.limit}</p>
+                <p className="font-black text-yellow-400 text-sm shrink-0 ml-4">{maskText(item.limit, isUnlocked)}</p>
               </div>
             ))}
           </div>
@@ -212,7 +213,7 @@ export const ChildPrenatalSection = ({ onAction }: { onAction: () => void }) => 
               <div key={i} className="flex items-center gap-5 p-5 bg-yellow-50/30 rounded-3xl border border-yellow-100/50 hover:border-yellow-200 transition-colors">
                 <div className="shrink-0 font-black text-yellow-700 text-sm w-32">{item.step}</div>
                 <div className="flex-1">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -256,9 +257,9 @@ export const ChildPrenatalSection = ({ onAction }: { onAction: () => void }) => 
             { company: '한화손해보험', product: '라이프플러스어린이', highlight: '어른이보험 실속형 비갱신 가격 경쟁력 우수', badges: ['어른이 실속형', '비갱신 강자'] },
           ].map((item, i) => (
             <div key={i} className="p-5 md:p-8 bg-yellow-50/20 rounded-2xl md:rounded-[2.5rem] border border-yellow-100 hover:border-yellow-300 hover:shadow-lg transition-all">
-              <p className="text-xs font-black text-yellow-600 mb-1">{item.company}</p>
-              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
-              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>
+              <p className="text-xs font-black text-yellow-600 mb-1">{maskCompany(item.company, isUnlocked)}</p>
+              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{maskProductName(item.product, isUnlocked)}</p>
+              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{maskText(item.highlight, isUnlocked)}</p>
               <div className="flex flex-wrap gap-2">
                 {item.badges.map((b) => (
                   <span

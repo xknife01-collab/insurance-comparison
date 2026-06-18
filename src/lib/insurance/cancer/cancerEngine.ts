@@ -57,11 +57,11 @@ export const analyzeCancer = (analysis: any): any => {
   if (isAftereffectDeficient) deficiencies.push('질병후유장해 보장 부족');
 
   if (deficiencies.length === 0) {
-    deficiencies.push('보완할 점이 거의 없는 완벽한 설계');
+    deficiencies.push('보완할 점이 거의 없는 균형 잡힌 설계');
   }
 
   let totalScore = 95;
-  totalScore -= (deficiencies.filter(d => d !== '보완할 점이 거의 없는 완벽한 설계').length * 4);
+  totalScore -= (deficiencies.filter(d => d !== '보완할 점이 거의 없는 균형 잡힌 설계').length * 4);
   
   if (hasTreatment2025) totalScore += 3;
   if (hasTargeted) totalScore += 2;
@@ -107,7 +107,7 @@ export const analyzeCancer = (analysis: any): any => {
         description: (analysis as any).cancer?.paymentType === 'renewable'
           ? `초기 비용 부담을 획기적으로 줄인 ${opt3.companyName}의 갱신형 플랜입니다. 경제적인 보험료로 넓은 보장을 준비할 수 있습니다.`
           : (hasFamilyHistory 
-              ? `가족력이 있으신 고객님께 꼭 필요한 ${opt3.companyName}의 VIP 집중 보장 플랜입니다. 반복되는 재발암까지 완벽하게 보장합니다.`
+              ? `가족력이 있으신 고객님께 꼭 필요한 ${opt3.companyName}의 VIP 집중 보장 플랜입니다. 반복되는 재발암까지 안정적으로 보장합니다.`
               : `보험료 인상 걱정 없이 100세까지 든든하게 보장받는 ${opt3.companyName}의 명품 암보험입니다.`),
         productName: opt3.productName,
         companyName: opt3.companyName,

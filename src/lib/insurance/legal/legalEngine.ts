@@ -133,11 +133,11 @@ export const analyzeLegal = (analysis: any): any => {
     companyName: opt3.companyName,
     productName: opt3.productName,
     description: isLawyerFocus
-      ? `변호사 선임비용 업계 최고 한도(3,000만 원)를 설정하고 민/형사 방어력을 극대화한 ${opt3.companyName}의 프리미엄 마스터 변호사 플랜입니다.`
-      : `심급별 인지대/송달료 최고 한도 지원과 급발진 EDR 소송 대응력까지 완비한 ${opt3.companyName}의 하이엔드 소송비용 마스터플랜입니다.`,
+      ? `변호사 선임비용 업계 최대 한도(3,000만 원)를 설정하고 민/형사 방어력을 극대화한 ${opt3.companyName}의 프리미엄 마스터 변호사 플랜입니다.`
+      : `심급별 인지대/송달료 최대 한도 지원과 급발진 EDR 소송 대응력까지 완비한 ${opt3.companyName}의 하이엔드 소송비용 마스터플랜입니다.`,
     estimatedPremium: opt3.premium,
     coverageChanges: [
-      isLawyerFocus ? '변호사 선임 한도 심급별 최대 3,000만 원' : '인지대/송달료 최고 수준(1,000만 원) 보장',
+      isLawyerFocus ? '변호사 선임 한도 심급별 최대 3,000만 원' : '인지대/송달료 우수한 수준(1,000만 원) 보장',
       '소송 전 대면 변호사 상담 및 급발진 특약 풀패키지 탑재',
       '민사, 형사, 행정 소송 전방위 가드 탑재'
     ],

@@ -107,11 +107,11 @@ export const analyzePet = (analysis: any): any => {
   const hybridPremium = opt3.premium;
   const hybrid: RecommendationPlan = {
     title: `[${opt3.companyName}] 프리미엄 마스터 플랜`,
-    description: `수술비 한도 증액 및 구강/스케일링 특약까지 모두 포함하여 든든하게 보장받는 최고급 케어 플랜입니다.`,
+    description: `수술비 한도 증액 및 구강/스케일링 특약까지 모두 포함하여 든든하게 보장받는 프리미엄 케어 플랜입니다.`,
     estimatedPremium: hybridPremium,
     coverageChanges: [
       '보장 비율 최대 80% ~ 90% 세팅',
-      '수술 회당 한도 업계 최고 수준',
+      '수술 회당 한도 업계 우수한 수준',
       '슬개골 + 피부 + 치과 전담 특약 풀패키지'
     ],
     switchingLossNotice: '보장이 큰 만큼 월 보험료가 높게 책정되므로 납입 여력을 확인하세요.'

@@ -331,7 +331,7 @@ export function LeadDistributionSimulator({
                   <div className="flex items-baseline gap-1.5">
                     <span className="text-base font-black text-white">{giniIndex}</span>
                     <span className={`text-[9px] font-bold ${giniIndex < 0.1 ? 'text-emerald-400' : giniIndex < 0.25 ? 'text-amber-400' : 'text-rose-400'}`}>
-                      {giniIndex < 0.1 ? '완벽한 균등' : giniIndex < 0.25 ? '양호한 균등' : '불평등 격차'}
+                      {giniIndex < 0.1 ? '균형 잡힌 균등' : giniIndex < 0.25 ? '양호한 균등' : '불평등 격차'}
                     </span>
                   </div>
                 </div>

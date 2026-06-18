@@ -1,4 +1,5 @@
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import { 
   Activity, Search, ShieldCheck, HeartPulse, ChevronRight, 
   HelpCircle, AlertCircle, RefreshCw, Award, CheckCircle2, Heart, Sparkles,
@@ -6,10 +7,11 @@ import {
 } from 'lucide-react';
 
 interface Props {
+  isUnlocked?: boolean;
   onAction?: () => void;
 }
 
-export const CaregivingExplanation: React.FC<Props> = ({ onAction }) => {
+export const CaregivingExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => {
   return (
     <div className="mt-16 space-y-24 animate-in fade-in slide-in-from-bottom-8 duration-1000">
       
@@ -130,7 +132,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction }) => {
                 </div>
                 <div className="flex justify-between text-xs font-bold text-gray-600">
                   <span>📌 상품 구조</span>
-                  <span className="text-red-500 font-black">3년 / 5년 주기 갱신형 (고연령 갱신 폭탄 대비 필요)</span>
+                  <span className="text-red-500 font-black">3년 / 5년 주기 갱신형 (고연령 갱신 시 보험료 인상 대비 필요)</span>
                 </div>
               </div>
             </div>
@@ -304,7 +306,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction }) => {
               company: 'DB손해보험',
               badge: '간호간병 통합 우수',
               badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-              highlight: '간호·간병통합서비스 입원 일당 업계 최고액 보강',
+              highlight: '간호·간병통합서비스 입원 일당 업계 우수액 보강',
               desc: '보호자 없는 간호통합병동 입원 빈도가 높은 현대 트렌드에 발맞춰, 공동 병동 이용 시 지급되는 하루 정액 일당 한도를 가장 강력한 단가로 보장해 줍니다.',
               strength: '실용적인 대학병원 공동간병 이용 플랜 최적'
             },
@@ -347,22 +349,22 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction }) => {
             >
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-base font-black text-gray-900">{item.company}</span>
+                  <span className="text-base font-black text-gray-900">{maskCompany(item.company, isUnlocked)}</span>
                   <span className={`text-[9px] font-black px-2.5 py-1 rounded-full border ${item.badgeColor}`}>
                     {item.badge}
                   </span>
                 </div>
                 <div className="pt-2">
-                  <p className="text-[11px] text-purple-600 font-black">{item.highlight}</p>
+                  <p className="text-[11px] text-purple-600 font-black">{maskText(item.highlight, isUnlocked)}</p>
                   <p className="text-xs text-gray-500 font-bold mt-2 leading-relaxed">
-                    {item.desc}
+                    {maskText(item.desc, isUnlocked)}
                   </p>
                 </div>
               </div>
               <div className="pt-4 border-t border-gray-50">
                 <p className="text-[9px] text-gray-400 font-bold uppercase tracking-wider">강력 추천 매칭</p>
                 <p className="text-xs text-gray-700 font-black mt-1 flex items-center gap-1.5">
-                  🛡️ {item.strength}
+                  🛡️ {maskText(item.strength, isUnlocked)}
                 </p>
               </div>
             </div>
@@ -402,7 +404,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction }) => {
               <span className="text-3xl font-black text-purple-100 leading-none">{item.step}</span>
               <div className="space-y-2">
                 <h5 className="text-base font-black text-slate-900">{item.title}</h5>
-                <p className="text-xs text-slate-500 font-bold leading-relaxed">{item.desc}</p>
+                <p className="text-xs text-slate-500 font-bold leading-relaxed">{maskText(item.desc, isUnlocked)}</p>
               </div>
             </div>
           ))}

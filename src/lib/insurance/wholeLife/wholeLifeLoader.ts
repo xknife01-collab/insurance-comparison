@@ -60,7 +60,7 @@ export const fetchWholeLifePremium = async (analysis: InsuranceAnalysis): Promis
         refundType: 'low', 
         declaredRate: 3.25, 
         businessFee: 4.8, 
-        features: "완납 후 업계 최고 수준 환급률 (123.4%) CM 전용 | 저해지 환급형 18% 할인 요율 반영 | 1:1 전담 계약유지 관리 서비스 제공" 
+        features: "완납 후 업계 우수한 수준 환급률 (123.4%) CM 전용 | 저해지 환급형 18% 할인 요율 반영 | 1:1 전담 계약유지 관리 서비스 제공" 
       },
       { 
         company: '신한라이프', 
@@ -84,7 +84,7 @@ export const fetchWholeLifePremium = async (analysis: InsuranceAnalysis): Promis
         refundType: 'standard', 
         declaredRate: 2.85, 
         businessFee: 6.5, 
-        features: "업계 최대 자산 1위 삼성생명 절대 안정성 지원 | 납입 기간 중 해약 시 안심 비례 환급 보존 | 연금전환 특약 업계 최고 적용율" 
+        features: "업계 최대 자산 1위 삼성생명 절대 안정성 지원 | 납입 기간 중 해약 시 안심 비례 환급 보존 | 연금전환 특약 업계 우수 적용율" 
       }
     ];
   }

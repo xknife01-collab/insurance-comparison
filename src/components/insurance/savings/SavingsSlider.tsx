@@ -85,7 +85,7 @@ export const SavingsSlider: React.FC<{ result: AnalysisResult }> = ({ result }) 
       if (savingType === 'installment' && value === 1500000) {
         scoreIndex = 100; // 비과세 월 한도 최대치 설계
       } else if (savingType === 'lumpSum' && value === 100000000) {
-        scoreIndex = 100; // 일시납 비과세 최고 한도 설계
+        scoreIndex = 100; // 일시납 비과세 최대 한도 설계
       }
     } else {
       if (keepYears < 10) {

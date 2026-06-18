@@ -1,14 +1,16 @@
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import {
   PiggyBank, ShieldCheck, TrendingUp, Award, Sparkles,
   CheckCircle, Clock, Quote, Compass, AlertTriangle
 } from 'lucide-react';
 
 interface Props {
+  isUnlocked?: boolean;
   onAction?: () => void;
 }
 
-export const AnnuityExplanation: React.FC<Props> = ({ onAction }) => (
+export const AnnuityExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
   <section className="py-24 bg-blue-50/10 px-2 sm:px-4 relative overflow-hidden text-left" id="annuity-detail">
     <div className="max-w-7xl mx-auto">
 
@@ -78,7 +80,7 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction }) => (
                 <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
                   <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
-                  <p className="text-[11px] text-slate-400 font-bold break-keep">{item.desc}</p>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -165,7 +167,7 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction }) => (
                   <p className="font-black text-sm text-left">
                     {item.title}{' '}
                   </p>
-                  <p className="text-[11px] text-slate-400 font-bold mt-0.5 text-left">{item.note}</p>
+                  <p className="text-[11px] text-slate-400 font-bold mt-0.5 text-left">{maskText(item.note, isUnlocked)}</p>
                 </div>
                 <p className="font-black text-blue-400 text-sm shrink-0 sm:ml-4 text-left sm:text-right">{item.val}</p>
               </div>
@@ -190,7 +192,7 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction }) => (
               <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-blue-50/30 rounded-3xl border border-blue-100/50 hover:border-blue-200 transition-colors">
                 <div className="shrink-0 font-black text-blue-700 text-sm w-32 text-left">{item.step}</div>
                 <div className="flex-1 text-left">
-                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{item.desc}</p>
+                  <p className="font-bold text-slate-800 text-xs leading-relaxed break-keep">{maskText(item.desc, isUnlocked)}</p>
                 </div>
               </div>
             ))}
@@ -231,12 +233,12 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction }) => (
             { company: '한화생명', product: '한화 e연금저축보험 (무)', highlight: '납입 유연성이 돋보이는 유니버셜 기능 지원, 급전 필요 시 해지 없이 중도 인출/추가 납입 가능', badges: ['납입 유연성', '중도인출 지원'] },
             { company: '미래에셋생명', product: '온라인 연금저축보험 (무)', highlight: '해외 자산 배분 펀드 연계 운용 노하우 반영, 고이율의 연금 자산 시뮬레이션 및 포트폴리오 다양성', badges: ['자산 배분 노하우', '다양한 포트폴리오'] },
             { company: '동양생명', product: '(무)수호천사 인터넷연금저축보험', highlight: '중저소득 직장인을 위한 적립금 가산 혜택 제공, 우수 고객 수수료 감면으로 해지 환급 가치 우위', badges: ['적립 가산', '수수료 감면'] },
-            { company: '교보라이프플래닛', product: '(무)라이프플래닛 연금보험(비과세)', highlight: '세액공제 환급 대신 수령액 비과세 혜택 집중, 10년 거치 시 완벽한 비과세 계좌 전환 지원', badges: ['비과세 집중형', '이자소득세 면제'] },
+            { company: '교보라이프플래닛', product: '(무)라이프플래닛 연금보험(비과세)', highlight: '세액공제 환급 대신 수령액 비과세 혜택 집중, 10년 거치 시 균형 잡힌 비과세 계좌 전환 지원', badges: ['비과세 집중형', '이자소득세 면제'] },
           ].map((item, i) => (
             <div key={i} className="p-5 md:p-8 bg-blue-50/20 rounded-2xl md:rounded-[2.5rem] border border-blue-100 hover:border-blue-300 hover:shadow-lg transition-all text-left">
-              <p className="text-xs font-black text-blue-600 mb-1">{item.company}</p>
-              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{item.product}</p>
-              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{item.highlight}</p>
+              <p className="text-xs font-black text-blue-600 mb-1">{maskCompany(item.company, isUnlocked)}</p>
+              <p className="font-black text-slate-800 text-sm mb-2 leading-tight">{maskProductName(item.product, isUnlocked)}</p>
+              <p className="text-xs text-slate-500 font-bold mb-4 leading-relaxed">{maskText(item.highlight, isUnlocked)}</p>
               <div className="flex flex-wrap gap-2">
                 {item.badges.map((b) => (
                   <span

@@ -1,8 +1,9 @@
 import React from 'react';
+import { maskCompany, maskProductName, maskText } from '../../../utils/compliance';
 import { motion } from 'framer-motion';
 import { Brain, HeartHandshake, ShieldCheck, AlertCircle, Users, ClipboardCheck, TrendingUp, Info } from 'lucide-react';
 
-export const CaregivingOldGuide: React.FC = () => {
+export const CaregivingOldGuide: React.FC<{ isUnlocked?: boolean }> = ({ isUnlocked }) => {
   return (
     <div className="mt-20 space-y-24">
       {/* Introduction Section */}
