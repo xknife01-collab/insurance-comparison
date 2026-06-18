@@ -17,11 +17,15 @@ export default async function handler(req, res) {
 
   try {
     const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
-    const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
     
     if (!supabaseUrl || !supabaseServiceRoleKey) {
-      console.error('🔴 Supabase credentials missing');
-      return res.status(500).json({ success: false, error: 'Supabase credentials are not configured.' });
+      const availableKeys = Object.keys(process.env).filter(k => k.toLowerCase().includes('supabase')).join(', ');
+      console.error('🔴 Supabase credentials missing. Available env keys:', availableKeys);
+      return res.status(500).json({ 
+        success: false, 
+        error: `Supabase credentials are not configured on Vercel. (URL present: ${!!supabaseUrl}, Key present: ${!!supabaseServiceRoleKey}). Available keys: [${availableKeys}]` 
+      });
     }
 
     const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
