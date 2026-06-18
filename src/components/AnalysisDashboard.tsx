@@ -1661,6 +1661,32 @@ ${origin}/?code=${simCode}
           <p className="text-gray-500 font-bold italic">"대한민국 모든 보험사의 DB를 전수 조사한 결과입니다."</p>
         </div>
 
+        {!isUnlocked && (
+          <div className="bg-orange-500/10 backdrop-blur-md border border-orange-500/20 rounded-[2rem] p-6 text-center shadow-lg relative overflow-hidden group mb-6 max-w-7xl mx-auto">
+            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 via-orange-600/5 to-orange-500/5 opacity-50 group-hover:scale-105 transition-transform duration-1000"></div>
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-3 text-left">
+                <div className="w-10 h-10 rounded-2xl bg-orange-500/20 flex items-center justify-center flex-shrink-0">
+                  <AlertCircle className="w-5 h-5 text-orange-500" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-black text-slate-800 tracking-tight">🔒 심의 규정에 따라 실제 회사명/상품명이 마스킹 처리되어 있습니다.</h4>
+                  <p className="text-xs text-slate-500 font-bold mt-0.5">본인 인증 및 상담 신청(0.1초 무료) 완료 즉시 실명 상품 정보 잠금이 해제됩니다.</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsConsultOpen(true);
+                }}
+                className="px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-black text-xs rounded-xl shadow-md transition-all active:scale-95 whitespace-nowrap cursor-pointer font-extrabold"
+              >
+                🔒 0.1초 만에 무료로 실제 이름 잠금 해제하기
+              </button>
+            </div>
+          </div>
+        )}
+
         {(result.recommendations.diet.isFire || isProperty) && (
           <div className="p-6 bg-orange-50/80 rounded-2xl border border-orange-100 flex items-start gap-4 max-w-2xl mx-auto text-left shadow-sm backdrop-blur-sm animate-in fade-in slide-in-from-bottom-2 duration-300">
             <span className="text-2xl mt-0.5">💡</span>
@@ -1727,32 +1753,6 @@ ${origin}/?code=${simCode}
                   </p>
                 </div>
               </div>
-            </div>
-          </div>
-        )}
-
-        {!isUnlocked && (
-          <div className="bg-orange-500/10 backdrop-blur-md border border-orange-500/20 rounded-[2rem] p-6 text-center shadow-lg relative overflow-hidden group mb-6 max-w-7xl mx-auto">
-            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 via-orange-600/5 to-orange-500/5 opacity-50 group-hover:scale-105 transition-transform duration-1000"></div>
-            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-3 text-left">
-                <div className="w-10 h-10 rounded-2xl bg-orange-500/20 flex items-center justify-center flex-shrink-0">
-                  <AlertCircle className="w-5 h-5 text-orange-500" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-black text-slate-800 tracking-tight">🔒 심의 규정에 따라 실제 회사명/상품명이 마스킹 처리되어 있습니다.</h4>
-                  <p className="text-xs text-slate-500 font-bold mt-0.5">본인 인증 및 상담 신청(0.1초 무료) 완료 즉시 실명 상품 정보 잠금이 해제됩니다.</p>
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={() => {
-                  setIsConsultOpen(true);
-                }}
-                className="px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-black text-xs rounded-xl shadow-md transition-all active:scale-95 whitespace-nowrap cursor-pointer font-extrabold"
-              >
-                🔒 0.1초 만에 무료로 실제 이름 잠금 해제하기
-              </button>
             </div>
           </div>
         )}
