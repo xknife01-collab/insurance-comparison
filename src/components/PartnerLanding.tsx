@@ -85,9 +85,10 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
         {/* Navigation / Header Area */}
         <div className="max-w-[1300px] mx-auto px-4">
           <div className="flex justify-between items-center pb-6 border-b border-slate-900">
-            <div className="flex items-center gap-2 cursor-pointer" onClick={() => onNavigate('home')}>
-              <span className="text-xl font-black bg-gradient-to-r from-orange-500 to-amber-400 bg-clip-text text-transparent tracking-tight">
-                INSUREBALANCE
+            <div className="flex items-center gap-3 cursor-pointer" onClick={() => onNavigate('home')}>
+              <img src="/6397187-1.png" alt="보험리밸런스" className="h-10 md:h-12 w-auto object-contain" />
+              <span className="text-lg md:text-xl font-black bg-gradient-to-r from-orange-500 to-amber-400 bg-clip-text text-transparent">
+                보험리밸런스
               </span>
               <span className="text-[10px] font-black bg-orange-500/10 text-orange-400 border border-orange-500/20 px-2 py-0.5 rounded">
                 B2B PARTNER
@@ -146,7 +147,7 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
                 href="/?planner=test" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="group relative overflow-hidden bg-slate-900/60 border border-slate-800 hover:border-orange-500/40 rounded-3xl p-6 text-left transition-all duration-300 hover:shadow-[0_12px_30px_rgba(249,115,22,0.08)] flex flex-col justify-between min-h-[240px]"
+                className="group relative overflow-hidden bg-gradient-to-br from-slate-900/40 via-slate-950/60 to-orange-500/5 border border-slate-800/80 hover:border-orange-500/40 rounded-3xl p-6 text-left transition-all duration-300 hover:shadow-[0_12px_30px_rgba(249,115,22,0.08)] flex flex-col justify-between min-h-[240px]"
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/5 rounded-full blur-2xl group-hover:scale-150 transition-all duration-500" />
                 <div className="space-y-3">
@@ -170,7 +171,7 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
                 href="/admin?demo=planner" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="group relative overflow-hidden bg-slate-900/60 border border-slate-800 hover:border-violet-500/40 rounded-3xl p-6 text-left transition-all duration-300 hover:shadow-[0_12px_30px_rgba(124,58,237,0.08)] flex flex-col justify-between min-h-[240px]"
+                className="group relative overflow-hidden bg-gradient-to-br from-slate-900/40 via-slate-950/60 to-violet-500/5 border border-slate-800/80 hover:border-violet-500/40 rounded-3xl p-6 text-left transition-all duration-300 hover:shadow-[0_12px_30px_rgba(124,58,237,0.08)] flex flex-col justify-between min-h-[240px]"
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-violet-600/5 rounded-full blur-2xl group-hover:scale-150 transition-all duration-500" />
                 <div className="space-y-3">
@@ -197,7 +198,7 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
                 href="/admin?demo=agency" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="group relative overflow-hidden bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 rounded-3xl p-6 text-left transition-all duration-300 hover:shadow-[0_12px_30px_rgba(16,185,129,0.08)] flex flex-col justify-between min-h-[240px]"
+                className="group relative overflow-hidden bg-gradient-to-br from-slate-900/40 via-slate-950/60 to-emerald-500/5 border border-slate-800/80 hover:border-emerald-500/40 rounded-3xl p-6 text-left transition-all duration-300 hover:shadow-[0_12px_30px_rgba(16,185,129,0.08)] flex flex-col justify-between min-h-[240px]"
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl group-hover:scale-150 transition-all duration-500" />
                 <div className="space-y-3">
@@ -463,6 +464,239 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
           </div>
         </div>
 
+        {/* 눈으로 확인하는 AI 영업 자동화 프로세스 */}
+        <div className="max-w-[1600px] mx-auto px-4 py-12">
+          <div className="text-center space-y-4 mb-10">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-[10px] font-black tracking-widest uppercase">
+              <Sparkles className="w-3 h-3 text-orange-400" />
+              <span>AI 영업 프로세스 시각화</span>
+            </div>
+            <h3 className="text-xl md:text-3xl font-black text-white">눈으로 확인하는 AI 영업 자동화 프로세스</h3>
+            <p className="text-slate-400 text-xs md:text-sm font-semibold max-w-2xl mx-auto">
+              고객이 진단 기기를 사용하는 순간부터 1:1 상담까지, 모든 과정이 실시간으로 자동 연동됩니다.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-[1400px] mx-auto">
+            {/* Card 1: B2C Kakao Push & 1:1 Consultation */}
+            <div className="p-6 md:p-8 rounded-3xl bg-gradient-to-br from-slate-900/40 via-slate-950/60 to-orange-500/5 border border-slate-800/80 space-y-6 text-left relative overflow-hidden flex flex-col justify-between">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/5 rounded-full blur-3xl pointer-events-none" />
+              
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-black text-orange-400 bg-orange-500/10 px-2.5 py-0.5 rounded border border-orange-500/20 uppercase tracking-widest">
+                    1. 실시간 카톡 알림 및 즉시 연결
+                  </span>
+                  <span className="text-slate-500 text-xs font-semibold">고객 진단과 동시에 휴대폰 진동 알림</span>
+                </div>
+
+                {/* Kakao notification mockup */}
+                <div className="p-5 rounded-2xl bg-slate-900/85 border border-slate-800 backdrop-blur-sm shadow-xl max-w-md mx-auto space-y-4 relative">
+                  <div className="flex items-center justify-between border-b border-slate-800/50 pb-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-7 h-7 rounded-lg bg-[#FFE812] flex items-center justify-center text-[#3C1E1E] font-black text-xs shadow-md">
+                        talk
+                      </div>
+                      <span className="text-white font-extrabold text-xs">카카오톡 알림톡</span>
+                    </div>
+                    <span className="text-slate-500 text-[10px] font-semibold">지금</span>
+                  </div>
+                  
+                  <div className="space-y-2 text-xs leading-relaxed text-slate-300 font-semibold break-keep">
+                    <p className="text-amber-400 font-bold">[보험리밸런스 AI 영업비서]</p>
+                    <p className="text-white font-extrabold">김*우 고객님 (34세/남)</p>
+                    <p>이 설계사님의 개인 보장분석 링크를 통해 <span className="text-orange-400 font-bold">[실손 및 3대 진단비 분석]</span>을 완료했습니다!</p>
+                    
+                    <div className="mt-3 p-3 rounded-xl bg-slate-950/80 border border-slate-800/50 space-y-1">
+                      <p className="text-red-400 font-bold flex items-center gap-1">
+                        <span>🚨</span> 주요 결손 보장 요약
+                      </p>
+                      <ul className="text-slate-400 space-y-0.5 pl-1">
+                        <li>• 뇌혈관 질환 진단비 (-2,000만원 부족)</li>
+                        <li>• 암 치료 수술비 (-1,000만원 부족)</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* 즉시 1:1 상담 연결하기 (0.1초 연동) Button */}
+                  <button className="w-full py-3 rounded-xl bg-[#FFE812] text-[#3C1E1E] font-black text-xs hover:bg-[#FEE500] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-[0_4px_12px_rgba(255,232,18,0.25)] relative overflow-hidden group">
+                    <span className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out" />
+                    <span>즉시 1:1 상담 연결하기 (0.1초 연동)</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Descriptions */}
+              <div className="pt-4 border-t border-slate-800/50 space-y-2.5 text-xs text-slate-400 font-semibold leading-relaxed">
+                <p className="flex items-start gap-2">
+                  <span className="text-orange-400">⚡</span>
+                  <span><b>개인 고유 링크:</b> 카톡 프로필, 블로그 등에 배포하여 비대면 DB 수집</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <span className="text-orange-400">⚡</span>
+                  <span><b>실시간 알림:</b> 분석이 끝나는 즉시 상세 결손 데이터가 모바일 알림 전송</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <span className="text-orange-400">⚡</span>
+                  <span><b>다이렉트 연결:</b> 터치 한 번으로 고객과의 1:1 카톡 채팅방이 바로 개설</span>
+                </p>
+              </div>
+            </div>
+
+            {/* Card 2: AI Report Mockup */}
+            <div className="p-6 md:p-8 rounded-3xl bg-gradient-to-br from-slate-900/40 via-slate-950/60 to-violet-500/5 border border-slate-800/80 space-y-6 text-left relative overflow-hidden flex flex-col justify-between">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-violet-500/5 rounded-full blur-3xl pointer-events-none" />
+              
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-black text-violet-400 bg-violet-600/10 px-2.5 py-0.5 rounded border border-violet-600/20 uppercase tracking-widest">
+                    2. 고객용 0.1초 모바일 AI 진단서
+                  </span>
+                  <span className="text-slate-500 text-xs font-semibold">계약 체결을 유도하는 직관적 브리핑 화면</span>
+                </div>
+
+                {/* AI report summary mockup */}
+                <div className="p-5 rounded-2xl bg-slate-900/85 border border-slate-800 backdrop-blur-sm shadow-xl max-w-md mx-auto space-y-4">
+                  <div className="flex justify-between items-center border-b border-slate-800/50 pb-3">
+                    <span className="text-white font-extrabold text-xs flex items-center gap-1.5">
+                      <span>📊</span> 암보험 보장분석 결과
+                    </span>
+                    <span className="text-[10px] font-bold text-slate-500 bg-slate-950 px-2 py-0.5 rounded border border-slate-800/80">단일 상품 진단</span>
+                  </div>
+
+                  {/* Score gauge and stats */}
+                  <div className="flex items-center justify-around py-2">
+                    <div className="relative flex items-center justify-center w-20 h-20 rounded-full border-4 border-slate-800/80">
+                      <div 
+                        className="absolute inset-0 rounded-full border-4 border-t-orange-500 border-r-orange-500 border-b-transparent border-l-transparent" 
+                        style={{ animation: 'spin 3s linear infinite' }}
+                      />
+                      <div className="text-center">
+                        <span className="text-xl font-black text-white">60점</span>
+                      </div>
+                    </div>
+                    <div className="space-y-1 text-center">
+                      <span className="inline-block px-2.5 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 text-[10px] font-extrabold">보완 필요</span>
+                      <p className="text-slate-400 text-[10px] font-semibold">보장 균형이 불안정합니다</p>
+                    </div>
+                  </div>
+
+                  {/* Metrics list */}
+                  <div className="grid grid-cols-2 gap-2 text-[11px] font-semibold">
+                    <div className="p-2 rounded-xl bg-slate-950/60 border border-slate-800/50 flex justify-between items-center">
+                      <span className="text-slate-400">유사암 진단</span>
+                      <span className="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded">충분</span>
+                    </div>
+                    <div className="p-2 rounded-xl bg-slate-950/60 border border-slate-800/50 flex justify-between items-center">
+                      <span className="text-slate-400">일반암 진단</span>
+                      <span className="text-orange-400 font-bold bg-orange-500/10 px-2 py-0.5 rounded">부족</span>
+                    </div>
+                    <div className="p-2 rounded-xl bg-slate-950/60 border border-slate-800/50 flex justify-between items-center">
+                      <span className="text-slate-400">암 수술비</span>
+                      <span className="text-red-400 font-bold bg-red-500/10 px-2 py-0.5 rounded">위험</span>
+                    </div>
+                    <div className="p-2 rounded-xl bg-slate-950/60 border border-slate-800/50 flex justify-between items-center">
+                      <span className="text-slate-400">표적치료비</span>
+                      <span className="text-slate-500 font-bold bg-slate-800 px-2 py-0.5 rounded">미가입</span>
+                    </div>
+                  </div>
+
+                  {/* savings callout */}
+                  <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20 text-center text-xs text-orange-300 font-bold">
+                    💡 중복 및 비효율적인 특약을 정리하면 <span className="text-orange-400 underline decoration-2 decoration-orange-400 underline-offset-2">월 3.2만 원 절감 가능!</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Descriptions */}
+              <div className="pt-4 border-t border-slate-800/50 space-y-2.5 text-xs text-slate-400 font-semibold leading-relaxed">
+                <p className="flex items-start gap-2">
+                  <span className="text-violet-400">⚡</span>
+                  <span><b>상품별 보장 집중:</b> 여러 카테고리가 아닌 해당 보험 상품 한 분야에 대한 깊이 있는 분석 제공</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <span className="text-violet-400">⚡</span>
+                  <span><b>의심 차단:</b> 마스킹 처리된 규정 준수 안내로 100% 신뢰 보장</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <span className="text-violet-400">⚡</span>
+                  <span><b>효율 극대화:</b> 클릭 몇 번만으로 과부족 분석표를 카톡 브리핑 가능</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 3. 확실한 ROI(투자 수익률) 계산기 또는 가격 혜택 강조 */}
+        <div className="max-w-[1600px] mx-auto px-4 py-12">
+          <div className="max-w-[1600px] mx-auto text-center space-y-8">
+            <div className="space-y-4">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-[10px] font-black tracking-widest uppercase">
+                <Scale className="w-3 h-3 text-orange-400" />
+                <span>수익성 및 효율성</span>
+              </div>
+              <h3 className="text-xl md:text-2xl font-black text-white">어째서 단 1건의 계약만으로도 이득일까요?</h3>
+              <p className="text-slate-400 text-xs font-semibold max-w-2xl mx-auto">
+                초기 부담 비용은 0원입니다. 한 달 무료체험 기간 동안 이뤄질 놀라운 영업 효율을 검증해 보세요.
+              </p>
+            </div>
+            
+            {/* ROI Flow Container - Flex Row Single Line on Desktop */}
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4 p-6 rounded-3xl bg-slate-950/45 border border-slate-900/80">
+              {/* Step 1 */}
+              <div className="flex-1 w-full p-4 space-y-2">
+                <span className="text-xs font-bold text-slate-500">STEP 1. 초기 도입 비용</span>
+                <div className="text-2xl font-black text-white">0원</div>
+                <span className="text-[10px] font-semibold text-orange-400 bg-orange-500/10 px-2 py-0.5 rounded">30일 전기능 무료체험</span>
+              </div>
+              
+              <div className="hidden md:block text-slate-700 text-lg flex-shrink-0">➜</div>
+              
+              {/* Step 2 */}
+              <div className="flex-1 w-full p-4 space-y-2">
+                <span className="text-xs font-bold text-slate-500">STEP 2. 단 1건 계약 성공 시</span>
+                <div className="text-2xl font-black text-white">+150만 원↑</div>
+                <span className="text-[10px] font-medium text-slate-400">평균 신계약 건당 수수료 기준</span>
+              </div>
+              
+              <div className="hidden md:block text-slate-700 text-lg flex-shrink-0">➜</div>
+              
+              {/* Step 3 */}
+              <div className="flex-[1.5] w-full p-4 space-y-2">
+                <span className="text-xs font-bold text-slate-500">STEP 3. 투자 대비 기대 수익률 (ROI)</span>
+                <div className="text-3xl font-black text-orange-400 animate-pulse">최소 15배 이상↑</div>
+                <span className="text-[10px] font-semibold text-slate-400 break-keep">잃을 것은 전혀 없고, 평생 소유할 나만의 독점 고객 DB 자산만 쌓입니다.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* DB 보안 및 영구 소유권 안심 보장 배너 */}
+        <div className="max-w-[1300px] mx-auto px-4 py-8">
+          <div className="max-w-5xl mx-auto rounded-3xl p-8 bg-slate-950/45 border border-slate-900 relative overflow-hidden flex flex-col md:flex-row items-center md:items-start gap-6">
+            <div className="absolute top-1/2 left-0 -translate-y-1/2 w-48 h-48 bg-orange-500/5 rounded-full blur-3xl pointer-events-none" />
+            
+            {/* Left Shield Icon */}
+            <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center shadow-lg shadow-orange-500/5">
+              <ShieldCheck className="w-7 h-7 text-orange-400" />
+            </div>
+            
+            {/* Right Text Content */}
+            <div className="space-y-3 text-left flex-1">
+              <div className="inline-flex items-center gap-1.5 text-orange-400 text-[10px] font-black tracking-widest uppercase">
+                <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+                <span>소유권 & 보안 안심 보장</span>
+              </div>
+              <h4 className="text-lg md:text-xl font-black text-white">
+                설계사님이 유치한 DB는 100% 설계사님만의 영구적 독점 자산입니다.
+              </h4>
+              <p className="text-slate-400 text-xs font-semibold leading-relaxed break-keep">
+                보험리밸런스는 설계사님의 영업권을 존중합니다. 고객이 진단 정보 및 연락처 등 모든 가망고객 DB는 <span className="text-orange-450 font-black">종단간 암호화(End-to-End Encryption)</span> 기술로 완벽히 암호 처리되며, 플랫폼 본사나 타 대리점 관리자를 포함한 제3자는 절대로 데이터에 접근하거나 유출할 수 없습니다. 오직 설계사님의 고유 로그인 계정으로만 안전하게 보관 및 다운로드됩니다.
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* 2. '독점권 선점' 경쟁 심리 유도 (FOMO) */}
         <div className="max-w-[1300px] mx-auto px-4 py-8">
           <div className="max-w-5xl mx-auto rounded-3xl p-8 bg-slate-950/80 border border-slate-900 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
@@ -484,50 +718,6 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
               <span className="text-[10px] font-bold text-slate-500">실시간 전국 라이브 링크</span>
               <span className="text-2xl font-black text-orange-400 mt-1 animate-pulse">4,812개</span>
               <span className="text-[9px] font-medium text-slate-500 mt-1">설계사 홈페이지 활성화 중</span>
-            </div>
-          </div>
-        </div>
-
-        {/* 3. 확실한 ROI(투자 수익률) 계산기 또는 가격 혜택 강조 */}
-        <div className="max-w-[1300px] mx-auto px-4 py-12">
-          <div className="max-w-5xl mx-auto text-center space-y-8">
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-[10px] font-black tracking-widest uppercase">
-                <Scale className="w-3 h-3 text-orange-400" />
-                <span>수익성 및 효율성</span>
-              </div>
-              <h3 className="text-xl md:text-2xl font-black text-white">어째서 단 1건의 계약만으로도 이득일까요?</h3>
-              <p className="text-slate-400 text-xs font-semibold max-w-2xl mx-auto">
-                초기 부담 비용은 0원입니다. 한 달 무료체험 기간 동안 이뤄질 놀라운 영업 효율을 검증해 보세요.
-              </p>
-            </div>
-            
-            {/* ROI Flow Container */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center justify-center p-6 rounded-3xl bg-slate-950/45 border border-slate-900/80">
-              {/* Step 1 */}
-              <div className="p-4 space-y-2">
-                <span className="text-xs font-bold text-slate-500">STEP 1. 초기 도입 비용</span>
-                <div className="text-2xl font-black text-white">0원</div>
-                <span className="text-[10px] font-semibold text-orange-400 bg-orange-500/10 px-2 py-0.5 rounded">30일 전기능 무료체험</span>
-              </div>
-              
-              <div className="hidden md:block text-slate-700 text-lg">➜</div>
-              
-              {/* Step 2 */}
-              <div className="p-4 space-y-2">
-                <span className="text-xs font-bold text-slate-500">STEP 2. 단 1건 계약 성공 시</span>
-                <div className="text-2xl font-black text-white">+150만 원↑</div>
-                <span className="text-[10px] font-medium text-slate-400">평균 신계약 건당 수수료 기준</span>
-              </div>
-              
-              <div className="hidden md:block text-slate-700 text-lg">➜</div>
-              
-              {/* Step 3 */}
-              <div className="p-4 space-y-2 md:col-span-2">
-                <span className="text-xs font-bold text-slate-500">STEP 3. 투자 대비 기대 수익률 (ROI)</span>
-                <div className="text-3xl font-black text-orange-400 animate-pulse">최소 15배 이상↑</div>
-                <span className="text-[9px] font-semibold text-slate-400 break-keep">잃을 것은 전혀 없고, 평생 소유할 나만의 독점 고객 DB 자산만 쌓입니다.</span>
-              </div>
             </div>
           </div>
         </div>
