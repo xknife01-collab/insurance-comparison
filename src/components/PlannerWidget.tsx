@@ -87,9 +87,12 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
                 {branding.type === 'planner' ? `${branding.name} 설계사` : `${branding.name} 공식 설계사`}
               </h4>
               {branding.customPhone && (
-                <p className="text-xs text-slate-400 font-bold flex items-center justify-center gap-1">
+                <a 
+                  href={`tel:${branding.customPhone}`} 
+                  className="text-xs text-slate-400 hover:text-orange-400 transition-colors font-bold flex items-center justify-center gap-1 cursor-pointer"
+                >
                   <Phone size={12} className="text-orange-500" /> {branding.customPhone}
-                </p>
+                </a>
               )}
             </div>
 

@@ -136,7 +136,7 @@ export const CustomerSupportSection: React.FC<CustomerSupportSectionProps> = ({
             </div>
             <h3 className="text-lg font-black text-slate-900">대표 연락처</h3>
             <p className="text-sm text-slate-600 font-bold leading-relaxed">
-              전화: {displayPhone}
+              전화: <a href={`tel:${displayPhone}`} className="hover:underline hover:text-orange-500 transition-colors">{displayPhone}</a>
             </p>
             {branding?.customPhone ? null : (
               <p className="text-xs text-slate-400 font-semibold">팩스: 02-3456-7890</p>
@@ -185,10 +185,10 @@ export const CustomerSupportSection: React.FC<CustomerSupportSectionProps> = ({
                 <Mail size={16} className="text-orange-500 shrink-0" />
                 <span className="text-xs font-bold">{displayEmail}</span>
               </div>
-              <div className="flex items-center gap-3 text-slate-350">
+              <a href={`tel:${displayPhone}`} className="flex items-center gap-3 text-slate-350 hover:text-orange-400 transition-colors cursor-pointer">
                 <Phone size={16} className="text-orange-500 shrink-0" />
                 <span className="text-xs font-bold">{displayPhone}</span>
-              </div>
+              </a>
             </div>
           </div>
 

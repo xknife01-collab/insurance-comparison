@@ -213,10 +213,13 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
             </div>
 
             <div className="hidden lg:flex items-center gap-4">
-              <div className="flex items-center gap-2 text-gray-600">
+              <a 
+                href={`tel:${branding?.customPhone || "080.808.1088"}`} 
+                className="flex items-center gap-2 text-gray-600 hover:text-orange-500 transition-colors cursor-pointer"
+              >
                 <Phone className="w-4 h-4" />
                 <span className="font-bold text-sm">{branding?.customPhone || "080.808.1088"}</span>
-              </div>
+              </a>
             </div>
 
             {/* 모바일 햄버거 */}
@@ -419,10 +422,13 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
             </div>
 
             <div className="p-4 border-t border-gray-100 bg-gray-50 space-y-3">
-              <div className="flex items-center gap-2 text-gray-600 justify-center">
+              <a 
+                href={`tel:${branding?.customPhone || "080.808.1088"}`} 
+                className="flex items-center gap-2 text-gray-600 justify-center hover:text-orange-500 transition-colors cursor-pointer"
+              >
                 <Phone className="w-4 h-4" />
                 <span className="font-bold">{branding?.customPhone || "080.808.1088"}</span>
-              </div>
+              </a>
               {!isStandalone && (deferredPrompt || isInAppBrowser || isIOS) && (
                 <button 
                   onClick={onInstallClick}

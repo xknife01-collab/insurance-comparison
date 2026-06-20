@@ -1366,9 +1366,12 @@ export const Footer = () => {
           {/* Right Side: Customer Support Info (Right-aligned) */}
           <div className="max-w-md md:text-right flex flex-col md:items-end gap-1">
             <p className="text-xs text-slate-400 font-extrabold mb-1 uppercase tracking-widest">무료 전화 상담 센터</p>
-            <p className="text-5xl font-black text-white leading-none mb-6 tracking-tight hover:text-orange-500 transition-colors">
+            <a 
+              href={`tel:${branding?.customPhone || "080.808.1088"}`} 
+              className="text-5xl font-black text-white leading-none mb-6 tracking-tight hover:text-orange-500 transition-colors block cursor-pointer"
+            >
               {branding?.customPhone || "080.808.1088"}
-            </p>
+            </a>
             <div className="space-y-2 text-xs text-slate-400 font-bold flex flex-col items-start md:items-end">
               <p className="text-slate-500">고객센터 영업시간</p>
               <p className="text-slate-300">평일 09:00 - 18:00 / 주말 10:00 - 15:00</p>
