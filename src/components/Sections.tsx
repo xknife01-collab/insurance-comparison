@@ -1406,7 +1406,7 @@ export const Footer = () => {
             ※ 상기 분석 및 추천 설계 내용은 모집종사자(또는 AI 분석 엔진)의 개인적인 의견이며, 계약체결에 따른 이익 또는 손실은 보험계약자 및 피보험자에게 귀속됩니다.
           </p>
           <p>보험계약자가 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서 질병이력, 연령증가 등으로 가입이 거절되거나 보험료가 인상될 수 있습니다. 또한 해약환급금 손실이 발생할 수 있으니 유의하시기 바랍니다.</p>
-          <p className="text-slate-500">© {branding?.name || "보험리밸런스"}. All Rights Reserved.</p>
+          <p className="text-slate-500">© 보험리밸런스 (Insure-rebalance). All Rights Reserved.</p>
         </div>
       </div>
     </footer>
