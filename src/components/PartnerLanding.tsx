@@ -159,6 +159,24 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
           </div>
         </div>
 
+        {/* 중간 구분 및 독보적 인프라 설명 영역 (Plain Text Version) */}
+        <div className="max-w-[1300px] mx-auto px-4 py-8 text-center space-y-4">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-[10px] font-black tracking-widest uppercase">
+            <Sparkles className="w-3 h-3 text-orange-400" />
+            <span>Only for insurebalance partners</span>
+          </div>
+          
+          <h2 className="text-xl md:text-3xl font-black text-white leading-tight break-keep">
+            기존 보험 비교 서비스를 뛰어넘는 독보적 기술력,<br className="hidden sm:inline" />
+            국내 유일의 <span className="bg-gradient-to-r from-orange-400 via-orange-450 to-amber-400 bg-clip-text text-transparent">0.1초 독립형 AI 영업 인프라</span>
+          </h2>
+          
+          <p className="text-slate-400 text-xs md:text-sm font-semibold leading-relaxed max-w-4xl mx-auto break-keep">
+            타 서비스들처럼 고객 리드(DB)를 플랫폼이 수집해 타인에게 분배하거나 공유하지 않고, 설계사 본인이 100% 영구적으로 독점 소유합니다. 
+            고객이 진단하는 즉시 0.1초 만에 스마트폰 알림으로 분석 결과가 전송되며, 터치 한 번으로 카카오톡 1:1 상담까지 원스톱으로 연결되어 계약 성공률을 압도적으로 끌어올립니다.
+          </p>
+        </div>
+
         {/* Feature Highlights Section (Wider max-w-[1600px] for desktop 4-column display) */}
         <div className="max-w-[1600px] mx-auto px-4 w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-10">
