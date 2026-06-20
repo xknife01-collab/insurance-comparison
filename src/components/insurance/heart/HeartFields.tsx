@@ -45,7 +45,7 @@ const HeartFields: React.FC<HeartFieldsProps> = ({
   ];
 
   return (
-    <div className="bg-slate-50/50 rounded-[3rem] p-8 md:p-10 border-2 border-slate-100 mb-10 animate-in fade-in slide-in-from-bottom-4">
+    <div id="input-heart-fields" className="bg-slate-50/50 rounded-[3rem] p-8 md:p-10 border-2 border-slate-100 mb-10 animate-in fade-in slide-in-from-bottom-4">
       <div className="flex items-center gap-3 mb-8">
         <div className="w-10 h-10 bg-red-100 rounded-2xl flex items-center justify-center text-red-600">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
@@ -185,7 +185,7 @@ const HeartFields: React.FC<HeartFieldsProps> = ({
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {fields.map((item, i) => (
-            <div key={i} className="space-y-3">
+            <div key={i} id={`input-heart-subfield-${i}`} className="space-y-3 rounded-2xl p-2 transition-all">
               <p className="text-[0.65rem] font-black text-slate-400 pl-1 uppercase tracking-widest">{item.label}</p>
               <div className="flex bg-white rounded-2xl p-1.5 shadow-sm border border-slate-100">
                 {item.options.map((opt, oi) => (

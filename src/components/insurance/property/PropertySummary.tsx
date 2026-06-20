@@ -1,3 +1,4 @@
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 import { motion } from 'motion/react';
 import { Building, Flame, ShieldCheck, CheckCircle2, Zap, AlertTriangle, ShieldAlert } from 'lucide-react';
@@ -117,10 +118,10 @@ export const PropertySummary: React.FC<Props> = ({ result }) => {
             {/* 세부 점수 리스트 */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-4">
               {[
-                { label: '화재재산한도', val: formatEok(totalAssets), score: scores.propertyScore },
-                { label: '배상책임특약', val: propOpts.hasPremisesLiability ? '종합배상 가입' : '미완성', score: scores.liabilityScore },
-                { label: '비즈니스연속성', val: propOpts.hasBusinessInterruption ? '휴업 보장' : '미보장', score: scores.continuityScore },
-                { label: '건물 소방안전도', val: propOpts.buildingGrade === 'grade_1' ? '우수' : propOpts.buildingGrade === 'grade_2' ? '보통' : '취약', score: propOpts.buildingGrade === 'grade_1' ? 95 : propOpts.buildingGrade === 'grade_2' ? 75 : 50 },
+                { label: '화재재산한도', targetId: 'input-property-fields', val: formatEok(totalAssets), score: scores.propertyScore },
+                { label: '배상책임특약', targetId: 'input-property-fields', val: propOpts.hasPremisesLiability ? '종합배상 가입' : '미완성', score: scores.liabilityScore },
+                { label: '비즈니스연속성', targetId: 'input-property-fields', val: propOpts.hasBusinessInterruption ? '휴업 보장' : '미보장', score: scores.continuityScore },
+                { label: '건물 소방안전도', targetId: 'input-property-fields', val: propOpts.buildingGrade === 'grade_1' ? '우수' : propOpts.buildingGrade === 'grade_2' ? '보통' : '취약', score: propOpts.buildingGrade === 'grade_1' ? 95 : propOpts.buildingGrade === 'grade_2' ? 75 : 50 },
               ].map((item, i) => (
                 <div key={i} className="space-y-2">
                   <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">{item.label}</p>

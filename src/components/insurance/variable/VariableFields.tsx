@@ -48,7 +48,7 @@ export const VariableFields: React.FC<Props> = ({
   isUnlocked,
 }) => {
   return (
-    <div className="space-y-12 animate-in fade-in duration-500">
+    <div id="input-variable-fields" className="space-y-12 animate-in fade-in duration-500">
       
       {/* ── SECTION 1: 4대 상품 타입 정밀 선택 ── */}
       <div className="bg-slate-900 rounded-[3.5rem] p-8 md:p-12 text-white relative overflow-hidden">

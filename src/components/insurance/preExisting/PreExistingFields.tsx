@@ -16,7 +16,7 @@ export const PreExistingFields: React.FC<Props> = ({
   fiveYearMajor, setFiveYearMajor
 }) => {
   return (
-    <div className="bg-indigo-50/30 rounded-[3rem] p-10 mb-12 border border-indigo-100/50">
+    <div id="input-preExisting-fields" className="bg-indigo-50/30 rounded-[3rem] p-10 mb-12 border border-indigo-100/50">
       <div className="flex items-center gap-3 mb-8">
          <div className="w-1.5 h-6 bg-indigo-500 rounded-full"></div>
          <h3 className="text-xl font-bold text-slate-800 tracking-tight">유병자 전용 '3.X.5' 간편고지 질문</h3>

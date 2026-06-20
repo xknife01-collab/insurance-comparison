@@ -1,3 +1,4 @@
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 import { AnalysisResult } from '../../../types/insurance';
 import { Baby, Calendar, ShieldCheck, Heart, Sparkles } from 'lucide-react';
@@ -37,50 +38,50 @@ export const ChildSummary: React.FC<Props> = ({ result }) => {
 
   const items = child.isPreFamily ? [
     { 
-      label: '우리아이 맞춤 병력', 
+      label: '우리아이 맞춤 병력', targetId: 'input-child-fields', 
       amount: child.illnessType === 'development' ? '발달지연/놀이치료' : child.illnessType === 'adhd' ? 'ADHD/소아우울' : child.illnessType === 'puberty' ? '성조숙증' : child.illnessType === 'asthma' ? '천식/아토피' : child.illnessType === 'fracture' ? '골절/깁스' : '기타 질환', 
       status: '안심플랜', 
       color: 'text-blue-600 bg-blue-50' 
     },
     { 
-      label: '무사고 간편 등급', 
+      label: '무사고 간편 등급', targetId: 'input-child-fields', 
       amount: `3.${child.noAccidentYears || '5'}.5 고지`, 
       status: child.noAccidentYears === '5' ? '최저할증' : '자동적용', 
       color: child.noAccidentYears === '5' ? 'text-emerald-600 bg-emerald-50' : 'text-orange-600 bg-orange-50' 
     },
     { 
-      label: '보장 기간 (만기)', 
+      label: '보장 기간 (만기)', targetId: 'input-child-fields', 
       amount: getMaturityLabel(child.maturity), 
       status: child.maturity === 100 ? '평생보장' : '실속형', 
       color: child.maturity === 100 ? 'text-indigo-600 bg-indigo-50' : 'text-blue-600 bg-blue-50' 
     },
     { 
-      label: '보장 집중 선택', 
+      label: '보장 집중 선택', targetId: 'input-child-fields', 
       amount: getFocusAreaLabel(child.focusArea), 
       status: '최적화', 
       color: 'text-emerald-600 bg-emerald-50' 
     },
   ] : [
     { 
-      label: '가입 대상 구분', 
+      label: '가입 대상 구분', targetId: 'input-child-fields', 
       amount: getAgeGroupLabel(child.targetAgeGroup), 
       status: '확인됨', 
       color: 'text-yellow-600 bg-yellow-50' 
     },
     { 
-      label: '보장 기간 (만기)', 
+      label: '보장 기간 (만기)', targetId: 'input-child-fields', 
       amount: getMaturityLabel(child.maturity), 
       status: child.maturity === 100 ? '평생보장' : '실속형', 
       color: child.maturity === 100 ? 'text-indigo-600 bg-indigo-50' : 'text-blue-600 bg-blue-50' 
     },
     { 
-      label: '보장 집중 선택', 
+      label: '보장 집중 선택', targetId: 'input-child-fields', 
       amount: getFocusAreaLabel(child.focusArea), 
       status: '최적화', 
       color: 'text-emerald-600 bg-emerald-50' 
     },
     { 
-      label: '태아 특약 가입', 
+      label: '태아 특약 가입', targetId: 'input-child-fields', 
       amount: child.targetAgeGroup === 'prenatal' 
         ? (child.hasPrenatalRider ? `포함 (${child.weeksPregnancy}주차)` : '미포함') 
         : '대상 아님', 
@@ -106,7 +107,10 @@ export const ChildSummary: React.FC<Props> = ({ result }) => {
         </h3>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {items.map((item, i) => (
-            <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-yellow-50/50 flex flex-col justify-center gap-2 group hover:border-yellow-200 transition-all">
+            <div 
+              key={i} 
+              onClick={() => scrollToInputAndHighlight((item as any).targetId)}
+              className="bg-white p-6 rounded-2xl shadow-sm border border-yellow-50/50 flex flex-col justify-center gap-2 group  hover:border-orange-300 hover:shadow-md hover:scale-[1.02] cursor-pointer transition-all duration-300">
               <div className="flex justify-between items-center w-full">
                 <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{item.label}</p>
                 <span className={`text-[10px] font-black px-3 py-1 rounded-lg ${item.color}`}>{item.status}</span>

@@ -38,7 +38,7 @@ export const SilsonFields: React.FC<Props> = ({
   ];
 
   return (
-    <div className="bg-blue-50/30 rounded-[3rem] p-10 mb-12 border border-blue-100/50">
+    <div id="input-silson-fields" className="bg-blue-50/30 rounded-[3rem] p-10 mb-12 border border-blue-100/50">
       <div className="flex items-center gap-3 mb-8">
          <div className="w-1.5 h-6 bg-blue-500 rounded-full"></div>
          <h3 className="text-xl font-bold text-slate-800">{subType} 가입 전 고지사항</h3>

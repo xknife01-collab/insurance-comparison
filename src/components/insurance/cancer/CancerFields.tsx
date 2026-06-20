@@ -25,7 +25,7 @@ export const CancerFields: React.FC<Props> = ({
   familyHistory, setFamilyHistory
 }) => {
   return (
-    <div className="bg-rose-50/30 rounded-[3rem] p-10 mb-12 border border-rose-100/50">
+    <div id="input-cancer-fields" className="bg-rose-50/30 rounded-[3rem] p-10 mb-12 border border-rose-100/50">
       <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-8">
          <div className="flex items-center gap-3">
             <div className="w-1.5 h-6 bg-rose-500 rounded-full"></div>
@@ -41,7 +41,7 @@ export const CancerFields: React.FC<Props> = ({
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {/* 일반암 진단비 */}
-        <div className="space-y-3">
+        <div id="input-cancer-diagnosis" className="space-y-3 rounded-2xl p-2 transition-all">
            <p className="text-[0.65rem] font-black text-slate-400 pl-1 uppercase tracking-widest flex items-center gap-1">
              <Shield size={12} /> 일반암 진단비
            </p>
@@ -77,7 +77,7 @@ export const CancerFields: React.FC<Props> = ({
         </div>
 
         {/* 표적항암/방사선 */}
-        <div className="space-y-3">
+        <div id="input-cancer-targeted" className="space-y-3 rounded-2xl p-2 transition-all">
            <p className="text-[0.65rem] font-black text-slate-400 pl-1 uppercase tracking-widest flex items-center gap-1">
              <Target size={12} /> 표적항암/중입자
            </p>
@@ -95,7 +95,7 @@ export const CancerFields: React.FC<Props> = ({
         </div>
 
         {/* 납입 유형 */}
-        <div className="space-y-3">
+        <div id="input-cancer-paymentType" className="space-y-3 rounded-2xl p-2 transition-all">
            <p className="text-[0.65rem] font-black text-slate-400 pl-1 uppercase tracking-widest flex items-center gap-1">
              <Clock size={12} /> 납입/갱신 유형
            </p>
@@ -113,7 +113,7 @@ export const CancerFields: React.FC<Props> = ({
         </div>
 
         {/* 재발/전이암 보장 */}
-        <div className="space-y-3">
+        <div id="input-cancer-recurrent" className="space-y-3 rounded-2xl p-2 transition-all">
            <p className="text-[0.65rem] font-black text-slate-400 pl-1 uppercase tracking-widest flex items-center gap-1">
              <Activity size={12} /> 재발/전이암
            </p>

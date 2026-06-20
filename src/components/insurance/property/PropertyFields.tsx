@@ -74,7 +74,7 @@ export const PropertyFields: React.FC<Props> = ({
   };
 
   return (
-    <div className="space-y-12 animate-in fade-in duration-500">
+    <div id="input-property-fields" className="space-y-12 animate-in fade-in duration-500">
       
       {/* ── SECTION 1: 업종 및 건물 구조 ── */}
       <div className="bg-slate-900 rounded-[3.5rem] p-8 md:p-12 text-white relative overflow-hidden">

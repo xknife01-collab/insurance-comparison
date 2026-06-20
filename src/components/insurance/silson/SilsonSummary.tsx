@@ -1,3 +1,4 @@
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 import { motion } from 'motion/react';
 import { Shield, ArrowDownCircle, TrendingDown, CheckCircle2, AlertCircle, Scale, PiggyBank, Activity, Clock } from 'lucide-react';
@@ -56,12 +57,12 @@ export const SilsonSummary: React.FC<Props> = ({ result }) => {
   };
 
   const analysisItems = [
-    { label: '실손 의료비 세대', val: getGenerationLabel(subType), status: '정상', icon: Activity },
-    { label: '자기부담금 비율', val: getCoinsuranceLabel(subType), status: '정상', icon: Scale },
-    { label: '3대 비급여 한도', val: subType === '노후 실손' ? '미보장/제한' : '특약 가입', status: '정상', icon: Shield },
-    { label: '도수/MRI 보장', val: getCoverageLimitLabel(subType), status: '정상', icon: Activity },
-    { label: '보험료 차등제', val: subType === '노후 실손' ? '해당없음' : getDifferentialStatus(), status: '정상', icon: TrendingDown },
-    { label: '재가입 주기', val: getRenewalCycleLabel(subType), status: '정상', icon: Clock },
+    { label: '실손 의료비 세대', targetId: 'input-silson-fields', val: getGenerationLabel(subType), status: '정상', icon: Activity },
+    { label: '자기부담금 비율', targetId: 'input-silson-fields', val: getCoinsuranceLabel(subType), status: '정상', icon: Scale },
+    { label: '3대 비급여 한도', targetId: 'input-silson-fields', val: subType === '노후 실손' ? '미보장/제한' : '특약 가입', status: '정상', icon: Shield },
+    { label: '도수/MRI 보장', targetId: 'input-silson-fields', val: getCoverageLimitLabel(subType), status: '정상', icon: Activity },
+    { label: '보험료 차등제', targetId: 'input-silson-fields', val: subType === '노후 실손' ? '해당없음' : getDifferentialStatus(), status: '정상', icon: TrendingDown },
+    { label: '재가입 주기', targetId: 'input-silson-fields', val: getRenewalCycleLabel(subType), status: '정상', icon: Clock },
   ];
 
   return (

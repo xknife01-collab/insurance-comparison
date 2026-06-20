@@ -341,7 +341,7 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
               kakaoLink: planner.kakao_link || null,
               agencyName: planner.company_name || planner.agencies?.name || null,
               agencyAddress: planner.custom_address || planner.agencies?.address || null,
-              registrationNumber: planner.registration_number || null,
+              registrationNumber: (planner.registration_number && !planner.registration_number.startsWith('dist_')) ? planner.registration_number : null,
               customEmail: planner.email || planner.agencies?.email || DEFAULT_BRANDING.customEmail,
               leadRoutingType: demoRoutingOverride || planner.agencies?.lead_routing_type || 'direct',
             };
@@ -442,7 +442,7 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
               kakaoLink: adminPlanner.kakao_link || null,
               agencyName: adminPlanner.company_name || adminPlanner.agencies?.name || null,
               agencyAddress: adminPlanner.custom_address || adminPlanner.agencies?.address || null,
-              registrationNumber: adminPlanner.registration_number || null,
+              registrationNumber: (adminPlanner.registration_number && !adminPlanner.registration_number.startsWith('dist_')) ? adminPlanner.registration_number : null,
               customEmail: adminPlanner.email || adminPlanner.agencies?.email || DEFAULT_BRANDING.customEmail,
               leadRoutingType: demoRoutingOverride || adminPlanner.agencies?.lead_routing_type || 'direct',
             };
@@ -472,14 +472,33 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
     fetchBranding();
   }, []);
 
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === CACHE_KEY && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue);
+          setBranding(parsed);
+        } catch (err) {
+          console.error('Failed to parse storage changed branding', err);
+        }
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
   const updateBranding = (newBranding: B2BBranding) => {
-    setBranding(newBranding);
-    const isStandaloneApp = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone;
-    if (isStandaloneApp) {
-      localStorage.setItem(CACHE_KEY, JSON.stringify(newBranding));
-    } else {
-      sessionStorage.setItem(CACHE_KEY, JSON.stringify(newBranding));
-    }
+    const sanitizedBranding = {
+      ...newBranding,
+      registrationNumber: (newBranding.registrationNumber && !newBranding.registrationNumber.startsWith('dist_')) 
+        ? newBranding.registrationNumber 
+        : null
+    };
+    setBranding(sanitizedBranding);
+    localStorage.setItem(CACHE_KEY, JSON.stringify(sanitizedBranding));
+    sessionStorage.setItem(CACHE_KEY, JSON.stringify(sanitizedBranding));
   };
 
   return (

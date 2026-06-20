@@ -1,3 +1,4 @@
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 import { motion } from 'motion/react';
 import { ShieldCheck, Zap, CheckCircle2, PiggyBank, Star, AlertCircle, Sparkles } from 'lucide-react';
@@ -91,10 +92,10 @@ export const AnnuitySummary: React.FC<Props> = ({ result }) => {
             {/* 세부 점수 리스트 */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-4">
               {[
-                { label: '세액공제 최적성', val: isSavings ? `${Math.round((Math.min(annuityOpts.monthlyPremium * 12, 6000000) / 6000000) * 100)}% 만족` : '비과세 대상', score: scores.cancerScore },
-                { label: '소득 대비 저축 비중', val: `${((annuityOpts.monthlyPremium * 12 / (annuityOpts.annualIncome || 50000000)) * 100).toFixed(1)}% 수준`, score: scores.cerebrovascularScore },
-                { label: '노후 소득 대체율', val: '부부 최저생계비 대비', score: scores.cardiovascularScore },
-                { label: 'IRP 연동 설계', val: annuityOpts.hasIrp ? '통합 900만 공제' : '연금 단독 600만', score: annuityOpts.hasIrp ? 95 : 60 },
+                { label: '세액공제 최적성', targetId: 'input-annuity-type', val: isSavings ? `${Math.round((Math.min(annuityOpts.monthlyPremium * 12, 6000000) / 6000000) * 100)}% 만족` : '비과세 대상', score: scores.cancerScore },
+                { label: '소득 대비 저축 비중', targetId: 'input-annuity-premium', val: `${((annuityOpts.monthlyPremium * 12 / (annuityOpts.annualIncome || 50000000)) * 100).toFixed(1)}% 수준`, score: scores.cerebrovascularScore },
+                { label: '노후 소득 대체율', targetId: 'input-annuity-commencement', val: '부부 최저생계비 대비', score: scores.cardiovascularScore },
+                { label: 'IRP 연동 설계', targetId: 'input-annuity-irp', val: annuityOpts.hasIrp ? '통합 900만 공제' : '연금 단독 600만', score: annuityOpts.hasIrp ? 95 : 60 },
               ].map((item, i) => (
                 <div key={i} className="space-y-2">
                   <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">{item.label}</p>

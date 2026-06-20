@@ -1,3 +1,4 @@
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 import { motion } from 'motion/react';
 import { Shield, TrendingUp, CheckCircle2, AlertCircle, Scale, PiggyBank, Activity, Clock, Car, UserCheck, ShieldAlert, ShieldCheck } from 'lucide-react';
@@ -24,42 +25,42 @@ export const DriverSummary: React.FC<Props> = ({ result }) => {
   // 요약 분석 카드 정보 6가지 구성
   const analysisItems = [
     { 
-      label: '운전 목적', 
+      label: '운전 목적', targetId: 'input-driver-fields', 
       val: drivingPurpose === 'motorcycle' ? '이륜차 (오토바이)' : (drivingPurpose === 'commercial' ? '영업용 (상업 목적)' : '자가용 (일반 개인)'), 
       status: '선택됨', 
       icon: Car, 
       color: 'text-purple-500' 
     },
     { 
-      label: '직업 등급', 
+      label: '직업 등급', targetId: 'input-driver-fields', 
       val: `${jobClass}급 (상해위험도)`, 
       status: '정상', 
       icon: UserCheck, 
       color: 'text-emerald-500' 
     },
     { 
-      label: '희망 플랜', 
+      label: '희망 플랜', targetId: 'input-driver-fields', 
       val: planType === 'saving' ? '실속형' : planType === 'premium' ? 'VIP 안심형' : '표준형', 
       status: '정상', 
       icon: Scale, 
       color: 'text-purple-500' 
     },
     { 
-      label: '형사합의금 (교사처)', 
+      label: '형사합의금 (교사처)', targetId: 'input-driver-fields', 
       val: planType === 'saving' ? '1억 원 한도' : planType === 'premium' ? '2억 원 한도' : '1.5억 원 한도', 
       status: planType === 'saving' ? '보통' : '우수', 
       icon: ShieldCheck, 
       color: planType === 'saving' ? 'text-slate-400' : 'text-emerald-500' 
     },
     { 
-      label: '변호사 선임 비용', 
+      label: '변호사 선임 비용', targetId: 'input-driver-fields', 
       val: planType === 'saving' ? '3,000만 원' : '5,000만 원 (경찰선지원)', 
       status: '정상', 
       icon: Clock, 
       color: 'text-emerald-500' 
     },
     { 
-      label: '벌금 보장 한도', 
+      label: '벌금 보장 한도', targetId: 'input-driver-fields', 
       val: planType === 'saving' ? '대인 2,000만 원' : (planType === 'premium' ? '대인 3천 / 대물 5백' : '대인 3,000만 원'), 
       status: '정상', 
       icon: Shield, 

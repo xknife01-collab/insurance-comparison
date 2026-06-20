@@ -88,7 +88,7 @@ export const HealthGeneralFields: React.FC<Props> = ({
   };
 
   return (
-    <div className="bg-orange-50/20 rounded-[3rem] p-8 md:p-12 mb-12 border border-orange-100/40">
+    <div id="input-healthGeneral-fields" className="bg-orange-50/20 rounded-[3rem] p-8 md:p-12 mb-12 border border-orange-100/40">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10 border-b border-orange-100/50 pb-6">
         <div className="flex items-center gap-3">
           <div className="w-2 h-7 bg-orange-500 rounded-full"></div>

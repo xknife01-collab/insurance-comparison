@@ -19,7 +19,7 @@ export const SurgeryFields: React.FC<Props> = ({
   tertiaryHospital, setTertiaryHospital
 }) => {
   return (
-    <div className="bg-orange-50/30 rounded-[4rem] p-10 md:p-14 mb-16 border border-orange-100/40 relative overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div id="input-surgery-fields" className="bg-orange-50/30 rounded-[4rem] p-10 md:p-14 mb-16 border border-orange-100/40 relative overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="absolute top-0 right-0 p-8 opacity-5">
         <Activity size={120} className="text-orange-500" />
       </div>

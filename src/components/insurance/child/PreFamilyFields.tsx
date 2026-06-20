@@ -57,7 +57,7 @@ export const PreFamilyFields: React.FC<PreFamilyFieldsProps> = ({
   };
 
   return (
-    <div className="space-y-10 text-left max-w-4xl mx-auto py-8">
+    <div id="input-child-fields" className="space-y-10 text-left max-w-4xl mx-auto py-8">
       
       {/* 우리아이 생년월일 입력 */}
       <div className="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm space-y-4">

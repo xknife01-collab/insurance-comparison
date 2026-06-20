@@ -79,7 +79,7 @@ export const FireFields: React.FC<Props> = ({
   const recommendedGoodsText = `${(recommendedGoodsLimit / 10000000).toFixed(0)}천만 원`;
 
   return (
-    <div className="space-y-12 animate-in fade-in duration-500">
+    <div id="input-fire-fields" className="space-y-12 animate-in fade-in duration-500">
       
       {/* ── STEP 01: 주거 기본정보 ── */}
       <div className="bg-slate-900 rounded-[3.5rem] p-8 md:p-12 text-white relative overflow-hidden">

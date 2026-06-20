@@ -1,3 +1,4 @@
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 import { motion } from 'motion/react';
 import { Shield, TrendingUp, CheckCircle2, AlertCircle, Scale, PiggyBank, Activity, Clock, Heart, Users } from 'lucide-react';
@@ -14,12 +15,12 @@ export const CaregivingSummary: React.FC<Props> = ({ result }) => {
   const savings = currentPremium - recommendedPremium;
 
   const analysisItems = [
-    { label: '간병 지원 방식', val: analysis.caregiving?.type === 'support' ? '지원형(파견)' : '사용형(일당)', status: '선택됨', icon: Users, color: 'text-purple-500' },
-    { label: '체증형 여부', val: analysis.caregiving?.isStepUp ? '체증형(가입)' : '기본형', status: analysis.caregiving?.isStepUp ? '우수' : '보통', icon: TrendingUp, color: analysis.caregiving?.isStepUp ? 'text-emerald-500' : 'text-slate-400' },
-    { label: '간병인 일당', val: '최대 15만원', status: '정상', icon: PiggyBank, color: 'text-emerald-500' },
-    { label: '요양병원 보장', val: '최대 3~5만원', status: '정상', icon: Heart, color: 'text-emerald-500' },
-    { label: '면책 기간', val: '90일', status: '고정', icon: Clock, color: 'text-slate-400' },
-    { label: '납입 면제', val: '5대 질병', status: '포함', icon: Shield, color: 'text-emerald-500' },
+    { label: '간병 지원 방식', targetId: 'input-caregiving-fields', val: analysis.caregiving?.type === 'support' ? '지원형(파견)' : '사용형(일당)', status: '선택됨', icon: Users, color: 'text-purple-500' },
+    { label: '체증형 여부', targetId: 'input-caregiving-fields', val: analysis.caregiving?.isStepUp ? '체증형(가입)' : '기본형', status: analysis.caregiving?.isStepUp ? '우수' : '보통', icon: TrendingUp, color: analysis.caregiving?.isStepUp ? 'text-emerald-500' : 'text-slate-400' },
+    { label: '간병인 일당', targetId: 'input-caregiving-fields', val: '최대 15만원', status: '정상', icon: PiggyBank, color: 'text-emerald-500' },
+    { label: '요양병원 보장', targetId: 'input-caregiving-fields', val: '최대 3~5만원', status: '정상', icon: Heart, color: 'text-emerald-500' },
+    { label: '면책 기간', targetId: 'input-caregiving-fields', val: '90일', status: '고정', icon: Clock, color: 'text-slate-400' },
+    { label: '납입 면제', targetId: 'input-caregiving-fields', val: '5대 질병', status: '포함', icon: Shield, color: 'text-emerald-500' },
   ];
 
   return (

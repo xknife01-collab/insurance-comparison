@@ -1,3 +1,4 @@
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 import { motion } from 'motion/react';
 import { ShieldCheck, Zap, CheckCircle2, PiggyBank, Star, AlertCircle, TrendingUp, Scale, ArrowRightLeft } from 'lucide-react';
@@ -123,10 +124,10 @@ export const VariableSummary: React.FC<Props> = ({ result }) => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-4">
               {isInvestment ? (
                 [
-                  { label: '펀드 매칭 최적성', val: `${varOpts.equityRatio}% 주식형 비중`, score: scores.cancerScore },
-                  { label: '납입 구조 효율성', val: `${varOpts.paymentPeriod}년납 설정`, score: scores.cerebrovascularScore },
-                  { label: '위험 대응 적합도', val: varOpts.isAnnuityConversion ? '연금전환 옵션 연결' : '연금전환 미지정', score: scores.cardiovascularScore },
-                  { label: '비과세 절세 효율', val: varOpts.paymentPeriod >= 10 ? '10년 비과세 만족' : '절세 조건 불충족', score: varOpts.paymentPeriod >= 10 ? 95 : 50 }
+                  { label: '펀드 매칭 최적성', targetId: 'input-variable-fields', val: `${varOpts.equityRatio}% 주식형 비중`, score: scores.cancerScore },
+                  { label: '납입 구조 효율성', targetId: 'input-variable-fields', val: `${varOpts.paymentPeriod}년납 설정`, score: scores.cerebrovascularScore },
+                  { label: '위험 대응 적합도', targetId: 'input-variable-fields', val: varOpts.isAnnuityConversion ? '연금전환 옵션 연결' : '연금전환 미지정', score: scores.cardiovascularScore },
+                  { label: '비과세 절세 효율', targetId: 'input-variable-fields', val: varOpts.paymentPeriod >= 10 ? '10년 비과세 만족' : '절세 조건 불충족', score: varOpts.paymentPeriod >= 10 ? 95 : 50 }
                 ].map((item, i) => (
                   <div key={i} className="space-y-2">
                     <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">{item.label}</p>
@@ -142,20 +143,20 @@ export const VariableSummary: React.FC<Props> = ({ result }) => {
                 ))
               ) : (
                 (subType === 'term_ceo' ? [
-                  { label: '사망보장액 적정성', val: `${(varOpts.deathBenefit / 100000000).toFixed(1)}억원 보장`, score: scores.cancerScore },
-                  { label: '보장 만기 설계', val: `만 ${varOpts.coveragePeriod}세 만기`, score: scores.cerebrovascularScore },
-                  { label: '법인세 절세 효과', val: '납입액 전액 비용처리', score: scores.cardiovascularScore },
-                  { label: '환급 효율 최적도', val: '목표 환급률 달성', score: 95 }
+                  { label: '사망보장액 적정성', targetId: 'input-variable-fields', val: `${(varOpts.deathBenefit / 100000000).toFixed(1)}억원 보장`, score: scores.cancerScore },
+                  { label: '보장 만기 설계', targetId: 'input-variable-fields', val: `만 ${varOpts.coveragePeriod}세 만기`, score: scores.cerebrovascularScore },
+                  { label: '법인세 절세 효과', targetId: 'input-variable-fields', val: '납입액 전액 비용처리', score: scores.cardiovascularScore },
+                  { label: '환급 효율 최적도', targetId: 'input-variable-fields', val: '목표 환급률 달성', score: 95 }
                 ] : subType === 'variable_term' ? [
-                  { label: '사망보장액 적정성', val: `${(varOpts.deathBenefit / 100000000).toFixed(1)}억원 보장`, score: scores.cancerScore },
-                  { label: '보장 만기 설계', val: `만 ${varOpts.coveragePeriod}세 만기`, score: scores.cerebrovascularScore },
-                  { label: '펀드 투자 연계도', val: '글로벌 자산배분', score: scores.cardiovascularScore },
-                  { label: '실적배당 가성비', val: '투자수익 반영 가능', score: 92 }
+                  { label: '사망보장액 적정성', targetId: 'input-variable-fields', val: `${(varOpts.deathBenefit / 100000000).toFixed(1)}억원 보장`, score: scores.cancerScore },
+                  { label: '보장 만기 설계', targetId: 'input-variable-fields', val: `만 ${varOpts.coveragePeriod}세 만기`, score: scores.cerebrovascularScore },
+                  { label: '펀드 투자 연계도', targetId: 'input-variable-fields', val: '글로벌 자산배분', score: scores.cardiovascularScore },
+                  { label: '실적배당 가성비', targetId: 'input-variable-fields', val: '투자수익 반영 가능', score: 92 }
                 ] : [
-                  { label: '사망보장액 적정성', val: `${(varOpts.deathBenefit / 100000000).toFixed(1)}억원 보장`, score: scores.cancerScore },
-                  { label: '보장 만기 설계', val: `만 ${varOpts.coveragePeriod}세 만기`, score: scores.cerebrovascularScore },
-                  { label: '우량체 할인 적용', val: varOpts.isHealthyDiscount ? '15% 특별 할인' : '할인 미지정', score: scores.cardiovascularScore },
-                  { label: '종신 대비 가성비', val: '약 85% 지출 절감', score: 98 }
+                  { label: '사망보장액 적정성', targetId: 'input-variable-fields', val: `${(varOpts.deathBenefit / 100000000).toFixed(1)}억원 보장`, score: scores.cancerScore },
+                  { label: '보장 만기 설계', targetId: 'input-variable-fields', val: `만 ${varOpts.coveragePeriod}세 만기`, score: scores.cerebrovascularScore },
+                  { label: '우량체 할인 적용', targetId: 'input-variable-fields', val: varOpts.isHealthyDiscount ? '15% 특별 할인' : '할인 미지정', score: scores.cardiovascularScore },
+                  { label: '종신 대비 가성비', targetId: 'input-variable-fields', val: '약 85% 지출 절감', score: 98 }
                 ]).map((item, i) => (
                   <div key={i} className="space-y-2">
                     <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">{item.label}</p>

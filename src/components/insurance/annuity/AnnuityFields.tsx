@@ -35,7 +35,7 @@ export const AnnuityFields: React.FC<Props> = ({
   setReceivingPeriod,
 }) => {
   return (
-    <div className="space-y-12 animate-in fade-in duration-500">
+    <div id="input-annuity-fields" className="space-y-12 animate-in fade-in duration-500">
       
       {/* ── SECTION 1: 연금저축 vs 일반연금 선택 ── */}
       <div className="bg-slate-900 rounded-[3.5rem] p-8 md:p-12 text-white relative overflow-hidden">

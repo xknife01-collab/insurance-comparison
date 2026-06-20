@@ -1,3 +1,4 @@
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 import { motion } from 'motion/react';
 import { ShieldCheck, Zap, CheckCircle2, Flag, Star, AlertCircle, Users } from 'lucide-react';
@@ -82,10 +83,10 @@ export const GolfSummary: React.FC<Props> = ({ result }) => {
             {/* 세부 점수 리스트 */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-4">
               {[
-                { label: '홀인원 보장', val: golfOpts.gameType === 'professional' ? '보장 제외' : (golfOpts.hasHoleInOneRider ? '가입 완료' : '미보장'), score: golfOpts.gameType === 'professional' ? 20 : (golfOpts.hasHoleInOneRider ? 95 : 30) },
-                { label: '경기 배상책임', val: golfOpts.hasLiabilityRider ? '가입 완료' : '미보장', score: golfOpts.hasLiabilityRider ? 95 : 35 },
-                { label: '용품 파손/도난', val: golfOpts.gameType === 'professional' ? '보장 제외' : (golfOpts.hasEquipmentRider ? '가입 완료' : '미보장'), score: golfOpts.gameType === 'professional' ? 20 : (golfOpts.hasEquipmentRider ? 90 : 30) },
-                { label: '단체 동반 혜택', val: golfOpts.isGroup ? '5% 할인대상' : '할인 미적용', score: golfOpts.isGroup ? 95 : 50 },
+                { label: '홀인원 보장', targetId: 'input-golf-fields', val: golfOpts.gameType === 'professional' ? '보장 제외' : (golfOpts.hasHoleInOneRider ? '가입 완료' : '미보장'), score: golfOpts.gameType === 'professional' ? 20 : (golfOpts.hasHoleInOneRider ? 95 : 30) },
+                { label: '경기 배상책임', targetId: 'input-golf-fields', val: golfOpts.hasLiabilityRider ? '가입 완료' : '미보장', score: golfOpts.hasLiabilityRider ? 95 : 35 },
+                { label: '용품 파손/도난', targetId: 'input-golf-fields', val: golfOpts.gameType === 'professional' ? '보장 제외' : (golfOpts.hasEquipmentRider ? '가입 완료' : '미보장'), score: golfOpts.gameType === 'professional' ? 20 : (golfOpts.hasEquipmentRider ? 90 : 30) },
+                { label: '단체 동반 혜택', targetId: 'input-golf-fields', val: golfOpts.isGroup ? '5% 할인대상' : '할인 미적용', score: golfOpts.isGroup ? 95 : 50 },
               ].map((item, i) => (
                 <div key={i} className="space-y-2">
                   <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">{item.label}</p>

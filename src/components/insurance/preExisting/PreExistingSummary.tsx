@@ -1,3 +1,4 @@
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 import { AnalysisResult } from '../../../types/insurance';
 
@@ -16,22 +17,30 @@ export const PreExistingSummary: React.FC<Props> = ({ result, formatAmount }) =>
   const savings = currentPremium - recommendedPremium;
 
   const items = [
-    { label: '건강 고지 유형', amount: analysis.preExistingType || '3.5.5', status: '유병자 전용', color: 'text-blue-500' },
-    { label: '3개월 내 치료 이력', amount: analysis.silson?.threeMonthTreatment === 'yes' ? '있음' : '없음', status: analysis.silson?.threeMonthTreatment === 'yes' ? '주의' : '정상', color: analysis.silson?.threeMonthTreatment === 'yes' ? 'text-orange-500' : 'text-emerald-500' },
-    { label: '5년 내 중대질환', amount: analysis.silson?.fiveYearTreatment === 'yes' ? '있음' : '없음', status: analysis.silson?.fiveYearTreatment === 'yes' ? '주의' : '정상', color: analysis.silson?.fiveYearTreatment === 'yes' ? 'text-orange-500' : 'text-emerald-500' },
-    { label: '납입/갱신 유형', amount: '갱신형(추천)', status: '정상', color: 'text-emerald-500' },
+    { label: '건강 고지 유형', targetId: 'input-preExisting-fields', amount: analysis.preExistingType || '3.5.5', status: '유병자 전용', color: 'text-blue-500' },
+    { label: '3개월 내 치료 이력', targetId: 'input-preExisting-fields', amount: analysis.silson?.threeMonthTreatment === 'yes' ? '있음' : '없음', status: analysis.silson?.threeMonthTreatment === 'yes' ? '주의' : '정상', color: analysis.silson?.threeMonthTreatment === 'yes' ? 'text-orange-500' : 'text-emerald-500' },
+    { label: '5년 내 중대질환', targetId: 'input-preExisting-fields', amount: analysis.silson?.fiveYearTreatment === 'yes' ? '있음' : '없음', status: analysis.silson?.fiveYearTreatment === 'yes' ? '주의' : '정상', color: analysis.silson?.fiveYearTreatment === 'yes' ? 'text-orange-500' : 'text-emerald-500' },
+    { label: '납입/갱신 유형', targetId: 'input-preExisting-fields', amount: '갱신형(추천)', status: '정상', color: 'text-emerald-500' },
   ];
 
   return (
     <div className="space-y-6">
       <div className="rounded-[2.5rem] p-10 border bg-blue-50/30 border-blue-100">
-        <h3 className="text-xl font-bold mb-8 flex items-center gap-2 text-blue-900">
-          <div className="w-1.5 h-6 rounded-full bg-blue-500"></div>
-          유병자 보험 상세 보장 현황
-        </h3>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+          <h3 className="text-xl font-bold mb-8 flex items-center gap-2 text-blue-900">
+            <div className="w-1.5 h-6 rounded-full bg-blue-500"></div>
+            유병자 보험 상세 보장 현황
+          </h3>
+          <span className="text-xs font-black text-slate-500 bg-white/80 border border-slate-200/50 px-4 py-2 rounded-xl shadow-sm flex items-center gap-1.5 animate-pulse">
+            💡 <b>안내:</b> 보장 현황에 <b className="text-red-500 font-black">[부족]</b>이 있다면 항목을 클릭해 상단 조절바에서 보장액을 늘려보세요!
+          </span>
+        </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {items.map((item, i) => (
-            <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-blue-50 flex flex-col justify-center gap-2 group hover:border-blue-200 transition-all">
+            <div 
+              key={i} 
+              onClick={() => scrollToInputAndHighlight((item as any).targetId)}
+              className="bg-white p-6 rounded-2xl shadow-sm border border-blue-50 flex flex-col justify-center gap-2 group  hover:border-orange-300 hover:shadow-md hover:scale-[1.02] cursor-pointer transition-all duration-300">
               <div className="flex justify-between items-center w-full">
                 <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{item.label}</p>
                 <span className={`text-[10px] font-black px-3 py-1 bg-gray-50 rounded-lg ${item.color}`}>{item.status}</span>

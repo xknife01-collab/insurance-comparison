@@ -217,12 +217,6 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
                 <Phone className="w-4 h-4" />
                 <span className="font-bold text-sm">{branding?.customPhone || "080.808.1088"}</span>
               </div>
-              <button 
-                onClick={() => navigate('admin')}
-                className="bg-slate-900 border border-slate-800 text-white hover:bg-black px-4 py-1.5 rounded-lg text-sm font-bold shadow-sm transition-all cursor-pointer"
-              >
-                설계사 파트너 어드민
-              </button>
             </div>
 
             {/* 모바일 햄버거 */}
@@ -442,12 +436,6 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
                 className="w-full bg-white border border-gray-250 text-gray-700 py-3 rounded-2xl font-black text-sm hover:bg-gray-150 transition-all cursor-pointer flex items-center justify-center gap-2 shadow-sm"
               >
                 📞 고객센터 (1:1 문의)
-              </button>
-              <button 
-                onClick={() => navigate('admin')}
-                className="w-full bg-slate-900 text-white py-3 rounded-2xl font-black text-sm hover:bg-black transition-colors cursor-pointer"
-              >
-                설계사 파트너 어드민
               </button>
             </div>
           </div>

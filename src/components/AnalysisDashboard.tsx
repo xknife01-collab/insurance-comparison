@@ -1670,8 +1670,8 @@ ${origin}/?code=${simCode}
                   <AlertCircle className="w-5 h-5 text-orange-500" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-black text-slate-800 tracking-tight">🔒 심의 규정에 따라 실제 회사명/상품명이 마스킹 처리되어 있습니다.</h4>
-                  <p className="text-xs text-slate-500 font-bold mt-0.5">본인 인증 및 상담 신청(0.1초 무료) 완료 즉시 실명 상품 정보 잠금이 해제됩니다.</p>
+                  <h4 className="text-sm font-black text-slate-800 tracking-tight">🔒 금융소비자보호법(이하 금소법) 시행에 따라 실제 회사명/상품명이 마스킹 처리되어 있습니다.</h4>
+                  <p className="text-xs text-slate-500 font-bold mt-0.5">모든 회사명과 상품명은 본인 인증 및 상담 신청완료 즉시 0.1초만에 실명 상품 정보 잠금이 해제됩니다.</p>
                 </div>
               </div>
               <button
@@ -2583,14 +2583,21 @@ ${origin}/?code=${simCode}
           
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pt-6 border-t border-slate-100 text-[10px] text-slate-450 font-bold pb-12">
             <div className="space-y-1">
-              <p>보험대리점명: 주식회사 아이지에이수수 (등록번호: 제2026068888호)</p>
+              <p>
+                보험대리점명: {branding?.agencyName || '주식회사 아이지에이수수'} 
+                {branding?.agencyAddress ? (
+                  ` (${branding.agencyAddress.replace('보험대리점 : ', '')})`
+                ) : (
+                  ' (등록번호: 제2026068888호)'
+                )}
+              </p>
               <p className="text-slate-400">본 광고는 상품 광고가 아닌 회사 브랜딩 목적의 업무광고이며, 손해/생명보험협회 심의 규정을 준수합니다.</p>
               <p className="text-slate-500 border border-slate-100 p-2.5 rounded bg-slate-50 mt-2 font-bold leading-relaxed">
                 ※ 상기 분석 및 추천 설계 내용은 모집종사자(또는 AI 분석 엔진)의 개인적인 의견이며, 계약체결에 따른 이익 또는 손실은 보험계약자 및 피보험자에게 귀속됩니다.
               </p>
             </div>
             <div className="px-3 py-1.5 bg-slate-50 rounded text-slate-400 border border-slate-100 whitespace-nowrap">
-              생명보험협회 심의필 제 2026-00000호 (유효기간: 2026.06.18 ~ 2027.06.17)
+              {branding?.registrationNumber || '생명보험협회 심의필 제 2026-00000호 (유효기간: 2026.06.18 ~ 2027.06.17)'}
             </div>
           </div>
         </div>

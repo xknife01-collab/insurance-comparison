@@ -1,3 +1,4 @@
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 import { motion } from 'motion/react';
 import { ShieldCheck, Zap, CheckCircle2, Dog, Cat, Star, AlertCircle, Heart } from 'lucide-react';
@@ -93,10 +94,10 @@ export const PetSummary: React.FC<Props> = ({ result }) => {
             {/* 세부 점수 리스트 */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-4">
               {[
-                { label: '슬개골/고관절', val: petOpts.patellaRider ? '가입 완료' : '미보장', score: scores.patellaScore },
-                { label: '피부/외이염', val: petOpts.skinRider ? '가입 완료' : '미보장', score: scores.skinScore },
-                { label: '구강/치과', val: petOpts.dentalRider ? '가입 완료' : '미보장', score: scores.dentalScore },
-                { label: '동물등록 혜택', val: petOpts.isRegistered ? '5% 할인대상' : '할인 미적용', score: petOpts.isRegistered ? 95 : 50 },
+                { label: '슬개골/고관절', targetId: 'input-pet-fields', val: petOpts.patellaRider ? '가입 완료' : '미보장', score: scores.patellaScore },
+                { label: '피부/외이염', targetId: 'input-pet-fields', val: petOpts.skinRider ? '가입 완료' : '미보장', score: scores.skinScore },
+                { label: '구강/치과', targetId: 'input-pet-fields', val: petOpts.dentalRider ? '가입 완료' : '미보장', score: scores.dentalScore },
+                { label: '동물등록 혜택', targetId: 'input-pet-fields', val: petOpts.isRegistered ? '5% 할인대상' : '할인 미적용', score: petOpts.isRegistered ? 95 : 50 },
               ].map((item, i) => (
                 <div key={i} className="space-y-2">
                   <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">{item.label}</p>

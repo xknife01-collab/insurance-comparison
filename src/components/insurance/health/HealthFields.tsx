@@ -33,7 +33,7 @@ export const HealthFields: React.FC<Props> = ({
   ];
 
   return (
-    <div className="bg-orange-50/30 rounded-[3rem] p-10 mb-12 border border-orange-100/50">
+    <div id="input-health-fields" className="bg-orange-50/30 rounded-[3rem] p-10 mb-12 border border-orange-100/50">
       <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-8">
          <div className="flex items-center gap-3">
             <div className="w-1.5 h-6 bg-orange-500 rounded-full"></div>

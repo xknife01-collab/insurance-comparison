@@ -3,10 +3,12 @@ import { createClient } from '../utils/supabase/client';
 import { MarketingPlaybookTab } from './MarketingPlaybookTab';
 import { AdCampaignTab } from './AdCampaignTab';
 import { ChatTab } from './ChatTab';
+import { ComplianceGuideTab } from './ComplianceGuideTab';
 import { LeadDistributionSimulator } from './LeadDistributionSimulator';
 import { triggerWelcomeChat } from '../utils/chatHelper';
 import PWAInstallCard from './PWAInstallCard';
 import { registerPushSubscription, triggerTestPushNotification } from '../utils/pushNotification';
+import { useB2BBranding } from '../hooks/useB2BBranding';
 
 import { 
   Users, Settings, CreditCard, FileText, Plus, LogOut, CheckCircle, 
@@ -433,8 +435,9 @@ const getUtmSourceBadge = (utmSource?: string) => {
   return map[cleanSource] || { label: `${utmSource} 🔗`, bgClass: 'bg-slate-800/40 text-slate-300 border-slate-700/50' };
 };
 
-export default function AdminDashboard() {
+export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 'register' }) {
   const supabase = createClient();
+  const { updateBranding } = useB2BBranding();
   
   // Auth state simulation
   const [currentUser, setCurrentUser] = useState<{
@@ -467,6 +470,13 @@ export default function AdminDashboard() {
   const [loginCode, setLoginCode] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [loginError, setLoginError] = useState('');
+
+  // Sync signupTab with initialTab changes
+  useEffect(() => {
+    if (initialTab) {
+      setSignupTab(initialTab);
+    }
+  }, [initialTab]);
   
   // Registration Inputs
   const [regName, setRegName] = useState('');
@@ -496,7 +506,7 @@ export default function AdminDashboard() {
   const [invitedAgencyName, setInvitedAgencyName] = useState<string | null>(null);
 
   // Dashboard Tab state
-  const [activeTab, setActiveTab] = useState<'leads' | 'settings' | 'billing' | 'planners' | 'profile' | 'marketing' | 'playbook' | 'ad_campaign' | 'chat'>('leads');
+  const [activeTab, setActiveTab] = useState<'leads' | 'settings' | 'billing' | 'planners' | 'profile' | 'marketing' | 'playbook' | 'ad_campaign' | 'chat' | 'compliance'>('leads');
   const [unreadTotal, setUnreadTotal] = useState(0);
 
   // 도움말 가이드 상태 및 로컬 스토리지 연동 (기본값 ON)
@@ -1994,6 +2004,24 @@ export default function AdminDashboard() {
     }
   };
 
+  // Auto-login for demo parameters from B2B Hub
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const demoType = params.get('demo');
+    if (demoType && currentUser.role === 'guest') {
+      if (demoType === 'agency') {
+        handleLogin(undefined, 'test', '1234');
+      } else if (demoType === 'planner') {
+        handleLogin(undefined, 'test_planner', '1234');
+      }
+    }
+    
+    // Auto-select registration tab if navigated with register=true
+    if (params.get('register') === 'true') {
+      setSignupTab('register');
+    }
+  }, [currentUser.role]);
+
   // Perform Registration (Self-serve)
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -2900,6 +2928,25 @@ export default function AdminDashboard() {
     }
     setLoading(true);
     try {
+      const updatedBranding = {
+        type: currentUser.role === 'agency' ? 'agency' as const : 'planner' as const,
+        plannerId: currentUser.plannerId || null,
+        agencyId: currentUser.agencyId || null,
+        name: currentUser.name || '',
+        profileImageUrl: editProfileImg || null,
+        logoUrl: editLogoUrl || null,
+        greetingTitle: editGreetingTitle || '',
+        greetingContent: editGreetingContent || '',
+        customPhone: editCustomPhone || '',
+        customAddress: editCustomAddress || '',
+        kakaoLink: editKakao || null,
+        agencyName: editCompanyName || '',
+        agencyAddress: editCustomAddress || '',
+        registrationNumber: editRegistrationNumber || null,
+        customEmail: editEmail || '',
+        leadRoutingType: sessionStorage.getItem('demo_lead_routing_type') || null
+      };
+
       if (currentUser.plannerCode === 'test' || currentUser.plannerCode === 'test_planner') {
         setCurrentUser(prev => ({
           ...prev,
@@ -2926,6 +2973,7 @@ export default function AdminDashboard() {
             email: editEmail
           } : a));
         }
+        updateBranding(updatedBranding);
         alert("프로필 및 랜딩페이지 설정이 실시간으로 저장되었습니다. 즉시 내 홈페이지에 반영됩니다. (데모 모드)");
         return;
       }
@@ -2961,6 +3009,7 @@ export default function AdminDashboard() {
           console.error("Failed to update agency settings:", agencyUpdateError);
         }
       }
+      updateBranding(updatedBranding);
       alert("프로필 및 랜딩페이지 설정이 실시간으로 저장되었습니다. 즉시 내 홈페이지에 반영됩니다.");
       await fetchData();
     } catch (err) {
@@ -4880,6 +4929,43 @@ export default function AdminDashboard() {
                 >
                   <User className="w-4 h-4" />
                   {currentUser.role === 'super' ? '대표 랜딩페이지 설정' : '개인 프로필/랜딩 설정'}
+                </button>
+              )}
+
+               {(currentUser.role === 'agency' || currentUser.role === 'planner' || currentUser.role === 'super') && (
+                <button 
+                  onClick={() => setActiveTab('compliance')}
+                  className={`w-auto lg:w-full text-left rounded-2xl transition-all duration-300 relative overflow-hidden group cursor-pointer border ${
+                    activeTab === 'compliance' 
+                      ? 'bg-gradient-to-r from-amber-500 to-orange-600 border-orange-400 text-white shadow-[0_8px_24px_rgba(249,115,22,0.25)]' 
+                      : 'bg-slate-900/50 hover:bg-slate-900 border-slate-800 hover:border-amber-500/30 text-slate-400 hover:text-slate-200'
+                  } p-4 mt-2 mb-2 space-y-1.5`}
+                >
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/10 rounded-full blur-xl group-hover:scale-150 transition-all duration-500" />
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-xs font-black text-amber-400 group-hover:text-amber-300">
+                      <ShieldCheck className="w-3.5 h-3.5 animate-pulse" />
+                      <span>준법 지원</span>
+                    </div>
+                    <span className={`text-[9px] font-black px-1.5 py-0.5 rounded tracking-wide ${
+                      activeTab === 'compliance' 
+                        ? 'bg-white/20 text-white' 
+                        : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                    }`}>
+                      필독
+                    </span>
+                  </div>
+
+                  <div className="font-extrabold text-xs lg:text-[13px] leading-tight text-white flex items-center gap-1.5 pt-0.5">
+                    <span>광고 심의 매뉴얼 📜</span>
+                  </div>
+
+                  <p className={`text-[10px] leading-normal font-semibold ${
+                    activeTab === 'compliance' ? 'text-orange-100' : 'text-slate-500'
+                  }`}>
+                    동일물 신고 양식 & 정보 기재 안내
+                  </p>
                 </button>
               )}
 
@@ -7473,6 +7559,27 @@ export default function AdminDashboard() {
                       onToggleHelpGuide={handleToggleHelpGuide}
                     />
                   </div>
+                </div>
+              )}
+
+              {/* Tab 10: Compliance/Deliberation Guide */}
+              {activeTab === 'compliance' && (
+                <div key="compliance" className="active-tab-fade-slide space-y-6">
+                  {showHelpGuide && (
+                    <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)]">
+                      <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                      <div className="pl-2 space-y-1">
+                        <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 광고 심의 가이드</span>
+                        <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                          "📜 설계사가 개별적으로 준법 감시 및 광고 심의필 번호를 신속하게 등록하고 안전하게 홍보할 수 있는 단계별 인포그래픽 매뉴얼입니다."
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  <ComplianceGuideTab 
+                    plannerCode={currentUser.plannerCode || 'test'} 
+                    onGoToProfile={() => setActiveTab('profile')}
+                  />
                 </div>
               )}
 

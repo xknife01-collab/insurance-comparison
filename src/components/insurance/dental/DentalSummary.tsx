@@ -1,3 +1,4 @@
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 import { DentalAnalysisResult } from '../../../types/insurance/dental';
 import { motion } from 'motion/react';
@@ -49,10 +50,10 @@ export const DentalSummary: React.FC<Props> = ({ result }) => {
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-4">
               {[
-                { label: '보철(임플란트)', val: analysis.dental?.implantLimit === 'unlimited' ? '무제한' : '연 3회', score: scores.implant },
-                { label: '보존(크라운)', val: formatAmount(analysis.dental?.crownAmount || 0), score: scores.crown },
-                { label: '보존치료', val: '레진/인레이', score: scores.conservative },
-                { label: '감액기간', val: '90일/1년', score: 95 },
+                { label: '보철(임플란트)', targetId: 'input-dental-fields', val: analysis.dental?.implantLimit === 'unlimited' ? '무제한' : '연 3회', score: scores.implant },
+                { label: '보존(크라운)', targetId: 'input-dental-fields', val: formatAmount(analysis.dental?.crownAmount || 0), score: scores.crown },
+                { label: '보존치료', targetId: 'input-dental-fields', val: '레진/인레이', score: scores.conservative },
+                { label: '감액기간', targetId: 'input-dental-fields', val: '90일/1년', score: 95 },
               ].map((item, i) => (
                 <div key={i} className="space-y-2">
                   <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">{item.label}</p>

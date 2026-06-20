@@ -33,7 +33,7 @@ export const DentalFields: React.FC<Props> = (props) => {
   const [scalingInterval, setScalingInterval] = useState<'6m' | '1y' | 'none'>('1y');
 
   return (
-    <div className="bg-emerald-50/20 rounded-[4rem] p-10 md:p-14 mb-16 border border-emerald-100/40 relative overflow-hidden">
+    <div id="input-dental-fields" className="bg-emerald-50/20 rounded-[4rem] p-10 md:p-14 mb-16 border border-emerald-100/40 relative overflow-hidden">
       <div className="absolute top-0 right-0 p-8 opacity-5">
         <Activity size={120} className="text-emerald-500" />
       </div>

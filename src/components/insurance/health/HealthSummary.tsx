@@ -1,3 +1,4 @@
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 import { HealthAnalysisResult } from '../../../types/insurance/health';
 
@@ -24,12 +25,12 @@ export const HealthSummary: React.FC<Props> = ({ result, formatAmount }) => {
   };
 
   const items = [
-    { label: '일반암 진단비', amount: formatAmount(analysis.cancer.currentAmount), status: getStatus(analysis.cancer.currentAmount, analysis.cancer.targetAmount, '일암').text, color: getStatus(analysis.cancer.currentAmount, analysis.cancer.targetAmount, '일암').color },
-    { label: '뇌혈관 질환', amount: formatAmount(analysis.cerebrovascular.currentAmount), status: getStatus(analysis.cerebrovascular.currentAmount, analysis.cerebrovascular.targetAmount, '뇌').text, color: getStatus(analysis.cerebrovascular.currentAmount, analysis.cerebrovascular.targetAmount, '뇌').color },
-    { label: '심혈관 질환', amount: formatAmount(analysis.cardiovascular.currentAmount), status: getStatus(analysis.cardiovascular.currentAmount, analysis.cardiovascular.targetAmount, '심').text, color: getStatus(analysis.cardiovascular.currentAmount, analysis.cardiovascular.targetAmount, '심').color },
-    { label: '수술비(질병/상해)', amount: formatAmount(analysis.surgery.currentAmount), status: getStatus(analysis.surgery.currentAmount, analysis.surgery.targetAmount, '수').text, color: getStatus(analysis.surgery.currentAmount, analysis.surgery.targetAmount, '수').color },
-    { label: '질병후유장해', amount: formatAmount(analysis.postDisability.currentAmount), status: getStatus(analysis.postDisability.currentAmount, analysis.postDisability.targetAmount, '질').text, color: getStatus(analysis.postDisability.currentAmount, analysis.postDisability.targetAmount, '질').color },
-    { label: '납입면제 범위', amount: analysis.paymentExemption === 'premium' ? '고급형' : '표준형', status: analysis.paymentExemption === 'premium' ? '우수' : '정상', color: 'text-emerald-500' },
+    { label: '일반암 진단비', targetId: 'input-health-fields', amount: formatAmount(analysis.cancer.currentAmount), status: getStatus(analysis.cancer.currentAmount, analysis.cancer.targetAmount, '일암').text, color: getStatus(analysis.cancer.currentAmount, analysis.cancer.targetAmount, '일암').color },
+    { label: '뇌혈관 질환', targetId: 'input-health-fields', amount: formatAmount(analysis.cerebrovascular.currentAmount), status: getStatus(analysis.cerebrovascular.currentAmount, analysis.cerebrovascular.targetAmount, '뇌').text, color: getStatus(analysis.cerebrovascular.currentAmount, analysis.cerebrovascular.targetAmount, '뇌').color },
+    { label: '심혈관 질환', targetId: 'input-health-fields', amount: formatAmount(analysis.cardiovascular.currentAmount), status: getStatus(analysis.cardiovascular.currentAmount, analysis.cardiovascular.targetAmount, '심').text, color: getStatus(analysis.cardiovascular.currentAmount, analysis.cardiovascular.targetAmount, '심').color },
+    { label: '수술비(질병/상해)', targetId: 'input-health-fields', amount: formatAmount(analysis.surgery.currentAmount), status: getStatus(analysis.surgery.currentAmount, analysis.surgery.targetAmount, '수').text, color: getStatus(analysis.surgery.currentAmount, analysis.surgery.targetAmount, '수').color },
+    { label: '질병후유장해', targetId: 'input-health-fields', amount: formatAmount(analysis.postDisability.currentAmount), status: getStatus(analysis.postDisability.currentAmount, analysis.postDisability.targetAmount, '질').text, color: getStatus(analysis.postDisability.currentAmount, analysis.postDisability.targetAmount, '질').color },
+    { label: '납입면제 범위', targetId: 'input-health-fields', amount: analysis.paymentExemption === 'premium' ? '고급형' : '표준형', status: analysis.paymentExemption === 'premium' ? '우수' : '정상', color: 'text-emerald-500' },
   ];
 
   return (
@@ -40,7 +41,10 @@ export const HealthSummary: React.FC<Props> = ({ result, formatAmount }) => {
       </h3>
       <div className="grid md:grid-cols-3 gap-6">
         {items.map((item, i) => (
-          <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex justify-between items-center group hover:border-orange-200 transition-all">
+            <div 
+              key={i} 
+              onClick={() => scrollToInputAndHighlight((item as any).targetId)}
+              className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex justify-between items-center group  hover:border-orange-300 hover:shadow-md hover:scale-[1.02] cursor-pointer transition-all duration-300">
             <div>
               <p className="text-[10px] text-gray-400 font-bold mb-1 uppercase tracking-widest">{item.label}</p>
               <p className="text-lg font-black text-gray-800">{item.amount}</p>

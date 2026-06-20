@@ -1,3 +1,4 @@
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 import { motion } from 'motion/react';
 import { ShieldCheck, Zap, CheckCircle2, Award, Star, AlertCircle, TrendingUp } from 'lucide-react';
@@ -104,10 +105,10 @@ export const WholeLifeSummary: React.FC<Props> = ({ result }) => {
             {/* 세부 점수 리스트 */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-4">
               {[
-                { label: '사망금 적정성', val: `${formatAmt(wholeLifeOpts.deathBenefit)} 설정`, score: scores.cancerScore },
-                { label: '환급형 효율성', val: isLowRefund ? '저해지형 특약 반영' : '일반환급형 반영', score: scores.cerebrovascularScore },
-                { label: '보장구조 최적성', val: isStepUp ? '체증형(물가대응)' : '기본고정형', score: scores.cardiovascularScore },
-                { label: '소득대비 납입적성', val: '월 보험료 비율 분석', score: 85 },
+                { label: '사망금 적정성', targetId: 'input-wholeLife-fields', val: `${formatAmt(wholeLifeOpts.deathBenefit)} 설정`, score: scores.cancerScore },
+                { label: '환급형 효율성', targetId: 'input-wholeLife-fields', val: isLowRefund ? '저해지형 특약 반영' : '일반환급형 반영', score: scores.cerebrovascularScore },
+                { label: '보장구조 최적성', targetId: 'input-wholeLife-fields', val: isStepUp ? '체증형(물가대응)' : '기본고정형', score: scores.cardiovascularScore },
+                { label: '소득대비 납입적성', targetId: 'input-wholeLife-fields', val: '월 보험료 비율 분석', score: 85 },
               ].map((item, i) => (
                 <div key={i} className="space-y-2">
                   <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">{item.label}</p>

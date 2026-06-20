@@ -52,7 +52,7 @@ export const AccidentFields: React.FC<Props> = ({
   };
 
   return (
-    <div className="space-y-12 animate-in fade-in duration-500">
+    <div id="input-accident-fields" className="space-y-12 animate-in fade-in duration-500">
       
       {/* ── SECTION 1: 직업 및 운전정보 (핵심 리스크) ── */}
       <div className="bg-slate-900 rounded-[3.5rem] p-8 md:p-12 text-white relative overflow-hidden">
@@ -138,7 +138,7 @@ export const AccidentFields: React.FC<Props> = ({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* 상해사망 한도 */}
-          <div className="space-y-3">
+        <div id="input-accident-death" className="space-y-3 rounded-2xl p-2 transition-all">
             <div className="flex justify-between items-center">
               <label className="text-xs font-black text-slate-500">상해사망 보장액</label>
               <span className="text-sm font-black text-red-600">{formatWon(accidentDeathLimit)}</span>
@@ -159,7 +159,7 @@ export const AccidentFields: React.FC<Props> = ({
           </div>
 
           {/* 상해후유장해 한도 */}
-          <div className="space-y-3">
+        <div id="input-accident-disability" className="space-y-3 rounded-2xl p-2 transition-all">
             <div className="flex justify-between items-center">
               <label className="text-xs font-black text-slate-500">상해후유장해(3%~100%) 보장액</label>
               <span className="text-sm font-black text-red-600">{formatWon(accidentDisabilityLimit)}</span>
@@ -180,7 +180,7 @@ export const AccidentFields: React.FC<Props> = ({
           </div>
 
           {/* 골절진단비 한도 */}
-          <div className="space-y-3">
+        <div id="input-accident-fracture" className="space-y-3 rounded-2xl p-2 transition-all">
             <div className="flex justify-between items-center">
               <label className="text-xs font-black text-slate-500">골절 진단비 (치아파절 포함)</label>
               <span className="text-sm font-black text-red-600">{formatWon(fractureLimit)}</span>
@@ -201,7 +201,7 @@ export const AccidentFields: React.FC<Props> = ({
           </div>
 
           {/* 상해수술비 한도 */}
-          <div className="space-y-3">
+        <div id="input-accident-surgery" className="space-y-3 rounded-2xl p-2 transition-all">
             <div className="flex justify-between items-center">
               <label className="text-xs font-black text-slate-500">상해 수술비 (사고 1회당)</label>
               <span className="text-sm font-black text-red-600">{formatWon(surgeryLimit)}</span>

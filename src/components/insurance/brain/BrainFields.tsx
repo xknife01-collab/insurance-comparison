@@ -19,7 +19,7 @@ export const BrainFields: React.FC<Props> = ({
   coveragePeriod, setCoveragePeriod
 }) => {
   return (
-    <div className="bg-indigo-50/30 rounded-[3rem] p-10 mb-12 border border-indigo-100/50">
+    <div id="input-brain-fields" className="bg-indigo-50/30 rounded-[3rem] p-10 mb-12 border border-indigo-100/50">
       <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-8">
          <div className="flex items-center gap-3">
             <div className="w-1.5 h-6 bg-indigo-500 rounded-full"></div>
@@ -35,7 +35,7 @@ export const BrainFields: React.FC<Props> = ({
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {/* 뇌혈관질환 진단비 */}
-        <div className="space-y-3">
+        <div id="input-brain-diagnosis" className="space-y-3 rounded-2xl p-2 transition-all">
            <p className="text-[0.65rem] font-black text-slate-400 pl-1 uppercase tracking-widest flex items-center gap-1">
              <Shield size={12} /> 뇌혈관질환 진단비
            </p>
@@ -69,7 +69,7 @@ export const BrainFields: React.FC<Props> = ({
         </div>
 
         {/* 뇌혈관질환 수술비 */}
-        <div className="space-y-3">
+        <div id="input-brain-surgery" className="space-y-3 rounded-2xl p-2 transition-all">
            <p className="text-[0.65rem] font-black text-slate-400 pl-1 uppercase tracking-widest flex items-center gap-1">
              <HeartPulse size={12} /> 뇌혈관질환 수술비
            </p>
@@ -87,7 +87,7 @@ export const BrainFields: React.FC<Props> = ({
         </div>
 
         {/* 납입/갱신 유형 */}
-        <div className="space-y-3">
+        <div id="input-brain-paymentType" className="space-y-3 rounded-2xl p-2 transition-all">
            <p className="text-[0.65rem] font-black text-slate-400 pl-1 uppercase tracking-widest flex items-center gap-1">
              <Clock size={12} /> 납입/갱신 유형
            </p>
@@ -105,7 +105,7 @@ export const BrainFields: React.FC<Props> = ({
         </div>
 
         {/* 보장 만기 */}
-        <div className="space-y-3">
+        <div id="input-brain-coveragePeriod" className="space-y-3 rounded-2xl p-2 transition-all">
            <p className="text-[0.65rem] font-black text-slate-400 pl-1 uppercase tracking-widest flex items-center gap-1">
              <Zap size={12} /> 보장 만기
            </p>

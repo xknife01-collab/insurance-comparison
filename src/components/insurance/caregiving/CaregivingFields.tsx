@@ -23,7 +23,7 @@ export const CaregivingFields: React.FC<Props> = ({
   focusIntegrated, setFocusIntegrated
 }) => {
   return (
-    <div className="bg-purple-50/30 rounded-[3rem] p-10 mb-12 border border-purple-100/50">
+    <div id="input-caregiving-fields" className="bg-purple-50/30 rounded-[3rem] p-10 mb-12 border border-purple-100/50">
       <div className="flex items-center gap-3 mb-8">
          <div className="w-1.5 h-6 bg-purple-500 rounded-full"></div>
          <h3 className="text-xl font-bold text-slate-800">간병 서비스 방식 및 보장 설정</h3>

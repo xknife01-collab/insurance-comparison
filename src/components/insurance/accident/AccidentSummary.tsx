@@ -1,3 +1,4 @@
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 import { motion } from 'motion/react';
 import { Shield, Zap, CheckCircle2, Star, AlertCircle, Eye, Activity, UserCheck } from 'lucide-react';
@@ -94,10 +95,10 @@ export const AccidentSummary: React.FC<Props> = ({ result }) => {
             {/* 세부 점수 리스트 */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-4">
               {[
-                { label: '상해사망', val: formatWon(opts.accidentDeathLimit), score: scores.deathScore },
-                { label: '후유장해', val: formatWon(opts.accidentDisabilityLimit), score: scores.disabilityScore },
-                { label: '일상치료 (골절/깁스)', val: `${formatWon(opts.fractureLimit)} (깁스: ${opts.castLimit > 0 ? formatWon(opts.castLimit) : '미가입'})`, score: scores.treatmentScore },
-                { label: '수술/입원/레저', val: `수술: ${formatWon(opts.surgeryLimit)} / ${opts.hasLeisureRider ? '레저 가입' : '레저 미가입'}`, score: opts.hasLeisureRider ? 95 : 65 },
+                { label: '상해사망', targetId: 'input-accident-death', val: formatWon(opts.accidentDeathLimit), score: scores.deathScore },
+                { label: '후유장해', targetId: 'input-accident-disability', val: formatWon(opts.accidentDisabilityLimit), score: scores.disabilityScore },
+                { label: '일상치료 (골절/깁스)', targetId: 'input-accident-fracture', val: `${formatWon(opts.fractureLimit)} (깁스: ${opts.castLimit > 0 ? formatWon(opts.castLimit) : '미가입'})`, score: scores.treatmentScore },
+                { label: '수술/입원/레저', targetId: 'input-accident-surgery', val: `수술: ${formatWon(opts.surgeryLimit)} / ${opts.hasLeisureRider ? '레저 가입' : '레저 미가입'}`, score: opts.hasLeisureRider ? 95 : 65 },
               ].map((item, i) => (
                 <div key={i} className="space-y-2">
                   <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">{item.label}</p>

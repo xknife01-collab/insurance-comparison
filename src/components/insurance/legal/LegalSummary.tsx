@@ -1,3 +1,4 @@
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 import { motion } from 'motion/react';
 import { ShieldCheck, Zap, CheckCircle2, Scale, Star, AlertCircle, HelpCircle } from 'lucide-react';
@@ -80,10 +81,10 @@ export const LegalSummary: React.FC<Props> = ({ result }) => {
             {/* 세부 점수 리스트 */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-4">
               {[
-                { label: '변호사비 한도', val: `${(legalOpts.lawyerLimit / 10000).toLocaleString()}만원`, score: scores.lawyerScore },
-                { label: '인지액/송달료', val: `${(legalOpts.courtFeeLimit / 10000).toLocaleString()}만원`, score: scores.courtFeeScore },
-                { label: '추가 특약 수준', val: (legalOpts.suddenAccelerationRider || legalOpts.consultationRider) ? '특약 조립완료' : '특약 미선택', score: scores.riderScore },
-                { label: '전자소송 할인', val: legalOpts.isElectronicLitigation ? '5% 할인대상' : '할인 미동의', score: legalOpts.isElectronicLitigation ? 95 : 50 },
+                { label: '변호사비 한도', targetId: 'input-legal-fields', val: `${(legalOpts.lawyerLimit / 10000).toLocaleString()}만원`, score: scores.lawyerScore },
+                { label: '인지액/송달료', targetId: 'input-legal-fields', val: `${(legalOpts.courtFeeLimit / 10000).toLocaleString()}만원`, score: scores.courtFeeScore },
+                { label: '추가 특약 수준', targetId: 'input-legal-fields', val: (legalOpts.suddenAccelerationRider || legalOpts.consultationRider) ? '특약 조립완료' : '특약 미선택', score: scores.riderScore },
+                { label: '전자소송 할인', targetId: 'input-legal-fields', val: legalOpts.isElectronicLitigation ? '5% 할인대상' : '할인 미동의', score: legalOpts.isElectronicLitigation ? 95 : 50 },
               ].map((item, i) => (
                 <div key={i} className="space-y-2">
                   <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">{item.label}</p>

@@ -32,7 +32,7 @@ export const NursingFields: React.FC<NursingFieldsProps> = ({
   setHasLtcHistory,
 }) => {
   return (
-    <div className="space-y-16">
+    <div id="input-nursing-fields" className="space-y-16">
       {/* 1. Preferred Service Section */}
       <div className="space-y-6">
         <div>

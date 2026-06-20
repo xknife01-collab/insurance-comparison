@@ -1,3 +1,4 @@
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 import { motion } from 'motion/react';
 import { ShieldCheck, Zap, CheckCircle2, Home, Flame, Star, AlertCircle, Building } from 'lucide-react';
@@ -91,10 +92,10 @@ export const FireSummary: React.FC<Props> = ({ result }) => {
             {/* 세부 점수 리스트 */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-4 text-left">
               {[
-                { label: '누수 (급배수) 특약', val: fireOpts.hasWaterLeakRider ? '가입 완료' : '미보장', score: scores.waterLeakScore || 30 },
-                { label: '배상책임 (대물)', val: fireOpts.hasLiabilityRider ? '가입 완료' : '미보장', score: scores.liabilityScore || 30 },
-                { label: '임시 거주 지원', val: fireOpts.hasTemporaryHousingRider ? '가입 완료' : '미보장', score: scores.housingScore || 40 },
-                { label: '보장 한도 균형', val: fireOpts.occupancyType === 'tenant' ? '자가 건물 제외' : `${(fireOpts.buildingLimit / 100000000).toFixed(1)}억 원`, score: scores.limitScore || 70 },
+                { label: '누수 (급배수) 특약', targetId: 'input-fire-fields', val: fireOpts.hasWaterLeakRider ? '가입 완료' : '미보장', score: scores.waterLeakScore || 30 },
+                { label: '배상책임 (대물)', targetId: 'input-fire-fields', val: fireOpts.hasLiabilityRider ? '가입 완료' : '미보장', score: scores.liabilityScore || 30 },
+                { label: '임시 거주 지원', targetId: 'input-fire-fields', val: fireOpts.hasTemporaryHousingRider ? '가입 완료' : '미보장', score: scores.housingScore || 40 },
+                { label: '보장 한도 균형', targetId: 'input-fire-fields', val: fireOpts.occupancyType === 'tenant' ? '자가 건물 제외' : `${(fireOpts.buildingLimit / 100000000).toFixed(1)}억 원`, score: scores.limitScore || 70 },
               ].map((item, i) => (
                 <div key={i} className="space-y-2">
                   <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">{item.label}</p>

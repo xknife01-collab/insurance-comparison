@@ -549,7 +549,7 @@ export const CarFields: React.FC<CarFieldsProps> = ({
 
 
   return (
-    <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-5xl mx-auto text-left">
+    <div id="input-car-fields" className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-5xl mx-auto text-left">
       
       {/* SECTION 1: 차량 정보 및 자차손해 설정 */}
       <div className="bg-slate-50/50 border border-slate-100 rounded-[2.5rem] p-8 md:p-12 space-y-8">

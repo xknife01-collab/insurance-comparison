@@ -44,7 +44,7 @@ export const SavingsFields: React.FC<Props> = ({
   ] as const;
 
   return (
-    <div className="space-y-12 animate-in fade-in duration-500 text-left">
+    <div id="input-savings-fields" className="space-y-12 animate-in fade-in duration-500 text-left">
       
       {/* ── STEP 01: 납입 방식 선택 (적립식 vs 일시납) ── */}
       <div className="bg-slate-900 rounded-[3.5rem] p-8 md:p-12 text-white relative overflow-hidden">

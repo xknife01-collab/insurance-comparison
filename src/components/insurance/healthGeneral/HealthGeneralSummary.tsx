@@ -1,3 +1,4 @@
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 
 interface Props {
@@ -34,37 +35,37 @@ export const HealthGeneralSummary: React.FC<Props> = ({ result, formatAmount }) 
 
   const items = [
     { 
-      label: '일반암 진단비', 
+      label: '일반암 진단비', targetId: 'input-healthGeneral-fields', 
       amount: formatAmount(opts.cancerLimit), 
       status: getStatus(opts.cancerLimit, 50000000).text, 
       color: getStatus(opts.cancerLimit, 50000000).color 
     },
     { 
-      label: '유사암 진단비', 
+      label: '유사암 진단비', targetId: 'input-healthGeneral-fields', 
       amount: formatAmount(opts.similarCancerLimit), 
       status: getStatus(opts.similarCancerLimit, 10000000).text, 
       color: getStatus(opts.similarCancerLimit, 10000000).color 
     },
     { 
-      label: '뇌혈관 진단비', 
+      label: '뇌혈관 진단비', targetId: 'input-healthGeneral-fields', 
       amount: formatAmount(opts.brainLimit), 
       status: getStatus(opts.brainLimit, 30000000).text, 
       color: getStatus(opts.brainLimit, 30000000).color 
     },
     { 
-      label: '허혈성 심장 진단비', 
+      label: '허혈성 심장 진단비', targetId: 'input-healthGeneral-fields', 
       amount: formatAmount(opts.heartLimit), 
       status: getStatus(opts.heartLimit, 20000000).text, 
       color: getStatus(opts.heartLimit, 20000000).color 
     },
     { 
-      label: '심혈관 진단비', 
+      label: '심혈관 진단비', targetId: 'input-healthGeneral-fields', 
       amount: opts.cardioLimit === 0 ? '미가입' : formatAmount(opts.cardioLimit), 
       status: opts.cardioLimit === 0 ? '공백' : getStatus(opts.cardioLimit, 10000000).text, 
       color: opts.cardioLimit === 0 ? 'text-red-600 bg-red-100/60 font-bold' : getStatus(opts.cardioLimit, 10000000).color 
     },
     { 
-      label: '가입 계약 조건', 
+      label: '가입 계약 조건', targetId: 'input-healthGeneral-fields', 
       amount: `${opts.paymentPeriod}년납 / ${opts.coveragePeriod}세만기`, 
       status: opts.isRenewable ? '갱신형' : '비갱신형', 
       color: opts.isRenewable ? 'text-orange-600 bg-orange-50 font-bold' : 'text-emerald-600 bg-emerald-50 font-bold' 
@@ -72,10 +73,10 @@ export const HealthGeneralSummary: React.FC<Props> = ({ result, formatAmount }) 
   ];
 
   const riders = [
-    { label: '질병·상해 1-5종 수술비', active: opts.has1to5Surgery },
-    { label: '표적항암 약물 치료비', active: opts.hasTargetedTherapy },
-    { label: '급성 혈전용해 치료비', active: opts.hasThrombolysis },
-    { label: '가족 일상생활 배상책임', active: opts.hasLiability }
+    { label: '질병·상해 1-5종 수술비', targetId: 'input-healthGeneral-fields', active: opts.has1to5Surgery },
+    { label: '표적항암 약물 치료비', targetId: 'input-healthGeneral-fields', active: opts.hasTargetedTherapy },
+    { label: '급성 혈전용해 치료비', targetId: 'input-healthGeneral-fields', active: opts.hasThrombolysis },
+    { label: '가족 일상생활 배상책임', targetId: 'input-healthGeneral-fields', active: opts.hasLiability }
   ];
 
   return (
@@ -88,7 +89,10 @@ export const HealthGeneralSummary: React.FC<Props> = ({ result, formatAmount }) 
       {/* 3대 진단비 및 기본 조건 */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
         {items.map((item, i) => (
-          <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex justify-between items-center hover:border-orange-200 transition-all">
+            <div 
+              key={i} 
+              onClick={() => scrollToInputAndHighlight((item as any).targetId)}
+              className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex justify-between items-center  hover:border-orange-300 hover:shadow-md hover:scale-[1.02] cursor-pointer transition-all duration-300">
             <div>
               <p className="text-[10px] text-slate-400 font-bold mb-1 uppercase tracking-widest">{item.label}</p>
               <p className="text-base font-black text-slate-800">{item.amount}</p>

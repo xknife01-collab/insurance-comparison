@@ -19,7 +19,7 @@ export const DriverFields: React.FC<Props> = ({
   setPlanType
 }) => {
   return (
-    <div className="space-y-12 animate-in fade-in duration-500">
+    <div id="input-driver-fields" className="space-y-12 animate-in fade-in duration-500">
       
       {/* ── SECTION 1: 운전 목적 설정 ── */}
       <div className="bg-slate-900 rounded-[3.5rem] p-8 md:p-12 text-white relative overflow-hidden">

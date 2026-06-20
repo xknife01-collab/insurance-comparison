@@ -1,5 +1,6 @@
 import React from 'react';
 import { AnalysisResult } from '../../../types/insurance';
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 
 interface Props {
   result: AnalysisResult;
@@ -25,22 +26,55 @@ export const BrainSummary: React.FC<Props> = ({ result, formatAmount }) => {
   };
 
   const items = [
-    { label: '뇌혈관 질환 진단비', amount: formatAmount(analysis.cerebrovascular.currentAmount), status: getStatus(analysis.cerebrovascular.currentAmount, analysis.cerebrovascular.targetAmount, '뇌').text, color: getStatus(analysis.cerebrovascular.currentAmount, analysis.cerebrovascular.targetAmount, '뇌').color },
-    { label: '수술비(질병/상해)', amount: formatAmount(analysis.surgery.currentAmount), status: getStatus(analysis.surgery.currentAmount, analysis.surgery.targetAmount, '수').text, color: getStatus(analysis.surgery.currentAmount, analysis.surgery.targetAmount, '수').color },
-    { label: '질병후유장해', amount: formatAmount(analysis.postDisability.currentAmount), status: getStatus(analysis.postDisability.currentAmount, analysis.postDisability.targetAmount, '질').text, color: getStatus(analysis.postDisability.currentAmount, analysis.postDisability.targetAmount, '질').color },
-    { label: '납입면제 범위', amount: analysis.paymentExemption === 'premium' ? '고급형' : '표준형', status: analysis.paymentExemption === 'premium' ? '우수' : '정상', color: 'text-emerald-500' },
+    { 
+      label: '뇌혈관 질환 진단비', 
+      amount: formatAmount(analysis.cerebrovascular.currentAmount), 
+      status: getStatus(analysis.cerebrovascular.currentAmount, analysis.cerebrovascular.targetAmount, '뇌').text, 
+      color: getStatus(analysis.cerebrovascular.currentAmount, analysis.cerebrovascular.targetAmount, '뇌').color,
+      targetId: 'input-brain-diagnosis'
+    },
+    { 
+      label: '수술비(질병/상해)', 
+      amount: formatAmount(analysis.surgery.currentAmount), 
+      status: getStatus(analysis.surgery.currentAmount, analysis.surgery.targetAmount, '수').text, 
+      color: getStatus(analysis.surgery.currentAmount, analysis.surgery.targetAmount, '수').color,
+      targetId: 'input-brain-surgery'
+    },
+    { 
+      label: '질병후유장해', 
+      amount: formatAmount(analysis.postDisability.currentAmount), 
+      status: getStatus(analysis.postDisability.currentAmount, analysis.postDisability.targetAmount, '질').text, 
+      color: getStatus(analysis.postDisability.currentAmount, analysis.postDisability.targetAmount, '질').color,
+      targetId: 'input-brain-fields'
+    },
+    { 
+      label: '납입면제 범위', 
+      amount: analysis.paymentExemption === 'premium' ? '고급형' : '표준형', 
+      status: analysis.paymentExemption === 'premium' ? '우수' : '정상', 
+      color: 'text-emerald-500',
+      targetId: 'input-brain-fields'
+    },
   ];
 
   return (
     <div className="space-y-6">
       <div className="rounded-[2.5rem] p-10 border bg-indigo-50/30 border-indigo-100">
-        <h3 className="text-xl font-bold mb-8 flex items-center gap-2 text-indigo-900">
-          <div className="w-1.5 h-6 rounded-full bg-indigo-500"></div>
-          뇌혈관 보험 상세 보장 현황
-        </h3>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+          <h3 className="text-xl font-bold flex items-center gap-2 text-indigo-900">
+            <div className="w-1.5 h-6 rounded-full bg-indigo-500"></div>
+            뇌혈관 보험 상세 보장 현황
+          </h3>
+          <span className="text-xs font-black text-slate-500 bg-white/80 border border-slate-200/50 px-4 py-2 rounded-xl shadow-sm flex items-center gap-1.5 animate-pulse">
+            💡 <b>안내:</b> 보장 현황에 <b className="text-red-500 font-black">[부족]</b>이 있다면 항목을 클릭해 상단 조절바에서 보장액을 늘려보세요!
+          </span>
+        </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {items.map((item, i) => (
-            <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-indigo-50 flex flex-col justify-center gap-2 group hover:border-indigo-200 transition-all">
+            <div 
+              key={i} 
+              onClick={() => scrollToInputAndHighlight(item.targetId)}
+              className="bg-white p-6 rounded-2xl shadow-sm border border-indigo-50 flex flex-col justify-center gap-2 group hover:border-indigo-300 hover:shadow-md hover:scale-[1.02] cursor-pointer transition-all duration-300"
+            >
               <div className="flex justify-between items-center w-full">
                 <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{item.label}</p>
                 <span className={`text-[10px] font-black px-3 py-1 bg-gray-50 rounded-lg ${item.color}`}>{item.status}</span>

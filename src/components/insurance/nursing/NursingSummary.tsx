@@ -1,3 +1,4 @@
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 import { motion } from 'motion/react';
 import { Shield, TrendingUp, CheckCircle2, AlertCircle, PiggyBank, Clock, HeartHandshake, Users } from 'lucide-react';
@@ -27,12 +28,12 @@ export const NursingSummary: React.FC<Props> = ({ result }) => {
   const underwritingText = (hasBrain || hasLtc) ? '초간편 심사형' : '일반 심사형';
 
   const analysisItems = [
-    { label: '요양 지원 방식', val: prefServiceText, status: '선택됨', icon: Users, color: 'text-pink-500' },
-    { label: '재가 보장 금액', val: `월 최대 ${(homeAmt / 10000).toFixed(0)}만원`, status: '우수', icon: PiggyBank, color: 'text-emerald-500' },
-    { label: '시설 보장 금액', val: `월 최대 ${(facilityAmt / 10000).toFixed(0)}만원`, status: '우수', icon: HeartHandshake, color: 'text-emerald-500' },
-    { label: '대리인 지정 여부', val: proxyText, status: hasProxy ? '안전' : '경고', icon: Shield, color: hasProxy ? 'text-emerald-500' : 'text-rose-500' },
-    { label: '심사 유형', val: underwritingText, status: '확인됨', icon: Users, color: 'text-blue-500' },
-    { label: '면책/감액 기간', val: '90일 고정 / 1년 50%', status: '고정', icon: Clock, color: 'text-slate-400' },
+    { label: '요양 지원 방식', targetId: 'input-nursing-fields', val: prefServiceText, status: '선택됨', icon: Users, color: 'text-pink-500' },
+    { label: '재가 보장 금액', targetId: 'input-nursing-fields', val: `월 최대 ${(homeAmt / 10000).toFixed(0)}만원`, status: '우수', icon: PiggyBank, color: 'text-emerald-500' },
+    { label: '시설 보장 금액', targetId: 'input-nursing-fields', val: `월 최대 ${(facilityAmt / 10000).toFixed(0)}만원`, status: '우수', icon: HeartHandshake, color: 'text-emerald-500' },
+    { label: '대리인 지정 여부', targetId: 'input-nursing-fields', val: proxyText, status: hasProxy ? '안전' : '경고', icon: Shield, color: hasProxy ? 'text-emerald-500' : 'text-rose-500' },
+    { label: '심사 유형', targetId: 'input-nursing-fields', val: underwritingText, status: '확인됨', icon: Users, color: 'text-blue-500' },
+    { label: '면책/감액 기간', targetId: 'input-nursing-fields', val: '90일 고정 / 1년 50%', status: '고정', icon: Clock, color: 'text-slate-400' },
   ];
 
   const efficiencyScore = result.scores?.totalScore ? Math.round(result.scores.totalScore) : 80;

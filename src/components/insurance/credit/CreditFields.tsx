@@ -67,7 +67,7 @@ export const CreditFields: React.FC<Props> = ({
   };
 
   return (
-    <div className="space-y-12 animate-in fade-in duration-500 text-left">
+    <div id="input-credit-fields" className="space-y-12 animate-in fade-in duration-500 text-left">
       
       {/* ── STEP 01: 대출 종류 선택 ── */}
       <div className="bg-slate-900 rounded-[3.5rem] p-8 md:p-12 text-white relative overflow-hidden">

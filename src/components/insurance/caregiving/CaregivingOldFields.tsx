@@ -33,7 +33,7 @@ export const CaregivingOldFields: React.FC<Props> = ({
   const isSevere = subType === 'severe';
 
   return (
-    <div className="bg-amber-50/30 rounded-[3rem] p-8 md:p-10 mb-12 border border-amber-100/50 space-y-12">
+    <div id="input-caregiving-fields" className="bg-amber-50/30 rounded-[3rem] p-8 md:p-10 mb-12 border border-amber-100/50 space-y-12">
       
       {/* ── Section 1: 보장금액 및 선호 서비스 설정 ── */}
       <div>

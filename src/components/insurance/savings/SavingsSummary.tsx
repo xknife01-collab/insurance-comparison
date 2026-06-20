@@ -1,3 +1,4 @@
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 import { motion } from 'motion/react';
 import { ShieldCheck, Zap, CheckCircle2, PiggyBank, Star, AlertCircle, Sparkles } from 'lucide-react';
@@ -121,10 +122,10 @@ export const SavingsSummary: React.FC<Props> = ({ result }) => {
             {/* 세부 점수 리스트 */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-4">
               {[
-                { label: '비과세 혜택 최적성', val: isTaxExempt ? '비과세 100% 매칭' : '일반과세 대상', score: scores.cancerScore },
-                { label: '이율 안전성 점수', val: `공시이율 ${(declaredRate*100).toFixed(2)}%`, score: scores.cerebrovascularScore },
-                { label: '사업비 효율 점수', val: `수수료 ${(feeRate*100).toFixed(1)}% 수준`, score: scores.cardiovascularScore },
-                { label: '유니버셜 기능성', val: savingsOpts.hasUniversal ? '기능 보유 (200%)' : '미보유 (100%)', score: savingsOpts.hasUniversal ? 95 : 50 },
+                { label: '비과세 혜택 최적성', targetId: 'input-savings-fields', val: isTaxExempt ? '비과세 100% 매칭' : '일반과세 대상', score: scores.cancerScore },
+                { label: '이율 안전성 점수', targetId: 'input-savings-fields', val: `공시이율 ${(declaredRate*100).toFixed(2)}%`, score: scores.cerebrovascularScore },
+                { label: '사업비 효율 점수', targetId: 'input-savings-fields', val: `수수료 ${(feeRate*100).toFixed(1)}% 수준`, score: scores.cardiovascularScore },
+                { label: '유니버셜 기능성', targetId: 'input-savings-fields', val: savingsOpts.hasUniversal ? '기능 보유 (200%)' : '미보유 (100%)', score: savingsOpts.hasUniversal ? 95 : 50 },
               ].map((item, i) => (
                 <div key={i} className="space-y-2">
                   <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">{item.label}</p>

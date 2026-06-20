@@ -1,3 +1,4 @@
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 import { AnalysisResult } from '../../../types/insurance';
 
@@ -25,22 +26,30 @@ export const CancerSummary: React.FC<Props> = ({ result, formatAmount }) => {
   };
 
   const items = [
-    { label: '일반암 진단비', amount: formatAmount(analysis.cancer.currentAmount), status: getStatus(analysis.cancer.currentAmount, analysis.cancer.targetAmount).text, color: getStatus(analysis.cancer.currentAmount, analysis.cancer.targetAmount).color },
-    { label: '표적항암 치료비', amount: analysis.cancer.targetedTherapy ? '포함' : '미포함', status: analysis.cancer.targetedTherapy ? '우수' : '권장', color: analysis.cancer.targetedTherapy ? 'text-emerald-500' : 'text-orange-500' },
-    { label: '재발/전이암 보장', amount: analysis.cancer.recurrentCancer ? '포함' : '미포함', status: analysis.cancer.recurrentCancer ? '우수' : '권장', color: analysis.cancer.recurrentCancer ? 'text-emerald-500' : 'text-orange-500' },
-    { label: '납입/갱신 유형', amount: analysis.cancer.paymentType === 'non-renewable' ? '비갱신형' : '갱신형', status: '정상', color: 'text-emerald-500' },
+    { label: '일반암 진단비', targetId: 'input-cancer-diagnosis', amount: formatAmount(analysis.cancer.currentAmount), status: getStatus(analysis.cancer.currentAmount, analysis.cancer.targetAmount).text, color: getStatus(analysis.cancer.currentAmount, analysis.cancer.targetAmount).color },
+    { label: '표적항암 치료비', targetId: 'input-cancer-targeted', amount: analysis.cancer.targetedTherapy ? '포함' : '미포함', status: analysis.cancer.targetedTherapy ? '우수' : '권장', color: analysis.cancer.targetedTherapy ? 'text-emerald-500' : 'text-orange-500' },
+    { label: '재발/전이암 보장', targetId: 'input-cancer-recurrent', amount: analysis.cancer.recurrentCancer ? '포함' : '미포함', status: analysis.cancer.recurrentCancer ? '우수' : '권장', color: analysis.cancer.recurrentCancer ? 'text-emerald-500' : 'text-orange-500' },
+    { label: '납입/갱신 유형', targetId: 'input-cancer-paymentType', amount: analysis.cancer.paymentType === 'non-renewable' ? '비갱신형' : '갱신형', status: '정상', color: 'text-emerald-500' },
   ];
 
   return (
     <div className="space-y-6">
       <div className="rounded-[2.5rem] p-10 border bg-rose-50/30 border-rose-100">
-        <h3 className="text-xl font-bold mb-8 flex items-center gap-2 text-rose-900">
-          <div className="w-1.5 h-6 rounded-full bg-rose-500"></div>
-          암보험 상세 보장 현황
-        </h3>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+          <h3 className="text-xl font-bold mb-8 flex items-center gap-2 text-rose-900">
+            <div className="w-1.5 h-6 rounded-full bg-rose-500"></div>
+            암보험 상세 보장 현황
+          </h3>
+          <span className="text-xs font-black text-slate-500 bg-white/80 border border-slate-200/50 px-4 py-2 rounded-xl shadow-sm flex items-center gap-1.5 animate-pulse">
+            💡 <b>안내:</b> 보장 현황에 <b className="text-red-500 font-black">[부족]</b>이 있다면 항목을 클릭해 상단 조절바에서 보장액을 늘려보세요!
+          </span>
+        </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {items.map((item, i) => (
-            <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-rose-50 flex flex-col justify-center gap-2 group hover:border-rose-200 transition-all">
+            <div 
+              key={i} 
+              onClick={() => scrollToInputAndHighlight((item as any).targetId)}
+              className="bg-white p-6 rounded-2xl shadow-sm border border-rose-50 flex flex-col justify-center gap-2 group  hover:border-orange-300 hover:shadow-md hover:scale-[1.02] cursor-pointer transition-all duration-300">
               <div className="flex justify-between items-center w-full">
                 <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{item.label}</p>
                 <span className={`text-[10px] font-black px-3 py-1 bg-gray-50 rounded-lg ${item.color}`}>{item.status}</span>

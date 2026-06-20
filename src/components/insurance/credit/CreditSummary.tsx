@@ -1,3 +1,4 @@
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 import { motion } from 'motion/react';
 import { ShieldCheck, Zap, CheckCircle2, Coins, Star, AlertTriangle, Sparkles, Building2, Wallet, UserCheck, ShieldAlert } from 'lucide-react';
@@ -125,10 +126,10 @@ export const CreditSummary: React.FC<Props> = ({ result }) => {
             {/* 세부 평가 점수 바 */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-4 border-t border-white/5">
               {[
-                { label: '대출상환 안전성', val: `한도 ${formatAmount(loanAmount)}`, score: scores.cancerScore },
-                { label: '신용할인 최적도', val: `${creditBureau.toUpperCase()} ${discountRate}% 할인`, score: scores.cerebrovascularScore },
-                { label: '특약 구성 종합도', val: hasIllnessRider && hasDisabilityRider ? '종합안심 가입' : '일부 위험 노출', score: scores.cardiovascularScore },
-                { label: '보장 만기 적절성', val: `${loanPeriod}년 보장`, score: loanPeriod >= 10 ? 95 : 55 },
+                { label: '대출상환 안전성', targetId: 'input-credit-fields', val: `한도 ${formatAmount(loanAmount)}`, score: scores.cancerScore },
+                { label: '신용할인 최적도', targetId: 'input-credit-fields', val: `${creditBureau.toUpperCase()} ${discountRate}% 할인`, score: scores.cerebrovascularScore },
+                { label: '특약 구성 종합도', targetId: 'input-credit-fields', val: hasIllnessRider && hasDisabilityRider ? '종합안심 가입' : '일부 위험 노출', score: scores.cardiovascularScore },
+                { label: '보장 만기 적절성', targetId: 'input-credit-fields', val: `${loanPeriod}년 보장`, score: loanPeriod >= 10 ? 95 : 55 },
               ].map((item, i) => (
                 <div key={i} className="space-y-2">
                   <p className="text-[10px] font-black text-slate-400 tracking-wider uppercase">{item.label}</p>

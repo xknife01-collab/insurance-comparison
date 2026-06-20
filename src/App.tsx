@@ -45,6 +45,7 @@ import { SavingsExplanation } from './components/insurance/savings/SavingsExplan
 import { PropertyExplanation } from './components/insurance/property/PropertyExplanation';
 import AdminDashboard from './components/AdminDashboard';
 import { CustomerSupportSection } from './components/CustomerSupportSection';
+import { PartnerLanding } from './components/PartnerLanding';
 
 export default function App() {
   const { branding, loading, showInAppGuide, setShowInAppGuide, isIOS, isInAppBrowser, isStandalone, updateBranding } = useB2BBranding();
@@ -52,10 +53,12 @@ export default function App() {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [remodelingResult, setRemodelingResult] = useState<AnalysisResult | null>(null);
   const [currentAnalysis, setCurrentAnalysis] = useState<InsuranceAnalysis | null>(null);
-  const [view, setView] = useState<'admin' | 'home' | 'indemnity' | 'preexisting' | 'dental' | 'caregiving' | 'dementia' | 'surgery' | 'cancer' | 'cerebrovascular' | 'heart' | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'property' | 'annuity' | 'whole' | 'variable' | 'legal' | 'credit' | 'health_general' | 'accident' | 'savings_general' | 'support'>(() => {
+  const [view, setView] = useState<'admin' | 'partner' | 'home' | 'indemnity' | 'preexisting' | 'dental' | 'caregiving' | 'dementia' | 'surgery' | 'cancer' | 'cerebrovascular' | 'heart' | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'property' | 'annuity' | 'whole' | 'variable' | 'legal' | 'credit' | 'health_general' | 'accident' | 'savings_general' | 'support'>(() => {
     if (window.location.pathname === '/admin') return 'admin';
+    if (window.location.pathname === '/partner') return 'partner';
     return 'home';
   });
+  const [adminTab, setAdminTab] = useState<'login' | 'register'>('login');
 
   const [calcTarget, setCalcTarget] = useState<string | null>(null);
   const [remodelingApplied, setRemodelingApplied] = useState(false);
@@ -404,12 +407,30 @@ export default function App() {
       if (window.location.pathname !== '/admin') {
         window.history.pushState({}, '', '/admin');
       }
+    } else if (view === 'partner') {
+      if (window.location.pathname !== '/partner') {
+        window.history.pushState({}, '', '/partner');
+      }
     } else {
-      if (window.location.pathname === '/admin') {
+      if (window.location.pathname === '/admin' || window.location.pathname === '/partner') {
         window.history.pushState({}, '', '/');
       }
     }
   }, [view]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      if (window.location.pathname === '/admin') {
+        setView('admin');
+      } else if (window.location.pathname === '/partner') {
+        setView('partner');
+      } else {
+        setView('home');
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   // Preload the large hero background image to prevent pop-in flickering
   useEffect(() => {
@@ -421,7 +442,7 @@ export default function App() {
   }, [view]);
 
   // Render splash screen while loading B2B branding or preloading critical hero image to prevent logo/UI pop-in flickering
-  if (view !== 'admin' && (loading || !heroImageLoaded)) {
+  if (view !== 'admin' && view !== 'partner' && (loading || !heroImageLoaded)) {
     return (
       <div className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-slate-950 text-white select-none">
         {/* Modern grand background gradient */}
@@ -465,7 +486,20 @@ export default function App() {
   }
 
   if (view === 'admin') {
-    return <AdminDashboard />;
+    return <AdminDashboard initialTab={adminTab} />;
+  }
+
+  if (view === 'partner') {
+    return (
+      <PartnerLanding 
+        onNavigate={(newView, options) => {
+          if (newView === 'admin' && options?.tab) {
+            setAdminTab(options.tab);
+          }
+          setView(newView);
+        }} 
+      />
+    );
   }
 
   if (view === 'support') {

@@ -1,3 +1,4 @@
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 import { motion } from 'motion/react';
 import { Zap, CheckCircle2, AlertCircle, Star, Activity, Bed, Users, ShieldCheck, Syringe } from 'lucide-react';
@@ -21,7 +22,7 @@ export const SurgerySummary = ({ result }: { result: AnalysisResult }) => {
   // ── 보장 항목 정의 ──────────────────────────────────────────
   const coverageItems = [
     {
-      label: '질병/상해 수술비',
+      label: '질병/상해 수술비', targetId: 'input-surgery-fields',
       icon: Activity,
       covered: focus === 'wide',
       partial: focus === 'named' || focus === 'major',
@@ -29,7 +30,7 @@ export const SurgerySummary = ({ result }: { result: AnalysisResult }) => {
       score: focus === 'wide' ? 95 : 60,
     },
     {
-      label: '1~5종 종별 수술비',
+      label: '1~5종 종별 수술비', targetId: 'input-surgery-fields',
       icon: Syringe,
       covered: focus === 'named',
       partial: focus === 'wide',
@@ -37,7 +38,7 @@ export const SurgerySummary = ({ result }: { result: AnalysisResult }) => {
       score: focus === 'named' ? 95 : focus === 'wide' ? 70 : 30,
     },
     {
-      label: '입원일당',
+      label: '입원일당', targetId: 'input-surgery-fields',
       icon: Bed,
       covered: hospitalAmount >= 30000,
       partial: hospitalAmount > 0 && hospitalAmount < 30000,
@@ -45,7 +46,7 @@ export const SurgerySummary = ({ result }: { result: AnalysisResult }) => {
       score: hospitalAmount === 0 ? 0 : Math.min(95, (hospitalAmount / 150000) * 100 + 40),
     },
     {
-      label: '간병인 서비스',
+      label: '간병인 서비스', targetId: 'input-surgery-fields',
       icon: Users,
       covered: caregiverOpt !== 'none',
       partial: false,
@@ -53,7 +54,7 @@ export const SurgerySummary = ({ result }: { result: AnalysisResult }) => {
       score: caregiverOpt === 'none' ? 0 : caregiverOpt === 'support' ? 95 : 70,
     },
     {
-      label: '상급종합병원',
+      label: '상급종합병원', targetId: 'input-surgery-fields',
       icon: ShieldCheck,
       covered: tertiaryHosp,
       partial: false,

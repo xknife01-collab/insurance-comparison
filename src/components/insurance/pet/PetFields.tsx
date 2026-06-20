@@ -123,7 +123,7 @@ export const PetFields: React.FC<Props> = ({
     : fallbackCatBreeds;
 
   return (
-    <div className="space-y-12 animate-in fade-in duration-500">
+    <div id="input-pet-fields" className="space-y-12 animate-in fade-in duration-500">
       
       {/* ── SECTION 1: 반려동물 기본정보 ── */}
       <div className="bg-slate-900 rounded-[3.5rem] p-8 md:p-12 text-white relative overflow-hidden">

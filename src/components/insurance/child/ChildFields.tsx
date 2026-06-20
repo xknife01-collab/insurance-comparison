@@ -32,7 +32,7 @@ export const ChildFields: React.FC<ChildFieldsProps> = ({
   setChildBirthDate
 }) => {
   return (
-    <div className="space-y-10 text-left max-w-4xl mx-auto py-8">
+    <div id="input-child-fields" className="space-y-10 text-left max-w-4xl mx-auto py-8">
       {/* 1. 대상 연령대 선택 */}
       <div className="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm">
         <h4 className="text-xl font-black text-slate-800 mb-6 flex items-center gap-2">

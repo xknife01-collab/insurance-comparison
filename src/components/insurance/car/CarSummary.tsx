@@ -1,3 +1,4 @@
+import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 import { AnalysisResult } from '../../../types/insurance';
 import { Car, ShieldCheck, Compass, AlertCircle, Sparkles, HelpCircle } from 'lucide-react';
@@ -86,55 +87,55 @@ export const CarSummary: React.FC<Props> = ({ result }) => {
 
   const items = [
     {
-      label: '가입 차량',
+      label: '가입 차량', targetId: 'input-car-fields',
       amount: `${BRAND_LABELS[brandId] || brandId} ${ALL_MODEL_LABELS[modelId] || modelId} (${yearVal}년식)`,
       status: '확인됨',
       color: 'text-blue-600 bg-blue-50'
     },
     {
-      label: '차량 상세 용도',
+      label: '차량 상세 용도', targetId: 'input-car-fields',
       amount: car.subType === 'business' ? '업무용 차량 (20% 할증)' : '개인용 차량',
       status: '확인됨',
       color: car.subType === 'business' ? 'text-amber-600 bg-amber-50' : 'text-blue-600 bg-blue-50'
     },
     {
-      label: '운전자 범위 특약',
+      label: '운전자 범위 특약', targetId: 'input-car-fields',
       amount: DRIVER_LABELS[driverLimitVal] || driverLimitVal,
       status: driverLimitVal === 'single' ? '최저가' : driverLimitVal === 'anyone' ? '고비용' : '보통',
       color: driverLimitVal === 'single' ? 'text-emerald-600 bg-emerald-50' : driverLimitVal === 'anyone' ? 'text-rose-600 bg-rose-50' : 'text-orange-600 bg-orange-50',
     },
     { 
-      label: '연간 예상 주행거리', 
+      label: '연간 예상 주행거리', targetId: 'input-car-fields', 
       amount: getMileageLabel(car.annualMileage), 
       status: car.annualMileage !== 'over_15k' ? '환급 대상' : '대상 제외', 
       color: car.annualMileage !== 'over_15k' ? 'text-emerald-600 bg-emerald-50' : 'text-rose-600 bg-rose-50' 
     },
     { 
-      label: 'T-map 안전운전 점수', 
+      label: 'T-map 안전운전 점수', targetId: 'input-car-fields', 
       amount: getScoreLabel(car.safeDrivingScore), 
       status: car.safeDrivingScore === 'over_80' ? '최대할인' : '적용완료', 
       color: car.safeDrivingScore === 'over_80' ? 'text-blue-600 bg-blue-50' : 'text-orange-600 bg-orange-50' 
     },
     {
-      label: '직전 무사고 기간',
+      label: '직전 무사고 기간', targetId: 'input-car-fields',
       amount: getNoAccidentLabel(car.noAccidentYears),
       status: car.noAccidentYears && car.noAccidentYears !== 'none' ? '우량할인 대상' : '할인 제외',
       color: car.noAccidentYears && car.noAccidentYears !== 'none' ? 'text-emerald-600 bg-emerald-50' : 'text-slate-600 bg-slate-50'
     },
     {
-      label: '자기차량손해 (자차)',
+      label: '자기차량손해 (자차)', targetId: 'input-car-fields',
       amount: OWN_DAMAGE_LABELS[ownDamageVal] || ownDamageVal,
       status: ownDamageVal === 'join' ? '완전 보장' : ownDamageVal === 'exclude_single' ? '절약형' : '미가입',
       color: ownDamageVal === 'join' ? 'text-emerald-600 bg-emerald-50' : ownDamageVal === 'none' ? 'text-rose-600 bg-rose-50' : 'text-orange-600 bg-orange-50',
     },
     { 
-      label: '대물배상 기존 한도', 
+      label: '대물배상 기존 한도', targetId: 'input-car-fields', 
       amount: getLimitLabel(car.currentPropertyLimit), 
       status: car.currentPropertyLimit >= 5 ? '안정권' : '확장 권장', 
       color: car.currentPropertyLimit >= 5 ? 'text-indigo-600 bg-indigo-50' : 'text-red-600 bg-red-50' 
     },
     { 
-      label: '기존 상해 담보 방식', 
+      label: '기존 상해 담보 방식', targetId: 'input-car-fields', 
       amount: getInjuryLabel(car.currentInjuryType), 
       status: car.currentInjuryType === 'jasang' ? '100% 보장' : '전환 권장', 
       color: car.currentInjuryType === 'jasang' ? 'text-emerald-600 bg-emerald-50' : 'text-rose-600 bg-rose-50' 
@@ -155,7 +156,10 @@ export const CarSummary: React.FC<Props> = ({ result }) => {
         </h3>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {items.map((item, i) => (
-            <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100/50 flex flex-col justify-center gap-2 group hover:border-slate-300 transition-all">
+            <div 
+              key={i} 
+              onClick={() => scrollToInputAndHighlight((item as any).targetId)}
+              className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100/50 flex flex-col justify-center gap-2 group  hover:border-orange-300 hover:shadow-md hover:scale-[1.02] cursor-pointer transition-all duration-300">
               <div className="flex justify-between items-center w-full">
                 <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{item.label}</p>
                 <span className={`text-[10px] font-black px-3 py-1 rounded-lg ${item.color}`}>{item.status}</span>
