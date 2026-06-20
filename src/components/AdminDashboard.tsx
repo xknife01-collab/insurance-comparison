@@ -4612,6 +4612,8 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                               <li>복사된 주소(예: <code className="text-orange-400 font-bold">https://open.kakao.com/o/...</code>)를 위 입력창에 붙여넣어 주세요.</li>
                             </ol>
                             <p className="text-[10px] text-slate-500 font-bold border-t border-slate-850 pt-1.5 leading-normal">
+                              ⚠️ <strong className="text-amber-400">필수 체크 설정</strong>: 오픈채팅방 생성 시 <strong className="text-white">"카카오프렌즈 프로필만 허용" 옵션은 반드시 해제(OFF)</strong>로 설정해 주세요. 그래야 익명 고객(카카오프렌즈 프로필)과 일반 실명 프로필 고객 모두 오류 없이 상담방에 입장할 수 있습니다.
+                              <br />
                               ※ 일반 개인 카톡 아이디는 인터넷 브라우저 바로가기 연결을 지원하지 않아, 반드시 오픈채팅방 주소로 등록하셔야 고객이 실시간으로 상담을 신청할 수 있습니다.
                             </p>
                           </div>
@@ -7329,6 +7331,8 @@ if (distPart.startsWith('dist_weight:')) {
                               <li>복사된 주소(예: <code className="text-orange-400 font-bold">https://open.kakao.com/o/...</code>)를 위 입력창에 붙여넣어 주세요.</li>
                             </ol>
                             <p className="text-[10px] text-slate-500 font-bold border-t border-slate-850 pt-1.5 leading-normal">
+                              ⚠️ <strong className="text-amber-400">필수 체크 설정</strong>: 오픈채팅방 생성 시 <strong className="text-white">"카카오프렌즈 프로필만 허용" 옵션은 반드시 해제(OFF)</strong>로 설정해 주세요. 그래야 익명 고객(카카오프렌즈 프로필)과 일반 실명 프로필 고객 모두 오류 없이 상담방에 입장할 수 있습니다.
+                              <br />
                               ※ 일반 개인 카톡 아이디는 인터넷 브라우저 바로가기 연결을 지원하지 않아, 반드시 오픈채팅방 주소로 등록하셔야 고객이 실시간으로 상담을 신청할 수 있습니다.
                             </p>
                           </div>
