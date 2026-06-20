@@ -13,7 +13,7 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
   const [isOpen, setIsOpen] = useState(true);
   const [isMinimized, setIsMinimized] = useState(false);
 
-  if (branding.type !== 'planner' || !isOpen) {
+  if (!isOpen) {
     return null;
   }
 
@@ -56,12 +56,19 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
           <div className="flex flex-col items-center text-center space-y-4">
             {/* Profile Avatar / Photo */}
             <div className="relative">
-              <div className="w-20 h-20 rounded-[2rem] overflow-hidden border-2 border-orange-500/50 shadow-lg flex items-center justify-center bg-slate-800">
+              <div className="w-20 h-20 rounded-[2rem] overflow-hidden border-2 border-orange-500/50 shadow-lg flex items-center justify-center bg-slate-950 p-2">
                 {branding.profileImageUrl ? (
                   <img
                     src={branding.profileImageUrl}
                     alt={branding.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover rounded-[1.7rem]"
+                    referrerPolicy="no-referrer"
+                  />
+                ) : branding.logoUrl ? (
+                  <img
+                    src={branding.logoUrl}
+                    alt={branding.name}
+                    className="w-full h-full object-contain p-1"
                     referrerPolicy="no-referrer"
                   />
                 ) : (
@@ -74,9 +81,11 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
             {/* Planner Info */}
             <div className="space-y-1">
               <span className="inline-block px-2.5 py-0.5 bg-orange-500/10 text-orange-400 text-[9px] font-black rounded-md border border-orange-500/20 uppercase tracking-widest">
-                전담 라이프 플래너
+                {branding.type === 'planner' ? '전담 라이프 플래너' : '공식 고객센터'}
               </span>
-              <h4 className="text-lg font-black tracking-tight">{branding.name} 설계사</h4>
+              <h4 className="text-lg font-black tracking-tight">
+                {branding.type === 'planner' ? `${branding.name} 설계사` : branding.name}
+              </h4>
               {branding.customPhone && (
                 <p className="text-xs text-slate-400 font-bold flex items-center justify-center gap-1">
                   <Phone size={12} className="text-orange-500" /> {branding.customPhone}
@@ -140,12 +149,19 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
             onClick={() => setIsMinimized(false)}
             className="pointer-events-auto px-6 py-4 bg-slate-950 text-white rounded-full border border-white/10 shadow-[0_15px_30px_rgba(0,0,0,0.3)] hover:border-orange-500/50 flex items-center gap-3 transform hover:scale-105 transition-all duration-300 cursor-pointer"
           >
-            <div className="w-8 h-8 rounded-xl overflow-hidden border border-orange-500/30 flex items-center justify-center bg-slate-800 shrink-0">
+            <div className="w-8 h-8 rounded-xl overflow-hidden border border-orange-500/30 flex items-center justify-center bg-slate-950 shrink-0 p-0.5">
               {branding.profileImageUrl ? (
                 <img
                   src={branding.profileImageUrl}
                   alt={branding.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover rounded-lg"
+                  referrerPolicy="no-referrer"
+                />
+              ) : branding.logoUrl ? (
+                <img
+                  src={branding.logoUrl}
+                  alt={branding.name}
+                  className="w-full h-full object-contain p-0.5"
                   referrerPolicy="no-referrer"
                 />
               ) : (
@@ -153,8 +169,12 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
               )}
             </div>
             <div className="text-left">
-              <p className="text-[8px] font-black text-orange-400 leading-none">Planner Contact</p>
-              <p className="text-xs font-black mt-0.5">{branding.name} 설계사 상담</p>
+              <p className="text-[8px] font-black text-orange-400 leading-none">
+                {branding.type === 'planner' ? 'Planner Contact' : 'Customer Support'}
+              </p>
+              <p className="text-xs font-black mt-0.5">
+                {branding.type === 'planner' ? `${branding.name} 설계사 상담` : `${branding.name} 고객 상담`}
+              </p>
             </div>
           </motion.button>
         </div>
