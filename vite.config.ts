@@ -169,6 +169,82 @@ export default defineConfig(({mode}) => {
                   res.end(JSON.stringify({ success: false, error: err.message }));
                 }
               });
+            } else if (req.url && req.url.startsWith('/api/save-profile')) {
+              let body = '';
+              req.on('data', chunk => { body += chunk; });
+              req.on('end', async () => {
+                try {
+                  const parsedBody = body ? JSON.parse(body) : {};
+                  const supabaseUrl = env.VITE_SUPABASE_URL || '';
+                  const supabaseServiceRoleKey = env.SUPABASE_SERVICE_ROLE_KEY || '';
+                  const { createClient } = await import('@supabase/supabase-js');
+                  const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
+
+                  const { plannerId, plannerData, agencyId, agencyData } = parsedBody;
+
+                  res.setHeader('Content-Type', 'application/json');
+
+                  if (!plannerId) {
+                    res.statusCode = 400;
+                    res.end(JSON.stringify({ success: false, error: 'plannerId is required' }));
+                    return;
+                  }
+
+                  let hasCertWarning = false;
+                  if (plannerData && Object.keys(plannerData).length > 0) {
+                    let { error: plannerErr } = await supabase
+                      .from('planners')
+                      .update(plannerData)
+                      .eq('id', plannerId);
+
+                    if (plannerErr && plannerErr.message.includes('certification_message')) {
+                      const { certification_message, ...fallbackData } = plannerData;
+                      const { error: retryErr } = await supabase
+                        .from('planners')
+                        .update(fallbackData)
+                        .eq('id', plannerId);
+                      
+                      if (!retryErr) {
+                        hasCertWarning = true;
+                      } else {
+                        plannerErr = retryErr;
+                      }
+                    }
+
+                    if (plannerErr && !hasCertWarning) {
+                      res.statusCode = 500;
+                      res.end(JSON.stringify({ success: false, error: `Planner update failed: ${plannerErr.message}` }));
+                      return;
+                    }
+                  }
+
+                  if (agencyId && agencyData && Object.keys(agencyData).length > 0) {
+                    const { error: agencyErr } = await supabase
+                      .from('agencies')
+                      .update(agencyData)
+                      .eq('id', agencyId);
+
+                    if (agencyErr) {
+                      res.statusCode = 500;
+                      res.end(JSON.stringify({ success: false, error: `Agency update failed: ${agencyErr.message}` }));
+                      return;
+                    }
+                  }
+
+                  if (hasCertWarning) {
+                    res.end(JSON.stringify({
+                      success: true,
+                      warning: 'certification_message_missing',
+                      message: '인증 문구를 제외한 프로필 정보가 정상 저장되었습니다. 인증 문구 기능도 활성화하려면 Supabase SQL Editor에서 ALTER TABLE planners ADD COLUMN certification_message text; 명령어를 실행해 주세요.'
+                    }));
+                  } else {
+                    res.end(JSON.stringify({ success: true, message: '프로필이 성공적으로 저장되었습니다.' }));
+                  }
+                } catch (err: any) {
+                  res.statusCode = 500;
+                  res.end(JSON.stringify({ success: false, error: err.message }));
+                }
+              });
             } else {
               next();
             }

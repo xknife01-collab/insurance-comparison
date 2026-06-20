@@ -14,6 +14,10 @@ self.addEventListener('fetch', (event) => {
   if (!event.request.url.startsWith('http')) {
     return;
   }
+  // Bypass API requests to let the browser handle them directly
+  if (event.request.url.includes('/api/')) {
+    return;
+  }
   event.respondWith(fetch(event.request));
 });
 

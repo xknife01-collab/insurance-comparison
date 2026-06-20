@@ -217,11 +217,15 @@ export default function App() {
         try {
           const { data: planners } = await supabase
             .from('planners')
-            .select('id, name, registration_number, monthly_credit_used, profile_image_url, logo_url, greeting_title, greeting_content, custom_phone, custom_address, kakao_link, company_name, phone, email, subscription_status')
+            .select('id, name, registration_number, monthly_credit_used, profile_image_url, logo_url, greeting_title, greeting_content, custom_phone, custom_address, certification_message, kakao_link, company_name, phone, email, subscription_status')
             .eq('agency_id', branding.agencyId)
             .eq('subscription_status', 'active');
 
-          const activePlanners = (planners || []).filter(p => p.registration_number !== 'dist_disabled');
+          const activePlanners = (planners || []).filter(p => {
+            const reg = p.registration_number || '';
+            const dist = reg.includes('|') ? reg.split('|')[1] : reg;
+            return dist !== 'dist_disabled';
+          });
 
           if (activePlanners.length > 0) {
             let chosen = activePlanners[0];
@@ -246,8 +250,10 @@ export default function App() {
               activePlanners.forEach(p => {
                 let weight = 1;
                 if (branding.leadRoutingType === 'distribute_auto_weighted') {
-                  if (p.registration_number && p.registration_number.startsWith('dist_weight:')) {
-                    const w = parseInt(p.registration_number.split(':')[1]);
+                  const reg = p.registration_number || '';
+                  const dist = reg.includes('|') ? reg.split('|')[1] : reg;
+                  if (dist && dist.startsWith('dist_weight:')) {
+                    const w = parseInt(dist.split(':')[1]);
                     weight = isNaN(w) ? 5 : w;
                   } else {
                     weight = 5;
@@ -274,6 +280,9 @@ export default function App() {
               
             autoAssignedLog = `⚡ 실시간 자동 분배 엔진에 의해 [${chosen.name}] 플래너에게 배정되었습니다. (${algoName})`;
 
+            const rawReg = chosen.registration_number || '';
+            const cleanRegNum = rawReg.includes('|') ? rawReg.split('|')[0] : (rawReg.startsWith('dist_') ? null : rawReg);
+
             const newPlannerBranding = {
               type: 'planner' as const,
               plannerId: chosen.id,
@@ -285,10 +294,11 @@ export default function App() {
               greetingContent: chosen.greeting_content || `${chosen.name} 설계사가 양심을 걸고 정직하게 분석해 드립니다.`,
               customPhone: chosen.custom_phone || chosen.phone || branding.customPhone,
               customAddress: chosen.custom_address || branding.customAddress,
+              certificationMessage: (chosen as any).certification_message || null,
               kakaoLink: chosen.kakao_link || null,
               agencyName: chosen.company_name || branding.agencyName || null,
               agencyAddress: chosen.custom_address || branding.agencyAddress || null,
-              registrationNumber: chosen.registration_number || null,
+              registrationNumber: cleanRegNum || null,
               customEmail: chosen.email || branding.customEmail || null,
               leadRoutingType: branding.leadRoutingType,
             };

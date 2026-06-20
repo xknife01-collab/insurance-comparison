@@ -12,6 +12,7 @@ export interface B2BBranding {
   greetingContent: string | null;
   customPhone: string | null;
   customAddress: string | null;
+  certificationMessage?: string | null;
   kakaoLink: string | null;
   agencyName?: string | null;
   agencyAddress?: string | null;
@@ -31,6 +32,7 @@ const DEFAULT_BRANDING: B2BBranding = {
   greetingContent: '대한민국 모든 보험사의 상품을 0.1초 만에 비교 분석하여 불필요한 고정 지출을 성공적으로 줄여 드립니다.',
   customPhone: '080.808.1088',
   customAddress: '보험대리점 : 인카금융서비스 (등록번호 : 제2006038313호) 본 광고는 광고심의기준을 준수하였으며, 유효기간은 심의일로부터 1년입니다.',
+  certificationMessage: null,
   kakaoLink: null,
   agencyName: '인카금융서비스',
   agencyAddress: '보험대리점 : 인카금융서비스 (등록번호 : 제2006038313호)',
@@ -39,6 +41,12 @@ const DEFAULT_BRANDING: B2BBranding = {
 };
 
 const CACHE_KEY = 'ins_rebalance_b2b_branding';
+
+const extractDelibNumber = (raw: string | null | undefined): string | null => {
+  if (!raw) return null;
+  const delibPart = raw.includes('|') ? raw.split('|')[0] : (raw.startsWith('dist_') ? '' : raw);
+  return delibPart || null;
+};
 
 interface BrandingContextType {
   branding: B2BBranding;
@@ -338,10 +346,11 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
               greetingContent: planner.greeting_content || `${planner.name} 설계사가 양심을 걸고 정직하게 분석해 드립니다.`,
               customPhone: planner.custom_phone || planner.phone || planner.agencies?.custom_phone || DEFAULT_BRANDING.customPhone,
               customAddress: planner.custom_address || planner.agencies?.address || DEFAULT_BRANDING.customAddress,
+              certificationMessage: planner.certification_message || null,
               kakaoLink: planner.kakao_link || null,
               agencyName: planner.company_name || planner.agencies?.name || null,
               agencyAddress: planner.custom_address || planner.agencies?.address || null,
-              registrationNumber: (planner.registration_number && !planner.registration_number.startsWith('dist_')) ? planner.registration_number : null,
+              registrationNumber: extractDelibNumber(planner.registration_number),
               customEmail: planner.email || planner.agencies?.email || DEFAULT_BRANDING.customEmail,
               leadRoutingType: demoRoutingOverride || planner.agencies?.lead_routing_type || 'direct',
             };
@@ -439,10 +448,11 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
               greetingContent: adminPlanner.greeting_content || DEFAULT_BRANDING.greetingContent,
               customPhone: adminPlanner.custom_phone || adminPlanner.phone || adminPlanner.agencies?.custom_phone || DEFAULT_BRANDING.customPhone,
               customAddress: adminPlanner.custom_address || adminPlanner.agencies?.address || DEFAULT_BRANDING.customAddress,
+              certificationMessage: adminPlanner.certification_message || null,
               kakaoLink: adminPlanner.kakao_link || null,
               agencyName: adminPlanner.company_name || adminPlanner.agencies?.name || null,
               agencyAddress: adminPlanner.custom_address || adminPlanner.agencies?.address || null,
-              registrationNumber: (adminPlanner.registration_number && !adminPlanner.registration_number.startsWith('dist_')) ? adminPlanner.registration_number : null,
+              registrationNumber: extractDelibNumber(adminPlanner.registration_number),
               customEmail: adminPlanner.email || adminPlanner.agencies?.email || DEFAULT_BRANDING.customEmail,
               leadRoutingType: demoRoutingOverride || adminPlanner.agencies?.lead_routing_type || 'direct',
             };
@@ -492,9 +502,7 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
   const updateBranding = (newBranding: B2BBranding) => {
     const sanitizedBranding = {
       ...newBranding,
-      registrationNumber: (newBranding.registrationNumber && !newBranding.registrationNumber.startsWith('dist_')) 
-        ? newBranding.registrationNumber 
-        : null
+      registrationNumber: extractDelibNumber(newBranding.registrationNumber)
     };
     setBranding(sanitizedBranding);
     localStorage.setItem(CACHE_KEY, JSON.stringify(sanitizedBranding));

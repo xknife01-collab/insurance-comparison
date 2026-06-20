@@ -43,6 +43,7 @@ interface Planner {
   greeting_content?: string;
   custom_phone?: string;
   custom_address?: string;
+  certification_message?: string;
   kakao_link?: string;
   subscription_status: string;
   subscription_expires_at?: string;
@@ -460,6 +461,8 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
   const [planners, setPlanners] = useState<Planner[]>([]);
   const [agencies, setAgencies] = useState<Agency[]>([]);
   const [loading, setLoading] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
 
   const activeBillingAgencyId = currentUser.agencyId || '88888888-8888-4888-a888-888888888888';
   const isIndependentPlanner = currentUser.role === 'planner' && (!currentUser.agencyId || currentUser.agencyId === '88888888-8888-4888-a888-888888888888');
@@ -772,17 +775,28 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
   const handleUpdatePlannerWeight = async (plannerId: string, weight: number) => {
     try {
       const weightVal = Math.max(1, Math.min(100, weight));
+      const planner = planners.find(p => p.id === plannerId);
+      const rawRegNum = planner?.registration_number || '';
+      const delibPart = rawRegNum.includes('|') ? rawRegNum.split('|')[0] : (rawRegNum.startsWith('dist_') ? '' : rawRegNum);
+      const combinedVal = delibPart ? `${delibPart}|dist_weight:${weightVal}` : `dist_weight:${weightVal}`;
+
       if (currentUser.plannerCode === 'test' || currentUser.plannerCode === 'test_planner') {
-        setPlanners(prev => prev.map(p => p.id === plannerId ? { ...p, registration_number: `dist_weight:${weightVal}` } : p));
+        setPlanners(prev => prev.map(p => p.id === plannerId ? { ...p, registration_number: combinedVal } : p));
         alert("설계사 배정 가중치가 변경되었습니다. (데모 모드)");
         return;
       }
-      const { error } = await supabase
-        .from('planners')
-        .update({ registration_number: `dist_weight:${weightVal}` })
-        .eq('id', plannerId);
 
-      if (error) throw error;
+      const res = await fetch('/api/save-profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          plannerId,
+          plannerData: { registration_number: combinedVal }
+        })
+      });
+      const resData = await res.json();
+      if (!resData.success) throw new Error(resData.error || '가중치 업데이트 실패');
+
       alert("설계사 배정 가중치가 변경되었습니다.");
       await fetchData();
     } catch (err: any) {
@@ -792,19 +806,31 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
 
   const handleTogglePlannerDistribution = async (plannerId: string, currentRegNum: string | null) => {
     try {
-      const isDisabled = currentRegNum === 'dist_disabled';
-      const newVal = isDisabled ? 'dist_weight:5' : 'dist_disabled';
+      const rawRegNum = currentRegNum || '';
+      const delibPart = rawRegNum.includes('|') ? rawRegNum.split('|')[0] : (rawRegNum.startsWith('dist_') ? '' : rawRegNum);
+      const distPart = rawRegNum.includes('|') ? rawRegNum.split('|')[1] : (rawRegNum.startsWith('dist_') ? rawRegNum : '');
+      
+      const isDisabled = distPart === 'dist_disabled';
+      const newDistPart = isDisabled ? 'dist_weight:5' : 'dist_disabled';
+      const combinedVal = delibPart ? `${delibPart}|${newDistPart}` : newDistPart;
+
       if (currentUser.plannerCode === 'test' || currentUser.plannerCode === 'test_planner') {
-        setPlanners(prev => prev.map(p => p.id === plannerId ? { ...p, registration_number: newVal } : p));
+        setPlanners(prev => prev.map(p => p.id === plannerId ? { ...p, registration_number: combinedVal } : p));
         alert(isDisabled ? "자동 분배 대상에 포함되었습니다. (데모 모드)" : "자동 분배 대상에서 제외되었습니다. (데모 모드)");
         return;
       }
-      const { error } = await supabase
-        .from('planners')
-        .update({ registration_number: newVal })
-        .eq('id', plannerId);
 
-      if (error) throw error;
+      const res = await fetch('/api/save-profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          plannerId,
+          plannerData: { registration_number: combinedVal }
+        })
+      });
+      const resData = await res.json();
+      if (!resData.success) throw new Error(resData.error || '분배 상태 변경 실패');
+
       alert(isDisabled ? "자동 분배 대상에 포함되었습니다." : "자동 분배 대상에서 제외되었습니다.");
       await fetchData();
     } catch (err: any) {
@@ -1021,6 +1047,8 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
   const [editCompanyName, setEditCompanyName] = useState('');
   const [editRegistrationNumber, setEditRegistrationNumber] = useState('');
   const [editEmail, setEditEmail] = useState('');
+  const [editCertificationMessage, setEditCertificationMessage] = useState('');
+  const [editPlannerName, setEditPlannerName] = useState('');
 
   const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>, isReg: boolean) => {
     const file = e.target.files?.[0];
@@ -2456,8 +2484,12 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
           setEditCustomAddress(myProfile.custom_address || '');
           setEditPassword(myProfile.password || '');
           setEditCompanyName(myProfile.company_name || '');
-          setEditRegistrationNumber(myProfile.registration_number || '');
+          const rawRegNum = myProfile.registration_number || '';
+          const delibPart = rawRegNum.includes('|') ? rawRegNum.split('|')[0] : (rawRegNum.startsWith('dist_') ? '' : rawRegNum);
+          setEditRegistrationNumber(delibPart);
           setEditEmail(myProfile.email || '');
+          setEditCertificationMessage(myProfile.certification_message || '');
+          setEditPlannerName(myProfile.name || '');
         }
       }
     } catch (err) {
@@ -2922,8 +2954,12 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
       alert("지점(소속) 이름은 필수 입력 항목입니다. (예: 더윤컴퍼니 강남지점)");
       return;
     }
+    if (!editPlannerName || editPlannerName.trim() === '') {
+      alert("설계사 이름은 필수 입력 항목입니다.");
+      return;
+    }
     if (!editCustomAddress || editCustomAddress.trim() === '') {
-      alert("지점 주소 및 인증 문구는 필수 입력 항목입니다. (예: 더윤컴퍼니 공식 인증 설계사 또는 서울시 강남구 테헤란로 123)");
+      alert("지점 주소는 필수 입력 항목입니다. (예: 서울시 강남구 테헤란로 123)");
       return;
     }
     setLoading(true);
@@ -2932,13 +2968,14 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
         type: currentUser.role === 'agency' ? 'agency' as const : 'planner' as const,
         plannerId: currentUser.plannerId || null,
         agencyId: currentUser.agencyId || null,
-        name: currentUser.name || '',
+        name: editPlannerName || currentUser.name || '',
         profileImageUrl: editProfileImg || null,
         logoUrl: editLogoUrl || null,
         greetingTitle: editGreetingTitle || '',
         greetingContent: editGreetingContent || '',
         customPhone: editCustomPhone || '',
         customAddress: editCustomAddress || '',
+        certificationMessage: editCertificationMessage || null,
         kakaoLink: editKakao || null,
         agencyName: editCompanyName || '',
         agencyAddress: editCustomAddress || '',
@@ -2947,6 +2984,11 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
         leadRoutingType: sessionStorage.getItem('demo_lead_routing_type') || null
       };
 
+      const currentPlanner = planners.find(p => p.id === currentUser.plannerId);
+      const rawRegNum_save = currentPlanner?.registration_number || '';
+      const existingDistSetting = rawRegNum_save.includes('|') ? rawRegNum_save.split('|')[1] : (rawRegNum_save.startsWith('dist_') ? rawRegNum_save : '');
+      const combinedRegistrationNumber = editRegistrationNumber ? (existingDistSetting ? `${editRegistrationNumber}|${existingDistSetting}` : editRegistrationNumber) : (existingDistSetting || '');
+
       if (currentUser.plannerCode === 'test' || currentUser.plannerCode === 'test_planner') {
         setCurrentUser(prev => ({
           ...prev,
@@ -2954,6 +2996,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
         }));
         setPlanners(prev => prev.map(p => p.id === currentUser.plannerId ? {
           ...p,
+          name: editPlannerName,
           kakao_link: editKakao,
           greeting_title: editGreetingTitle,
           greeting_content: editGreetingContent,
@@ -2961,6 +3004,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
           logo_url: editLogoUrl,
           custom_phone: editCustomPhone,
           custom_address: editCustomAddress,
+          certification_message: editCertificationMessage,
           password: editPassword,
           company_name: editCompanyName,
           registration_number: editRegistrationNumber,
@@ -2974,43 +3018,58 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
           } : a));
         }
         updateBranding(updatedBranding);
-        alert("프로필 및 랜딩페이지 설정이 실시간으로 저장되었습니다. 즉시 내 홈페이지에 반영됩니다. (데모 모드)");
+        setToastMessage("✨ 프로필 및 랜딩페이지 설정이 실시간 저장되었습니다! (데모)");
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 3000);
         return;
       }
 
-      const { error } = await supabase
-        .from('planners')
-        .update({
-          kakao_link: editKakao,
-          greeting_title: editGreetingTitle,
-          greeting_content: editGreetingContent,
-          profile_image_url: editProfileImg,
-          logo_url: editLogoUrl,
-          custom_phone: editCustomPhone,
-          custom_address: editCustomAddress,
-          password: editPassword,
-          company_name: editCompanyName,
-          registration_number: editRegistrationNumber,
-          email: editEmail
+      const plannerData = {
+        name: editPlannerName,
+        kakao_link: editKakao,
+        greeting_title: editGreetingTitle,
+        greeting_content: editGreetingContent,
+        profile_image_url: editProfileImg,
+        logo_url: editLogoUrl,
+        custom_phone: editCustomPhone,
+        custom_address: editCustomAddress,
+        certification_message: editCertificationMessage,
+        password: editPassword,
+        company_name: editCompanyName,
+        registration_number: combinedRegistrationNumber,
+        email: editEmail
+      };
+
+      const agencyData = (currentUser.role === 'agency' && currentUser.agencyId) ? {
+        logo_url: editLogoUrl,
+        email: editEmail
+      } : null;
+
+      const res = await fetch('/api/save-profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          plannerId: currentUser.plannerId,
+          plannerData,
+          agencyId: currentUser.agencyId || null,
+          agencyData
         })
-        .eq('id', currentUser.plannerId);
+      });
 
-      if (error) throw error;
-
-      if (currentUser.role === 'agency' && currentUser.agencyId) {
-        const { error: agencyUpdateError } = await supabase
-          .from('agencies')
-          .update({ 
-            logo_url: editLogoUrl,
-            email: editEmail
-          })
-          .eq('id', currentUser.agencyId);
-        if (agencyUpdateError) {
-          console.error("Failed to update agency settings:", agencyUpdateError);
-        }
+      const resData = await res.json();
+      if (!resData.success) {
+        throw new Error(resData.error || '프로필 저장 실패');
       }
+
       updateBranding(updatedBranding);
-      alert("프로필 및 랜딩페이지 설정이 실시간으로 저장되었습니다. 즉시 내 홈페이지에 반영됩니다.");
+      if (resData.warning === 'certification_message_missing') {
+        alert(resData.message);
+        setToastMessage("⚠️ 일부 항목 제외 저장됨");
+      } else {
+        setToastMessage("저장되었습니다.");
+      }
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
       await fetchData();
     } catch (err) {
       alert("프로필 저장 중 오류가 발생했습니다: " + err);
@@ -5859,14 +5918,15 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                                   .map(planner => {
                                     const stats = getPlannerAssignmentStats(planner.id);
                                     const regNum = planner.registration_number || '';
-                                    const isDisabled = regNum === 'dist_disabled';
-                                    
-                                    // Parse weight
-                                    let weight = 5;
-                                    if (regNum.startsWith('dist_weight:')) {
-                                      const w = parseInt(regNum.split(':')[1]);
-                                      weight = isNaN(w) ? 5 : w;
-                                    }
+const distPart = regNum.includes('|') ? regNum.split('|')[1] : regNum;
+const isDisabled = distPart === 'dist_disabled';
+
+// Parse weight
+let weight = 5;
+if (distPart.startsWith('dist_weight:')) {
+  const w = parseInt(distPart.split(':')[1]);
+  weight = isNaN(w) ? 5 : w;
+}
 
                                     return (
                                       <tr key={planner.id} className="border-b border-slate-800/60 hover:bg-slate-900/40">
@@ -5912,14 +5972,15 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                               .map(planner => {
                                 const stats = getPlannerAssignmentStats(planner.id);
                                 const regNum = planner.registration_number || '';
-                                const isDisabled = regNum === 'dist_disabled';
-                                
-                                // Parse weight
-                                let weight = 5;
-                                if (regNum.startsWith('dist_weight:')) {
-                                  const w = parseInt(regNum.split(':')[1]);
-                                  weight = isNaN(w) ? 5 : w;
-                                }
+const distPart = regNum.includes('|') ? regNum.split('|')[1] : regNum;
+const isDisabled = distPart === 'dist_disabled';
+
+// Parse weight
+let weight = 5;
+if (distPart.startsWith('dist_weight:')) {
+  const w = parseInt(distPart.split(':')[1]);
+  weight = isNaN(w) ? 5 : w;
+}
 
                                 return (
                                   <div 
@@ -7158,6 +7219,37 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                     )}
                     <div className="grid md:grid-cols-2 gap-6">
                       
+                      {/* 로그인 ID */}
+                      <div className="space-y-2 md:col-span-2">
+                        <label className="text-xs font-black text-slate-400 uppercase tracking-wider block">
+                          로그인 ID
+                        </label>
+                        <input 
+                          type="text"
+                          value={currentUser.plannerCode || ''}
+                          readOnly
+                          className="w-full bg-slate-950/40 border border-slate-900 rounded-xl py-2.5 px-4 outline-none text-xs text-slate-500 font-bold cursor-not-allowed select-all"
+                        />
+                        <p className="text-[10px] text-slate-500 font-medium">
+                          💡 해당 대시보드 로그인 시 사용하는 고유 식별 코드입니다. (수정 불가)
+                        </p>
+                      </div>
+
+                      {/* 설계사 이름 */}
+                      <div className="space-y-2 md:col-span-2">
+                        <label className="text-xs font-black text-slate-400 uppercase tracking-wider block">
+                          설계사 이름 (필수)
+                        </label>
+                        <input 
+                          type="text"
+                          value={editPlannerName}
+                          onChange={(e) => setEditPlannerName(e.target.value)}
+                          placeholder="예: 홍길동"
+                          className="w-full bg-slate-950 border border-slate-800 focus:border-orange-500/50 rounded-xl py-2.5 px-4 outline-none text-xs text-white font-bold"
+                          required
+                        />
+                      </div>
+
                       {/* Phone */}
                       <div className="space-y-2">
                         <label className="text-xs font-black text-slate-400 uppercase tracking-wider block">
@@ -7356,18 +7448,32 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                         />
                       </div>
 
-                      {/* Custom Address / Footer Description */}
+                      {/* 지점 주소 */}
                       <div className="space-y-2 md:col-span-2">
                         <label className="text-xs font-black text-slate-400 uppercase tracking-wider block">
-                          지점 주소 및 인증 문구 (필수)
+                          지점 주소 (필수)
                         </label>
                         <input 
                           type="text"
                           value={editCustomAddress}
                           onChange={(e) => setEditCustomAddress(e.target.value)}
-                          placeholder="예: 서울시 강남구 테헤란로 123 (더윤컴퍼니 공식 인증 설계사)"
+                          placeholder="예: 서울시 강남구 테헤란로 123"
                           className="w-full bg-slate-950 border border-slate-800 focus:border-orange-500/50 rounded-xl py-2.5 px-4 outline-none text-xs text-white font-bold"
                           required
+                        />
+                      </div>
+
+                      {/* 인증 문구 */}
+                      <div className="space-y-2 md:col-span-2">
+                        <label className="text-xs font-black text-slate-400 uppercase tracking-wider block">
+                          인증 문구 (선택 - 기입 시 하단 푸터 및 랜딩페이지에 상시 노출)
+                        </label>
+                        <input 
+                          type="text"
+                          value={editCertificationMessage}
+                          onChange={(e) => setEditCertificationMessage(e.target.value)}
+                          placeholder="예: 더윤컴퍼니 공식 인증 설계사"
+                          className="w-full bg-slate-950 border border-slate-800 focus:border-orange-500/50 rounded-xl py-2.5 px-4 outline-none text-xs text-white font-bold"
                         />
                       </div>
 
@@ -8697,6 +8803,13 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
               </div>
             )}
           </div>
+        </div>
+      )}
+
+      {showToast && (
+        <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[9999] bg-slate-900 border border-emerald-500/30 text-emerald-400 font-extrabold text-xs px-6 py-3.5 rounded-2xl shadow-2xl flex items-center gap-2 animate-bounce">
+          <span className="w-2 h-2 bg-emerald-400 rounded-full animate-ping" />
+          {toastMessage}
         </div>
       )}
 

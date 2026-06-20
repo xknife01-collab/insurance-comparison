@@ -1264,17 +1264,17 @@ export const PhilosophySection = () => {
   const isDefaultContent = !branding.greetingContent || branding.greetingContent === '대한민국 모든 보험사의 상품을 0.1초 만에 비교 분석하여 불필요한 고정 지출을 성공적으로 줄여 드립니다.';
 
   // 3. Name Dynamic Binding
-  const displayName = branding.type === 'planner' && branding.name
+  const displayName = branding.name && branding.name !== '보험리밸런스'
     ? `보험 분석가 ${branding.name}`
     : '보험 분석가 김리치';
 
   // 4. Certification (소속) Dynamic Binding
-  const displayCert = branding.type === 'planner' && branding.customAddress
-    ? branding.customAddress
-    : '인카금융서비스 공식 인증 설계사';
+  const displayCert = branding.certificationMessage
+    ? branding.certificationMessage
+    : (branding.agencyName ? `${branding.agencyName} 공식 인증 설계사` : '인카금융서비스 공식 인증 설계사');
 
   // 5. Profile Image Dynamic Binding
-  const profileImg = branding.type === 'planner' && branding.profileImageUrl
+  const profileImg = branding.profileImageUrl
     ? branding.profileImageUrl
     : 'https://picsum.photos/seed/planner/200/200';
 
@@ -1388,7 +1388,12 @@ export const Footer = () => {
 
         <div className="border-t border-slate-800 pt-12 text-[10px] text-slate-400 space-y-4 max-w-4xl opacity-80 leading-relaxed font-bold">
           <p className="text-slate-300">[ 필수안내사항 ]</p>
-          <p>{branding?.customAddress || "보험대리점 : 인카금융서비스 (등록번호 : 제2006038313호) 본 광고는 광고심의기준을 준수하였으며, 유효기간은 심의일로부터 1년입니다."}</p>
+          <p>
+            {branding?.type === 'planner'
+              ? `보험대리점 : ${branding.agencyName || '인카금융서비스'} | 지점 주소 : ${branding.customAddress || '등록된 주소가 없습니다.'} | 본 광고는 광고심의기준을 준수하였으며, 유효기간은 심의일로부터 1년입니다.`
+              : (branding?.customAddress || "보험대리점 : 인카금융서비스 (등록번호 : 제2006038313호) 본 광고는 광고심의기준을 준수하였으며, 유효기간은 심의일로부터 1년입니다.")
+            }
+          </p>
           {branding?.registrationNumber && (
             <p className="text-orange-400 font-extrabold bg-slate-900 border border-slate-850 px-3.5 py-2 rounded-xl inline-block">
               광고심의필: {branding.registrationNumber}
