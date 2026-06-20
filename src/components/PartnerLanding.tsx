@@ -326,6 +326,185 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
           </div>
         </div>
 
+        {/* 1. [기존 대면 영업 vs AI 영업] Before & After 대조표 */}
+        <div className="max-w-[1300px] mx-auto px-4 py-12">
+          <div className="text-center space-y-4 mb-10">
+            <h3 className="text-xl md:text-2xl font-black text-white">기존 영업 방식과 무엇이 다른가요?</h3>
+            <p className="text-slate-400 text-xs font-semibold">비효율적인 영업 관행을 탈피하고, 실시간 반응형 AI 비교 솔루션으로 압도적인 성과를 만들어내세요.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* 기존 영업 (Before) */}
+            <div className="p-8 rounded-3xl bg-slate-950/45 border border-slate-900 text-left space-y-6 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-red-500/5 rounded-full blur-xl pointer-events-none" />
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center">
+                  <span className="text-red-550 font-black text-sm">✗</span>
+                </div>
+                <h4 className="text-base font-extrabold text-slate-400">기존 대면 영업 방식</h4>
+              </div>
+              
+              <ul className="space-y-4 text-xs font-semibold text-slate-500">
+                <li className="flex items-start gap-2.5">
+                  <span className="text-red-500 mt-0.5">•</span>
+                  <span>매달 유료 가망고객 DB 구매비용으로 <b>50~100만 원 상당 고정 지출</b></span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="text-red-500 mt-0.5">•</span>
+                  <span>모르는 번호 수신 거부 및 전화 연결 성공 시에도 <b>거절률 90% 이상</b></span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="text-red-500 mt-0.5">•</span>
+                  <span>고객 맞춤 분석 및 수많은 종이 제안서 준비·인쇄에만 <b>매번 3시간 소모</b></span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="text-red-500 mt-0.5">•</span>
+                  <span>특정 보험사 상품에 치우친 권유라는 고객의 불신과 의심으로 <b>계약 이탈 빈번</b></span>
+                </li>
+              </ul>
+            </div>
+
+            {/* 도입 후 (After) */}
+            <div className="p-8 rounded-3xl bg-gradient-to-br from-orange-500/10 via-slate-900/40 to-slate-950/80 border border-orange-500/30 hover:border-orange-500/40 transition-all duration-300 text-left space-y-6 relative overflow-hidden shadow-[0_10px_35px_rgba(249,115,22,0.05)]">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-orange-500/10 rounded-full blur-xl pointer-events-none" />
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-orange-500/20 border border-orange-500/30 flex items-center justify-center">
+                  <Sparkles className="w-4 h-4 text-orange-400" />
+                </div>
+                <h4 className="text-base font-extrabold text-white">INSUREBALANCE AI 영업 인프라</h4>
+              </div>
+              
+              <ul className="space-y-4 text-xs font-semibold text-slate-350">
+                <li className="flex items-start gap-2.5">
+                  <span className="text-orange-400 mt-0.5">✓</span>
+                  <span>나만의 고유 진단 링크 배포로 <b>고객이 먼저 자발적으로 분석 신청 (DB 비용 0원)</b></span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="text-orange-400 mt-0.5">✓</span>
+                  <span>고객 진단과 동시에 성별·연령·주요 보장 데이터가 <b>0.1초 만에 폰 푸시 알림 전송</b></span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="text-orange-400 mt-0.5">✓</span>
+                  <span>고객 이탈 전 터치 한 번으로 <b>카카오톡 1:1 다이렉트 실시간 상담 즉시 연결</b></span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="text-orange-400 mt-0.5">✓</span>
+                  <span>국내 생보·손보사 상품 전수 비교 및 마스킹 공시문으로 <b>100% 신뢰 기반 계약 체결</b></span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* 2. '독점권 선점' 경쟁 심리 유도 (FOMO) */}
+        <div className="max-w-[1300px] mx-auto px-4 py-8">
+          <div className="max-w-5xl mx-auto rounded-3xl p-8 bg-slate-950/80 border border-slate-900 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="absolute top-1/2 left-0 -translate-y-1/2 w-48 h-48 bg-orange-500/5 rounded-full blur-3xl pointer-events-none" />
+            
+            <div className="space-y-3 text-left max-w-2xl">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-red-500/10 border border-red-500/20 text-red-400 text-[10px] font-black tracking-widest uppercase">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                <span>독점 한정 수량</span>
+              </div>
+              <h4 className="text-lg md:text-xl font-black text-white">경쟁 설계사들이 먼저 선점하기 전에 권한을 획득하세요</h4>
+              <p className="text-slate-400 text-xs md:text-sm font-semibold leading-relaxed break-keep">
+                옆 자리의 억대 연봉 탑-플래너는 이미 스마트폰으로 실시간 리드 분석을 받아 계약을 성사시키고 있습니다. 
+                내 소중한 가망 고객들이 다른 설계사가 보낸 AI 진단 링크로 먼저 넘어가기 전에, 지금 바로 나만의 독립형 인프라를 무료로 활성화하세요.
+              </p>
+            </div>
+            
+            <div className="flex-shrink-0 w-full md:w-auto px-6 py-5 rounded-2xl bg-slate-900/60 border border-slate-800 flex flex-col justify-center items-center text-center min-w-[180px]">
+              <span className="text-[10px] font-bold text-slate-500">실시간 전국 라이브 링크</span>
+              <span className="text-2xl font-black text-orange-400 mt-1 animate-pulse">4,812개</span>
+              <span className="text-[9px] font-medium text-slate-500 mt-1">설계사 홈페이지 활성화 중</span>
+            </div>
+          </div>
+        </div>
+
+        {/* 3. 확실한 ROI(투자 수익률) 계산기 또는 가격 혜택 강조 */}
+        <div className="max-w-[1300px] mx-auto px-4 py-12">
+          <div className="max-w-5xl mx-auto text-center space-y-8">
+            <div className="space-y-4">
+              <h3 className="text-xl md:text-2xl font-black text-white">어째서 단 1건의 계약만으로도 이득일까요?</h3>
+              <p className="text-slate-400 text-xs font-semibold max-w-2xl mx-auto">
+                초기 부담 비용은 0원입니다. 한 달 무료체험 기간 동안 이뤄질 놀라운 영업 효율을 검증해 보세요.
+              </p>
+            </div>
+            
+            {/* ROI Flow Container */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center justify-center p-6 rounded-3xl bg-slate-950/45 border border-slate-900/80">
+              {/* Step 1 */}
+              <div className="p-4 space-y-2">
+                <span className="text-xs font-bold text-slate-500">STEP 1. 초기 도입 비용</span>
+                <div className="text-2xl font-black text-white">0원</div>
+                <span className="text-[10px] font-semibold text-orange-400 bg-orange-500/10 px-2 py-0.5 rounded">30일 전기능 무료체험</span>
+              </div>
+              
+              <div className="hidden md:block text-slate-700 text-lg">➜</div>
+              
+              {/* Step 2 */}
+              <div className="p-4 space-y-2">
+                <span className="text-xs font-bold text-slate-500">STEP 2. 단 1건 계약 성공 시</span>
+                <div className="text-2xl font-black text-white">+150만 원↑</div>
+                <span className="text-[10px] font-medium text-slate-400">평균 신계약 건당 수수료 기준</span>
+              </div>
+              
+              <div className="hidden md:block text-slate-700 text-lg">➜</div>
+              
+              {/* Step 3 */}
+              <div className="p-4 space-y-2 md:col-span-2">
+                <span className="text-xs font-bold text-slate-500">STEP 3. 투자 대비 기대 수익률 (ROI)</span>
+                <div className="text-3xl font-black text-orange-400 animate-pulse">최소 15배 이상↑</div>
+                <span className="text-[9px] font-semibold text-slate-400 break-keep">잃을 것은 전혀 없고, 평생 소유할 나만의 독점 고객 DB 자산만 쌓입니다.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 4. 실제 필드 설계사들의 성공 사례 (Social Proof) */}
+        <div className="max-w-[1300px] mx-auto px-4 py-8">
+          <div className="max-w-5xl mx-auto space-y-8">
+            <div className="text-center space-y-4">
+              <h3 className="text-xl md:text-2xl font-black text-white">실제 현장 설계사님들의 도입 후기</h3>
+              <p className="text-slate-400 text-xs font-semibold">INSUREBALANCE 플랫폼을 통해 성공적인 디지털 전환을 이뤄낸 실제 파트너들의 인터뷰입니다.</p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* 후기 1 */}
+              <div className="p-6 rounded-3xl bg-slate-900/60 border border-slate-800/80 text-left space-y-4 relative overflow-hidden">
+                <div className="flex justify-between items-center">
+                  <div className="flex gap-1 text-orange-400">
+                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                  </div>
+                  <span className="text-[10px] font-black text-orange-400 bg-orange-500/10 px-2.5 py-0.5 rounded">개인 플래너</span>
+                </div>
+                <p className="text-xs md:text-sm font-semibold text-slate-300 leading-relaxed break-keep italic">
+                  "가망 고객에게 카카오톡으로 저만의 비교진단 링크 하나 공유했을 뿐인데, 저녁 식사하던 중에 부족 보장 계약 요청 피드백이 와서 정말 소름 돋았습니다. 제안서 뽑는 시간 아끼고 실적은 2배로 늘었습니다."
+                </p>
+                <div className="text-[10px] font-bold text-slate-500">
+                  3년 차 이OO 설계사 (GA 소속)
+                </div>
+              </div>
+
+              {/* 후기 2 */}
+              <div className="p-6 rounded-3xl bg-slate-900/60 border border-slate-800/80 text-left space-y-4 relative overflow-hidden">
+                <div className="flex justify-between items-center">
+                  <div className="flex gap-1 text-orange-400">
+                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                  </div>
+                  <span className="text-[10px] font-black text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded">GA 지점장</span>
+                </div>
+                <p className="text-xs md:text-sm font-semibold text-slate-300 leading-relaxed break-keep italic">
+                  "지점 설계사 25명에게 이 영업 시스템을 전부 지급하고 도입시켰더니, 첫 달 지점 전체 매출(수수료)이 240% 이상 폭발적으로 뛰어올랐습니다. 신입 교육 및 가망고객 터치 도구로 이만한 게 없네요."
+                </p>
+                <div className="text-[10px] font-bold text-slate-500">
+                  12년 차 GA 지점장 박OO (GA 대리점 운영)
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Bottom Call-to-Action Section */}
         <div className="max-w-[1300px] mx-auto px-4">
           <div className="pt-10 border-t border-slate-900">
