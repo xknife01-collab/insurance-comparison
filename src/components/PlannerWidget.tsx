@@ -81,10 +81,10 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
             {/* Planner Info */}
             <div className="space-y-1">
               <span className="inline-block px-2.5 py-0.5 bg-orange-500/10 text-orange-400 text-[9px] font-black rounded-md border border-orange-500/20 uppercase tracking-widest">
-                {branding.type === 'planner' ? '전담 라이프 플래너' : '공식 고객센터'}
+                {branding.type === 'planner' ? '전담 라이프 플래너' : '공식 설계사'}
               </span>
               <h4 className="text-lg font-black tracking-tight">
-                {branding.type === 'planner' ? `${branding.name} 설계사` : branding.name}
+                {branding.type === 'planner' ? `${branding.name} 설계사` : `${branding.name} 공식 설계사`}
               </h4>
               {branding.customPhone && (
                 <p className="text-xs text-slate-400 font-bold flex items-center justify-center gap-1">
@@ -170,10 +170,10 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
             </div>
             <div className="text-left">
               <p className="text-[8px] font-black text-orange-400 leading-none">
-                {branding.type === 'planner' ? 'Planner Contact' : 'Customer Support'}
+                {branding.type === 'planner' ? 'Planner Contact' : 'Official Planner'}
               </p>
               <p className="text-xs font-black mt-0.5">
-                {branding.type === 'planner' ? `${branding.name} 설계사 상담` : `${branding.name} 고객 상담`}
+                {branding.type === 'planner' ? `${branding.name} 설계사 상담` : `${branding.name} 공식 설계사 상담`}
               </p>
             </div>
           </motion.button>
