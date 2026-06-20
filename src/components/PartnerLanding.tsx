@@ -329,6 +329,10 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
         {/* 1. [기존 대면 영업 vs AI 영업] Before & After 대조표 */}
         <div className="max-w-[1300px] mx-auto px-4 py-12">
           <div className="text-center space-y-4 mb-10">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-[10px] font-black tracking-widest uppercase">
+              <Layers className="w-3 h-3 text-orange-400" />
+              <span>영업 방식 비교</span>
+            </div>
             <h3 className="text-xl md:text-2xl font-black text-white">기존 영업 방식과 무엇이 다른가요?</h3>
             <p className="text-slate-400 text-xs font-semibold">비효율적인 영업 관행을 탈피하고, 실시간 반응형 AI 비교 솔루션으로 압도적인 성과를 만들어내세요.</p>
           </div>
@@ -425,6 +429,10 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
         <div className="max-w-[1300px] mx-auto px-4 py-12">
           <div className="max-w-5xl mx-auto text-center space-y-8">
             <div className="space-y-4">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-[10px] font-black tracking-widest uppercase">
+                <Scale className="w-3 h-3 text-orange-400" />
+                <span>수익성 및 효율성</span>
+              </div>
               <h3 className="text-xl md:text-2xl font-black text-white">어째서 단 1건의 계약만으로도 이득일까요?</h3>
               <p className="text-slate-400 text-xs font-semibold max-w-2xl mx-auto">
                 초기 부담 비용은 0원입니다. 한 달 무료체험 기간 동안 이뤄질 놀라운 영업 효율을 검증해 보세요.
@@ -465,6 +473,10 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
         <div className="max-w-[1300px] mx-auto px-4 py-8">
           <div className="max-w-5xl mx-auto space-y-8">
             <div className="text-center space-y-4">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-[10px] font-black tracking-widest uppercase">
+                <Users className="w-3 h-3 text-orange-400" />
+                <span>파트너 리얼 인터뷰</span>
+              </div>
               <h3 className="text-xl md:text-2xl font-black text-white">실제 현장 설계사님들의 도입 후기</h3>
               <p className="text-slate-400 text-xs font-semibold">INSUREBALANCE 플랫폼을 통해 성공적인 디지털 전환을 이뤄낸 실제 파트너들의 인터뷰입니다.</p>
             </div>
