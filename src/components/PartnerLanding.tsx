@@ -8,6 +8,69 @@ interface PartnerLandingProps {
 }
 
 export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
+  const testimonials = [
+    {
+      stars: 5,
+      tag: '개인 플래너',
+      author: '3년 차 이OO 설계사 (GA 소속)',
+      text: '가망 고객에게 카카오톡으로 저만의 비교진단 링크 하나 공유했을 뿐인데, 저녁 식사하던 중에 부족 보장 계약 요청 피드백이 와서 정말 소름 돋았습니다. 제안서 뽑는 시간 아끼고 실적은 2배로 늘었습니다.'
+    },
+    {
+      stars: 5,
+      tag: 'GA 지점장',
+      author: '12년 차 GA 지점장 박OO (GA 대리점 운영)',
+      text: '지점 설계사 25명에게 이 영업 시스템을 전부 지급하고 도입시켰더니, 첫 달 지점 전체 매출(수수료)이 240% 이상 폭발적으로 뛰어올랐습니다. 신입 교육 및 가망고객 터치 도구로 이만한 게 없네요.'
+    },
+    {
+      stars: 5,
+      tag: '개인 플래너',
+      author: '8년 차 김OO 설계사 (대형 생보사 소속)',
+      text: '가족이나 지인한테 아쉬운 소리하며 부탁하는 영업은 이제 끝났습니다. 고객이 먼저 자기 보험 분석해달라고 카톡을 먼저 보내오니 영업이 너무 즐겁습니다.'
+    },
+    {
+      stars: 5,
+      tag: '개인 플래너',
+      author: '5년 차 최OO 설계사 (손보 전문)',
+      text: '고객이 진단 기기 누르자마자 0.1초 만에 스마트폰 진동 울리면서 분석 정보 날아오네요. 이 골든타임 덕분에 지난달 계약 체결률 300% 올렸습니다.'
+    },
+    {
+      stars: 5,
+      tag: '개인 플래너',
+      author: '1년 차 신입 설계사 정OO (GA 소속)',
+      text: '설계사 개인 전용 홈페이지가 가입 즉시 1초 만에 생성되는 걸 보고 충격 받았습니다. 명함 대신 프로필이랑 비교진단 엔진 달린 사이트 주소를 보내니 고객이 프로로 봅니다.'
+    },
+    {
+      stars: 5,
+      tag: '개인 플래너',
+      author: '15년 차 베테랑 설계사 한OO (원수사 소속)',
+      text: '금소법 규정 때문에 블로그나 SNS 영업할 때 심의 리스크가 제일 큰 고민이었는데, 이 앱은 비인증 고객한테 상품명/보험사명이 자동 마스킹되니까 리스크 ZERO입니다.'
+    },
+    {
+      stars: 5,
+      tag: '개인 플래너',
+      author: '6년 차 임OO 설계사 (대형 GA 소속)',
+      text: '원래 보장분석 한 번 하려면 약속 잡고 종이 서류 받아서 입력하느라 3시간 넘게 걸렸는데, 이제 고객이 모바일로 2분 만에 끝내니까 일의 능률이 다릅니다.'
+    },
+    {
+      stars: 5,
+      tag: 'GA 지점장',
+      author: '10년 차 지점장 윤OO (보험 대리점 운영)',
+      text: '설계사들의 실시간 상담 요청률과 고객 유입 추이를 대시보드로 실시간 확인하니까 지점 통제가 쉬워졌습니다. 대리점 전용 기능들이 정말 탄탄합니다.'
+    },
+    {
+      stars: 5,
+      tag: '개인 플래너',
+      author: '4년 차 강OO 설계사 (재무설계사)',
+      text: '고객이 가입한 27개 카테고리 보험료를 실시간 계산하고 담보별로 동적 스마트 폼이 움직이니까, 상담 중에 버벅거릴 일이 전혀 없습니다.'
+    },
+    {
+      stars: 5,
+      tag: '개인 플래너',
+      author: '7년 차 송OO 설계사 (리밸런싱 전문가)',
+      text: '보장은 동일하지만 보험료는 더 저렴한 상품, 혹은 동일 보험료 대비 보장이 더 큰 전수 매칭 결과를 제안서로 즉시 받으니 고객 거절 핑계가 사라집니다.'
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-slate-950 text-white font-sans overflow-x-hidden selection:bg-orange-500 selection:text-white pb-24">
       {/* Background Gradients */}
@@ -469,50 +532,64 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
           </div>
         </div>
 
-        {/* 4. 실제 필드 설계사들의 성공 사례 (Social Proof) */}
-        <div className="max-w-[1300px] mx-auto px-4 py-8">
-          <div className="max-w-5xl mx-auto space-y-8">
-            <div className="text-center space-y-4">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-[10px] font-black tracking-widest uppercase">
-                <Users className="w-3 h-3 text-orange-400" />
-                <span>파트너 리얼 인터뷰</span>
-              </div>
-              <h3 className="text-xl md:text-2xl font-black text-white">실제 현장 설계사님들의 도입 후기</h3>
-              <p className="text-slate-400 text-xs font-semibold">INSUREBALANCE 플랫폼을 통해 성공적인 디지털 전환을 이뤄낸 실제 파트너들의 인터뷰입니다.</p>
+        {/* 4. 실제 필드 설계사들의 성공 사례 (Social Proof - Infinite Marquee Version) */}
+        <div className="max-w-full mx-auto py-8 overflow-hidden relative">
+          <div className="max-w-[1300px] mx-auto px-4 mb-10 text-center space-y-4">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-[10px] font-black tracking-widest uppercase">
+              <Users className="w-3 h-3 text-orange-400" />
+              <span>파트너 리얼 인터뷰</span>
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* 후기 1 */}
-              <div className="p-6 rounded-3xl bg-slate-900/60 border border-slate-800/80 text-left space-y-4 relative overflow-hidden">
-                <div className="flex justify-between items-center">
-                  <div className="flex gap-1 text-orange-400">
-                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                  </div>
-                  <span className="text-[10px] font-black text-orange-400 bg-orange-500/10 px-2.5 py-0.5 rounded">개인 플래너</span>
-                </div>
-                <p className="text-xs md:text-sm font-semibold text-slate-300 leading-relaxed break-keep italic">
-                  "가망 고객에게 카카오톡으로 저만의 비교진단 링크 하나 공유했을 뿐인데, 저녁 식사하던 중에 부족 보장 계약 요청 피드백이 와서 정말 소름 돋았습니다. 제안서 뽑는 시간 아끼고 실적은 2배로 늘었습니다."
-                </p>
-                <div className="text-[10px] font-bold text-slate-500">
-                  3년 차 이OO 설계사 (GA 소속)
-                </div>
-              </div>
+            <h3 className="text-xl md:text-2xl font-black text-white">실제 현장 설계사님들의 도입 후기</h3>
+            <p className="text-slate-400 text-xs font-semibold">INSUREBALANCE 플랫폼을 통해 성공적인 디지털 전환을 이뤄낸 실제 파트너들의 인터뷰입니다.</p>
+          </div>
+          
+          {/* Custom style for smooth loop animation and pause-on-hover */}
+          <style>{`
+            @keyframes scrollTrack {
+              0% { transform: translateX(0); }
+              100% { transform: translateX(-50%); }
+            }
+            .animate-marquee {
+              animation: scrollTrack 60s linear infinite;
+            }
+            .animate-marquee:hover {
+              animation-play-state: paused;
+            }
+          `}</style>
 
-              {/* 후기 2 */}
-              <div className="p-6 rounded-3xl bg-slate-900/60 border border-slate-800/80 text-left space-y-4 relative overflow-hidden">
-                <div className="flex justify-between items-center">
-                  <div className="flex gap-1 text-orange-400">
-                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          {/* Marquee Row Container */}
+          <div className="w-full relative flex overflow-hidden py-4">
+            {/* Gradient overlays to fade edge sides */}
+            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-slate-950 to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-slate-950 to-transparent z-10 pointer-events-none" />
+            
+            <div className="flex gap-6 animate-marquee whitespace-nowrap">
+              {/* Render 10 Cards duplicated once to form a seamless infinite loop */}
+              {[...testimonials, ...testimonials].map((t, idx) => (
+                <div 
+                  key={idx} 
+                  className="inline-block w-[350px] md:w-[400px] p-6 rounded-3xl bg-slate-900/60 border border-slate-800/80 text-left space-y-4 relative overflow-hidden flex-shrink-0 whitespace-normal"
+                >
+                  <div className="flex justify-between items-center">
+                    <div className="flex gap-0.5 text-orange-400 text-sm">
+                      {"★".repeat(t.stars)}
+                    </div>
+                    <span className={`text-[10px] font-black px-2.5 py-0.5 rounded ${
+                      t.tag === 'GA 지점장' 
+                        ? 'text-emerald-400 bg-emerald-500/10' 
+                        : 'text-orange-400 bg-orange-500/10'
+                    }`}>
+                      {t.tag}
+                    </span>
                   </div>
-                  <span className="text-[10px] font-black text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded">GA 지점장</span>
+                  <p className="text-xs font-semibold text-slate-300 leading-relaxed break-keep min-h-[72px]">
+                    "{t.text}"
+                  </p>
+                  <div className="text-[10px] font-bold text-slate-500 pt-2 border-t border-slate-800/30">
+                    {t.author}
+                  </div>
                 </div>
-                <p className="text-xs md:text-sm font-semibold text-slate-300 leading-relaxed break-keep italic">
-                  "지점 설계사 25명에게 이 영업 시스템을 전부 지급하고 도입시켰더니, 첫 달 지점 전체 매출(수수료)이 240% 이상 폭발적으로 뛰어올랐습니다. 신입 교육 및 가망고객 터치 도구로 이만한 게 없네요."
-                </p>
-                <div className="text-[10px] font-bold text-slate-500">
-                  12년 차 GA 지점장 박OO (GA 대리점 운영)
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
