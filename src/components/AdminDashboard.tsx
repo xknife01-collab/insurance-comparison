@@ -490,6 +490,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
   const [regGreetingContent, setRegGreetingContent] = useState('');
   const [regProfileImg, setRegProfileImg] = useState(DEFAULT_PROFILE_IMG);
   const [regKakao, setRegKakao] = useState('');
+  const [showKakaoHelp, setShowKakaoHelp] = useState(false);
   const [codeCheckStatus, setCodeCheckStatus] = useState<'idle' | 'checking' | 'available' | 'taken'>('idle');
 
   // Agency Specific Inputs
@@ -1037,6 +1038,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
   };
 
   const [editKakao, setEditKakao] = useState('');
+  const [showKakaoHelpEdit, setShowKakaoHelpEdit] = useState(false);
   const [editGreetingTitle, setEditGreetingTitle] = useState('');
   const [editGreetingContent, setEditGreetingContent] = useState('');
   const [editProfileImg, setEditProfileImg] = useState('');
@@ -4579,7 +4581,16 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                         />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-xs font-bold text-slate-400 block">카카오톡 상담 연결 링크 (오픈채팅/채널 주소)</label>
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-slate-400 block">카카오톡 상담 연결 링크 (오픈채팅/채널 주소)</label>
+                          <button
+                            type="button"
+                            onClick={() => setShowKakaoHelp(!showKakaoHelp)}
+                            className="text-[10px] text-orange-400 hover:text-orange-300 font-bold transition-all flex items-center gap-1 cursor-pointer bg-slate-800/40 hover:bg-slate-800 px-2 py-0.5 rounded border border-slate-700"
+                          >
+                            오픈채팅 링크 확인 방법 ❓
+                          </button>
+                        </div>
                         <input 
                           type="url" 
                           placeholder="예: https://open.kakao.com/o/..." 
@@ -4587,6 +4598,24 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                           onChange={(e) => setRegKakao(e.target.value)}
                           className="w-full bg-slate-950 border border-slate-800 focus:border-orange-500/50 rounded-xl py-2.5 px-4 outline-none text-sm text-white font-bold"
                         />
+                        {showKakaoHelp && (
+                          <div className="bg-slate-950/80 border border-slate-800/80 rounded-xl p-3.5 space-y-2 text-[11px] text-slate-400 leading-relaxed animate-in fade-in slide-in-from-top-2 duration-200 text-left">
+                            <p className="font-extrabold text-white flex items-center gap-1">
+                              <span>💬</span> 카카오톡 1:1 오픈채팅방 생성 및 링크 확인 방법
+                            </p>
+                            <ol className="list-decimal pl-4 space-y-1.5 font-medium text-slate-300">
+                              <li>스마트폰에서 <strong className="text-white">카카오톡</strong> 앱을 실행합니다.</li>
+                              <li>하단 <strong className="text-white">채팅 탭</strong>으로 이동 후, 우측 상단의 <strong className="text-white">말풍선+ (새로운 채팅)</strong> 아이콘을 누릅니다.</li>
+                              <li><strong className="text-white">오픈채팅</strong> ➜ <strong className="text-white">내 오픈링크</strong> ➜ <strong className="text-white">만들기</strong> 버튼을 선택합니다.</li>
+                              <li><strong className="text-white">1:1 채팅방</strong>을 선택한 후, 이름과 프로필을 설정하여 방을 만듭니다.</li>
+                              <li>방이 생성되면 우측 상단 메뉴(혹은 중간)의 <strong className="text-white">링크 공유</strong> ➜ <strong className="text-white">링크 복사</strong>를 누릅니다.</li>
+                              <li>복사된 주소(예: <code className="text-orange-400 font-bold">https://open.kakao.com/o/...</code>)를 위 입력창에 붙여넣어 주세요.</li>
+                            </ol>
+                            <p className="text-[10px] text-slate-500 font-bold border-t border-slate-850 pt-1.5 leading-normal">
+                              ※ 일반 개인 카톡 아이디는 인터넷 브라우저 바로가기 연결을 지원하지 않아, 반드시 오픈채팅방 주소로 등록하셔야 고객이 실시간으로 상담을 신청할 수 있습니다.
+                            </p>
+                          </div>
+                        )}
                       </div>
                       <div className="space-y-2">
                         <label className="text-xs font-bold text-slate-400 block">메인 랜딩페이지 한줄 인사말 제목</label>
@@ -7267,9 +7296,18 @@ if (distPart.startsWith('dist_weight:')) {
 
                       {/* Kakao Talk Link */}
                       <div className="space-y-2">
-                        <label className="text-xs font-black text-slate-400 uppercase tracking-wider block">
-                          카카오톡 상담 연결 링크 (오픈채팅/채널 주소)
-                        </label>
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-black text-slate-400 uppercase tracking-wider block">
+                            카카오톡 상담 연결 링크 (오픈채팅/채널 주소)
+                          </label>
+                          <button
+                            type="button"
+                            onClick={() => setShowKakaoHelpEdit(!showKakaoHelpEdit)}
+                            className="text-[10px] text-orange-400 hover:text-orange-300 font-bold transition-all flex items-center gap-1 cursor-pointer bg-slate-800/40 hover:bg-slate-800 px-2 py-0.5 rounded border border-slate-700"
+                          >
+                            오픈채팅 링크 확인 방법 ❓
+                          </button>
+                        </div>
                         <input 
                           type="url"
                           value={editKakao}
@@ -7277,6 +7315,24 @@ if (distPart.startsWith('dist_weight:')) {
                           placeholder="예: https://open.kakao.com/o/..."
                           className="w-full bg-slate-950 border border-slate-800 focus:border-orange-500/50 rounded-xl py-2.5 px-4 outline-none text-xs text-white font-bold"
                         />
+                        {showKakaoHelpEdit && (
+                          <div className="bg-slate-950/80 border border-slate-800/80 rounded-xl p-3.5 space-y-2 text-[11px] text-slate-400 leading-relaxed animate-in fade-in slide-in-from-top-2 duration-200 text-left normal-case">
+                            <p className="font-extrabold text-white flex items-center gap-1">
+                              <span>💬</span> 카카오톡 1:1 오픈채팅방 생성 및 링크 확인 방법
+                            </p>
+                            <ol className="list-decimal pl-4 space-y-1.5 font-medium text-slate-300">
+                              <li>스마트폰에서 <strong className="text-white">카카오톡</strong> 앱을 실행합니다.</li>
+                              <li>하단 <strong className="text-white">채팅 탭</strong>으로 이동 후, 우측 상단의 <strong className="text-white">말풍선+ (새로운 채팅)</strong> 아이콘을 누릅니다.</li>
+                              <li><strong className="text-white">오픈채팅</strong> ➜ <strong className="text-white">내 오픈링크</strong> ➜ <strong className="text-white">만들기</strong> 버튼을 선택합니다.</li>
+                              <li><strong className="text-white">1:1 채팅방</strong>을 선택한 후, 이름과 프로필을 설정하여 방을 만듭니다.</li>
+                              <li>방이 생성되면 우측 상단 메뉴(혹은 중간)의 <strong className="text-white">링크 공유</strong> ➜ <strong className="text-white">링크 복사</strong>를 누릅니다.</li>
+                              <li>복사된 주소(예: <code className="text-orange-400 font-bold">https://open.kakao.com/o/...</code>)를 위 입력창에 붙여넣어 주세요.</li>
+                            </ol>
+                            <p className="text-[10px] text-slate-500 font-bold border-t border-slate-850 pt-1.5 leading-normal">
+                              ※ 일반 개인 카톡 아이디는 인터넷 브라우저 바로가기 연결을 지원하지 않아, 반드시 오픈채팅방 주소로 등록하셔야 고객이 실시간으로 상담을 신청할 수 있습니다.
+                            </p>
+                          </div>
+                        )}
                       </div>
 
                       {/* Email */}
