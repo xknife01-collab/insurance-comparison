@@ -1110,7 +1110,7 @@ export default function App() {
 
                 return (
                   <>
-                    <AnalysisDashboard result={analysisResult} onSubmitLead={submitLead} branding={branding} isUnlocked={isUnlocked} />
+                    <AnalysisDashboard result={analysisResult} onSubmitLead={submitLead} branding={branding} isUnlocked={true} />
 
                     {currentAnalysis && (
                       <div className="mt-40">
@@ -1278,10 +1278,10 @@ export default function App() {
                             <div className="flex items-start justify-between gap-4">
                               <div className="space-y-1">
                                 <span className="inline-block px-2.5 py-1 bg-slate-100 text-slate-600 rounded-lg text-[10px] font-black">
-                                  {maskCompany(policy.insurance_company, isUnlocked)}
+                                  {maskCompany(policy.insurance_company, true)}
                                 </span>
                                 <h4 className="text-base font-bold text-slate-800 group-hover:text-orange-600 transition-colors">
-                                  {maskProductName(policy.product_name, isUnlocked)}
+                                  {maskProductName(policy.product_name, true)}
                                 </h4>
                               </div>
                               <div className="text-right shrink-0">
@@ -1325,7 +1325,7 @@ export default function App() {
                   💡 본 분석은 한국신용정보원의 상품명과 월 납입 보험료 정보를 기반으로, AI가 표준 보험 요율에 맞춰 가입 특약 및 보장 금액을 정교하게 역산한 추정치입니다. 실제 가입하신 보험 증권의 세부 구성에 따라 차이가 있을 수 있으므로 정확한 진단은 전문 설계사의 정밀 상담을 권장합니다.
                 </p>
               </div>
-              <AnalysisDashboard result={remodelingResult} onSubmitLead={submitLead} branding={branding} isUnlocked={isUnlocked} />
+              <AnalysisDashboard result={remodelingResult} onSubmitLead={submitLead} branding={branding} isUnlocked={true} />
 
 
             </motion.section>

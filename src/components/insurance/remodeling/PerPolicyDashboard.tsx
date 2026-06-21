@@ -7,7 +7,7 @@ import { maskCompany, maskProductName } from '../../../utils/compliance';
 interface Rider { rider_name: string; coverage_amount: number; }
 interface Policy { insurance_company: string; product_name: string; monthly_premium: number; riders: Rider[]; }
 
-interface Props { policies: Policy[]; age: number; gender: 'M' | 'F'; isUnlocked?: boolean; }
+interface Props { policies: Policy[]; age: number; gender: 'M' | 'F'; isUnlocked?: boolean; forceAllOpen?: boolean; }
 
 const COMPANIES = ['DB손해보험','KB손해보험','한화손해보험','현대해상','삼성화재','메리츠화재'];
 
@@ -98,8 +98,14 @@ function findDups(policies: Policy[]): Set<number> {
   return dups;
 }
 
-function PolicyCard({policy,index,isDup,totalCount,isUnlocked}:{policy:Policy;index:number;isDup:boolean;totalCount:number;isUnlocked?:boolean;key?:any}) {
-  const [open,setOpen]=useState(index === 0);
+function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen}:{policy:Policy;index:number;isDup:boolean;totalCount:number;isUnlocked?:boolean;forceOpen?:boolean;key?:any}) {
+  const [openState,setOpenState]=useState(index === 0);
+  const open = forceOpen ? true : openState;
+  const setOpen = (val: boolean) => {
+    if (!forceOpen) {
+      setOpenState(val);
+    }
+  };
   const t=detectType(policy.product_name);
   const cov=extractCov(policy.riders);
   const p=policy.monthly_premium;
@@ -350,7 +356,7 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked}:{policy:Policy;in
   );
 }
 
-export const PerPolicyDashboard: React.FC<Props> = ({ policies, age, gender, isUnlocked }) => {
+export const PerPolicyDashboard: React.FC<Props> = ({ policies, age, gender, isUnlocked, forceAllOpen }) => {
   const dups = findDups(policies);
   const total = policies.reduce((s,p)=>s+p.monthly_premium,0);
   const hasDups = dups.size > 0;
@@ -384,7 +390,7 @@ export const PerPolicyDashboard: React.FC<Props> = ({ policies, age, gender, isU
 
       {/* Per-Policy Cards */}
       {policies.map((policy,i)=>(
-        <PolicyCard key={i} policy={policy} index={i} isDup={dups.has(i)} totalCount={policies.length} isUnlocked={isUnlocked} />
+        <PolicyCard key={i} policy={policy} index={i} isDup={dups.has(i)} totalCount={policies.length} isUnlocked={isUnlocked} forceOpen={forceAllOpen} />
       ))}
     </div>
   );

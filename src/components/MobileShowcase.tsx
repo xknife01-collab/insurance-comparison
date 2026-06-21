@@ -135,11 +135,18 @@ export default function MobileShowcase() {
   // Ref for results auto scroll
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const scrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const scrollRafRef = useRef<number | null>(null);
+  const progressBarRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   // Timeline manager
   useEffect(() => {
     if (!isPlaying) {
       if (scrollIntervalRef.current) clearInterval(scrollIntervalRef.current);
+      if (scrollRafRef.current) {
+        cancelAnimationFrame(scrollRafRef.current);
+        scrollRafRef.current = null;
+      }
       return;
     }
 
@@ -297,30 +304,45 @@ export default function MobileShowcase() {
         
         const container = scrollContainerRef.current;
         container.scrollTop = 0;
+        if (progressBarRef.current) {
+          progressBarRef.current.style.width = '0%';
+        }
         
-        scrollIntervalRef.current = setInterval(() => {
+        const scrollSpeed = 2.8; // pixels per frame (smooth)
+
+        const animateScroll = () => {
           if (!container) return;
-          
-          const maxScroll = container.scrollHeight - container.clientHeight;
+          const contentHeight = contentRef.current ? contentRef.current.offsetHeight : container.scrollHeight;
+          const visibleContentHeight = contentHeight * 0.5;
+          const maxScroll = Math.max(0, visibleContentHeight - container.clientHeight);
+
           if (container.scrollTop < maxScroll) {
-            container.scrollTop += 5.1; // Smooth scroll speed (6x faster)
+            container.scrollTop += scrollSpeed;
             const progress = (container.scrollTop / maxScroll) * 100;
-            setStepProgress(progress);
+            if (progressBarRef.current) {
+              progressBarRef.current.style.width = `${progress}%`;
+            }
+            scrollRafRef.current = requestAnimationFrame(animateScroll);
           } else {
-            if (scrollIntervalRef.current) clearInterval(scrollIntervalRef.current);
-            setStepProgress(100);
-            
+            if (progressBarRef.current) {
+              progressBarRef.current.style.width = '100%';
+            }
             // Hold at the bottom
             timer = setTimeout(() => {
               setActiveStep('input');
             }, 2500);
           }
-        }, 16);
+        };
+
+        scrollRafRef.current = requestAnimationFrame(animateScroll);
       }, 2000);
 
       return () => {
         clearTimeout(scrollTimer);
-        if (scrollIntervalRef.current) clearInterval(scrollIntervalRef.current);
+        if (scrollRafRef.current) {
+          cancelAnimationFrame(scrollRafRef.current);
+          scrollRafRef.current = null;
+        }
       };
     }
 
@@ -566,16 +588,21 @@ export default function MobileShowcase() {
                   <div className="absolute inset-0 overflow-hidden bg-slate-50">
                     <div 
                       ref={scrollContainerRef}
-                      className="absolute top-0 left-0 w-[200%] h-[200%] overflow-y-auto text-left flex flex-col bg-slate-50 select-none origin-top-left scale-[0.5] hide-scrollbar"
+                      className="absolute inset-0 overflow-y-auto text-left flex flex-col bg-slate-50 select-none hide-scrollbar"
                       style={{ scrollBehavior: 'auto' }}
+                      onWheel={() => setIsPlaying(false)}
+                      onTouchStart={() => setIsPlaying(false)}
+                      onMouseDown={() => setIsPlaying(false)}
                     >
-                       <AnalysisDashboard 
-                         result={mockAnalysisResult} 
-                         onSubmitLead={async () => null} 
-                         branding={{ type: 'organic', name: '아이지에이수수', registrationNumber: '2020-IGA-SOOSOO' }} 
-                         isUnlocked={true} 
-                         forceMobile={true}
-                       />
+                      <div ref={contentRef} className="w-[200%] origin-top-left scale-[0.5] pb-24 p-6 bg-slate-50 text-left">
+                        <AnalysisDashboard 
+                          result={mockAnalysisResult} 
+                          onSubmitLead={async () => null} 
+                          branding={{ type: 'organic', name: '아이지에이수수', registrationNumber: '2020-IGA-SOOSOO' }} 
+                          isUnlocked={false} 
+                          forceMobile={true}
+                        />
+                      </div>
                     </div>
                   </div>
                 )}
@@ -710,7 +737,11 @@ export default function MobileShowcase() {
 
               {activeStep === 'result' && (
                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-slate-850">
-                  <div className="h-full bg-rose-500 transition-all" style={{ width: `${stepProgress}%` }} />
+                  <div 
+                    ref={progressBarRef}
+                    className="h-full bg-rose-500" 
+                    style={{ width: '0%' }} 
+                  />
                 </div>
               )}
             </button>

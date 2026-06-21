@@ -356,7 +356,9 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
   } | null>(null);
 
   const [localUnlocked, setLocalUnlocked] = React.useState(false);
-  const isUnlocked = !!parentIsUnlocked || localUnlocked || consultVerified || uwVerified || smsSuccess || localStorage.getItem('ins_unlocked') === 'true';
+  const isUnlocked = parentIsUnlocked === false
+    ? false
+    : (!!parentIsUnlocked || localUnlocked || consultVerified || uwVerified || smsSuccess || localStorage.getItem('ins_unlocked') === 'true');
 
   React.useEffect(() => {
     if (isUnlocked) {
@@ -1085,6 +1087,7 @@ ${origin}/?code=${simCode}
             age={(analysis as any).age || 40}
             gender={(analysis as any).gender || 'M'}
             isUnlocked={isUnlocked}
+            forceAllOpen={forceMobile}
           />
         </div>
       )}

@@ -281,12 +281,29 @@ const FIELD_LABELS: Record<string, string> = {
   loanType: '대출 종류',
   loanAmount: '대출 잔액',
   loanPeriod: '대출 잔여기간',
-  creditBureau: '신용등급 기관'
+  creditBureau: '신용등급 기관',
+
+  // Cancer options
+  treatmentCost2025: '2025 암주요치료비',
+  targetedTherapy: '표적항암/원인자',
+  recurrentCancer: '재발/전이암 보장',
+  familyHistory: '암 가족력'
 };
 
 const formatValue = (key: string, val: any) => {
   if (val === true) return '포함';
   if (val === false) return '미포함';
+  if (Array.isArray(val)) {
+    return val.map(item => {
+      if (typeof item === 'object' && item !== null) {
+        return item.rider_name || item.name || JSON.stringify(item);
+      }
+      return String(item);
+    }).join(', ');
+  }
+  if (typeof val === 'object' && val !== null) {
+    return JSON.stringify(val);
+  }
   if (typeof val === 'number') {
     if (val >= 100000000) {
       return `${(val / 100000000).toLocaleString()}억 원`;
@@ -8300,7 +8317,7 @@ if (distPart.startsWith('dist_weight:')) {
               const analysisInputs = selectedLead.raw_payload?.analysisInputs || selectedLead.raw_payload;
               if (!analysisInputs) return null;
 
-              const reservedKeys = ['gender', 'jobClass', 'age', 'name', 'phone', 'birthDate', 'selectedCategory', 'isDirect', 'plannerId'];
+              const reservedKeys = ['gender', 'jobClass', 'age', 'name', 'phone', 'birthDate', 'selectedCategory', 'isDirect', 'plannerId', '_remodelingCoverage', 'policies', 'timeline', 'memos', 'underwriting'];
               const categoryKey = Object.keys(analysisInputs).find(k => !reservedKeys.includes(k) && typeof analysisInputs[k] === 'object' && analysisInputs[k] !== null);
               if (!categoryKey) return null;
 
