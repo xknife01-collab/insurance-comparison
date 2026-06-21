@@ -30,7 +30,7 @@ export async function analyzeRemodeling(
   // 3. Construct Recommendation Plans
   const dietPlan: RecommendationPlan = {
     title: '📉 가격은 낮추고 보장은 동일하게',
-    description: `기존 보장 수준을 100% 동일하게 유지하면서 월 납입 보험료를 ${Math.round((coverage.current_total_premium - dietResult.total_premium) / 10000)}만원 줄일 수 있습니다.`,
+    description: `기존 보장 수준을 동일하게 유지하면서 월 납입 보험료를 ${Math.round((coverage.current_total_premium - dietResult.total_premium) / 10000)}만원 줄일 수 있습니다.`,
     estimatedPremium: dietResult.total_premium,
     coverageChanges: [
       `동일 보장 유지: 일반암 ${Math.round(coverage.cancer_diagnosis / 10000000) * 10}00만원`,

@@ -31,7 +31,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => {
             </span>
           </h2>
           <p className="text-red-200/80 font-semibold text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            급성심근경색(9%)과 허혈성(60~70%)만 보장받고 계셨나요? 직장인 건강검진 시 흔히 진단 소견을 받는 심장 부정맥(I49), 심방세동(I48) 및 심부전(I50)까지 포함해 심장 질환을 100% 든든하게 보장하는 프리미엄 설계 가이드입니다.
+            급성심근경색(9%)과 허혈성(60~70%)만 보장받고 계셨나요? 직장인 건강검진 시 흔히 진단 소견을 받는 심장 부정맥(I49), 심방세동(I48) 및 심부전(I50)까지 포함해 심장 질환을 빈틈없이 든든하게 보장하는 프리미엄 설계 가이드입니다.
           </p>
         </div>
       </div>
@@ -40,7 +40,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => {
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
           {
-            title: '심장질환 100% 보장',
+            title: '심장질환 광범위 보장',
             desc: '급성심근경색증과 협심증은 물론, 부정맥(I49), 심방세동(I48), 심부전(I50)까지 심장 전체 이상 보장.',
             tag: '넓은 보장 범위',
             tagBg: 'bg-red-50 text-red-700 border-red-200',
@@ -159,7 +159,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => {
                 <h4 className="text-lg font-black text-red-900 flex items-center gap-2">
                   <span className="w-2.5 h-2.5 bg-red-600 rounded-full animate-ping"></span> 심장질환 (특정/확대)
                 </h4>
-                <span className="text-[10px] font-black text-red-600 bg-red-50 px-2 py-0.5 rounded border border-red-200">전체 질환 100% 보장</span>
+                <span className="text-[10px] font-black text-red-600 bg-red-50 px-2 py-0.5 rounded border border-red-200">전체 질환 광범위 보장</span>
               </div>
               <p className="text-xs text-red-950 font-bold leading-relaxed">
                 급성심근경색 및 협심증은 기본이고, 심장이 불규칙하게 뛰는 부정맥(I49), 빈맥(I47), 심방세동(I48) 및 판막 이상, 심부전(I50)까지 전부 보장합니다.
@@ -305,9 +305,9 @@ export const HeartExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => {
             },
             {
               company: 'DB손해보험',
-              badge: '반복 수술비 1위',
+              badge: '반복 수술비 우수',
               badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-              highlight: '매 시술 수술비 감액 삭감 없이 100% 보장',
+              highlight: '매 시술 수술비 감액 삭감 없이 전액 보장',
               desc: '스텐트 삽입술 등 관상동맥 협착 시술 청구 횟수에 제약이 없고 연간 1회 한도 차감 규정이 존재하지 않아, 주기적 혈관 리모델링 시술을 받는 장기 입원 고객에게 유리합니다.',
               strength: '혈관 확장 및 반복 수술 특약 최적화 선호 상품'
             },
@@ -329,7 +329,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => {
             },
             {
               company: 'KB손해보험',
-              badge: '산정특례 한도 1위',
+              badge: '산정특례 한도 우수',
               badgeColor: 'bg-amber-50 text-amber-700 border-amber-200',
               highlight: '중증 산정특례 진단금 매년 최대 한도 리필',
               desc: '심장 질환으로 중증 환자 등록 및 산정특례 상태를 유지할 경우, 매년 특례 조건 갱신 시마다 연간 반복 지급하는 위로금 가입 한도를 업계 우수 금액으로 세팅해 줍니다.',

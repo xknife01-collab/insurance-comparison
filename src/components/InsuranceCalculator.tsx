@@ -63,7 +63,7 @@ const ALL_CATEGORIES: MajorCategory[] = [
     icon: Hospital,
     accentColor: '#FF6B00',
     items: [
-      { id: 'silson', label: '의료실비', description: '병원비 90% 보장', icon: Shield, color: '#00D7C4', bgColor: '#F0FDFA', subTypes: ['4세대 실손', '5세대 실손', '노후 실손'] },
+      { id: 'silson', label: '의료실비', description: '필수적인 의료비 보장 (자기부담금 제외)', icon: Shield, color: '#00D7C4', bgColor: '#F0FDFA', subTypes: ['4세대 실손', '5세대 실손', '노후 실손'] },
       { id: 'dental', label: '치아보험', description: '임플란트/크라운', icon: Smile, color: '#10B981', bgColor: '#F0FDF4', subTypes: ['진단형', '무진단형'] },
       { id: 'pre', label: '유병자', description: '아픈 분도 가입', icon: Stethoscope, color: '#2563EB', bgColor: '#EFF6FF', subTypes: ['간편 고지형', '무심사형'] },
       { id: 'surgery', label: '수술/입원', description: '수술비 반복 지급', icon: Activity, color: '#F59E0B', bgColor: '#FFFBEB', subTypes: ['1-5종 수술비', 'N대 수술비', '상해 수술비'] },
@@ -1080,21 +1080,21 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
 
   return (
     <section id="calculator-section" className="w-full max-w-[1600px] mx-auto py-12 px-4 font-sans">
-      {/* 100% 안심 자율 비교 서비스 배너 (텍스트만) */}
+      {/* 안심 자율 비교 서비스 배너 (텍스트만) */}
       <div className="max-w-4xl mx-auto w-full text-center mb-16 px-4">
         {/* Badge */}
         <div className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-orange-500/10 text-orange-600 rounded-full text-[11px] md:text-xs font-black uppercase tracking-wider mb-4">
-          ✨ 100% 안심 자율 비교 서비스
+          ✨ 안심 자율 비교 서비스
         </div>
         
         {/* Title */}
         <h3 className="text-2xl md:text-4xl font-black text-slate-800 tracking-tight mb-4 leading-tight">
-          "가입 권유 전화 <span className="text-orange-500">Zero</span>" — 100% 완전 비대면 자율 분석
+          "가입 권유 전화 <span className="text-orange-500">Zero</span>" — 완전 비대면 자율 분석
         </h3>
         
         {/* Description */}
         <p className="text-sm md:text-base lg:text-lg text-slate-600 font-bold leading-relaxed max-w-2xl mx-auto break-keep mb-3">
-          상담원 전화 유도 없이, 오직 AI 빅데이터 엔진을 통해 고객 스스로 100% 자율 비교 및 진단을 완료할 수 있습니다.
+          상담원 전화 유도 없이, 오직 AI 빅데이터 엔진을 통해 고객 스스로 자율 비교 및 진단을 완료할 수 있습니다.
         </p>
         
         {/* Subtext */}

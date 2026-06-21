@@ -33,7 +33,7 @@ export const HEALTH_GENERAL_PRODUCTS: HealthGeneralProduct[] = [
   { company: '한화생명', productName: '한화생명 시그니처 H통합보험 무배당(납입면제형)[일반가입형] (월납)', basePremium: 40000 },
   { company: '한화생명', productName: '한화생명 걸음e건강보험 무배당 (월납)', basePremium: 40000 },
   { company: '한화생명', productName: '한화생명 e건강보험 무배당 (월납)', basePremium: 40000 },
-  { company: '삼성생명', productName: '삼성 The(더)Dream 건강보험(2601)(무배당) 100%만기환급형 (월납)', basePremium: 55000 },
+  { company: '삼성생명', productName: '삼성 The(더)Dream 건강보험(2601)(무배당) 전액만기환급형 (월납)', basePremium: 55000 },
   { company: '교보생명', productName: '교보평생건강보험 PLUS (무배당)_일반형 (월납)', basePremium: 90000 },
   { company: '교보생명', productName: '교보더블업여성건강보험 (무배당) (월납)', basePremium: 90000 },
   { company: '교보생명', productName: '교보더블업여성건강보험 [D](무배당) (월납)', basePremium: 90000 },

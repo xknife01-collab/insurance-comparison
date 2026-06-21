@@ -115,7 +115,7 @@ export const CancerExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
                 <h4 className="text-xl font-black text-gray-900 flex items-center gap-2">
                   <span className="w-2.5 h-2.5 bg-rose-600 rounded-full"></span> 일반암 (悪性新生物)
                 </h4>
-                <span className="text-xs font-black text-rose-600 bg-rose-50 px-3 py-1 rounded-lg border border-rose-100">가입 금액 100% 지급</span>
+                <span className="text-xs font-black text-rose-600 bg-rose-50 px-3 py-1 rounded-lg border border-rose-100">가입 금액 전액 지급</span>
               </div>
               <p className="text-xs text-gray-500 font-bold leading-relaxed">
                 침윤과 전이 성질을 띠며 인체 장기 조직에 영구적인 손상을 입히는 악성 악성 종양입니다. 위암, 폐암, 간암, 대장암, 췌장암, 유방암 등이 대표적입니다.
@@ -320,8 +320,8 @@ export const CancerExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
               company: '메리츠화재',
               badge: '감액 기간 없음',
               badgeColor: 'bg-rose-50 text-rose-700 border-rose-200',
-              highlight: '가입 90일 직후 100% 전액 지급',
-              desc: '통상 가입 후 1~2년 이내에는 진단비의 50%만 지급하는 감액 규정이 있으나, 메리츠는 특판 플랜을 통해 가입 90일 면책만 넘어가면 즉시 100%를 보장하는 즉시 지급형을 지원합니다.',
+              highlight: '가입 90일 직후 전액 즉시 지급',
+              desc: '통상 가입 후 1~2년 이내에는 진단비의 50%만 지급하는 감액 규정이 있으나, 메리츠는 특판 플랜을 통해 가입 90일 면책만 넘어가면 즉시 보장 금액 전체를 지급하는 즉시 지급형을 지원합니다.',
               strength: '빠른 보장 개시 및 즉시 지급 한도 설계 선호'
             },
             {
@@ -337,7 +337,7 @@ export const CancerExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
               badge: '여성 특화/가성비',
               badgeColor: 'bg-purple-50 text-purple-700 border-purple-200',
               highlight: '여성 전용 시그니처 암보험 할인',
-              desc: '유방암, 자궁암, 난소암 등 여성 관련 암 발생 시 가입 한도와 진단비를 특화하고, 무사고 전환 할인 시 보험료 감면율이 매우 높아 2030 여성층 가성비 1위를 고수합니다.',
+              desc: '유방암, 자궁암, 난소암 등 여성 관련 암 발생 시 가입 한도와 진단비를 특화하고, 무사고 전환 할인 시 보험료 감면율이 매우 높아 2030 여성층 대상 높은 가성비를 유지하고 있습니다.',
               strength: '여성 다빈도 암 보장 특화 및 업계 최저 요율'
             }
           ].map((item, index) => (

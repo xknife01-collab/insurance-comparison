@@ -120,7 +120,7 @@ export const fetchVariablePremium = async (analysis: InsuranceAnalysis): Promise
           subType: 'term',
           feeOrDiscount: '우량체 15% 할인',
           baseRateOrYield: 24500,
-          features: '비대면 다이렉트 스마트 계약 | 가입금액 최고 5억원 세팅 가능 | 암/질병 관련 특약 자유로운 추가'
+          features: '비대면 다이렉트 스마트 계약 | 가입금액 최대 5억원 세팅 가능 | 암/질병 관련 특약 자유로운 추가'
         },
         {
           company: '삼성생명',

@@ -31,7 +31,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction, isUnlock
             </span>
           </h2>
           <p className="text-indigo-200/80 font-semibold text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            뇌출혈(9%)과 뇌졸중(60%)만 보장받고 계셨나요? 건강검진 뇌 MRA 촬영 시 발견 빈도가 매우 높은 뇌동맥류(I67)와 뇌경색(I63)을 포함해 전체 뇌혈관 질환(I60~I69)을 100% 빈틈없이 커버하는 가이드입니다.
+            뇌출혈(9%)과 뇌졸중(60%)만 보장받고 계셨나요? 건강검진 뇌 MRA 촬영 시 발견 빈도가 매우 높은 뇌동맥류(I67)와 뇌경색(I63)을 포함해 전체 뇌혈관 질환(I60~I69)을 빈틈없이 광범위하게 커버하는 가이드입니다.
           </p>
         </div>
       </div>
@@ -40,7 +40,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction, isUnlock
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
           {
-            title: '뇌혈관질환 100% 보장',
+            title: '뇌혈관질환 전체 보장',
             desc: '지주막하출혈(I60)부터 뇌경색(I63), 뇌동맥류(I67) 및 후유증(I69)까지 전체 뇌혈관 질환을 든든하게 보장.',
             tag: '넓은 보장 범위',
             tagBg: 'bg-indigo-50 text-indigo-700 border-indigo-200',
@@ -159,7 +159,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction, isUnlock
                 <h4 className="text-lg font-black text-indigo-900 flex items-center gap-2">
                   <span className="w-2.5 h-2.5 bg-indigo-600 rounded-full animate-ping"></span> 뇌혈관질환 진단비
                 </h4>
-                <span className="text-[10px] font-black text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">전체 질환 100% 보장</span>
+                <span className="text-[10px] font-black text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">전체 질환 광범위 보장</span>
               </div>
               <p className="text-xs text-indigo-950 font-bold leading-relaxed">
                 뇌출혈, 뇌졸중은 기본이고 건강검진에서 조기 발견되는 뇌동맥류(I67), 협착, 기타 뇌혈관 질환 및 후유증(I69)까지 든든하게 보장합니다.
@@ -305,10 +305,10 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction, isUnlock
             },
             {
               company: 'DB손해보험',
-              badge: '매회 수술비 1위',
+              badge: '매회 수술비 우수',
               badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
               highlight: '코일색전술/스텐트 매회 삭감 없음',
-              desc: '뇌혈관 수술비 반복 지급 한도 내에서 스텐트 삽입 및 뇌압 경감 관련 비관혈 시술 청구 횟수를 타사 대비 연간 1회 제한 없이 매 수술 시마다 100% 한도를 고수합니다.',
+              desc: '뇌혈관 수술비 반복 지급 한도 내에서 스텐트 삽입 및 뇌압 경감 관련 비관혈 시술 청구 횟수를 타사 대비 연간 1회 제한 없이 매 수술 시마다 전액 한도를 고수합니다.',
               strength: '다회 시술에 절대적으로 유리한 반복 수술비'
             },
             {
@@ -337,7 +337,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction, isUnlock
             },
             {
               company: '한화손해보험',
-              badge: '최고 가성비 요율',
+              badge: '합리적 가성비 요율',
               badgeColor: 'bg-purple-50 text-purple-700 border-purple-200',
               highlight: '무해지 환급형 뇌혈관 특약 최저가 가입',
               desc: '20대부터 40대까지 뇌혈관질환 진단비 특약의 보험료 단가를 국내 대표 손해사 중 가장 낮게 산정하여, 보장 범위를 뇌출혈에서 뇌혈관으로 넓히는 보강 설계에 최적입니다.',

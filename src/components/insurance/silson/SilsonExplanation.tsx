@@ -29,7 +29,7 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
         <div className="max-w-md text-right hidden lg:block opacity-60">
           <p className="text-sm font-bold text-slate-500 leading-relaxed">
             나에게 맞는 급여/비급여 최적 설계부터 4세대 전환 분석까지!<br />
-            100% 갱신형 구조에 대비하는 합리적인 실손의료비 매칭 솔루션.
+            매년 갱신형 구조에 대비하는 합리적인 실손의료비 매칭 솔루션.
           </p>
         </div>
       </div>
@@ -216,7 +216,7 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
               <Clock className="text-blue-500 w-5 h-5" /> 가입 최적 시점
             </h4>
             <p className="text-xs font-bold text-slate-500 leading-relaxed">
-              실손의료비는 질병이 생기거나 나이가 많아지면 인수 심사가 가장 까다로워지는 진입장벽 1위 상품입니다. 한 살이라도 젊고 전혀 아픈 곳이 없는 건강한 상태일 때 다이렉트 단독 실손으로 즉각적인 안심 장치를 장착해두시는 것이 평생의 병원비 리스크를 제로로 만드는 골든 타임입니다.
+              실손의료비는 질병이 생기거나 나이가 많아지면 인수 심사가 가장 까다로워지는 진입장벽이 높은 상품입니다. 한 살이라도 젊고 전혀 아픈 곳이 없는 건강한 상태일 때 다이렉트 단독 실손으로 즉각적인 안심 장치를 장착해두시는 것이 평생의 병원비 리스크를 제로로 만드는 골든 타임입니다.
             </p>
           </div>
         </div>
@@ -229,8 +229,8 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { company: '삼성화재', product: '다이렉트 실손의료비보험', highlight: '압도적인 자금력을 기반으로 한 가장 빠르고 투명한 보험금 지급 심사 프로세스 및 모바일 앱 편의성 제공', badges: ['지급 심사 1위', '대표 브랜드'] },
-            { company: '현대해상', product: '다이렉트 실손의료비보장보험', highlight: '태아/어린이 실손 부동의 1위를 달성한 신뢰도 높은 설계 요율, 폭넓은 연령대별 상해 급여 보상 네트워크 보유', badges: ['어린이 실손 최우수', '상해 치료 특화'] },
+            { company: '삼성화재', product: '다이렉트 실손의료비보험', highlight: '압도적인 자금력을 기반으로 한 가장 빠르고 투명한 보험금 지급 심사 프로세스 및 모바일 앱 편의성 제공', badges: ['지급 심사 우수', '대표 브랜드'] },
+            { company: '현대해상', product: '다이렉트 실손의료비보장보험', highlight: '태아/어린이 실손 선두를 달성한 신뢰도 높은 설계 요율, 폭넓은 연령대별 상해 급여 보상 네트워크 보유', badges: ['어린이 실손 최우수', '상해 치료 특화'] },
             { company: 'DB손해보험', product: '다이렉트 실손의료비보험', highlight: '다이렉트 전용 수수료가 전면 배제된 매우 합리적인 월 기본 가격대 형성, 기존 가입자 계약 전환 케어 우수', badges: ['실속 보험료', '계약전환 간편화'] },
             { company: '메리츠화재', product: '다이렉트 실손의료비보험', highlight: '소액 외래 진단비 및 약제 처방 청구 서류 간소화, 통원 도수치료 및 비급여 특약 보상 청구 절차 원스톱 승인', badges: ['신속 심사', '소액청구 특화'] },
             { company: 'KB손해보험', product: '다이렉트 실손의료비보장보험', highlight: 'KB금융 계열사 통합 금융 혜택 연동 및 주택화재/자동차보험과의 간편 패키지 결합 우대 혜택 보유', badges: ['그룹 결합 우대', '쉽고 빠른 UI'] },

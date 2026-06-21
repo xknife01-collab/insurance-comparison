@@ -101,9 +101,9 @@ export const SilsonFields: React.FC<Props> = ({
              {[
                { id: 'none', label: '없음', desc: '5% 할인' },
                { id: 'under100', label: '100만원 미만', desc: '유지' },
-               { id: '100to150', label: '100~150만원', desc: '100% 할증' },
-               { id: '150to300', label: '150~300만원', desc: '200% 할증' },
-               { id: 'over300', label: '300만원 이상', desc: '300% 할증' },
+               { id: '100to150', label: '100~150만원', desc: '보험료 2배' },
+               { id: '150to300', label: '150~300만원', desc: '보험료 3배' },
+               { id: 'over300', label: '300만원 이상', desc: '보험료 4배' },
              ].map((opt) => (
                <button
                  key={opt.id}

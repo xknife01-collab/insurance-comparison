@@ -115,10 +115,10 @@ export const PetExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
             <div className="space-y-6">
               <div className="p-5 md:p-6 bg-white/10 rounded-2xl md:rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
                 <p className="font-black text-orange-300 mb-2 flex items-center gap-2">
-                  🐾 비급여 100% 동물병원 의료비
+                  🐾 비급여 전액 동물병원 의료비
                 </p>
                 <p className="text-xs opacity-75 font-bold leading-relaxed">
-                  국민건강보험이 없는 반려동물은 동물병원마다 의료비 편차가 크며, 진료비 전체를 보호자가 100% 부담해야 해 수술 시 가계에 큰 부담이 됩니다.
+                  국민건강보험이 없는 반려동물은 동물병원마다 의료비 편차가 크며, 진료비 전체를 보호자가 직접 부담해야 해 수술 시 가계에 큰 부담이 됩니다.
                 </p>
               </div>
 

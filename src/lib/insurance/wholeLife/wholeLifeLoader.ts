@@ -84,7 +84,7 @@ export const fetchWholeLifePremium = async (analysis: InsuranceAnalysis): Promis
         refundType: 'standard', 
         declaredRate: 2.85, 
         businessFee: 6.5, 
-        features: "업계 최대 자산 1위 삼성생명 절대 안정성 지원 | 납입 기간 중 해약 시 안심 비례 환급 보존 | 연금전환 특약 업계 우수 적용율" 
+        features: "업계 최대 자산 규모 삼성생명 절대 안정성 지원 | 납입 기간 중 해약 시 안심 비례 환급 보존 | 연금전환 특약 업계 우수 적용율" 
       }
     ];
   }

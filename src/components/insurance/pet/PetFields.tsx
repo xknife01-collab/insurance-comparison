@@ -298,7 +298,7 @@ export const PetFields: React.FC<Props> = ({
                 <label className="flex items-center justify-between p-4 rounded-2xl border border-slate-100 bg-slate-50/50 cursor-pointer hover:border-slate-200 transition-all">
                   <div className="flex flex-col text-left">
                     <span className="text-sm font-bold text-slate-800">슬개골 및 고관절 탈구 보장</span>
-                    <span className="text-[10px] text-slate-400 font-medium">소형견 다빈도 질환 1위 보장 (1년 대기)</span>
+                    <span className="text-[10px] text-slate-400 font-medium">소형견 다빈도 질환 핵심 보장 (1년 대기)</span>
                   </div>
                   <input
                     type="checkbox"

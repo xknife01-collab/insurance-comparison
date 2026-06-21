@@ -182,7 +182,7 @@ export const FireExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
           </h3>
           <div className="space-y-3">
             {[
-              { step: '01. 비례 vs 실손 체크', desc: '과거 가입한 화재보험이 비례보상형인지 파악하고, 전손 시 100% 보장하는 실손보상형으로 신규 매칭' },
+              { step: '01. 비례 vs 실손 체크', desc: '과거 가입한 화재보험이 비례보상형인지 파악하고, 전손 시 전액 보장하는 실손보상형으로 신규 매칭' },
               { step: '02. 건물 평당 단가 설정', desc: '최근 건설 자재 및 인건비 상승을 고려하여 건물 가입 금액을 현실적으로 평당 400~500만 원 선 적용' },
               { step: '03. 이사 시 주소 등록', desc: '주택화재보험은 부동산에 종속되므로 이사 후 보험사에 주소지 승인을 거치지 않으면 사고 시 보장 거절' },
               { step: '04. 세입자 구상권 방어', desc: '전세/월세 입주자는 계약 종료 시 원상복구 의무가 있으므로 임차자배상책임 한도를 확실히 확보' },
@@ -230,7 +230,7 @@ export const FireExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
             { company: '삼성화재', product: '다이렉트 주택화재보험', highlight: '다이렉트 요율로 가성비 극대화, 모바일 즉시 청구 연동 및 대형 가전 AS 특약 지원', badges: ['다이렉트 요율', '가전 수리 강점'] },
             { company: '현대해상', product: 'H주택화재보험', highlight: '세입자 전용 임차자배상 및 이웃집 전파 피해 배상 한도 우수, 빌라/연립 최적화', badges: ['세입자 안심 설계', '대물배상 우수'] },
             { company: 'DB손해보험', product: '다이렉트 주택화재보험', highlight: '단독주택 및 상가주택 복구비용 요율 테이블 경쟁력, 노후 빌라 특별 심사 지원', badges: ['단독주택 특화', '노후주택 특별심사'] },
-            { company: 'KB손해보험', product: 'KB 주택화재보험', highlight: '일상생활배상책임 한도 우수, 누수로 인한 아랫집 배상 처리 및 화재 벌금 일괄 보장', badges: ['배상책임 최고한도', '벌금 특약 완비'] },
+            { company: 'KB손해보험', product: 'KB 주택화재보험', highlight: '일상생활배상책임 한도 우수, 누수로 인한 아랫집 배상 처리 및 화재 벌금 일괄 보장', badges: ['배상책임 최대한도', '벌금 특약 완비'] },
             { company: '한화손해보험', product: '한화 다이렉트 주택화재보험', highlight: '실속형 최저 보험료 플랜 지원, 필수 특약만 골라 설계하여 월 5~7천원대 가입 지원', badges: ['최저가 플랜 지원', '실속 맞춤 설계'] },
           ].map((item, i) => (
             <div key={i} className="p-5 md:p-8 bg-red-50/20 rounded-2xl md:rounded-[2.5rem] border border-red-100 hover:border-red-300 hover:shadow-lg transition-all">

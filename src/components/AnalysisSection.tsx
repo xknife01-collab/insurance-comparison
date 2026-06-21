@@ -64,21 +64,21 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
 
   return (
     <section className="w-full py-40 space-y-24">
-      {/* 100% 안심 자율 비교 서비스 배너 (텍스트만) */}
+      {/* 안심 자율 비교 서비스 배너 (텍스트만) */}
       <div className="max-w-4xl mx-auto w-full text-center px-4">
         {/* Badge */}
         <div className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-orange-500/10 text-orange-600 rounded-full text-[11px] md:text-xs font-black uppercase tracking-wider mb-4">
-          ✨ 100% 안심 자율 비교 서비스
+          ✨ 안심 자율 비교 서비스
         </div>
         
         {/* Title */}
         <h3 className="text-2xl md:text-4xl font-black text-slate-800 tracking-tight mb-4 leading-tight">
-          "가입 권유 전화 <span className="text-orange-500">Zero</span>" — 100% 완전 비대면 자율 분석
+          "가입 권유 전화 <span className="text-orange-500">Zero</span>" — 완전 비대면 자율 분석
         </h3>
         
         {/* Description */}
         <p className="text-sm md:text-base lg:text-lg text-slate-600 font-bold leading-relaxed max-w-2xl mx-auto break-keep mb-3">
-          상담원 전화 유도 없이, 오직 AI 빅데이터 엔진을 통해 고객 스스로 100% 자율 비교 및 진단을 완료할 수 있습니다.
+          상담원 전화 유도 없이, 오직 AI 빅데이터 엔진을 통해 고객 스스로 자율 비교 및 진단을 완료할 수 있습니다.
         </p>
         
         {/* Subtext */}

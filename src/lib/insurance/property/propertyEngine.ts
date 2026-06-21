@@ -231,7 +231,7 @@ export const analyzeProperty = (analysis: any): any => {
       : `[${upgradePlan.companyName}] 자산 실손 밸런스 플랜`,
     description: subType === '화재배상책임형'
       ? `대인/대물 시설배상 한도를 극대화하고 음식물 배상까지 탑재하여 소상공인의 법적 리스크를 안정적으로 방어하는 맞춤형 플랜입니다.`
-      : `설정한 매장 자산 가치를 100% 실손 보상하며, 누수로 인한 건물 침수 피해까지 안정적으로 커버하는 가장 권장해 드리는 설계안입니다.`,
+      : `설정한 매장 자산 가치 범위 내에서 실제 손해를 보상하며, 누수로 인한 건물 침수 피해까지 안정적으로 커버하는 권장해 드리는 설계안입니다.`,
     estimatedPremium: upgradePlan.premium,
     riskPremium: upgradePlan.riskPremium,
     savingsPremium: upgradePlan.savingsPremium,
@@ -246,7 +246,7 @@ export const analyzeProperty = (analysis: any): any => {
           `최저보험료 차액 ${(upgradePlan.savingsPremium || 0).toLocaleString()}원 적립금으로 자동 전환`
         ]
       : [
-          '건물 및 시설 인테리어 실손보상 가액 100% 적용',
+          '건물 및 시설 인테리어 실손보상 가액 기준 적용',
           '급배수시설누출(누수) 손해 보장 기본 탑재',
           '기본 시설소유자 및 화재 대물배상 탑재',
           `최저보험료 차액 ${(upgradePlan.savingsPremium || 0).toLocaleString()}원 적립금으로 자동 전환`
@@ -260,7 +260,7 @@ export const analyzeProperty = (analysis: any): any => {
 
   const hybrid: any = {
     title: `[${hybridPlan.companyName}] 프리미엄 사업장 마스터 플랜`,
-    description: `화재 재산 손해 100% 보장은 물론 주변 상가 피해 배상 한도 최대(10억) 설정, 영업 중단 시 임차료/인건비를 지원하는 프리미엄 소상공인 올케어 플랜입니다.`,
+    description: `화재 재산 손해 가액 한도 내 보장은 물론 주변 상가 피해 배상 한도 최대(10억) 설정, 영업 중단 시 임차료/인건비를 지원하는 프리미엄 소상공인 올케어 플랜입니다.`,
     estimatedPremium: hybridPlan.premium,
     riskPremium: hybridPlan.riskPremium,
     savingsPremium: hybridPlan.savingsPremium,

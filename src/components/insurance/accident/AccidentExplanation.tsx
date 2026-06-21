@@ -29,7 +29,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
         <div className="max-w-md text-right hidden lg:block opacity-60">
           <p className="text-sm font-bold text-slate-500 leading-relaxed">
             상해 사망/후유장해는 물론, 깁스치료와 미끄러짐 사고까지!<br />
-            비운전자 감면 혜택과 야외 레저 특약으로 가성비 100% 극대화 설계.
+            비운전자 감면 혜택과 야외 레저 특약으로 가성비 극대화 설계.
           </p>
         </div>
       </div>
@@ -39,7 +39,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
         {[
           { num: '비운전자 할인', label: '차량 미운전 시 즉시 적용', sub: '5% ~ 10% 보험료 추가 감면 혜택' },
           { num: '치아파절 기본보장', label: '골절진단비 내 치아 포함', sub: '가입 전 약관의 제외 조항 확인 필수' },
-          { num: '후유장해 전 구간', label: '3%부터 100% 장해율 지급', sub: '고도장해(80% 이상) 한정 특약 피하기' },
+          { num: '후유장해 전 구간', label: '3%부터 전 장해율 지급', sub: '고도장해(80% 이상) 한정 특약 피하기' },
           { num: '레저 스포츠 특약', label: '등산/골프 등 야외 사고 케어', sub: '저렴한 월 1천 원대로 든든한 보강' },
         ].map((s, i) => (
           <div key={i} className="bg-white border border-red-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-red-200 transition-all group">
@@ -73,7 +73,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
 
           <div className="space-y-3">
             {[
-              { title: '사망/후유장해', label: '상해 사고로 인한 신체적 영구 장해 보장', color: 'bg-red-50/50 border-red-100', badge: 'text-red-700 bg-red-100', desc: '장해지급률(3%~100%)에 따라 가입 금액을 곱하여 정액 지급되며, 경제 활동 기간 소득 상실을 대체하는 핵심 담보' },
+              { title: '사망/후유장해', label: '상해 사고로 인한 신체적 영구 장해 보장', color: 'bg-red-50/50 border-red-100', badge: 'text-red-700 bg-red-100', desc: '장해지급률(3%~전구간)에 따라 가입 금액을 곱하여 정액 지급되며, 경제 활동 기간 소득 상실을 대체하는 핵심 담보' },
               { title: '골절/깁스 치료', label: '일상 낙상, 미끄러짐 및 골절 치료비 보강', color: 'bg-rose-50/50 border-rose-100', badge: 'text-rose-700 bg-rose-100', desc: '뼈가 깨지거나 금이 간 경우 지급되며, 통깁스치료 외에 최근 반깁스까지 보장하는 최신 특약 조건 확인 권장' },
               { title: '상해수술/입원', label: '사고로 인한 수술 및 입원 치료비 반복 지급', color: 'bg-orange-50 border-orange-100', badge: 'text-orange-700 bg-orange-100', desc: '상해 사고로 수술 시 회당 정액 지급되며, 첫날부터 보장되는 상해입원일당을 추가하여 치료 기간 보장' },
             ].map((item, i) => (
@@ -169,7 +169,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
           <div className="space-y-4">
             {[
               { company: '레저 스포츠 상해', product: '등산/골프/자전거 사고 집중 보강', limit: '골절 및 깁스비 추가 지원', note: '취미 활동 중 발생한 물리 충격 골절 및 외상 수술 케어' },
-              { company: '주말 상해 고액 보장', product: '휴일 교통/재해 특약', limit: '사망/장해 시 최고 2배 지급', note: '주말 야외 나들이 차량 통행 중 돌발 재해에 특화 설계' },
+              { company: '주말 상해 고액 보장', product: '휴일 교통/재해 특약', limit: '사망/장해 시 최대 2배 지급', note: '주말 야외 나들이 차량 통행 중 돌발 재해에 특화 설계' },
               { company: '비운전자 할인 특약', product: '대중교통 이용자 요율 혜택', limit: '최대 10% 상시 보험료 감면', note: '소유 차량 유무와 무관하게 실질 운전을 하지 않는 피보험자 우대' },
             ].map((item, i) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
@@ -216,7 +216,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
             <p className="text-xs font-bold opacity-90 leading-relaxed">
               ① 이직 시 통지의무 누락 확인<br />
               ② 골절진단비 치아파절 포함 여부 체크<br />
-              ③ 상해후유장해 3%~100% 한도 충분히 확보<br />
+              ③ 상해후유장해 3%~전구간 한도 충분히 확보<br />
               ④ 반깁스 및 일상 수술비 특약 설계<br />
               ⑤ 비운전자 할인 대상인지 확인하여 10% 세이빙
             </p>
@@ -239,7 +239,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { company: '삼성화재', product: '다이렉트 상해 안심케어', highlight: '브랜드 인지도 우수, 수술비 및 깁스 보장 한도 넉넉, 일상생활 배상책임 특약 연계 최적', badges: ['가입 신뢰도 1위', '배상책임 연계'] },
+            { company: '삼성화재', product: '다이렉트 상해 안심케어', highlight: '브랜드 인지도 우수, 수술비 및 깁스 보장 한도 넉넉, 일상생활 배상책임 특약 연계 최적', badges: ['가입 신뢰도 우수', '배상책임 연계'] },
             { company: '현대해상', product: '무배당 현대해상 상해케어', highlight: '레저/스포츠 특약 다양화, 자전거/골프 주말 돌발 사고 추가 지급 조건 업계 우수한 수준', badges: ['레저스포츠 강자', '주말 나들이 특화'] },
             { company: 'DB손해보험', product: '참좋은 상해보험', highlight: '직업 위험군별 가입 한도 우대 적용, 중대 후유장해 시 가계 안전을 위한 연금식 분할 지급 지원', badges: ['현장직 인수 우대', '생활자금 옵션'] },
             { company: 'KB손해보험', product: 'KB 다이렉트 상해보험', highlight: '일상 미끄러짐 및 단순 골절/깁스 정액 진단비 최적 요율 매칭, 비운전자 감면 폭 최다', badges: ['골절/깁스 강점', '비운전 할인 우수'] },

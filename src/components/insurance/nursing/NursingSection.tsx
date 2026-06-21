@@ -257,7 +257,7 @@ export const NursingSection = ({ onAction, isUnlocked }: { onAction: () => void,
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             { company: '흥국화재',   product: '흥국재가케어간병보험',   highlight: '초경쟁력 있는 보험료 설계', badges: ['가성비 재가', '방문요양 특화'] },
-            { company: 'DB손해보험', product: '참좋은재가시설요양',     highlight: '체증형 한도 매년 5% 상승', badges: ['체증형', '브랜드 1위'] },
+            { company: 'DB손해보험', product: '참좋은재가시설요양',     highlight: '체증형 한도 매년 5% 상승', badges: ['체증형', '브랜드 선두'] },
             { company: 'KB손해보험', product: 'KB요양방문케어보험',     highlight: '인지지원등급 보장 개시',   badges: ['인지지원', '요양원특약'] },
             { company: '삼성화재',   product: '마이핏 요양케어',        highlight: '치매와 재가 보장 동시 탑재', badges: ['치매+LTC 통합', '든든보장'] },
             { company: '라이나생명', product: '방문요양시설종합보험',   highlight: '무제한 갱신 고령층 가입',   badges: ['고연령 무심사', '재가전문'] },

@@ -165,7 +165,7 @@ export const analyzeWholeLife = (analysis: any): any => {
     coverageChanges: [
       `월 보험료 ${(hybridPremium).toLocaleString()}원으로 맞춤 설계`,
       `사망 보장 기본 7,000만 원 안심 설계`,
-      `10년납으로 월 부담 완화 및 10년 시점 비과세 혜택 100% 매칭`,
+      `10년납으로 월 부담 완화 및 10년 시점 비과세 혜택 완벽 매칭`,
       `완납 후 연금 전환 특약 또는 적립금 중도인출 기능 무료 탑재`
     ],
     switchingLossNotice: '사망 보장과 저축 기능이 결합된 상품이므로, 순수 저축성 보험보다 초기 사업비 차감이 다소 큽니다.',

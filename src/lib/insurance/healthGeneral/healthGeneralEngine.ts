@@ -126,7 +126,7 @@ export const analyzeHealthGeneral = (analysis: any): any => {
     companyName: dietPlan.companyName,
     productName: dietPlan.productName,
     coverageChanges: [
-      '선택하신 진단비 및 특약 한도 100% 유지',
+      '선택하신 진단비 및 특약 한도 전액 유지',
       '해당 가입 조건 기준 업계 최저 요율 상품 매칭',
       '무해지환급형(저해약환급금형) 최적 세팅 적용'
     ],
@@ -167,7 +167,7 @@ export const analyzeHealthGeneral = (analysis: any): any => {
     companyName: hybridPlan.companyName,
     productName: hybridPlan.productName,
     coverageChanges: [
-      `일반암 최고 ${(hybridCancer / 10000).toLocaleString()}만 원 및 유사암 ${(hybridSimilar / 10000).toLocaleString()}만 원 최대 한도 확보`,
+      `일반암 최대 ${(hybridCancer / 10000).toLocaleString()}만 원 및 유사암 ${(hybridSimilar / 10000).toLocaleString()}만 원 최대 한도 확보`,
       `뇌혈관 ${(hybridBrain / 10000).toLocaleString()}만 원 / 허혈성 심장 ${(hybridHeart / 10000).toLocaleString()}만 원 / 심혈관 ${(hybridCardio / 10000).toLocaleString()}만 원 풀 케어`,
       '1-5종 수술비 + 표적항암 + 혈전용해 + 가족일상배상책임 풀 패키지'
     ],

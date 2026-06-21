@@ -724,7 +724,7 @@ export default function AnalysisShowcase() {
                                   
                                   <p className="text-sm text-slate-550 font-semibold leading-relaxed break-keep w-full">
                                     고객님은 현재 총 <span className="text-slate-800 font-extrabold">{policies.length}건</span>의 보험을 유지 중이시며, 이 중 <span className="text-red-500 font-extrabold">{dups.size}건의 중복 가입 상품</span>이 확인되었습니다. 
-                                    불필요한 과납 보장과 사망 위주의 주계약 비용을 최적화하면, 기존 핵심 보장은 100% 동일하게 지키면서 매월 총 <span className="text-orange-500 font-extrabold">{savingAmount.toLocaleString()}원</span>의 기회 자산을 확보하실 수 있습니다.
+                                    불필요한 과납 보장과 사망 위주의 주계약 비용을 최적화하면, 기존 핵심 보장은 동일하게 지키면서 매월 총 <span className="text-orange-500 font-extrabold">{savingAmount.toLocaleString()}원</span>의 기회 자산을 확보하실 수 있습니다.
                                   </p>
 
                                   {/* CTA 버튼 / 신청 완료 상태 */}
@@ -908,7 +908,7 @@ export default function AnalysisShowcase() {
               <Sparkles size={14} className="text-orange-500" /> High-Fidelity Simulator
             </div>
             <h2 className="text-4xl md:text-5xl font-black text-white leading-tight tracking-tight">
-              실제 앱과 100% 동일한<br />
+              실제 앱과 동일한<br />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-orange-400">내 보험 정밀 분석</span> 재현
             </h2>
             <p className="text-slate-400 font-bold text-sm leading-relaxed max-w-xl break-keep">

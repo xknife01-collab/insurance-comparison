@@ -40,7 +40,7 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
           { num: '이자소득세 0%', label: '10년 유지 시 소득세 면제', sub: '일반 은행 이자소득세 15.4% 전액 비과세' },
           { num: '월 복리 부리', label: '단리 예적금 대비 자산 가속화', sub: '원금과 이자 전체에 다시 복리 이자 누적' },
           { num: '추가납입 200%', label: '수수료 없는 유니버셜 혜택', sub: '기본 납입액 외 추가 금액은 수수료 면제 적산' },
-          { num: '예금자보호 5천만', label: '안전한 제도권 금융 자산', sub: '보험사별 1인당 최고 5,000만 원 원리금 보호' },
+          { num: '예금자보호 5천만', label: '안전한 제도권 금융 자산', sub: '보험사별 1인당 최대 5,000만 원 원리금 보호' },
         ].map((s, i) => (
           <div key={i} className="bg-white border border-emerald-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-emerald-200 transition-all group">
             <p className="text-2xl font-black text-emerald-600 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>

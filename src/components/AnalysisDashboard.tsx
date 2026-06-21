@@ -1755,7 +1755,7 @@ ${origin}/?code=${simCode}
                 <div className="bg-white/90 p-5 rounded-2xl border border-indigo-50 space-y-2">
                   <span className="inline-block text-[9px] px-2 py-0.5 rounded-full font-black bg-indigo-100 text-indigo-700">🏢 CEO / 경영인 절세형 (40~60만 원대)</span>
                   <p className="text-[10px] font-bold text-slate-500 leading-normal">
-                    사망보장금이 매년 5%~10%씩 체증(복리 증가)되며, 법인 비용 처리를 통한 법인세 절세 및 은퇴 시 높은 해약환급금(90%~100%+)을 퇴직금 재원으로 활용하도록 고안된 특수 목적용 법인 자산 적립 상품입니다.
+                    사망보장금이 매년 5%~10%씩 체증(복리 증가)되며, 법인 비용 처리를 통한 법인세 절세 및 은퇴 시 높은 해약환급금(90% 이상)을 퇴직금 재원으로 활용하도록 고안된 특수 목적용 법인 자산 적립 상품입니다.
                   </p>
                 </div>
               </div>
@@ -1777,7 +1777,7 @@ ${origin}/?code=${simCode}
                 {/* Mobile Rank, Company & Price Header */}
                 <div className={`flex w-full items-center justify-between ${forceMobile ? '' : 'md:hidden'}`}>
                   <div className="flex items-center gap-2">
-                    <span className={`text-xs font-black px-2 py-0.5 rounded-md ${idx < 3 ? 'bg-orange-500 text-white' : 'bg-slate-100 text-slate-500'}`}>{idx + 1}위</span>
+                    <span className={`text-xs font-black px-2 py-0.5 rounded-md ${idx < 3 ? 'bg-orange-500 text-white' : 'bg-slate-100 text-slate-500'}`}>{idx + 1}순위</span>
                     <span className="text-sm font-black text-gray-900">{maskCompany(opt.companyName, isUnlocked)}</span>
                   </div>
                   <div className="text-right">
@@ -2103,7 +2103,7 @@ ${origin}/?code=${simCode}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
               <div className="text-left space-y-1">
                 <span className="text-[10px] font-black text-orange-400 block uppercase tracking-widest">1:1 맞춤형 컨설팅</span>
-                <h4 className="text-base font-bold text-white">내 증권의 숨겨진 보장 구멍, 100% 정확하게 찾아드립니다.</h4>
+                <h4 className="text-base font-bold text-white">내 증권의 숨겨진 보장 구멍, 정확하게 찾아드립니다.</h4>
                 <p className="text-xs text-slate-400 font-semibold leading-relaxed">
                   전문 분석 솔루션을 통해 고객님의 증권을 대조하여 최적화 및 보장 공백 보완 설계를 0.1초 만에 도와드립니다.
                 </p>

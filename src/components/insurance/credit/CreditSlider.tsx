@@ -19,9 +19,9 @@ export const CreditSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =
     ratio = Math.max(0, Math.min(1, ratio));
 
     // 보장 수준 산출 (대출 원금 보장률, 특약 조립 범위 등)
-    const coverageRatio = Math.round(60 + ratio * 40); // 60% ~ 100%
+    const coverageRatio = Math.round(60 + ratio * 39); // 60% ~ 99%
     const index = Math.round(72 + (ratio * 27)); // 72점 ~ 99점
-    const percentage = Math.round(35 + ratio * 65); // 35% ~ 100%
+    const percentage = Math.round(35 + ratio * 64); // 35% ~ 99%
 
     let riderText = '사망 단독 (기본형)';
     if (ratio >= 0.7) {

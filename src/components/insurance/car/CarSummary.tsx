@@ -137,7 +137,7 @@ export const CarSummary: React.FC<Props> = ({ result }) => {
     { 
       label: '기존 상해 담보 방식', targetId: 'input-car-fields', 
       amount: getInjuryLabel(car.currentInjuryType), 
-      status: car.currentInjuryType === 'jasang' ? '100% 보장' : '전환 권장', 
+      status: car.currentInjuryType === 'jasang' ? '전액 보장' : '전환 권장', 
       color: car.currentInjuryType === 'jasang' ? 'text-emerald-600 bg-emerald-50' : 'text-rose-600 bg-rose-50' 
     },
   ];
@@ -224,7 +224,7 @@ export const CarSummary: React.FC<Props> = ({ result }) => {
             </h5>
             <p className="text-xs text-red-600 leading-relaxed">
               자기신체사고는 사고 과실 여부에 따라 등급별 치료비 한도(상해 12등급 시 단 120만 원 한도 등) 제한이 걸려 실제 병원비마저 자비로 메꿔야 합니다. 
-              **자동차상해(자상)**로 전환하면 치료비 전액은 물론 위자료와 일 못한 날에 대한 휴업손해금까지 과실 유무 관계없이 100% 지급받으실 수 있습니다.
+              **자동차상해(자상)**로 전환하면 치료비 전액은 물론 위자료와 일 못한 날에 대한 휴업손해금까지 과실 유무 관계없이 전액 지급받으실 수 있습니다.
             </p>
           </div>
         </div>

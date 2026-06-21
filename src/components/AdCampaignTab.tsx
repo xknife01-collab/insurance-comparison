@@ -384,7 +384,7 @@ export const AdCampaignTab: React.FC<AdCampaignTabProps> = ({ currentUser, isSup
         .from('ad_requests')
         .update({ 
           status: 'completed', 
-          user_notes: (request.user_notes || '') + '\n[어드민 환불: 광고 대행 취소 및 예산 100% 환불 완료]', 
+          user_notes: (request.user_notes || '') + '\n[어드민 환불: 광고 대행 취소 및 예산 전액 환불 완료]', 
           updated_at: new Date().toISOString() 
         })
         .eq('id', request.id);
@@ -510,7 +510,7 @@ export const AdCampaignTab: React.FC<AdCampaignTabProps> = ({ currentUser, isSup
               <div className="flex items-start gap-3">
                 <TrendingUp className="w-5 h-5 text-green-400 shrink-0" />
                 <div>
-                  <h4 className="text-xs font-black text-white">100% 최적화 타겟팅 운영</h4>
+                  <h4 className="text-xs font-black text-white">최적화 타겟팅 운영</h4>
                   <p className="text-[11px] text-slate-400 font-bold mt-1 leading-normal">
                     대기업 GA들이 진흙탕 싸움을 벌이는 메인 키워드 대신 가입 확률이 높은 세부 롱테일 검색어 세팅 및 인스타 숏폼 맞춤 마케팅을 적용합니다.
                   </p>

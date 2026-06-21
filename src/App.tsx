@@ -1183,7 +1183,7 @@ export default function App() {
                         </h4>
                         <p className="text-sm text-slate-500 font-bold leading-relaxed break-keep">
                           고객님은 현재 총 <span className="text-slate-800 font-extrabold">{policies.length}건</span>의 보험을 유지 중이시며, 이 중 <span className="text-red-500 font-extrabold">{dups.size}건의 중복 가입 상품</span>이 확인되었습니다. 
-                          불필요한 과납 보장과 사망 위주의 주계약 비용을 최적화하면, 기존 핵심 보장은 100% 동일하게 지키면서 매월 총 <span className="text-orange-500 font-extrabold">{savingAmount.toLocaleString()}원</span>의 기회 자산을 확보하실 수 있습니다.
+                          불필요한 과납 보장과 사망 위주의 주계약 비용을 최적화하면, 기존 핵심 보장은 동일하게 지키면서 매월 총 <span className="text-orange-500 font-extrabold">{savingAmount.toLocaleString()}원</span>의 기회 자산을 확보하실 수 있습니다.
                         </p>
                       </div>
 

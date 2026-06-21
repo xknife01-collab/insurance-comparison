@@ -82,7 +82,7 @@ export const VariableFields: React.FC<Props> = ({
               </div>
               <span className="font-black text-lg text-white mb-2">🛡️ 실속 순수보장형 정기보험</span>
               <p className="text-xs text-slate-400 font-semibold leading-relaxed">
-                종신보험 대비 월 90% 저렴한 비용! 만기 시 소멸하지만, 가족의 경제적 자립이 필요한 시기만 골라 저렴하게 사망보금 1억원을 세팅합니다. (예: {maskProductName('흥국생명 온라인정기보험', !!isUnlocked)} 등)
+                종신보험 대비 더욱 합리적인 비용! 만기 시 소멸하지만, 가족의 경제적 자립이 필요한 시기만 골라 실속있게 사망보금 1억원을 세팅합니다. (예: {maskProductName('흥국생명 온라인정기보험', !!isUnlocked)} 등)
               </p>
             </button>
 
@@ -276,7 +276,7 @@ export const VariableFields: React.FC<Props> = ({
                 <div className="flex justify-between text-[10px] text-slate-400 font-bold">
                   <span>보수적 (10%)</span>
                   <span>적정 균형 (50%)</span>
-                  <span>적극 수익 (100%)</span>
+                  <span>적극 수익 (최대)</span>
                 </div>
               </div>
             </div>
@@ -286,7 +286,7 @@ export const VariableFields: React.FC<Props> = ({
               <div className="space-y-2 text-left">
                 <h5 className="text-sm font-black text-slate-800">목돈 마련 후 평생 노후 연금으로 전환하시겠습니까?</h5>
                 <p className="text-xs text-slate-500 font-medium leading-relaxed max-w-xl">
-                  연금전환 옵션을 켜두면 만기 시점에 100% 비과세 연금으로 자동 수령이 연결되어 은퇴 연금으로 활용이 원활해집니다.
+                  연금전환 옵션을 켜두면 만기 시점에 비과세 연금으로 자동 수령이 연결되어 은퇴 연금으로 활용이 원활해집니다.
                 </p>
               </div>
               <button

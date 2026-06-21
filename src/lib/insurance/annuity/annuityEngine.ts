@@ -96,7 +96,7 @@ export const analyzeAnnuity = (analysis: any): any => {
     deficiencies.push('짧은 납입 기간 (연금저축은 장기 적립식 복리 효과 극대화를 위해 10년 이상 권장)');
   }
   if (annuityOpts.commencementAge < 60) {
-    deficiencies.push('이른 연금 개시 설정 (55~59세 개시 시 연금소득세 5.5% 최고세율 적용, 70세 이후 개시 시 3.3% 절세 가능)');
+    deficiencies.push('이른 연금 개시 설정 (55~59세 개시 시 연금소득세 5.5% 최대 세율 적용, 70세 이후 개시 시 3.3% 절세 가능)');
   }
 
   // 6. 세 가지 추천 시나리오 설계
@@ -129,7 +129,7 @@ export const analyzeAnnuity = (analysis: any): any => {
 
   const upgrade: RecommendationPlan = {
     title: `[${opt2.companyName}] 세액공제 풀 최적화 플랜`,
-    description: `연금저축 단독 한도인 연 600만 원(월 50만 원)을 100% 채워 매년 최대 환급금을 확보하고 노후 자금을 채우는 베스트 플랜입니다.`,
+    description: `연금저축 단독 한도인 연 600만 원(월 50만 원)을 가득 채워 매년 최대 환급금을 확보하고 노후 자금을 채우는 베스트 플랜입니다.`,
     estimatedPremium: upgradePremium,
     companyName: opt2.companyName,
     productName: opt2.productName,

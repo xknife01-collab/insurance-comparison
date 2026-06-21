@@ -26,12 +26,12 @@ export const PreFamilyFields: React.FC<PreFamilyFieldsProps> = ({
   const illnessTips: Record<string, { title: string; text: string; badge: string }> = {
     adhd: {
       title: 'ADHD(주의력 결핍) 집중 컨설팅',
-      text: '정신과 약을 장기 복용 중이거나 정기 상담을 받더라도, 최근 3개월 이내에 추가 검사(재검사)나 수술 소견이 없다면 암, 뇌, 심장 3대 진단비를 심사 서류 없이 100% 통과할 수 있습니다.',
+      text: '정신과 약을 장기 복용 중이거나 정기 상담을 받더라도, 최근 3개월 이내에 추가 검사(재검사)나 수술 소견이 없다면 암, 뇌, 심장 3대 진단비를 심사 서류 없이 수월하게 가입할 수 있습니다.',
       badge: '약물 복용 중 가입 가능'
     },
     development: {
       title: '발달지연 (언어·미술·놀이치료) 안심 플랜',
-      text: '일반 어린이보험은 심사에서 100% 거절되는 가장 빈번한 질환입니다. 하지만 간편 고지를 사용하면 3개월 소견 통과 시 뇌/심장 진단비와 수술비 한도를 동일하게 확보할 수 있습니다.',
+      text: '일반 어린이보험은 심사에서 거절 빈도가 매우 높은 대표 질환입니다. 하지만 간편 고지를 사용하면 3개월 소견 통과 시 뇌/심장 진단비와 수술비 한도를 동일하게 확보할 수 있습니다.',
       badge: '발달지연 치료 중 인수 통과'
     },
     puberty: {
@@ -89,7 +89,7 @@ export const PreFamilyFields: React.FC<PreFamilyFieldsProps> = ({
         <h4 className="text-xl font-black text-slate-800 mb-2 flex items-center gap-2">
           <Stethoscope className="text-blue-500 w-6 h-6" /> 우리아이 맞춤 병력을 체크해 주세요 (인수 우대)
         </h4>
-        <p className="text-xs font-bold text-slate-400 mb-6 ml-8">실제 현장에서 가장 많이 거절당하지만 간편 고지로 100% 승인되는 대표 질환군입니다.</p>
+        <p className="text-xs font-bold text-slate-400 mb-6 ml-8">실제 현장에서 거절 빈도가 높지만 간편 고지로 승인율이 높은 대표 질환군입니다.</p>
         
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {[

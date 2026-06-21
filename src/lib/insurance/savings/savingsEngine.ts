@@ -211,7 +211,7 @@ export const analyzeSavings = (analysis: any): any => {
       savingType === 'lumpSum'
         ? `일시납 ${upgradePremium.toLocaleString()}원 비과세 한도 내 거치`
         : `월 납입액 ${upgradePremium.toLocaleString()}원 최적 설계`,
-      `이자소득세 15.4% 비과세 혜택 100% 매칭 충족`,
+      `이자소득세 15.4% 비과세 혜택 전액 매칭 충족`,
       `은행 적금 단리 대비 높은 월 복리(공시이율 적용) 자산 증식 효과`
     ],
     switchingLossNotice: `가입 초기 1~2년 이내 해지 시에는 누적된 사업비 비중으로 인해 해약환급금이 원금 이하일 수 있어 10년 유지가 가능한 예산이어야 합니다.`,

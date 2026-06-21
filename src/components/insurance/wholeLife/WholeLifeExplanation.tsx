@@ -41,7 +41,7 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction, isUnlocked }) 
           { num: '단기 완납 트렌드', label: '5년/7년/10년 단기 납입', sub: '경제 활동기 집중 불입 완료 구조' },
           { num: '저해지 18% 즉시할인', label: '일반형 대비 보험료 절감', sub: '중도 해지 금지 및 완납 보너스 매칭' },
           { num: '체증형 물가방어', label: '사망금 연 5% 복리 증액', sub: '인플레이션 화폐가치 하락 위험 방어' },
-          { num: '상속세 절세 세팅', label: '계약자(자녀) 피보험자(부모)', sub: '상속재산 배제로 상속세 100% 비과세' },
+          { num: '상속세 절세 세팅', label: '계약자(자녀) 피보험자(부모)', sub: '상속재산 배제로 상속세 비과세 요건 충족 가능' },
         ].map((s, i) => (
           <div key={i} className="bg-white border border-indigo-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-indigo-200 transition-all group">
             <p className="text-2xl font-black text-indigo-600 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
@@ -232,7 +232,7 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction, isUnlocked }) 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             { company: '신한라이프', product: '신한더아름다운종신보험', highlight: '단기납 환급 보너스 적립률 업계 상위권 설계 가능, 5년/7년 단기 구조에 우수한 환급 테이블 강점', badges: ['단기납 특화', '환급 효율성 우수'] },
-            { company: '삼성생명', product: '삼성든든종신보험', highlight: '압도적인 자산 운용 규모와 재무 안정성으로 평생 사망 보험 상속 신뢰도 1위, 헬스케어 인프라 완비', badges: ['안정성 1위', '자산상속 특화'] },
+            { company: '삼성생명', product: '삼성든든종신보험', highlight: '압도적인 자산 운용 규모와 재무 안정성으로 평생 사망 보험 상속 신뢰도 우수, 헬스케어 인프라 완비', badges: ['높은 안정성', '자산상속 특화'] },
             { company: '한화생명', product: '한화시그니처종신보험', highlight: '체증형 개시 나이를 가입자 성향에 맞추어 자유로운 맞춤 포지셔닝 가능, 납입면제 특약 범위 폭넓음', badges: ['체증형 강점', '납입면제 우대'] },
             { company: '교보생명', product: '교보더든든종신보험', highlight: '가입금액별 대규모 우량체 할인 및 1대1 주치의 메디컬 케어 서비스 연계 지원 등 풍부한 서비스 패키지', badges: ['우량체 우대', '헬스케어 결합'] },
             { company: '동양생명', product: '수호천사종신보험', highlight: '저해지 환급 조건 설계 시 최저 가성비 요율 테이블 구현, 일반 종합 건강 특약 동시 조립 조화', badges: ['가성비 강점', '특약 조립 유연'] },

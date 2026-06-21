@@ -75,7 +75,7 @@ export const CarExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
             {[
               { title: '대인배상 II', label: '반드시 "무한" 한도로 가입', color: 'bg-blue-50/50 border-blue-100', badge: 'text-blue-700 bg-blue-100', desc: '12대 중과실 제외 일반 교통사고 시 형사 처벌(기소) 면제 필수 조건' },
               { title: '대물배상', label: '최소 5억 원 ~ 10억 원 한도 권장', color: 'bg-indigo-50/50 border-indigo-100', badge: 'text-indigo-700 bg-indigo-100', desc: '도로 위 고가 수입차 및 고전압 전기차(배터리 전손) 급증 환경 대비' },
-              { title: '자동차상해', label: '자기신체사고 대신 무조건 선택', color: 'bg-emerald-50 border-emerald-100', badge: 'text-emerald-700 bg-emerald-100', desc: '치료비 급수 제한 없음! 치료비 전액 + 위자료 + 일 못한 기간 휴업손해 100% 보장' },
+              { title: '자동차상해', label: '자기신체사고 대신 무조건 선택', color: 'bg-emerald-50 border-emerald-100', badge: 'text-emerald-700 bg-emerald-100', desc: '치료비 급수 제한 없음! 치료비 전액 + 위자료 + 일 못한 기간 휴업손해 전액 보장' },
             ].map((item, i) => (
               <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-5 rounded-3xl border ${item.color}`}>
                 <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
@@ -148,7 +148,7 @@ export const CarExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
           <div className="relative z-10 mt-8 p-5 md:p-6 bg-white/5 rounded-3xl border border-white/10">
             <p className="text-blue-400 font-black text-xs mb-1 uppercase tracking-widest">💡 전문가 꿀팁</p>
             <p className="text-white font-bold text-xs leading-relaxed opacity-80">
-              "블랙박스 할인 특약이나 커넥티드카 할인은 가입 시 사진 1장 등록이나 순정 앱 연동만으로 즉시 보험료가 차감되므로, 설계 시 빠뜨리지 않고 100% 챙겨가는 것이 현명한 맞춤 설계의 기초입니다."
+              "블랙박스 할인 특약이나 커넥티드카 할인은 가입 시 사진 1장 등록이나 순정 앱 연동만으로 즉시 보험료가 차감되므로, 설계 시 빠뜨리지 않고 꼼꼼히 챙겨가는 것이 현명한 맞춤 설계의 기초입니다."
             </p>
           </div>
         </div>
@@ -242,9 +242,9 @@ export const CarExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { company: '현대해상', product: '하이카 자동차보험', highlight: '신속 보상망 1위, 자녀 할인 연계 특화', badges: ['신속출동 강점', '커넥티드 할인'] },
+            { company: '현대해상', product: '하이카 자동차보험', highlight: '신속 보상망 우수, 자녀 할인 연계 특화', badges: ['신속출동 강점', '커넥티드 할인'] },
             { company: 'KB손해보험', product: 'KB 자동차보험', highlight: '대중교통 할인 특약 및 안전운전 연동 할인', badges: ['안전점수 특화', '대중교통 중복'] },
-            { company: 'DB손해보험', product: '프로미 자동차보험', highlight: 'Tmap 안전운전 최대 할인율 지원, 가격 가성비', badges: ['Tmap 할인최고', '가성비 우수'] },
+            { company: 'DB손해보험', product: '프로미 자동차보험', highlight: 'Tmap 안전운전 최대 할인율 지원, 가격 가성비', badges: ['Tmap 최대할인', '가성비 우수'] },
             { company: '삼성화재', product: '애니카 자동차보험', highlight: '전국 촘촘한 긴급출동 네트워크 및 네임드 보상', badges: ['신속 보상', '네임드 출동망'] },
             { company: '메리츠화재', product: '메리츠 자동차보험', highlight: '주행거리 마일리지 환급 구간 설계가 합리적', badges: ['단거리 최적화', '마일리지 우수'] },
             { company: '한화손해보험', product: '한화 자동차보험', highlight: '연간 운행이 극단적으로 적은 유저를 위한 가성비', badges: ['초실속 요율', '실속형 마일리지'] },

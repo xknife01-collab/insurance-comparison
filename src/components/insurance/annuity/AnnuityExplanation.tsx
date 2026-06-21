@@ -37,7 +37,7 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
       {/* ── 통계 배너 ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
         {[
-          { num: '최대 16.5%', label: '소득 수준별 환급율 차등', sub: '총급여 5,500만 원 이하는 최고이율 공제' },
+          { num: '최대 16.5%', label: '소득 수준별 환급율 차등', sub: '총급여 5,500만 원 이하는 최대 공제율 적용' },
           { num: '연 600만 원', label: '연금저축 단독 납입 한도', sub: 'IRP 결합 시 최대 연 900만 원 공제 가능' },
           { num: '3.3% ~ 5.5%', label: '수령 시 저율 연금소득세', sub: '수령 개시 연령이 늦을수록 세율 인하' },
           { num: '10년 이상 비과세', label: '일반 연금보험 선택 시', sub: '연금 수령 시 발생하는 이자 전액 면제' },
@@ -228,8 +228,8 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { company: '교보라이프플래닛', product: '(무)라이프플래닛 연금저축보험', highlight: '다이렉트 전용 보험사로 수수료가 업계 최저 수준이며, 높은 공시이율(3.1%)로 복리 적립 효율성 극대화', badges: ['수수료 최저', '공시이율 1위'] },
-            { company: '삼성생명', product: '인터넷 연금저축보험 (무)', highlight: '1위 생보사의 자산 운용 안정성 기반, 최저보증이율이 튼튼하며 장기 가입 보너스 혜택 탑재', badges: ['장기유지 보너스', '브랜드 1위'] },
+            { company: '교보라이프플래닛', product: '(무)라이프플래닛 연금저축보험', highlight: '다이렉트 전용 보험사로 수수료가 업계 최저 수준이며, 높은 공시이율(3.1%)로 복리 적립 효율성 극대화', badges: ['수수료 최저', '공시이율 우수'] },
+            { company: '삼성생명', product: '인터넷 연금저축보험 (무)', highlight: '자산 규모 선두 생보사의 자산 운용 안정성 기반, 최저보증이율이 튼튼하며 장기 가입 보너스 혜택 탑재', badges: ['장기유지 보너스', '브랜드 선두'] },
             { company: '한화생명', product: '한화 e연금저축보험 (무)', highlight: '납입 유연성이 돋보이는 유니버셜 기능 지원, 급전 필요 시 해지 없이 중도 인출/추가 납입 가능', badges: ['납입 유연성', '중도인출 지원'] },
             { company: '미래에셋생명', product: '온라인 연금저축보험 (무)', highlight: '해외 자산 배분 펀드 연계 운용 노하우 반영, 고이율의 연금 자산 시뮬레이션 및 포트폴리오 다양성', badges: ['자산 배분 노하우', '다양한 포트폴리오'] },
             { company: '동양생명', product: '(무)수호천사 인터넷연금저축보험', highlight: '중저소득 직장인을 위한 적립금 가산 혜택 제공, 우수 고객 수수료 감면으로 해지 환급 가치 우위', badges: ['적립 가산', '수수료 감면'] },

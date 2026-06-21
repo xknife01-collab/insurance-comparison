@@ -307,7 +307,7 @@ export const analyzeCar = async (analysis: InsuranceAnalysis): Promise<AnalysisR
       },
       upgrade: {
         title: '대물 10억 + 자상 프리미엄 플랜',
-        description: `사고 시 탑승자 및 보행 중 가족까지 100% 보장하는 프리미엄형 안심 포트폴리오입니다.`,
+        description: `사고 시 탑승자 및 보행 중 가족까지 빈틈없이 보장하는 프리미엄형 안심 포트폴리오입니다.`,
         estimatedPremium: Math.round(upgradePremium * 1.02),
         coverageChanges: [
           `${brandLabel} ${modelLabel} (${engineLabel} ${trimLabel}, ${carYear}년식) 자차손해 완전 보장`,

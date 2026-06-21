@@ -78,7 +78,7 @@ const mockAnalysisResult: AnalysisResult = {
   recommendations: {
     diet: {
       title: `[A사 손해보험] 실속 암진단 집중 플랜`,
-      description: `불필요한 사망 보장을 최소화하고 핵심 암 진단비만 골라 담은 가성비 1등 플랜입니다.`,
+      description: `불필요한 사망 보장을 최소화하고 핵심 암 진단비만 골라 담은 가성비 우수 플랜입니다.`,
       productName: `(무)실손더든든 암보험(개정)`,
       companyName: `A사 손해보험`,
       estimatedPremium: 32400,
@@ -100,7 +100,7 @@ const mockAnalysisResult: AnalysisResult = {
     },
     hybrid: {
       title: `[A사 손해보험] 평생 보장 비갱신 프리미엄`,
-      description: `보험료 인상 걱정 없이 100세까지 든든하게 보장받는 명품 암보험입니다.`,
+      description: `비갱신형 구조로 든든하게 대비하는 암보험입니다.`,
       productName: `(무)실손더든든 암보험(개정)`,
       companyName: `A사 손해보험`,
       estimatedPremium: 32400,
@@ -637,8 +637,8 @@ export default function MobileShowcase() {
               <Sparkles size={14} className="animate-pulse text-rose-500" /> High-Fidelity Simulator
             </div>
             <h3 className="text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
-              실제 앱과 100% 동일한<br />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-rose-500 to-orange-400">정밀 암보험 진단 과정</span>을 체험해 보세요
+              실제 앱과 동일한<br />
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-rose-500 to-orange-400">정밀 암보험 진단 과정</span>을 체험해 보세요..
             </h3>
             <p className="text-sm text-slate-400 font-bold leading-relaxed max-w-xl break-keep">
               암 주요 치료비 신설, 표적 항암 풀보장 등 실제 플랫폼 설계창의 상세 세부 항목들이 

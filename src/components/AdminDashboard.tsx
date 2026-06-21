@@ -3865,7 +3865,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
               나만의 독점 핀테크 플랫폼을 <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500 font-black">즉시 구축</span>하세요
             </h1>
             <p className="text-sm text-slate-400 leading-relaxed font-bold break-keep">
-              대리점과 설계사의 이름으로 즉시 생성되는 최첨단 초고속 보험 비교 엔진. 상담 현장에서 태블릿으로 0.1초 만에 보장을 진단해 신뢰를 얻고, 내 브랜드 플랫폼으로 직접 마케팅하여 자발적인 상담 신청 리드를 수집하세요. 신규 가입 시 첫 30일간 기능 제약 없이 100% 무료 체험
+              대리점과 설계사의 이름으로 즉시 생성되는 최첨단 초고속 보험 비교 엔진. 상담 현장에서 태블릿으로 0.1초 만에 보장을 진단해 신뢰를 얻고, 내 브랜드 플랫폼으로 직접 마케팅하여 자발적인 상담 신청 리드를 수집하세요. 신규 가입 시 첫 30일간 기능 제약 없이 무료 체험
             </p>
           </div>
 
@@ -4013,7 +4013,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
                 </span>
                 <span className="text-xs sm:text-sm md:text-base font-black text-emerald-400 tracking-tight">
-                  🎁 신규 가입 시 첫 30일간 전 기능 100% 무료 체험 지원 (자동 결제 없음)
+                  🎁 신규 가입 시 첫 30일간 전 기능 무료 체험 지원 (자동 결제 없음)
                 </span>
               </div>
             </div>
@@ -4810,7 +4810,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                     disabled={loading || (signupTab === 'register' && codeCheckStatus !== 'available')}
                     className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black py-4 rounded-xl text-sm transition-all shadow-lg shadow-orange-500/20 active:scale-95 disabled:opacity-50 cursor-pointer text-center block"
                   >
-                    {loading ? '신청 처리 중...' : '첫 달 100% 무료 체험 신청 완료 🚀'}
+                    {loading ? '신청 처리 중...' : '첫 달 무료 체험 신청 완료 🚀'}
                   </button>
                 </form>
               )}

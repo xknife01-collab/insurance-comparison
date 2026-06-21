@@ -238,7 +238,7 @@ export const CreditExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { company: 'BNP파리바 카디프생명', product: '대출안심 신용생명보험', highlight: '국내 대표 1위 신용보험 상품, 신용생명지수 할인 특약 탑재로 최저 3%~최대 10% 보험료 감면 제공', badges: ['시장 선두 대표상품', '신용지수 할인'] },
+            { company: 'BNP파리바 카디프생명', product: '대출안심 신용생명보험', highlight: '국내 대표 신용보험 상품, 신용생명지수 할인 특약 탑재로 최저 3%~최대 10% 보험료 감면 제공', badges: ['시장 선두 대표상품', '신용지수 할인'] },
             { company: '메트라이프생명', product: '신용대출 상환 정기보험', highlight: '사망 보장에 고도후유장해 상환 특약 집중 결합 가능, 연령층 대비 실속 있는 주계약 사망 설계 지원', badges: ['정기 보장 강점', '고도장해 보장'] },
             { company: 'BNP파리바 카디프생명', product: '대출안심 보장보험 (다이렉트)', highlight: '핀테크 채널(토스 등) 전용 간편 다이렉트 가입 플랜, 0.1초 신용 데이터 연동 및 초간편 즉시 청약 승인', badges: ['모바일 특화', '0.1초 즉시 승인'] },
           ].map((item, i) => (

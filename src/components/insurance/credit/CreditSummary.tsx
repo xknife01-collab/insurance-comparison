@@ -193,7 +193,7 @@ export const CreditSummary: React.FC<Props> = ({ result }) => {
           <div className="space-y-2">
             <div className="flex justify-between text-xs font-bold text-slate-500">
               <span>채무 대위변제 안심 커버리지</span>
-              <span className="text-emerald-600 font-black">최대 {formatAmount(loanAmount)} (100% 매칭)</span>
+              <span className="text-emerald-600 font-black">최대 {formatAmount(loanAmount)} (전액 매칭)</span>
             </div>
             <div className="h-4 w-full bg-slate-100 rounded-full relative overflow-hidden">
               <div className="h-full bg-emerald-500 rounded-full w-full" />

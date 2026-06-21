@@ -393,7 +393,7 @@ export const DRIVER_PRODUCTS: DriverProduct[] = [
   {
     company: 'AIG손보',
     productName: `무배당 AIG 꼭 필요한 상해종합보험2601`,
-    coverage: `[갱신형]교통상해후유장해(3~100%)`,
+    coverage: `[갱신형]교통상해후유장해(3% 이상)`,
     payoutAmount: `무배당 AIG 꼭 필요한 상해종합보험2601`,
     malePremium: 13618,
     femalePremium: 8060,
@@ -401,7 +401,7 @@ export const DRIVER_PRODUCTS: DriverProduct[] = [
   {
     company: 'AIG손보',
     productName: `무배당 AIG 꼭 필요한 상해보험2601(2종)`,
-    coverage: `[갱신형]교통상해후유장해(3~100%)`,
+    coverage: `[갱신형]교통상해후유장해(3% 이상)`,
     payoutAmount: `무배당 AIG 꼭 필요한 상해보험2601(2종)`,
     malePremium: 13618,
     femalePremium: 8060,
@@ -409,7 +409,7 @@ export const DRIVER_PRODUCTS: DriverProduct[] = [
   {
     company: 'AIG손보',
     productName: `무배당 AIG 꼭 필요한 상해보험2601(1종)`,
-    coverage: `[갱신형]교통상해후유장해(3~100%)`,
+    coverage: `[갱신형]교통상해후유장해(3% 이상)`,
     payoutAmount: `무배당 AIG 꼭 필요한 상해보험2601(1종)`,
     malePremium: 7258,
     femalePremium: 4520,

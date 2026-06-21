@@ -75,7 +75,7 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType, isUnlocke
           <div className="space-y-3">
             {[
               { title: '홀인원 축하비', label: '기쁜 홀인원 순간의 실지출 비용 환급', color: 'bg-emerald-50/50 border-emerald-100', badge: 'text-emerald-700 bg-emerald-100', desc: '동반자 라운딩 비용, 캐디피 피팁, 축하 만찬 및 증정품(기념떡/우산 등) 실비 청구 가능' },
-              { title: '스윙 배상책임', label: '필드 안에서 유일한 법적 안심 보장', color: 'bg-amber-50/50 border-amber-100', badge: 'text-amber-700 bg-amber-100', desc: '슬라이스/훅 타구 사고로 동반자나 캐디에게 가한 신해상해 및 재물 손해 보장(벌금 미포함)' },
+              { title: '스윙 배상책임', label: '필드 안에서 든든한 법적 안심 보장', color: 'bg-amber-50/50 border-amber-100', badge: 'text-amber-700 bg-amber-100', desc: '슬라이스/훅 타구 사고로 동반자나 캐디에게 가한 신해상해 및 재물 손해 보장(벌금 미포함)' },
               { title: '골프용품 파손', label: '값비싼 드라이버/아이언 파손 실비 보상', color: 'bg-yellow-50 border-yellow-100', badge: 'text-yellow-700 bg-yellow-100', desc: '스윙 중 클럽 샤프트 부러짐, 드라이버 헤드 깨짐, 골프 가방 도난 등 실손 의료비와 유사하게 실제 수리비 지급' },
             ].map((item, i) => (
               <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-5 rounded-3xl border ${item.color}`}>

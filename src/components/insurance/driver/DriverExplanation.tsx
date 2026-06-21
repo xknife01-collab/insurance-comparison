@@ -75,7 +75,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
             {[
               { title: '교통사고처리지원금', label: '형사합의금 최대 2억 원 한도 실손 보장', color: 'bg-purple-50/50 border-purple-100', badge: 'text-purple-700 bg-purple-100', desc: '피해자 사망, 6주 이상 치료 필요 상해, 또는 12대 중과실 사고 시 형사합의비 부담 전담' },
               { title: '변호사 선임비용', label: '경찰조사 단계부터 선지원 탑재 필수', color: 'bg-indigo-50/50 border-indigo-100', badge: 'text-indigo-700 bg-indigo-100', desc: '과거 약식기소 후에만 나오던 담보에서 개선되어, 경찰 첫 출석(조사) 단계부터 5천만 원 즉각 지원' },
-              { title: '대인/대물 벌금', label: '스쿨존 민식이법 3천만 원 한도 최고치 설계', color: 'bg-emerald-50 border-emerald-100', badge: 'text-emerald-700 bg-emerald-100', desc: '어린이보호구역 벌금 인상안 든든하게 대비 및 도로 시설물 훼손 벌금 최대 500만 원 보장' },
+              { title: '대인/대물 벌금', label: '스쿨존 민식이법 3천만 원 한도 최대 설계', color: 'bg-emerald-50 border-emerald-100', badge: 'text-emerald-700 bg-emerald-100', desc: '어린이보호구역 벌금 인상안 든든하게 대비 및 도로 시설물 훼손 벌금 최대 500만 원 보장' },
             ].map((item, i) => (
               <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-5 rounded-3xl border ${item.color}`}>
                 <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
@@ -116,7 +116,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
               {/* 차이 1 */}
               <div className="p-5 md:p-6 bg-white/10 rounded-2xl md:rounded-[2.5rem] border border-white/10 hover:bg-white/15 transition-colors">
                 <p className="font-black text-purple-300 mb-2 flex items-center gap-2">
-                  🚗 자동차보험 (민사 배상 100%)
+                  🚗 자동차보험 (민사 책임 배상)
                 </p>
                 <p className="text-xs opacity-75 font-bold leading-relaxed">
                   피해 차량 수리, 부상인 치료 및 위자료 지급 등 **"상대방의 인적/물적 피해를 대신 메꿔주는"** 강제성 민사 보험입니다. 본인의 사법적 형사 처벌은 대신 방어해 주지 않습니다.
@@ -126,7 +126,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
               {/* 차이 2 */}
               <div className="p-5 md:p-6 bg-purple-500/20 rounded-2xl md:rounded-[2.5rem] border border-purple-400/30 hover:bg-purple-500/30 transition-colors">
                 <p className="font-black text-purple-300 mb-2 flex items-center gap-2">
-                  🛡️ 운전자보험 (형사/행정 방어 100%)
+                  🛡️ 운전자보험 (형사/행정 방어 지원)
                 </p>
                 <p className="text-xs opacity-75 font-bold leading-relaxed mb-2">
                   12대 중과실 사고 등으로 형사 입건 시 본인의 법적 구속을 면하고 사법 절차를 방어하기 위한 **"행정적 벌금, 변호사비용, 형사합의금"**을 전담하는 실질적인 본인 보호형 법률 보험입니다.
@@ -211,7 +211,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
               ② 경찰 조사단계 선임비 탑재 유무<br />
               ③ 자부치 염좌(14급) 보장 한도 확인<br />
               ④ 교통사고처리지원금 2억 이상 업그레이드<br />
-              ⑤ 벌금 한도 법정 최고액 3천만 세팅
+              ⑤ 벌금 한도 법정 한도 3천만 세팅
             </p>
           </div>
           <div className="bg-white border border-purple-100 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-sm hover:shadow-xl transition-all">
@@ -234,7 +234,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
           {[
             { company: '현대해상', product: '마음안심 운전자보험', highlight: '경찰조사단계 선임비 탄탄한 기본 한도, 자녀 양육 운전자 우대 할인', badges: ['경찰단계 선두', '가족 가입 우대'] },
             { company: 'KB손해보험', product: '안전운전 파트너 운전자보험', highlight: '대중교통 상해 및 자부상 한도 보강 설계, 경쟁력 있는 특약 요율', badges: ['자부상 우수', '합리적 요율'] },
-            { company: 'DB손해보험', product: '참좋은 운전자보험', highlight: '업계 최초 경찰조사 선임비 보장 특허 출시, 탄탄한 수사 동행 프로토콜', badges: ['최초 특허 탑재', '변호사 한도최고'] },
+            { company: 'DB손해보험', product: '참좋은 운전자보험', highlight: '업계 최초 경찰조사 선임비 보장 특허 출시, 탄탄한 수사 동행 프로토콜', badges: ['최초 특허 탑재', '변호사 한도최대'] },
             { company: '삼성화재', product: '안심동행 운전자보험', highlight: '형사합의금 접수 시 신속 심사 및 즉각 합의금 선지급 네트워크', badges: ['신속 심사', '네임드 출동망'] },
             { company: '메리츠화재', product: '올바른 운전자보험', highlight: '12대 중과실 한도 보장 극대화 및 단순 타박상 단독 보장 설계 최적화', badges: ['중과실 특화', '경상 케어 최적화'] },
             { company: '한화손해보험', product: '차도리 운전자보험', highlight: '주말 상해사고 집중 보강 특약 및 직장인 출퇴근길 안심 보장 특화', badges: ['주말사고 특약', '직장인 맞춤형'] },

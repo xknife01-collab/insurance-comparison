@@ -676,7 +676,7 @@ export const CarFields: React.FC<CarFieldsProps> = ({
               { id: 'single', label: '피보험자 1인 한정', multiplier: '기본 요율 적용', desc: '본인 1명만 운전 가능 (가장 저렴)' },
               { id: 'couple', label: '부부 한정 특약', multiplier: '약 15% 할증', desc: '법적 배우자 및 본인만 보장' },
               { id: 'family', label: '가족 한정 특약', multiplier: '약 35% 할증', desc: '부모, 배우자, 자녀까지 보장 범위 확대' },
-              { id: 'anyone', label: '누구나 운전 (제한없음)', multiplier: '약 70% 할증', desc: '타인이 운전해도 전액 동일 보상 (할증 최고)' }
+              { id: 'anyone', label: '누구나 운전 (제한없음)', multiplier: '약 70% 할증', desc: '타인이 운전해도 전액 동일 보상 (할증 최대)' }
             ].map((item) => (
               <button
                 key={item.id}

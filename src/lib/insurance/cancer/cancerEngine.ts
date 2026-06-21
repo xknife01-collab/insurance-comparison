@@ -22,7 +22,7 @@ export const analyzeCancer = (analysis: any): any => {
 
   const diet: RecommendationPlan = {
     title: `[${opt1.companyName}] 실속 암진단 집중 플랜`,
-    description: `불필요한 사망 보장을 최소화하고 ${opt1.productName}의 핵심 암 진단비만 골라 담은 가성비 1등 플랜입니다.`,
+    description: `불필요한 사망 보장을 최소화하고 ${opt1.productName}의 핵심 암 진단비만 골라 담은 가성비 우수 플랜입니다.`,
     productName: opt1.productName,
     companyName: opt1.companyName,
     estimatedPremium: Math.round(opt1.premium / 10) * 10,

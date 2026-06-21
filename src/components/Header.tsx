@@ -34,7 +34,7 @@ const ALL_GROUPS: NavGroup[] = [
     textColor: 'text-rose-600',
     itemHover: 'hover:text-rose-600',
     items: [
-      { label: '의료실비', view: 'indemnity', desc: '병원비 90% 보장' },
+      { label: '의료실비', view: 'indemnity', desc: '기본적인 의료비 보장 (자기부담금 제외)' },
       { label: '치아보험', view: 'dental', desc: '임플란트/크라운' },
       { label: '유병자', view: 'preexisting', desc: '아픈 분도 가입' },
       { label: '수술/입원', view: 'surgery', desc: '수술비 반복 지급' },

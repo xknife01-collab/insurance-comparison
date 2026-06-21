@@ -140,7 +140,7 @@ export const analyzeFire = (analysis: any): any => {
   
   const upgrade: any = {
     title: `[${opt2.companyName}] 올인원 안심 밸런스 플랜`,
-    description: `소유주와 임차인 모두 만족하는 최적 설계로, 급배수 누수 보장과 화재배상 한도를 넉넉히 탑재한 1위 추천 플랜입니다.`,
+    description: `소유주와 임차인 모두 만족하는 최적 설계로, 급배수 누수 보장과 화재배상 한도를 넉넉히 탑재한 대표 추천 플랜입니다.`,
     estimatedPremium: upgradePremium,
     riskPremium: upgradeRisk,
     savingsPremium: upgradeSavings,
@@ -150,7 +150,7 @@ export const analyzeFire = (analysis: any): any => {
     coverageChanges: [
       '건물/가재도구 실손 보상 기준 설정',
       '급배수시설누출손해 특약 기본 탑재',
-      '화재배상책임 대물 20억 최고한도 업그레이드',
+      '화재배상책임 대물 20억 최대한도 업그레이드',
       `최저보험료 차액 ${upgradeSavings.toLocaleString()}원 적립금으로 자동 전환`
     ],
     switchingLossNotice: '일반 콘크리트조(1급) 구조가 아닌 목조주택 등의 경우 인수 심사 과정에서 추가 할증이 발생할 수 있습니다.'

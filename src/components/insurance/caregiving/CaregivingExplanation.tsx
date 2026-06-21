@@ -124,7 +124,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction, isUnlocked })
               <div className="space-y-3 bg-white p-5 md:p-6 rounded-2xl border border-slate-100">
                 <div className="flex justify-between text-xs font-bold text-gray-600">
                   <span>📌 인건비 변동 리스크</span>
-                  <span className="text-purple-600 font-black">완전 없음 (보험사가 100% 부담)</span>
+                  <span className="text-purple-600 font-black">완전 없음 (보험사 전액 부담)</span>
                 </div>
                 <div className="flex justify-between text-xs font-bold text-gray-600">
                   <span>📌 구인 편의성</span>
@@ -137,7 +137,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction, isUnlocked })
               </div>
             </div>
             <div className="p-3 bg-purple-50 text-purple-700 text-[10px] font-bold rounded-lg text-center">
-              🛡️ "간병인을 구할 일손이 부족한 맞벌이 자녀분들에게 최고의 방패"
+              🛡️ "간병인을 구할 일손이 부족한 맞벌이 자녀분들에게 든든한 방패"
             </div>
           </div>
 
@@ -298,7 +298,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction, isUnlocked })
               company: '삼성화재',
               badge: '요양병원 한도 우대',
               badgeColor: 'bg-blue-50 text-blue-700 border-blue-200',
-              highlight: '노인 요양병원 간병인 사용일당 최고치 한도 적용',
+              highlight: '노인 요양병원 간병인 사용일당 최대한도 적용',
               desc: '타사가 요양병원 사용일당을 하루 2~3만 원으로 묶어두는 데 반해, 삼성은 요양병원 입원 시에도 하루 간병인 사용 비용 지원 한도를 상대적으로 넉넉하게 세팅할 수 있게 지원합니다.',
               strength: '장기 요양병원 입소 목적의 간병 리모델링 특화'
             },
@@ -312,11 +312,11 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction, isUnlocked })
             },
             {
               company: '현대해상',
-              badge: '지원형 파견 인프라 1위',
+              badge: '지원형 파견 인프라 우수',
               badgeColor: 'bg-orange-50 text-orange-700 border-orange-200',
               highlight: '업계 최다 제휴 네트워크 보유로 간병인 신속 파견',
               desc: '간병인 지원형(파견) 운영 시, 전국구 규모의 조율 협력망을 확보하여 명절 연휴나 대도시 외곽 지역 입원 시에도 간병인 매칭 대기 지연 시간을 대폭 줄였습니다.',
-              strength: '지방 거주 부모님을 위한 파견 지원형 설계 1순위'
+              strength: '지방 거주 부모님을 위한 파견 지원형 설계 추천'
             },
             {
               company: '메리츠화재',
@@ -324,14 +324,14 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction, isUnlocked })
               badgeColor: 'bg-rose-50 text-rose-700 border-rose-200',
               highlight: '5년마다 10% 증액되는 체증 비율 가성비 우수',
               desc: '미래 인건비 인상분을 온전히 방어하기 위한 체증형 간병인 사용일당 설계 시, 세대별 요율 가중치 단가를 가장 안정적으로 책정하여 비갱신 세팅 부담을 덜어줍니다.',
-              strength: '4050 세대용 미래 물가 방어 체증형 상품 1순위'
+              strength: '4050 세대용 미래 물가 방어 체증형 상품 추천'
             },
             {
               company: 'KB손해보험',
               badge: '첫날 즉시 보장',
               badgeColor: 'bg-amber-50 text-amber-700 border-amber-200',
               highlight: '뇌혈관/심혈관 등 주요 급성 질환 시 첫날 일당 지급',
-              desc: '일부 사가 3일 초과 입원 시부터 간병 일당을 적용하는 장벽을 낮춰, 뇌와 심장 질환 등으로 단기 입원 시 첫날부터 간병 사용 혜택을 100% 감액 없이 정산합니다.',
+              desc: '일부 사가 3일 초과 입원 시부터 간병 일당을 적용하는 장벽을 낮춰, 뇌와 심장 질환 등으로 단기 입원 시 첫날부터 간병 사용 혜택을 감액 없이 정산합니다.',
               strength: '주요 뇌/심장 3대 질병 단기 입원 간병비 보강'
             },
             {
@@ -422,7 +422,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction, isUnlocked })
             <span className="text-purple-300">지금 노후 실버 간병 remolding 지수를 무료로 진단해 보세요!</span>
           </h3>
           <p className="text-xs text-purple-200/70 font-semibold leading-relaxed">
-            성별, 나이, 가입 희망 유형(지원형/사용형)만 선택해 보세요. 국내 대표 6대사 상품의 체증형 보험료 단가와 요양병원/간호간병통합서비스 지급 비율을 정밀 분석하여 자녀들에게 짐이 되지 않는 최고 품질의 노후 간병 안심 설계를 매칭해 드립니다.
+            성별, 나이, 가입 희망 유형(지원형/사용형)만 선택해 보세요. 국내 대표 6대사 상품의 체증형 보험료 단가와 요양병원/간호간병통합서비스 지급 비율을 정밀 분석하여 자녀들에게 짐이 되지 않는 고품질의 노후 간병 안심 설계를 매칭해 드립니다.
           </p>
           <div className="pt-4 flex justify-center">
             <button

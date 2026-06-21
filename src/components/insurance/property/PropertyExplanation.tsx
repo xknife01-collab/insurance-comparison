@@ -89,7 +89,7 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
           <div className="mt-8 p-5 md:p-6 bg-orange-50 rounded-3xl border border-orange-100">
             <p className="text-orange-700 font-black text-xs mb-1">⚠️ 비례보상의 함정 주의</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
-              만약 5억 원 가치의 상가를 2억 원만 가입(일부보험)했을 경우, 화재 사고 시 실제 발생한 피해의 **40%만 비례 보상**되어 복구 자금이 모자라 파산하는 비극이 발생합니다. 가치 평가 100% 매칭이 핵심입니다.
+              만약 5억 원 가치의 상가를 2억 원만 가입(일부보험)했을 경우, 화재 사고 시 실제 발생한 피해의 **40%만 비례 보상**되어 복구 자금이 모자라 파산하는 비극이 발생합니다. 자산 가치에 걸맞는 평가 매칭이 핵심입니다.
             </p>
           </div>
         </div>
@@ -205,7 +205,7 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
             <h4 className="text-xl font-black mb-4">재물 리모델링 핵심 5원칙</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
               ① 건물 구조 등급의 실제 현장 일치화<br />
-              ② 비례보상 차단을 위한 100% 자산 설정<br />
+              ② 비례보상 차단을 위한 자산 가치 설정<br />
               ③ 업종 전용 특약(음식물 배상 등) 탑재<br />
               ④ 아래층 피해 복구를 위한 누수 특약 추가<br />
               ⑤ 화재 시 임차료 방어를 위한 휴업손해 확보
@@ -229,7 +229,7 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { company: '메리츠화재', product: '성공파트너재물보험', highlight: '다양한 업종 인수 능력 우수, 화재 및 누수 복구 일당 패키지 요율 강점 보유', badges: ['인수 한도 최고', '음식점 요율 우대'] },
+            { company: '메리츠화재', product: '성공파트너재물보험', highlight: '다양한 업종 인수 능력 우수, 화재 및 누수 복구 일당 패키지 요율 강점 보유', badges: ['넓은 인수 한도', '음식점 요율 우대'] },
             { company: '삼성화재', product: '비즈앤안심파트너', highlight: '종합 배상책임 범위 우수, 건물 급수 감면 및 화재 벌금 등 법률비용 포함 강점', badges: ['브랜드 경쟁력', '법률 비용 포함'] },
             { company: '현대해상', product: '성공마스터재물종합', highlight: '소상공인 맞춤 플랜 지원, 휴업 손해 일당 신속 지급 프로세스 및 누수 특약 강점', badges: ['휴업 정액 지급', '누수 보장 강화'] },
             { company: 'KB손해보험', product: 'KB자산안심재물종합', highlight: '프랜차이즈 가맹점 단체 할인 연동 및 다중이용업소 화재 의무보험 최적화', badges: ['단체 할인 혜택', '의무보험 즉시발행'] },

@@ -159,7 +159,7 @@ export const LegalExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
           <div className="space-y-4">
             {[
               { company: '대법원 전자소송 할인', product: '인터넷 전자 제출 이용자 우대', limit: '5% 월 보험료 평생 감면', note: '대법원 전자소송 시스템 연동 동의 시 요율 할인 적용 완료' },
-              { company: '급발진(EDR) 분쟁 특약', product: '급발진 의심 소송 비용 한도 증액', limit: '사고당 최고 2,000만원 한도', note: '제조사 상대 소송 시 분석 및 기술 검증 변호 비용 지원' },
+              { company: '급발진(EDR) 분쟁 특약', product: '급발진 의심 소송 비용 한도 증액', limit: '사고당 최대 2,000만원 한도', note: '제조사 상대 소송 시 분석 및 기술 검증 변호 비용 지원' },
               { company: '법률 상담 바우처 제공', product: '1:1 대면 및 유선 법률 상담 연동', note: '소송 전 내용증명 및 약정서 작성 지원 전담 변호사 상담 보조' },
             ].map((item, i) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">

@@ -144,13 +144,13 @@ export const analyzeVariable = (analysis: any): any => {
     const hybridPremium = 300000;
     const hybrid: RecommendationPlan = {
       title: `[${opt3.companyName}] 최저보증형 수익 안심 플랜`,
-      description: `투자 성과가 나빠도 연금 개시 시점에 납입 원금의 100%~120% 수준을 최저 보증(GMAB)하여, 투자 수익과 안전판을 동시에 챙기는 연금 최강자 플랜입니다.`,
+      description: `투자 성과가 나빠도 연금 개시 시점에 기납입보험료 전액 수준을 최저 보증(GMAB)하여, 투자 수익과 안전판을 동시에 챙기는 대표적인 연금 플랜입니다.`,
       estimatedPremium: hybridPremium,
       companyName: opt3.companyName,
       productName: opt3.productName,
       coverageChanges: [
         `투자 이익 발생 시 실적 배당 환급률 적용`,
-        `마이너스 수익률 발생 시에도 연금 개시 시 납입 원금 100% 보증`,
+        `마이너스 수익률 발생 시에도 연금 개시 시 기납입보험료 전액 보증`,
         `사망 시 가입 시점 사망보험금 최저 보증 (GMDB 적용)`
       ],
       switchingLossNotice: '최저 보증을 위한 비용(연 약 0.5%~0.8%)이 특별 계정에서 매월 차감되므로, 순수 변액적립보험 대비 기대 수익률은 약간 제한됩니다.',
@@ -259,7 +259,7 @@ export const analyzeVariable = (analysis: any): any => {
         productName: opt3.productName,
         coverageChanges: [
           `단기(5/7년납) 완납으로 법인 유동성 리스크 최소화`,
-          `목적 자산 환급률 최고 125% 이상 도달 가능 설계`,
+          `목적 자산 적립 및 중장기 환급률 최적화 설계`,
           `법인세 감면과 은퇴 자금 마련의 최적 밸런스 실현`
         ],
         switchingLossNotice: '단기납 상품의 경우 완납 이전 해지 시 환급률이 극히 저조하므로 주의해야 합니다.',

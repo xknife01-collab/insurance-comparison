@@ -141,7 +141,7 @@ export const DriverFields: React.FC<Props> = ({
               label: '표준형 (가장 균형 잡힌 플랜)',
               price: '월 2~3만 원대',
               desc: '평균 리스크를 안정적으로 대비하고 주요 상해 담보까지 탄탄히 추가된 정석 세팅',
-              features: ['교사처(형사합의금) 1.5억 원', '변호사 선임비 5,000만 원', '벌금 대인 3,000만 원 최고치'],
+              features: ['교사처(형사합의금) 1.5억 원', '변호사 선임비 5,000만 원', '벌금 대인 3,000만 원 최대'],
               icon: Scale,
               accent: 'bg-purple-50 text-purple-700 border-purple-100'
             },

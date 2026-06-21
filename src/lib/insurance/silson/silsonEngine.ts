@@ -68,7 +68,7 @@ export const analyzeSilson = (analysis: any): any => {
         title: `[${opt3.companyName}] 보장 강화형 플랜`,
         description: `보험료보다는 탄탄한 보장과 브랜드 신뢰도를 중시하는 프리미엄 선택지입니다.`,
         estimatedPremium: Math.round(p3 / 10) * 10,
-        coverageChanges: ['브랜드 인지도 1위 기업', '부수 특약 선택 가용성', '신속한 보상 프로세스'],
+        coverageChanges: ['브랜드 인지도 우수 기업', '부수 특약 선택 가용성', '신속한 보상 프로세스'],
         switchingLossNotice: '단독 가입이 어려운 회사가 있을 수 있습니다.'
       }
     }

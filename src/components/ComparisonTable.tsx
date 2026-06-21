@@ -124,7 +124,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     { 
       label: '간병인 지원 일당 (보험사 직접 파견)', 
       current: '없음', 
-      recommended: '일반 병실/요양병원 간병인 100% 매칭 지원', 
+      recommended: '일반 병실/요양병원 간병인 매칭 지원', 
       icon: <Stethoscope className="w-4 h-4 text-emerald-600" /> 
     },
     { 
@@ -257,7 +257,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     { 
       label: '자기신체 상해 담보 방식', 
       current: analysis.car?.currentInjuryType === 'jasang' ? '자동차상해 (자상)' : '자기신체사고 (자손)', 
-      recommended: '자동차상해 (치료비+위자료+휴업손해 100% 보장)', 
+      recommended: '자동차상해 (치료비+위자료+휴업손해 보장)', 
       icon: <HeartPulse className="w-4 h-4 text-blue-600" /> 
     },
     { 
@@ -296,7 +296,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
       icon: <Clock className="w-4 h-4 text-purple-600" /> 
     },
     { 
-      label: '대인 벌금 (민식이법 법정 최고 벌금)', 
+      label: '대인 벌금 (민식이법 법정 최대 벌금)', 
       current: driverPlanType === 'saving' ? '2,000만 원' : '3,000만 원', 
       recommended: '3,000만 원 (대인 벌금 리스크 전액 실손방어)', 
       icon: <ShieldCheck className="w-4 h-4 text-purple-600" /> 
@@ -338,7 +338,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     { 
       label: '저체중아/신생아 입원일당', 
       current: '없음', 
-      recommended: '2.5kg 미만 출생 시 인큐베이터 비용 100% 매칭 지원', 
+      recommended: '2.5kg 미만 출생 시 인큐베이터 비용 매칭 지원', 
       icon: <ShieldCheck className="w-4 h-4 text-emerald-600" /> 
     },
     { 
@@ -353,7 +353,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     { 
       label: 'ADHD / 소아 우울증 진단비', 
       current: '없음', 
-      recommended: '진단 시 최초 1회 최고 300만 원 지급', 
+      recommended: '진단 시 최초 1회 최대 300만 원 지급', 
       icon: <Brain className="w-4 h-4 text-emerald-600" /> 
     },
     { 
@@ -402,7 +402,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     {
       label: '납입/갱신 유형',
       current: analysis.cancer?.paymentType === 'non-renewable' ? '비갱신형' : '갱신형',
-      recommended: '비갱신형 (보험료 동결 — 나이 들어도 인상 없음)',
+      recommended: '비갱신형 (납입기간 동안 보험료가 고정되어 장기 유지 시 유리)',
       icon: <Clock className="w-4 h-4 text-rose-500" />
     },
   ];
@@ -530,7 +530,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     { 
       label: '화재 배상책임 (이웃집 피해보상)', 
       current: fireOpts.hasLiabilityRider ? '가입 완료' : '미보장', 
-      recommended: fireOpts.occupancyType === 'owner' ? '대물 20억 / 대인 1.5억 최고한도 설정' : '임차자 배상책임 1억 든든하게 설정', 
+      recommended: fireOpts.occupancyType === 'owner' ? '대물 20억 / 대인 1.5억 최대 한도 설정' : '임차자 배상책임 1억 든든하게 설정', 
       icon: <Scale className="w-4 h-4 text-red-600" /> 
     },
     { 
@@ -687,7 +687,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     {
       label: '비과세 절세 혜택',
       current: '미적용 (일반 예적금/과세 상품)',
-      recommended: varOpts.paymentPeriod >= 10 ? '10년 유지 시 이자소득세 비과세 100% 만족' : '10년 비과세 최적 조건 충족 설계',
+      recommended: varOpts.paymentPeriod >= 10 ? '10년 유지 시 이자소득세 비과세 요건 만족' : '10년 비과세 최적 조건 충족 설계',
       icon: <Coins className="w-4 h-4 text-blue-600" />
     },
     {
@@ -858,7 +858,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
       icon: <ShieldCheck className="w-4 h-4 text-red-600" /> 
     },
     { 
-      label: '상해후유장해 (3%~100%)', 
+      label: '상해후유장해 (3% 이상)', 
       current: formatAmt(accidentOpts.accidentDisabilityLimit), 
       recommended: '최대 1억 5,000만 원 (장해 상태 진단 시 장기 대체 소득 마련)', 
       icon: <TrendingUp className="w-4 h-4 text-red-600" /> 
@@ -900,8 +900,8 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     },
     {
       label: '납입/갱신 구조',
-      current: hg?.isRenewable ? '갱신형 (나이 들수록 보험료 인상)' : '비갱신형',
-      recommended: `비갱신형 ${hg?.paymentPeriod ? hg.paymentPeriod + '년납' : '20년납'} (보험료 동결 — 완납 후 평생 보장)`,
+      current: hg?.isRenewable ? '갱신형 (갱신 시점 보험료 연동)' : '비갱신형',
+      recommended: `비갱신형 ${hg?.paymentPeriod ? hg.paymentPeriod + '년납' : '20년납'} (납입기간 동안 보험료가 고정되어 장기 유지 시 유리)`,
       icon: <Clock className="w-4 h-4 text-violet-600" />
     },
     {

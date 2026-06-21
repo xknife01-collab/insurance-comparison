@@ -161,7 +161,7 @@ export const AccidentFields: React.FC<Props> = ({
           {/* 상해후유장해 한도 */}
         <div id="input-accident-disability" className="space-y-3 rounded-2xl p-2 transition-all">
             <div className="flex justify-between items-center">
-              <label className="text-xs font-black text-slate-500">상해후유장해(3%~100%) 보장액</label>
+              <label className="text-xs font-black text-slate-500">상해후유장해(3% 이상) 보장액</label>
               <span className="text-sm font-black text-red-600">{formatWon(accidentDisabilityLimit)}</span>
             </div>
             <input

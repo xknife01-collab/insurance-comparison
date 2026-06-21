@@ -126,7 +126,7 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
             <div className="flex justify-center pt-2">
               <div className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-orange-500/25 via-amber-500/15 to-violet-600/25 border border-orange-500/35 text-orange-300 font-extrabold text-sm shadow-[0_4px_20px_rgba(249,115,22,0.15)] backdrop-blur-sm animate-pulse">
                 <Zap className="w-4.5 h-4.5 text-orange-400 animate-spin duration-3000" />
-                <span>지금 신청하시면 <b>30일(1달)간 전 기능 100% 무료 체험</b> 가능합니다.</span>
+                <span>지금 신청하시면 <b>30일(1달)간 전 기능 무료 체험</b> 가능합니다.</span>
               </div>
             </div>
           </div>
@@ -244,7 +244,7 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
           </h2>
           
           <p className="text-slate-400 text-xs md:text-sm font-semibold leading-relaxed max-w-4xl mx-auto break-keep">
-            타 서비스들처럼 고객 리드(DB)를 플랫폼이 수집해 타인에게 분배하거나 공유하지 않고, 설계사 본인이 100% 영구적으로 독점 소유합니다. 
+            타 서비스들처럼 고객 리드(DB)를 플랫폼이 수집해 타인에게 분배하거나 공유하지 않고, 설계사 본인이 영구적으로 독점 소유합니다. 
             고객이 진단하는 즉시 0.1초 만에 스마트폰 알림으로 분석 결과가 전송되며, 터치 한 번으로 카카오톡 1:1 상담까지 원스톱으로 연결되어 계약 성공률을 압도적으로 끌어올립니다.
           </p>
         </div>
@@ -266,7 +266,7 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
               </div>
               <h4 className="font-extrabold text-base text-white group-hover:text-orange-400 transition-colors">설계사 개인 전용 홈페이지 및 비교엔진 1초만에 생성</h4>
               <p className="text-slate-400 text-xs font-semibold leading-relaxed break-keep">
-                가입과 동시에 설계사 본인의 프로필이 탑재된 <span className="text-orange-300">독립 모바일 개인 홈페이지가 생성</span>되며, 플랫폼 종속 없이 개인이 독립 소유하여 운영하는 27종 분석 엔진을 가집니다. 확보된 가망 데이터(DB)는 제3자 공유 없이 <span className="text-orange-300">본인의 대시보드에만 100% 영구 저장되어 독점 마케팅 자산</span>으로 활용됩니다.
+                가입과 동시에 설계사 본인의 프로필이 탑재된 <span className="text-orange-300">독립 모바일 개인 홈페이지가 생성</span>되며, 플랫폼 종속 없이 개인이 독립 소유하여 운영하는 27종 분석 엔진을 가집니다. 확보된 가망 데이터(DB)는 제3자 공유 없이 <span className="text-orange-300">본인의 대시보드에만 영구 저장되어 독점 마케팅 자산</span>으로 활용됩니다.
               </p>
             </div>
 
@@ -465,7 +465,7 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
                 </li>
                 <li className="flex items-start gap-2.5">
                   <span className="text-orange-400 mt-0.5">✓</span>
-                  <span>국내 생보·손보사 상품 전수 비교 및 마스킹 공시문으로 <b>100% 신뢰 기반 계약 체결</b></span>
+                  <span>국내 생보·손보사 상품 전수 비교 및 마스킹 공시문으로 <b>신뢰 기반 계약 체결</b></span>
                 </li>
               </ul>
             </div>
@@ -624,7 +624,7 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
                 </p>
                 <p className="flex items-start gap-2">
                   <span className="text-violet-400">⚡</span>
-                  <span><b>의심 차단:</b> 마스킹 처리된 규정 준수 안내로 100% 신뢰 보장</span>
+                  <span><b>의심 차단:</b> 마스킹 처리된 규정 준수 안내로 신뢰 보장</span>
                 </p>
                 <p className="flex items-start gap-2">
                   <span className="text-violet-400">⚡</span>
@@ -696,7 +696,7 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
                 <span>소유권 & 보안 안심 보장</span>
               </div>
               <h4 className="text-lg md:text-xl font-black text-white">
-                설계사님이 유치한 DB는 100% 설계사님만의 영구적 독점 자산입니다.
+                설계사님이 유치한 DB는 설계사님만의 영구적 독점 자산입니다.
               </h4>
               <p className="text-slate-400 text-xs font-semibold leading-relaxed break-keep">
                 보험리밸런스는 설계사님의 영업권을 존중합니다. 고객이 진단 정보 및 연락처 등 모든 가망고객 DB는 <span className="text-orange-450 font-black">종단간 암호화(End-to-End Encryption)</span> 기술로 완벽히 암호 처리되며, 플랫폼 본사나 타 대리점 관리자를 포함한 제3자는 절대로 데이터에 접근하거나 유출할 수 없습니다. 오직 설계사님의 고유 로그인 계정으로만 안전하게 보관 및 다운로드됩니다.

@@ -77,7 +77,7 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction, isUnlocked
 
           <div className="space-y-3">
             {[
-              { title: '일반암 진단비', label: '소액암/유사암 제외 여부 확인', color: 'bg-orange-50/50 border-orange-100', badge: 'text-orange-700 bg-orange-100', desc: '유방암, 자궁암, 대장점막내암, 전립선암 등이 축소 보장되지 않고 일반암 진단비와 100% 동일하게 지급되는 사 매칭' },
+              { title: '일반암 진단비', label: '소액암/유사암 제외 여부 확인', color: 'bg-orange-50/50 border-orange-100', badge: 'text-orange-700 bg-orange-100', desc: '유방암, 자궁암, 대장점막내암, 전립선암 등이 축소 보장되지 않고 일반암 진단비와 완전히 동일하게 지급되는 상품 매칭' },
               { title: '뇌질환 보장 범위', label: '뇌출혈/뇌졸중 ❌ 뇌혈관질환 ⭕', color: 'bg-amber-50/50 border-amber-100', badge: 'text-amber-700 bg-amber-100', desc: '뇌출혈(전체 뇌질환 중 9%만 보장)보다 뇌경색과 협착증을 모두 포함하는 전체 뇌혈관질환 특약으로 빈틈없이 충족' },
               { title: '심장질환 범위', label: '급성심근경색 ❌ 허혈성/심혈관 ⭕', color: 'bg-yellow-50 border-yellow-100', badge: 'text-yellow-700 bg-yellow-100', desc: '가장 빈번한 협심증(허혈성)과 부정맥, 심부전 등 넓은 심혈관질환 진단 특약을 조합하여 균형 잡힌 방어선 구축' },
             ].map((item, i) => (

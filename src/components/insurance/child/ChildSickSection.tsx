@@ -19,8 +19,9 @@ export const ChildSickSection = ({ onAction, isUnlocked }: { onAction: () => voi
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[1.1]">
             ADHD · 발달지연 · 성조숙증<br />
-            <span className="text-blue-600">아픈 우리아이도 100% 가입됩니다.</span>
+            <span className="text-blue-600">아픈 우리아이도 간편하게 가입 심사를 받아볼 수 있습니다.</span>
           </h2>
+          <p className="text-xs text-blue-500 font-bold mt-2">(※ 회사별 인수 기준에 따라 가입이 제한될 수 있습니다.)</p>
         </div>
         <div className="max-w-md text-right hidden lg:block opacity-60">
           <p className="text-sm font-bold text-slate-500 leading-relaxed">
@@ -36,7 +37,7 @@ export const ChildSickSection = ({ onAction, isUnlocked }: { onAction: () => voi
           { num: '3개월', label: '간편 심사 핵심 질문', sub: '3개월 내 소견만 없으면 즉시 가입 가능' },
           { num: '35%', label: '일반 대비 최대 할증폭', sub: '무사고 5년이면 8~10%로 급감' },
           { num: '5대 질환', label: '대표 유병 어린이 타겟', sub: 'ADHD·발달지연·성조숙증·천식·골절' },
-          { num: '100%', label: '3대 진단비 동일 적용', sub: '암 5천만·뇌·심 각 3천만 한도 동일' },
+          { num: '최적화', label: '3대 진단비 동일 적용', sub: '암 5천만·뇌·심 각 3천만 한도 동일' },
         ].map((s, i) => (
           <div key={i} className="bg-white border border-blue-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-blue-200 transition-all group">
             <p className="text-3xl font-black text-blue-600 mb-2 group-hover:scale-110 transition-transform inline-block">{s.num}</p>
@@ -158,7 +159,7 @@ export const ChildSickSection = ({ onAction, isUnlocked }: { onAction: () => voi
               icon: '🗣️',
               problem: '발달장애 진단으로 심사팀 거절 1순위 질환',
               solution: '간편고지는 "발달지연" 진단명 자체를 고지항목에서 제외',
-              tip: '치료 기간·빈도 무관 — 입원 이력만 없으면 100% 통과',
+              tip: '치료 기간·빈도 무관 — 입원 이력만 없으면 대부분 심사 통과 가능',
               color: 'border-blue-100 bg-blue-50/20',
               badgeColor: 'bg-blue-100 text-blue-700',
             },
@@ -237,7 +238,7 @@ export const ChildSickSection = ({ onAction, isUnlocked }: { onAction: () => voi
               {
                 company: '현대해상',
                 product: '간편한 굿앤굿어린이종합보험',
-                strong: '시장점유율 1위 · 소아암·정신질환 보장 범위 최다',
+                strong: '높은 시장점유율 · 소아암·정신질환 보장 범위 우수',
                 badges: ['발달지연 3.5.5 특화', '소아암 특화', '계약전환 우수'],
                 note: '태아부터 35세까지 — 어른이 비갱신 구조 안정성 업계 최상',
               },
@@ -259,7 +260,7 @@ export const ChildSickSection = ({ onAction, isUnlocked }: { onAction: () => voi
                 company: 'DB손해보험',
                 product: '아이러브 간편어린이보험',
                 strong: '30세 만기 → 100세 무심사 계약 전환 조건 업계 최우수',
-                badges: ['계약전환 1위', '골절 특화', '가성비 비갱신'],
+                badges: ['계약전환 강점', '골절 특화', '가성비 비갱신'],
                 note: '처음엔 저렴한 간편 플랜으로 가입 후 나중에 표준 전환',
               },
             ].map((item, i) => (

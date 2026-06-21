@@ -153,12 +153,12 @@ export const VariableExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
             </div>
             <h3 className="text-3xl font-black mb-4 tracking-tight">수익률이 폭락해도 안심, 최저 보증(GMAB/GMDB) 제도</h3>
             <p className="text-sm opacity-70 font-bold leading-relaxed">
-              주식시장이 아무리 나빠져 가치 평가가 하락해도, 보험을 중도 해지하지 않고 연금 수령 개시 시점까지 유지할 경우 고객이 납입한 **원금의 100%~120% 수준을 확정 보증(GMAB)**하는 특별 옵션들이 출시되었습니다. 또한 사망 시에도 지급받을 최소 사망보험금 원금을 보증(GMDB)하여 안전판을 공고히 하고 있습니다.
+              주식시장이 아무리 나빠져 가치 평가가 하락해도, 보험을 중도 해지하지 않고 연금 수령 개시 시점까지 유지할 경우 고객이 납입한 **보험료 수준을 확정 보증(GMAB)**하는 특별 옵션들이 출시되었습니다. 또한 사망 시에도 지급받을 최소 사망보험금 원금을 보증(GMDB)하여 안전판을 공고히 하고 있습니다.
             </p>
           </div>
           <div className="space-y-4">
             {[
-              { title: '납입원금 최저 보증(GMAB)', val: '연금 개시 시 원금 100% 보증', note: '투자 실적이 마이너스가 나더라도 은퇴 시점 원금 완전 보존 장치' },
+              { title: '납입원금 최저 보증(GMAB)', val: '연금 개시 시 납입 보험료 보증', note: '투자 실적이 마이너스가 나더라도 은퇴 시점 원금 완전 보존 장치' },
               { title: '사망보험금 최저 보증(GMDB)', val: '사망 시 기납입 보험료 최저 한도', note: '가입 기간 중 예기치 못한 사망 사고 시 최소 원금 이상의 지급 보장' },
               { title: '연금저축 이전 및 관리 스마트폰 앱', val: '언제든 실시간 펀드 비중 조절', note: '시장 주기에 맞추어 채권형과 주식형 비중을 스마트폰으로 자유 변경 가능' },
             ].map((item, i) => (
@@ -185,7 +185,7 @@ export const VariableExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
               { step: '01. 펀드변경 조건 확인', desc: '시장 국면 전환 시 자유로운 펀드 비중 변경을 위해 연 12회 내외의 펀드변경 수수료가 무상 지원되는지 확인' },
               { step: '02. 비과세 감면 요건', desc: '월 보험료 합산 150만 원 이하, 10년 이상 계약 유지 및 5년 이상 납입 조건을 만족하여 이자소득세 15.4% 비과세 혜택 검증' },
               { step: '03. 정기보험 우량체 할인', desc: '비흡연, 정상 BMI(18.5~25.0), 혈압(수축기 120mmHg 미만) 만족 시 보험사에서 제공하는 12~18% 수준의 우량체 특별 요율 적용' },
-              { step: '04. 최저보증제도 탑재', desc: '장기 하락장 및 원금 손실 리스크 방지를 위해 연금 개시 시점 기납입 보험료의 100% 이상을 확정 보증(GMAB)하는 옵션 체크' },
+              { step: '04. 최저보증제도 탑재', desc: '장기 하락장 및 원금 손실 리스크 방지를 위해 연금 개시 시점 기납입 보험료의 원금 이상을 확정 보증(GMAB)하는 옵션 체크' },
             ].map((item, i) => (
               <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-indigo-50/30 rounded-3xl border border-indigo-100/50 hover:border-indigo-200 transition-colors">
                 <div className="shrink-0 font-black text-indigo-700 text-sm w-full sm:w-32">{item.step}</div>
@@ -202,7 +202,7 @@ export const VariableExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
             <h4 className="text-xl font-black mb-4">변액·정기 리모델링 핵심 TOP 5</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
               ① 종신보험 해약환급금 기회비용 재투자<br />
-              ② 우량체 할인(비흡연/체형) 적용으로 최고 18% 절감<br />
+              ② 우량체 할인(비흡연/체형) 적용으로 최대 18% 절감<br />
               ③ 변액 펀드 비중 설정 시 글로벌 주식 비중 확대<br />
               ④ 사업비 공제 비율이 적은 다이렉트 전용 상품 선택<br />
               ⑤ 최저 보증(GMAB) 장치로 원금 보호 확보
@@ -227,11 +227,11 @@ export const VariableExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             { company: '메트라이프생명', product: '(무)메트라이프 e-변액적립보험', highlight: '다이렉트 전용 보험사로 수수료가 업계 최저 수준이며, 다양한 글로벌 주식형 펀드로 공격적인 복리 적립에 최적', badges: ['글로벌 투자 특화', '다이렉트 최저수수료'] },
-            { company: '미래에셋생명', product: '(무)미래에셋 변액저축보험 글로벌형', highlight: '미국 테크, 글로벌 자산배분 펀드 라인업의 절대 강자이며 장기 운용 수익률 지표 업계 최상위권 달성', badges: ['미국 주식형', '자산배분 1위'] },
-            { company: '신한라이프', product: '(무)신한 e-변액연금보험', highlight: '원금 100% 최저연금보증 기능 제공하여 안정 지향의 투자 성향을 지닌 고객에게 균형 잡힌 대안 제시', badges: ['원금 100% 보증', '안심 운용'] },
-            { company: '교보라이프플래닛', product: '(무)라이프플래닛 e정기보험', highlight: '순수보장형 초가성비 정기보험의 원조 격. 비흡연/우량체 할인률이 최대 18%에 달해 가장 저렴함', badges: ['우량체 최고할인', '다이렉트 원조'] },
-            { company: '한화생명', product: '(무)한화생명 e다이렉트 정기보험', highlight: '다이렉트 전용 스마트 시스템 탑재, 사망보장 한도를 최고 5억원까지 간편 모바일 심사로 보장 설계', badges: ['사망 5억 간편심사', '모바일 청약'] },
-            { company: '삼성생명', product: '(무)삼성생명 다이렉트 정기보험', highlight: '대한민국 최대 자본 규모의 안정성, 전국 단위 청구 지원 및 비우량체 판정 시에도 합리적인 표준 요율 제공', badges: ['신속 청구 지원', '자본력 1위'] },
+            { company: '미래에셋생명', product: '(무)미래에셋 변액저축보험 글로벌형', highlight: '미국 테크, 글로벌 자산배분 펀드 라인업의 절대 강자이며 장기 운용 수익률 지표 업계 최상위권 달성', badges: ['미국 주식형', '자산배분 우수'] },
+            { company: '신한라이프', product: '(무)신한 e-변액연금보험', highlight: '원금 최저연금보증 기능 제공하여 안정 지향의 투자 성향을 지닌 고객에게 균형 잡힌 대안 제시', badges: ['납입 보험료 보증', '안심 운용'] },
+            { company: '교보라이프플래닛', product: '(무)라이프플래닛 e정기보험', highlight: '순수보장형 초가성비 정기보험의 원조 격. 비흡연/우량체 할인률이 최대 18%에 달해 가성비 우수함', badges: ['우량체 우수할인', '다이렉트 원조'] },
+            { company: '한화생명', product: '(무)한화생명 e다이렉트 정기보험', highlight: '다이렉트 전용 스마트 시스템 탑재, 사망보장 한도를 최대 5억원까지 간편 모바일 심사로 보장 설계', badges: ['사망 5억 간편심사', '모바일 청약'] },
+            { company: '삼성생명', product: '(무)삼성생명 다이렉트 정기보험', highlight: '대한민국 최대 자본 규모의 안정성, 전국 단위 청구 지원 및 비우량체 판정 시에도 합리적인 표준 요율 제공', badges: ['신속 청구 지원', '우수한 자본력'] },
           ].map((item, i) => (
             <div key={i} className="p-5 md:p-8 bg-indigo-50/20 rounded-2xl md:rounded-[2.5rem] border border-indigo-100 hover:border-indigo-300 hover:shadow-lg transition-all text-left">
               <p className="text-xs font-black text-indigo-600 mb-1">{maskCompany(item.company, isUnlocked)}</p>

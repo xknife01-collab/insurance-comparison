@@ -290,7 +290,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction, isUnlocked }
           {[
             {
               company: '삼성화재',
-              badge: '최고의 안정성',
+              badge: '우수한 안정성',
               badgeColor: 'bg-blue-50 text-blue-700 border-blue-200',
               highlight: '브랜드 가치 & 무사고 안정망',
               desc: '가장 폭넓은 담보 구성과 우수한 계약 안정성을 자랑하며, 무사고 시 3.5.5 등급으로 신속하게 갈아탈 수 있는 계약 전환 할인 인프라가 뛰어납니다.',
@@ -306,10 +306,10 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction, isUnlocked }
             },
             {
               company: '현대해상',
-              badge: '승인율 1위',
+              badge: '높은 승인율',
               badgeColor: 'bg-orange-50 text-orange-700 border-orange-200',
               highlight: '업계 최다 인수 예외 질환 확보',
-              desc: '타사에서 가입이 즉각 거절되는 다양한 가벼운 만성질환이나 최근 외래 수술 이력도 심사 없이 승인해 주는 예외 질환 항목을 가장 폭넓게 열어두어 승인율이 압도적입니다.',
+              desc: '타사에서 가입이 즉각 거절되는 다양한 가벼운 만성질환이나 최근 외래 수술 이력도 심사 없이 승인해 주는 예외 질환 항목을 가장 폭넓게 열어두어 승인율이 우수합니다.',
               strength: '최근 수술력/병력이 있는 유병자 최후의 보루'
             },
             {
@@ -322,7 +322,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction, isUnlocked }
             },
             {
               company: 'KB손해보험',
-              badge: '최고의 전환 유연성',
+              badge: '뛰어난 전환 유연성',
               badgeColor: 'bg-amber-50 text-amber-700 border-amber-200',
               highlight: '유연하고 빠른 무사고 할인권',
               desc: '가입 기간 중 사고 여부를 체크하여 자동으로 할인 등급 적용을 권장하는 유연한 상품 구조를 자랑합니다. 전환 시 차액 감면 혜택 체계가 가장 정교합니다.',
@@ -334,7 +334,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction, isUnlocked }
               badgeColor: 'bg-purple-50 text-purple-700 border-purple-200',
               highlight: '3.5.5 가성비 라인업 집중 설계',
               desc: '5년 무사고 간편 고지 플랜 선택 시, 대형 6개사 중 초기 월 납입 요금을 가장 콤팩트하게 다이어트하여 유병자의 매월 고정비 지출을 최소화해 줍니다.',
-              strength: '3.5.5 최고 가성비 진단비 특약 탑재'
+              strength: '3.5.5 가성비 우수 진단비 특약 탑재'
             }
           ].map((item, index) => (
             <div 
@@ -416,7 +416,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction, isUnlocked }
             <span className="text-indigo-300">지금 실시간 유병자 리모델링 지수를 무료 진단하세요!</span>
           </h3>
           <p className="text-xs text-indigo-200/70 font-semibold leading-relaxed">
-            질문 3가지만 체크해 보세요. 6대 손해사의 병력 인수 조건과 우대 혜택을 실시간 반영하여 본인에게 100% 최적화된 가장 저렴하고 든든한 간편 요금을 산출해 드립니다.
+            질문 3가지만 체크해 보세요. 6대 손해사의 병력 인수 조건과 우대 혜택을 실시간 반영하여 본인에게 최적화된 저렴하고 든든한 간편 요금을 산출해 드립니다.
           </p>
           <div className="pt-4 flex justify-center">
             <button

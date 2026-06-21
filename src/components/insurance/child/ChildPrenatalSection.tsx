@@ -86,7 +86,7 @@ export const ChildPrenatalSection = ({ onAction, isUnlocked }: { onAction: () =>
             <p className="text-yellow-700 font-black text-xs mb-1">⚠️ 태아 가입 시 필수 체크</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
               임신 사실 확인 직후부터 <span className="text-yellow-600 font-black">22주 6일 이내</span>에 가입해야 
-              가장 폭넓은 선천성 장애 진단비와 저체중 인큐베이터 일당을 100% 한도로 확보할 수 있습니다.
+              가장 폭넓은 선천성 장애 진단비와 저체중 인큐베이터 일당을 전액 한도로 확보할 수 있습니다.
             </p>
           </div>
         </div>
@@ -173,12 +173,12 @@ export const ChildPrenatalSection = ({ onAction, isUnlocked }: { onAction: () =>
             </div>
             <h3 className="text-3xl font-black mb-4 tracking-tight">어른이보험 연령 확대 및 면책 조항 우대</h3>
             <p className="text-sm opacity-70 font-bold leading-relaxed">
-              기존 15세까지였던 어린이보험 가입 한도가 최고 35세까지 상향 조정되어, 성인들도 대폭 저렴한 조건으로 암/뇌/심장 주요 진단비 특약을 비갱신형 가입하는 열풍이 지속되고 있습니다.
+              기존 15세까지였던 어린이보험 가입 한도가 최대 35세까지 상향 조정되어, 성인들도 대폭 저렴한 조건으로 암/뇌/심장 주요 진단비 특약을 비갱신형 가입하는 열풍이 지속되고 있습니다.
             </p>
           </div>
           <div className="space-y-4">
             {[
-              { company: '현대해상', product: '굿앤굿어린이종합', limit: '선천질환 특화 1위', note: '대한민국 신생아 2명 중 1명 가입 대기' },
+              { company: '현대해상', product: '굿앤굿어린이종합', limit: '선천질환 특화 우수', note: '대한민국 신생아 2명 중 1명 가입 대기' },
               { company: 'KB손해보험', product: 'KB희망플러스어린이', limit: '3대 진단비 업계 최대 한도', note: '독감 치료비 및 감염병 일당 고액 설계' },
               { company: 'DB손해보험', product: '아이러브건강보험', limit: '가성비 최적화 비갱신 플랜', note: '납입면제 대상 범위 업계 최다 지원' },
             ].map((item, i) => (
@@ -249,10 +249,10 @@ export const ChildPrenatalSection = ({ onAction, isUnlocked }: { onAction: () =>
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { company: '현대해상', product: '굿앤굿어린이종합보험', highlight: '태아보험 누적 계약 1위, 신속한 보상 청구', badges: ['태아 부동의 1위', '선천 장애 완벽'] },
+            { company: '현대해상', product: '굿앤굿어린이종합보험', highlight: '태아보험 누적 계약 선두, 신속한 보상 청구', badges: ['태아 선두 브랜드', '선천 장애 완벽'] },
             { company: 'KB손해보험', product: 'KB희망플러스자녀보험', highlight: '무사고 시 보험료 자동 할인 제도 탑재', badges: ['보험료 할인', '독감 일당 특화'] },
-            { company: 'DB손해보험', product: '아이러브건강보험', highlight: '30세 만기 후 100세 전환 시 최고 우대 조건', badges: ['계약전환 강점', '수술비 고액'] },
-            { company: '메리츠화재', product: '내Mom같은어린이보험', highlight: '유사암 및 소아 희귀 질환 납입면제 범위 최고', badges: ['납면 넓음', '희귀난치병'] },
+            { company: 'DB손해보험', product: '아이러브건강보험', highlight: '30세 만기 후 100세 전환 시 유리한 우대 조건', badges: ['계약전환 강점', '수술비 고액'] },
+            { company: '메리츠화재', product: '내Mom같은어린이보험', highlight: '유사암 및 소아 희귀 질환 납입면제 범위 우수', badges: ['납면 넓음', '희귀난치병'] },
             { company: '삼성화재', product: '우리 아이 안심케어', highlight: '대기업 네임드 신속 보상 서비스 연계', badges: ['삼성케어', '치아+어린이 통합'] },
             { company: '한화손해보험', product: '라이프플러스어린이', highlight: '어른이보험 실속형 비갱신 가격 경쟁력 우수', badges: ['어른이 실속형', '비갱신 강자'] },
           ].map((item, i) => (

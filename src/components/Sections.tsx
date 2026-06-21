@@ -183,7 +183,7 @@ export const ProblemSection = () => (
           icon: <Clock className="w-7 h-7 text-orange-400" />,
           bg: 'bg-gray-900 text-white border-gray-800',
           title: '변동 가능한 노후 지출',
-          desc: <>지금 3만 원인 갱신형 보험, 10년 뒤엔 15만 원이 될 수도 있습니다. <span className="font-bold text-white">인상 가능성이 있는 갱신형 보험료 지출</span>을 지금 비갱신형 확정 지출로 전환하여 대비하세요.</>
+          desc: <>갱신형 상품은 초기 보험료가 경제적이지만 일정 기간마다 인상될 수 있습니다. <span className="font-bold text-white">장기적으로 안정적인 지출</span>을 계획하신다면 비갱신형 선택을 고려해 보세요.</>
         }
       ].map((item, i) => (
         <div key={i} className={`p-10 rounded-[3rem] border shadow-sm ${item.bg} hover:scale-[1.03] transition-transform`}>
@@ -281,7 +281,7 @@ export const IndemnitySection = ({ onAction }: { onAction: () => void }) => (
                     <div className="w-8 h-8 bg-blue-50 rounded-full flex items-center justify-center text-blue-600 font-black text-xs shrink-0 mt-1">2</div>
                     <div>
                        <p className="font-black text-gray-900">갱신 및 재가입 주기</p>
-                       <p className="text-xs text-gray-400 font-bold mt-1">실손은 100% 갱신형이며, 가입 시기에 따라 1~5년 주기로 조건이 변경됩니다.</p>
+                       <p className="text-xs text-gray-400 font-bold mt-1">실손은 갱신형 구조이며, 가입 시기에 따라 1~5년 주기로 조건이 변경됩니다.</p>
                     </div>
                  </div>
                  <div className="flex items-start gap-4 p-4 hover:bg-gray-50 rounded-2xl transition-colors">
@@ -703,7 +703,7 @@ export const DentalSection = ({ onAction, isUnlocked }: { onAction: () => void, 
                     <div>
                        <p className="text-xl font-black mb-2">건강할 때 진단형 가입!</p>
                        <p className="text-sm opacity-60 font-bold leading-relaxed">
-                         치아가 아주 건강하다면 '진단형' 가입을 권장합니다. 면책기간 없이 즉시 100% 보장받을 수 있는 유일한 방법입니다.
+                         치아가 아주 건강하다면 '진단형' 가입을 권장합니다. 면책기간 없이 즉시 보장받을 수 있는 방법 중 하나입니다.
                        </p>
                     </div>
                  </div>
@@ -816,7 +816,7 @@ export const SurgerySection = ({ onAction }: { onAction: () => void }) => (
                     <div className="w-8 h-8 bg-orange-50 rounded-full flex items-center justify-center text-orange-600 font-black text-xs shrink-0 mt-1 shadow-sm border border-orange-100">2</div>
                     <div>
                        <p className="font-black text-gray-900">갱신 및 재가입 주기</p>
-                       <p className="text-xs text-gray-400 font-bold mt-1">수술비 담보는 100% 갱신형이며, 가입 시기에 따라 1~5년 주기로 조건이 변경됩니다.</p>
+                       <p className="text-xs text-gray-400 font-bold mt-1">수술비 담보는 갱신형 구조이며, 가입 시기에 따라 1~5년 주기로 조건이 변경됩니다.</p>
                     </div>
                  </div>
                  <div className="flex items-start gap-4 p-4 hover:bg-gray-50 rounded-2xl transition-colors">

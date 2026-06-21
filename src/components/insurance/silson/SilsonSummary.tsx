@@ -45,9 +45,9 @@ export const SilsonSummary: React.FC<Props> = ({ result }) => {
     const usage = analysis.silson?.nonReimbursableUsage || 'under100';
     if (usage === 'none') return '1단계(할인)';
     if (usage === 'under100') return '2단계(정상)';
-    if (usage === '100to150') return '3단계(100% 할증)';
-    if (usage === '150to300') return '4단계(200% 할증)';
-    return '5단계(300% 할증)';
+    if (usage === '100to150') return '3단계(보험료 2배)';
+    if (usage === '150to300') return '4단계(보험료 3배)';
+    return '5단계(보험료 4배)';
   };
 
   const getExplanationCopy = (type: string) => {

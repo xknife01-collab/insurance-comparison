@@ -108,7 +108,7 @@ export const PropertySummary: React.FC<Props> = ({ result }) => {
             <div className="p-5 rounded-2xl bg-orange-50/50 border border-orange-100/50 flex gap-3 items-start">
               <AlertTriangle className="w-5 h-5 text-orange-500 shrink-0 mt-0.5" />
               <div className="space-y-1">
-                <p className="text-xs font-black text-orange-800">실제 손해액 100% 실손 보장 검토</p>
+                <p className="text-xs font-black text-orange-800">실제 손해액 실손 보장 한도 검토</p>
                 <p className="text-[11px] text-slate-500 font-bold leading-relaxed">
                   재물종합보험은 가입 금액이 실제 건물/인테리어 가액의 80% 미만일 경우 화재 시 비례보상이 적용되어 큰 금전적 피해를 입을 수 있습니다. 자산 현황에 맞는 최적 가치 평가가 필요합니다.
                 </p>

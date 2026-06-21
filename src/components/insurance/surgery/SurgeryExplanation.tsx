@@ -236,7 +236,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
                 <div className="bg-white p-4 rounded-xl border border-orange-100 shadow-sm w-36">
                   <p className="text-xs font-bold text-gray-500">매회 지급형 상품</p>
                   <p className="text-lg font-black text-emerald-600 mt-1">수술할 때마다</p>
-                  <p className="text-[9px] text-gray-400 font-bold">연간 횟수 제한 없이 100%</p>
+                  <p className="text-[9px] text-gray-400 font-bold">연간 횟수 제한 없이 보장</p>
                 </div>
                 <div className="text-gray-300 font-bold text-xl">VS</div>
                 <div className="bg-white p-4 rounded-xl border border-orange-100 shadow-sm w-36">
@@ -286,7 +286,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
             },
             {
               company: 'DB손해보험',
-              badge: '인수 한도 1위',
+              badge: '인수 한도 우수',
               badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
               highlight: '특정 시술(체외충격파 등) 완화 가입',
               desc: '질병 수술 및 특정 뇌/심장 관상동맥 수술비 한도가 넉넉하고, 요로결석 체외충격파 쇄석술 등 타사에서 횟수 제한을 두는 수술의 인수 기준을 비교적 넓게 적용합니다.',
@@ -404,7 +404,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
             <span className="text-orange-300">지금 실시간 수술/입원 리모델링 지수를 무료 진단하세요!</span>
           </h3>
           <p className="text-xs text-orange-200/70 font-semibold leading-relaxed">
-            나이와 건강 상태만 입력해 보세요. 6대 손해사의 종수술비 요율과 상급병실 입원비 혜택을 실시간 대조하여 본인에게 100% 최적화된 가장 저렴하고 든든한 설계안을 추천해 드립니다.
+            나이와 건강 상태만 입력해 보세요. 6대 손해사의 종수술비 요율과 상급병실 입원비 혜택을 실시간 대조하여 본인에게 최적화된 가장 저렴하고 든든한 설계안을 추천해 드립니다.
           </p>
           <div className="pt-4 flex justify-center">
             <button
