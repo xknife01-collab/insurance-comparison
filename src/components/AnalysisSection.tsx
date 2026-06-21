@@ -63,6 +63,22 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
 
   return (
     <section className="max-w-7xl mx-auto px-4 py-40 space-y-24">
+      {/* 100% 안심 자율 비교 서비스 안내 (텍스트) */}
+      <div className="max-w-3xl mx-auto text-center space-y-3 animate-in fade-in slide-in-from-top-4 duration-1000 font-sans">
+        <div className="text-orange-500 font-extrabold text-base md:text-lg">
+          ✨ 100% 안심 자율 비교 서비스
+        </div>
+        <div className="text-slate-800 font-extrabold text-base md:text-lg">
+          "가입 권유 전화 Zero" — 100% 완전 비대면 자율 분석
+        </div>
+        <div className="text-slate-600 font-bold text-base md:text-lg max-w-2xl mx-auto break-keep leading-relaxed">
+          상담원 전화 유도 없이, 오직 AI 빅데이터 엔진을 통해 고객 스스로 100% 자율 비교 및 진단을 완료할 수 있습니다.
+        </div>
+        <div className="text-slate-400 font-medium text-base md:text-lg">
+          (전화는 고객이 원할 때만 1:1 신청 가능)
+        </div>
+      </div>
+
       <div className="flex flex-col items-center text-center space-y-6">
         <div className="inline-flex items-center gap-2 px-6 py-2 bg-slate-900 text-white rounded-full text-[0.65rem] font-black uppercase tracking-[0.3em] shadow-xl">
            <Zap size={14} className="fill-current text-orange-500" /> Professional Deep Analysis
@@ -70,6 +86,7 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
         <h2 className="text-5xl md:text-6xl font-black text-gray-900 tracking-tighter leading-tight">내 보험 정밀 분석</h2>
         <p className="text-xl text-gray-500 font-bold italic">"내가 이미 가입한 보험, 제대로 가입한 게 맞을까요?"</p>
       </div>
+
 
       <div className="max-w-3xl mx-auto w-full">
         <div className="bg-slate-900 rounded-[4rem] p-8 md:p-16 shadow-[0_60px_120px_-30px_rgba(0,0,0,0.4)] flex flex-col justify-center relative overflow-hidden group">
