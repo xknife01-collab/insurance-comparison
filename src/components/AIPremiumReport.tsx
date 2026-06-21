@@ -12,9 +12,10 @@ interface AIPremiumReportProps {
     cardiovascularScore: number;
     totalScore: number;
   };
+  forceMobile?: boolean;
 }
 
-export const AIPremiumReport: React.FC<AIPremiumReportProps> = ({ analysis, deficiencies, scores }) => {
+export const AIPremiumReport: React.FC<AIPremiumReportProps> = ({ analysis, deficiencies, scores, forceMobile }) => {
   const age = analysis.age || 40;
   const gender = analysis.gender === 'F' ? '여성' : '남성';
   const category = analysis.selectedCategory ?? '';
@@ -271,7 +272,7 @@ export const AIPremiumReport: React.FC<AIPremiumReportProps> = ({ analysis, defi
       <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none" />
 
       {/* 헤더 AI 배지 */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 pb-8 border-b border-[#2b1767]/60 relative z-10">
+      <div className={`flex flex-col ${forceMobile ? 'flex-col items-start' : 'md:flex-row md:items-center'} justify-between gap-6 mb-10 pb-8 border-b border-[#2b1767]/60 relative z-10`}>
         <div className="space-y-3">
           <div className="inline-flex items-center gap-3 px-6 py-2.5 bg-purple-500/20 text-purple-300 rounded-full text-sm md:text-base font-black tracking-wide border border-purple-500/30 shadow-sm">
             <Sparkles className="w-5 h-5 text-orange-400 animate-pulse" />
@@ -293,10 +294,10 @@ export const AIPremiumReport: React.FC<AIPremiumReportProps> = ({ analysis, defi
       </div>
 
       {/* 리포트 콘텐츠 그리드 */}
-      <div className="grid lg:grid-cols-12 gap-10 md:gap-14 relative z-10">
+      <div className={`grid ${forceMobile ? 'grid-cols-1' : 'lg:grid-cols-12'} gap-10 md:gap-14 relative z-10`}>
         
         {/* 왼쪽: 질병 통계 및 리스크 요인 */}
-        <div className="lg:col-span-5 space-y-8 bg-white/5 backdrop-blur-md p-8 rounded-[2.5rem] border border-white/5 shadow-inner flex flex-col justify-between">
+        <div className={`${forceMobile ? 'col-span-1' : 'lg:col-span-5'} space-y-8 bg-white/5 backdrop-blur-md p-8 rounded-[2.5rem] border border-white/5 shadow-inner flex flex-col justify-between`}>
           <div className="space-y-6">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-purple-500/20 flex items-center justify-center">
@@ -330,10 +331,10 @@ export const AIPremiumReport: React.FC<AIPremiumReportProps> = ({ analysis, defi
         </div>
 
         {/* 오른쪽: AI 상세 진단 (Good, Bad, Solution) */}
-        <div className="lg:col-span-7 space-y-8">
+        <div className={`${forceMobile ? 'col-span-1' : 'lg:col-span-7'} space-y-8`}>
           
           {/* Good & Bad 그리드 */}
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className={`grid ${forceMobile ? 'grid-cols-1' : 'md:grid-cols-2'} gap-6`}>
             {/* Good */}
             <div className="bg-emerald-950/20 backdrop-blur-md border border-emerald-900/30 p-8 rounded-[2.5rem] space-y-4">
               <div className="flex items-center gap-2.5 text-emerald-400">

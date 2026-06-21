@@ -8,9 +8,10 @@ interface ComparisonTableProps {
   analysis: InsuranceAnalysis;
   recommendation: RecommendationPlan;
   isUnlocked?: boolean;
+  forceMobile?: boolean;
 }
 
-const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendation, isUnlocked }) => {
+const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendation, isUnlocked, forceMobile }) => {
   const savings = analysis.monthlyPremium - recommendation.estimatedPremium;
 
   const formatAmt = (amt: number) => {
@@ -1070,7 +1071,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
       </div>
 
       <div className="relative z-10 flex flex-col gap-12">
-        <div className="flex flex-col md:flex-row justify-between items-end gap-6">
+        <div className={`flex ${forceMobile ? 'flex-col items-start' : 'flex-col md:flex-row md:items-end'} justify-between gap-6`}>
           <div className="space-y-2">
             <h3 className="text-3xl font-black text-gray-900 tracking-tighter">1:1 상세 비교 분석</h3>
             <p className="text-gray-500 font-bold italic">"가격은 낮추고, 보장은 더 든든하게!"</p>
@@ -1098,7 +1099,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
           </div>
         )}
 
-        <div className="hidden sm:grid grid-cols-12 gap-1 px-4 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-1">
+        <div className={`${forceMobile ? 'hidden' : 'hidden sm:grid'} grid-cols-12 gap-1 px-4 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-1`}>
            <div className="col-span-4">보장 항목</div>
            <div className="col-span-4 text-center">기존 보험 유지 시 (Stay)</div>
            <div className="col-span-4 text-right">교체 제안 (Switch)</div>
@@ -1111,25 +1112,25 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.05 * i }}
-              className={`flex flex-col sm:grid sm:grid-cols-12 gap-4 sm:gap-2 items-start sm:items-center p-5 sm:p-6 rounded-[2rem] transition-all border ${
+              className={`flex flex-col ${forceMobile ? '' : 'sm:grid sm:grid-cols-12'} gap-4 sm:gap-2 items-start ${forceMobile ? '' : 'sm:items-center'} p-5 sm:p-6 rounded-[2rem] transition-all border ${
                 i % 2 === 0 ? 'bg-gray-50/30 border-gray-100/50' : 'bg-white border-transparent'
               } hover:bg-orange-50/50 hover:shadow-xl hover:border-orange-100 group`}
             >
-              <div className="w-full sm:col-span-4 flex items-center gap-3 sm:gap-4">
+              <div className={`w-full ${forceMobile ? '' : 'sm:col-span-4'} flex items-center gap-3 sm:gap-4`}>
                  <div className="p-3 bg-white rounded-2xl shadow-sm border border-gray-100 transition-transform group-hover:rotate-12 group-hover:scale-110">
                    {row.icon}
                  </div>
                  <span className="text-sm font-black text-gray-900 break-keep">{row.label}</span>
               </div>
               
-              <div className="w-full flex sm:grid sm:col-span-8 sm:grid-cols-8 items-center justify-between gap-4 sm:gap-0 mt-2 sm:mt-0 pt-3 sm:pt-0 border-t border-gray-100/30 sm:border-t-0">
-                <div className="flex-1 sm:col-span-4 text-left sm:text-center flex flex-col sm:block gap-1">
-                  <span className="text-[9px] font-black text-gray-400 sm:hidden">기존 (Stay)</span>
-                  <span className="font-black text-gray-400 sm:text-gray-300 text-sm sm:text-lg break-keep">{row.current}</span>
+              <div className={`w-full flex flex-col ${forceMobile ? '' : 'sm:grid sm:col-span-8 sm:grid-cols-8'} gap-3 sm:gap-0 mt-2 sm:mt-0 pt-3 sm:pt-0 border-t border-gray-100/30 ${forceMobile ? '' : 'sm:border-t-0'}`}>
+                <div className={`w-full ${forceMobile ? 'text-left' : 'sm:col-span-4 sm:text-center'} flex flex-col ${forceMobile ? '' : 'sm:block'} gap-1`}>
+                  <span className={`text-[9px] font-black text-gray-400 ${forceMobile ? '' : 'sm:hidden'}`}>기존 (Stay)</span>
+                  <span className="font-black text-gray-400 sm:text-gray-300 text-xs sm:text-lg break-keep">{row.current}</span>
                 </div>
-                <div className="flex-1 sm:col-span-4 text-right flex flex-col sm:block gap-1 items-end">
-                  <span className="text-[9px] font-black text-blue-500 sm:hidden">제안 (Switch)</span>
-                  <span className="bg-slate-900 text-white px-4 py-2 sm:px-6 sm:py-2.5 rounded-2xl font-black text-xs sm:text-sm md:text-base lg:text-lg shadow-lg inline-block transform transition-all group-hover:-translate-x-2 break-keep text-center">
+                <div className={`w-full ${forceMobile ? 'text-left' : 'sm:col-span-4 sm:text-right'} flex flex-col ${forceMobile ? '' : 'sm:block'} gap-1 mt-2 sm:mt-0`}>
+                  <span className={`text-[9px] font-black text-blue-500 ${forceMobile ? '' : 'sm:hidden'}`}>제안 (Switch)</span>
+                  <span className="bg-slate-900 text-white px-4 py-2 sm:px-6 sm:py-2.5 rounded-2xl font-black text-xs sm:text-sm md:text-base lg:text-lg shadow-lg inline-block transform transition-all group-hover:-translate-x-2 break-keep">
                     {row.recommended}
                   </span>
                 </div>

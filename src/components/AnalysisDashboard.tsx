@@ -41,6 +41,7 @@ interface AnalysisDashboardProps {
   onSubmitLead?: (analysis: any, category: string, resultData: any, consultType?: 'anonymous' | 'regular') => Promise<any> | void;
   branding?: any;
   isUnlocked?: boolean;
+  forceMobile?: boolean;
 }
 
 // ─── 보험 타입별 요약 컴포넌트 1:1 맵 ───────────────────────────────────────
@@ -116,25 +117,25 @@ const PARTIAL_SUMMARY_MAP: Array<[string, SummaryComponentType]> = [
   ['일반 저축', SavingsSummary],
 ];
 
-const InsuranceSummary = ({ result }: { result: AnalysisResult }) => {
+const InsuranceSummary = ({ result, forceMobile }: { result: AnalysisResult; forceMobile?: boolean }) => {
   const category = result.analysis.selectedCategory ?? '';
 
   // 1. 정확한 키 매칭
   const ExactComponent = EXACT_SUMMARY_MAP[category];
-  if (ExactComponent) return <ExactComponent result={result as any} formatAmount={formatAmountUtil} />;
+  if (ExactComponent) return <ExactComponent result={result as any} formatAmount={formatAmountUtil} forceMobile={forceMobile} />;
 
   // 2. 부분 문자열 매칭 (순서 보장)
   const partialMatch = PARTIAL_SUMMARY_MAP.find(([key]) => category.includes(key));
   if (partialMatch) {
     const PartialComponent = partialMatch[1];
-    return <PartialComponent result={result as any} formatAmount={formatAmountUtil} />;
+    return <PartialComponent result={result as any} formatAmount={formatAmountUtil} forceMobile={forceMobile} />;
   }
 
   // 3. 폴백: 일반 건강보험
-  return <HealthSummary result={result as any} formatAmount={formatAmountUtil} />;
+  return <HealthSummary result={result as any} formatAmount={formatAmountUtil} forceMobile={forceMobile} />;
 };
 
-const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitLead, branding, isUnlocked: parentIsUnlocked }) => {
+const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitLead, branding, isUnlocked: parentIsUnlocked, forceMobile }) => {
   const { scores, efficiency, deficiencies, analysis } = result;
   const isRemodeling = !!(analysis as any)._allDietOptions && !!(analysis as any)._allUpgradeOptions;
   const cat = analysis.selectedCategory ?? '';
@@ -819,7 +820,7 @@ ${origin}/?code=${simCode}
         <div className="absolute top-0 right-0 p-24 opacity-5 scale-150 transform group-hover:scale-125 transition-transform duration-1000 rotate-12">
           <Smartphone className="w-96 h-96 text-white" />
         </div>
-        <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
+        <div className={`relative z-10 flex ${forceMobile ? 'flex-col' : 'flex-col lg:flex-row'} items-center justify-between gap-8`}>
           <div className="space-y-4 max-w-xl text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-orange-500/10 text-orange-400 rounded-full text-[10px] font-black uppercase tracking-wider border border-orange-500/20">
               <Sparkles size={12} className="text-orange-400 animate-spin-slow" /> 설계안 평생 무료 보관함
@@ -832,7 +833,7 @@ ${origin}/?code=${simCode}
             </p>
           </div>
 
-          <div className="w-full lg:w-auto shrink-0 min-w-[320px] md:min-w-[420px] bg-slate-950/60 p-6 md:p-8 rounded-[2rem] border border-white/5 shadow-inner">
+          <div className={`w-full ${forceMobile ? 'min-w-0' : 'lg:w-auto shrink-0 min-w-[320px] md:min-w-[420px]'} bg-slate-950/60 p-6 md:p-8 rounded-[2rem] border border-white/5 shadow-inner`}>
             {smsSuccess ? (
               <div className="text-center py-4 space-y-4">
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xl font-black">
@@ -888,9 +889,9 @@ ${origin}/?code=${simCode}
       </section>
 
       {/* Insurance Summary Cards (Silson, Caregiving, Dental, etc.) */}
-      <InsuranceSummary result={result} />
+      <InsuranceSummary result={result} forceMobile={forceMobile} />
 
-      <section className="bg-white rounded-[4rem] p-10 md:p-20 shadow-[0_40px_120px_-20px_rgba(0,0,0,0.08)] border border-gray-50 flex flex-col lg:flex-row gap-24 items-center relative overflow-hidden">
+      <section className={`bg-white rounded-[4rem] p-10 md:p-20 shadow-[0_40px_120px_-20px_rgba(0,0,0,0.08)] border border-gray-50 flex ${forceMobile ? 'flex-col' : 'flex-col lg:flex-row'} gap-24 items-center relative overflow-hidden`}>
         <div className="absolute top-0 right-0 p-24 opacity-[0.03] scale-150 transform rotate-12">
            {isDental || isSilbi ? <Stethoscope className="w-96 h-96 text-emerald-500" /> :
             isCaregiving ? <Hotel className="w-96 h-96 text-purple-500" /> :
@@ -968,7 +969,7 @@ ${origin}/?code=${simCode}
              </p>
           </div>
 
-          <div className="flex flex-col md:flex-row gap-6">
+          <div className={`flex ${forceMobile ? 'flex-col' : 'flex-col md:flex-row'} gap-6`}>
             <div className={`flex-1 p-8 rounded-[2rem] border group hover:scale-105 transition-all ${
               isDental || isSilbi || isGolf || isCredit || isSavingsGeneral ? 'bg-emerald-50/50 border-emerald-100/50' :
               isCaregiving ? 'bg-purple-50/50 border-purple-100/50' :
@@ -1059,12 +1060,14 @@ ${origin}/?code=${simCode}
         analysis={result.analysis} 
         deficiencies={deficiencies} 
         scores={scores} 
+        forceMobile={forceMobile}
       />
 
       <ComparisonTable 
         analysis={result.analysis}
         recommendation={isRemodeling ? result.recommendations.diet : result.recommendations.upgrade} 
         isUnlocked={isUnlocked}
+        forceMobile={forceMobile}
       />
 
       {/* 보험별 개별 분석 (전체 종합 분석 테이블 아래, 매직 다이어트 가이드 위에 위치) */}
@@ -1104,7 +1107,7 @@ ${origin}/?code=${simCode}
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8 relative z-10 items-stretch">
+        <div className={`grid ${forceMobile ? 'grid-cols-1' : 'lg:grid-cols-3'} gap-8 relative z-10 items-stretch`}>
           {/* Card 1: 최적화 결과 */}
           <div className="bg-white/5 backdrop-blur-md p-10 rounded-[3rem] border border-white/10 flex flex-col justify-between hover:bg-white/10 transition-all duration-300">
             <div>
@@ -1200,7 +1203,7 @@ ${origin}/?code=${simCode}
         </div>
 
         <div className={`grid grid-cols-1 gap-10 items-stretch mx-auto ${
-          isRemodeling ? 'max-w-4xl' : 'lg:grid-cols-3 max-w-7xl'
+          isRemodeling ? 'max-w-4xl' : `${forceMobile ? 'grid-cols-1 max-w-xl' : 'lg:grid-cols-3 max-w-7xl'}`
         }`}>
            {/* Diet Type */}
            <motion.div 
@@ -1758,7 +1761,7 @@ ${origin}/?code=${simCode}
         )}
 
         <div className="bg-white rounded-[3rem] border border-gray-100 shadow-xl overflow-hidden">
-          <div className="grid grid-cols-12 bg-gray-50 p-8 text-[10px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-100">
+          <div className={`${forceMobile ? 'hidden' : 'hidden md:grid'} grid-cols-12 bg-gray-50 p-8 text-[10px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-100`}>
             <div className="col-span-1 text-center">순위</div>
             <div className="col-span-3">보험사</div>
             <div className="col-span-5">상품명</div>
@@ -1766,17 +1769,35 @@ ${origin}/?code=${simCode}
           </div>
           
           <div className="divide-y divide-gray-50">
-            {((result.analysis as any)._allOptions || []).map((opt: any, idx: number) => (
-              <div key={idx} className="grid grid-cols-12 p-8 items-center hover:bg-gray-50 transition-all group">
-                <div className="col-span-1 text-center">
+            {((result.analysis as any)._allOptions || []).slice(0, 30).map((opt: any, idx: number) => (
+              <div key={idx} className={`flex flex-col ${forceMobile ? '' : 'md:grid md:grid-cols-12'} p-6 md:p-8 items-start ${forceMobile ? '' : 'md:items-center'} hover:bg-gray-50 transition-all group gap-3 md:gap-0`}>
+                {/* Mobile Rank, Company & Price Header */}
+                <div className={`flex w-full items-center justify-between ${forceMobile ? '' : 'md:hidden'}`}>
+                  <div className="flex items-center gap-2">
+                    <span className={`text-xs font-black px-2 py-0.5 rounded-md ${idx < 3 ? 'bg-orange-500 text-white' : 'bg-slate-100 text-slate-500'}`}>{idx + 1}위</span>
+                    <span className="text-sm font-black text-gray-900">{maskCompany(opt.companyName, isUnlocked)}</span>
+                  </div>
+                  <div className="text-right">
+                    {isCar ? (
+                      <span className="text-sm font-black text-emerald-600">최종 {Math.round(opt.premium * 12).toLocaleString()}원</span>
+                    ) : (
+                      <span className="text-sm font-black text-gray-900">{Math.round(opt.premium).toLocaleString()}원</span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Desktop Rank & Company */}
+                <div className={`${forceMobile ? 'hidden' : 'hidden md:block md:col-span-1'} text-center`}>
                    <span className={`text-sm font-black ${idx < 3 ? 'text-orange-500' : 'text-gray-300'}`}>0{idx + 1}</span>
                 </div>
-                <div className="col-span-3">
+                <div className={`${forceMobile ? 'hidden' : 'hidden md:block md:col-span-3'}`}>
                    <span className="text-base font-black text-gray-900">{maskCompany(opt.companyName, isUnlocked)}</span>
                 </div>
-                <div className="col-span-5">
+
+                {/* Product Name */}
+                <div className={`w-full ${forceMobile ? '' : 'md:col-span-5'} text-left`}>
                    <div className="flex flex-col gap-1">
-                      <p className="text-sm text-gray-500 font-bold group-hover:text-gray-900 transition-colors">{maskProductName(opt.productName, isUnlocked)}</p>
+                      <p className="text-xs md:text-sm text-gray-500 font-bold group-hover:text-gray-900 transition-colors">{maskProductName(opt.productName, isUnlocked)}</p>
                       <div className="flex flex-wrap gap-1.5 mt-1">
                         {isVariable && (
                           <>
@@ -1830,7 +1851,9 @@ ${origin}/?code=${simCode}
                       </div>
                    </div>
                 </div>
-                <div className="col-span-3 text-right">
+
+                {/* Desktop Price & Extra details */}
+                <div className={`${forceMobile ? 'hidden' : 'hidden md:block md:col-span-3'} text-right`}>
                     <div className="flex flex-col items-end">
                         {isCar ? (
                           <>
@@ -1849,12 +1872,24 @@ ${origin}/?code=${simCode}
                         )}
                        {opt.riskPremium !== undefined && !isAnnuity && !isVariable && !isFire && !isProperty && !isSavingsGeneral && (
                          <span className="text-[10px] text-gray-400 font-bold mt-1">
-                           보장 {opt.riskPremium.toLocaleString()}원 (소멸성 사업비+보장) / 적립 {opt.savingsPremium.toLocaleString()}원 (이자가 복리로 굴러가는 순적립금)
+                           보장 {opt.riskPremium.toLocaleString()}원 (소멸성 사업비+보장) / 적립 {opt.savingsPremium.toLocaleString()}원 (순적립금)
                          </span>
                        )}
                        {idx === 0 && <span className="text-[10px] text-emerald-500 font-black uppercase tracking-tighter mt-0.5">Market Lowest</span>}
                     </div>
                 </div>
+
+                {/* Mobile subtext details */}
+                <div className="flex flex-col gap-0.5 md:hidden text-[9px] text-slate-400 font-bold w-full text-left border-t border-slate-100/50 pt-2 mt-1">
+                  {idx === 0 && <span className="text-[9px] text-emerald-500 font-black uppercase tracking-tighter block mb-0.5">Market Lowest</span>}
+                  {opt.riskPremium !== undefined && !isAnnuity && !isVariable && !isFire && !isProperty && !isSavingsGeneral && (
+                     <span>보장 {opt.riskPremium.toLocaleString()}원 / 적립 {opt.savingsPremium.toLocaleString()}원</span>
+                  )}
+                  {isCar && opt.paymentPremium !== undefined && (
+                     <span>결제 {Math.round(opt.paymentPremium * 12).toLocaleString()}원 {opt.paymentPremium > opt.premium && `(환급 ${Math.round((opt.paymentPremium - opt.premium) * 12).toLocaleString()}원)`}</span>
+                  )}
+                </div>
+
               </div>
             ))}
             

@@ -24,7 +24,7 @@ const Hero = () => (
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-8 leading-tight tracking-tight px-4"
+        className="text-4xl md:text-6xl font-semibold text-gray-900 mb-8 leading-tight tracking-tight px-4"
       >
         어려운 경기, 가장 먼저 줄여야 할 것은<br />
         생활비가 아니라 <span className="text-orange-500">내 통장에서 새나가는 보험료</span>입니다.

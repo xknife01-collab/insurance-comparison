@@ -11,7 +11,7 @@ interface PlannerWidgetProps {
 export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetProps) {
   const { deferredPrompt, onInstallClick, isInAppBrowser, setShowInAppGuide, isIOS, isStandalone } = useB2BBranding();
   const [isOpen, setIsOpen] = useState(true);
-  const [isMinimized, setIsMinimized] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(true);
 
   if (!isOpen) {
     return null;

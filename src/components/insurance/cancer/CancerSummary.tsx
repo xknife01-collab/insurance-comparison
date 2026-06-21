@@ -5,9 +5,10 @@ import { AnalysisResult } from '../../../types/insurance';
 interface Props {
   result: AnalysisResult;
   formatAmount: (amt: number) => string;
+  forceMobile?: boolean;
 }
 
-export const CancerSummary: React.FC<Props> = ({ result, formatAmount }) => {
+export const CancerSummary: React.FC<Props> = ({ result, formatAmount, forceMobile }) => {
   const { analysis } = result as any;
   if (!analysis) return null;
 
@@ -35,7 +36,7 @@ export const CancerSummary: React.FC<Props> = ({ result, formatAmount }) => {
   return (
     <div className="space-y-6">
       <div className="rounded-[2.5rem] p-10 border bg-rose-50/30 border-rose-100">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div className={`flex flex-col ${forceMobile ? 'flex-col items-start' : 'md:flex-row md:items-center'} justify-between gap-4 mb-8`}>
           <h3 className="text-xl font-bold mb-8 flex items-center gap-2 text-rose-900">
             <div className="w-1.5 h-6 rounded-full bg-rose-500"></div>
             암보험 상세 보장 현황
@@ -44,7 +45,7 @@ export const CancerSummary: React.FC<Props> = ({ result, formatAmount }) => {
             💡 <b>안내:</b> 보장 현황에 <b className="text-red-500 font-black">[부족]</b>이 있다면 항목을 클릭해 상단 조절바에서 보장액을 늘려보세요!
           </span>
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className={`grid ${forceMobile ? 'grid-cols-1' : 'md:grid-cols-2 lg:grid-cols-4'} gap-6`}>
           {items.map((item, i) => (
             <div 
               key={i} 
@@ -65,7 +66,7 @@ export const CancerSummary: React.FC<Props> = ({ result, formatAmount }) => {
         <div className="absolute top-0 right-0 p-8 opacity-10 scale-150 transform translate-x-4 -translate-y-4">
           <div className="w-48 h-48 rounded-full border-8 border-white"></div>
         </div>
-        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className={`relative z-10 flex ${forceMobile ? 'flex-col items-start' : 'flex-col md:flex-row md:items-center md:justify-between'} gap-8`}>
           <div>
             <span className="text-xs font-black text-rose-200 uppercase tracking-widest bg-rose-900/30 px-3 py-1 rounded-full mb-4 inline-block">
               Cancer Specialization Analysis
@@ -75,7 +76,7 @@ export const CancerSummary: React.FC<Props> = ({ result, formatAmount }) => {
               사용자님의 연령과 상황에 맞춘 최적의 암보험 플랜으로 전환 시 절감되는 금액입니다.
             </p>
           </div>
-          <div className="text-right">
+          <div className={forceMobile ? 'text-left' : 'text-right'}>
             {savings > 0 ? (
               <div className="flex items-baseline gap-2">
                 <span className="text-6xl font-black tracking-tighter text-yellow-300">

@@ -33,6 +33,7 @@ import { AccidentFields } from './insurance/accident/AccidentFields';
 import { SavingsFields } from './insurance/savings/SavingsFields';
 import { CreditFields } from './insurance/credit/CreditFields';
 import { LegalFields } from './insurance/legal/LegalFields';
+import MobileShowcase from './MobileShowcase';
 
 
 
@@ -1078,7 +1079,77 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   };
 
   return (
-    <section id="calculator-section" className="w-full max-w-7xl mx-auto py-12 px-4 font-sans">
+    <section id="calculator-section" className="w-full max-w-[1600px] mx-auto py-12 px-4 font-sans">
+      {/* 가입 권유 전화 Zero 안심 배너 (카드 디자인 제외) */}
+      <div className="max-w-4xl mx-auto w-full text-center mb-16 px-4">
+        <div className="inline-flex items-center gap-2 px-5 py-2 bg-orange-500/10 text-orange-600 rounded-full text-[11px] md:text-xs font-black uppercase tracking-wider mb-4">
+          ✨ 100% 안심 자율 비교 서비스
+        </div>
+        <h3 className="text-2xl md:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight mb-4 leading-tight">
+          "가입 권유 전화 <span className="text-orange-500">Zero</span>" — 100% 완전 비대면 자율 분석
+        </h3>
+        <p className="text-sm md:text-base lg:text-lg text-slate-600 font-bold leading-relaxed max-w-2xl mx-auto break-keep">
+          상담원 전화 유도 없이, 오직 AI 빅데이터 엔진을 통해 고객 스스로 100% 자율 비교 및 진단을 완료할 수 있습니다.<br />
+          <span className="text-slate-400 text-xs font-semibold mt-2 block">(전화는 고객이 원할 때만 1:1 신청 가능)</span>
+        </p>
+      </div>
+
+      {/* 3대 핵심 차별점 카드 */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1600px] mx-auto mb-20 px-4">
+        {/* 카드 1 */}
+        <div className="bg-gradient-to-br from-white via-slate-50/50 to-orange-500/[0.04] border border-slate-200/80 hover:border-orange-500/30 hover:from-white hover:to-orange-500/[0.08] hover:-translate-y-1.5 active:-translate-y-3.5 active:scale-[1.01] hover:shadow-[0_25px_50px_-15px_rgba(255,107,0,0.08)] active:shadow-[0_35px_60px_-10px_rgba(255,107,0,0.15)] shadow-[inset_0_1px_1px_rgba(255,255,255,0.7),_0_10px_30px_-10px_rgba(0,0,0,0.03)] transition-all duration-300 rounded-[2rem] p-8 flex flex-col gap-4 text-left group cursor-pointer select-none">
+          <div className="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-600 flex items-center justify-center group-hover:scale-115 group-hover:rotate-[15deg] transition-all duration-300">
+            <Shield className="w-6 h-6" strokeWidth={2.5} />
+          </div>
+          <div>
+            <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest block mb-1">Differentiator 01</span>
+            <h4 className="text-lg font-black text-slate-800 tracking-tight leading-snug">
+              국내 전(全) 생명·손해보험사<br />
+              <span className="text-orange-500">상품 1초 만에 비교</span>
+            </h4>
+          </div>
+          <p className="text-xs text-slate-500 font-semibold leading-relaxed break-keep">
+            국내 전 생명·손해보험사에서 판매 중인 수만 개의 보험 상품 데이터를 실시간으로 비교 분석합니다. 복잡하게 얽혀 있는 특약 조건과 보장 금액을 1원 단위까지 꼼꼼히 비교하여, 불필요한 지출은 걷어내고 오직 고객님께 꼭 필요한 알짜배기 담보 정보만 한눈에 확인해 드립니다.
+          </p>
+        </div>
+
+        {/* 카드 2 */}
+        <div className="bg-gradient-to-br from-white via-slate-50/50 to-orange-500/[0.04] border border-slate-200/80 hover:border-orange-500/30 hover:from-white hover:to-orange-500/[0.08] hover:-translate-y-1.5 active:-translate-y-3.5 active:scale-[1.01] hover:shadow-[0_25px_50px_-15px_rgba(255,107,0,0.08)] active:shadow-[0_35px_60px_-10px_rgba(255,107,0,0.15)] shadow-[inset_0_1px_1px_rgba(255,255,255,0.7),_0_10px_30px_-10px_rgba(0,0,0,0.03)] transition-all duration-300 rounded-[2rem] p-8 flex flex-col gap-4 text-left group cursor-pointer select-none">
+          <div className="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-600 flex items-center justify-center group-hover:scale-115 group-hover:-translate-y-1.5 transition-all duration-300">
+            <Zap className="w-6 h-6" strokeWidth={2.5} />
+          </div>
+          <div>
+            <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest block mb-1">Differentiator 02</span>
+            <h4 className="text-lg font-black text-slate-800 tracking-tight leading-snug">
+              암부터 펫보험까지,<br />
+              <span className="text-orange-500">27종 맞춤 보험 실시간 계산</span>
+            </h4>
+          </div>
+          <p className="text-xs text-slate-500 font-semibold leading-relaxed break-keep">
+            암·뇌·심장 3대 질환부터 치매, 간병, 태아, 펫보험까지 27종의 다양한 보험 카테고리를 지원합니다. 내가 선택한 상품에 맞춰 꼭 필요한 핵심 질문만 알아서 자동으로 나타나는 스마트 입력 방식을 적용하여, 복잡한 서류 준비나 어려운 용어 이해 없이도 단 0.1초 만에 나만의 실시간 보험료 계산 결과를 도출합니다.
+          </p>
+        </div>
+
+        {/* 카드 3 */}
+        <div className="bg-gradient-to-br from-white via-slate-50/50 to-orange-500/[0.04] border border-slate-200/80 hover:border-orange-500/30 hover:from-white hover:to-orange-500/[0.08] hover:-translate-y-1.5 active:-translate-y-3.5 active:scale-[1.01] hover:shadow-[0_25px_50px_-15px_rgba(255,107,0,0.08)] active:shadow-[0_35px_60px_-10px_rgba(255,107,0,0.15)] shadow-[inset_0_1px_1px_rgba(255,255,255,0.7),_0_10px_30px_-10px_rgba(0,0,0,0.03)] transition-all duration-300 rounded-[2rem] p-8 flex flex-col gap-4 text-left group cursor-pointer select-none">
+          <div className="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-600 flex items-center justify-center group-hover:scale-115 group-hover:rotate-[360deg] transition-all duration-700">
+            <Sparkles className="w-6 h-6" strokeWidth={2.5} />
+          </div>
+          <div>
+            <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest block mb-1">Differentiator 03</span>
+            <h4 className="text-lg font-black text-slate-800 tracking-tight leading-snug">
+              0.1초 AI 내 보험 분석 &<br />
+              <span className="text-orange-500">또래 평균 보장 비교</span>
+            </h4>
+          </div>
+          <p className="text-xs text-slate-500 font-semibold leading-relaxed break-keep">
+            내가 설정한 보험 설계가 안전한지 AI가 즉시 검증합니다. 신뢰할 수 있는 국가 통계 데이터를 바탕으로 동일 조건에서 꼭 필요한 적정 보장 수준을 대조하고, 사용자가 선택한 입력 필드의 내용 중 잘못 설계되었거나 부족한 부분을 꼼꼼하게 짚어주어 빈틈없는 보장 완성을 지원합니다.
+          </p>
+        </div>
+      </div>
+
+      <MobileShowcase />
+
       <div className="flex flex-col items-center gap-6 mb-12 animate-in fade-in slide-in-from-top-4 duration-1000">
         <div className="text-[0.7rem] font-black text-slate-400 uppercase tracking-[0.3em] opacity-70 mb-4">
           국내 35개 전 보험사 실시간 통합 비교
@@ -1099,7 +1170,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
         </div>
       </div>
 
-      <div className="bg-white rounded-[4.5rem] shadow-[0_60px_180px_-40px_rgba(20,40,80,0.12)] p-8 md:p-16 flex flex-col overflow-hidden border border-gray-50">
+      <div className="max-w-7xl mx-auto w-full bg-white rounded-[4.5rem] shadow-[0_60px_180px_-40px_rgba(20,40,80,0.12)] p-8 md:p-16 flex flex-col overflow-hidden border border-gray-50">
         <div className="flex flex-col gap-20 mb-20 animate-in fade-in slide-in-from-top-4 duration-1000">
 
           <div className="flex flex-col items-center">

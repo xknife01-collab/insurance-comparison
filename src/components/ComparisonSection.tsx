@@ -24,7 +24,7 @@ const ComparisonSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-3xl md:text-5xl lg:text-6xl font-black text-white leading-[1.25] tracking-tight"
+            className="text-3xl md:text-5xl lg:text-6xl font-semibold text-white leading-[1.25] tracking-tight"
           >
             어려운 경기, 가장 먼저 줄여야 할 것은<br />
             생활비가 아니라 <span className="text-orange-400 underline decoration-orange-400/40 decoration-4 underline-offset-8">내 통장에서 새나가는 보험료</span>입니다.

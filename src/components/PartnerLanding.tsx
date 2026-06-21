@@ -2,6 +2,7 @@ import React from 'react';
 import { 
   ArrowUpRight, ShieldCheck, HeartHandshake, Zap, ChevronRight, Award, Sparkles, User, Building, Layers, Brain, Scale, Users
 } from 'lucide-react';
+import MobileShowcase from './MobileShowcase';
 
 interface PartnerLandingProps {
   onNavigate: (view: 'admin' | 'home', options?: { tab?: 'login' | 'register' }) => void;
@@ -129,6 +130,9 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
             </div>
           </div>
         </div>
+
+        {/* High-Fidelity Simulator */}
+        <MobileShowcase />
 
         {/* Dual Demonstration Cards (B2C & B2B Experience) */}
         <div className="max-w-[1300px] mx-auto px-4">
