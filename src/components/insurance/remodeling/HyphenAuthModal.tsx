@@ -1004,6 +1004,12 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
           </div>
           <h3 className="text-2xl font-black">실시간 내 보험 정밀 분석</h3>
           <p className="text-sm opacity-60 mt-1">본인 인증 한 번으로 가입한 보험 정보를 실시간 분석합니다.</p>
+          <div className="flex items-start gap-2 mt-4 text-[11px] text-slate-400 bg-white/5 border border-white/10 rounded-2xl p-3.5 leading-relaxed">
+            <Info size={14} className="text-orange-400 shrink-0 mt-0.5" />
+            <span>
+              본 분석 서비스는 <strong>한국신용정보원(내보험다보여)</strong>에 등록된 고객님의 실시간 보험 계약 데이터를 기반으로 작동합니다. 정상적인 분석을 위해 기존 신용정보원 아이디로 로그인하시거나, 아직 계정이 없으신 경우 본인인증 회원가입이 필요합니다.
+            </span>
+          </div>
         </div>
 
         {/* Tabs */}
@@ -1011,8 +1017,7 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
           <div className="flex border-b border-gray-100 bg-gray-50/50 p-2">
             {[
               { id: 'login', label: '🔑 내보험다보여 로그인' },
-              { id: 'register', label: '💬 본인인증 회원가입' },
-              { id: 'demo', label: '🧪 데모 체험 모드' }
+              { id: 'register', label: '💬 본인인증 회원가입' }
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -1089,6 +1094,26 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
                 <div className="space-y-6">
                   {loginSubMode === 'normal' ? (
                     <form onSubmit={handleLoginSubmit} className="space-y-6">
+                      <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 text-xs font-semibold text-slate-600 leading-relaxed mb-4">
+                        <div className="flex gap-2">
+                          <span className="text-orange-500 font-black shrink-0">💡 아직 계정이 없으신가요?</span>
+                          <p>
+                            한국신용정보원(내보험다보여)이 처음이시라면 우측의{' '}
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setActiveTab('register');
+                                setRegStep('init');
+                                setError('');
+                              }}
+                              className="text-orange-600 font-black hover:underline cursor-pointer"
+                            >
+                              [본인인증 회원가입]
+                            </button>{' '}
+                            탭에서 1분 만에 가입 후 즉시 조회가 가능합니다.
+                          </p>
+                        </div>
+                      </div>
                       {loginStep === 'init' ? (
                         <div className="space-y-4">
                           <div className="space-y-2">
@@ -1441,6 +1466,26 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
                 <div className="space-y-6">
                   {regStep === 'init' && (
                     <form onSubmit={handleRegisterInit} className="space-y-4">
+                      <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 text-xs font-semibold text-slate-600 leading-relaxed mb-4">
+                        <div className="flex gap-2">
+                          <span className="text-emerald-600 font-black shrink-0">💡 이미 계정이 있으신가요?</span>
+                          <p>
+                            기존에 한국신용정보원에 가입하신 적이 있으시다면 새로 가입하실 필요 없이 좌측의{' '}
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setActiveTab('login');
+                                resetLoginStates();
+                                setError('');
+                              }}
+                              className="text-emerald-600 font-black hover:underline cursor-pointer"
+                            >
+                              [내보험다보여 로그인]
+                            </button>{' '}
+                            탭에서 바로 로그인해 주세요.
+                          </p>
+                        </div>
+                      </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-1">
                           <label className="text-[11px] font-black text-slate-400 pl-2">성명</label>
