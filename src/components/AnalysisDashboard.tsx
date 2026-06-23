@@ -207,15 +207,16 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
     return "2026년 06월 공시";
   };
 
-
   const [selectedPlan, setSelectedPlan] = React.useState<any>(null);
   const [applied, setApplied] = React.useState(false);
   const [isUnderwritingOpen, setIsUnderwritingOpen] = React.useState(false);
   const [uwName, setUwName] = React.useState('');
   const [uwPhone, setUwPhone] = React.useState('');
-  const [uwSurgery, setUwSurgery] = React.useState(false);
-  const [uwHospitalization, setUwHospitalization] = React.useState(false);
-  const [uwMedication, setUwMedication] = React.useState(false);
+  const [uwQ1, setUwQ1] = React.useState(false);
+  const [uwQ2, setUwQ2] = React.useState(false);
+  const [uwQ3, setUwQ3] = React.useState(false);
+  const [uwQ4, setUwQ4] = React.useState(false);
+  const [uwQ5, setUwQ5] = React.useState(false);
   const [uwNone, setUwNone] = React.useState(false);
   const [uwSubmitting, setUwSubmitting] = React.useState(false);
 
@@ -333,6 +334,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
   const [smsPhone, setSmsPhone] = React.useState('');
   const [smsSubmitting, setSmsSubmitting] = React.useState(false);
   const [smsSuccess, setSmsSuccess] = React.useState(false);
+  const [isKakaoRequested, setIsKakaoRequested] = React.useState(false);
 
   // KakaoTalk Consultation States & Handlers
   const [isConsultOpen, setIsConsultOpen] = React.useState(false);
@@ -388,12 +390,14 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
   React.useEffect(() => {
     let interval: any;
     if (redirectingModal && redirectingModal.isOpen && redirectingModal.countdown > 0) {
+      if (redirectingModal.isAnonymous) {
+        return;
+      }
       interval = setInterval(() => {
         setRedirectingModal(prev => {
           if (!prev) return null;
           if (prev.countdown <= 1) {
             clearInterval(interval);
-            // Change page location instead of popup to bypass popup blockers
             window.location.href = prev.targetUrl;
             return null;
           }
@@ -402,7 +406,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [redirectingModal?.isOpen, redirectingModal?.countdown]);
+  }, [redirectingModal?.isOpen, redirectingModal?.countdown, redirectingModal?.isAnonymous]);
 
   const handleRequestConsultOtp = async () => {
     const cleanPhone = consultPhone.replace(/[^0-9]/g, '');
@@ -551,60 +555,27 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
       const category = result.analysis.selectedCategory || 'general';
       const simCode = (result as any).simulation_code || '';
       
-      let simulated = false;
-      try {
-        const origin = window.location.origin;
-        const msg = `[보험리밸런스]
-안녕하세요, ${smsName} 고객님.
-요청하신 비교 설계안 보관 링크입니다.
-
-🔑 고유 코드: ${simCode}
-🔗 모바일 보고서 링크:
-${origin}/?code=${simCode}
-
-보안된 서버에 안전하게 보관되었습니다. 언제든 분석 결과를 다시 확인하실 수 있습니다.`;
-
-        const smsRes = await fetch('/api/send-sms-verification', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            action: 'send-link',
-            phone: smsPhone,
-            message: msg
-          })
-        });
-
-        const smsData = await smsRes.json();
-        if (smsData?.simulated) {
-          simulated = true;
-        }
-      } catch (smsErr) {
-        console.error("SMS transmission error:", smsErr);
-      }
-
       if (onSubmitLead) {
         const customAnalysis = {
           ...result.analysis,
-          name: smsName,
-          mobile: smsPhone
+          name: '익명고객',
+          mobile: '010-0000-0000'
         };
         await onSubmitLead(
           customAnalysis,
-          `${category}_sms`,
+          `${category}_consult`,
           result,
-          'regular'
+          'anonymous'
         );
       }
       
-      setSmsSuccess(true);
-      if (simulated) {
-        alert(`[시뮬레이션 안내]\n알리고 API IP 제한으로 인해 SMS가 발송된 것으로 시뮬레이션 처리되었습니다.\n\n고객명: ${smsName}\n연락처: ${smsPhone}\n설계 코드: ${simCode}\n링크: ${window.location.origin}/?code=${simCode}`);
-      } else {
-        alert(`[알림톡/SMS 발송 완료]\n\n고유 설계 코드: [ ${simCode} ]\n\n${smsName} 고객님(${smsPhone})께 모바일 비교 보고서 보관용 링크가 발송되었습니다.`);
-      }
+      const clipboardMsg = `안녕하세요! [ ${simCode} ] 설계안으로 1:1 카톡 상담 및 보관 요청합니다.`;
+      copyToClipboard(clipboardMsg);
+      
+      setIsKakaoRequested(true);
     } catch (err) {
       console.error(err);
-      alert("전송 중 오류가 발생했습니다. 다시 시도해 주세요.");
+      alert("신청 중 오류가 발생했습니다. 다시 시도해 주세요.");
     } finally {
       setSmsSubmitting(false);
     }
@@ -612,40 +583,51 @@ ${origin}/?code=${simCode}
 
   const handleUnderwritingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isRemodeling && !uwVerified) {
-      alert("휴대폰 본인인증을 먼저 완료해 주세요.");
-      return;
-    }
     if (uwSubmitting) return;
     setUwSubmitting(true);
     try {
       const category = result.analysis.selectedCategory || 'general';
+      const simCode = (result as any).simulation_code || '';
       
       if (onSubmitLead) {
         const customAnalysis = {
           ...result.analysis,
-          name: uwName,
-          mobile: uwPhone
+          name: '익명고객',
+          mobile: '010-0000-0000'
         };
         const customPayload = {
           ...result,
           underwriting: {
-            hasSurgery: uwSurgery,
-            hasHospitalization: uwHospitalization,
-            hasMedication: uwMedication,
-            hasNone: uwNone
+            uwQ1,
+            uwQ2,
+            uwQ3,
+            uwQ4,
+            uwQ5,
+            uwNone
           }
         };
         await onSubmitLead(
           customAnalysis, 
           `${category}_underwriting`, 
           customPayload, 
-          'regular'
+          'anonymous'
         );
       }
       
-      alert("사전 심사 신청이 성공적으로 완료되었습니다!\n설계사가 5년 이내 과거 병력 고지 사항을 검토하여 0.1초 만에 실제 인수 동의 및 할증 금액 심사 결과를 안내해 드립니다.");
+      const clipboardMsg = `안녕하세요! [ ${simCode} ] 설계안으로 가입 승인 사전 심사 및 익명 상담 요청합니다.`;
+      copyToClipboard(clipboardMsg);
+      
       setIsUnderwritingOpen(false);
+
+      if (branding?.kakaoLink) {
+        setRedirectingModal({
+          isOpen: true,
+          code: simCode,
+          isAnonymous: true,
+          targetUrl: branding.kakaoLink,
+          countdown: 9999
+        });
+      }
     } catch (err) {
       console.error(err);
       alert("신청 중 오류가 발생했습니다. 다시 시도해 주세요.");
@@ -653,6 +635,44 @@ ${origin}/?code=${simCode}
       setUwSubmitting(false);
     }
   };
+
+  const handleRequestUnlockAnonymous = async () => {
+    try {
+      const category = result.analysis.selectedCategory || 'general';
+      const simCode = (result as any).simulation_code || '';
+      
+      if (onSubmitLead) {
+        const customAnalysis = {
+          ...result.analysis,
+          name: '익명고객',
+          mobile: '010-0000-0000'
+        };
+        await onSubmitLead(
+          customAnalysis,
+          `${category}_consult`,
+          result,
+          'anonymous'
+        );
+      }
+      
+      const clipboardMsg = `안녕하세요! [ ${simCode} ] 설계안으로 1:1 카톡 상담 및 보관 요청합니다.`;
+      copyToClipboard(clipboardMsg);
+      
+      if (branding?.kakaoLink) {
+        setRedirectingModal({
+          isOpen: true,
+          code: simCode,
+          isAnonymous: true,
+          targetUrl: branding.kakaoLink,
+          countdown: 9999
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      alert("신청 중 오류가 발생했습니다.");
+    }
+  };
+
   const allDietOptions = (analysis as any)._allDietOptions || [];
   const allUpgradeOptions = (analysis as any)._allUpgradeOptions || [];
 
@@ -831,58 +851,65 @@ ${origin}/?code=${simCode}
               지금 화면을 닫으면 분석 결과가 사라집니다!
             </h3>
             <p className="text-sm text-slate-400 font-bold leading-relaxed">
-              내 전용 비교 설계안 보고서를 스마트폰으로 평생 무료 보관하세요. (알림톡/SMS 즉시 전송)
+              내 전용 비교 설계안 보고서를 카카오톡 비공개 1:1 상담방으로 안전하게 발송하고 스마트폰에 보관하세요.
             </p>
           </div>
 
           <div className={`w-full ${forceMobile ? 'min-w-0' : 'lg:w-auto shrink-0 min-w-[320px] md:min-w-[420px]'} bg-slate-950/60 p-6 md:p-8 rounded-[2rem] border border-white/5 shadow-inner`}>
-            {smsSuccess ? (
-              <div className="text-center py-4 space-y-4">
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xl font-black">
-                  ✓
+            {isKakaoRequested ? (
+              <div className="text-center py-2 space-y-4">
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-400 text-xl font-black animate-pulse">
+                  💬
                 </div>
                 <div className="space-y-1">
-                  <h4 className="text-base font-black text-white">보관함 링크 전송 완료!</h4>
-                  <p className="text-xs text-slate-400 font-bold">
-                    입력하신 번호로 맞춤 설계 보고서 링크가 발송되었습니다.
+                  <h4 className="text-base font-black text-white">고유 보관 코드가 발급되었습니다.</h4>
+                  <p className="text-[11px] text-slate-400 font-bold break-keep leading-relaxed">
+                    아래 코드를 복사하여 1:1 카카오톡 상담방에 전송해 주시면 본인인증 완료 즉시 설계안이 평생 보관됩니다.
                   </p>
                 </div>
-                <div className="bg-white/5 border border-white/10 rounded-xl p-3 text-xs text-slate-350 font-bold inline-block">
-                  🔑 고유 설계 코드: <span className="text-orange-400 font-black uppercase tracking-widest">{(result as any).simulation_code || ''}</span>
+                
+                <div className="w-full bg-slate-900 border border-white/10 rounded-2xl p-4 text-center space-y-3">
+                  <span className="text-[9px] font-black text-slate-500 uppercase tracking-wider block">내 고유 보관 코드</span>
+                  <span className="text-lg font-mono font-black text-orange-400 tracking-widest uppercase select-all block bg-black/40 py-2 rounded-xl border border-white/5">
+                    {(result as any).simulation_code || ''}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      copyToClipboard((result as any).simulation_code || '');
+                      alert('보관 코드가 복사되었습니다! 카톡방에 붙여넣기(Ctrl+V)하여 전송해 주세요.');
+                    }}
+                    className="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-black text-[11px] rounded-xl border border-white/5 transition-all cursor-pointer"
+                  >
+                    코드 복사하기 📋
+                  </button>
                 </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (branding?.kakaoLink) {
+                      window.open(branding.kakaoLink, '_blank');
+                    } else {
+                      window.open('https://open.kakao.com/o/sgnA9rAi', '_blank');
+                    }
+                  }}
+                  className="w-full py-4.5 bg-yellow-500 hover:bg-yellow-600 text-slate-950 font-black text-xs rounded-xl shadow-[0_10px_20px_-4px_rgba(234,179,8,0.3)] transition-all cursor-pointer flex items-center justify-center gap-2"
+                >
+                  💬 카카오톡 1:1 상담방 입장하기
+                </button>
               </div>
             ) : (
               <form onSubmit={handleSmsSubmit} className="space-y-4">
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-1 text-left">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">고객 이름</label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="홍길동"
-                      value={smsName}
-                      onChange={(e) => setSmsName(e.target.value)}
-                      className="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors"
-                    />
-                  </div>
-                  <div className="space-y-1 text-left">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">휴대전화 번호</label>
-                    <input
-                      type="tel"
-                      required
-                      placeholder="010-1234-5678"
-                      value={smsPhone}
-                      onChange={(e) => setSmsPhone(e.target.value)}
-                      className="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors"
-                    />
-                  </div>
-                </div>
+                <p className="text-[11.5px] text-slate-400 font-bold leading-relaxed text-center py-2 break-keep">
+                  개인 식별 정보(이름, 휴대폰 번호)를 미리 입력받지 않고, 카카오톡 1:1 비공개 상담방을 통해 완전 익명으로 안전하게 보관해 드립니다.
+                </p>
                 <button
                   type="submit"
                   disabled={smsSubmitting}
                   className="w-full py-4.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:opacity-50 text-white font-black text-xs rounded-xl shadow-[0_10px_20px_-4px_rgba(255,107,0,0.4)] transition-all cursor-pointer text-center"
                 >
-                  {smsSubmitting ? "설계안 전송 중..." : "👉 내 번호로 설계안 전송하기"}
+                  {smsSubmitting ? "보관 코드 발급 중..." : "💬 카카오톡으로 설계안 보관 & 1:1 상담받기"}
                 </button>
               </form>
             )}
@@ -1682,9 +1709,7 @@ ${origin}/?code=${simCode}
               </div>
               <button
                 type="button"
-                onClick={() => {
-                  setIsConsultOpen(true);
-                }}
+                onClick={handleRequestUnlockAnonymous}
                 className="px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-black text-xs rounded-xl shadow-md transition-all active:scale-95 whitespace-nowrap cursor-pointer font-extrabold"
               >
                 🔒 0.1초 만에 무료로 실제 이름 잠금 해제하기
@@ -1772,7 +1797,10 @@ ${origin}/?code=${simCode}
           </div>
           
           <div className="divide-y divide-gray-50">
-            {((result.analysis as any)._allOptions || []).slice(0, 30).map((opt: any, idx: number) => (
+            {(window.location.search.includes('simulation=true')
+              ? ((result.analysis as any)._allOptions || []).slice(0, 30)
+              : ((result.analysis as any)._allOptions || [])
+            ).map((opt: any, idx: number) => (
               <div key={idx} className={`flex flex-col ${forceMobile ? '' : 'md:grid md:grid-cols-12'} p-6 md:p-8 items-start ${forceMobile ? '' : 'md:items-center'} hover:bg-gray-50 transition-all group gap-3 md:gap-0`}>
                 {/* Mobile Rank, Company & Price Header */}
                 <div className={`flex w-full items-center justify-between ${forceMobile ? '' : 'md:hidden'}`}>
@@ -1943,48 +1971,49 @@ ${origin}/?code=${simCode}
                       <span className="px-2 py-0.5 bg-orange-500/25 text-orange-400 rounded-md text-[8px] font-black uppercase tracking-widest border border-orange-500/30">Verified</span>
                     </div>
                     <div className="space-y-2 text-[11px] font-bold text-slate-200">
-                      <p className="flex items-center gap-1.5"><span className="text-orange-500 text-xs">✓</span> 동의 없는 무단 전화 일절 금지</p>
-                      <p className="flex items-center gap-1.5"><span className="text-orange-500 text-xs">✓</span> 자가진단시 연락처 완벽 마스킹</p>
-                      <p className="flex items-center gap-1.5"><span className="text-orange-500 text-xs">✓</span> 코드를 통한 1:1 카톡 익명 상담 가능</p>
+                      <p className="flex items-center gap-1.5"><span className="text-orange-500 text-xs">✓</span> 개인정보 없는 익명 진단</p>
+                      <p className="flex items-center gap-1.5"><span className="text-orange-500 text-xs">✓</span> 고유 보관 코드 발급</p>
+                      <p className="flex items-center gap-1.5"><span className="text-orange-500 text-xs">✓</span> 상담원 없는 자율 진단</p>
                     </div>
                   </div>
                 </div>
 
-                {/* 가로 분할 2 버튼 */}
-                <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10 pt-4 border-t border-white/5">
+                {/* 가로 분할 1 버튼 (익명 상담 신청만 단독 노출) */}
+                <div className="w-full grid grid-cols-1 gap-4 relative z-10 pt-4 border-t border-white/5">
                   <button
-                    onClick={() => {
-                      setConsultType('anonymous');
-                      if (result.analysis.name) setConsultName(result.analysis.name);
-                      if (result.analysis.mobile) setConsultPhone(result.analysis.mobile);
-                      setConsultOtpSent(false);
-                      setConsultOtpCode('');
-                      setConsultVerified(false);
-                      setConsultOtpLoading(false);
-                      setConsultOtpTimer(180);
-                      setConsultOtpError(null);
-                      setIsConsultOpen(true);
-                    }}
-                    className="w-full px-6 py-4.5 bg-slate-800 hover:bg-slate-700 text-white font-black text-xs rounded-xl border border-white/10 shadow-md transform hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer text-center"
-                  >
-                    💬 익명 카톡 상담 신청 (무료)
-                  </button>
-                  <button
-                    onClick={() => {
-                      setConsultType('regular');
-                      if (result.analysis.name) setConsultName(result.analysis.name);
-                      if (result.analysis.mobile) setConsultPhone(result.analysis.mobile);
-                      setConsultOtpSent(false);
-                      setConsultOtpCode('');
-                      setConsultVerified(false);
-                      setConsultOtpLoading(false);
-                      setConsultOtpTimer(180);
-                      setConsultOtpError(null);
-                      setIsConsultOpen(true);
+                    onClick={async () => {
+                      setApplied(true);
+                      const simCode = (result as any).simulation_code || '';
+                        if (onSubmitLead) {
+                          const customAnalysis = {
+                            ...result.analysis,
+                            name: '익명고객',
+                            mobile: '010-0000-0000'
+                          };
+                          await onSubmitLead(
+                            customAnalysis,
+                            'general_consult',
+                            result,
+                            'anonymous'
+                          );
+                        }
+                      
+                      const clipboardMsg = `안녕하세요! [ ${simCode} ] 설계안으로 정밀 분석 익명 상담 신청합니다. (보험 종류: ${result.analysis.selectedCategory || '일반'})`;
+                      copyToClipboard(clipboardMsg);
+
+                      if (branding?.kakaoLink) {
+                        setRedirectingModal({
+                          isOpen: true,
+                          code: simCode,
+                          isAnonymous: true,
+                          targetUrl: branding.kakaoLink,
+                          countdown: 9999
+                        });
+                      }
                     }}
                     className="w-full px-6 py-4.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xs rounded-xl shadow-[0_12px_24px_-4px_rgba(255,107,0,0.4)] transform hover:scale-[1.03] active:scale-95 transition-all duration-300 cursor-pointer text-center"
                   >
-                    🚀 정식 카톡 상담 신청 (무료)
+                    💬 익명 카톡 상담 신청 (무료)
                   </button>
                 </div>
               </div>
@@ -2117,15 +2146,15 @@ ${origin}/?code=${simCode}
                   <span className="px-1.5 py-0.5 bg-orange-500/20 text-orange-400 rounded-md text-[7px] font-black uppercase tracking-wider border border-orange-500/20">Verified</span>
                 </div>
                 <div className="space-y-1.5 text-[9px] font-bold text-slate-400">
-                  <p className="flex items-center gap-1"><span className="text-orange-500">✓</span> 동의 없는 무단 전화 일절 금지</p>
-                  <p className="flex items-center gap-1"><span className="text-orange-500">✓</span> 자가진단시 연락처 완벽 마스킹</p>
-                  <p className="flex items-center gap-1"><span className="text-orange-500">✓</span> 코드를 통한 1:1 카톡 익명 상담 가능</p>
+                  <p className="flex items-center gap-1"><span className="text-orange-500">✓</span> 개인정보 없는 익명 진단</p>
+                  <p className="flex items-center gap-1"><span className="text-orange-500">✓</span> 고유 보관 코드 발급</p>
+                  <p className="flex items-center gap-1"><span className="text-orange-500">✓</span> 상담원 없는 자율 진단</p>
                 </div>
               </div>
             </div>
 
-            {/* 가로 분할 2 버튼 */}
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/5">
+            {/* 가로 분할 1 버튼 (익명 신청만 단독 노출) */}
+            <div className="w-full grid grid-cols-1 gap-4 pt-4 border-t border-white/5">
               <button
                 onClick={async () => {
                   setApplied(true);
@@ -2153,48 +2182,13 @@ ${origin}/?code=${simCode}
                       code: simCode,
                       isAnonymous: true,
                       targetUrl: branding.kakaoLink,
-                      countdown: 3
-                    });
-                  }
-                }}
-                className="w-full px-6 py-4.5 bg-slate-800 hover:bg-slate-700 text-white font-black text-xs rounded-xl border border-white/10 shadow-md transform hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer text-center"
-              >
-                💬 익명 정밀 분석 신청 (무료)
-              </button>
-              <button
-                onClick={async () => {
-                  setApplied(true);
-                  const simCode = (result as any).simulation_code || '';
-                  if (onSubmitLead) {
-                    const customAnalysis = {
-                      ...result.analysis,
-                      name: result.analysis.name || '고객',
-                      mobile: result.analysis.mobile || ''
-                    };
-                    await onSubmitLead(
-                      customAnalysis,
-                      'remodeling_consult',
-                      result,
-                      'regular'
-                    );
-                  }
-                  
-                  const clipboardMsg = `안녕하세요! [ ${simCode} ] 설계안으로 정밀 분석 정식 상담 신청합니다. (보험 종류: ${result.analysis.selectedCategory || '일반'})`;
-                  copyToClipboard(clipboardMsg);
-
-                  if (branding?.kakaoLink) {
-                    setRedirectingModal({
-                      isOpen: true,
-                      code: simCode,
-                      isAnonymous: false,
-                      targetUrl: branding.kakaoLink,
-                      countdown: 3
+                      countdown: 9999
                     });
                   }
                 }}
                 className="w-full px-6 py-4.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xs rounded-xl shadow-[0_12px_24px_-4px_rgba(255,107,0,0.4)] transform hover:scale-[1.03] active:scale-95 transition-all duration-300 cursor-pointer text-center"
               >
-                🚀 정식 정밀 분석 신청 (무료)
+                💬 익명 정밀 분석 신청 (무료)
               </button>
             </div>
           </div>
@@ -2221,135 +2215,77 @@ ${origin}/?code=${simCode}
             </div>
 
             <form onSubmit={handleUnderwritingSubmit} className="space-y-4">
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">고객 이름</label>
-                <input 
-                  type="text" 
-                  required
-                  disabled={isRemodeling}
-                  placeholder="홍길동"
-                  value={uwName}
-                  onChange={(e) => setUwName(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-850 rounded-xl px-4 py-3.5 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors disabled:opacity-50"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">연락처 (휴대폰 번호)</label>
-                {isRemodeling ? (
-                  <input 
-                    type="tel" 
-                    required
-                    disabled={true}
-                    placeholder="010-1234-5678"
-                    value={uwPhone}
-                    onChange={(e) => setUwPhone(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-850 rounded-xl px-4 py-3.5 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors disabled:opacity-50"
-                  />
-                ) : (
-                  <div className="flex gap-2">
-                    <input 
-                      type="tel" 
-                      required
-                      disabled={uwVerified}
-                      placeholder="010-1234-5678"
-                      value={uwPhone}
-                      onChange={(e) => setUwPhone(e.target.value)}
-                      className="flex-1 bg-slate-950 border border-slate-850 rounded-xl px-4 py-3.5 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors disabled:opacity-50"
-                    />
-                    <button
-                      type="button"
-                      disabled={uwVerified || uwOtpLoading}
-                      onClick={handleRequestUwOtp}
-                      className="px-4 bg-orange-500 hover:bg-orange-600 disabled:bg-slate-800 text-white font-extrabold text-[10px] rounded-xl transition-all cursor-pointer whitespace-nowrap"
-                    >
-                      {uwOtpSent ? "재전송" : "인증번호 받기"}
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {!isRemodeling && uwOtpSent && !uwVerified && (
-                <div className="space-y-1.5 animate-in slide-in-from-top-2 duration-200">
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">인증번호 입력</label>
-                  <div className="flex gap-2">
-                    <div className="relative flex-1">
-                      <input 
-                        type="text" 
-                        required
-                        maxLength={6}
-                        placeholder="6자리 인증번호"
-                        value={uwOtpCode}
-                        onChange={(e) => setUwOtpCode(e.target.value.replace(/[^0-9]/g, ''))}
-                        className="w-full bg-slate-950 border border-slate-850 rounded-xl px-4 py-3.5 pr-12 text-xs font-bold text-white placeholder-slate-650 focus:outline-none focus:border-orange-500 transition-colors"
-                      />
-                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-black text-orange-400">
-                        {Math.floor(uwOtpTimer / 60)}:{(uwOtpTimer % 60).toString().padStart(2, '0')}
-                      </span>
-                    </div>
-                    <button
-                      type="button"
-                      disabled={uwOtpLoading}
-                      onClick={handleVerifyUwOtp}
-                      className="px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-[10px] rounded-xl transition-all cursor-pointer whitespace-nowrap"
-                    >
-                      인증 완료
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {!isRemodeling && uwOtpError && (
-                <p className="text-[11px] text-rose-500 font-bold leading-relaxed">{uwOtpError}</p>
-              )}
-              
-              {!isRemodeling && uwVerified && (
-                <p className="text-[11px] text-emerald-400 font-extrabold flex items-center gap-1 font-bold">
-                  <span>✓</span> 휴대폰 인증이 완료되었습니다.
-                </p>
-              )}
-
               <div className="space-y-3 pt-2">
                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">최근 5년 내 병력 사항 고지 (단순 체크)</label>
-                <div className="space-y-2 bg-slate-950/40 p-4 rounded-xl border border-slate-850/60">
+                <div className="space-y-2.5 bg-slate-950/40 p-4 rounded-xl border border-slate-850/60 max-h-[350px] overflow-y-auto">
                   <label className="flex items-start gap-2.5 cursor-pointer text-xs font-bold text-slate-350 hover:text-white select-none">
                     <input 
                       type="checkbox"
-                      checked={uwSurgery}
+                      checked={uwQ1}
                       onChange={(e) => {
                         const checked = e.target.checked;
-                        setUwSurgery(checked);
+                        setUwQ1(checked);
                         if (checked) setUwNone(false);
                       }}
                       className="mt-0.5 rounded border-slate-800 text-orange-500 focus:ring-0 focus:ring-offset-0 bg-slate-950 cursor-pointer"
                     />
-                    <span className="leading-tight break-keep">최근 5년 이내 수술 이력이 있습니다.</span>
+                    <span className="leading-tight break-keep">최근 3개월 이내 의사로부터 추가 검사(재검사) 필요 소견을 받은 적이 있습니다.</span>
                   </label>
+                  
                   <label className="flex items-start gap-2.5 cursor-pointer text-xs font-bold text-slate-350 hover:text-white select-none">
                     <input 
                       type="checkbox"
-                      checked={uwHospitalization}
+                      checked={uwQ2}
                       onChange={(e) => {
                         const checked = e.target.checked;
-                        setUwHospitalization(checked);
+                        setUwQ2(checked);
                         if (checked) setUwNone(false);
                       }}
                       className="mt-0.5 rounded border-slate-800 text-orange-500 focus:ring-0 focus:ring-offset-0 bg-slate-950 cursor-pointer"
                     />
-                    <span className="leading-tight break-keep">최근 5년 이내 입원 이력이 있습니다.</span>
+                    <span className="leading-tight break-keep">최근 3개월 이내 의사로부터 질병의심소견, 치료, 입원, 수술 처방을 받은 적이 있습니다.</span>
                   </label>
+
                   <label className="flex items-start gap-2.5 cursor-pointer text-xs font-bold text-slate-350 hover:text-white select-none">
                     <input 
                       type="checkbox"
-                      checked={uwMedication}
+                      checked={uwQ3}
                       onChange={(e) => {
                         const checked = e.target.checked;
-                        setUwMedication(checked);
+                        setUwQ3(checked);
                         if (checked) setUwNone(false);
                       }}
                       className="mt-0.5 rounded border-slate-800 text-orange-500 focus:ring-0 focus:ring-offset-0 bg-slate-950 cursor-pointer"
                     />
-                    <span className="leading-tight break-keep">최근 3개월 이내 의사 처방 및 약 복용 이력이 있습니다.</span>
+                    <span className="leading-tight break-keep">최근 5년 이내 계속하여 7일 이상 치료를 받은 적이 있습니다.</span>
+                  </label>
+
+                  <label className="flex items-start gap-2.5 cursor-pointer text-xs font-bold text-slate-350 hover:text-white select-none">
+                    <input 
+                      type="checkbox"
+                      checked={uwQ4}
+                      onChange={(e) => {
+                        const checked = e.target.checked;
+                        setUwQ4(checked);
+                        if (checked) setUwNone(false);
+                      }}
+                      className="mt-0.5 rounded border-slate-800 text-orange-500 focus:ring-0 focus:ring-offset-0 bg-slate-950 cursor-pointer"
+                    />
+                    <span className="leading-tight break-keep">최근 5년 이내 계속하여 30일 이상 약 복용(투약)을 한 적이 있습니다.</span>
+                  </label>
+
+                  <label className="flex items-start gap-2.5 cursor-pointer text-xs font-bold text-slate-350 hover:text-white select-none">
+                    <input 
+                      type="checkbox"
+                      checked={uwQ5}
+                      onChange={(e) => {
+                        const checked = e.target.checked;
+                        setUwQ5(checked);
+                        if (checked) setUwNone(false);
+                      }}
+                      className="mt-0.5 rounded border-slate-800 text-orange-500 focus:ring-0 focus:ring-offset-0 bg-slate-950 cursor-pointer"
+                    />
+                    <span className="leading-tight break-keep">최근 5년 이내 암, 백혈병, 고혈압, 당뇨병, 협심증, 심근경색, 뇌졸중(뇌출혈/뇌경색), 간경화증으로 진단받거나 치료/입원/수술을 받은 적이 있습니다.</span>
                   </label>
                   
                   <div className="w-full h-px bg-slate-850/60 my-2" />
@@ -2362,9 +2298,11 @@ ${origin}/?code=${simCode}
                         const checked = e.target.checked;
                         setUwNone(checked);
                         if (checked) {
-                          setUwSurgery(false);
-                          setUwHospitalization(false);
-                          setUwMedication(false);
+                          setUwQ1(false);
+                          setUwQ2(false);
+                          setUwQ3(false);
+                          setUwQ4(false);
+                          setUwQ5(false);
                         }
                       }}
                       className="mt-0.5 rounded border-slate-800 text-orange-500 focus:ring-0 focus:ring-offset-0 bg-slate-950 cursor-pointer"
@@ -2384,10 +2322,10 @@ ${origin}/?code=${simCode}
                 </button>
                 <button 
                   type="submit"
-                  disabled={uwSubmitting || (!isRemodeling && !uwVerified)}
+                  disabled={uwSubmitting || (!uwQ1 && !uwQ2 && !uwQ3 && !uwQ4 && !uwQ5 && !uwNone)}
                   className="flex-1 px-4 py-3.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:opacity-50 text-white font-black text-xs rounded-xl shadow-[0_8px_16px_rgba(255,107,0,0.3)] cursor-pointer text-center font-extrabold"
                 >
-                  {uwSubmitting ? "신청 중..." : "사전 심사 신청 완료"}
+                  {uwSubmitting ? "신청 중..." : "👉 사전 심사 및 익명 카톡 신청"}
                 </button>
               </div>
             </form>
@@ -2568,8 +2506,12 @@ ${origin}/?code=${simCode}
                 <button
                   type="button"
                   onClick={() => {
-                    window.location.href = redirectingModal.targetUrl;
-                    setRedirectingModal(null);
+                    if (redirectingModal.isAnonymous) {
+                      window.open(redirectingModal.targetUrl, '_blank');
+                    } else {
+                      window.location.href = redirectingModal.targetUrl;
+                      setRedirectingModal(null);
+                    }
                   }}
                   className="w-full py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xs rounded-xl shadow-lg active:scale-95 transition-all duration-300 cursor-pointer"
                 >
@@ -2578,18 +2520,20 @@ ${origin}/?code=${simCode}
               </div>
 
               {/* Progress Indicator for Auto-redirect */}
-              <div className="space-y-1">
-                <div className="flex justify-between items-center text-[9px] font-black text-slate-500 uppercase tracking-wider px-1">
-                  <span>자동 연결</span>
-                  <span>{redirectingModal.countdown}초</span>
+              {!redirectingModal.isAnonymous && (
+                <div className="space-y-1">
+                  <div className="flex justify-between items-center text-[9px] font-black text-slate-500 uppercase tracking-wider px-1">
+                    <span>자동 연결</span>
+                    <span>{redirectingModal.countdown}초</span>
+                  </div>
+                  <div className="w-full h-1 bg-slate-950 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-gradient-to-r from-orange-500 to-yellow-500 transition-all duration-1000 ease-linear"
+                      style={{ width: `${(redirectingModal.countdown / 3) * 100}%` }}
+                    />
+                  </div>
                 </div>
-                <div className="w-full h-1 bg-slate-950 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-gradient-to-r from-orange-500 to-yellow-500 transition-all duration-1000 ease-linear"
-                    style={{ width: `${(redirectingModal.countdown / 3) * 100}%` }}
-                  />
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

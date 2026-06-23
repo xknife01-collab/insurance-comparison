@@ -178,23 +178,23 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
                 <div className="bg-white p-3.5 rounded-2xl border border-orange-100 flex flex-col gap-0.5 shadow-sm">
                   <div className="flex items-center gap-1.5">
                     <span className="text-[9px] font-black text-orange-500 uppercase tracking-widest">Promise 1</span>
-                    <span className="text-xs font-black text-slate-800 leading-tight">동의 없는 전화 금지</span>
+                    <span className="text-xs font-black text-slate-800 leading-tight">개인정보 없는 익명 진단</span>
                   </div>
-                  <p className="text-[10.5px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">상담 동의가 없는 한, 광고성 무단 전화를 일절 유도하지 않습니다.</p>
+                  <p className="text-[10.5px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">이름과 휴대폰 번호 등 개인 정보를 입력하지 않고 즉시 비교 분석 결과를 확인합니다.</p>
                 </div>
                 <div className="bg-white p-3.5 rounded-2xl border border-orange-100 flex flex-col gap-0.5 shadow-sm">
                   <div className="flex items-center gap-1.5">
                     <span className="text-[9px] font-black text-orange-500 uppercase tracking-widest">Promise 2</span>
-                    <span className="text-xs font-black text-slate-800 leading-tight">개인정보 암호화</span>
+                    <span className="text-xs font-black text-slate-800 leading-tight">고유 보관 코드 발급</span>
                   </div>
-                  <p className="text-[10.5px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">자가진단 단계에서는 연락처가 든든하게 마스킹 보호 처리됩니다.</p>
+                  <p className="text-[10.5px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">분석 화면 분실 방지를 위해 나만 알 수 있는 안전한 임시 보관 코드가 발급됩니다.</p>
                 </div>
                 <div className="bg-white p-3.5 rounded-2xl border border-orange-100 flex flex-col gap-0.5 shadow-sm">
                   <div className="flex items-center gap-1.5">
                     <span className="text-[9px] font-black text-orange-500 uppercase tracking-widest">Promise 3</span>
-                    <span className="text-xs font-black text-slate-800 leading-tight">카톡 1:1 익명 상담</span>
+                    <span className="text-xs font-black text-slate-800 leading-tight">상담원 없는 자율 진단</span>
                   </div>
-                  <p className="text-[10.5px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">고객이 원할 때만 코드를 활용한 익명 상담으로 매칭됩니다.</p>
+                  <p className="text-[10.5px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">상담원 전화 유도 없이, 오직 AI 빅데이터 엔진을 통해 고객 스스로 자율 비교 및 진단을 완료할 수 있습니다.</p>
                 </div>
               </div>
             </div>

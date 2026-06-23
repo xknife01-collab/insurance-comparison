@@ -46,6 +46,7 @@ import { PropertyExplanation } from './components/insurance/property/PropertyExp
 import AdminDashboard from './components/AdminDashboard';
 import { CustomerSupportSection } from './components/CustomerSupportSection';
 import { PartnerLanding } from './components/PartnerLanding';
+import VerificationPage from './components/VerificationPage';
 
 export default function App() {
   const { branding, loading, showInAppGuide, setShowInAppGuide, isIOS, isInAppBrowser, isStandalone, updateBranding } = useB2BBranding();
@@ -53,9 +54,10 @@ export default function App() {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [remodelingResult, setRemodelingResult] = useState<AnalysisResult | null>(null);
   const [currentAnalysis, setCurrentAnalysis] = useState<InsuranceAnalysis | null>(null);
-  const [view, setView] = useState<'admin' | 'partner' | 'home' | 'indemnity' | 'preexisting' | 'dental' | 'caregiving' | 'dementia' | 'surgery' | 'cancer' | 'cerebrovascular' | 'heart' | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'property' | 'annuity' | 'whole' | 'variable' | 'legal' | 'credit' | 'health_general' | 'accident' | 'savings_general' | 'support'>(() => {
+  const [view, setView] = useState<'admin' | 'partner' | 'home' | 'indemnity' | 'preexisting' | 'dental' | 'caregiving' | 'dementia' | 'surgery' | 'cancer' | 'cerebrovascular' | 'heart' | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'property' | 'annuity' | 'whole' | 'variable' | 'legal' | 'credit' | 'health_general' | 'accident' | 'savings_general' | 'support' | 'verify'>(() => {
     if (window.location.pathname === '/admin') return 'admin';
     if (window.location.pathname === '/partner') return 'partner';
+    if (window.location.pathname === '/verify') return 'verify';
     return 'home';
   });
   const [adminTab, setAdminTab] = useState<'login' | 'register'>('login');
@@ -65,6 +67,7 @@ export default function App() {
   const [submittedLeads, setSubmittedLeads] = useState<string[]>([]);
   const [lastSubmittedLeadId, setLastSubmittedLeadId] = useState<number | null>(null);
   const [currentSimulationCode, setCurrentSimulationCode] = useState<string>('');
+  const [showUnlockModal, setShowUnlockModal] = useState<boolean>(false);
   const [isUnlocked, setIsUnlocked] = useState<boolean>(() => {
     if (window.location.search.includes('reset')) {
       localStorage.removeItem('ins_unlocked');
@@ -81,6 +84,52 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const codeParam = params.get('code');
+    if (codeParam && codeParam.startsWith('R')) {
+      const fetchLeadOnMount = async () => {
+        try {
+          const supabase = createClient();
+          const { data, error } = await supabase
+            .from('customer_leads')
+            .select('*')
+            .eq('raw_payload->>simulation_code', codeParam)
+            .order('created_at', { ascending: false })
+            .limit(1);
+
+          if (!error && data && data.length > 0) {
+            const lead = data[0];
+            const payload = lead.raw_payload || {};
+            const analysisInputs = payload.analysisInputs;
+            
+            if (analysisInputs) {
+              setCurrentAnalysis(analysisInputs);
+              setCurrentSimulationCode(codeParam);
+              
+              const isRemod = lead.insurance_type === 'remodeling' || lead.insurance_type === 'remodeling_consult';
+              setCalcTarget(isRemod ? 'remodeling' : (lead.insurance_type?.replace('_consult', '') || 'general'));
+              
+              if (isRemod) {
+                setRemodelingResult(lead.analysis_result);
+              } else {
+                setAnalysisResult(lead.analysis_result);
+              }
+
+              if (lead.status === 'verified') {
+                setIsUnlocked(true);
+                localStorage.setItem('ins_unlocked', 'true');
+              }
+            }
+          }
+        } catch (err) {
+          console.error('Failed to load lead on mount:', err);
+        }
+      };
+      fetchLeadOnMount();
+    }
+  }, []);
+
+  useEffect(() => {
     const hasHighIntentLead = submittedLeads.some(leadKey => {
       const parts = leadKey.split('_');
       const cat = parts[parts.length - 1];
@@ -91,6 +140,39 @@ export default function App() {
       localStorage.setItem('ins_unlocked', 'true');
     }
   }, [submittedLeads]);
+
+  useEffect(() => {
+    if (!currentSimulationCode) return;
+
+    const supabase = createClient();
+    
+    // Listen to updates on customer_leads where raw_payload->>simulation_code equals currentSimulationCode
+    const channel = supabase
+      .channel(`verification_listener:${currentSimulationCode}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'customer_leads'
+        },
+        (payload) => {
+          const leadCode = payload.new?.raw_payload?.simulation_code;
+          const status = payload.new?.status;
+          
+          if (leadCode === currentSimulationCode && status === 'verified') {
+            setIsUnlocked(true);
+            localStorage.setItem('ins_unlocked', 'true');
+            alert('🎉 본인인증이 확인되어 실명 마스킹이 0.1초 만에 해제되었습니다!');
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [currentSimulationCode]);
 
   const generateSimulationCode = () => {
     const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -116,7 +198,7 @@ export default function App() {
       const supabase = createClient();
       const { data: lead } = await supabase
         .from('customer_leads')
-        .select('raw_payload')
+        .select('raw_payload, insurance_type')
         .eq('id', leadId)
         .single();
       
@@ -143,12 +225,23 @@ export default function App() {
 
         const updatedPayload = {
           ...currentPayload,
+          consult_type: type || 'anonymous',
+          copied_by_planner: false,
           timeline: [newEvent, ...currentTimeline]
         };
 
+        let currentType = lead.insurance_type || '';
+        let newType = currentType;
+        if (type === 'anonymous' && !currentType.endsWith('_consult')) {
+          newType = `${currentType}_consult`;
+        }
+
         await supabase
           .from('customer_leads')
-          .update({ raw_payload: updatedPayload })
+          .update({ 
+            insurance_type: newType,
+            raw_payload: updatedPayload 
+          })
           .eq('id', leadId);
       }
     } catch (err) {
@@ -421,8 +514,12 @@ export default function App() {
       if (window.location.pathname !== '/partner') {
         window.history.pushState({}, '', '/partner');
       }
+    } else if (view === 'verify') {
+      if (window.location.pathname !== '/verify') {
+        window.history.pushState({}, '', '/verify' + window.location.search);
+      }
     } else {
-      if (window.location.pathname === '/admin' || window.location.pathname === '/partner') {
+      if (window.location.pathname === '/admin' || window.location.pathname === '/partner' || window.location.pathname === '/verify') {
         window.history.pushState({}, '', '/');
       }
     }
@@ -434,6 +531,8 @@ export default function App() {
         setView('admin');
       } else if (window.location.pathname === '/partner') {
         setView('partner');
+      } else if (window.location.pathname === '/verify') {
+        setView('verify');
       } else {
         setView('home');
       }
@@ -509,6 +608,20 @@ export default function App() {
           setView(newView);
         }} 
       />
+    );
+  }
+
+  if (view === 'verify') {
+    return (
+      <div className="min-h-screen bg-slate-900 font-sans text-white antialiased flex flex-col justify-between">
+        <div>
+          <Header setView={setView} />
+          <main className="pt-24 px-4 max-w-xl mx-auto w-full">
+            <VerificationPage branding={branding} />
+          </main>
+        </div>
+        <Footer />
+      </div>
     );
   }
 
@@ -1110,7 +1223,7 @@ export default function App() {
 
                 return (
                   <>
-                    <AnalysisDashboard result={analysisResult} onSubmitLead={submitLead} branding={branding} isUnlocked={true} />
+                    <AnalysisDashboard result={analysisResult} onSubmitLead={submitLead} branding={branding} isUnlocked={isUnlocked} />
 
                     {currentAnalysis && (
                       <div className="mt-40">
@@ -1278,10 +1391,10 @@ export default function App() {
                             <div className="flex items-start justify-between gap-4">
                               <div className="space-y-1">
                                 <span className="inline-block px-2.5 py-1 bg-slate-100 text-slate-600 rounded-lg text-[10px] font-black">
-                                  {maskCompany(policy.insurance_company, true)}
+                                  {maskCompany(policy.insurance_company, isUnlocked)}
                                 </span>
                                 <h4 className="text-base font-bold text-slate-800 group-hover:text-orange-600 transition-colors">
-                                  {maskProductName(policy.product_name, true)}
+                                  {maskProductName(policy.product_name, isUnlocked)}
                                 </h4>
                               </div>
                               <div className="text-right shrink-0">
@@ -1325,7 +1438,7 @@ export default function App() {
                   💡 본 분석은 한국신용정보원의 상품명과 월 납입 보험료 정보를 기반으로, AI가 표준 보험 요율에 맞춰 가입 특약 및 보장 금액을 정교하게 역산한 추정치입니다. 실제 가입하신 보험 증권의 세부 구성에 따라 차이가 있을 수 있으므로 정확한 진단은 전문 설계사의 정밀 상담을 권장합니다.
                 </p>
               </div>
-              <AnalysisDashboard result={remodelingResult} onSubmitLead={submitLead} branding={branding} isUnlocked={true} />
+              <AnalysisDashboard result={remodelingResult} onSubmitLead={submitLead} branding={branding} isUnlocked={isUnlocked} />
 
 
             </motion.section>
@@ -1429,6 +1542,114 @@ export default function App() {
                 확인했습니다
               </button>
             </div>
+          </div>
+        </div>
+      )}
+      {/* 🔒 PII-Free Pivot: Sticky Floating Bottom Bar for Unmasking */}
+      {(analysisResult || remodelingResult) && !isUnlocked && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-full max-w-md px-4">
+          <div className="bg-slate-950/90 text-white rounded-[2rem] p-4.5 border border-slate-800 backdrop-blur-md shadow-2xl flex items-center justify-between gap-4">
+            <div className="text-left space-y-0.5 pl-1">
+              <p className="text-[11px] font-black text-slate-400 flex items-center gap-1.5">
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+                익명 안심 비교 모드
+              </p>
+              <h4 className="text-xs font-black text-slate-200">
+                1:1 카톡인증 시 실명 공개
+              </h4>
+            </div>
+            <button
+              onClick={() => setShowUnlockModal(true)}
+              className="px-5 py-3 bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-700 hover:to-orange-600 text-white font-black text-xs rounded-xl shadow-lg shadow-orange-950/40 transition-all flex items-center gap-2"
+            >
+              <ShieldCheck className="w-4 h-4" />
+              실명 정보 해제하기
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 🔒 PII-Free Pivot: Unmasking Instruction Modal */}
+      {showUnlockModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <div className="bg-slate-900 border border-slate-800 text-white rounded-[2.5rem] p-6 max-w-sm w-full space-y-5 shadow-2xl relative overflow-hidden animate-in fade-in zoom-in-95 duration-200 text-left">
+            <button 
+              onClick={() => setShowUnlockModal(false)}
+              className="absolute top-6 right-6 text-slate-400 hover:text-white cursor-pointer transition-colors text-base font-extrabold"
+            >
+              ✕
+            </button>
+
+            <div className="space-y-1.5 text-center">
+              <div className="w-14 h-14 bg-orange-500/10 border border-orange-500/20 text-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-2">
+                <ShieldCheck size={28} />
+              </div>
+              <h3 className="text-base font-black tracking-tight text-white">실명 정보 잠금 해제</h3>
+              <p className="text-[10px] text-slate-400 font-bold leading-relaxed break-keep">
+                1:1 카카오톡 비공개 상담방에서 인증을 완료하시면,<br />
+                보고 계신 화면의 마스킹이 0.1초 만에 자동으로 해제됩니다.
+              </p>
+            </div>
+
+            {/* Code Box */}
+            <div className="bg-slate-950 border border-slate-850 rounded-2xl p-4 flex flex-col items-center justify-center space-y-2">
+              <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">나의 고유 설계 코드</span>
+              <div className="flex items-center gap-2">
+                <span className="text-lg font-black text-orange-500 font-mono tracking-wider">
+                  {currentSimulationCode || '발급 중...'}
+                </span>
+                <button
+                  onClick={() => {
+                    if (currentSimulationCode) {
+                      navigator.clipboard.writeText(currentSimulationCode);
+                      alert('설계 코드가 복사되었습니다! 카톡방에 붙여넣어 주세요.');
+                    }
+                  }}
+                  className="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-[10px] font-black rounded-lg transition-colors"
+                >
+                  복사
+                </button>
+              </div>
+            </div>
+
+            {/* Instruction Steps */}
+            <div className="bg-slate-950/40 border border-slate-850/50 rounded-2xl p-4 space-y-3">
+              <div className="flex items-start gap-2.5">
+                <span className="w-4 h-4 rounded-full bg-slate-800 text-[9px] font-black flex items-center justify-center shrink-0 mt-0.5 text-slate-300">1</span>
+                <p className="text-[10px] font-semibold text-slate-300 leading-normal">
+                  아래 1:1 상담 오픈채팅방 링크로 이동합니다.
+                </p>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <span className="w-4 h-4 rounded-full bg-slate-800 text-[9px] font-black flex items-center justify-center shrink-0 mt-0.5 text-slate-300">2</span>
+                <p className="text-[10px] font-semibold text-slate-300 leading-normal">
+                  입장 후 복사한 고유 코드 <strong className="text-orange-500 font-mono">{currentSimulationCode}</strong>를 메시지로 전송해 주세요.
+                </p>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <span className="w-4 h-4 rounded-full bg-slate-800 text-[9px] font-black flex items-center justify-center shrink-0 mt-0.5 text-slate-300">3</span>
+                <p className="text-[10px] font-semibold text-slate-300 leading-normal">
+                  설계사가 보내 드리는 **비공개 안전 간편인증 링크**를 열어 본인인증을 완료합니다.
+                </p>
+              </div>
+            </div>
+
+            {/* Redirect Button */}
+            <button
+              onClick={async () => {
+                const kLink = branding.kakaoLink || 'https://open.kakao.com/o/sB1B2C3D';
+                
+                // Track timeline click for consultant
+                if (lastSubmittedLeadId) {
+                  logKakaoClick(lastSubmittedLeadId, 'anonymous');
+                }
+
+                window.open(kLink, '_blank');
+              }}
+              className="w-full py-3.5 bg-[#FEE500] hover:bg-[#FDD800] text-black font-black text-xs rounded-xl shadow-lg transition-colors cursor-pointer text-center flex items-center justify-center gap-2"
+            >
+              💬 1:1 상담 카카오톡방 입장하기
+            </button>
           </div>
         </div>
       )}

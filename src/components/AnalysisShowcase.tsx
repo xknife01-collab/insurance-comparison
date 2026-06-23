@@ -130,92 +130,60 @@ export default function AnalysisShowcase() {
       // Pointer appears
       setPointerStyle({ top: '65%', left: '85%', opacity: 1 });
 
-      // T1: Type Name "홍길동"
+      // T1: Type Birthdate "19800101"
       timer = setTimeout(() => {
-        setPointerStyle({ top: '22%', left: '30%', opacity: 1 });
+        setPointerStyle({ top: '25%', left: '28%', opacity: 1 });
 
-        const fullName = '홍길동';
-        let typedName = '';
-        const nameInterval = setInterval(() => {
-          if (typedName.length < fullName.length) {
-            typedName += fullName[typedName.length];
-            setSimName(typedName);
+        const fullBirth = '19800101';
+        let typedBirth = '';
+        const birthInterval = setInterval(() => {
+          if (typedBirth.length < fullBirth.length) {
+            typedBirth += fullBirth[typedBirth.length];
+            setSimBirthDate(typedBirth);
           } else {
-            clearInterval(nameInterval);
+            clearInterval(birthInterval);
           }
-        }, 150);
+        }, 100);
 
-        // T2: Click Gender "남성"
+        // T2: Type Age "40"
         setTimeout(() => {
-          setPointerStyle({ top: '22%', left: '70%', opacity: 1 });
+          setPointerStyle({ top: '25%', left: '72%', opacity: 1 });
 
+          const fullAge = '40';
+          let typedAge = '';
+          const ageInterval = setInterval(() => {
+            if (typedAge.length < fullAge.length) {
+              typedAge += fullAge[typedAge.length];
+              setSimAge(typedAge);
+            } else {
+              clearInterval(ageInterval);
+            }
+          }, 150);
+
+          // T3: Click Gender "남성"
           setTimeout(() => {
-            setIsClicking(true);
-            setSimGender('M');
-            setTimeout(() => setIsClicking(false), 150);
+            setPointerStyle({ top: '36%', left: '28%', opacity: 1 });
 
-            // T3: Type Birthdate "19800101"
             setTimeout(() => {
-              setPointerStyle({ top: '33%', left: '30%', opacity: 1 });
+              setIsClicking(true);
+              setSimGender('M');
+              setTimeout(() => setIsClicking(false), 150);
 
-              const fullBirth = '19800101';
-              let typedBirth = '';
-              const birthInterval = setInterval(() => {
-                if (typedBirth.length < fullBirth.length) {
-                  typedBirth += fullBirth[typedBirth.length];
-                  setSimBirthDate(typedBirth);
-                } else {
-                  clearInterval(birthInterval);
-                }
-              }, 100);
-
-              // T4: Type Age "40"
+              // T4: Click CTA "내 보험 정밀 분석 시작하기"
               setTimeout(() => {
-                setPointerStyle({ top: '33%', left: '70%', opacity: 1 });
+                setPointerStyle({ top: '55%', left: '50%', opacity: 1 });
 
-                const fullAge = '40';
-                let typedAge = '';
-                const ageInterval = setInterval(() => {
-                  if (typedAge.length < fullAge.length) {
-                    typedAge += fullAge[typedAge.length];
-                    setSimAge(typedAge);
-                  } else {
-                    clearInterval(ageInterval);
-                  }
-                }, 150);
-
-                // T5: Type Mobile No "01012345678"
                 setTimeout(() => {
-                  setPointerStyle({ top: '44%', left: '40%', opacity: 1 });
-
-                  const fullMobile = '01012345678';
-                  let typedMobile = '';
-                  const mobileInterval = setInterval(() => {
-                    if (typedMobile.length < fullMobile.length) {
-                      typedMobile += fullMobile[typedMobile.length];
-                      setSimMobile(typedMobile);
-                    } else {
-                      clearInterval(mobileInterval);
-                    }
-                  }, 100);
-
-                  // T6: Click CTA "내 보험 정밀 분석 시작하기"
+                  setIsClicking(true);
                   setTimeout(() => {
-                    setPointerStyle({ top: '92%', left: '50%', opacity: 1 });
-
-                    setTimeout(() => {
-                      setIsClicking(true);
-                      setTimeout(() => {
-                        setIsClicking(false);
-                        setActiveStep('auth');
-                      }, 150);
-                    }, 600);
-                  }, 1500);
+                    setIsClicking(false);
+                    setActiveStep('auth');
+                  }, 150);
                 }, 600);
               }, 1200);
             }, 600);
-          }, 600);
-        }, 1000);
+          }, 1000);
+        }, 1200);
       }, 800);
 
     } else if (activeStep === 'auth') {
@@ -467,31 +435,6 @@ export default function AnalysisShowcase() {
                     </div>
 
                     <div className="space-y-3 mt-2 flex-1">
-                      {/* Name & Gender */}
-                      <div className="grid grid-cols-2 gap-2">
-                        <div className="space-y-1 text-left">
-                          <label className="text-[8px] font-bold text-slate-450 uppercase pl-1">성함</label>
-                          <input
-                            type="text"
-                            readOnly
-                            placeholder="홍길동"
-                            value={simName}
-                            className="w-full bg-white/5 border border-white/10 rounded-xl py-2 px-3 text-xs font-bold text-white focus:outline-none"
-                          />
-                        </div>
-                        <div className="space-y-1 text-left">
-                          <label className="text-[8px] font-bold text-slate-450 uppercase pl-1">성별</label>
-                          <div className="flex bg-white/5 p-0.5 rounded-xl h-[34px] gap-0.5 border border-white/10">
-                            <div className={`flex-1 rounded-lg font-black text-[10px] flex items-center justify-center transition-all ${simGender === 'M' ? 'bg-white text-slate-900' : 'text-slate-400'}`}>
-                              남성
-                            </div>
-                            <div className={`flex-1 rounded-lg font-black text-[10px] flex items-center justify-center transition-all ${simGender === 'F' ? 'bg-orange-500 text-white' : 'text-slate-400'}`}>
-                              여성
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
                       {/* Birth & Age */}
                       <div className="grid grid-cols-2 gap-2 text-left">
                         <div className="space-y-1">
@@ -519,16 +462,17 @@ export default function AnalysisShowcase() {
                         </div>
                       </div>
 
-                      {/* Mobile */}
+                      {/* Gender Select */}
                       <div className="space-y-1 text-left">
-                        <label className="text-[8px] font-bold text-slate-450 uppercase pl-1">연락처</label>
-                        <input
-                          type="text"
-                          readOnly
-                          placeholder="예) 01012345678"
-                          value={simMobile}
-                          className="w-full bg-white/5 border border-white/10 rounded-xl py-2 px-3 text-xs font-bold text-white focus:outline-none"
-                        />
+                        <label className="text-[8px] font-bold text-slate-450 uppercase pl-1">성별</label>
+                        <div className="flex bg-white/5 p-0.5 rounded-xl h-[34px] gap-0.5 border border-white/10">
+                          <div className={`flex-1 rounded-lg font-black text-[10px] flex items-center justify-center transition-all ${simGender === 'M' ? 'bg-white text-slate-900 font-extrabold' : 'text-slate-400'}`}>
+                            남성
+                          </div>
+                          <div className={`flex-1 rounded-lg font-black text-[10px] flex items-center justify-center transition-all ${simGender === 'F' ? 'bg-orange-500 text-white font-extrabold' : 'text-slate-400'}`}>
+                            여성
+                          </div>
+                        </div>
                       </div>
 
                       {/* Info Banner */}
@@ -902,7 +846,6 @@ export default function AnalysisShowcase() {
 
         {/* Right Column: Interaction Flow Controls and Description (7 cols) */}
         <div className="lg:col-span-7 flex flex-col text-left justify-center space-y-8">
-          
           <div className="space-y-4">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-500/10 text-orange-500 rounded-full text-xs font-black uppercase tracking-widest border border-orange-500/20">
               <Sparkles size={14} className="text-orange-500" /> High-Fidelity Simulator
@@ -912,7 +855,7 @@ export default function AnalysisShowcase() {
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-orange-400">내 보험 정밀 분석</span> 재현
             </h2>
             <p className="text-slate-400 font-bold text-sm leading-relaxed max-w-xl break-keep">
-              단순히 이미지만 슬라이드 형태로 보여주는 더미 애니메이션이 아닙니다. 실제 성함과 연락처 기입 단계, 실시간 한국신용정보원 API 보안 연동 및 AI 정밀 분석 진단 과정, 그리고 3대 진단비 리밸런싱 대시보드 출력까지 전 과정을 실제 우리 앱의 코드로 동일하게 재현합니다.
+              단순히 이미지만 슬라이드 형태로 보여주는 더미 애니메이션이 아닙니다. 실제 생년월일과 성별 기입 단계, 실시간 한국신용정보원 API 보안 연동 및 AI 정밀 분석 진단 과정, 그리고 3대 진단비 리밸런싱 대시보드 출력까지 전 과정을 실제 우리 앱의 코드로 동일하게 재현합니다.
             </p>
           </div>
 
@@ -937,11 +880,13 @@ export default function AnalysisShowcase() {
                   <h4 className={`text-xs font-black ${activeStep === 'input' ? 'text-orange-500' : 'text-slate-300'}`}>
                     정밀 분석 입력 폼 (Inputs)
                   </h4>
-                  <p className="text-[10px] text-slate-500 font-semibold mt-0.5">성함, 성별, 생년월일, 연락처 정보를 차례대로 가상 타이핑합니다.</p>
+                  <p className="text-[10px] text-slate-500 font-semibold mt-0.5">생년월일과 성별 정보를 차례대로 가상 타이핑합니다.</p>
                 </div>
               </div>
               <ChevronRight className={`w-4 h-4 ${activeStep === 'input' ? 'text-orange-500' : 'text-slate-650'}`} />
             </div>
+          
+
 
             {/* Step 2 */}
             <div 

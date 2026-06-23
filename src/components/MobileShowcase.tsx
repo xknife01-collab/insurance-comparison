@@ -169,7 +169,7 @@ export default function MobileShowcase() {
       
       // T1: Type Birthday
       timer = setTimeout(() => {
-        setPointerStyle({ top: '21%', left: '40%', opacity: 1 });
+        setPointerStyle({ top: '21%', left: '50%', opacity: 1 });
         
         const fullDate = '19900515';
         let typed = '';
@@ -432,20 +432,12 @@ export default function MobileShowcase() {
                     </div>
 
                     <div className="space-y-2.5 flex-1 text-[10px]">
-                      {/* Name & Birthday */}
-                      <div className="grid grid-cols-2 gap-2">
-                        <div className="space-y-1">
-                          <label className="text-[8px] font-black text-slate-400">성함</label>
-                          <div className="w-full bg-slate-50 border border-slate-100 rounded-lg p-1.5 font-bold text-slate-800 text-[10px]">
-                            홍길동
-                          </div>
-                        </div>
-                        <div className="space-y-1">
-                          <label className="text-[8px] font-black text-slate-400">생년월일 (8자리)</label>
-                          <div className="w-full bg-slate-50 border border-rose-300/40 rounded-lg p-1.5 font-black text-slate-800 text-[10px] relative">
-                            {simBirthDate || <span className="text-slate-350">19900515</span>}
-                            <span className="absolute right-2 top-1/2 -translate-y-1/2 w-0.5 h-2.5 bg-rose-500 animate-pulse" />
-                          </div>
+                      {/* Birthday */}
+                      <div className="space-y-1">
+                        <label className="text-[8px] font-black text-slate-400">생년월일 (8자리)</label>
+                        <div className="w-full bg-slate-50 border border-rose-300/40 rounded-lg p-1.5 font-black text-slate-800 text-[10px] relative">
+                          {simBirthDate || <span className="text-slate-350">19900515</span>}
+                          <span className="absolute right-2 top-1/2 -translate-y-1/2 w-0.5 h-2.5 bg-rose-500 animate-pulse" />
                         </div>
                       </div>
 

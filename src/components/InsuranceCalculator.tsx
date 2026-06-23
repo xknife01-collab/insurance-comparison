@@ -733,20 +733,13 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
   };
 
   const handleCalculate = (overrides?: { name?: string; age?: number; gender?: 'M' | 'F'; mobile?: string }) => {
-    const finalName = (overrides?.name !== undefined ? overrides.name : name) || '';
+    const finalName = "고객님";
     const finalGender = overrides?.gender !== undefined ? overrides.gender : gender;
-    const finalMobile = (overrides?.mobile !== undefined ? overrides.mobile : mobile) || '';
+    const finalMobile = "";
     const finalBirth = birthDate || '';
 
-    if (!finalName.trim() || !finalGender || finalBirth.length < 8) {
-      const msg = "정확한 보험 비교를 위해 성함, 성별, 생년월일을 모두 입력해 주세요.";
-      setValidationError(msg);
-      alert(msg);
-      return;
-    }
-
-    if (!agreedTerms) {
-      const msg = "개인정보수집 및 활용동의에 체크해 주세요.";
+    if (!finalGender || finalBirth.length < 8) {
+      const msg = "정확한 보험 비교를 위해 성별과 생년월일을 모두 입력해 주세요.";
       setValidationError(msg);
       alert(msg);
       return;
@@ -1336,18 +1329,18 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="bg-white p-5 rounded-3xl border border-orange-100 flex flex-col gap-1.5 shadow-sm hover:shadow-md transition-all duration-300">
                     <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest">Promise 1</span>
-                    <span className="text-sm font-black text-slate-800 leading-tight">동의 없는 전화 금지</span>
-                    <p className="text-[11px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">상담 동의가 없는 한, 광고성 무단 전화를 일절 유도하지 않습니다.</p>
+                    <span className="text-sm font-black text-slate-800 leading-tight">개인정보 없는 익명 진단</span>
+                    <p className="text-[11px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">이름과 휴대폰 번호 등 개인 정보를 입력하지 않고 즉시 비교 분석 결과를 확인합니다.</p>
                   </div>
                   <div className="bg-white p-5 rounded-3xl border border-orange-100 flex flex-col gap-1.5 shadow-sm hover:shadow-md transition-all duration-300">
                     <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest">Promise 2</span>
-                    <span className="text-sm font-black text-slate-800 leading-tight">개인정보 암호화</span>
-                    <p className="text-[11px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">자가진단 단계에서는 연락처가 든든하게 마스킹 보호 처리됩니다.</p>
+                    <span className="text-sm font-black text-slate-800 leading-tight">고유 보관 코드 발급</span>
+                    <p className="text-[11px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">분석 화면 분실 방지를 위해 나만 알 수 있는 안전한 임시 보관 코드가 발급됩니다.</p>
                   </div>
                   <div className="bg-white p-5 rounded-3xl border border-orange-100 flex flex-col gap-1.5 shadow-sm hover:shadow-md transition-all duration-300">
                     <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest">Promise 3</span>
-                    <span className="text-sm font-black text-slate-800 leading-tight">카톡 1:1 익명 상담</span>
-                    <p className="text-[11px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">고객이 원할 때만 코드를 활용한 익명 상담으로 매칭됩니다.</p>
+                    <span className="text-sm font-black text-slate-800 leading-tight">상담원 없는 자율 진단</span>
+                    <p className="text-[11px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">상담원 전화 유도 없이, 오직 AI 빅데이터 엔진을 통해 고객 스스로 자율 비교 및 진단을 완료할 수 있습니다.</p>
                   </div>
                 </div>
               </div>
@@ -1360,89 +1353,52 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                 </p>
               </div>
 
-              {selectedId === 'car' ? (
-                <>
-                  {/* 자동차 전용 고객 정보 입력 폼 (인증 버튼 없음) */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-                     <div className="bg-slate-50/40 rounded-[2.2rem] p-7 flex flex-col gap-1 relative overflow-hidden focus-within:bg-white focus-within:shadow-2xl transition-all border-2 border-transparent focus-within:border-orange-100/50">
-                          <label className="text-[0.55rem] font-black text-slate-400 uppercase tracking-widest mb-1 text-left pl-1">성함</label>
-                          <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="홍길동" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200" />
-                          <div className="absolute top-[8px] right-[8px] bottom-[8px] w-24 bg-slate-100 rounded-[1.8rem] flex p-1 shadow-inner border border-slate-200/50">
-                            <button onClick={() => setGender('M')} className={`flex-1 rounded-[1.5rem] font-black text-xs transition-all ${gender === 'M' ? 'bg-slate-800 text-white shadow-md' : 'text-slate-400'}`}>남</button>
-                            <button onClick={() => setGender('F')} className={`flex-1 rounded-[1.5rem] font-black text-xs transition-all ${gender === 'F' ? 'bg-orange-500 text-white shadow-md' : 'text-slate-400'}`}>여</button>
-                          </div>
-                     </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10 max-w-2xl mx-auto">
+                 <div className="bg-slate-50/40 rounded-[2.2rem] p-7 flex flex-col gap-1 relative focus-within:bg-white focus-within:shadow-2xl transition-all border-2 border-transparent focus-within:border-orange-100/50">
+                      <label className="text-[0.55rem] font-black text-slate-400 uppercase tracking-widest mb-1 text-left pl-1">생년월일</label>
+                      <div className="flex justify-between items-center text-left">
+                         <input type="text" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} maxLength={8} placeholder="예)19770101" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200 w-full" />
+                         <div className={`flex-shrink-0 px-4 py-2 rounded-[1rem] font-black text-[0.65rem] transition-all whitespace-nowrap shadow-sm border
+                           ${calculatedAge 
+                             ? 'bg-orange-500 text-white border-orange-400 animate-in zoom-in-50' 
+                             : 'bg-white text-slate-200 border-slate-100'}`}>
+                            나이 {calculatedAge || '**'}세
+                         </div>
+                      </div>
+                 </div>
 
-                     <div className="bg-slate-50/40 rounded-[2.2rem] p-7 flex flex-col gap-1 relative focus-within:bg-white focus-within:shadow-2xl transition-all border-2 border-transparent focus-within:border-orange-100/50">
-                          <label className="text-[0.55rem] font-black text-slate-400 uppercase tracking-widest mb-1 text-left pl-1">생년월일</label>
-                          <div className="flex justify-between items-center text-left">
-                             <input type="text" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} maxLength={8} placeholder="예)19770101" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200 w-full" />
-                             <div className={`flex-shrink-0 px-4 py-2 rounded-[1rem] font-black text-[0.65rem] transition-all whitespace-nowrap shadow-sm border
-                               ${calculatedAge 
-                                 ? 'bg-orange-500 text-white border-orange-400 animate-in zoom-in-50' 
-                                 : 'bg-white text-slate-200 border-slate-100'}`}>
-                               나이 {calculatedAge || '**'}세
-                             </div>
-                          </div>
-                     </div>
+                 <div className="bg-slate-50/40 rounded-[2.2rem] p-7 flex flex-col gap-1 relative overflow-hidden focus-within:bg-white focus-within:shadow-2xl transition-all border-2 border-transparent focus-within:border-orange-100/50">
+                      <label className="text-[0.55rem] font-black text-slate-400 uppercase tracking-widest mb-1 text-left pl-1">성별</label>
+                      <div className="flex h-10 w-full bg-slate-200/50 p-1 rounded-[1.2rem] gap-1 relative">
+                        <button 
+                          type="button" 
+                          onClick={() => setGender('M')} 
+                          className={`flex-1 rounded-[1rem] font-black text-xs transition-all ${gender === 'M' ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-500 hover:text-slate-800'}`}
+                        >
+                          남성
+                        </button>
+                        <button 
+                          type="button" 
+                          onClick={() => setGender('F')} 
+                          className={`flex-1 rounded-[1rem] font-black text-xs transition-all ${gender === 'F' ? 'bg-orange-500 text-white shadow-sm' : 'text-slate-500 hover:text-slate-800'}`}
+                        >
+                          여성
+                        </button>
+                      </div>
+                 </div>
+              </div>
 
-                     <div className="bg-slate-50/40 rounded-[2.2rem] p-7 flex flex-col gap-1 relative focus-within:bg-white focus-within:shadow-2xl transition-all border-2 border-transparent focus-within:border-orange-100/50">
-                          <label className="text-[0.55rem] font-black text-slate-400 uppercase tracking-widest mb-1 text-left pl-1">연락처 (Mobile)</label>
-                          <div className="flex justify-between items-center text-left">
-                             <input type="text" value={mobile} onChange={(e) => setMobile(e.target.value)} placeholder="01012345678" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200 w-full" />
-                             <div className="flex-shrink-0 px-4 py-2 rounded-[1rem] font-black text-[0.65rem] transition-all whitespace-nowrap shadow-sm border bg-[#FFF0E5] text-[#FF6B00] border-orange-200">
-                               선택사항
-                             </div>
-                          </div>
-                     </div>
-                  </div>
-
-                  {/* 자동차 전용 내차정보 조회하기 큰 버튼 */}
-                  <div className="w-full flex justify-center mb-12 animate-in fade-in slide-in-from-top-2 duration-500">
-                    <button
-                      onClick={() => setTriggerHyphenModal(true)}
-                      className="w-full max-w-xl py-5 bg-gradient-to-r from-orange-600 via-pink-600 to-indigo-600 text-white rounded-[2.2rem] font-black text-lg shadow-[0_12px_35px_rgba(239,68,68,0.25)] hover:shadow-[0_18px_45px_rgba(239,68,68,0.45)] hover:scale-[1.01] transition-all flex items-center justify-center gap-3 active:scale-[0.99] cursor-pointer"
-                    >
-                      <Sparkles className="w-5 h-5 text-yellow-300 animate-pulse" />
-                      내 차량정보 입력으로 실시간 조회하기 (car365 실시간 연동)
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-                   <div className="bg-slate-50/40 rounded-[2.2rem] p-7 flex flex-col gap-1 relative overflow-hidden focus-within:bg-white focus-within:shadow-2xl transition-all border-2 border-transparent focus-within:border-orange-100/50">
-                        <label className="text-[0.55rem] font-black text-slate-400 uppercase tracking-widest mb-1 text-left pl-1">성함</label>
-                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="홍길동" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200" />
-                        <div className="absolute top-[8px] right-[8px] bottom-[8px] w-24 bg-slate-100 rounded-[1.8rem] flex p-1 shadow-inner border border-slate-200/50">
-                          <button onClick={() => setGender('M')} className={`flex-1 rounded-[1.5rem] font-black text-xs transition-all ${gender === 'M' ? 'bg-slate-800 text-white shadow-md' : 'text-slate-400'}`}>남</button>
-                          <button onClick={() => setGender('F')} className={`flex-1 rounded-[1.5rem] font-black text-xs transition-all ${gender === 'F' ? 'bg-orange-500 text-white shadow-md' : 'text-slate-400'}`}>여</button>
-                        </div>
-                   </div>
-
-                   <div className="bg-slate-50/40 rounded-[2.2rem] p-7 flex flex-col gap-1 relative focus-within:bg-white focus-within:shadow-2xl transition-all border-2 border-transparent focus-within:border-orange-100/50">
-                        <label className="text-[0.55rem] font-black text-slate-400 uppercase tracking-widest mb-1 text-left pl-1">생년월일</label>
-                        <div className="flex justify-between items-center text-left">
-                           <input type="text" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} maxLength={8} placeholder="예)19770101" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200 w-full" />
-                           <div className={`flex-shrink-0 px-4 py-2 rounded-[1rem] font-black text-[0.65rem] transition-all whitespace-nowrap shadow-sm border
-                             ${calculatedAge 
-                               ? 'bg-orange-500 text-white border-orange-400 animate-in zoom-in-50' 
-                               : 'bg-white text-slate-200 border-slate-100'}`}>
-                              나이 {calculatedAge || '**'}세
-                           </div>
-                        </div>
-                   </div>
-
-                   <div className="bg-slate-50/40 rounded-[2.2rem] p-7 flex flex-col gap-1 relative focus-within:bg-white focus-within:shadow-2xl transition-all border-2 border-transparent focus-within:border-orange-100/50">
-                        <label className="text-[0.55rem] font-black text-slate-400 uppercase tracking-widest mb-1 text-left pl-1">연락처 (Mobile)</label>
-                        <div className="flex justify-between items-center text-left">
-                           <input type="text" value={mobile} onChange={(e) => setMobile(e.target.value)} placeholder="01012345678" className="bg-transparent border-none outline-none text-xl font-black text-slate-800 placeholder:text-slate-200 w-full" />
-                           <div className="flex-shrink-0 px-4 py-2 rounded-[1rem] font-black text-[0.65rem] transition-all whitespace-nowrap shadow-sm border bg-[#FFF0E5] text-[#FF6B00] border-orange-200">
-                             선택사항
-                           </div>
-                        </div>
-                   </div>
+              {/* selectedId === 'car' && (
+                <div className="w-full flex justify-center mb-12 animate-in fade-in slide-in-from-top-2 duration-500">
+                  <button
+                    onClick={() => setTriggerHyphenModal(true)}
+                    className="w-full max-w-xl py-5 bg-gradient-to-r from-orange-600 via-pink-600 to-indigo-600 text-white rounded-[2.2rem] font-black text-lg shadow-[0_12px_35px_rgba(239,68,68,0.25)] hover:shadow-[0_18px_45px_rgba(239,68,68,0.45)] hover:scale-[1.01] transition-all flex items-center justify-center gap-3 active:scale-[0.99] cursor-pointer"
+                  >
+                    <Sparkles className="w-5 h-5 text-yellow-300 animate-pulse" />
+                    내 차량정보 입력으로 실시간 조회하기 (car365 실시간 연동)
+                  </button>
                 </div>
-              )}
+              ) */}
 
               {/* Modular Specialized Field Components */}
               {selectedId === 'care_svc' ? (
@@ -1832,28 +1788,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                 />
               )}
 
-              <div className="flex items-center justify-center gap-4 mb-10">
-                 <input 
-                   type="checkbox" 
-                   id="terms" 
-                   checked={agreedTerms}
-                   onChange={(e) => setAgreedTerms(e.target.checked)}
-                   className="w-5 h-5 rounded-lg accent-orange-500" 
-                 />
-                 <label htmlFor="terms" className="text-[0.7rem] font-bold text-slate-400 cursor-pointer select-none">
-                    개인정보수집 및 활용동의 
-                    <span 
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setShowTermsModal(true);
-                      }}
-                      className="underline ml-1 font-black opacity-60 hover:opacity-100 transition-opacity"
-                    >
-                      자세히 보기
-                    </span>
-                 </label>
-              </div>
+
 
               {validationError && (
                 <motion.div 

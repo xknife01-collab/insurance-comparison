@@ -96,6 +96,48 @@ export function maskCompany(name: string, isUnlocked: boolean): string {
 
 export function maskProductName(name: string, isUnlocked: boolean): string {
   if (isUnlocked || !name) return name;
+
+  const lower = name.toLowerCase();
+  
+  if (lower.includes('암') || lower.includes('cancer')) {
+    if (lower.includes('표적') || lower.includes('치료비')) return '안심 표적항암치료보험';
+    if (lower.includes('재진단') || lower.includes('또받는')) return '반복보장 재진단암보험';
+    return '실속 암진단보험';
+  }
+  if (lower.includes('뇌') || lower.includes('심장') || lower.includes('혈관') || lower.includes('뇌졸중') || lower.includes('뇌출혈') || lower.includes('급성심근경색')) {
+    return '2대질환 안심보장보험';
+  }
+  if (lower.includes('운전자') || lower.includes('driver')) {
+    return '안심 운전자보험';
+  }
+  if (lower.includes('치아') || lower.includes('덴탈') || lower.includes('dental')) {
+    return '실속 치아보장보험';
+  }
+  if (lower.includes('실손') || lower.includes('실비')) {
+    return '표준 실손의료비보험';
+  }
+  if (lower.includes('종신') || lower.includes('whole life') || lower.includes('wholelife')) {
+    return '평생 종신보장보험';
+  }
+  if (lower.includes('펫') || lower.includes('pet') || lower.includes('개') || lower.includes('고양이')) {
+    return '반려동물 건강케어보험';
+  }
+  if (lower.includes('화재') || lower.includes('주택') || lower.includes('fire')) {
+    return '가정 주택화재보험';
+  }
+  if (lower.includes('치매') || lower.includes('간병') || lower.includes('재가') || lower.includes('시설') || lower.includes('dementia') || lower.includes('care')) {
+    return '실버 치매간병보험';
+  }
+  if (lower.includes('어린이') || lower.includes('자녀') || lower.includes('아이') || lower.includes('태아') || lower.includes('child')) {
+    return '희망 어린이종합보험';
+  }
+  if (lower.includes('저축') || lower.includes('연금') || lower.includes('pension') || lower.includes('savings')) {
+    return '안심 저축연금보험';
+  }
+  if (lower.includes('상해') || lower.includes('레저') || lower.includes('골프') || lower.includes('accident') || lower.includes('golf')) {
+    return '데일리 상해보장보험';
+  }
+
   let masked = name;
 
   // Replace company names first (longer keys first to prevent partial match issues)

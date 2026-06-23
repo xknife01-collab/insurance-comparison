@@ -760,8 +760,8 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
   const [savingAlert, setSavingAlert] = useState(false);
   const [quotaSaving, setQuotaSaving] = useState(false);
 
-  // Edit Profile States
   const [topupLoading, setTopupLoading] = useState(false);
+  const [isKakaoGuideOpen, setIsKakaoGuideOpen] = useState(false);
 
   const handleUpdatePlannerQuota = async (plannerId: string, quota: number) => {
     try {
@@ -3395,9 +3395,76 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                     <div className="flex items-center gap-1.5">
                       <p className="font-extrabold text-sm text-white">{lead.name}</p>
                       {lead.raw_payload?.simulation_code && (
-                        <span className="px-1.5 py-0.5 bg-orange-500/10 text-orange-400 border border-orange-500/20 rounded text-[9px] font-black uppercase tracking-wider">
-                          {lead.raw_payload.simulation_code}
-                        </span>
+                        <div className="flex items-center gap-1">
+                          <span className="px-1.5 py-0.5 bg-orange-500/10 text-orange-400 border border-orange-500/20 rounded text-[9px] font-black uppercase tracking-wider">
+                            {lead.raw_payload.simulation_code}
+                          </span>
+                          {lead.raw_payload?.consult_type === 'anonymous' && (
+                            <button
+                              onClick={async (e) => {
+                                e.stopPropagation();
+                                const simCode = lead.raw_payload?.simulation_code || '';
+                                const origin = window.location.origin;
+                                const msg = `안녕하세요! 보험리밸런스 대리점입니다. 고객님의 설계서 잠금 해제를 위한 본인인증 전용 링크입니다. 아래 링크를 눌러 간편인증을 완료하시면 0.1초 만에 마스킹이 해제됩니다.\n▶ 인증 링크: ${origin}/verify?code=${simCode}`;
+                                navigator.clipboard.writeText(msg);
+                                setToastMessage("✨ 카톡 인증 문구가 복사되었습니다! 카톡창에 붙여넣기(Ctrl+V) 하세요.");
+                                setShowToast(true);
+                                setTimeout(() => setShowToast(false), 3000);
+
+                                // Stop flashing via DB update
+                                try {
+                                  const supabase = createClient();
+                                  const updatedPayload = {
+                                    ...(lead.raw_payload || {}),
+                                    copied_by_planner: true,
+                                    timeline: [
+                                      {
+                                        id: `copy-${Date.now()}`,
+                                        type: 'system_log',
+                                        author: '설계사',
+                                        detail: '설계사가 카톡 인증 안내 문구를 복사하여 전달했습니다.',
+                                        created_at: new Date().toISOString()
+                                      },
+                                      ...(lead.raw_payload?.timeline || [])
+                                    ]
+                                  };
+                                  await supabase
+                                    .from('customer_leads')
+                                    .update({ raw_payload: updatedPayload })
+                                    .eq('id', lead.id);
+                                } catch (err) {
+                                  console.error(err);
+                                }
+
+                                // Update local state for immediate 0.1s responsiveness
+                                setLeads(prev => prev.map(l => {
+                                  if (l.id === lead.id) {
+                                    return {
+                                      ...l,
+                                      raw_payload: {
+                                        ...(l.raw_payload || {}),
+                                        copied_by_planner: true
+                                      }
+                                    };
+                                  }
+                                  return l;
+                                }));
+
+                                setSelectedLead(prev => prev && prev.id === lead.id ? {
+                                  ...prev,
+                                  raw_payload: {
+                                    ...(prev.raw_payload || {}),
+                                    copied_by_planner: true
+                                  }
+                                } : prev);
+                              }}
+                              className="px-2.5 py-1.5 bg-yellow-500 hover:bg-yellow-400 text-slate-950 rounded-lg text-[10px] font-black cursor-pointer transition-all active:scale-95 flex items-center gap-1 shadow-md shadow-yellow-500/15"
+                              title="카톡 인증문구 복사"
+                            >
+                              문구복사 📋
+                            </button>
+                          )}
+                        </div>
                       )}
                     </div>
                     <p className="text-[10px] text-slate-400 font-bold">
@@ -3434,18 +3501,25 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                         );
                       })()}
                       {(() => {
-                        if (!isLeadConsult(lead.insurance_type) || lead.insurance_type === 'support_consult') return null;
-                        const consultType = lead.raw_payload?.consult_type;
-                        if (consultType === 'anonymous') {
+                        const isUnderwriting = lead.insurance_type?.includes('_underwriting');
+                        if ((!isLeadConsult(lead.insurance_type) && !isUnderwriting) || lead.insurance_type === 'support_consult') return null;
+                        
+                        const isAnonymous = lead.raw_payload?.consult_type === 'anonymous' || (isUnderwriting && lead.status !== 'verified');
+                        if (isAnonymous) {
+                          const isCopied = lead.raw_payload?.copied_by_planner === true;
                           return (
-                            <span className="px-1.5 py-0.5 rounded bg-red-500/10 text-red-400 border border-red-500/20 text-[9px] font-black uppercase flex items-center gap-1 select-none">
-                              익명 상담 🔒
+                            <span className={`px-1.5 py-0.5 rounded text-[9px] font-black uppercase flex items-center gap-1 select-none border transition-all ${
+                              isCopied
+                                ? 'bg-yellow-500/10 text-yellow-500 border-yellow-500/25'
+                                : 'bg-yellow-500 text-slate-900 border-yellow-400 animate-pulse shadow-[0_0_12px_rgba(234,179,8,0.4)]'
+                            }`}>
+                              카톡채팅요청 💬
                             </span>
                           );
                         }
                         return (
-                          <span className="px-1.5 py-0.5 rounded bg-orange-500/10 text-orange-400 border border-orange-500/20 text-[9px] font-black uppercase flex items-center gap-1 select-none">
-                            정식 상담 🔑
+                          <span className="px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[9px] font-black uppercase flex items-center gap-1 select-none">
+                            {isUnderwriting ? '인증완료 ✅' : '정식상담요청 🔑'}
                           </span>
                         );
                       })()}
@@ -3536,18 +3610,92 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                     <div className="flex items-center gap-1.5 flex-wrap">
                       <p className="font-extrabold text-sm text-white">{lead.name}</p>
                       {lead.raw_payload?.simulation_code && (
-                        <span className="px-1.5 py-0.5 bg-orange-500/10 text-orange-400 border border-orange-500/20 rounded text-[9px] font-black uppercase tracking-wider">
-                          {lead.raw_payload.simulation_code}
-                        </span>
+                        <div className="flex items-center gap-1">
+                          <span className="px-1.5 py-0.5 bg-orange-500/10 text-orange-400 border border-orange-500/20 rounded text-[9px] font-black uppercase tracking-wider">
+                            {lead.raw_payload.simulation_code}
+                          </span>
+                          {lead.raw_payload?.consult_type === 'anonymous' && (
+                            <button
+                              onClick={async (e) => {
+                                e.stopPropagation();
+                                const simCode = lead.raw_payload?.simulation_code || '';
+                                const origin = window.location.origin;
+                                const msg = `안녕하세요! 보험리밸런스 대리점입니다. 고객님의 설계서 잠금 해제를 위한 본인인증 전용 링크입니다. 아래 링크를 눌러 간편인증을 완료하시면 0.1초 만에 마스킹이 해제됩니다.\n▶ 인증 링크: ${origin}/verify?code=${simCode}`;
+                                navigator.clipboard.writeText(msg);
+                                setToastMessage("✨ 카톡 인증 문구가 복사되었습니다! 카톡창에 붙여넣기(Ctrl+V) 하세요.");
+                                setShowToast(true);
+                                setTimeout(() => setShowToast(false), 3000);
+
+                                // Stop flashing via DB update
+                                try {
+                                  const supabase = createClient();
+                                  const updatedPayload = {
+                                    ...(lead.raw_payload || {}),
+                                    copied_by_planner: true,
+                                    timeline: [
+                                      {
+                                        id: `copy-${Date.now()}`,
+                                        type: 'system_log',
+                                        author: '설계사',
+                                        detail: '설계사가 카톡 인증 안내 문구를 복사하여 전달했습니다.',
+                                        created_at: new Date().toISOString()
+                                      },
+                                      ...(lead.raw_payload?.timeline || [])
+                                    ]
+                                  };
+                                  await supabase
+                                    .from('customer_leads')
+                                    .update({ raw_payload: updatedPayload })
+                                    .eq('id', lead.id);
+                                } catch (err) {
+                                  console.error(err);
+                                }
+
+                                // Update local state for immediate 0.1s responsiveness
+                                setLeads(prev => prev.map(l => {
+                                  if (l.id === lead.id) {
+                                    return {
+                                      ...l,
+                                      raw_payload: {
+                                        ...(l.raw_payload || {}),
+                                        copied_by_planner: true
+                                      }
+                                    };
+                                  }
+                                  return l;
+                                }));
+
+                                setSelectedLead(prev => prev && prev.id === lead.id ? {
+                                  ...prev,
+                                  raw_payload: {
+                                    ...(prev.raw_payload || {}),
+                                    copied_by_planner: true
+                                  }
+                                } : prev);
+                              }}
+                              className="px-2.5 py-1.5 bg-yellow-500 hover:bg-yellow-400 text-slate-950 rounded-lg text-[10px] font-black cursor-pointer transition-all active:scale-95 flex items-center gap-1 shadow-md shadow-yellow-500/15"
+                              title="카톡 인증문구 복사"
+                            >
+                              문구복사 📋
+                            </button>
+                          )}
+                        </div>
                       )}
                       {(() => {
-                        if (!isLeadConsult(lead.insurance_type) || lead.insurance_type === 'support_consult') return null;
-                        const consultType = lead.raw_payload?.consult_type;
+                        const isUnderwriting = lead.insurance_type?.includes('_underwriting');
+                        if ((!isLeadConsult(lead.insurance_type) && !isUnderwriting) || lead.insurance_type === 'support_consult') return null;
+                        
+                        const isAnonymous = lead.raw_payload?.consult_type === 'anonymous' || (isUnderwriting && lead.status !== 'verified');
+                        const isCopied = lead.raw_payload?.copied_by_planner === true;
                         return (
-                          <span className={`px-1 py-0.5 rounded text-[8px] font-black uppercase ${
-                            consultType === 'anonymous' ? 'bg-red-500/10 text-red-400 border border-red-500/20' : 'bg-orange-500/10 text-orange-400 border-orange-500/20'
+                          <span className={`px-1 py-0.5 rounded text-[8px] font-black uppercase border transition-all ${
+                            isAnonymous
+                              ? isCopied
+                                ? 'bg-yellow-500/10 text-yellow-500 border-yellow-500/25'
+                                : 'bg-yellow-500 text-slate-900 border-yellow-400 animate-pulse shadow-[0_0_12px_rgba(234,179,8,0.4)]'
+                              : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
                           }`}>
-                            {consultType === 'anonymous' ? '익명' : '정식'}
+                            {isAnonymous ? '카톡채팅요청 💬' : isUnderwriting ? '인증완료 ✅' : '정식상담요청 🔑'}
                           </span>
                         );
                       })()}
@@ -5284,11 +5432,48 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                         💬 카톡 상담 신청 및 1:1 고객센터 문의 목록
                       </h3>
                       <p className="text-[10px] text-slate-400 font-bold">고객이 분석 결과를 확인한 후 카톡 상담을 요청했거나, 고객센터를 통해 1:1 문의를 남긴 초고관여 리드 목록입니다.</p>
-                      {(consultCategoryFilter === 'all' || consultCategoryFilter === 'underwriting') && (
-                        <div className="mt-3 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-[10px] text-emerald-400 font-extrabold leading-relaxed break-keep">
-                          🟢 [사전 심사 요청 고객 대응 가이드] 본 고객은 과거 병력을 기반으로 가입 가능 여부를 심사받기 위해 사전 심사를 직접 신청한 고객입니다. 빠른 가입 여부 피드백 및 심사 진행을 위해 즉시 전화 통화 또는 카카오톡으로 연락하여 병력 보완 사항을 확인하고 상담을 진행하시기 바랍니다.
-                        </div>
-                      )}
+                      <div className="mt-3 overflow-hidden rounded-xl border border-yellow-500/30 bg-yellow-500/5 transition-all">
+                        {/* Accordion Header */}
+                        <button
+                          type="button"
+                          onClick={() => setIsKakaoGuideOpen(!isKakaoGuideOpen)}
+                          className="w-full flex items-center justify-between p-3.5 text-left text-[11px] font-black text-yellow-400 hover:bg-yellow-500/10 transition-all cursor-pointer"
+                        >
+                          <span className="flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse" />
+                            💡 [필독] 카톡 신청 시 고객 정보 잠금 해제하는 방법 (클릭해서 보기)
+                          </span>
+                          <span className="text-yellow-500 text-xs font-bold transition-transform duration-200">
+                            {isKakaoGuideOpen ? '▲ 닫기' : '▼ 열기'}
+                          </span>
+                        </button>
+
+                        {/* Accordion Content */}
+                        {isKakaoGuideOpen && (
+                          <div className="p-4 border-t border-yellow-500/20 bg-slate-950/40 text-[10.5px] text-slate-300 space-y-3 font-bold leading-relaxed break-keep">
+                            <p className="text-xs font-black text-yellow-300">🔓 [필독] 0.1초 카카오톡 실시간 상담 연동 가이드</p>
+                            
+                            <div className="space-y-2.5 pl-1">
+                              <div>
+                                <span className="text-white font-black block">1단계. 실시간 알림 확인</span>
+                                <span className="text-slate-400">고객이 카톡 상담을 신청하면, 대시보드에 노란색 <span className="text-yellow-400">카톡채팅요청 💬</span> 배지가 번쩍이며 실시간으로 뜹니다.</span>
+                              </div>
+                              <div>
+                                <span className="text-white font-black block">2단계. 카톡방에서 코드 확인</span>
+                                <span className="text-slate-400">고객이 오픈채팅방에 입장하여 자신의 <span className="text-orange-400 font-extrabold bg-orange-500/10 px-1 py-0.5 rounded border border-orange-500/20 uppercase text-[9px] tracking-wider">고유 코드 (예: REX-DA4JGR)</span>를 보낼 것입니다.</span>
+                              </div>
+                              <div>
+                                <span className="text-white font-black block">3단계. 인증 문구 복사 및 전달</span>
+                                <span className="text-slate-400">어드민에서 해당 고객을 찾아 <span className="text-yellow-400 bg-yellow-500/10 px-1 py-0.5 rounded border border-yellow-500/20">[문구복사 📋]</span> 버튼을 누릅니다. 자동으로 복사된 인증 안내 문구를 카카오톡 오픈채팅방에 붙여넣기(Ctrl+V) 하여 고객에게 전송합니다.</span>
+                              </div>
+                              <div>
+                                <span className="text-white font-black block">4단계. 마스킹 자동 해제 및 상담</span>
+                                <span className="text-slate-400">고객이 링크를 눌러 본인인증을 마치는 순간, 설계사님 어드민 화면의 숨겨진 실명과 연락처가 <span className="text-yellow-400 font-extrabold underline">0.1초 만에 자동으로 잠금 해제</span>됩니다. 이제 확보된 정보로 상담을 진행하세요!</span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
 
                     {/* Lower Category Filter Tabs */}
@@ -7863,14 +8048,16 @@ if (distPart.startsWith('dist_weight:')) {
               <div className="bg-slate-950 p-4 rounded-xl border border-slate-850 flex flex-col justify-between space-y-3">
                 <div>
                   <span className="text-slate-500 block font-bold mb-1.5">고객 기본 정보</span>
-                  <p className="font-extrabold text-slate-300">이름: {selectedLead.name || '미기입'}</p>
+                  <p className="font-extrabold text-slate-300">
+                    이름: {selectedLead.status === 'verified' || (selectedLead.name && selectedLead.name !== '익명고객' && selectedLead.name !== '무명고객' && selectedLead.name !== '고객')
+                      ? selectedLead.name 
+                      : '🔒 미인증 고객'}
+                  </p>
                   <p className="font-extrabold text-slate-300">연령: {selectedLead.age || '미기입'}세</p>
                   <p className="font-extrabold text-slate-300">
-                    연락처: {(() => {
-                      const isConsult = isLeadConsult(selectedLead.insurance_type);
-                      const isUnderwriting = selectedLead.insurance_type?.includes('_underwriting');
-                      return (isConsult || isUnderwriting) ? selectedLead.phone : maskPhoneNumber(selectedLead.phone);
-                    })()}
+                    연락처: {selectedLead.status === 'verified' || (selectedLead.phone && selectedLead.phone !== '010-0000-0000' && selectedLead.phone !== '')
+                      ? selectedLead.phone 
+                      : '🔒 미인증 번호'}
                   </p>
                   <p className="font-extrabold text-slate-300">성별: {selectedLead.raw_payload?.gender === 'M' ? '남성' : selectedLead.raw_payload?.gender === 'F' ? '여성' : '미확인'}</p>
                   {(() => {
@@ -7890,6 +8077,18 @@ if (distPart.startsWith('dist_weight:')) {
                       🔑 설계 코드: <span className="text-orange-400 select-all font-black bg-orange-500/5 px-1.5 py-0.5 rounded border border-orange-500/10 uppercase tracking-wider">{selectedLead.raw_payload.simulation_code}</span>
                     </p>
                   )}
+                  {selectedLead.raw_payload?.simulation_code && selectedLead.status !== 'verified' && (
+                    <button
+                      onClick={() => {
+                        const shareUrl = `${window.location.origin}/verify?code=${selectedLead.raw_payload?.simulation_code}`;
+                        navigator.clipboard.writeText(shareUrl);
+                        alert("🔑 고객 안심인증 링크가 클립보드에 복사되었습니다!\n카카오톡 1:1 상담방에 붙여넣어 고객에게 전송해 주세요.\n\n링크: " + shareUrl);
+                      }}
+                      className="mt-3 w-full py-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-[10.5px] rounded-xl flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-all cursor-pointer border border-orange-500/20"
+                    >
+                      🔑 안심인증 링크 복사
+                    </button>
+                  )}
                   {(() => {
                     const isConsult = isLeadConsult(selectedLead.insurance_type);
                     const isUnderwriting = selectedLead.insurance_type?.includes('_underwriting');
@@ -7905,15 +8104,20 @@ if (distPart.startsWith('dist_weight:')) {
                     if (isConsult) {
                       const consultType = selectedLead.raw_payload?.consult_type;
                       if (consultType === 'anonymous') {
+                        const isCopied = selectedLead.raw_payload?.copied_by_planner === true;
                         return (
-                          <div className="mt-2.5 p-3 bg-red-500/10 border-2 border-red-500/30 rounded-xl text-[9.5px] text-red-400 font-extrabold leading-relaxed break-keep">
-                            ⚠️ [익명 안심 약속 준수 가이드] 본 고객은 <span className="text-white bg-red-600 px-1 py-0.5 rounded">익명 카톡 상담</span> 조건으로 신청하신 고객입니다. 무단으로 먼저 유선 전화를 거는 행위는 심각한 거부감과 민원을 발생시킬 수 있으니, <span className="text-red-300 underline font-black">반드시 오픈채팅방에서 코드로 먼저 상담을 나눈 뒤</span> 유선으로 유도하세요.
+                          <div className={`mt-2.5 p-3 rounded-xl text-[9.5px] font-extrabold leading-relaxed break-keep border transition-all ${
+                            isCopied
+                              ? 'bg-yellow-500/10 border-yellow-500/20 text-yellow-500'
+                              : 'bg-yellow-500/20 border-yellow-500/40 text-yellow-400 animate-pulse shadow-[0_0_10px_rgba(234,179,8,0.15)]'
+                          }`}>
+                            ⚠️ [카톡채팅요청 안내 가이드] 본 고객은 <span className="text-white bg-yellow-600 px-1 py-0.5 rounded">카톡 익명 상담</span> 조건으로 신청하신 고객입니다. 무단으로 먼저 유선 전화를 거는 행위는 금지되어 있으니, <span className="text-yellow-300 underline font-black">반드시 오픈채팅방에서 코드를 수신한 후 아래 인증 링크를 전달</span>하여 본인인증을 진행하도록 유도해 주세요.
                           </div>
                         );
                       }
                       return (
-                        <div className="mt-2.5 p-2 bg-orange-500/10 border border-orange-500/20 rounded-xl text-[9.5px] text-orange-400 font-extrabold leading-normal break-keep">
-                          ⚠️ [정식 상담 약속 준수 가이드] 본 고객은 정식 상담을 신청한 고객입니다. 카카오톡으로 연락 후, 고객 동의 후 유선 안내 바랍니다.
+                        <div className="mt-2.5 p-2 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-[9.5px] text-emerald-400 font-extrabold leading-normal break-keep">
+                          ⚠️ [정식상담요청 안내 가이드] 본 고객은 본인인증을 완료하고 정식 상담을 요청한 상태입니다. 확보된 연락처를 통해 신속하게 상담을 진행해 주세요.
                         </div>
                       );
                     }
@@ -7925,6 +8129,81 @@ if (distPart.startsWith('dist_weight:')) {
                     const isConsult = isLeadConsult(selectedLead.insurance_type);
                     const isUnderwriting = selectedLead.insurance_type?.includes('_underwriting');
                     if (isConsult || isUnderwriting) {
+                      const consultType = selectedLead.raw_payload?.consult_type;
+                      if (consultType === 'anonymous') {
+                        return (
+                          <button
+                            onClick={async () => {
+                              const simCode = selectedLead.raw_payload?.simulation_code || '';
+                              const origin = window.location.origin;
+                              const msg = `안녕하세요! 보험리밸런스 대리점입니다. 고객님의 설계서 잠금 해제를 위한 본인인증 전용 링크입니다. 아래 링크를 눌러 간편인증을 완료하시면 0.1초 만에 마스킹이 해제됩니다.\n▶ 인증 링크: ${origin}/verify?code=${simCode}`;
+                              navigator.clipboard.writeText(msg);
+                              setToastMessage("✨ 카톡 인증 문구가 복사되었습니다! 카톡창에 붙여넣기(Ctrl+V) 하세요.");
+                              setShowToast(true);
+                              setTimeout(() => setShowToast(false), 3000);
+
+                              // Stop flashing via DB update
+                              try {
+                                const supabase = createClient();
+                                const updatedPayload = {
+                                  ...(selectedLead.raw_payload || {}),
+                                  copied_by_planner: true,
+                                  timeline: [
+                                    {
+                                      id: `copy-${Date.now()}`,
+                                      type: 'system_log',
+                                      author: '설계사',
+                                      detail: '설계사가 카톡 인증 안내 문구를 복사하여 전달했습니다.',
+                                      created_at: new Date().toISOString()
+                                    },
+                                    ...(selectedLead.raw_payload?.timeline || [])
+                                  ]
+                                };
+                                await supabase
+                                  .from('customer_leads')
+                                  .update({ raw_payload: updatedPayload })
+                                  .eq('id', selectedLead.id);
+                              } catch (err) {
+                                console.error(err);
+                              }
+
+                              // Update local state for immediate 0.1s responsiveness
+                              setLeads(prev => prev.map(l => {
+                                if (l.id === selectedLead.id) {
+                                  return {
+                                    ...l,
+                                    raw_payload: {
+                                      ...(l.raw_payload || {}),
+                                      copied_by_planner: true
+                                    }
+                                  };
+                                }
+                                return l;
+                              }));
+
+                              setSelectedLead(prev => prev ? {
+                                ...prev,
+                                raw_payload: {
+                                  ...(prev.raw_payload || {}),
+                                  copied_by_planner: true
+                                }
+                              } : null);
+                            }}
+                            className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-slate-950 text-[12px] font-extrabold py-3.5 px-5 rounded-2xl transition-all cursor-pointer text-center flex items-center justify-center gap-2 shadow-lg shadow-yellow-500/25 hover:shadow-yellow-500/35 border border-yellow-300 active:scale-98"
+                          >
+                            💬 카톡 인증문구 복사
+                          </button>
+                        );
+                      }
+                      const isVerified = selectedLead.status === 'verified' || (selectedLead.phone && selectedLead.phone !== '010-0000-0000');
+                      if (!isVerified) {
+                        return (
+                          <div className="w-full bg-slate-900 border border-slate-850 p-2.5 rounded-xl text-center text-[10.5px] font-bold text-slate-400">
+                            🔒 미인증 고객입니다. 먼저 카톡 상담방에 안심인증 링크를 전송해 주세요.
+                          </div>
+                        );
+                      }
+                      
                       return (
                         <>
                           <button
@@ -8096,7 +8375,10 @@ if (distPart.startsWith('dist_weight:')) {
             })()}
 
             {/* 과거 병력 사전 심사 고지 내역 */}
-            {selectedLead.insurance_type?.endsWith('_underwriting') && (
+            {(selectedLead.insurance_type?.endsWith('_underwriting') || 
+              selectedLead.raw_payload?.underwriting || 
+              selectedLead.analysis_result?.underwriting || 
+              selectedLead.analysis_result?.underwriting_questions) && (
               <div className="space-y-3">
                 <h4 className="font-extrabold text-sm text-white border-l-3 border-orange-500 pl-2">🔍 과거 병력 사전 심사 고지 내역</h4>
                 <div className="bg-slate-950/80 border border-slate-850 rounded-2xl p-5 text-xs font-semibold text-slate-300 space-y-4">
@@ -8105,11 +8387,22 @@ if (distPart.startsWith('dist_weight:')) {
                                          selectedLead.analysis_result?.underwriting || 
                                          selectedLead.analysis_result?.underwriting_questions;
                                          
-                    const questions = Array.isArray(underwriting) ? underwriting : [
-                      { question: "최근 5년 이내 수술 이력", answer: underwriting?.hasSurgery ? "있음 ⚠️" : "없음 ✓" },
-                      { question: "최근 5년 이내 입원 이력", answer: underwriting?.hasHospitalization ? "있음 ⚠️" : "없음 ✓" },
-                      { question: "최근 3개월 이내 의사 처방 및 약 복용 이력", answer: underwriting?.hasMedication ? "있음 ⚠️" : "없음 ✓" }
-                    ];
+                    const questions = Array.isArray(underwriting) ? underwriting : (
+                      (underwriting?.uwQ1 !== undefined || underwriting?.uwQ2 !== undefined || underwriting?.uwQ3 !== undefined || underwriting?.uwQ4 !== undefined || underwriting?.uwQ5 !== undefined || underwriting?.uwNone !== undefined) 
+                      ? [
+                        { question: "최근 3개월 이내 추가 검사(재검사) 필요 소견", answer: underwriting?.uwQ1 ? "있음 ⚠️" : "없음 ✓" },
+                        { question: "최근 3개월 이내 질병의심소견, 치료, 입원, 수술 처방", answer: underwriting?.uwQ2 ? "있음 ⚠️" : "없음 ✓" },
+                        { question: "최근 5년 이내 계속하여 7일 이상 치료 이력", answer: underwriting?.uwQ3 ? "있음 ⚠️" : "없음 ✓" },
+                        { question: "최근 5년 이내 계속하여 30일 이상 약 복용(투약) 이력", answer: underwriting?.uwQ4 ? "있음 ⚠️" : "없음 ✓" },
+                        { question: "최근 5년 이내 8대 중대질병 진단/치료/입원/수술 이력", answer: underwriting?.uwQ5 ? "있음 ⚠️" : "없음 ✓" },
+                        { question: "해당 사항 없음 (건강함)", answer: underwriting?.uwNone ? "해당됨 ✓" : "해당없음" }
+                      ]
+                      : [
+                        { question: "최근 5년 이내 수술 이력", answer: underwriting?.hasSurgery ? "있음 ⚠️" : "없음 ✓" },
+                        { question: "최근 5년 이내 입원 이력", answer: underwriting?.hasHospitalization ? "있음 ⚠️" : "없음 ✓" },
+                        { question: "최근 3개월 이내 의사 처방 및 약 복용 이력", answer: underwriting?.hasMedication ? "있음 ⚠️" : "없음 ✓" }
+                      ]
+                    );
                     
                     return (
                       <div className="grid gap-3">

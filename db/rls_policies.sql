@@ -95,3 +95,16 @@ CREATE POLICY "Enable insert for anonymous users" ON public.visitor_logs
 -- 조회: 누구나 (어드민 대시보드 통계 집계용)
 CREATE POLICY "Enable read for all users" ON public.visitor_logs
     FOR SELECT USING (true);
+
+-- ==========================================
+-- 🔔 7. 실시간 테이블 변경 감지 (Supabase Realtime) 활성화
+-- ==========================================
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_publication_tables 
+    WHERE pubname = 'supabase_realtime' AND schemaname = 'public' AND tablename = 'customer_leads'
+  ) THEN
+    ALTER PUBLICATION supabase_realtime ADD TABLE public.customer_leads;
+  END IF;
+END $$;
