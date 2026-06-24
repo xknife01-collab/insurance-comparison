@@ -1088,6 +1088,7 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
           <div>
             <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest block mb-1">Differentiator 01</span>
             <h4 className="text-lg font-black text-slate-800 tracking-tight leading-snug">
+              카카오톡 익명채팅 신청시<br />
               한국신용정보원 실시간 연동<br />
               <span className="text-orange-500">& 0.1초 AI 정밀 진단</span>
             </h4>
