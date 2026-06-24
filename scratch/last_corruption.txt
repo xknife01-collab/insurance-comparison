@@ -1,0 +1,1 @@
+Line 19: "const COMPANIES = ['DB손해보험','KB손해보험','한화손해보�function detectType(name: string) {\n"

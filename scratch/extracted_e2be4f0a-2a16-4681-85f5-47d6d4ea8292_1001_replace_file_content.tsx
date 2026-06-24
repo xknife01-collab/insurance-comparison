@@ -1,0 +1,2 @@
+"                              className={`relative p-3.5 rounded-3xl flex flex-col gap-1.5 items-start justify-between text-left transition-all min-h-[110px] ${\n                                isSelected \n                                  ? 'bg-orange-5
+<truncated 1676 bytes>

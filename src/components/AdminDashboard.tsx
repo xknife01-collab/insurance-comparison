@@ -9,6 +9,8 @@ import { triggerWelcomeChat } from '../utils/chatHelper';
 import PWAInstallCard from './PWAInstallCard';
 import { registerPushSubscription, triggerTestPushNotification } from '../utils/pushNotification';
 import { useB2BBranding } from '../hooks/useB2BBranding';
+import { HyphenAuthModal } from './insurance/remodeling/HyphenAuthModal';
+import { StandardizedCoverage } from '../types/remodeling';
 
 import { 
   Users, Settings, CreditCard, FileText, Plus, LogOut, CheckCircle, 
@@ -762,6 +764,59 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
 
   const [topupLoading, setTopupLoading] = useState(false);
   const [isKakaoGuideOpen, setIsKakaoGuideOpen] = useState(false);
+  // 어드민 하이픈 연동 모달 상태
+  const [adminHyphenLead, setAdminHyphenLead] = useState<Lead | null>(null);
+  const [showAdminHyphen, setShowAdminHyphen] = useState(false);
+
+  // 어드민 하이픈 성공 핸들러 — coverage 저장 + status verified 설정
+  const handleAdminHyphenSuccess = async (coverage: StandardizedCoverage, customerInfo?: { name: string; phone: string }) => {
+    if (!adminHyphenLead) return;
+    try {
+      const supabase = createClient();
+      const updatedPayload = {
+        ...(adminHyphenLead.raw_payload || {}),
+        hyphen_coverage: coverage,
+        timeline: [
+          {
+            id: `hyphen-${Date.now()}`,
+            type: 'system_log',
+            author: '설계사',
+            detail: '설계사가 하이픈 연동을 완료하여 실제 보험 데이터를 가져왔습니다.',
+            created_at: new Date().toISOString()
+          },
+          ...(adminHyphenLead.raw_payload?.timeline || [])
+        ]
+      };
+
+      const updateData: any = { status: 'verified', raw_payload: updatedPayload };
+      // 하이픈 인증에서 입력된 실명/전화 저장
+      if (customerInfo?.name && customerInfo.name !== '고객') {
+        updateData.name = customerInfo.name;
+      }
+      if (customerInfo?.phone && customerInfo.phone !== '010-0000-0000') {
+        updateData.phone = customerInfo.phone;
+      }
+
+      await supabase
+        .from('customer_leads')
+        .update(updateData)
+        .eq('id', adminHyphenLead.id);
+
+      setLeads(prev => prev.map(l =>
+        l.id === adminHyphenLead.id
+          ? { ...l, ...updateData }
+          : l
+      ));
+      setToastMessage('✅ 하이픈 연동 완료! 실명·보험 데이터가 저장되었습니다.');
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+    } catch (err) {
+      alert('하이픈 데이터 저장 실패: ' + err);
+    } finally {
+      setShowAdminHyphen(false);
+      setAdminHyphenLead(null);
+    }
+  };
 
   const handleUpdatePlannerQuota = async (plannerId: string, quota: number) => {
     try {
@@ -3570,13 +3625,28 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                     </select>
                   </td>
                   <td className="py-4.5 px-4 text-right">
-                    <button 
-                      onClick={() => setSelectedLead(lead)}
-                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-orange-500/10 hover:bg-orange-500 text-orange-400 hover:text-white border border-orange-500/20 hover:border-transparent rounded-lg font-black transition-all cursor-pointer text-[10px]"
-                    >
-                      {lead.insurance_type === 'support_consult' ? '문의 내용' : '결과지 열람'}
-                      <ExternalLink className="w-3 h-3" />
-                    </button>
+                    <div className="flex items-center justify-end gap-2">
+                      {lead.insurance_type?.includes('remodeling') && !lead.raw_payload?.hyphen_coverage && (
+                        <button
+                          onClick={() => { setAdminHyphenLead(lead); setShowAdminHyphen(true); }}
+                          className="inline-flex items-center gap-1 px-3 py-1.5 bg-purple-500/10 hover:bg-purple-500 text-purple-400 hover:text-white border border-purple-500/20 hover:border-transparent rounded-lg font-black transition-all cursor-pointer text-[10px]"
+                        >
+                          🔍 하이픈 연동
+                        </button>
+                      )}
+                      {lead.raw_payload?.hyphen_coverage && (
+                        <span className="px-2 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-lg text-[9px] font-black">
+                          실데이터 완료 ✅
+                        </span>
+                      )}
+                      <button
+                        onClick={() => setSelectedLead(lead)}
+                        className="inline-flex items-center gap-1 px-3 py-1.5 bg-orange-500/10 hover:bg-orange-500 text-orange-400 hover:text-white border border-orange-500/20 hover:border-transparent rounded-lg font-black transition-all cursor-pointer text-[10px]"
+                      >
+                        {lead.insurance_type === 'support_consult' ? '문의 내용' : '결과지 열람'}
+                        <ExternalLink className="w-3 h-3" />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -3817,8 +3887,21 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                       </div>
                     )}
 
-                    <div className="pt-1">
-                      <button 
+                    <div className="pt-1 space-y-2">
+                      {lead.insurance_type?.includes('remodeling') && !lead.raw_payload?.hyphen_coverage && (
+                        <button
+                          onClick={(e) => { e.stopPropagation(); setAdminHyphenLead(lead); setShowAdminHyphen(true); }}
+                          className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-purple-500/10 hover:bg-purple-500 text-purple-400 hover:text-white border border-purple-500/20 rounded-xl font-black transition-all cursor-pointer text-xs"
+                        >
+                          🔍 하이픈 연동 실행
+                        </button>
+                      )}
+                      {lead.raw_payload?.hyphen_coverage && (
+                        <div className="text-center py-1.5 text-[10px] font-black text-emerald-400">
+                          실데이터 연동 완료 ✅
+                        </div>
+                      )}
+                      <button
                         onClick={() => setSelectedLead(lead)}
                         className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white border border-transparent rounded-xl font-black transition-all cursor-pointer text-xs shadow-md shadow-orange-500/10"
                       >
@@ -9182,6 +9265,20 @@ if (distPart.startsWith('dist_weight:')) {
           {toastMessage}
         </div>
       )}
+
+      {/* 하이픈 연동 모달 — 리모델링 리드 열람 시 설계사가 실행 */}
+      <HyphenAuthModal
+        isOpen={showAdminHyphen}
+        onClose={() => { setShowAdminHyphen(false); setAdminHyphenLead(null); }}
+        onSuccess={handleAdminHyphenSuccess}
+        initialData={{
+          userName: adminHyphenLead?.name || '고객',
+          gender: (adminHyphenLead?.raw_payload?.analysisInputs?.gender as 'M' | 'F') || 'M',
+          birth: adminHyphenLead?.raw_payload?.analysisInputs?.birth || '',
+          mobileNo: adminHyphenLead?.phone || '',
+          age: adminHyphenLead?.age || 40,
+        }}
+      />
 
     </div>
   );

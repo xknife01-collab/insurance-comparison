@@ -13,17 +13,24 @@ import {
 } from '../../../lib/insurance/remodeling/hyphenRemodelingService';
 import { parsePoliciesToStandardized } from '../../../lib/remodeling/parser';
 import { StandardizedCoverage } from '../../../types/remodeling';
+import { generateCustomMockData } from '../../../utils/mockGenerator';
 
 interface HyphenAuthModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess: (coverage: StandardizedCoverage) => void;
+  onSuccess: (coverage: StandardizedCoverage, customerInfo?: { name: string; phone: string }) => void;
   initialData?: {
     userName: string;
     gender: 'M' | 'F';
     birth: string;
     mobileNo: string;
     age: number;
+    customPolicies?: {
+      categoryId: string;
+      premium: number;
+      riders: { rider_name: string; coverage_amount: number }[];
+      isCustom: boolean;
+    }[];
   };
 }
 
@@ -524,7 +531,7 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
     }
 
     setLoading(false);
-    onSuccess(coverage);
+    onSuccess(coverage, { name: findUserName, phone: findMobileNo });
     onClose();
   };
 
@@ -971,12 +978,48 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
     }
   };
 
+  const getStandardizedCoverage = (
+    finalAge: number,
+    finalGender: 'M' | 'F',
+    mockPolicies: any[]
+  ) => {
+    const custom = initialData?.customPolicies || [];
+    const merged = [...custom];
+    const customIds = new Set(custom.map(p => p.categoryId));
+    
+    mockPolicies.forEach((p: any) => {
+      let categoryId = 'general';
+      const name = p.product_name || '';
+      if (name.includes('암')) categoryId = 'cancer';
+      else if (name.includes('뇌') || name.includes('뇌졸중')) categoryId = 'cerebrovascular';
+      else if (name.includes('심장') || name.includes('허혈')) categoryId = 'heart';
+      else if (name.includes('종신')) categoryId = 'whole';
+      else if (name.includes('실손') || name.includes('실비') || name.includes('의료비')) categoryId = 'indemnity';
+      else if (name.includes('수술')) categoryId = 'surgery';
+      else if (name.includes('치아')) categoryId = 'dental';
+      else if (name.includes('간병')) categoryId = 'caregiving';
+      else if (name.includes('운전자')) categoryId = 'driver';
+      else if (name.includes('자동차')) categoryId = 'car';
+      
+      if (!customIds.has(categoryId)) {
+        merged.push({
+          categoryId,
+          premium: p.monthly_premium,
+          riders: p.riders || [],
+          isCustom: false
+        });
+      }
+    });
+
+    return generateCustomMockData(finalAge, finalGender, merged);
+  };
+
   const handleDemoStart = async (type: 'overpaying' | 'underinsured' | 'optimal') => {
     setError('');
     const mock = MOCK_REMODELING_DATA[type];
     const finalAge = (initialData?.age && initialData.age > 0) ? initialData.age : mock.age;
     const finalGender = initialData?.gender || mock.gender;
-    const standardized = await parsePoliciesToStandardized(finalAge, finalGender, mock.policies);
+    const standardized = getStandardizedCoverage(finalAge, finalGender, mock.policies);
     await runAnalysisAnimation(standardized, true);
   };
 
@@ -1017,7 +1060,8 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
           <div className="flex border-b border-gray-100 bg-gray-50/50 p-2">
             {[
               { id: 'login', label: '🔑 내보험다보여 로그인' },
-              { id: 'register', label: '💬 본인인증 회원가입' }
+              { id: 'register', label: '💬 본인인증 회원가입' },
+              { id: 'demo', label: '⚙️ 시뮬레이션 데모' }
             ].map((tab) => (
               <button
                 key={tab.id}

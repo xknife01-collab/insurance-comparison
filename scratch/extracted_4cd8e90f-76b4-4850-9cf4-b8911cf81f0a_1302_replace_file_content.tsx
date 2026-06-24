@@ -1,0 +1,2 @@
+"  return (\n    <section className=\"max-w-7xl mx-auto px-4 py-40 space-y-24\">\n      {/* 100% 안심 자율 비교 서비스 배너 */}\n      <div className=\"max-w-4xl mx-auto animate-in fade-in slide-in-from-top-4 duration-1000\">\n        <div class
+<truncated 3048 bytes>

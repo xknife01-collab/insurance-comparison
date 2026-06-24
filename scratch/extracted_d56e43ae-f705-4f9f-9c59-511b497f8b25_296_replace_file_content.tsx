@@ -1,0 +1,2 @@
+"    // Check if at least one category has premium > 0 or is checked/included\n    const activePoliciesCount = (Object.values(customPolicies) as { premium: number; isCustom: boolean; included?: boolean }[])\n      .filter(p => p.premium > 0 || p.included).
+<truncated 8 bytes>

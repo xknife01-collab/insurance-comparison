@@ -1,0 +1,19 @@
+Line19: "const COMPANIES = ['DB손해보험','KB손해보험','한화손해보�function detectType(name: string) {\n"
+Line47: 'const typeLabel: Record<string,string> = { \n'
+Line48: "  silson: '의료실비',\n"
+Line49: "  dental: '치아보험',\n"
+Line50: "  pre_existing: '유병자보험',\n"
+Line51: "  surgery_hospital: '수술/입원보험',\n"
+Line52: "  cancer: '암보험',\n"
+Line53: "  health: '종합건강보험',\n"
+Line54: "  brain: '뇌혈관보험',\n"
+Line481: "    {label:'급여실손',value:cov.hasSilsonCommon?90:20,target:75},\n"
+Line482: "    {label:'비급여실손',value:cov.hasSilsonCommon?88:20,target:70},\n"
+Line483: "    {label:'주사제실비',value:cov.hasSilsonInjections?92:20,target:75},\n"
+Line484: "    {label:'가성비',value:p<=20000?95:75,target:70},\n"
+Line485: "    {label:'본인부담',value:80,target:75},\n"
+Line869: '                      <CovRow label="세대 구분 및 본인부담금" value={cov.hasSilsonCommon ? \'4세대 가입\' : \'미가입\'} status={cov.hasSilsonCommon ? \'good\' : \'none\'} note="의료비 리스크 노출"/>\n'
+Line870: '                      <CovRow label="비급여 주사제 보장" value={cov.hasSilsonInjections ? \'가입\' : \'미가입\'} status={cov.hasSilsonInjections ? \'good\' : \'none\'} note="3대 비급여 한도 부족"/>\n'
+Line871: '                    </>\n'
+Line872: '                  )}\n'
+Line873: "                  {t === 'dental' && (\n"

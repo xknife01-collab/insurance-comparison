@@ -1,0 +1,2 @@
+"      {/* 100% 안심 자율 비교 서비스 배너 (텍스트만) */}\n      <div className=\"max-w-4xl mx-auto w-full text-center px-4\">\n        {/* Badge */}\n        <div className=\"inline-flex items-center gap-1.5 px-4 py-1.5 bg-orange-500/10 tex
+<truncated 996 bytes>

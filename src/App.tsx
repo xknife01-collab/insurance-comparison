@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -47,6 +47,8 @@ import AdminDashboard from './components/AdminDashboard';
 import { CustomerSupportSection } from './components/CustomerSupportSection';
 import { PartnerLanding } from './components/PartnerLanding';
 import VerificationPage from './components/VerificationPage';
+import { HyphenAuthModal } from './components/insurance/remodeling/HyphenAuthModal';
+import { StandardizedCoverage } from './types/remodeling';
 
 export default function App() {
   const { branding, loading, showInAppGuide, setShowInAppGuide, isIOS, isInAppBrowser, isStandalone, updateBranding } = useB2BBranding();
@@ -68,6 +70,9 @@ export default function App() {
   const [lastSubmittedLeadId, setLastSubmittedLeadId] = useState<number | null>(null);
   const [currentSimulationCode, setCurrentSimulationCode] = useState<string>('');
   const [showUnlockModal, setShowUnlockModal] = useState<boolean>(false);
+  const [isInRemodelingZone, setIsInRemodelingZone] = useState<boolean>(false);
+  const [showComparisonBar, setShowComparisonBar] = useState<boolean>(false);
+  const [isRemodelingHyphenOpen, setIsRemodelingHyphenOpen] = useState<boolean>(false);
   const [isUnlocked, setIsUnlocked] = useState<boolean>(() => {
     if (window.location.search.includes('reset')) {
       localStorage.removeItem('ins_unlocked');
@@ -159,11 +164,20 @@ export default function App() {
         (payload) => {
           const leadCode = payload.new?.raw_payload?.simulation_code;
           const status = payload.new?.status;
+          const hyphenCoverage = payload.new?.raw_payload?.hyphen_coverage;
           
           if (leadCode === currentSimulationCode && status === 'verified') {
-            setIsUnlocked(true);
-            localStorage.setItem('ins_unlocked', 'true');
-            alert('🎉 본인인증이 확인되어 실명 마스킹이 0.1초 만에 해제되었습니다!');
+            if (hyphenCoverage) {
+              // 정밀 분석 플로우: 실제 보험 데이터 → remodelingResult 갱신
+              setIsInRemodelingZone(true);
+              handleRemodelingHyphenSuccess(hyphenCoverage);
+              alert('🔍 설계사가 하이픈 연동을 완료했습니다! 실제 보험 데이터가 0.1초 만에 로드됩니다.');
+            } else {
+              // 비교 분석 플로우: 마스킹 해제
+              setIsUnlocked(true);
+              localStorage.setItem('ins_unlocked', 'true');
+              alert('🎉 본인인증이 확인되어 실명 마스킹이 0.1초 만에 해제되었습니다!');
+            }
           }
         }
       )
@@ -461,6 +475,8 @@ export default function App() {
     setCurrentSimulationCode(simulationCode);
 
     if (analysis.selectedCategory === 'remodeling') {
+      setIsInRemodelingZone(true); // 정밀 분석 클릭 순간 floating bar 즉시 교체
+      setShowComparisonBar(false);
       setRemodelingApplied(false);
       const result = await runAnalysis(analysis);
       result.simulation_code = simulationCode; // attach code
@@ -468,6 +484,8 @@ export default function App() {
       // Automatically save lead upon analysis completion
       submitLead(analysis, 'remodeling', result);
     } else {
+      setIsInRemodelingZone(false);
+      setShowComparisonBar(true); // 비교 분석 클릭 순간 즉시 bar 표시
       setCurrentAnalysis(analysis);
       const result = await runAnalysis(analysis);
       result.simulation_code = simulationCode; // attach code
@@ -476,6 +494,27 @@ export default function App() {
       // Automatically save lead upon analysis completion
       submitLead(analysis, analysis.selectedCategory || 'general', result);
     }
+  };
+
+  // 정밀 분석용 하이픈 연동 성공 핸들러 — floating bar에서 HyphenAuthModal 완료 시 호출
+  const handleRemodelingHyphenSuccess = (coverage: StandardizedCoverage) => {
+    handleAnalyze({
+      name: '고객',
+      mobile: '010-0000-0000',
+      age: coverage.age,
+      gender: coverage.gender,
+      jobClass: 1,
+      selectedCategory: 'remodeling',
+      cancer: { currentAmount: coverage.cancer_diagnosis, targetAmount: 50000000 },
+      cerebrovascular: { currentAmount: coverage.brain_vascular, targetAmount: 30000000 },
+      cardiovascular: { currentAmount: coverage.ischemic_heart, targetAmount: 30000000 },
+      surgery: { currentAmount: (coverage as any).surgery_amount ?? 0, targetAmount: 10000000 },
+      postDisability: { currentAmount: (coverage as any).post_disability_amount ?? 0, targetAmount: 30000000 },
+      paymentExemption: 'standard',
+      healthStatus: 'standard',
+      monthlyPremium: coverage.current_total_premium,
+      _remodelingCoverage: coverage
+    });
   };
 
   useEffect(() => {
@@ -491,6 +530,7 @@ export default function App() {
       return () => clearTimeout(timer);
     }
   }, [remodelingResult]);
+
 
   useEffect(() => {
     if (analysisResult) {
@@ -1390,11 +1430,13 @@ export default function App() {
                           <div className="space-y-4">
                             <div className="flex items-start justify-between gap-4">
                               <div className="space-y-1">
-                                <span className="inline-block px-2.5 py-1 bg-slate-100 text-slate-600 rounded-lg text-[10px] font-black">
-                                  {maskCompany(policy.insurance_company, isUnlocked)}
-                                </span>
+                                {policy.insurance_company && (
+                                  <span className="inline-block px-2.5 py-1 bg-slate-100 text-slate-600 rounded-lg text-[10px] font-black">
+                                    {maskCompany(policy.insurance_company, isUnlocked)}
+                                  </span>
+                                )}
                                 <h4 className="text-base font-bold text-slate-800 group-hover:text-orange-600 transition-colors">
-                                  {maskProductName(policy.product_name, isUnlocked)}
+                                  {policy.isCustom ? policy.product_name : maskProductName(policy.product_name, isUnlocked)}
                                 </h4>
                               </div>
                               <div className="text-right shrink-0">
@@ -1545,8 +1587,8 @@ export default function App() {
           </div>
         </div>
       )}
-      {/* 🔒 PII-Free Pivot: Sticky Floating Bottom Bar for Unmasking */}
-      {(analysisResult || remodelingResult) && !isUnlocked && (
+      {/* 🔒 PII-Free Pivot: Sticky Floating Bottom Bar for Unmasking (비교 분석 구간) */}
+      {(analysisResult || showComparisonBar) && !isUnlocked && !isInRemodelingZone && (
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-full max-w-md px-4">
           <div className="bg-slate-950/90 text-white rounded-[2rem] p-4.5 border border-slate-800 backdrop-blur-md shadow-2xl flex items-center justify-between gap-4">
             <div className="text-left space-y-0.5 pl-1">
@@ -1564,6 +1606,33 @@ export default function App() {
             >
               <ShieldCheck className="w-4 h-4" />
               실명 정보 해제하기
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 🔬 정밀 분석 구간 Floating Bar */}
+      {isInRemodelingZone && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-full max-w-md px-4 animate-in slide-in-from-bottom-4 duration-300">
+          <div className="bg-slate-950/95 text-white rounded-[2rem] p-4 border border-orange-500/30 backdrop-blur-md shadow-[0_20px_40px_rgba(255,107,0,0.15)] flex items-center justify-between gap-3">
+            <div className="text-left space-y-0.5 pl-1 flex-1 min-w-0">
+              <p className="text-[10px] font-black text-orange-400 flex items-center gap-1.5">
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse" />
+                내보험 정밀 분석모드
+              </p>
+              <h4 className="text-[11px] font-black text-white leading-tight">
+                🔍 실제 내가 가입한 보험, 지금 바로 확인
+              </h4>
+              <p className="text-[9px] text-slate-400 font-semibold">
+                한국신용정보원 연동 후 0.1초 자동진단
+              </p>
+            </div>
+            <button
+              onClick={() => setShowUnlockModal(true)}
+              className="shrink-0 px-3 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-[10px] rounded-xl shadow-lg shadow-orange-950/40 transition-all flex items-center gap-1 whitespace-nowrap"
+            >
+              <ShieldCheck className="w-3.5 h-3.5" />
+              익명카톡신청 (무료)
             </button>
           </div>
         </div>
@@ -1653,6 +1722,22 @@ export default function App() {
           </div>
         </div>
       )}
+      {/* 🔬 정밀 분석용 하이픈 연동 모달 — floating bar에서 트리거 */}
+      <HyphenAuthModal
+        isOpen={isRemodelingHyphenOpen}
+        onClose={() => setIsRemodelingHyphenOpen(false)}
+        onSuccess={(coverage) => {
+          setIsRemodelingHyphenOpen(false);
+          handleRemodelingHyphenSuccess(coverage);
+        }}
+        initialData={{
+          userName: '고객',
+          gender: (remodelingResult?.analysis?.gender as 'M' | 'F') || 'M',
+          birth: '',
+          mobileNo: '',
+          age: remodelingResult?.analysis?.age || 40,
+        }}
+      />
     </div>
   );
 }

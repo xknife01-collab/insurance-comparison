@@ -1255,7 +1255,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
                         <Zap className="w-8 h-8 fill-current" />
                       </div>
                       <div>
-                        <h4 className="text-xl font-black tracking-tighter text-blue-900 uppercase">7개 보험 동시 리밸런싱</h4>
+                        <h4 className="text-xl font-black tracking-tighter text-blue-900 uppercase">{policies.length}개 보험 동시 리밸런싱</h4>
                         <p className="text-sm text-blue-400 font-bold">보장은 그대로 · 보험료만 낮춘다</p>
                       </div>
                     </div>
@@ -1386,7 +1386,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
                     {/* Total */}
                     <div className="bg-blue-600 rounded-2xl px-6 py-4 flex items-center justify-between text-white mt-2">
                       <div>
-                        <span className="text-[9px] font-black text-blue-200 block uppercase">7개 전체 리밸런싱 후</span>
+                        <span className="text-[9px] font-black text-blue-200 block uppercase">{policies.length}개 전체 리밸런싱 후</span>
                         <span className="text-lg font-black">{totalDiet.toLocaleString()}원/월</span>
                       </div>
                       <div className="text-center">
@@ -1461,7 +1461,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
                        <Zap className="w-8 h-8 fill-current" />
                      </div>
                      <div>
-                       <h4 className="text-xl font-black tracking-tighter text-orange-400 uppercase">'7개 보험 동시 업그레이드'</h4>
+                       <h4 className="text-xl font-black tracking-tighter text-orange-400 uppercase">'{policies.length}개 보험 동시 업그레이드'</h4>
                        <p className="text-sm text-slate-400 font-bold">보험료는 그대로 · 보장만 더 든든하게</p>
                      </div>
                    </div>
@@ -1539,7 +1539,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
                      {/* Total */}
                      <div className="bg-orange-600 rounded-2xl px-6 py-4 flex items-center justify-between text-white mt-2">
                        <div>
-                         <span className="text-[9px] font-black text-orange-200 block uppercase">7개 전체 업그레이드 후</span>
+                         <span className="text-[9px] font-black text-orange-200 block uppercase">{policies.length}개 전체 업그레이드 후</span>
                          <span className="text-lg font-black">{totalCurrent.toLocaleString()}원/월</span>
                        </div>
                        <div className="text-center">

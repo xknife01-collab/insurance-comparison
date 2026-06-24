@@ -1,0 +1,2 @@
+"      {/* 100% 안심 자율 비교 서비스 헤더 */}\n      <div className=\"flex flex-col items-center text-center space-y-6 animate-in fade-in slide-in-from-top-4 duration-1000\">\n        <div className=\"inline-flex items-center gap-2 px-6 py-2 bg
+<truncated 886 bytes>

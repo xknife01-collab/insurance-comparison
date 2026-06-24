@@ -752,11 +752,13 @@ export default function AnalysisShowcase() {
                                         <div className="space-y-4">
                                           <div className="flex items-start justify-between gap-4">
                                             <div className="space-y-1">
-                                              <span className="inline-block px-2.5 py-1 bg-slate-100 text-slate-600 rounded-lg text-[10px] font-black">
-                                                {maskCompany(policy.insurance_company, false)}
-                                              </span>
+                                              {policy.insurance_company && (
+                                                <span className="inline-block px-2.5 py-1 bg-slate-100 text-slate-600 rounded-lg text-[10px] font-black">
+                                                  {maskCompany(policy.insurance_company, false)}
+                                                </span>
+                                              )}
                                               <h4 className="text-base font-bold text-slate-800 group-hover:text-orange-600 transition-colors">
-                                                {maskProductName(policy.product_name, false)}
+                                                {policy.isCustom ? policy.product_name : maskProductName(policy.product_name, false)}
                                               </h4>
                                             </div>
                                             <div className="text-right shrink-0">

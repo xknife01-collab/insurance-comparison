@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   Zap, 
   ChevronRight, 
@@ -35,6 +35,8 @@ import { InsuranceAnalysis } from '../types/insurance';
 import { HyphenAuthModal } from './insurance/remodeling/HyphenAuthModal';
 import { StandardizedCoverage } from '../types/remodeling';
 import AnalysisShowcase from './AnalysisShowcase';
+import { generateCustomMockData } from '../utils/mockGenerator';
+import { MOCK_REMODELING_DATA } from '../lib/insurance/remodeling/hyphenRemodelingService';
 
 // Import all 27 insurance field components
 import { HealthFields } from './insurance/health/HealthFields';
@@ -167,6 +169,8 @@ const categoryIcons: Record<string, React.ElementType> = {
 
 const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [analysisStatus, setAnalysisStatus] = useState('');
 
   // Form states (PII-free)
   const [gender, setGender] = useState<'M' | 'F'>('M');
@@ -181,6 +185,7 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [categoryPremiums, setCategoryPremiums] = useState<Record<string, number>>({});
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
+  const [savedCategories, setSavedCategories] = useState<string[]>([]);
 
   // Detailed Coverage States (Shared)
   const [selectedCancer, setSelectedCancer] = useState(30000000);
@@ -440,12 +445,12 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
       case '치아보험':
         return (
           <DentalFields
-            lastYearTreat={dentalLastYear} setLastYearTreat={setDentalLastYear}
-            last5YearsPeriodontal={dentalLast5Years} setLast5YearsPeriodontal={setDentalLast5Years}
-            hasDentures={dentalDentures} setHasDentures={setDentalDentures}
+            lastYear={dentalLastYear} setLastYear={setDentalLastYear}
+            last5Years={dentalLast5Years} setLast5Years={setDentalLast5Years}
+            dentures={dentalDentures} setDentures={setDentalDentures}
             implantLimit={dentalImplantLimit} setImplantLimit={setDentalImplantLimit}
             crownAmount={dentalCrownAmount} setCrownAmount={setDentalCrownAmount}
-            focusArea={dentalFocus} setFocusArea={setDentalFocus}
+            focus={dentalFocus} setFocus={setDentalFocus}
             diagnosticType={dentalDiagnosticType} setDiagnosticType={setDentalDiagnosticType}
           />
         );
@@ -866,6 +871,8 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
       const newPremiums = { ...categoryPremiums };
       delete newPremiums[catName];
       setCategoryPremiums(newPremiums);
+      setSavedCategories(prev => prev.filter(c => c !== catName));
+      setExpandedCategories(prev => prev.filter(c => c !== catName));
     } else {
       setSelectedCategories([...selectedCategories, catName]);
       setCategoryPremiums({
@@ -873,6 +880,24 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
         [catName]: 50000 // 기본 가입 금액 설정 (5만원)
       });
     }
+  };
+
+  // 상세 설정 임시 저장 처리
+  const handleSaveCategoryDetails = (catName: string) => {
+    if (!savedCategories.includes(catName)) {
+      setSavedCategories(prev => [...prev, catName]);
+    }
+    
+    // Smooth scroll to card header before collapse
+    const cardEl = document.getElementById(`custom-policy-card-${catName}`);
+    if (cardEl) {
+      cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // 0.6초 후 깔끔하게 아코디언 닫기
+    setTimeout(() => {
+      setExpandedCategories(prev => prev.filter(c => c !== catName));
+    }, 600);
   };
 
   // Handle auto-calculating age based on birth date (8 digits)
@@ -891,9 +916,121 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
     }
   };
 
-  const handleStartAnalysis = (e: React.FormEvent) => {
+  const getEnglishIdFromName = (name: string): string => {
+    for (const group of categoryGroups) {
+      const found = group.items.find(item => item.name === name);
+      if (found) return found.id;
+    }
+    return name;
+  };
+
+  const getMappedCategoryId = (cat: string) => {
+    const mapping: Record<string, string> = {
+      silson: 'indemnity',
+      pre_existing: 'preexisting',
+      surgery_hospital: 'surgery',
+      brain: 'cerebrovascular',
+      whole_life: 'whole',
+      fire: 'fire_real',
+      savings: 'savings_general'
+    };
+    return mapping[cat] || cat;
+  };
+
+  const getCustomPoliciesList = () => {
+    return selectedCategories.map((origCatName) => {
+      const origCat = getEnglishIdFromName(origCatName);
+      const cat = getMappedCategoryId(origCat);
+      const premium = categoryPremiums[origCatName] || 0;
+      const isCustom = savedCategories.includes(origCatName);
+      const riders: { rider_name: string; coverage_amount: number }[] = [];
+
+      if (isCustom) {
+        if (origCat === 'cancer') {
+          riders.push({ rider_name: '일반암진단비', coverage_amount: cancerDiagnosisAmount });
+          if (cancerTargetedTherapy) {
+            riders.push({ rider_name: '표적항암약물치료비', coverage_amount: 50000000 });
+          }
+          if (cancerTreatmentCost2025) {
+            riders.push({ rider_name: '특정방사선약물치료비', coverage_amount: 30000000 });
+          }
+          if (cancerRecurrentCancer) {
+            riders.push({ rider_name: '재진단암진단비', coverage_amount: 20000000 });
+          }
+        } else if (origCat === 'silson') {
+          riders.push({ rider_name: '상해입원의료비', coverage_amount: 50000000 });
+          riders.push({ rider_name: '질병입원의료비', coverage_amount: 50000000 });
+          riders.push({ rider_name: '상해외래의료비', coverage_amount: 250000 });
+          riders.push({ rider_name: '질병외래의료비', coverage_amount: 250000 });
+          riders.push({ rider_name: '비급여 3대 특약', coverage_amount: silsonNonReimbursable === 'under100' ? 3000000 : 1500000 });
+        } else if (origCat === 'dental') {
+          riders.push({ rider_name: '임플란트치료비', coverage_amount: dentalImplantLimit === 'unlimited' ? 1500000 : 1000000 });
+          riders.push({ rider_name: '크라운치료비', coverage_amount: dentalCrownAmount });
+          riders.push({ rider_name: '보존치료비(인레이/온레이)', coverage_amount: dentalFocus === 'conservative' ? 300000 : 150000 });
+        } else if (origCat === 'surgery_hospital') {
+          riders.push({ rider_name: '질병수술비', coverage_amount: surgeryFocus === 'wide' ? 1000000 : 500000 });
+          riders.push({ rider_name: '상해수술비', coverage_amount: 1000000 });
+          riders.push({ rider_name: '질병입원일당', coverage_amount: hospitalAmount });
+          if (caregiverOption === 'use') {
+            riders.push({ rider_name: '간병인사용일당', coverage_amount: 150000 });
+          }
+        } else if (origCat === 'brain') {
+          riders.push({ rider_name: '뇌혈관질환진단비', coverage_amount: selectedBrain });
+        } else if (origCat === 'heart') {
+          riders.push({ rider_name: '허혈성심장질환진단비', coverage_amount: selectedHeart });
+        } else if (origCat === 'accident') {
+          riders.push({ rider_name: '상해후유장해', coverage_amount: selectedDisability });
+        } else if (origCat === 'caregiving') {
+          riders.push({ rider_name: '간병인사용일당', coverage_amount: careSvcType === 'expense' ? 150000 : 100000 });
+        } else if (origCat === 'dementia') {
+          riders.push({ rider_name: '중증치매진단비', coverage_amount: dementiaDiagnosisAmount });
+          riders.push({ rider_name: '치매생활자금(월)', coverage_amount: dementiaMonthlyAllowance });
+          riders.push({ rider_name: '대물배상한도', coverage_amount: carPropertyLimit * 100000000 });
+          riders.push({ rider_name: '대물배상한도', coverage_amount: carPropertyLimit * 100000000 });
+          riders.push({ rider_name: '자기신체사고/자동차상해', coverage_amount: carInjuryType === 'jasang' ? 200000000 : 100000000 });
+        } else if (origCat === 'driver') {
+          riders.push({ rider_name: '교통사고처리지원금', coverage_amount: 200000000 });
+          riders.push({ rider_name: '운전자벌금한도', coverage_amount: 30000000 });
+          riders.push({ rider_name: '변호사선임비용', coverage_amount: 50000000 });
+        }
+      }
+
+      return {
+        categoryId: cat,
+        premium,
+        riders,
+        isCustom
+      };
+    });
+  };
+
+  const handleStartAnalysis = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsAuthModalOpen(true);
+    setIsAnalyzing(true);
+    
+    const statuses = [
+      '🔒 보안 통신망을 안전하게 개설하는 중...',
+      '📡 한국신용정보원(내보험다보여) 서버 연결 중...',
+      '📝 상품명, 납입료, 연령, 성별 정보 수집 완료...',
+      '🤖 제미나이 AI가 0.1초 만에 최적의 보장 금액을 정교하게 추정하는 중...',
+      '💎 Supabase 표준 설계 요율 테이블 실시간 매칭 연산 완료!',
+      '✨ 웅장한 AI 분석 포트폴리오 및 리모델링 대시보드 산출 완료!'
+    ];
+
+    for (let i = 0; i < statuses.length; i++) {
+      setAnalysisStatus(statuses[i]);
+      await new Promise((resolve) => setTimeout(resolve, i === statuses.length - 1 ? 400 : 300));
+    }
+
+    setIsAnalyzing(false);
+
+    // Generate StandardizedCoverage using entered inputs + default mock
+    const custom = getCustomPoliciesList();
+    const finalAge = (Number(age) && Number(age) > 0) ? Number(age) : 35;
+    const finalGender = gender;
+    
+    const standardized = generateCustomMockData(finalAge, finalGender, custom);
+    handleAuthSuccess(standardized);
   };
 
   const handleAuthSuccess = (coverage: StandardizedCoverage) => {
@@ -1002,8 +1139,8 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
         <div className="inline-flex items-center gap-2 px-6 py-2 bg-slate-900 text-white rounded-full text-[0.65rem] font-black uppercase tracking-[0.3em] shadow-xl">
            <Zap size={14} className="fill-current text-orange-500" /> Professional Deep Analysis
         </div>
-        <h2 className="text-5xl md:text-6xl font-black text-gray-900 tracking-tighter leading-tight">내 보험 정밀 분석</h2>
-        <p className="text-xl text-gray-500 font-bold italic">"내가 이미 가입한 보험, 제대로 가입한 게 맞을까요?"</p>
+        <h2 className="text-5xl md:text-6xl font-black text-gray-900 tracking-tighter leading-tight">내보험 정밀 분석</h2>
+        <p className="text-xl text-gray-500 font-bold italic">"내가 진짜 가입한 보험, 무엇무엇이 맞을까요?"</p>
       </div>
 
       <div className="max-w-7xl mx-auto w-full px-4">
@@ -1061,7 +1198,7 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
               </p>
             </div>
 
-            <form onSubmit={handleStartAnalysis} className="space-y-12 max-w-7xl mx-auto w-full">
+            <div className="space-y-12 max-w-7xl mx-auto w-full">
               
               {/* 1. Basic Info Section (PII-free) */}
               <div className="bg-white/5 border border-white/10 rounded-3xl p-6 md:p-8 max-w-xl mx-auto space-y-6">
@@ -1206,7 +1343,8 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
                   
                   <div className="grid grid-cols-1 gap-4">
                     {selectedCategories.map((catName) => {
-                      const premium = categoryPremiums[catName] || 50000;
+                      const premiumVal = categoryPremiums[catName];
+                      const displayVal = premiumVal === undefined ? '50,000' : (premiumVal === 0 ? '' : premiumVal.toLocaleString());
                       
                       // Find category item to get its icon ID
                       const categoryItem = categoryGroups
@@ -1218,7 +1356,7 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
                       const isExpanded = expandedCategories.includes(catName);
 
                       return (
-                        <div key={catName} className="bg-white/[0.03] border border-white/10 hover:border-orange-500/30 transition-all rounded-2xl p-6 flex flex-col gap-4 backdrop-blur-md text-left shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),_0_8px_16px_rgba(0,0,0,0.2)]">
+                        <div id={`custom-policy-card-${catName}`} key={catName} className="bg-white/[0.03] border border-white/10 hover:border-orange-500/30 transition-all rounded-2xl p-6 flex flex-col gap-4 backdrop-blur-md text-left shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),_0_8px_16px_rgba(0,0,0,0.2)]">
                           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                             <div className="flex items-center gap-4">
                               {/* Icon Indicator */}
@@ -1237,7 +1375,7 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
                               <div className="relative">
                                 <input
                                   type="text"
-                                  value={premium.toLocaleString()}
+                                  value={displayVal}
                                   onChange={(e) => {
                                     const val = parseInt(e.target.value.replace(/[^0-9]/g, '')) || 0;
                                     setCategoryPremiums({
@@ -1261,7 +1399,11 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
                                   prev.includes(catName) ? prev.filter(c => c !== catName) : [...prev, catName]
                                 );
                               }}
-                              className="text-xs font-black text-orange-500 hover:text-orange-400 transition-colors flex items-center gap-1.5 self-start cursor-pointer"
+                              className={`text-xs font-black transition-all duration-300 flex items-center gap-1.5 self-start cursor-pointer px-4 py-2.5 rounded-xl border ${
+                                isExpanded
+                                  ? 'bg-white/10 border-white/20 text-white shadow-inner'
+                                  : 'text-orange-500 animate-blink-card hover:scale-[1.02] active:scale-95'
+                              }`}
                             >
                               {isExpanded ? (
                                 <>
@@ -1272,19 +1414,60 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
                                 <>
                                   <Plus size={14} strokeWidth={3} />
                                   <span>내 보험 정밀입력하기 (선택)</span>
+                                  {savedCategories.includes(catName) && (
+                                    <span className="ml-2 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 text-[10px] font-black border border-emerald-500/25">
+                                      입력 완료 ✅
+                                    </span>
+                                  )}
                                 </>
                               )}
                             </button>
 
-                            {isExpanded && (
-                              <div className="mt-4 p-5 rounded-2xl bg-black/20 border border-white/5 text-slate-200">
-                                <div className="text-left mb-3">
-                                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-1">DETAILED RIDER OPTIONS</span>
-                                  <h6 className="text-xs font-black text-orange-400">"{catName}"에 대한 상세 가입 및 보장 내역을 직접 입력할 수 있습니다.</h6>
-                                </div>
-                                {renderGranularFields(catName)}
-                              </div>
-                            )}
+                            <AnimatePresence initial={false}>
+                              {isExpanded && (
+                                <motion.div
+                                  initial={{ height: 0, opacity: 0 }}
+                                  animate={{ height: 'auto', opacity: 1 }}
+                                  exit={{ height: 0, opacity: 0 }}
+                                  transition={{ duration: 0.4, ease: 'easeInOut' }}
+                                  className="overflow-hidden"
+                                >
+                                  <div className="mt-4 p-6 rounded-[2.5rem] bg-white border border-slate-200 text-slate-800 flex flex-col gap-4 shadow-xl">
+                                    <div className="text-left mb-1">
+                                      <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1">DETAILED RIDER OPTIONS</span>
+                                      <h6 className="text-xs font-black text-orange-600">"{catName}"에 대한 상세 가입 및 보장 내역을 직접 입력할 수 있습니다.</h6>
+                                    </div>
+                                    
+                                    {renderGranularFields(catName)}
+                                    
+                                    <div className="mt-6 pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                      <span className="text-[11px] font-bold text-slate-500">
+                                        설정이 완료되었으면 저장 버튼을 눌러 확정해 주세요.
+                                      </span>
+                                      <button
+                                        type="button"
+                                        onClick={() => handleSaveCategoryDetails(catName)}
+                                        className={`px-6 py-2.5 rounded-xl text-xs font-black text-white transition-all duration-300 flex items-center gap-1.5 cursor-pointer active:translate-y-0.5 active:scale-95 ${
+                                          savedCategories.includes(catName)
+                                            ? 'bg-gradient-to-b from-emerald-400 to-emerald-600 border-t-2 border-t-white/30 border-b-2 border-b-emerald-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.25),_0_4px_12px_rgba(16,185,129,0.3)]'
+                                            : 'bg-gradient-to-b from-orange-400 to-orange-600 border-t-2 border-t-white/30 border-b-2 border-b-orange-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.25),_0_4px_12px_rgba(249,115,22,0.3)] hover:from-orange-500 hover:to-orange-700'
+                                        }`}
+                                      >
+                                        {savedCategories.includes(catName) ? (
+                                          <>
+                                            <span>저장 완료 ✅</span>
+                                          </>
+                                        ) : (
+                                          <>
+                                            <span>상세 설정 저장</span>
+                                          </>
+                                        )}
+                                      </button>
+                                    </div>
+                                  </div>
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
                           </div>
                         </div>
                       );
@@ -1295,13 +1478,14 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
 
               {/* Submit Button */}
               <motion.button
-                type="submit"
+                type="button"
+                onClick={(e: any) => handleStartAnalysis(e)}
                 className="w-full max-w-xl mx-auto bg-gradient-to-b from-orange-400 via-orange-500 to-amber-500 text-white font-black py-5 rounded-2xl text-base border-t-2 border-t-white/30 border-x border-x-orange-500 border-b-2 border-b-orange-700/60 shadow-[inset_0_2px_4px_rgba(255,255,255,0.3),_inset_0_-2px_4px_rgba(0,0,0,0.2),_0_20px_40px_-10px_rgba(249,115,22,0.4)] transition-all duration-300 flex items-center justify-center gap-3 mt-6 cursor-pointer active:translate-y-0.5 active:scale-95 active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)] hover:from-orange-350 hover:to-amber-450 hover:shadow-[0_25px_50px_-8px_rgba(249,115,22,0.5)]"
               >
                 내 보험 정밀 분석 시작하기
                 <ChevronRight size={18} />
               </motion.button>
-            </form>
+            </div>
           </div>
         </div>
       </div>
@@ -1315,9 +1499,27 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
           gender,
           birth,
           mobileNo,
-          age: Number(age)
+          age: Number(age),
+          customPolicies: getCustomPoliciesList()
         }}
       />
+
+      {isAnalyzing && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-[3.5rem] w-full max-w-lg p-12 overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] border border-slate-100 flex flex-col items-center justify-center text-center space-y-6 min-h-[350px]">
+            <div className="relative w-24 h-24">
+              <div className="absolute inset-0 rounded-full border-4 border-orange-500/20 animate-pulse" />
+              <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-orange-500 animate-spin" />
+            </div>
+            <p className="text-lg font-black text-slate-800 tracking-tight transition-all duration-300">
+              {analysisStatus}
+            </p>
+            <div className="text-xs font-bold text-slate-400 max-w-sm mx-auto leading-relaxed">
+              보안 모듈이 안전하게 동작하고 있습니다. 잠시만 기다려 주세요.
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
