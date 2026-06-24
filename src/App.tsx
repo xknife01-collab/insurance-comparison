@@ -73,6 +73,9 @@ export default function App() {
   const [isInRemodelingZone, setIsInRemodelingZone] = useState<boolean>(false);
   const [showComparisonBar, setShowComparisonBar] = useState<boolean>(false);
   const [isRemodelingHyphenOpen, setIsRemodelingHyphenOpen] = useState<boolean>(false);
+  // 고객이 /remodeling?code= 링크 접속 시 외부 하이픈 모달
+  const [hyphenCodeParam, setHyphenCodeParam] = useState<string | null>(null);
+  const [showExternalHyphenModal, setShowExternalHyphenModal] = useState<boolean>(false);
   const [isUnlocked, setIsUnlocked] = useState<boolean>(() => {
     if (window.location.search.includes('reset')) {
       localStorage.removeItem('ins_unlocked');
@@ -85,6 +88,18 @@ export default function App() {
     if (window.location.search.includes('reset')) {
       localStorage.removeItem('ins_unlocked');
       setIsUnlocked(false);
+    }
+  }, []);
+
+  // /remodeling?code=... 접속 시 HyphenAuthModal 자동 오픈
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const codeParam = params.get('code');
+    const isRemodelingPath = window.location.pathname === '/remodeling';
+    if (isRemodelingPath && codeParam) {
+      setHyphenCodeParam(codeParam);
+      setCurrentSimulationCode(codeParam);
+      setShowExternalHyphenModal(true);
     }
   }, []);
 
@@ -515,6 +530,51 @@ export default function App() {
       monthlyPremium: coverage.current_total_premium,
       _remodelingCoverage: coverage
     });
+  };
+
+  // 고객이 /remodeling?code= 링크 접속 후 인증 성공 → Supabase 저장 + 원래 브라우저 Realtime 수신
+  const handleExternalHyphenSuccess = async (coverage: StandardizedCoverage, customerInfo?: { name: string; phone: string }) => {
+    if (!hyphenCodeParam) return;
+    try {
+      const supabase = createClient();
+      const { data } = await supabase
+        .from('customer_leads')
+        .select('*')
+        .eq('raw_payload->>simulation_code', hyphenCodeParam)
+        .limit(1);
+
+      if (!data || data.length === 0) {
+        alert('연동 코드를 찾을 수 없습니다. 설계사에게 문의해 주세요.');
+        return;
+      }
+
+      const lead = data[0];
+      const updatedPayload = {
+        ...(lead.raw_payload || {}),
+        hyphen_coverage: coverage,
+        timeline: [
+          {
+            id: `hyphen-${Date.now()}`,
+            type: 'system_log',
+            author: '고객',
+            detail: '고객이 한국신용정보원 인증을 완료하여 실제 보험 데이터가 조회되었습니다.',
+            created_at: new Date().toISOString()
+          },
+          ...(lead.raw_payload?.timeline || [])
+        ]
+      };
+
+      const updateData: any = { status: 'verified', raw_payload: updatedPayload };
+      if (customerInfo?.name && customerInfo.name !== '고객') updateData.name = customerInfo.name;
+      if (customerInfo?.phone && customerInfo.phone !== '010-0000-0000') updateData.phone = customerInfo.phone;
+
+      await supabase.from('customer_leads').update(updateData).eq('id', lead.id);
+
+      setShowExternalHyphenModal(false);
+      alert('✅ 인증 완료! 실제 보험 내역이 0.1초 만에 자동 조회됩니다.\n원래 화면으로 돌아가시면 결과가 표시됩니다.');
+    } catch (err) {
+      alert('오류가 발생했습니다: ' + err);
+    }
   };
 
   useEffect(() => {
@@ -1736,6 +1796,20 @@ export default function App() {
           birth: '',
           mobileNo: '',
           age: remodelingResult?.analysis?.age || 40,
+        }}
+      />
+
+      {/* 고객이 /remodeling?code=... 링크 접속 시 자동 오픈 */}
+      <HyphenAuthModal
+        isOpen={showExternalHyphenModal}
+        onClose={() => setShowExternalHyphenModal(false)}
+        onSuccess={handleExternalHyphenSuccess}
+        initialData={{
+          userName: '',
+          gender: 'M',
+          birth: '',
+          mobileNo: '',
+          age: 40,
         }}
       />
     </div>
