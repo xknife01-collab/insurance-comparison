@@ -1372,15 +1372,20 @@ export default function App() {
               {/* AI Executive Summary 코멘트 카드 */}
               {(() => {
                 const coverage = (remodelingResult.analysis as any)._remodelingCoverage;
-                const totalPremium = remodelingResult.analysis.monthlyPremium || 0;
-                const cheapestPremium = remodelingResult.recommendations.diet?.estimatedPremium || 0;
-                // cheapestPremium이 0이면 절약 불가 → 상담 필요 메시지
-                // cheapestPremium > 0이면 실제 절약액(음수 방지)
-                const rawSaving = totalPremium - cheapestPremium;
-                const savingAmount = cheapestPremium > 0 ? Math.max(0, rawSaving) : 0;
                 const policies = coverage?.policies || [];
+                const totalPremium = remodelingResult.analysis.monthlyPremium || 0;
+
+                // AnalysisDashboard와 동일 공식: diet.estimatedPremium이 없으면 policies 합계 × 0.785
+                const dietEstimated = remodelingResult.recommendations.diet?.estimatedPremium || 0;
+                const totalFromPolicies = policies.reduce((s: number, p: any) => s + (p.monthly_premium || 0), 0);
+                const basePremium = totalFromPolicies > 0 ? totalFromPolicies : totalPremium;
+                const cheapestPremium = dietEstimated > 0 ? dietEstimated : Math.round(basePremium * 0.785);
+
+                const rawSaving = basePremium - cheapestPremium;
+                const savingAmount = cheapestPremium > 0 ? Math.max(0, rawSaving) : 0;
+
                 const dietCompanyRaw = remodelingResult.recommendations.diet?.companyName || '';
-                const dietCompany = maskCompany(dietCompanyRaw, isUnlocked);
+                const dietCompany = dietCompanyRaw ? maskCompany(dietCompanyRaw, isUnlocked) : '';
 
                 // 중복 가입 건수 계산
                 const dups = new Set<number>();
@@ -1414,7 +1419,7 @@ export default function App() {
                         <p className="text-sm text-slate-500 font-bold leading-relaxed break-keep">
                           고객님은 현재 총 <span className="text-slate-800 font-extrabold">{policies.length}건</span>의 보험을 유지 중이시며{dups.size > 0 && <>, 이 중 <span className="text-red-500 font-extrabold">{dups.size}건의 중복 가입 상품</span>이 확인되었습니다</>}.
                           {savingAmount > 0 ? (
-                            <> <span className="text-orange-500 font-extrabold">{dietCompany}</span> {cheapestPremium.toLocaleString()}원 플랜으로 전환 시, 기존 핵심 보장을 동일하게 지키면서 매월 총 <span className="text-orange-500 font-extrabold">{savingAmount.toLocaleString()}원</span>의 기회 자산을 확보하실 수 있습니다.</>
+                            <> {dietCompany ? <><span className="text-orange-500 font-extrabold">{dietCompany}</span> {cheapestPremium.toLocaleString()}원 플랜으로 전환 시,</> : <>최적 플랜({cheapestPremium.toLocaleString()}원)으로 전환 시,</>} 기존 핵심 보장을 동일하게 지키면서 매월 총 <span className="text-orange-500 font-extrabold">{savingAmount.toLocaleString()}원</span>의 기회 자산을 확보하실 수 있습니다.</>
                           ) : (
                             <> 현재 보장 구조에서 추가 보완이 필요한 항목을 확인해 드립니다. 설계사 상담을 통해 최적 포트폴리오를 제안받으세요.</>
                           )}
