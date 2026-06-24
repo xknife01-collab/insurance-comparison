@@ -1425,10 +1425,42 @@ export default function App() {
                       {/* CTA 버튼 / 신청 완료 상태 (웅장하고 눈에 띄는 다크 배너 박스) */}
                       <div className="pt-6 border-t border-orange-200/40">
                         {remodelingApplied ? (
-                          <div className="p-6 bg-emerald-500 text-white rounded-3xl text-center shadow-lg shadow-emerald-500/20 animate-in fade-in duration-300">
-                            <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white text-emerald-500 text-xs font-black mb-2">✓</span>
-                            <p className="text-sm font-black">100점 보완 및 절감 설계안 신청이 완료되었습니다!</p>
-                            <p className="text-xs text-emerald-100 font-bold mt-1">전담 설계사가 분석된 고객 DB 정보를 확인하여 카카오톡으로 상세 설계안을 0.1초 만에 발송해 드립니다.</p>
+                          <div className="bg-slate-900 border border-slate-700 rounded-3xl p-6 space-y-4 animate-in fade-in duration-300 text-white">
+                            {/* 헤더 */}
+                            <div className="text-center space-y-1">
+                              <p className="text-sm font-black text-white">고유 보관 코드가 발급되었습니다.</p>
+                              <p className="text-[10px] text-slate-400 font-semibold leading-relaxed">
+                                이 코드를 복사하여 1:1 카카오톡 상담방에서 전송하고, 설계사가 본인인증을 통해 설계안을 안전하게 보관해 드립니다.
+                              </p>
+                            </div>
+                            {/* 코드 박스 */}
+                            <div className="bg-slate-950 border border-slate-800 rounded-2xl p-3 flex flex-col items-center gap-2">
+                              <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">나의 고유 보관 코드</span>
+                              <span className="text-xl font-black text-orange-500 font-mono tracking-wider">{currentSimulationCode || '발급 중...'}</span>
+                            </div>
+                            {/* 복사 버튼 */}
+                            <button
+                              onClick={() => {
+                                if (currentSimulationCode) {
+                                  navigator.clipboard.writeText(currentSimulationCode);
+                                  alert('코드가 복사되었습니다! 카카오톡 채팅방에 붙여넣어 주세요.');
+                                }
+                              }}
+                              className="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-black text-xs rounded-xl transition-colors cursor-pointer"
+                            >
+                              코드 복사하기 📋
+                            </button>
+                            {/* 카카오톡 입장 버튼 */}
+                            <button
+                              onClick={() => {
+                                const kLink = branding.kakaoLink || 'https://open.kakao.com/o/sB1B2C3D';
+                                if (lastSubmittedLeadId) logKakaoClick(lastSubmittedLeadId, 'anonymous');
+                                window.open(kLink, '_blank');
+                              }}
+                              className="w-full py-3 bg-[#FEE500] hover:bg-[#FDD800] text-black font-black text-xs rounded-xl shadow-lg transition-colors cursor-pointer flex items-center justify-center gap-2"
+                            >
+                              <span>💬</span> 카카오톡 1:1 상담방 입장하기
+                            </button>
                           </div>
                         ) : (
                           <div className="bg-slate-900 border border-orange-500/30 rounded-3xl p-6 shadow-[0_15px_40px_-10px_rgba(0,0,0,0.15)] flex flex-col md:flex-row md:items-center justify-between gap-6 text-white text-left relative overflow-hidden">
