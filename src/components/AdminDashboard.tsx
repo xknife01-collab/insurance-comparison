@@ -3460,12 +3460,10 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                                 e.stopPropagation();
                                 const simCode = lead.raw_payload?.simulation_code || '';
                                 const origin = window.location.origin;
+                                const link = `${origin}/verify?code=${simCode}`;
                                 const isRemodeling = lead.insurance_type?.includes('remodeling');
-                                const link = isRemodeling
-                                  ? `${origin}/remodeling?code=${simCode}`
-                                  : `${origin}/verify?code=${simCode}`;
                                 const msg = isRemodeling
-                                  ? `안녕하세요! 보험리밸런스 대리점입니다. 고객님의 내보험 정밀분석을 위한 하이픈 연동 링크입니다. 아래 링크를 눌러 한국신용정보원 인증을 완료하시면 0.1초 만에 실제 보험 내역이 자동으로 조회됩니다.\n▶ 하이픈 연동 링크: ${link}`
+                                  ? `안녕하세요! 보험리밸런스 대리점입니다. 고객님의 내보험 정밀분석을 위한 본인인증 전용 링크입니다. 아래 링크를 눌러 간편인증을 완료하시면 0.1초 만에 실제 보험 내역이 자동으로 조회됩니다.\n▶ 인증 링크: ${link}`
                                   : `안녕하세요! 보험리밸런스 대리점입니다. 고객님의 설계서 잠금 해제를 위한 본인인증 전용 링크입니다. 아래 링크를 눌러 간편인증을 완료하시면 0.1초 만에 마스킹이 해제됩니다.\n▶ 인증 링크: ${link}`;
                                 navigator.clipboard.writeText(msg);
                                 setToastMessage("✨ 카톡 인증 문구가 복사되었습니다! 카톡창에 붙여넣기(Ctrl+V) 하세요.");
@@ -3696,12 +3694,10 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                                 e.stopPropagation();
                                 const simCode = lead.raw_payload?.simulation_code || '';
                                 const origin = window.location.origin;
+                                const link = `${origin}/verify?code=${simCode}`;
                                 const isRemodeling = lead.insurance_type?.includes('remodeling');
-                                const link = isRemodeling
-                                  ? `${origin}/remodeling?code=${simCode}`
-                                  : `${origin}/verify?code=${simCode}`;
                                 const msg = isRemodeling
-                                  ? `안녕하세요! 보험리밸런스 대리점입니다. 고객님의 내보험 정밀분석을 위한 하이픈 연동 링크입니다. 아래 링크를 눌러 한국신용정보원 인증을 완료하시면 0.1초 만에 실제 보험 내역이 자동으로 조회됩니다.\n▶ 하이픈 연동 링크: ${link}`
+                                  ? `안녕하세요! 보험리밸런스 대리점입니다. 고객님의 내보험 정밀분석을 위한 본인인증 전용 링크입니다. 아래 링크를 눌러 간편인증을 완료하시면 0.1초 만에 실제 보험 내역이 자동으로 조회됩니다.\n▶ 인증 링크: ${link}`
                                   : `안녕하세요! 보험리밸런스 대리점입니다. 고객님의 설계서 잠금 해제를 위한 본인인증 전용 링크입니다. 아래 링크를 눌러 간편인증을 완료하시면 0.1초 만에 마스킹이 해제됩니다.\n▶ 인증 링크: ${link}`;
                                 navigator.clipboard.writeText(msg);
                                 setToastMessage("✨ 카톡 인증 문구가 복사되었습니다! 카톡창에 붙여넣기(Ctrl+V) 하세요.");
@@ -8231,7 +8227,11 @@ if (distPart.startsWith('dist_weight:')) {
                             onClick={async () => {
                               const simCode = selectedLead.raw_payload?.simulation_code || '';
                               const origin = window.location.origin;
-                              const msg = `안녕하세요! 보험리밸런스 대리점입니다. 고객님의 설계서 잠금 해제를 위한 본인인증 전용 링크입니다. 아래 링크를 눌러 간편인증을 완료하시면 0.1초 만에 마스킹이 해제됩니다.\n▶ 인증 링크: ${origin}/verify?code=${simCode}`;
+                              const isRemodeling = selectedLead.insurance_type?.includes('remodeling');
+                              const link = `${origin}/verify?code=${simCode}`;
+                              const msg = isRemodeling
+                                ? `안녕하세요! 보험리밸런스 대리점입니다. 고객님의 내보험 정밀분석을 위한 본인인증 전용 링크입니다. 아래 링크를 눌러 간편인증을 완료하시면 0.1초 만에 실제 보험 내역이 자동으로 조회됩니다.\n▶ 인증 링크: ${link}`
+                                : `안녕하세요! 보험리밸런스 대리점입니다. 고객님의 설계서 잠금 해제를 위한 본인인증 전용 링크입니다. 아래 링크를 눌러 간편인증을 완료하시면 0.1초 만에 마스킹이 해제됩니다.\n▶ 인증 링크: ${link}`;
                               navigator.clipboard.writeText(msg);
                               setToastMessage("✨ 카톡 인증 문구가 복사되었습니다! 카톡창에 붙여넣기(Ctrl+V) 하세요.");
                               setShowToast(true);
