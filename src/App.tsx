@@ -1374,9 +1374,10 @@ export default function App() {
                 const coverage = (remodelingResult.analysis as any)._remodelingCoverage;
                 const totalPremium = remodelingResult.analysis.monthlyPremium || 0;
                 const cheapestPremium = remodelingResult.recommendations.diet?.estimatedPremium || 0;
-                // cheapestPremium이 0이거나 현재 보험료와 같으면 절약액 0으로 처리
+                // cheapestPremium이 0이면 절약 불가 → 상담 필요 메시지
+                // cheapestPremium > 0이면 실제 절약액(음수 방지)
                 const rawSaving = totalPremium - cheapestPremium;
-                const savingAmount = (cheapestPremium > 0 && rawSaving < totalPremium) ? rawSaving : 0;
+                const savingAmount = cheapestPremium > 0 ? Math.max(0, rawSaving) : 0;
                 const policies = coverage?.policies || [];
                 const dietCompanyRaw = remodelingResult.recommendations.diet?.companyName || '';
                 const dietCompany = maskCompany(dietCompanyRaw, isUnlocked);
