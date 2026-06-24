@@ -537,8 +537,13 @@ export default function App() {
     });
   };
 
-  // 고객이 /remodeling?code= 링크 접속 후 인증 성공 → Supabase 저장 + 원래 브라우저 Realtime 수신
+  // 고객이 /remodeling?code= 링크 접속 후 인증 성공 → Supabase 저장 + 로컬 즉시 렌더링
   const handleExternalHyphenSuccess = async (coverage: StandardizedCoverage, customerInfo?: { name: string; phone: string }) => {
+    // 1. 로컬 화면 즉시 갱신 (Supabase 성공 여부와 무관)
+    handleRemodelingHyphenSuccess(coverage);
+    setShowExternalHyphenModal(false);
+
+    // 2. Supabase 저장 (백그라운드)
     if (!hyphenCodeParam) return;
     try {
       const supabase = createClient();
@@ -548,10 +553,7 @@ export default function App() {
         .eq('raw_payload->>simulation_code', hyphenCodeParam)
         .limit(1);
 
-      if (!data || data.length === 0) {
-        alert('연동 코드를 찾을 수 없습니다. 설계사에게 문의해 주세요.');
-        return;
-      }
+      if (!data || data.length === 0) return;
 
       const lead = data[0];
       const updatedPayload = {
@@ -574,11 +576,8 @@ export default function App() {
       if (customerInfo?.phone && customerInfo.phone !== '010-0000-0000') updateData.phone = customerInfo.phone;
 
       await supabase.from('customer_leads').update(updateData).eq('id', lead.id);
-
-      setShowExternalHyphenModal(false);
-      alert('✅ 인증 완료! 실제 보험 내역이 0.1초 만에 자동 조회됩니다.\n원래 화면으로 돌아가시면 결과가 표시됩니다.');
     } catch (err) {
-      alert('오류가 발생했습니다: ' + err);
+      console.error('Supabase 저장 실패 (로컬 렌더링은 완료):', err);
     }
   };
 
