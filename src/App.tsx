@@ -496,6 +496,11 @@ export default function App() {
       const result = await runAnalysis(analysis);
       result.simulation_code = simulationCode; // attach code
       setRemodelingResult(result);
+      // policies가 있으면 (데모/실제 연동 모두) 마스킹 해제
+      if ((analysis as any)._remodelingCoverage?.policies?.length > 0) {
+        setIsUnlocked(true);
+        localStorage.setItem('ins_unlocked', 'true');
+      }
       // Automatically save lead upon analysis completion
       submitLead(analysis, 'remodeling', result);
     } else {

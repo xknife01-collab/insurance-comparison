@@ -1020,6 +1020,8 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
     const finalAge = (initialData?.age && initialData.age > 0) ? initialData.age : mock.age;
     const finalGender = initialData?.gender || mock.gender;
     const standardized = getStandardizedCoverage(finalAge, finalGender, mock.policies);
+    // 원본 회사명/상품명이 담긴 mock policies로 덮어씌워 카드에 실제 데이터 표시
+    standardized.policies = mock.policies;
     await runAnalysisAnimation(standardized, true);
   };
 
