@@ -1207,23 +1207,32 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                       <motion.button
                         key={item.id}
                         onClick={() => handleCategorySelect(item.id)}
-                        whileHover={{ y: -5, shadow: "0 20px 40px -10px rgba(0,0,0,0.1)" }}
-                        whileTap={{ scale: 0.98 }}
-                        className={`relative flex items-center gap-2 sm:gap-4 p-3.5 sm:p-5 rounded-[1.5rem] sm:rounded-[2.2rem] transition-all duration-500
+                        whileTap={{ scale: 0.96 }}
+                        className={`relative flex items-center gap-2 sm:gap-4 p-3.5 sm:p-5 rounded-[1.5rem] sm:rounded-[2.2rem] transition-all duration-300 text-left cursor-pointer group active:translate-y-0.5 active:scale-95 active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)]
                           ${isSelected 
-                            ? 'bg-white shadow-[0_20px_60px_-15px_rgba(255,107,0,0.3)] border-2 border-[#FF6B00]' 
-                            : 'bg-white border-2 border-slate-50 shadow-sm hover:border-slate-200'}
+                            ? 'bg-gradient-to-b from-orange-400 via-orange-500 to-amber-500 border-t-2 border-t-white/30 border-x border-x-orange-500 border-b-2 border-b-orange-700/60 shadow-[inset_0_2px_4px_rgba(255,255,255,0.3),_inset_0_-2px_4px_rgba(0,0,0,0.2),_0_15px_30px_-5px_rgba(255,107,0,0.3)] -translate-y-0.5' 
+                            : 'bg-gradient-to-b from-white to-slate-50/80 border-t border-t-white border-x border-x-slate-100 border-b-2 border-b-slate-200/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),_0_4px_8px_-2px_rgba(0,0,0,0.05)] hover:from-white hover:to-slate-100 hover:border-b-slate-300 hover:shadow-[0_8px_16px_-4px_rgba(0,0,0,0.1)] hover:-translate-y-0.5'}
                         `}
                       >
-                        <div className={`flex-shrink-0 w-8 h-8 sm:w-12 sm:h-12 rounded-[0.7rem] sm:rounded-[1rem] flex items-center justify-center transition-all duration-500 ${isSelected ? 'bg-[#FFF0E5]' : 'bg-slate-50 text-slate-300'}`}>
-                          <item.icon className="w-4 h-4 sm:w-6 sm:h-6" color={isSelected ? '#FF6B00' : 'currentColor'} strokeWidth={2} />
+                        <div className={`flex-shrink-0 w-8 h-8 sm:w-12 sm:h-12 rounded-[0.7rem] sm:rounded-[1rem] flex items-center justify-center transition-all duration-300 ${
+                          isSelected 
+                            ? 'bg-white/20 text-white shadow-[inset_0_1px_2px_rgba(255,255,255,0.25),_0_2px_4px_rgba(0,0,0,0.15)] scale-110' 
+                            : 'bg-slate-50 text-slate-400 border border-slate-100 shadow-[inset_0_1px_2px_rgba(0,0,0,0.05)] group-hover:bg-slate-100 group-hover:text-slate-600'
+                        }`}>
+                          <item.icon className="w-4 h-4 sm:w-6 sm:h-6" color={isSelected ? '#FFFFFF' : 'currentColor'} strokeWidth={2.5} />
                         </div>
 
                         <div className="flex flex-col items-start text-left overflow-hidden">
-                          <span className={`text-[0.85rem] sm:text-[1.05rem] font-black tracking-tight leading-none mb-1 sm:mb-1.5 ${isSelected ? 'text-slate-900' : 'text-slate-400 group-hover:text-slate-700'}`}>
+                          <span className={`text-[0.85rem] sm:text-[1.05rem] font-black tracking-tight leading-none mb-1 sm:mb-1.5 transition-colors ${
+                            isSelected 
+                              ? 'text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.2)]' 
+                              : 'text-slate-700 group-hover:text-slate-900'
+                          }`}>
                             {item.label}
                           </span>
-                          <p className={`text-[0.5rem] sm:text-[0.6rem] font-black uppercase tracking-widest truncate w-full ${isSelected ? 'text-orange-500 opacity-70' : 'text-slate-200'}`}>
+                          <p className={`text-[0.5rem] sm:text-[0.6rem] font-black uppercase tracking-widest truncate w-full transition-colors ${
+                            isSelected ? 'text-white/85' : 'text-slate-400'
+                          }`}>
                             {item.description}
                           </p>
                         </div>
@@ -1291,10 +1300,10 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                         }
                       }
                     }}
-                    className={`px-12 py-5 rounded-[2.2rem] text-xl font-black transition-all duration-300 border-2
+                    className={`px-12 py-5 rounded-[2.2rem] text-xl font-black transition-all duration-300 text-center cursor-pointer active:translate-y-0.5 active:scale-95 active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)]
                       ${selectedDetail === idx 
-                        ? 'border-[#FF6B00] text-[#FF6B00] bg-white shadow-[0_20px_50px_-10px_rgba(255,107,0,0.25)] scale-105' 
-                        : 'border-transparent text-slate-400 bg-white hover:bg-slate-50 hover:border-slate-200 shadow-sm'}
+                        ? 'bg-gradient-to-b from-orange-400 via-orange-500 to-amber-500 border-t-2 border-t-white/30 border-x border-x-orange-500 border-b-2 border-b-orange-700/60 shadow-[inset_0_2px_4px_rgba(255,255,255,0.3),_inset_0_-2px_4px_rgba(0,0,0,0.2),_0_15px_30px_-5px_rgba(255,107,0,0.35)] text-white scale-105 -translate-y-0.5' 
+                        : 'bg-gradient-to-b from-white to-slate-50/80 border-t border-t-white border-x border-x-slate-100 border-b-2 border-b-slate-200/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),_0_4px_8px_-2px_rgba(0,0,0,0.05)] hover:from-white hover:to-slate-100 hover:border-b-slate-300 hover:shadow-[0_8px_16px_-4px_rgba(0,0,0,0.1)] hover:-translate-y-0.5 text-slate-400'}
                     `}
                   >
                     {sub}
