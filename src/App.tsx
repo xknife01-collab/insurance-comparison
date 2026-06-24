@@ -1374,9 +1374,13 @@ export default function App() {
                 const coverage = (remodelingResult.analysis as any)._remodelingCoverage;
                 const totalPremium = remodelingResult.analysis.monthlyPremium || 0;
                 const cheapestPremium = remodelingResult.recommendations.diet?.estimatedPremium || 0;
-                const savingAmount = totalPremium - cheapestPremium;
+                // cheapestPremium이 0이거나 현재 보험료와 같으면 절약액 0으로 처리
+                const rawSaving = totalPremium - cheapestPremium;
+                const savingAmount = (cheapestPremium > 0 && rawSaving < totalPremium) ? rawSaving : 0;
                 const policies = coverage?.policies || [];
-                
+                const dietCompanyRaw = remodelingResult.recommendations.diet?.companyName || '';
+                const dietCompany = maskCompany(dietCompanyRaw, isUnlocked);
+
                 // 중복 가입 건수 계산
                 const dups = new Set<number>();
                 for (let i = 0; i < policies.length; i++) {
@@ -1400,11 +1404,19 @@ export default function App() {
                           📢 AI 종합 분석 리포트 요약
                         </div>
                         <h4 className="text-xl md:text-2xl font-black text-slate-800 tracking-tight">
-                          매달 합리적으로 조정 가능한 보험료 <span className="text-orange-500 underline underline-offset-4 font-black">{savingAmount.toLocaleString()}원</span>을 찾아냈습니다!
+                          {savingAmount > 0 ? (
+                            <>매달 합리적으로 조정 가능한 보험료 <span className="text-orange-500 underline underline-offset-4 font-black">{savingAmount.toLocaleString()}원</span>을 찾아냈습니다!</>
+                          ) : (
+                            <>현재 보험 구조 분석 완료 — 보장 최적화 상담을 추천드립니다.</>
+                          )}
                         </h4>
                         <p className="text-sm text-slate-500 font-bold leading-relaxed break-keep">
-                          고객님은 현재 총 <span className="text-slate-800 font-extrabold">{policies.length}건</span>의 보험을 유지 중이시며, 이 중 <span className="text-red-500 font-extrabold">{dups.size}건의 중복 가입 상품</span>이 확인되었습니다. 
-                          불필요한 과납 보장과 사망 위주의 주계약 비용을 최적화하면, 기존 핵심 보장은 동일하게 지키면서 매월 총 <span className="text-orange-500 font-extrabold">{savingAmount.toLocaleString()}원</span>의 기회 자산을 확보하실 수 있습니다.
+                          고객님은 현재 총 <span className="text-slate-800 font-extrabold">{policies.length}건</span>의 보험을 유지 중이시며{dups.size > 0 && <>, 이 중 <span className="text-red-500 font-extrabold">{dups.size}건의 중복 가입 상품</span>이 확인되었습니다</>}.
+                          {savingAmount > 0 ? (
+                            <> <span className="text-orange-500 font-extrabold">{dietCompany}</span> {cheapestPremium.toLocaleString()}원 플랜으로 전환 시, 기존 핵심 보장을 동일하게 지키면서 매월 총 <span className="text-orange-500 font-extrabold">{savingAmount.toLocaleString()}원</span>의 기회 자산을 확보하실 수 있습니다.</>
+                          ) : (
+                            <> 현재 보장 구조에서 추가 보완이 필요한 항목을 확인해 드립니다. 설계사 상담을 통해 최적 포트폴리오를 제안받으세요.</>
+                          )}
                         </p>
                       </div>
 
