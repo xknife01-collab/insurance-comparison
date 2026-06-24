@@ -106,7 +106,11 @@ export default function App() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const codeParam = params.get('code');
-    if (codeParam && codeParam.startsWith('R')) {
+    const isExternalHyphenPath = window.location.pathname === '/remodeling';
+
+    // 외부 하이픈 플로우(/remodeling?code=...)에서는 이전 결과 복원 안 함
+    // → 데모/실제 인증 후 7개 카드가 레이스 컨디션으로 덮어쓰이는 것 방지
+    if (codeParam && codeParam.startsWith('R') && !isExternalHyphenPath) {
       const fetchLeadOnMount = async () => {
         try {
           const supabase = createClient();
