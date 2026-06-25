@@ -1368,7 +1368,7 @@ export default function App() {
                   내 보험 정밀 리모델링 결과
                 </h2>
                 <p className="text-sm text-slate-500 font-semibold leading-relaxed break-keep mt-4 max-w-xl mx-auto">
-                  💬 본 분석은 고객님이 입력하신 보험 종류 및 월 보험료를 기반으로 AI가 통계적으로 추정한 결과입니다. 실제 가입 특약·보장 금액과 차이가 있을 수 있으며, 정확한 보장 내역은{' '}
+                  💡 본 분석은 고객님이 입력하신 보험 종류 및 월 보험료를 기반으로 AI가 통계적으로 추정한 결과입니다. 실제 가입 특약·보장 금액과 차이가 있을 수 있으며, 정확한 보장 내역은{' '}
                   <span className="text-yellow-500 font-black">카카오톡 익명 채팅 상담</span>을 통해 실제 가입정보를 기준으로 확인하실 수 있습니다.
                 </p>
               </div>
