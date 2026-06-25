@@ -1,4 +1,5 @@
 import { calculateDietPlan, calculateUpgradePlan, calculateAllUpgradePlans } from './matcher';
+import { buildCategoryOptions } from './categoryMatcher';
 import { StandardizedCoverage } from '../../types/remodeling';
 import { InsuranceAnalysis, AnalysisResult, RecommendationPlan } from '../../types/insurance';
 import { analyzeWholeLife } from '../insurance/wholeLife/wholeLifeEngine';
@@ -252,16 +253,67 @@ export async function analyzeRemodeling(
     }
   }
 
-  // 2. Run Matcher Calculations
-  const { cheapestPlan: dietResult, allDietOptions } = await calculateDietPlan(coverage);
-  const upgradeResult = calculateUpgradePlan(coverage, dietResult);
-  const allUpgradeOptions = calculateAllUpgradePlans(coverage, allDietOptions);
+  // 2. Run Category-based Supabase Loader (policies가 있을 때 우선 실행)
+  const hasPolicies = coverage.policies && coverage.policies.length > 0;
 
-  // 3. Construct Recommendation Plans
+  let allDietOptions: any[]    = [];
+  let allUpgradeOptions: any[] = [];
+  let dietResult: any          = null;
+  let upgradeResult: any       = null;
+
+  if (hasPolicies) {
+    // ✅ coverage.age/gender를 analysis에 주입 → 모든 Loader가 정확한 나이 기준으로 계산
+    const analysisWithAge: typeof analysis = {
+      ...analysis,
+      age:    coverage.age    || analysis.age    || 40,
+      gender: coverage.gender || analysis.gender || 'M',
+    };
+
+    // 각 카테고리 Loader → Supabase 실제 상품명·회사명·보험료 조회
+    const categoryResults = await buildCategoryOptions(coverage.policies!, analysisWithAge);
+    allDietOptions    = categoryResults.allDietOptions;
+    allUpgradeOptions = categoryResults.allUpgradeOptions;
+
+    // 카테고리별 최저가 기준으로 dietResult / upgradeResult 구성
+    const topDiet    = allDietOptions[0];
+    const topUpgrade = allUpgradeOptions[0] || topDiet;
+
+    dietResult = {
+      company_name:  topDiet?.companyName || 'DB손해보험',
+      total_premium: topDiet?.premium     || coverage.current_total_premium,
+      details: { cancer_premium: 0, brain_premium: 0, heart_premium: 0, caregiver_premium: 0 }
+    };
+    upgradeResult = {
+      company_name:  topUpgrade?.companyName || dietResult.company_name,
+      total_premium: topUpgrade?.premium     || coverage.current_total_premium,
+      details: { cancer_premium: 0, brain_premium: 0, heart_premium: 0, caregiver_premium: 0 }
+    };
+  } else {
+    // Fallback: 기존 matcher.ts (insurance_rates 테이블 기반)
+    const matcherResult = await calculateDietPlan(coverage);
+    dietResult          = matcherResult.cheapestPlan;
+    allDietOptions      = matcherResult.allDietOptions;
+    upgradeResult       = calculateUpgradePlan(coverage, dietResult);
+    allUpgradeOptions   = calculateAllUpgradePlans(coverage, allDietOptions);
+  }
+
+  // 3. Construct Recommendation Plans (실제 Supabase 상품명 사용)
+  const topDietOption    = allDietOptions[0];
+  const topUpgradeOption = allUpgradeOptions[0] || topDietOption;
+
+  const dietProductName    = topDietOption?.productName    || dietResult?.company_name    || '최적화 다이어트 보험';
+  const upgradeProductName = topUpgradeOption?.productName || upgradeResult?.company_name || '최적화 업그레이드 보험';
+  const dietCompanyName    = topDietOption?.companyName    || dietResult?.company_name    || 'DB손해보험';
+  const upgradeCompanyName = topUpgradeOption?.companyName || upgradeResult?.company_name || dietCompanyName;
+
+  const premiumSaving = Math.max(0, coverage.current_total_premium - (dietResult?.total_premium || 0));
+
   const dietPlan: RecommendationPlan = {
     title: '📉 가격은 낮추고 보장은 동일하게',
-    description: `기존 보장 수준을 동일하게 유지하면서 월 납입 보험료를 ${Math.round((coverage.current_total_premium - dietResult.total_premium) / 10000)}만원 줄일 수 있습니다.`,
-    estimatedPremium: dietResult.total_premium,
+    description: premiumSaving > 0
+      ? `기존 보장을 동일하게 유지하면서 월 납입 보험료를 ${Math.round(premiumSaving / 10000)}만원 줄일 수 있습니다.`
+      : `Supabase 실시간 분석 결과, 현재 가입하신 보험 중 동일 보장 기준 최적 상품을 매칭했습니다.`,
+    estimatedPremium: dietResult?.total_premium || coverage.current_total_premium,
     coverageChanges: [
       `동일 보장 유지: 일반암 ${Math.round(coverage.cancer_diagnosis / 10000000) * 10}00만원`,
       `동일 보장 유지: 뇌혈관 ${Math.round(coverage.brain_vascular / 10000000) * 10}00만원`,
@@ -269,23 +321,23 @@ export async function analyzeRemodeling(
       `불필요한 중복 및 고비용 특약 최적화`
     ],
     switchingLossNotice: '보장이 유지되므로 손해 없이 최저 가격으로 전환됩니다.',
-    companyName: dietResult.company_name,
-    productName: '무배당 간편건강 다이어트 보험'
+    companyName: dietCompanyName,
+    productName: dietProductName,
   };
 
   const upgradePlan: RecommendationPlan = {
     title: '🚀 가격은 그대로 보장은 더 든든하게',
     description: '기존에 납부하던 월 예산을 유지하면서, 미비했던 핵심 진단비를 추가 보강하는 플랜입니다.',
-    estimatedPremium: upgradeResult.total_premium,
+    estimatedPremium: upgradeResult?.total_premium || coverage.current_total_premium,
     coverageChanges: [
-      `일반암 보장: ${(upgradeResult.details.cancer_premium / dietResult.details.cancer_premium) > 1.2 ? '추가 확대 (+2,000만원)' : '동일 유지'}`,
-      `뇌혈관 보장: ${(upgradeResult.details.brain_premium / dietResult.details.brain_premium) > 1.2 ? '추가 확대 (+1,000만원)' : '동일 유지'}`,
-      `허혈성심장 보장: ${(upgradeResult.details.heart_premium / dietResult.details.heart_premium) > 1.2 ? '추가 확대 (+1,000만원)' : '동일 유지'}`,
+      `일반암 보장: ${coverage.cancer_diagnosis >= 50000000 ? '동일 유지' : '추가 확대 (+2,000만원)'}`,
+      `뇌혈관 보장: ${coverage.brain_vascular   >= 30000000 ? '동일 유지' : '추가 확대 (+1,000만원)'}`,
+      `허혈성심장 보장: ${coverage.ischemic_heart >= 30000000 ? '동일 유지' : '추가 확대 (+1,000만원)'}`,
       `동일한 월 보험료로 웅장한 핵심 보장 제공`
     ],
     switchingLossNotice: '동일 비용으로 보장이 강화되어 가성비가 상승합니다.',
-    companyName: upgradeResult.company_name,
-    productName: '무배당 VIP 마스터 업그레이드 건강보험'
+    companyName: upgradeCompanyName,
+    productName: upgradeProductName,
   };
 
   // Standard scores out of 100 based on coverage amounts

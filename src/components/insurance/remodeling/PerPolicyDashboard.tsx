@@ -14,7 +14,27 @@ interface Policy {
   isEstimated?: boolean;
 }
 
-interface Props { policies: Policy[]; age: number; gender: 'M' | 'F'; isUnlocked?: boolean; forceAllOpen?: boolean; }
+// Supabase Loader에서 가져온 실시간 옵션 타입
+export interface LiveOption {
+  companyName: string;
+  productName: string;
+  premium: number;
+  category?: string;
+  features?: string;
+  saving?: number;
+  currentProduct?: string;
+  currentCompany?: string;
+}
+
+interface Props {
+  policies: Policy[];
+  age: number;
+  gender: 'M' | 'F';
+  isUnlocked?: boolean;
+  forceAllOpen?: boolean;
+  allDietOptions?: LiveOption[];     // Supabase 실시간 다이어트 옵션
+  allUpgradeOptions?: LiveOption[];  // Supabase 실시간 업그레이드 옵션
+}
 
 const COMPANIES = ['DB손해보험','KB손해보험','한화손해보험','현대해상','삼성화재','메리츠화재'];
 function detectType(name: string) {
@@ -472,7 +492,7 @@ function findDups(policies: Policy[]): Set<number> {
   return dups;
 }
 
-function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen}:{policy:Policy;index:number;isDup:boolean;totalCount:number;isUnlocked?:boolean;forceOpen?:boolean;key?:any}) {
+function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen,liveDietOptions,liveUpgradeOptions}:{policy:Policy;index:number;isDup:boolean;totalCount:number;isUnlocked?:boolean;forceOpen?:boolean;key?:any;liveDietOptions?:LiveOption[];liveUpgradeOptions?:LiveOption[]}) {
   const [openState,setOpenState]=useState(index === 0);
   const open = forceOpen ? true : openState;
   const setOpen = (val: boolean) => {
@@ -663,11 +683,18 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen}:{policy
   ];
   const score=Math.round(radar.reduce((s,d)=>s+d.value,0)/radar.length);
 
-  // Diet options
-  const dietBase=Math.round(p*0.76);
-  const dietOpts=COMPANIES.map((c,i)=>({company:c,premium:dietBase+Math.round(p*0.024)*i}));
-  const dietPremium=dietOpts[0].premium;
-  const saving=p-dietPremium;
+  // Diet options — Supabase Loader 결과 우선 사용, 없으면 fallback
+  const hasliveOpts = liveDietOptions && liveDietOptions.length > 0;
+  const dietOpts = hasliveOpts
+    ? liveDietOptions!.map(o => ({ company: o.companyName, product: o.productName, premium: o.premium }))
+    : COMPANIES.map((c,i) => ({ company: c, product: '비교 상품', premium: Math.round(p*0.76)+Math.round(p*0.024)*i }));
+  const dietPremium = dietOpts[0]?.premium ?? Math.round(p*0.76);
+  const saving = Math.max(0, p - dietPremium);
+
+  const hasLiveUpgrade = liveUpgradeOptions && liveUpgradeOptions.length > 0;
+  const upgradeOpts = hasLiveUpgrade
+    ? liveUpgradeOptions!.map(o => ({ company: o.companyName, product: o.productName, premium: o.premium }))
+    : COMPANIES.map((c,i) => ({ company: c, product: '업그레이드 상품', premium: p }));
 
   // Problems
   const probs:string[]=[];
@@ -809,7 +836,7 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen}:{policy
               ))}
             </div>
             <p className="text-sm font-black text-slate-800 leading-snug group-hover:text-orange-600 transition-colors line-clamp-2">
-              {policy.isCustom ? policy.product_name : maskProductName(policy.product_name, !!isUnlocked)}
+              {maskProductName(policy.product_name, !!isUnlocked)}
             </p>
             <div className="flex items-center gap-3 mt-2">
               <span className="text-sm font-black text-orange-600">월 {p.toLocaleString()}원</span>
@@ -1118,7 +1145,7 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen}:{policy
                   <div>
                     <p className="text-xs font-black text-slate-800 uppercase tracking-widest mb-1">이 보험의 종합 평가</p>
                     <p className="text-2xl font-black text-slate-900">
-                      {policy.isCustom ? policy.product_name : maskProductName(policy.product_name.split('(')[0].trim(), !!isUnlocked)}
+                      {maskProductName(policy.product_name.split('(')[0].trim(), !!isUnlocked)}
                     </p>
                   </div>
                   {probs.length>0&&(
@@ -1135,7 +1162,7 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen}:{policy
                 </div>
               </div>
 
-              {/* Diet / Upgrade Options */}
+              {/* Diet / Upgrade Options — Supabase 실시간 데이터 */}
               <div className="grid md:grid-cols-2 gap-6">
                 {/* Diet */}
                 <div className="bg-blue-50/50 border border-blue-100/60 rounded-2xl p-6">
@@ -1144,13 +1171,13 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen}:{policy
                   <div className="flex items-baseline gap-1 mb-4">
                     <span className="text-3xl font-black text-blue-600">{dietPremium.toLocaleString()}</span>
                     <span className="text-sm font-bold text-slate-500">원/월</span>
-                    <span className="ml-2 text-xs font-black text-emerald-600">월 {fmt(saving)} 절감</span>
+                    {saving > 0 && <span className="ml-2 text-xs font-black text-emerald-600">월 {fmt(saving)} 절감</span>}
                   </div>
                   <div className="space-y-1">
                     {dietOpts.slice(0,4).map((o,i)=>(
                       <div key={i} className="flex justify-between items-center text-xs py-1.5 border-b border-blue-100/50 last:border-0">
-                        <span className="font-bold text-slate-700">{String(i+1).padStart(2,'0')} {maskCompany(o.company, !!isUnlocked)}</span>
-                        <span className="font-black text-blue-700">{o.premium.toLocaleString()}원</span>
+                        <span className="font-bold text-slate-700 truncate max-w-[60%]">{String(i+1).padStart(2,'0')} {maskCompany(o.company, !!isUnlocked)}</span>
+                        <span className="font-black text-blue-700 shrink-0">{o.premium.toLocaleString()}원</span>
                       </div>
                     ))}
                   </div>
@@ -1164,15 +1191,12 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen}:{policy
                     <span className="text-sm font-bold text-slate-400">원/월 유지</span>
                   </div>
                   <div className="space-y-1">
-                    {COMPANIES.slice(0,4).map((c,i)=>{
-                      const bonus=[5300,4700,4600,4200][i]||3800;
-                      return(
-                        <div key={i} className="flex justify-between items-center text-xs py-1.5 border-b border-white/10 last:border-0">
-                          <span className="font-bold text-slate-300">{String(i+1).padStart(2,'0')} {maskCompany(c, !!isUnlocked)}</span>
-                          <span className="font-black text-orange-300">암 +{bonus}만</span>
-                        </div>
-                      );
-                    })}
+                    {upgradeOpts.slice(0,4).map((o,i)=>(
+                      <div key={i} className="flex justify-between items-center text-xs py-1.5 border-b border-white/10 last:border-0">
+                        <span className="font-bold text-slate-300 truncate max-w-[60%]">{String(i+1).padStart(2,'0')} {maskCompany(o.company, !!isUnlocked)}</span>
+                        <span className="font-black text-orange-300 shrink-0">{o.premium.toLocaleString()}원</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -1191,7 +1215,7 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen}:{policy
                     <div key={i} className={`grid grid-cols-12 px-5 py-3 text-xs items-center border-b border-slate-50 last:border-0 ${i===0?'bg-emerald-50/30':''}`}>
                       <div className="col-span-1 font-black text-slate-400">{String(i+1).padStart(2,'0')}</div>
                       <div className="col-span-4 font-black text-slate-800">{maskCompany(o.company, !!isUnlocked)}</div>
-                      <div className="col-span-5 text-slate-500 truncate">무배당 다이어트 보험</div>
+                      <div className="col-span-5 text-slate-500 truncate">{maskProductName((o as any).product || '', !!isUnlocked)}</div>
                       <div className="col-span-2 text-right font-black text-blue-600">
                         {o.premium.toLocaleString()}원
                         {i===0&&<span className="block text-[9px] text-emerald-600 font-black">최저가</span>}
@@ -1209,7 +1233,7 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen}:{policy
   );
 }
 
-export const PerPolicyDashboard: React.FC<Props> = ({ policies, age, gender, isUnlocked, forceAllOpen }) => {
+export const PerPolicyDashboard: React.FC<Props> = ({ policies, age, gender, isUnlocked, forceAllOpen, allDietOptions, allUpgradeOptions }) => {
   const dups = findDups(policies);
   const total = policies.reduce((s,p)=>s+p.monthly_premium,0);
   const hasDups = dups.size > 0;
@@ -1242,9 +1266,24 @@ export const PerPolicyDashboard: React.FC<Props> = ({ policies, age, gender, isU
       </div>
 
       {/* Per-Policy Cards */}
-      {policies.map((policy,i)=>(
-        <PolicyCard key={i} policy={policy} index={i} isDup={dups.has(i)} totalCount={policies.length} isUnlocked={isUnlocked} forceOpen={forceAllOpen} />
-      ))}
+      {policies.map((policy,i)=>{
+        // 이 policy의 카테고리에 해당하는 Loader 옵션 필터링
+        const pDietOpts  = allDietOptions?.filter(o => o.currentProduct === policy.product_name || !o.currentProduct) || [];
+        const pUpOpts    = allUpgradeOptions?.filter(o => o.currentProduct === policy.product_name || !o.currentProduct) || [];
+        return (
+          <PolicyCard
+            key={i}
+            policy={policy}
+            index={i}
+            isDup={dups.has(i)}
+            totalCount={policies.length}
+            isUnlocked={isUnlocked}
+            forceOpen={forceAllOpen}
+            liveDietOptions={pDietOpts.length > 0 ? pDietOpts : allDietOptions}
+            liveUpgradeOptions={pUpOpts.length > 0 ? pUpOpts : allUpgradeOptions}
+          />
+        );
+      })}
     </div>
   );
 };

@@ -1124,6 +1124,8 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
             gender={(analysis as any).gender || 'M'}
             isUnlocked={isUnlocked}
             forceAllOpen={forceMobile}
+            allDietOptions={(analysis as any)._allDietOptions || []}
+            allUpgradeOptions={(analysis as any)._allUpgradeOptions || []}
           />
         </div>
       )}
@@ -1417,23 +1419,23 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
               )}
 
 
-              {/* Diet Table — 리모델링: 보험별 1:1 대체 상품 매핑 */}
+              {/* Diet Table — 리모델링: Supabase Loader 실데이터 기반 1:1 대체 상품 */}
               {isRemodeling && (() => {
                 const policies: any[] = (analysis as any)._remodelingCoverage?.policies || [];
                 if (policies.length === 0) return null;
 
-                const REPLACE_COMPANIES = ['DB손해보험','KB손해보험','한화손해보험','현대해상','삼성화재'];
+                // ✅ allDietOptions에서 각 policy별 최저가 상품 매핑
+                const rows = policies.map((p: any) => {
+                  // 해당 policy와 매칭되는 diet 옵션 찾기 (currentProduct 태그 기반)
+                  const matched = allDietOptions.filter(
+                    (o: any) => o.currentProduct === p.product_name || !o.currentProduct
+                  );
+                  const best = matched.length > 0 ? matched[0] : null;
 
-                const rows = policies.map((p: any, i: number) => {
-                  const ratio = p.product_name.includes('종신') ? 0.80
-                    : p.product_name.includes('운전자') ? 0.82
-                    : 0.76;
-                  const dietPrem = Math.round(p.monthly_premium * ratio);
-                  const saving = p.monthly_premium - dietPrem;
-                  const company = maskCompany(REPLACE_COMPANIES[i % REPLACE_COMPANIES.length], isUnlocked);
-                  const prodType = maskProductName(p.product_name.includes('종신') ? '무배당 종신 다이어트 보험'
-                    : p.product_name.includes('운전자') ? '무배당 운전자 다이어트 보험'
-                    : '무배당 간편건강 다이어트 보험', isUnlocked);
+                  const dietPrem = best?.premium ?? Math.round(p.monthly_premium * 0.76);
+                  const saving   = p.monthly_premium - dietPrem;
+                  const company  = maskCompany(best?.companyName ?? 'DB손해보험', isUnlocked);
+                  const prodType = maskProductName(best?.productName ?? '최적화 다이어트 보험', isUnlocked);
                   return { orig: p, dietPrem, saving, company, prodType };
                 });
 
@@ -1529,18 +1531,20 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
                const policies: any[] = (analysis as any)._remodelingCoverage?.policies || [];
                const totalCurrent = policies.reduce((s: number, p: any) => s + p.monthly_premium, 0);
 
-               const UPCO = ['DB손해보험','KB손해보험','한화손해보험','현대해상','삼성화재','메리츠화재'];
-               const rows = policies.map((p: any, i: number) => {
-                 const isDriver = p.product_name.includes('운전자');
-                 const isWhole = p.product_name.includes('종신');
-                 const company = maskCompany(UPCO[i % UPCO.length], isUnlocked);
-                 const prodType = maskProductName(isWhole ? '무배당 VIP 종신 업그레이드 보험'
-                   : isDriver ? '무배당 VIP 운전자 업그레이드 보험'
-                   : '무배당 VIP 마스터 업그레이드 건강보험', isUnlocked);
-                 const cancerBonus = isWhole || isDriver ? 0 : [2000,1800,1600,1400,1200,1000][i % 6] * 10000;
-                 const brainBonus  = isWhole || isDriver ? 0 : [1000,900,800,700,600,500][i % 6] * 10000;
-                 const heartBonus  = isWhole || isDriver ? 0 : [1000,900,800,700,600,500][i % 6] * 10000;
-                 return { orig: p, company, prodType, cancerBonus, brainBonus, heartBonus };
+               // ✅ allUpgradeOptions에서 각 policy별 업그레이드 상품 매핑
+               const rows = policies.map((p: any) => {
+                 const matched = allUpgradeOptions.filter(
+                   (o: any) => o.currentProduct === p.product_name || !o.currentProduct
+                 );
+                 const best = matched.length > 0 ? matched[0] : null;
+
+                 const company  = maskCompany(best?.companyName ?? '현대해상', isUnlocked);
+                 const prodType = maskProductName(best?.productName ?? '최적화 업그레이드 보험', isUnlocked);
+                 const upgPrem  = best?.premium ?? p.monthly_premium;
+                 const cancerBonus = 20000000;
+                 const brainBonus  = 10000000;
+                 const heartBonus  = 10000000;
+                 return { orig: p, company, prodType, upgPrem, cancerBonus, brainBonus, heartBonus };
                });
 
                return (

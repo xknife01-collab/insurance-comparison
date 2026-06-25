@@ -1041,15 +1041,43 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
       gender: coverage.gender,
       jobClass: 1,
       selectedCategory: 'remodeling',
-      cancer: { currentAmount: coverage.cancer_diagnosis, targetAmount: 50000000 },
-      cerebrovascular: { currentAmount: coverage.brain_vascular, targetAmount: 30000000 },
-      cardiovascular: { currentAmount: coverage.ischemic_heart, targetAmount: 30000000 },
-      surgery: { currentAmount: coverage.surgery_amount ?? 0, targetAmount: 10000000 },
-      postDisability: { currentAmount: coverage.post_disability_amount ?? 0, targetAmount: 30000000 },
+
+      // ✅ 비교 분석 Calculator와 동일한 파라미터 — categoryMatcher가 이 값을 우선 사용
+      cancer: {
+        currentAmount:     cancerDiagnosisAmount,
+        targetAmount:      cancerDiagnosisAmount,
+        paymentType:       cancerPaymentType,
+        familyHistory:     cancerFamilyHistory,
+        treatmentCost2025: cancerTreatmentCost2025,
+        targetedTherapy:   cancerTargetedTherapy,
+        recurrentCancer:   cancerRecurrentCancer,
+      },
+      cerebrovascular: {
+        currentAmount: selectedBrain || coverage.brain_vascular,
+        targetAmount:  selectedBrain || 30000000,
+        paymentType:   brainPaymentType,
+        surgeryBenefit: brainSurgeryBenefit,
+      },
+      cardiovascular: {
+        currentAmount: selectedHeart || coverage.ischemic_heart,
+        targetAmount:  selectedHeart || 30000000,
+        healthType:    heartHealthType,
+        coverageLevel: heartCoverageLevel,
+      },
+      surgery: {
+        currentAmount: coverage.surgery_amount ?? 0,
+        targetAmount:  10000000,
+        surgeryFocus,
+        hospitalDailyAmt: hospitalAmount,
+      },
+      postDisability: {
+        currentAmount: coverage.post_disability_amount ?? 0,
+        targetAmount:  30000000,
+      },
       paymentExemption: 'standard',
       healthStatus: 'standard',
       monthlyPremium: coverage.current_total_premium,
-      _remodelingCoverage: coverage
+      _remodelingCoverage: coverage,
     });
   };
 
