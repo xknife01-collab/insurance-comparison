@@ -1556,20 +1556,60 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
                      </div>
                    </div>
 
-                   <ul className="space-y-3 mb-10 relative z-10">
-                     <li className="flex items-center gap-3 text-sm font-bold text-slate-300">
-                       <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0"><ShieldCheck className="w-4 h-4 text-orange-400" /></div>
-                       종신보험 — 사망 1억 보장 동일 유지
-                     </li>
-                     <li className="flex items-center gap-3 text-sm font-bold text-slate-300">
-                       <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0"><ShieldCheck className="w-4 h-4 text-orange-400" /></div>
-                       운전자보험 — 형사합의·벌금·변호사 보장 동일 유지
-                     </li>
-                     <li className="flex items-center gap-3 text-sm font-bold text-slate-300">
-                       <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0"><ShieldCheck className="w-4 h-4 text-orange-400" /></div>
-                       종합건강보험 — 암·뇌혈관·심장 진단비 보장 동일 유지
-                     </li>
-                   </ul>
+                    <ul className="space-y-3 mb-10 relative z-10">
+                      {policies.map((p: any, idx: number) => {
+                        const name = p.product_name || '';
+                        let description = '기존 핵심 보장 동일 유지';
+                        
+                        if (/종신/i.test(name)) {
+                          description = '사망 보장 동일 유지';
+                        } else if (/운전자/i.test(name)) {
+                          description = '형사합의·벌금·변호사 보장 동일 유지';
+                        } else if (/실손|실비/i.test(name)) {
+                          description = '의료비 입원·통원 보장 동일 유지';
+                        } else if (/암/i.test(name)) {
+                          description = '암 진단비 및 수술비 보장 동일 유지';
+                        } else if (/뇌/i.test(name)) {
+                          description = '뇌혈관 및 뇌졸중 진단비 보장 동일 유지';
+                        } else if (/심장|허혈성/i.test(name)) {
+                          description = '허혈성 심장질환 보장 동일 유지';
+                        } else if (/치아|덴탈/i.test(name)) {
+                          description = '임플란트 및 크라운 보장 동일 유지';
+                        } else if (/펫|반려/i.test(name)) {
+                          description = '반려동물 치료비 및 수술비 보장 동일 유지';
+                        } else if (/어린이|자녀|태아/i.test(name)) {
+                          description = '주요 중대질환 보장 동일 유지';
+                        } else if (/간병|치매/i.test(name)) {
+                          description = '간병인 및 치매 보장 동일 유지';
+                        } else if (/화재/i.test(name)) {
+                          description = '주택 화재 및 배상책임 보장 동일 유지';
+                        }
+
+                        let typeLabel = '종합건강보험';
+                        if (/종신/i.test(name)) typeLabel = '종신보험';
+                        else if (/운전자/i.test(name)) typeLabel = '운전자보험';
+                        else if (/실손|실비/i.test(name)) typeLabel = '실손의료비보험';
+                        else if (/암/i.test(name)) typeLabel = '암보험';
+                        else if (/뇌/i.test(name)) typeLabel = '뇌질환보험';
+                        else if (/심장|허혈성/i.test(name)) typeLabel = '심장질환보험';
+                        else if (/치아|덴탈/i.test(name)) typeLabel = '치아보험';
+                        else if (/펫|반려/i.test(name)) typeLabel = '펫보험';
+                        else if (/어린이|자녀|태아/i.test(name)) typeLabel = '어린이보험';
+                        else if (/간병/i.test(name)) typeLabel = '간병보험';
+                        else if (/치매/i.test(name)) typeLabel = '치매보험';
+                        else if (/화재/i.test(name)) typeLabel = '화재보험';
+                        else if (/연금/i.test(name)) typeLabel = '연금보험';
+
+                        return (
+                          <li key={idx} className="flex items-center gap-3 text-sm font-bold text-slate-300">
+                            <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+                              <ShieldCheck className="w-4 h-4 text-orange-400" />
+                            </div>
+                            {typeLabel} — {description}
+                          </li>
+                        );
+                      })}
+                    </ul>
 
                    {/* Per-policy upgrade comparison list */}
                    <div className="mb-12 space-y-3 text-left">
