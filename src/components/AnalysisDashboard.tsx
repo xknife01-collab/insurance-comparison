@@ -680,8 +680,17 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
   const currentPrem = analysis.monthlyPremium || 0;
   const dietPrem = result.recommendations?.diet?.estimatedPremium || 0;
   const monthlySaving = Math.max(0, currentPrem - dietPrem);
-  const showSaving = monthlySaving > 0 ? monthlySaving : 22590; // 디폴트 22,590원 적용!
-  const showDiet = dietPrem > 0 ? dietPrem : 8910; // 디폴트 8,910원 적용!
+  let showSaving = monthlySaving > 0 ? monthlySaving : 22590; // 디폴트 22,590원 적용!
+  let showDiet = dietPrem > 0 ? dietPrem : 8910; // 디폴트 8,910원 적용!
+
+  if (isRemodeling) {
+    const policies: any[] = (analysis as any)._remodelingCoverage?.policies || [];
+    if (policies.length > 0) {
+      const totalCurrent = policies.reduce((s: number, p: any) => s + p.monthly_premium, 0);
+      showDiet = Math.round(totalCurrent * 0.785);
+      showSaving = totalCurrent - showDiet;
+    }
+  }
 
   const getAverageByAge = (age: number) => {
     if (age < 30) return { c: 50, b: 40, h: 40, s: 60, l: 30, d: 20 };
@@ -1276,18 +1285,82 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
                       </div>
                     </div>
                     <ul className="space-y-3 mb-10 relative z-10">
-                      <li className="flex items-center gap-3 text-sm font-bold text-gray-700">
-                        <div className="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0"><ShieldCheck className="w-4 h-4 text-indigo-500" /></div>
-                        종신보험 — 사망 1억 보장 동일 유지
-                      </li>
-                      <li className="flex items-center gap-3 text-sm font-bold text-gray-700">
-                        <div className="w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0"><ShieldCheck className="w-4 h-4 text-purple-500" /></div>
-                        운전자보험 — 형사합의·벌금·변호사 보장 동일 유지
-                      </li>
-                      <li className="flex items-center gap-3 text-sm font-bold text-gray-700">
-                        <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0"><ShieldCheck className="w-4 h-4 text-blue-500" /></div>
-                        종합건강보험 — 암·뇌혈관·심장 진단비 보장 동일 유지
-                      </li>
+                      {policies.map((p: any, idx: number) => {
+                        const name = p.product_name || '';
+                        let description = '기존 핵심 보장 동일 유지';
+                        let bgColor = 'bg-blue-100';
+                        let textColor = 'text-blue-500';
+                        
+                        if (/종신/i.test(name)) {
+                          description = '사망 보장 동일 유지';
+                          bgColor = 'bg-indigo-100';
+                          textColor = 'text-indigo-500';
+                        } else if (/운전자/i.test(name)) {
+                          description = '형사합의·벌금·변호사 보장 동일 유지';
+                          bgColor = 'bg-purple-100';
+                          textColor = 'text-purple-500';
+                        } else if (/실손|실비/i.test(name)) {
+                          description = '의료비 입원·통원 보장 동일 유지';
+                          bgColor = 'bg-teal-100';
+                          textColor = 'text-teal-500';
+                        } else if (/암/i.test(name)) {
+                          description = '암 진단비 및 수술비 보장 동일 유지';
+                          bgColor = 'bg-rose-100';
+                          textColor = 'text-rose-500';
+                        } else if (/뇌/i.test(name)) {
+                          description = '뇌혈관 및 뇌졸중 진단비 보장 동일 유지';
+                          bgColor = 'bg-indigo-100';
+                          textColor = 'text-indigo-500';
+                        } else if (/심장|허혈성/i.test(name)) {
+                          description = '허혈성 심장질환 보장 동일 유지';
+                          bgColor = 'bg-red-100';
+                          textColor = 'text-red-500';
+                        } else if (/치아|덴탈/i.test(name)) {
+                          description = '임플란트 및 크라운 보장 동일 유지';
+                          bgColor = 'bg-purple-100';
+                          textColor = 'text-purple-500';
+                        } else if (/펫|반려/i.test(name)) {
+                          description = '반려동물 치료비 및 수술비 보장 동일 유지';
+                          bgColor = 'bg-orange-100';
+                          textColor = 'text-orange-500';
+                        } else if (/어린이|자녀|태아/i.test(name)) {
+                          description = '주요 중대질환 보장 동일 유지';
+                          bgColor = 'bg-emerald-100';
+                          textColor = 'text-emerald-500';
+                        } else if (/간병|치매/i.test(name)) {
+                          description = '간병인 및 치매 보장 동일 유지';
+                          bgColor = 'bg-pink-100';
+                          textColor = 'text-pink-500';
+                        } else if (/화재/i.test(name)) {
+                          description = '주택 화재 및 배상책임 보장 동일 유지';
+                          bgColor = 'bg-amber-100';
+                          textColor = 'text-amber-500';
+                        }
+
+                        let typeLabel = '종합건강보험';
+                        if (/종신/i.test(name)) typeLabel = '종신보험';
+                        else if (/운전자/i.test(name)) typeLabel = '운전자보험';
+                        else if (/실손|실비/i.test(name)) typeLabel = '실손의료비보험';
+                        else if (/암/i.test(name)) typeLabel = '암보험';
+                        else if (/뇌/i.test(name)) typeLabel = '뇌질환보험';
+                        else if (/심장|허혈성/i.test(name)) typeLabel = '심장질환보험';
+                        else if (/치아|덴탈/i.test(name)) typeLabel = '치아보험';
+                        else if (/펫|반려/i.test(name)) typeLabel = '펫보험';
+                        else if (/어린이|자녀|태아/i.test(name)) typeLabel = '어린이보험';
+                        else if (/간병/i.test(name)) typeLabel = '간병보험';
+                        else if (/치매/i.test(name)) typeLabel = '치매보험';
+                        else if (/화재/i.test(name)) typeLabel = '화재보험';
+                        else if (/연금/i.test(name)) typeLabel = '연금보험';
+
+                        return (
+                          <li key={idx} className="flex items-center gap-3 text-sm font-bold text-gray-700">
+                            <div className={`w-6 h-6 rounded-full ${bgColor} flex items-center justify-center flex-shrink-0`}>
+                              <ShieldCheck className={`w-4 h-4 ${textColor}`} />
+                            </div>
+                            {typeLabel} — {description}
+                          </li>
+                        );
+                      })}
                       {hasKBDup && (
                         <li className="flex items-center gap-3 text-sm font-bold text-amber-700 bg-amber-50 rounded-xl px-3 py-2 border border-amber-100">
                           <span className="w-6 h-6 rounded-full bg-amber-200 flex items-center justify-center flex-shrink-0 text-xs">⚠️</span>

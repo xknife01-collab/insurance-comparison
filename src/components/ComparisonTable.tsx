@@ -20,7 +20,53 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     return `${amt.toLocaleString()}원`;
   };
 
-  const category = analysis.selectedCategory ?? '';
+  let category = analysis.selectedCategory ?? '';
+  if (category === 'remodeling' && (analysis as any)._remodelingCoverage?.policies?.length > 0) {
+    const policies = (analysis as any)._remodelingCoverage.policies;
+    const typeCounts: Record<string, number> = {};
+    for (const p of policies) {
+      const name = p.product_name || '';
+      let type = 'health';
+      if (/의료실비|실손|실비/i.test(name)) type = '실손';
+      else if (/치아|치과|덴탈|크라운|임플란트/i.test(name)) type = '치아';
+      else if (/유병자|간편고지|3\.2\.5|3\.3\.5|3\.5\.5/i.test(name)) type = '유병자';
+      else if (/수술\/입원|수술비|입원비|입원일당|수술입원/i.test(name)) type = '수술/입원';
+      else if (/암보험|암진단|3대질환/i.test(name)) type = '암';
+      else if (/어린이|신생아|자녀|태아/i.test(name)) type = '어린이';
+      else if (/뇌혈관|뇌졸중|뇌출혈|뇌질환/i.test(name)) type = '뇌혈관';
+      else if (/심장질환|허혈성|심근경색|심혈관|심장/i.test(name)) type = '심장';
+      else if (/상해/i.test(name)) type = '상해';
+      else if (/간병인|간병지원|간병사용|간병\s*보험/i.test(name)) type = '간병';
+      else if (/치매/i.test(name)) type = '치매';
+      else if (/재가\/시설|재가|시설급여|요양/i.test(name)) type = '재가/시설';
+      else if (/자동차/i.test(name)) type = '자동차';
+      else if (/운전자/i.test(name)) type = '운전자';
+      else if (/펫|pet|개|고양이|반려/i.test(name)) type = '펫';
+      else if (/골프|레저/i.test(name)) type = '골프';
+      else if (/주택화재|화재|풍수해/i.test(name)) type = '화재';
+      else if (/재물/i.test(name)) type = '재물';
+      else if (/연금|annuity/i.test(name)) type = '연금';
+      else if (/종신|whole/i.test(name)) type = '종신';
+      else if (/변액|정기/i.test(name)) type = '변액';
+      else if (/민사\/형사|법률|소송/i.test(name)) type = '법률';
+      else if (/저축|savings/i.test(name)) type = '일반 저축';
+      else if (/신용/i.test(name)) type = '신용';
+      
+      typeCounts[type] = (typeCounts[type] || 0) + 1;
+    }
+    
+    let primaryType = 'health';
+    let maxCount = 0;
+    for (const [type, count] of Object.entries(typeCounts)) {
+      if (count > maxCount) {
+        maxCount = count;
+        primaryType = type;
+      }
+    }
+    if (primaryType !== 'health') {
+      category = primaryType;
+    }
+  }
   const isDental = category.includes('치아');
   const isSilbi = category.includes('실손') || category.includes('실비');
   const isCaregiving = category.includes('간병');
