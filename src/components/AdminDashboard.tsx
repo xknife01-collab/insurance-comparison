@@ -2848,7 +2848,8 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
         (() => {
           const isConsult = isLeadConsult(l.insurance_type);
           const isUnderwriting = l.insurance_type?.includes('_underwriting');
-          return (isConsult || isUnderwriting) ? (l.phone || '미기입') : maskPhoneNumber(l.phone);
+          const isVerified = l.status === 'verified' || !!l.raw_payload?.verified_at || (l.phone && l.phone !== '010-0000-0000' && l.phone !== '0');
+          return (isConsult || isUnderwriting || isVerified) ? (l.phone || '미기입') : maskPhoneNumber(l.phone);
         })(),
         l.age ? `${l.age}세` : '미기입',
         (() => {
@@ -3532,7 +3533,8 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                       {(() => {
                         const isConsult = isLeadConsult(lead.insurance_type);
                         const isUnderwriting = lead.insurance_type?.includes('_underwriting');
-                        return (isConsult || isUnderwriting) ? lead.phone : maskPhoneNumber(lead.phone);
+                        const isVerified = lead.status === 'verified' || !!lead.raw_payload?.verified_at || (lead.phone && lead.phone !== '010-0000-0000' && lead.phone !== '0');
+                        return (isConsult || isUnderwriting || isVerified) ? lead.phone : maskPhoneNumber(lead.phone);
                       })()} • {lead.age}세
                     </p>
                     <p className="text-[9px] text-slate-500 font-black">
@@ -3670,7 +3672,8 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
             const utmBadge = getUtmSourceBadge(utmSource);
             const isConsult = isLeadConsult(lead.insurance_type);
             const isUnderwriting = lead.insurance_type?.includes('_underwriting');
-            const phone = (isConsult || isUnderwriting) ? lead.phone : maskPhoneNumber(lead.phone);
+            const isVerified = lead.status === 'verified' || !!lead.raw_payload?.verified_at || (lead.phone && lead.phone !== '010-0000-0000' && lead.phone !== '0');
+            const phone = (isConsult || isUnderwriting || isVerified) ? lead.phone : maskPhoneNumber(lead.phone);
 
             return (
               <div 
