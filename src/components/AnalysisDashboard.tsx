@@ -36,6 +36,158 @@ import disclosureDates from '../lib/insurance/disclosure_dates.json';
 import { AIPremiumReport } from './AIPremiumReport';
 import { maskCompany, maskProductName, maskText } from '../utils/compliance';
 
+export function classifyPolicy(policy: any): { typeLabel: string; description: string; bgColor: string; textColor: string } {
+  const name = policy.product_name || '';
+  const riders = policy.riders || [];
+  const riderNames = riders.map((r: any) => r.rider_name).join(' ');
+  const combined = (name + ' ' + riderNames).toLowerCase();
+
+  // 3대 진단비 특약 존재 여부
+  const hasCancer = /암|cancer/i.test(combined);
+  const hasBrain = /뇌|cerebro|stroke/i.test(combined);
+  const hasHeart = /심장|허혈성|cardio|infarction/i.test(combined);
+  const majorCount = [hasCancer, hasBrain, hasHeart].filter(Boolean).length;
+
+  let typeLabel = '종합건강보험';
+  let description = '하나의 보험으로 빈틈없이 조립';
+  let bgColor = 'bg-blue-100';
+  let textColor = 'text-blue-500';
+
+  if (/종신|whole/i.test(name)) {
+    typeLabel = '종신보험';
+    description = '가격대비 최다보장';
+    bgColor = 'bg-indigo-100';
+    textColor = 'text-indigo-500';
+  } else if (/자동차|car\s*insurance/i.test(name)) {
+    typeLabel = '자동차보험';
+    description = '전사 가격 자동 비교';
+    bgColor = 'bg-sky-100';
+    textColor = 'text-sky-500';
+  } else if (/운전자/i.test(name)) {
+    typeLabel = '운전자보험';
+    description = '벌금 및 민사 보장';
+    bgColor = 'bg-purple-100';
+    textColor = 'text-purple-500';
+  } else if (/실손|실비|의료실비|의료비/i.test(combined)) {
+    typeLabel = '의료실비';
+    description = '필수적인 의료비 보장 (자기부담금 제외)';
+    bgColor = 'bg-teal-100';
+    textColor = 'text-teal-500';
+  } else if (/치아|치과|덴탈|크라운|임플란트/i.test(combined)) {
+    typeLabel = '치아보험';
+    description = '임플란트/크라운';
+    bgColor = 'bg-purple-100';
+    textColor = 'text-purple-500';
+  } else if (/유병력자/i.test(combined)) {
+    typeLabel = '유병력자 전용';
+    description = '간편 고지 가입';
+    bgColor = 'bg-emerald-100';
+    textColor = 'text-emerald-500';
+  } else if (/유병자|간편고지|3\.[0-5]\.[0-5]/i.test(combined)) {
+    typeLabel = '유병자';
+    description = '아픈 분도 가입';
+    bgColor = 'bg-amber-100';
+    textColor = 'text-amber-500';
+  } else if (majorCount >= 2 || /종합|통합|건강|다사랑|굿밸런스/i.test(name)) {
+    typeLabel = '종합건강';
+    description = '하나의 보험으로 빈틈없이 조립';
+    bgColor = 'bg-blue-100';
+    textColor = 'text-blue-500';
+  } else if (hasCancer) {
+    typeLabel = '암보험';
+    description = '진단비 최대 1억';
+    bgColor = 'bg-rose-100';
+    textColor = 'text-rose-500';
+  } else if (hasBrain) {
+    typeLabel = '뇌혈관';
+    description = '뇌질환 무제한 보장';
+    bgColor = 'bg-indigo-100';
+    textColor = 'text-indigo-500';
+  } else if (hasHeart) {
+    typeLabel = '심장질환';
+    description = '허혈성 심장 집중';
+    bgColor = 'bg-red-100';
+    textColor = 'text-red-500';
+  } else if (/어린이|자녀|태아|신생아/i.test(combined)) {
+    typeLabel = '어린이/신생아';
+    description = '태아부터 성인까지';
+    bgColor = 'bg-emerald-100';
+    textColor = 'text-emerald-500';
+  } else if (/간병인|간병지원/i.test(combined)) {
+    typeLabel = '간병 보험';
+    description = '간병인 지원 및 사용일당 집중';
+    bgColor = 'bg-pink-100';
+    textColor = 'text-pink-500';
+  } else if (/치매/i.test(combined)) {
+    typeLabel = '치매 간병보험';
+    description = '치매 진단비 및 생활자금';
+    bgColor = 'bg-pink-100';
+    textColor = 'text-pink-500';
+  } else if (/재가|시설|요양/i.test(combined)) {
+    typeLabel = '재가/시설';
+    description = '국가 공인 방문 요양';
+    bgColor = 'bg-orange-100';
+    textColor = 'text-orange-500';
+  } else if (/상해/i.test(combined)) {
+    typeLabel = '상해보험';
+    description = '사고 장해 및 골절 치료 자산';
+    bgColor = 'bg-orange-100';
+    textColor = 'text-orange-500';
+  } else if (/주택화재|화재/i.test(combined)) {
+    typeLabel = '주택화재';
+    description = '재산 피해 보호';
+    bgColor = 'bg-amber-100';
+    textColor = 'text-amber-500';
+  } else if (/재물|점포/i.test(combined)) {
+    typeLabel = '재물종합';
+    description = '상가 화재 및 소상공인 자산 보호';
+    bgColor = 'bg-amber-100';
+    textColor = 'text-amber-500';
+  } else if (/연금저축|연금/i.test(combined)) {
+    typeLabel = '연금저축';
+    description = '노후 자금 준비';
+    bgColor = 'bg-yellow-100';
+    textColor = 'text-yellow-600';
+  } else if (/변액|정기/i.test(combined)) {
+    typeLabel = '변액, 정기';
+    description = '수익형 자산 관리';
+    bgColor = 'bg-slate-100';
+    textColor = 'text-slate-500';
+  } else if (/민사|형사|법률|소송/i.test(combined)) {
+    typeLabel = '민사/형사';
+    description = '법률 비용 보전';
+    bgColor = 'bg-teal-100';
+    textColor = 'text-teal-500';
+  } else if (/저축/i.test(combined)) {
+    typeLabel = '일반 저축';
+    description = '비과세 목돈 마련 재테크';
+    bgColor = 'bg-yellow-100';
+    textColor = 'text-yellow-600';
+  } else if (/신용|대출|상환/i.test(combined)) {
+    typeLabel = '신용보험';
+    description = '대출금 상환 안심 보장';
+    bgColor = 'bg-slate-100';
+    textColor = 'text-slate-500';
+  } else if (/펫|반려/i.test(combined)) {
+    typeLabel = '펫 보험';
+    description = '우리 아이 병원비';
+    bgColor = 'bg-orange-100';
+    textColor = 'text-orange-500';
+  } else if (/골프|레저/i.test(combined)) {
+    typeLabel = '골프 / 레저';
+    description = '취미 생활 보호';
+    bgColor = 'bg-green-100';
+    textColor = 'text-green-500';
+  } else if (/수술.*입원|입원.*수술|수술비|입원일당/i.test(combined)) {
+    typeLabel = '수술/입원';
+    description = '수술비 반복 지급';
+    bgColor = 'bg-sky-100';
+    textColor = 'text-sky-500';
+  }
+
+  return { typeLabel, description, bgColor, textColor };
+}
+
 interface AnalysisDashboardProps {
   result: AnalysisResult;
   onSubmitLead?: (analysis: any, category: string, resultData: any, consultType?: 'anonymous' | 'regular') => Promise<any> | void;
@@ -1288,88 +1440,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
                     </div>
                     <ul className="space-y-3 mb-10 relative z-10">
                       {policies.map((p: any, idx: number) => {
-                        const name = p.product_name || '';
-                        let description = '기존 핵심 보장 동일 유지';
-                        let bgColor = 'bg-blue-100';
-                        let textColor = 'text-blue-500';
-                        
-                        if (/종신/i.test(name)) {
-                          description = '사망 보장 동일 유지';
-                          bgColor = 'bg-indigo-100';
-                          textColor = 'text-indigo-500';
-                        } else if (/자동차|car insurance/i.test(name)) {
-                          description = '대인·대물·자차 핵심 보장 동일 유지';
-                          bgColor = 'bg-sky-100';
-                          textColor = 'text-sky-500';
-                        } else if (/운전자/i.test(name)) {
-                          description = '형사합의·벌금·변호사 보장 동일 유지';
-                          bgColor = 'bg-purple-100';
-                          textColor = 'text-purple-500';
-                        } else if (/실손|실비/i.test(name)) {
-                          description = '의료비 입원·통원 보장 동일 유지';
-                          bgColor = 'bg-teal-100';
-                          textColor = 'text-teal-500';
-                        } else if (/암/i.test(name)) {
-                          description = '암 진단비 및 수술비 보장 동일 유지';
-                          bgColor = 'bg-rose-100';
-                          textColor = 'text-rose-500';
-                        } else if (/뇌/i.test(name)) {
-                          description = '뇌혈관 및 뇌졸중 진단비 보장 동일 유지';
-                          bgColor = 'bg-indigo-100';
-                          textColor = 'text-indigo-500';
-                        } else if (/심장|허혈성/i.test(name)) {
-                          description = '허혈성 심장질환 보장 동일 유지';
-                          bgColor = 'bg-red-100';
-                          textColor = 'text-red-500';
-                        } else if (/치아|덴탈/i.test(name)) {
-                          description = '임플란트 및 크라운 보장 동일 유지';
-                          bgColor = 'bg-purple-100';
-                          textColor = 'text-purple-500';
-                        } else if (/펫|반려/i.test(name)) {
-                          description = '반려동물 치료비 및 수술비 보장 동일 유지';
-                          bgColor = 'bg-orange-100';
-                          textColor = 'text-orange-500';
-                        } else if (/어린이|자녀|태아|신생아/i.test(name)) {
-                          description = '주요 중대질환 보장 동일 유지';
-                          bgColor = 'bg-emerald-100';
-                          textColor = 'text-emerald-500';
-                        } else if (/간병|치매/i.test(name)) {
-                          description = '간병인 및 치매 보장 동일 유지';
-                          bgColor = 'bg-pink-100';
-                          textColor = 'text-pink-500';
-                        } else if (/화재/i.test(name)) {
-                          description = '주택 화재 및 배상책임 보장 동일 유지';
-                          bgColor = 'bg-amber-100';
-                          textColor = 'text-amber-500';
-                        }
-
-                        let typeLabel = '종합건강보험';
-                        if (/종신/i.test(name)) typeLabel = '종신보험';
-                        else if (/자동차|car insurance/i.test(name)) typeLabel = '자동차보험';
-                        else if (/운전자/i.test(name)) typeLabel = '운전자보험';
-                        else if (/수술.*입원|입원.*수술/i.test(name)) typeLabel = '수술/입원보험';
-                        else if (/실손|실비|의료실비/i.test(name)) typeLabel = '실손의료비보험';
-                        else if (/암/i.test(name)) typeLabel = '암보험';
-                        else if (/뇌혈관|뇌졸중|뇌/i.test(name)) typeLabel = '뇌혈관보험';
-                        else if (/심장|허혈성/i.test(name)) typeLabel = '심장질환보험';
-                        else if (/치아|덴탈/i.test(name)) typeLabel = '치아보험';
-                        else if (/펫|반려/i.test(name)) typeLabel = '펫보험';
-                        else if (/골프|레저/i.test(name)) typeLabel = '골프/레저보험';
-                        else if (/유병력자|유병력/i.test(name)) typeLabel = '유병력자 전용보험';
-                        else if (/유병자/i.test(name)) typeLabel = '유병자보험';
-                        else if (/어린이|자녀|태아|신생아/i.test(name)) typeLabel = '어린이/신생아보험';
-                        else if (/간병/i.test(name)) typeLabel = '간병보험';
-                        else if (/치매/i.test(name)) typeLabel = '치매 간병보험';
-                        else if (/재가|시설|요양/i.test(name)) typeLabel = '재가/시설보험';
-                        else if (/상해/i.test(name)) typeLabel = '상해보험';
-                        else if (/주택화재|화재/i.test(name)) typeLabel = '주택화재보험';
-                        else if (/재물|점포/i.test(name)) typeLabel = '재물종합보험';
-                        else if (/연금저축|연금/i.test(name)) typeLabel = '연금저축보험';
-                        else if (/변액|정기/i.test(name)) typeLabel = '변액/정기보험';
-                        else if (/민사|형사|법률/i.test(name)) typeLabel = '민사/형사보험';
-                        else if (/저축/i.test(name)) typeLabel = '일반 저축보험';
-                        else if (/신용|대출|상환/i.test(name)) typeLabel = '신용보험';
-
+                        const { typeLabel, description, bgColor, textColor } = classifyPolicy(p);
                         return (
                           <li key={idx} className="flex items-center gap-3 text-sm font-bold text-gray-700">
                             <div className={`w-6 h-6 rounded-full ${bgColor} flex items-center justify-center flex-shrink-0`}>
@@ -1577,73 +1648,18 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
                    </div>
 
                     <ul className="space-y-3 mb-10 relative z-10">
-                      {policies.map((p: any, idx: number) => {
-                        const name = p.product_name || '';
-                        let description = '기존 핵심 보장 동일 유지';
-                        
-                        if (/종신/i.test(name)) {
-                          description = '사망 보장 동일 유지';
-                        } else if (/자동차|car insurance/i.test(name)) {
-                          description = '대인·대물·자차 핵심 보장 동일 유지';
-                        } else if (/운전자/i.test(name)) {
-                          description = '형사합의·벌금·변호사 보장 동일 유지';
-                        } else if (/실손|실비/i.test(name)) {
-                          description = '의료비 입원·통원 보장 동일 유지';
-                        } else if (/암/i.test(name)) {
-                          description = '암 진단비 및 수술비 보장 동일 유지';
-                        } else if (/뇌/i.test(name)) {
-                          description = '뇌혈관 및 뇌졸중 진단비 보장 동일 유지';
-                        } else if (/심장|허혈성/i.test(name)) {
-                          description = '허혈성 심장질환 보장 동일 유지';
-                        } else if (/치아|덴탈/i.test(name)) {
-                          description = '임플란트 및 크라운 보장 동일 유지';
-                        } else if (/펫|반려/i.test(name)) {
-                          description = '반려동물 치료비 및 수술비 보장 동일 유지';
-                        } else if (/어린이|자녀|태아|신생아/i.test(name)) {
-                          description = '주요 중대질환 보장 동일 유지';
-                        } else if (/간병|치매/i.test(name)) {
-                          description = '간병인 및 치매 보장 동일 유지';
-                        } else if (/화재/i.test(name)) {
-                          description = '주택 화재 및 배상책임 보장 동일 유지';
-                        }
-
-                        let typeLabel = '종합건강보험';
-                        if (/종신/i.test(name)) typeLabel = '종신보험';
-                        else if (/자동차|car insurance/i.test(name)) typeLabel = '자동차보험';
-                        else if (/운전자/i.test(name)) typeLabel = '운전자보험';
-                        else if (/수술.*입원|입원.*수술/i.test(name)) typeLabel = '수술/입원보험';
-                        else if (/실손|실비|의료실비/i.test(name)) typeLabel = '실손의료비보험';
-                        else if (/암/i.test(name)) typeLabel = '암보험';
-                        else if (/뇌혈관|뇌졸중|뇌/i.test(name)) typeLabel = '뇌혈관보험';
-                        else if (/심장|허혈성/i.test(name)) typeLabel = '심장질환보험';
-                        else if (/치아|덴탈/i.test(name)) typeLabel = '치아보험';
-                        else if (/펫|반려/i.test(name)) typeLabel = '펫보험';
-                        else if (/골프|레저/i.test(name)) typeLabel = '골프/레저보험';
-                        else if (/유병력자|유병력/i.test(name)) typeLabel = '유병력자 전용보험';
-                        else if (/유병자/i.test(name)) typeLabel = '유병자보험';
-                        else if (/어린이|자녀|태아|신생아/i.test(name)) typeLabel = '어린이/신생아보험';
-                        else if (/간병/i.test(name)) typeLabel = '간병보험';
-                        else if (/치매/i.test(name)) typeLabel = '치매 간병보험';
-                        else if (/재가|시설|요양/i.test(name)) typeLabel = '재가/시설보험';
-                        else if (/상해/i.test(name)) typeLabel = '상해보험';
-                        else if (/주택화재|화재/i.test(name)) typeLabel = '주택화재보험';
-                        else if (/재물|점포/i.test(name)) typeLabel = '재물종합보험';
-                        else if (/연금저축|연금/i.test(name)) typeLabel = '연금저축보험';
-                        else if (/변액|정기/i.test(name)) typeLabel = '변액/정기보험';
-                        else if (/민사|형사|법률/i.test(name)) typeLabel = '민사/형사보험';
-                        else if (/저축/i.test(name)) typeLabel = '일반 저축보험';
-                        else if (/신용|대출|상환/i.test(name)) typeLabel = '신용보험';
-
-                        return (
-                          <li key={idx} className="flex items-center gap-3 text-sm font-bold text-slate-300">
-                            <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
-                              <ShieldCheck className="w-4 h-4 text-orange-400" />
-                            </div>
-                            {typeLabel} — {description}
-                          </li>
-                        );
-                      })}
-                    </ul>
+                       {policies.map((p: any, idx: number) => {
+                         const { typeLabel, description } = classifyPolicy(p);
+                         return (
+                           <li key={idx} className="flex items-center gap-3 text-sm font-bold text-slate-300">
+                             <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+                               <ShieldCheck className="w-4 h-4 text-orange-400" />
+                             </div>
+                             {typeLabel} — {description}
+                           </li>
+                         );
+                       })}
+                     </ul>
 
                    {/* Per-policy upgrade comparison list */}
                    <div className="mb-12 space-y-3 text-left">

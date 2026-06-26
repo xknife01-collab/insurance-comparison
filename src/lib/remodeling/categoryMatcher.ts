@@ -49,32 +49,42 @@ export function detectCategoryFromPolicy(policy: RawInsurancePolicy): string {
   const riderNames = (policy.riders || []).map(r => r.rider_name).join(' ').toLowerCase();
   const combined   = name + ' ' + riderNames;
 
-  if (/실손|실비|의료비/.test(combined))                    return 'silson';
-  if (/치아|치과|크라운|임플란트/.test(combined))           return 'dental';
-  if (/유병력자|간편고지/.test(combined))                   return 'pre_family';
-  if (/유병자/.test(combined))                              return 'pre_existing';
-  if (/수술비|입원일당|수술.*입원/.test(combined))           return 'surgery';
-  if (/암보험|암진단|암.*진단비|3대질환/.test(combined))    return 'cancer';
-  if (/어린이|신생아|자녀|태아/.test(combined))             return 'child';
-  if (/뇌혈관|뇌졸중|뇌출혈/.test(combined))               return 'brain';
-  if (/심장질환|허혈성|심근경색|심혈관/.test(combined))    return 'heart';
-  if (/상해/.test(combined))                                return 'accident';
-  if (/간병인|간병지원|간병보험/.test(combined))            return 'caregiving';
-  if (/치매/.test(combined))                                return 'dementia';
-  if (/재가|시설|방문요양|노인장기/.test(combined))         return 'nursing';
-  if (/자동차/.test(combined))                              return 'car';
-  if (/운전자/.test(combined))                              return 'driver';
-  if (/펫|pet|반려/.test(combined))                         return 'pet';
-  if (/골프|레저|홀인원/.test(combined))                   return 'golf';
-  if (/화재|풍수해/.test(combined))                         return 'fire';
-  if (/재물|점포|상가/.test(combined))                      return 'property';
-  if (/연금저축|연금보험/.test(combined))                   return 'annuity';
-  if (/종신/.test(combined))                                return 'whole_life';
-  if (/변액|정기보험|순수보장/.test(combined))              return 'variable';
-  if (/민사|형사|법률/.test(combined))                      return 'legal';
-  if (/저축보험|적금보험|일반저축/.test(combined))          return 'savings';
-  if (/신용보험|대출보험|상환보장/.test(combined))          return 'credit';
-  if (/종합건강|종합보험/.test(combined))                   return 'health';
+  // 3대 진단비 특약 존재 여부
+  const hasCancer = /암|cancer/i.test(combined);
+  const hasBrain = /뇌|cerebro|stroke/i.test(combined);
+  const hasHeart = /심장|허혈성|cardio|infarction/i.test(combined);
+  const majorCount = [hasCancer, hasBrain, hasHeart].filter(Boolean).length;
+
+  if (/종신|whole/i.test(name))                           return 'whole_life';
+  if (/자동차|car\s*insurance/i.test(name))                 return 'car';
+  if (/운전자/i.test(name))                                 return 'driver';
+  if (/실손|실비|의료실비|의료비/i.test(combined))            return 'silson';
+  if (/치아|치과|덴탈|크라운|임플란트/i.test(combined))       return 'dental';
+  if (/유병력자/i.test(combined))                           return 'pre_family';
+  if (/유병자|간편고지|3\.[0-5]\.[0-5]/i.test(combined))     return 'pre_existing';
+  
+  // 종합건강보험 판별: 3대 질병 중 2개 이상을 보장하거나, 상품명에 종합/통합/건강/다사랑/굿밸런스가 들어가는 경우
+  if (majorCount >= 2 || /종합|통합|건강|다사랑|굿밸런스/i.test(name)) return 'health';
+  
+  if (hasCancer)                                            return 'cancer';
+  if (hasBrain)                                             return 'brain';
+  if (hasHeart)                                             return 'heart';
+  if (/어린이|자녀|태아|신생아/i.test(combined))              return 'child';
+  if (/간병인|간병지원/i.test(combined))                     return 'caregiving';
+  if (/치매/i.test(combined))                               return 'dementia';
+  if (/재가|시설|요양/i.test(combined))                      return 'nursing';
+  if (/상해/i.test(combined))                               return 'accident';
+  if (/주택화재|화재/i.test(combined))                        return 'fire';
+  if (/재물|점포/i.test(combined))                          return 'property';
+  if (/연금저축|연금/i.test(combined))                      return 'annuity';
+  if (/변액|정기/i.test(combined))                          return 'variable';
+  if (/민사|형사|법률|소송/i.test(combined))                return 'legal';
+  if (/저축/i.test(combined))                               return 'savings';
+  if (/신용|대출|상환/i.test(combined))                     return 'credit';
+  if (/펫|반려/i.test(combined))                            return 'pet';
+  if (/골프|레저/i.test(combined))                          return 'golf';
+  if (/수술.*입원|입원.*수술|수술비|입원일당/i.test(combined)) return 'surgery';
+
   return 'health';
 }
 
