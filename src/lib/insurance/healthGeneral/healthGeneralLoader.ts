@@ -6,20 +6,21 @@ export { HEALTH_GENERAL_PRODUCTS };
 export type { HealthGeneralProduct };
 
 export const fetchHealthGeneralPremium = async (analysis: InsuranceAnalysis): Promise<any> => {
-  const opts = analysis.healthGeneral || {
-    cancerLimit: 50000000,
-    similarCancerLimit: 10000000,
-    brainLimit: 20000000,
-    heartLimit: 20000000,
-    cardioLimit: 10000000,
-    has1to5Surgery: true,
-    hasTargetedTherapy: true,
-    hasThrombolysis: false,
-    hasLiability: true,
-    paymentPeriod: 20,
-    coveragePeriod: 90,
-    isRenewable: false,
-    refundType: 'low'
+  const hg = (analysis.healthGeneral || {}) as any;
+  const opts = {
+    cancerLimit: hg.cancerLimit ?? 50000000,
+    similarCancerLimit: hg.similarCancerLimit ?? 10000000,
+    brainLimit: hg.brainLimit ?? 20000000,
+    heartLimit: hg.heartLimit ?? 20000000,
+    cardioLimit: hg.cardioLimit ?? 10000000,
+    has1to5Surgery: hg.has1to5Surgery ?? true,
+    hasTargetedTherapy: hg.hasTargetedTherapy ?? true,
+    hasThrombolysis: hg.hasThrombolysis ?? false,
+    hasLiability: hg.hasLiability ?? true,
+    paymentPeriod: hg.paymentPeriod ?? 20,
+    coveragePeriod: hg.coveragePeriod ?? 90,
+    isRenewable: hg.isRenewable ?? false,
+    refundType: hg.refundType ?? 'low'
   };
 
   // 1. 나이에 따른 위험요율 가중치 곡선 (40세 기준 1.0)

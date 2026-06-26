@@ -444,10 +444,16 @@ function buildAnalysisParams(
       const existing = (baseAnalysis as any).healthGeneral || {};
       (pa as any).healthGeneral = {
         cancerLimit:       existing.cancerLimit       || getAmount(['일반암진단', '암진단비']) || 50_000_000,
+        similarCancerLimit: existing.similarCancerLimit || getAmount(['유사암', '소액암']) || 10_000_000,
         brainLimit:        existing.brainLimit        || getAmount(['뇌혈관']) || 20_000_000,
         heartLimit:        existing.heartLimit        || getAmount(['허혈성', '심장']) || 20_000_000,
+        cardioLimit:        existing.cardioLimit        || getAmount(['심혈관', '부정맥']) || 10_000_000,
         has1to5Surgery:    existing.has1to5Surgery    ?? true,
         hasTargetedTherapy: existing.hasTargetedTherapy ?? true,
+        hasThrombolysis:    existing.hasThrombolysis    ?? false,
+        hasLiability:       existing.hasLiability       ?? true,
+        paymentPeriod:      existing.paymentPeriod      || 20,
+        coveragePeriod:     existing.coveragePeriod     || 90,
         isRenewable:       existing.isRenewable       ?? false,
         refundType:        existing.refundType        || 'low',
       };

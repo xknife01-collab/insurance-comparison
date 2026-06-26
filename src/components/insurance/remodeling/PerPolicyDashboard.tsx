@@ -686,14 +686,14 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen,liveDiet
   // Diet options — Supabase Loader 결과 우선 사용, 없으면 fallback
   const hasliveOpts = liveDietOptions && liveDietOptions.length > 0;
   const dietOpts = hasliveOpts
-    ? liveDietOptions!.map(o => ({ company: o.companyName, product: o.productName, premium: o.premium }))
+    ? liveDietOptions!.map(o => ({ company: o.companyName || '', product: o.productName || '', premium: o.premium || 0 }))
     : COMPANIES.map((c,i) => ({ company: c, product: '비교 상품', premium: Math.round(p*0.76)+Math.round(p*0.024)*i }));
-  const dietPremium = dietOpts[0]?.premium ?? Math.round(p*0.76);
+  const dietPremium = dietOpts[0]?.premium || Math.round(p*0.76);
   const saving = Math.max(0, p - dietPremium);
 
   const hasLiveUpgrade = liveUpgradeOptions && liveUpgradeOptions.length > 0;
   const upgradeOpts = hasLiveUpgrade
-    ? liveUpgradeOptions!.map(o => ({ company: o.companyName, product: o.productName, premium: o.premium }))
+    ? liveUpgradeOptions!.map(o => ({ company: o.companyName || '', product: o.productName || '', premium: o.premium || 0 }))
     : COMPANIES.map((c,i) => ({ company: c, product: '업그레이드 상품', premium: p }));
 
   // Problems
@@ -1169,7 +1169,7 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen,liveDiet
                   <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1">📉 다이어트 플랜</p>
                   <p className="text-lg font-black text-blue-900 mb-1">동일 보장, 더 저렴하게</p>
                   <div className="flex items-baseline gap-1 mb-4">
-                    <span className="text-3xl font-black text-blue-600">{dietPremium.toLocaleString()}</span>
+                    <span className="text-3xl font-black text-blue-600">{(dietPremium || 0).toLocaleString()}</span>
                     <span className="text-sm font-bold text-slate-500">원/월</span>
                     {saving > 0 && <span className="ml-2 text-xs font-black text-emerald-600">월 {fmt(saving)} 절감</span>}
                   </div>
@@ -1177,7 +1177,7 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen,liveDiet
                     {dietOpts.slice(0,4).map((o,i)=>(
                       <div key={i} className="flex justify-between items-center text-xs py-1.5 border-b border-blue-100/50 last:border-0">
                         <span className="font-bold text-slate-700 truncate max-w-[60%]">{String(i+1).padStart(2,'0')} {maskCompany(o.company, !!isUnlocked)}</span>
-                        <span className="font-black text-blue-700 shrink-0">{o.premium.toLocaleString()}원</span>
+                        <span className="font-black text-blue-700 shrink-0">{(o.premium || 0).toLocaleString()}원</span>
                       </div>
                     ))}
                   </div>
@@ -1187,20 +1187,20 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen,liveDiet
                   <p className="text-[10px] font-black text-orange-400 uppercase tracking-widest mb-1">🚀 업그레이드 플랜</p>
                   <p className="text-lg font-black text-white mb-1">동일 예산, 더 든든하게</p>
                   <div className="flex items-baseline gap-1 mb-4">
-                    <span className="text-3xl font-black text-orange-400">{p.toLocaleString()}</span>
+                    <span className="text-3xl font-black text-orange-400">{(p || 0).toLocaleString()}</span>
                     <span className="text-sm font-bold text-slate-400">원/월 유지</span>
                   </div>
                   <div className="space-y-1">
                     {upgradeOpts.slice(0,4).map((o,i)=>(
                       <div key={i} className="flex justify-between items-center text-xs py-1.5 border-b border-white/10 last:border-0">
                         <span className="font-bold text-slate-300 truncate max-w-[60%]">{String(i+1).padStart(2,'0')} {maskCompany(o.company, !!isUnlocked)}</span>
-                        <span className="font-black text-orange-300 shrink-0">{o.premium.toLocaleString()}원</span>
+                        <span className="font-black text-orange-300 shrink-0">{(o.premium || 0).toLocaleString()}원</span>
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
-
+ 
               {/* Market Comparison */}
               <div>
                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">🏆 전 보험사 실시간 비교</p>
@@ -1217,7 +1217,7 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen,liveDiet
                       <div className="col-span-4 font-black text-slate-800">{maskCompany(o.company, !!isUnlocked)}</div>
                       <div className="col-span-5 text-slate-500 truncate">{maskProductName((o as any).product || '', !!isUnlocked)}</div>
                       <div className="col-span-2 text-right font-black text-blue-600">
-                        {o.premium.toLocaleString()}원
+                        {(o.premium || 0).toLocaleString()}원
                         {i===0&&<span className="block text-[9px] text-emerald-600 font-black">최저가</span>}
                       </div>
                     </div>
@@ -1279,8 +1279,8 @@ export const PerPolicyDashboard: React.FC<Props> = ({ policies, age, gender, isU
             totalCount={policies.length}
             isUnlocked={isUnlocked}
             forceOpen={forceAllOpen}
-            liveDietOptions={pDietOpts.length > 0 ? pDietOpts : allDietOptions}
-            liveUpgradeOptions={pUpOpts.length > 0 ? pUpOpts : allUpgradeOptions}
+            liveDietOptions={pDietOpts}
+            liveUpgradeOptions={pUpOpts}
           />
         );
       })}

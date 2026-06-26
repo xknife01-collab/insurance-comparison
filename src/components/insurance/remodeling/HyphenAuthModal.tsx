@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Shield, Lock, User, RefreshCw, CheckCircle, Info, Flame, AlertCircle, Sparkles } from 'lucide-react';
+import { Shield, Lock, User, RefreshCw, CheckCircle, Info, Flame, AlertCircle, Sparkles, Smartphone } from 'lucide-react';
 import { useB2BBranding } from '../../../hooks/useB2BBranding';
 import { checkAndDeductCredits } from '../../../utils/creditService';
 import {
@@ -205,12 +205,17 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
       resetLoginStates();
       resetFindStates();
       if (initialData) {
-        setUserName(initialData.userName || '');
+        const rawName = initialData.userName || '';
+        const cleanName = (rawName === '고객' || rawName === '익명고객' || rawName === '무명고객') ? '' : rawName;
+        const rawPhone = initialData.mobileNo || '';
+        const cleanPhone = (rawPhone === '010-0000-0000' || rawPhone === '01000000000') ? '' : rawPhone;
+
+        setUserName(cleanName);
         setBirth(initialData.birth || '');
-        setMobileNo(initialData.mobileNo || '');
-        setFindUserName(initialData.userName || '');
+        setMobileNo(cleanPhone);
+        setFindUserName(cleanName);
         setFindBirth(initialData.birth || '');
-        setFindMobileNo(initialData.mobileNo || '');
+        setFindMobileNo(cleanPhone);
       }
     }
   }, [isOpen, initialData]);
@@ -531,12 +536,26 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
     }
 
     setLoading(false);
-    onSuccess(coverage, { name: findUserName, phone: findMobileNo });
+    const getCleanCustomerInfo = () => {
+      const rawName = findUserName || userName || initialData?.userName || '';
+      const cleanName = (rawName === '고객' || rawName === '익명고객' || rawName === '무명고객') ? '' : rawName;
+      const rawPhone = findMobileNo || mobileNo || initialData?.mobileNo || '';
+      const cleanPhone = (rawPhone === '010-0000-0000' || rawPhone === '01000000000') ? '' : rawPhone;
+      return { name: cleanName, phone: cleanPhone };
+    };
+    onSuccess(coverage, getCleanCustomerInfo());
     onClose();
   };
 
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const cleanName = (userName === '고객' || userName === '익명고객' || userName === '무명고객') ? '' : userName;
+    const cleanPhone = (mobileNo === '010-0000-0000' || mobileNo === '01000000000') ? '' : mobileNo;
+
+    if (!cleanName.trim() || !cleanPhone.trim()) {
+      setError('이름과 휴대폰 번호를 입력해 주세요.');
+      return;
+    }
     if (!loginId || !loginPw) {
       setError('아이디와 비밀번호를 입력해주세요.');
       return;
@@ -1162,6 +1181,36 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
                       </div>
                       {loginStep === 'init' ? (
                         <div className="space-y-4">
+                          {(!userName || !mobileNo) && (
+                            <>
+                              <div className="space-y-2">
+                                <label className="text-[11px] font-black text-slate-400 pl-2">이름 (본인인증 실명)</label>
+                                <div className="relative">
+                                  <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                                  <input
+                                    type="text"
+                                    placeholder="실명 입력"
+                                    value={userName}
+                                    onChange={(e) => setUserName(e.target.value)}
+                                    className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-4 pl-12 pr-4 text-sm font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
+                                  />
+                                </div>
+                              </div>
+                              <div className="space-y-2">
+                                <label className="text-[11px] font-black text-slate-400 pl-2">휴대폰 번호</label>
+                                <div className="relative">
+                                  <Smartphone className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                                  <input
+                                    type="tel"
+                                    placeholder="휴대폰 번호 입력 (예: 01012345678)"
+                                    value={mobileNo}
+                                    onChange={(e) => setMobileNo(e.target.value)}
+                                    className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-4 pl-12 pr-4 text-sm font-bold focus:outline-none focus:bg-white focus:border-orange-500 transition-all"
+                                  />
+                                </div>
+                              </div>
+                            </>
+                          )}
                           <div className="space-y-2">
                             <label className="text-[11px] font-black text-slate-400 pl-2">내보험다보여 아이디</label>
                             <div className="relative">

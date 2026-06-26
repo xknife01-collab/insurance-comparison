@@ -76,6 +76,13 @@ export default function App() {
   // 고객이 /remodeling?code= 링크 접속 시 외부 하이픈 모달
   const [hyphenCodeParam, setHyphenCodeParam] = useState<string | null>(null);
   const [showExternalHyphenModal, setShowExternalHyphenModal] = useState<boolean>(false);
+  const [externalLeadData, setExternalLeadData] = useState<{
+    userName: string;
+    gender: 'M' | 'F';
+    birth: string;
+    mobileNo: string;
+    age: number;
+  } | null>(null);
   const [isUnlocked, setIsUnlocked] = useState<boolean>(() => {
     if (window.location.search.includes('reset')) {
       localStorage.removeItem('ins_unlocked');
@@ -91,7 +98,7 @@ export default function App() {
     }
   }, []);
 
-  // /remodeling?code=... 접속 시 HyphenAuthModal 자동 오픈
+  // /remodeling?code=... 접속 시 HyphenAuthModal 자동 오픈 및 리드 정보 조회
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const codeParam = params.get('code');
@@ -99,7 +106,36 @@ export default function App() {
     if (isRemodelingPath && codeParam) {
       setHyphenCodeParam(codeParam);
       setCurrentSimulationCode(codeParam);
-      setShowExternalHyphenModal(true);
+      
+      const fetchLeadAndOpenModal = async () => {
+        try {
+          const supabase = createClient();
+          const { data, error } = await supabase
+            .from('customer_leads')
+            .select('*')
+            .eq('raw_payload->>simulation_code', codeParam)
+            .order('created_at', { ascending: false })
+            .limit(1);
+
+          if (!error && data && data.length > 0) {
+            const lead = data[0];
+            const payload = lead.raw_payload || {};
+            setExternalLeadData({
+              userName: lead.name || '',
+              gender: payload.gender || 'M',
+              birth: payload.analysisInputs?.birthYear || '',
+              mobileNo: lead.phone || '',
+              age: lead.age || 40,
+            });
+          }
+        } catch (err) {
+          console.error('Failed to fetch external lead on mount:', err);
+        } finally {
+          setShowExternalHyphenModal(true);
+        }
+      };
+
+      fetchLeadAndOpenModal();
     }
   }, []);
 
@@ -1763,10 +1799,9 @@ export default function App() {
             </div>
             <button
               onClick={() => setShowUnlockModal(true)}
-              className="shrink-0 px-3 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-[10px] rounded-xl shadow-lg shadow-orange-950/40 transition-all flex items-center gap-1 whitespace-nowrap"
+              className="shrink-0 px-3.5 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-[10px] rounded-xl shadow-lg shadow-orange-950/40 transition-all flex items-center gap-1 whitespace-nowrap"
             >
-              <ShieldCheck className="w-3.5 h-3.5" />
-              익명카톡신청 (무료)
+              💬 익명카톡신청 (무료)
             </button>
           </div>
         </div>
@@ -1878,7 +1913,7 @@ export default function App() {
         isOpen={showExternalHyphenModal}
         onClose={() => setShowExternalHyphenModal(false)}
         onSuccess={handleExternalHyphenSuccess}
-        initialData={{
+        initialData={externalLeadData || {
           userName: '',
           gender: 'M',
           birth: '',
