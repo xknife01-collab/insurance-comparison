@@ -21,7 +21,7 @@ import { analyzeRemodeling } from '../lib/remodeling/remodelingEngine';
 import { MOCK_REMODELING_DATA } from '../lib/insurance/remodeling/hyphenRemodelingService';
 import { maskCompany, maskProductName } from '../utils/compliance';
 
-type StepType = 'input' | 'auth' | 'loading' | 'result';
+type StepType = 'input' | 'loading' | 'result';
 
 export default function AnalysisShowcase() {
   const [activeStep, setActiveStep] = useState<StepType>('input');
@@ -33,12 +33,6 @@ export default function AnalysisShowcase() {
   const [simBirthDate, setSimBirthDate] = useState('');
   const [simAge, setSimAge] = useState('');
   const [simMobile, setSimMobile] = useState('');
-  
-  // Phase 2 (Auth Modal) simulation states
-  const [simAuthId, setSimAuthId] = useState('');
-  const [simAuthPw, setSimAuthPw] = useState('');
-  const [simCaptcha, setSimCaptcha] = useState('');
-  const [authSubStep, setAuthSubStep] = useState<'login' | 'captcha'>('login');
   
   // Phase 3 (Loading Statuses) simulation states
   const [loadingStatus, setLoadingStatus] = useState('');
@@ -120,10 +114,6 @@ export default function AnalysisShowcase() {
       setSimBirthDate('');
       setSimAge('');
       setSimMobile('');
-      setSimAuthId('');
-      setSimAuthPw('');
-      setSimCaptcha('');
-      setAuthSubStep('login');
       setLoadingStatus('');
       setStepProgress(0);
 
@@ -177,7 +167,7 @@ export default function AnalysisShowcase() {
                   setIsClicking(true);
                   setTimeout(() => {
                     setIsClicking(false);
-                    setActiveStep('auth');
+                    setActiveStep('loading');
                   }, 150);
                 }, 600);
               }, 1200);
@@ -185,118 +175,6 @@ export default function AnalysisShowcase() {
           }, 1000);
         }, 1200);
       }, 800);
-
-    } else if (activeStep === 'auth') {
-      setPointerStyle({ top: '50%', left: '50%', opacity: 1 });
-
-      if (authSubStep === 'login') {
-        // T1: Type Name "홍길동"
-        timer = setTimeout(() => {
-          setPointerStyle({ top: '35%', left: '40%', opacity: 1 });
-
-          const fullName = '홍길동';
-          let typedName = '';
-          const nameInterval = setInterval(() => {
-            if (typedName.length < fullName.length) {
-              typedName += fullName[typedName.length];
-              setSimName(typedName);
-            } else {
-              clearInterval(nameInterval);
-            }
-          }, 100);
-
-          // T2: Type Mobile "01012345678"
-          setTimeout(() => {
-            setPointerStyle({ top: '44%', left: '40%', opacity: 1 });
-
-            const fullMobile = '01012345678';
-            let typedMobile = '';
-            const mobileInterval = setInterval(() => {
-              if (typedMobile.length < fullMobile.length) {
-                typedMobile += fullMobile[typedMobile.length];
-                setSimMobile(typedMobile);
-              } else {
-                clearInterval(mobileInterval);
-              }
-            }, 80);
-
-            // T3: Type Login ID "gildong123"
-            setTimeout(() => {
-              setPointerStyle({ top: '53%', left: '40%', opacity: 1 });
-
-              const fullId = 'gildong123';
-              let typedId = '';
-              const idInterval = setInterval(() => {
-                if (typedId.length < fullId.length) {
-                  typedId += fullId[typedId.length];
-                  setSimAuthId(typedId);
-                } else {
-                  clearInterval(idInterval);
-                }
-              }, 80);
-
-              // T4: Type Password
-              setTimeout(() => {
-                setPointerStyle({ top: '62%', left: '40%', opacity: 1 });
-
-                const fullPw = '••••••••';
-                let typedPw = '';
-                const pwInterval = setInterval(() => {
-                  if (typedPw.length < fullPw.length) {
-                    typedPw += fullPw[typedPw.length];
-                    setSimAuthPw(typedPw);
-                  } else {
-                    clearInterval(pwInterval);
-                  }
-                }, 80);
-
-                // T5: Click "로그인 및 내 보험 조회"
-                setTimeout(() => {
-                  setPointerStyle({ top: '75%', left: '50%', opacity: 1 });
-
-                  setTimeout(() => {
-                    setIsClicking(true);
-                    setTimeout(() => {
-                      setIsClicking(false);
-                      setAuthSubStep('captcha');
-                    }, 150);
-                  }, 600);
-                }, 1200);
-              }, 1200);
-            }, 1200);
-          }, 1000);
-        }, 600);
-
-      } else if (authSubStep === 'captcha') {
-        // T1: Type Captcha "4892"
-        timer = setTimeout(() => {
-          setPointerStyle({ top: '63%', left: '40%', opacity: 1 });
-
-          const fullCaptcha = '4892';
-          let typedCaptcha = '';
-          const capInterval = setInterval(() => {
-            if (typedCaptcha.length < fullCaptcha.length) {
-              typedCaptcha += fullCaptcha[typedCaptcha.length];
-              setSimCaptcha(typedCaptcha);
-            } else {
-              clearInterval(capInterval);
-            }
-          }, 150);
-
-          // T2: Click "인증하기"
-          setTimeout(() => {
-            setPointerStyle({ top: '75%', left: '50%', opacity: 1 });
-
-            setTimeout(() => {
-              setIsClicking(true);
-              setTimeout(() => {
-                setIsClicking(false);
-                setActiveStep('loading');
-              }, 150);
-            }, 600);
-          }, 1000);
-        }, 600);
-      }
 
     } else if (activeStep === 'loading') {
       setStepProgress(0);
@@ -386,7 +264,7 @@ export default function AnalysisShowcase() {
     return () => {
       clearTimeout(timer);
     };
-  }, [activeStep, authSubStep, isPlaying]);
+  }, [activeStep, isPlaying]);
 
   const handleStepClick = (step: StepType) => {
     setActiveStep(step);
@@ -396,7 +274,6 @@ export default function AnalysisShowcase() {
       setSimBirthDate('');
       setSimAge('');
       setSimMobile('');
-      setAuthSubStep('login');
       setSimRemodelingApplied(false);
     }
   };
@@ -524,119 +401,7 @@ export default function AnalysisShowcase() {
                   </div>
                 )}
 
-                {/* PHASE 2: AUTH MODAL OVERLAY */}
-                {activeStep === 'auth' && (
-                  <div className="flex-1 flex flex-col bg-slate-950/90 text-white p-4 relative items-center justify-center">
-                    
-                    {/* Mocked Hyphen Auth Modal Container */}
-                    <div className="w-full bg-slate-900 border border-slate-800 rounded-3xl p-4 shadow-2xl text-left flex flex-col gap-3 max-h-[95%] overflow-y-auto relative">
-                      
-                      <div className="flex items-center justify-between border-b border-white/5 pb-2">
-                        <div className="flex items-center gap-2">
-                          <div className="w-7 h-7 rounded-lg bg-orange-500/10 text-orange-500 flex items-center justify-center">
-                            <Shield className="w-4 h-4" />
-                          </div>
-                          <div>
-                            <h5 className="text-[11px] font-black text-white">신용정보원 간편인증</h5>
-                            <p className="text-[7px] text-slate-500">내보험다보여 안전연동</p>
-                          </div>
-                        </div>
-                      </div>
 
-                      {/* Modal tabs */}
-                      <div className="flex bg-white/5 p-0.5 rounded-lg text-[9px] font-black border border-white/5">
-                        <div className="flex-1 py-1 text-center rounded-md bg-white text-slate-900 shadow">간편 로그인</div>
-                        <div className="flex-1 py-1 text-center rounded-md text-slate-400">회원가입</div>
-                        <div className="flex-1 py-1 text-center rounded-md text-slate-400">데모조회</div>
-                      </div>
-
-                      {authSubStep === 'login' && (
-                        <div className="space-y-2">
-                          <div className="space-y-1 text-left">
-                            <label className="text-[8px] font-bold text-slate-400 uppercase">이름 (본인인증 실명)</label>
-                            <input
-                              type="text"
-                              readOnly
-                              placeholder="실명 입력"
-                              value={simName}
-                              className="w-full bg-white/5 border border-white/10 rounded-xl py-2 px-3 text-xs font-bold text-white focus:outline-none"
-                            />
-                          </div>
-
-                          <div className="space-y-1 text-left">
-                            <label className="text-[8px] font-bold text-slate-400 uppercase">휴대폰 번호</label>
-                            <input
-                              type="text"
-                              readOnly
-                              placeholder="휴대폰 번호 입력"
-                              value={simMobile}
-                              className="w-full bg-white/5 border border-white/10 rounded-xl py-2 px-3 text-xs font-bold text-white focus:outline-none"
-                            />
-                          </div>
-
-                          <div className="space-y-1 text-left">
-                            <label className="text-[8px] font-bold text-slate-400 uppercase">아이디</label>
-                            <input
-                              type="text"
-                              readOnly
-                              placeholder="내보험다보여 ID"
-                              value={simAuthId}
-                              className="w-full bg-white/5 border border-white/10 rounded-xl py-2 px-3 text-xs font-bold text-white focus:outline-none"
-                            />
-                          </div>
-
-                          <div className="space-y-1 text-left">
-                            <label className="text-[8px] font-bold text-slate-400 uppercase">비밀번호</label>
-                            <input
-                              type="text"
-                              readOnly
-                              placeholder="내보험다보여 PW"
-                              value={simAuthPw}
-                              className="w-full bg-white/5 border border-white/10 rounded-xl py-2 px-3 text-xs font-bold text-white focus:outline-none"
-                            />
-                          </div>
-
-                          <div className="w-full py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-black text-[10px] rounded-xl shadow-md text-center mt-2">
-                            로그인 및 내 보험 조회
-                          </div>
-                        </div>
-                      )}
-
-                      {authSubStep === 'captcha' && (
-                        <div className="space-y-2">
-                          <div className="space-y-1">
-                            <label className="text-[8px] font-bold text-slate-400 uppercase">보안 문자 입력</label>
-                            
-                            {/* Mock Captcha Box */}
-                            <div className="bg-slate-950 p-2 rounded-xl border border-white/5 flex items-center justify-between">
-                              {/* SVG representation of captcha image */}
-                              <svg className="w-24 h-8 bg-slate-900 rounded border border-white/10" viewBox="0 0 120 40">
-                                <rect width="120" height="40" fill="#1e293b" />
-                                <path d="M 0,20 Q 30,5 60,20 T 120,20" fill="none" stroke="#f97316" strokeWidth="2" strokeDasharray="5,5" />
-                                <text x="15" y="28" fill="#ffffff" fontSize="22" fontWeight="900" fontFamily="monospace" letterSpacing="6" transform="skewX(-15)">4892</text>
-                              </svg>
-                              <div className="text-[8px] font-bold text-slate-500 cursor-pointer flex items-center gap-1">
-                                <RefreshCw className="w-2.5 h-2.5" /> 새로고침
-                              </div>
-                            </div>
-
-                            <input
-                              type="text"
-                              readOnly
-                              placeholder="보안 문자 4자리 입력"
-                              value={simCaptcha}
-                              className="w-full bg-white/5 border border-white/10 rounded-xl py-2 px-3 text-xs font-bold text-white focus:outline-none text-center tracking-widest mt-2"
-                            />
-                          </div>
-
-                          <div className="w-full py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-black text-[10px] rounded-xl shadow-md text-center mt-2">
-                            보안문자 확인 및 조회 계속하기
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
 
                 {/* PHASE 3: LOADING STATUSES */}
                 {activeStep === 'loading' && (
@@ -911,7 +676,7 @@ export default function AnalysisShowcase() {
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-orange-400">내 보험 정밀 분석</span> 재현
             </h2>
             <p className="text-slate-400 font-bold text-sm leading-relaxed max-w-xl break-keep">
-              단순히 이미지만 슬라이드 형태로 보여주는 더미 애니메이션이 아닙니다. 실제 생년월일과 성별 기입 단계, 실시간 한국신용정보원 API 보안 연동 및 AI 정밀 분석 진단 과정, 그리고 3대 진단비 리밸런싱 대시보드 출력까지 전 과정을 실제 우리 앱의 코드로 동일하게 재현합니다.
+              단순히 이미지만 슬라이드 형태로 보여주는 더미 애니메이션이 아닙니다. 이름이나 연락처 등 개인정보를 전혀 요구하지 않고, 고객의 연령·성별 및 관심 보장 정보만을 기반으로 AI 빅데이터 엔진이 표준 설계 요율 테이블과 대조하여 분석하는 전 과정을 실제 앱의 코드로 동일하게 재현합니다.
             </p>
           </div>
 
@@ -941,35 +706,8 @@ export default function AnalysisShowcase() {
               </div>
               <ChevronRight className={`w-4 h-4 ${activeStep === 'input' ? 'text-orange-500' : 'text-slate-650'}`} />
             </div>
-          
-
 
             {/* Step 2 */}
-            <div 
-              onClick={() => handleStepClick('auth')}
-              className={`p-4.5 rounded-2xl border transition-all duration-300 cursor-pointer flex items-center justify-between ${
-                activeStep === 'auth' 
-                  ? 'bg-gradient-to-r from-orange-500/15 via-orange-500/[0.03] to-slate-900 border-orange-500/30' 
-                  : 'bg-slate-950/40 border-slate-800/80 hover:border-slate-700'
-              }`}
-            >
-              <div className="flex items-center gap-4">
-                <div className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs ${
-                  activeStep === 'auth' ? 'bg-orange-500 text-white' : 'bg-slate-800 text-slate-400'
-                }`}>
-                  02
-                </div>
-                <div className="text-left">
-                  <h4 className={`text-xs font-black ${activeStep === 'auth' ? 'text-orange-500' : 'text-slate-300'}`}>
-                    신용정보원 본인 인증 (Auth Modal)
-                  </h4>
-                  <p className="text-[10px] text-slate-500 font-semibold mt-0.5">실제 보안 인증 프로세스(아이디 로그인 & 보안 문자 검증)를 가상 진행합니다.</p>
-                </div>
-              </div>
-              <ChevronRight className={`w-4 h-4 ${activeStep === 'auth' ? 'text-orange-500' : 'text-slate-650'}`} />
-            </div>
-
-            {/* Step 3 */}
             <div 
               onClick={() => handleStepClick('loading')}
               className={`p-4.5 rounded-2xl border transition-all duration-300 cursor-pointer flex items-center justify-between ${
@@ -982,19 +720,19 @@ export default function AnalysisShowcase() {
                 <div className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs ${
                   activeStep === 'loading' ? 'bg-orange-500 text-white' : 'bg-slate-800 text-slate-400'
                 }`}>
-                  03
+                  02
                 </div>
                 <div className="text-left">
                   <h4 className={`text-xs font-black ${activeStep === 'loading' ? 'text-orange-500' : 'text-slate-300'}`}>
-                    실시간 API 연동 & 파싱 (Engine)
+                    0.1초 AI 정밀 분석 및 매칭 (Engine)
                   </h4>
-                  <p className="text-[10px] text-slate-500 font-semibold mt-0.5">데이터 보안 전송망 개설과 AI 요율 매칭 연산 단계를 순차적으로 수행합니다.</p>
+                  <p className="text-[10px] text-slate-500 font-semibold mt-0.5">입력된 최소한의 기본 정보와 표준 설계 요율 테이블을 0.1초 만에 실시간으로 매칭하여 자율 진단 보장 점수를 초정밀 연산합니다.</p>
                 </div>
               </div>
               <ChevronRight className={`w-4 h-4 ${activeStep === 'loading' ? 'text-orange-500' : 'text-slate-650'}`} />
             </div>
 
-            {/* Step 4 */}
+            {/* Step 3 */}
             <div 
               onClick={() => handleStepClick('result')}
               className={`p-4.5 rounded-2xl border transition-all duration-300 cursor-pointer flex items-center justify-between ${
@@ -1007,7 +745,7 @@ export default function AnalysisShowcase() {
                 <div className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs ${
                   activeStep === 'result' ? 'bg-orange-500 text-white' : 'bg-slate-800 text-slate-400'
                 }`}>
-                  04
+                  03
                 </div>
                 <div className="text-left">
                   <h4 className={`text-xs font-black ${activeStep === 'result' ? 'text-orange-500' : 'text-slate-300'}`}>
