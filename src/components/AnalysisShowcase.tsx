@@ -190,49 +190,81 @@ export default function AnalysisShowcase() {
       setPointerStyle({ top: '50%', left: '50%', opacity: 1 });
 
       if (authSubStep === 'login') {
-        // T1: Type Login ID
+        // T1: Type Name "홍길동"
         timer = setTimeout(() => {
-          setPointerStyle({ top: '40%', left: '40%', opacity: 1 });
+          setPointerStyle({ top: '35%', left: '40%', opacity: 1 });
 
-          const fullId = 'gildong123';
-          let typedId = '';
-          const idInterval = setInterval(() => {
-            if (typedId.length < fullId.length) {
-              typedId += fullId[typedId.length];
-              setSimAuthId(typedId);
+          const fullName = '홍길동';
+          let typedName = '';
+          const nameInterval = setInterval(() => {
+            if (typedName.length < fullName.length) {
+              typedName += fullName[typedName.length];
+              setSimName(typedName);
             } else {
-              clearInterval(idInterval);
+              clearInterval(nameInterval);
             }
           }, 100);
 
-          // T2: Type Password
+          // T2: Type Mobile "01012345678"
           setTimeout(() => {
-            setPointerStyle({ top: '50%', left: '40%', opacity: 1 });
+            setPointerStyle({ top: '44%', left: '40%', opacity: 1 });
 
-            const fullPw = '••••••••';
-            let typedPw = '';
-            const pwInterval = setInterval(() => {
-              if (typedPw.length < fullPw.length) {
-                typedPw += fullPw[typedPw.length];
-                setSimAuthPw(typedPw);
+            const fullMobile = '01012345678';
+            let typedMobile = '';
+            const mobileInterval = setInterval(() => {
+              if (typedMobile.length < fullMobile.length) {
+                typedMobile += fullMobile[typedMobile.length];
+                setSimMobile(typedMobile);
               } else {
-                clearInterval(pwInterval);
+                clearInterval(mobileInterval);
               }
-            }, 100);
+            }, 80);
 
-            // T3: Click "로그인 및 내 보험 조회"
+            // T3: Type Login ID "gildong123"
             setTimeout(() => {
-              setPointerStyle({ top: '60%', left: '50%', opacity: 1 });
+              setPointerStyle({ top: '53%', left: '40%', opacity: 1 });
 
+              const fullId = 'gildong123';
+              let typedId = '';
+              const idInterval = setInterval(() => {
+                if (typedId.length < fullId.length) {
+                  typedId += fullId[typedId.length];
+                  setSimAuthId(typedId);
+                } else {
+                  clearInterval(idInterval);
+                }
+              }, 80);
+
+              // T4: Type Password
               setTimeout(() => {
-                setIsClicking(true);
+                setPointerStyle({ top: '62%', left: '40%', opacity: 1 });
+
+                const fullPw = '••••••••';
+                let typedPw = '';
+                const pwInterval = setInterval(() => {
+                  if (typedPw.length < fullPw.length) {
+                    typedPw += fullPw[typedPw.length];
+                    setSimAuthPw(typedPw);
+                  } else {
+                    clearInterval(pwInterval);
+                  }
+                }, 80);
+
+                // T5: Click "로그인 및 내 보험 조회"
                 setTimeout(() => {
-                  setIsClicking(false);
-                  setAuthSubStep('captcha');
-                }, 150);
-              }, 600);
+                  setPointerStyle({ top: '75%', left: '50%', opacity: 1 });
+
+                  setTimeout(() => {
+                    setIsClicking(true);
+                    setTimeout(() => {
+                      setIsClicking(false);
+                      setAuthSubStep('captcha');
+                    }, 150);
+                  }, 600);
+                }, 1200);
+              }, 1200);
             }, 1200);
-          }, 1500);
+          }, 1000);
         }, 600);
 
       } else if (authSubStep === 'captcha') {
@@ -520,7 +552,29 @@ export default function AnalysisShowcase() {
 
                       {authSubStep === 'login' && (
                         <div className="space-y-2">
-                          <div className="space-y-1">
+                          <div className="space-y-1 text-left">
+                            <label className="text-[8px] font-bold text-slate-400 uppercase">이름 (본인인증 실명)</label>
+                            <input
+                              type="text"
+                              readOnly
+                              placeholder="실명 입력"
+                              value={simName}
+                              className="w-full bg-white/5 border border-white/10 rounded-xl py-2 px-3 text-xs font-bold text-white focus:outline-none"
+                            />
+                          </div>
+
+                          <div className="space-y-1 text-left">
+                            <label className="text-[8px] font-bold text-slate-400 uppercase">휴대폰 번호</label>
+                            <input
+                              type="text"
+                              readOnly
+                              placeholder="휴대폰 번호 입력"
+                              value={simMobile}
+                              className="w-full bg-white/5 border border-white/10 rounded-xl py-2 px-3 text-xs font-bold text-white focus:outline-none"
+                            />
+                          </div>
+
+                          <div className="space-y-1 text-left">
                             <label className="text-[8px] font-bold text-slate-400 uppercase">아이디</label>
                             <input
                               type="text"
@@ -531,7 +585,7 @@ export default function AnalysisShowcase() {
                             />
                           </div>
 
-                          <div className="space-y-1">
+                          <div className="space-y-1 text-left">
                             <label className="text-[8px] font-bold text-slate-400 uppercase">비밀번호</label>
                             <input
                               type="text"
