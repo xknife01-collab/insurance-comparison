@@ -40,7 +40,7 @@ interface LeadsTabProps {
   setToastMessage: (msg: string) => void;
   setShowToast: (show: boolean) => void;
   setLeads: React.Dispatch<React.SetStateAction<Lead[]>>;
-  setSelectedLead: (lead: Lead | null) => void;
+  setSelectedLead: React.Dispatch<React.SetStateAction<Lead | null>>;
   setAssigningLead: (lead: Lead | null) => void;
   handleUpdateStatus: (leadId: number, status: string) => void;
   setAdminHyphenLead: (lead: Lead | null) => void;
