@@ -52,7 +52,7 @@ export const ACCIDENT_PRODUCTS: AccidentProduct[] = [
   { company: '주계약', productName: '재해장해보험금 (월납)', basePremium: 5600 },
   { company: '흥국생명', productName: '(무)처음만난흥국생명상해보험 (월납)', basePremium: 5000 },
   { company: '교보생명', productName: '교보e대중교통안심보험 (무배당) (월납)', basePremium: 5000 },
-  { company: '교보생명', productName: '교보상해보험 [D](무배당)[만기환급형(전액)] (월납)', basePremium: 50000 },
+  { company: '교보생명', productName: '교보상해보험 [D](무배당)[만기환급형(100%)] (월납)', basePremium: 50000 },
   { company: '동양생명', productName: '(무)엔젤안심보험(상해보장형,표준형) (월납)', basePremium: 50000 },
   { company: '동양생명', productName: '(무)우리WON하는미니상해보험 (월납)', basePremium: 5000 },
   { company: '동양생명', productName: '(무)우리WON하는mini교통재해보험 (월납)', basePremium: 5000 },

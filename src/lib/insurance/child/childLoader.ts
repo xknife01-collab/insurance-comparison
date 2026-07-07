@@ -107,6 +107,12 @@ export async function fetchChildPremium(analysis: InsuranceAnalysis) {
       filteredOptions = [...filteredOptions, ...rawOptions.filter((o: any) => o.targetCategory === 'child')];
     }
 
+    // Exclude dental products from child insurance comparison
+    filteredOptions = filteredOptions.filter((o: any) => {
+      const name = o.productName || '';
+      return !name.includes('치아') && !name.includes('치과') && !name.includes('덴탈');
+    });
+
     const results: any[] = [];
 
     // Determine pre-family premium loading and naming

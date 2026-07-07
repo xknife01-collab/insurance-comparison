@@ -99,42 +99,50 @@ export function maskProductName(name: string, isUnlocked: boolean): string {
 
   const lower = name.toLowerCase();
   
-  if (lower.includes('암') || lower.includes('cancer')) {
-    if (lower.includes('표적') || lower.includes('치료비')) return '안심 표적항암치료보험';
-    if (lower.includes('재진단') || lower.includes('또받는')) return '반복보장 재진단암보험';
+  // Strip company names containing "화재" to prevent keyword collision during product categorization.
+  const cleanLower = lower
+    .replace(/삼성\s*화재/g, '')
+    .replace(/메리츠\s*화재/g, '')
+    .replace(/흥국\s*화재/g, '')
+    .replace(/롯데\s*화재/g, '')
+    .replace(/한화\s*화재/g, '');
+
+  if (cleanLower.includes('암') || cleanLower.includes('cancer')) {
+    if (cleanLower.includes('표적') || cleanLower.includes('치료비')) return '안심 표적항암치료보험';
+    if (cleanLower.includes('재진단') || cleanLower.includes('또받는')) return '반복보장 재진단암보험';
     return '실속 암진단보험';
   }
-  if (lower.includes('뇌') || lower.includes('심장') || lower.includes('혈관') || lower.includes('뇌졸중') || lower.includes('뇌출혈') || lower.includes('급성심근경색')) {
+  if (cleanLower.includes('뇌') || cleanLower.includes('심장') || cleanLower.includes('혈관') || cleanLower.includes('뇌졸중') || cleanLower.includes('뇌출혈') || cleanLower.includes('급성심근경색')) {
     return '2대질환 안심보장보험';
   }
-  if (lower.includes('운전자') || lower.includes('driver')) {
+  if (cleanLower.includes('운전자') || cleanLower.includes('driver')) {
     return '안심 운전자보험';
   }
-  if (lower.includes('치아') || lower.includes('덴탈') || lower.includes('dental')) {
+  if (cleanLower.includes('치아') || cleanLower.includes('덴탈') || cleanLower.includes('dental')) {
     return '실속 치아보장보험';
   }
-  if (lower.includes('실손') || lower.includes('실비')) {
+  if (cleanLower.includes('실손') || cleanLower.includes('실비')) {
     return '표준 실손의료비보험';
   }
-  if (lower.includes('종신') || lower.includes('whole life') || lower.includes('wholelife')) {
+  if (cleanLower.includes('종신') || cleanLower.includes('whole life') || cleanLower.includes('wholelife')) {
     return '평생 종신보장보험';
   }
-  if (lower.includes('펫') || lower.includes('pet') || lower.includes('개') || lower.includes('고양이')) {
+  if (cleanLower.includes('펫') || cleanLower.includes('pet') || cleanLower.includes('개') || cleanLower.includes('고양이')) {
     return '반려동물 건강케어보험';
   }
-  if (lower.includes('화재') || lower.includes('주택') || lower.includes('fire')) {
-    return '가정 주택화재보험';
-  }
-  if (lower.includes('치매') || lower.includes('간병') || lower.includes('재가') || lower.includes('시설') || lower.includes('dementia') || lower.includes('care')) {
-    return '실버 치매간병보험';
-  }
-  if (lower.includes('어린이') || lower.includes('자녀') || lower.includes('아이') || lower.includes('태아') || lower.includes('child')) {
+  if (cleanLower.includes('어린이') || cleanLower.includes('자녀') || cleanLower.includes('아이') || cleanLower.includes('태아') || cleanLower.includes('child')) {
     return '희망 어린이종합보험';
   }
-  if (lower.includes('저축') || lower.includes('연금') || lower.includes('pension') || lower.includes('savings')) {
+  if (cleanLower.includes('화재') || cleanLower.includes('주택') || cleanLower.includes('fire')) {
+    return '가정 주택화재보험';
+  }
+  if (cleanLower.includes('치매') || cleanLower.includes('간병') || cleanLower.includes('재가') || cleanLower.includes('시설') || cleanLower.includes('dementia') || cleanLower.includes('care')) {
+    return '실버 치매간병보험';
+  }
+  if (cleanLower.includes('저축') || cleanLower.includes('연금') || cleanLower.includes('pension') || cleanLower.includes('savings')) {
     return '안심 저축연금보험';
   }
-  if (lower.includes('상해') || lower.includes('레저') || lower.includes('골프') || lower.includes('accident') || lower.includes('golf')) {
+  if (cleanLower.includes('상해') || cleanLower.includes('레저') || cleanLower.includes('골프') || cleanLower.includes('accident') || cleanLower.includes('golf')) {
     return '데일리 상해보장보험';
   }
 
