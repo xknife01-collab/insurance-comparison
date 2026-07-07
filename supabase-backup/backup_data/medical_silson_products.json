@@ -1,0 +1,254 @@
+[
+  {
+    "id": 656,
+    "product_code": "메리츠화재_메리츠_노후실손의료비보험",
+    "company_name": "메리츠화재",
+    "display_name": "메리츠 노후실손의료비보험",
+    "category": "노후_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 657,
+    "product_code": "롯데손보_let_care_노후실손의료보험_",
+    "company_name": "롯데손보",
+    "display_name": "let:care 노후실손의료보험Ⅱ",
+    "category": "노후_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 658,
+    "product_code": "삼성화재_삼성화재_노후실손의료비보험",
+    "company_name": "삼성화재",
+    "display_name": "삼성화재 노후실손의료비보험",
+    "category": "노후_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 659,
+    "product_code": "현대해상_현대해상노후실손의료비보장보험_Hi_",
+    "company_name": "현대해상",
+    "display_name": "현대해상노후실손의료비보장보험(Hi)",
+    "category": "노후_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 660,
+    "product_code": "KB손보_KB손보_노후실손의료비보장보험",
+    "company_name": "KB손보",
+    "display_name": "KB손보 노후실손의료비보장보험",
+    "category": "노후_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 661,
+    "product_code": "DB손보_프로미라이프_노후실손의료비보험_1종_",
+    "company_name": "DB손보",
+    "display_name": "프로미라이프 노후실손의료비보험(1종)",
+    "category": "노후_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 662,
+    "product_code": "DB손보_프로미라이프_노후실손의료비보험_2종_",
+    "company_name": "DB손보",
+    "display_name": "프로미라이프 노후실손의료비보험(2종)",
+    "category": "노후_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 663,
+    "product_code": "NH농협손보_헤아림노후실손의료보험",
+    "company_name": "NH농협손보",
+    "display_name": "헤아림노후실손의료보험",
+    "category": "노후_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 664,
+    "product_code": "한화손보_한화간편실손의료보험_무배당_간편고지_실손_신규계약용_",
+    "company_name": "한화손보",
+    "display_name": "한화간편실손의료보험 무배당(간편고지 실손 신규계약용)",
+    "category": "실속_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 665,
+    "product_code": "NH농협손보_간편가입헤아림실손의료비보험",
+    "company_name": "NH농협손보",
+    "display_name": "간편가입헤아림실손의료비보험",
+    "category": "실속_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 666,
+    "product_code": "메리츠화재_메리츠_다이렉트_실손의료비보험_v5",
+    "company_name": "메리츠화재",
+    "display_name": "메리츠 다이렉트 실손의료비보험 (5세대)",
+    "category": "5세대_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 667,
+    "product_code": "메리츠화재_메리츠_실손의료비보험_v5",
+    "company_name": "메리츠화재",
+    "display_name": "메리츠 실손의료비보험 (5세대)",
+    "category": "5세대_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 668,
+    "product_code": "한화손보_한화실손의료보험__무배당",
+    "company_name": "한화손보",
+    "display_name": "한화실손의료보험Ⅴ 무배당",
+    "category": "실속_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 669,
+    "product_code": "한화손보_한화다이렉트실손의료보험__무배당",
+    "company_name": "한화손보",
+    "display_name": "한화다이렉트실손의료보험Ⅴ 무배당",
+    "category": "실속_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 670,
+    "product_code": "롯데손보_let_care_실손의료보험__v5",
+    "company_name": "롯데손보",
+    "display_name": "let:care 실손의료보험Ⅴ (5세대)",
+    "category": "5세대_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 671,
+    "product_code": "흥국화재_흥Good_실손의료보험_v5",
+    "company_name": "흥국화재",
+    "display_name": "흥Good 실손의료보험 (5세대)",
+    "category": "5세대_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 672,
+    "product_code": "흥국화재_흥Good_다이렉트_실손의료보험_v5",
+    "company_name": "흥국화재",
+    "display_name": "흥Good 다이렉트 실손의료보험 (5세대)",
+    "category": "5세대_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 673,
+    "product_code": "삼성화재_삼성화재_실손의료비보험_v5",
+    "company_name": "삼성화재",
+    "display_name": "삼성화재 실손의료비보험 (5세대)",
+    "category": "5세대_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 674,
+    "product_code": "삼성화재_삼성화재_다이렉트_실손의료비보험_v5",
+    "company_name": "삼성화재",
+    "display_name": "삼성화재 다이렉트 실손의료비보험 (5세대)",
+    "category": "5세대_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 675,
+    "product_code": "현대해상_현대해상실손의료비보장보험_Hi__v5",
+    "company_name": "현대해상",
+    "display_name": "현대해상실손의료비보장보험(Hi) (5세대)",
+    "category": "5세대_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 676,
+    "product_code": "현대해상_현대해상다이렉트실손의료비보장보험_Hi__v5",
+    "company_name": "현대해상",
+    "display_name": "현대해상다이렉트실손의료비보장보험(Hi) (5세대)",
+    "category": "5세대_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 677,
+    "product_code": "KB손보_KB손보_다이렉트실손의료비보장보험_v5",
+    "company_name": "KB손보",
+    "display_name": "KB손보 다이렉트실손의료비보장보험 (5세대)",
+    "category": "5세대_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 678,
+    "product_code": "KB손보_KB손보_실손의료비보장보험_v5",
+    "company_name": "KB손보",
+    "display_name": "KB손보 실손의료비보장보험 (5세대)",
+    "category": "5세대_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 679,
+    "product_code": "DB손보_실손의료비보험_1종__v5",
+    "company_name": "DB손보",
+    "display_name": "실손의료비보험(1종) (5세대)",
+    "category": "5세대_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 680,
+    "product_code": "DB손보_실손의료비보험_2종__v5",
+    "company_name": "DB손보",
+    "display_name": "실손의료비보험(2종) (5세대)",
+    "category": "5세대_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 681,
+    "product_code": "DB손보_다이렉트_실손의료비보험_CM__v5",
+    "company_name": "DB손보",
+    "display_name": "다이렉트 실손의료비보험(CM) (5세대)",
+    "category": "5세대_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 682,
+    "product_code": "NH농협손보_헤아림실손의료비보험_v5",
+    "company_name": "NH농협손보",
+    "display_name": "헤아림실손의료비보험 (5세대)",
+    "category": "5세대_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  },
+  {
+    "id": 683,
+    "product_code": "NH농협손보_헤아림다이렉트실손의료비보험_v5",
+    "company_name": "NH농협손보",
+    "display_name": "헤아림다이렉트실손의료비보험 (5세대)",
+    "category": "5세대_의료실비",
+    "standard_code": null,
+    "created_at": "2026-06-10T02:14:24.191041+00:00"
+  }
+]

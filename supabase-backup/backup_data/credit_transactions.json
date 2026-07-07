@@ -1,0 +1,110 @@
+[
+  {
+    "id": "06801354-3c3a-4c66-ae92-70beec30e4db",
+    "agency_id": "88888888-8888-4888-a888-888888888888",
+    "planner_id": null,
+    "amount": -300,
+    "type": "car",
+    "description": "고객 [김홍일] 차량 [334나8464] 실시간 자동차 비교",
+    "created_at": "2026-06-16T09:12:45.259511+00:00"
+  },
+  {
+    "id": "14b63d7d-b1fe-404f-8b11-536281de4d27",
+    "agency_id": "88888888-8888-4888-a888-888888888888",
+    "planner_id": null,
+    "amount": -400,
+    "type": "remodeling",
+    "description": "고객 [김홍일] 내보험 비교분석",
+    "created_at": "2026-06-16T09:46:02.932402+00:00"
+  },
+  {
+    "id": "dff79edd-cc14-4bfc-bb66-7d1f2e8e13e5",
+    "agency_id": "88888888-8888-4888-a888-888888888888",
+    "planner_id": null,
+    "amount": -400,
+    "type": "remodeling",
+    "description": "고객 [김홍일] 내보험 비교분석",
+    "created_at": "2026-06-16T09:47:30.834418+00:00"
+  },
+  {
+    "id": "0c8d09ea-01cc-47dd-bba5-2fad5547be0d",
+    "agency_id": "88888888-8888-4888-a888-888888888888",
+    "planner_id": null,
+    "amount": -400,
+    "type": "remodeling",
+    "description": "고객 [김홍일] 내보험 비교분석",
+    "created_at": "2026-06-16T09:54:52.557859+00:00"
+  },
+  {
+    "id": "bc5a9c8d-7f77-45c6-8122-edecd071e028",
+    "agency_id": "88888888-8888-4888-a888-888888888888",
+    "planner_id": null,
+    "amount": -100,
+    "type": "car",
+    "description": "고객 [김홍일] 차량 [334나8464] 실시간 자동차 비교",
+    "created_at": "2026-06-17T04:13:41.840813+00:00"
+  },
+  {
+    "id": "02f3144a-2771-427d-a54f-3e3f8af0e2a4",
+    "agency_id": "88888888-8888-4888-a888-888888888888",
+    "planner_id": "00000000-0000-4000-a000-000000000000",
+    "amount": -300,
+    "type": "remodeling",
+    "description": "고객 [고객] 내보험 비교분석",
+    "created_at": "2026-06-26T01:31:50.959008+00:00"
+  },
+  {
+    "id": "7a2238f6-3580-4796-b0b2-1eb287337fc9",
+    "agency_id": "88888888-8888-4888-a888-888888888888",
+    "planner_id": "00000000-0000-4000-a000-000000000000",
+    "amount": -100,
+    "type": "remodeling_signup_init",
+    "description": "고객 [김호] 회원가입 1단계(init)",
+    "created_at": "2026-06-26T07:02:28.469584+00:00"
+  },
+  {
+    "id": "2a26c351-fc3e-4dbe-8d85-f32533f11a7d",
+    "agency_id": "88888888-8888-4888-a888-888888888888",
+    "planner_id": "00000000-0000-4000-a000-000000000000",
+    "amount": -100,
+    "type": "remodeling_signup_captcha",
+    "description": "고객 [김호] 회원가입 2단계(captcha)",
+    "created_at": "2026-06-26T07:02:49.01617+00:00"
+  },
+  {
+    "id": "8603989f-5f8a-47f5-917d-43f9e4bfa919",
+    "agency_id": "88888888-8888-4888-a888-888888888888",
+    "planner_id": "00000000-0000-4000-a000-000000000000",
+    "amount": -100,
+    "type": "remodeling_signup_captcha",
+    "description": "고객 [김호] 회원가입 2단계(captcha)",
+    "created_at": "2026-06-26T07:03:06.60099+00:00"
+  },
+  {
+    "id": "3e918ccb-2a00-48f9-b76c-b626a8b7ce42",
+    "agency_id": "88888888-8888-4888-a888-888888888888",
+    "planner_id": "00000000-0000-4000-a000-000000000000",
+    "amount": -100,
+    "type": "remodeling_signup_init",
+    "description": "고객 [김호] 회원가입 1단계(init)",
+    "created_at": "2026-06-26T07:04:45.18004+00:00"
+  },
+  {
+    "id": "ac95e55f-923f-4d61-b950-b7302f5005c2",
+    "agency_id": "88888888-8888-4888-a888-888888888888",
+    "planner_id": "00000000-0000-4000-a000-000000000000",
+    "amount": -100,
+    "type": "remodeling_signup_captcha",
+    "description": "고객 [김호] 회원가입 2단계(captcha)",
+    "created_at": "2026-06-26T07:05:01.684752+00:00"
+  },
+  {
+    "id": "42a0fc13-056b-4918-9243-5aeb25d9bbdc",
+    "agency_id": "88888888-8888-4888-a888-888888888888",
+    "planner_id": "00000000-0000-4000-a000-000000000000",
+    "amount": -300,
+    "type": "remodeling",
+    "description": "고객 [고객] 내보험 비교분석",
+    "created_at": "2026-06-26T07:06:56.728515+00:00"
+  }
+]

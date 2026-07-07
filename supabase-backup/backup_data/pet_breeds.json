@@ -1,0 +1,382 @@
+[
+  {
+    "id": 1,
+    "pet_type": "dog",
+    "breed_name": "말티즈",
+    "english_name": "Maltese",
+    "risk_group": "high",
+    "multiplier": 1.25,
+    "vulnerability": "슬개골 탈구, 심장판막증, 눈물샘 폐색",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 2,
+    "pet_type": "dog",
+    "breed_name": "포메라니안",
+    "english_name": "Pomeranian",
+    "risk_group": "high",
+    "multiplier": 1.25,
+    "vulnerability": "기관지 협착증, 슬개골 탈구, 탈모증(BSD)",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 3,
+    "pet_type": "dog",
+    "breed_name": "치와와",
+    "english_name": "Chihuahua",
+    "risk_group": "high",
+    "multiplier": 1.25,
+    "vulnerability": "뇌수두증(천문열림), 슬개골 탈구, 활막염",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 4,
+    "pet_type": "dog",
+    "breed_name": "요크셔",
+    "english_name": "Yorkshire Terrier",
+    "risk_group": "high",
+    "multiplier": 1.25,
+    "vulnerability": "기관지 협착증, 저혈당증, 치석 및 치주염",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 5,
+    "pet_type": "dog",
+    "breed_name": "비숑 프리제",
+    "english_name": "Bichon Frise",
+    "risk_group": "medium",
+    "multiplier": 1.15,
+    "vulnerability": "요로 결석, 쿠싱 증후군, 만성 피부염",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 6,
+    "pet_type": "dog",
+    "breed_name": "토이푸들",
+    "english_name": "Toy Poodle",
+    "risk_group": "medium",
+    "multiplier": 1.15,
+    "vulnerability": "슬개골 탈구, 외이염(귓병), 점진적 망막 위축",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 7,
+    "pet_type": "dog",
+    "breed_name": "푸들",
+    "english_name": "Poodle",
+    "risk_group": "medium",
+    "multiplier": 1.15,
+    "vulnerability": "점진적 망막 위축, 외이염, 피부 알레르기",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 8,
+    "pet_type": "dog",
+    "breed_name": "시추",
+    "english_name": "Shih Tzu",
+    "risk_group": "medium",
+    "multiplier": 1.15,
+    "vulnerability": "안구 건조증, 각막염, 외이염, 지루성 피부염",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 9,
+    "pet_type": "dog",
+    "breed_name": "닥스훈트",
+    "english_name": "Dachshund",
+    "risk_group": "medium",
+    "multiplier": 1.15,
+    "vulnerability": "추간판 탈출증(허리 디스크), 척추 관절염",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 10,
+    "pet_type": "dog",
+    "breed_name": "슈나우저",
+    "english_name": "Schnauzer",
+    "risk_group": "medium",
+    "multiplier": 1.15,
+    "vulnerability": "췌장염, 요로 결석증, 피부 면역 질환",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 11,
+    "pet_type": "dog",
+    "breed_name": "스피츠",
+    "english_name": "Spitz",
+    "risk_group": "medium",
+    "multiplier": 1.15,
+    "vulnerability": "슬개골 탈구, 피부 탈모, 예민성 피부 질환",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 12,
+    "pet_type": "dog",
+    "breed_name": "웰시코기",
+    "english_name": "Welsh Corgi",
+    "risk_group": "medium",
+    "multiplier": 1.15,
+    "vulnerability": "퇴행성 골관절염, 척추 디스크, 비만증",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 13,
+    "pet_type": "dog",
+    "breed_name": "비글",
+    "english_name": "Beagle",
+    "risk_group": "medium",
+    "multiplier": 1.15,
+    "vulnerability": "백내장, 녹내장, 만성 외이염, 추간판 디스크",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 14,
+    "pet_type": "dog",
+    "breed_name": "코카스파니엘",
+    "english_name": "Cocker Spaniel",
+    "risk_group": "medium",
+    "multiplier": 1.15,
+    "vulnerability": "외이염, 백내장, 아토피성 만성 피부염",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 15,
+    "pet_type": "dog",
+    "breed_name": "이탈리안 그레이하운드",
+    "english_name": "Italian Greyhound",
+    "risk_group": "medium",
+    "multiplier": 1.15,
+    "vulnerability": "골절(두께가 얇음), 치석 및 치주염, 탈모증",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 16,
+    "pet_type": "dog",
+    "breed_name": "파피용",
+    "english_name": "Papillon",
+    "risk_group": "normal",
+    "multiplier": 1,
+    "vulnerability": "슬개골 탈구, 백내장, 점진적 망막 위축",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 17,
+    "pet_type": "dog",
+    "breed_name": "시바견",
+    "english_name": "Shiba Inu",
+    "risk_group": "normal",
+    "multiplier": 1,
+    "vulnerability": "치석 및 치주염, 아토피성 피부염, 백내장",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 18,
+    "pet_type": "dog",
+    "breed_name": "진돗개",
+    "english_name": "Jindo",
+    "risk_group": "normal",
+    "multiplier": 1,
+    "vulnerability": "알레르기성 피부염, 선천적 유전병 매우 적음",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 19,
+    "pet_type": "dog",
+    "breed_name": "프렌치불독",
+    "english_name": "French Bulldog",
+    "risk_group": "super_high",
+    "multiplier": 1.4,
+    "vulnerability": "단두종 호흡기 증후군, 척추 이상, 피부 주름염",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 20,
+    "pet_type": "dog",
+    "breed_name": "불독",
+    "english_name": "Bulldog",
+    "risk_group": "super_high",
+    "multiplier": 1.4,
+    "vulnerability": "단두종 호흡기 증후군, 고관절 형성 부전, 피부염",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 21,
+    "pet_type": "dog",
+    "breed_name": "리트리버",
+    "english_name": "Golden Retriever",
+    "risk_group": "super_high",
+    "multiplier": 1.4,
+    "vulnerability": "고관절 형성 부전, 림프종(암), 퇴행성 관절염",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 22,
+    "pet_type": "dog",
+    "breed_name": "래브라도 리트리버",
+    "english_name": "Labrador Retriever",
+    "risk_group": "super_high",
+    "multiplier": 1.4,
+    "vulnerability": "고관절 탈구, 백내장, 점진적 망막 위축, 비만",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 23,
+    "pet_type": "dog",
+    "breed_name": "허스키",
+    "english_name": "Siberian Husky",
+    "risk_group": "super_high",
+    "multiplier": 1.4,
+    "vulnerability": "각막이상증, 녹내장/백내장, 고관절 형성이상",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 24,
+    "pet_type": "dog",
+    "breed_name": "말라뮤트",
+    "english_name": "Alaskan Malamute",
+    "risk_group": "super_high",
+    "multiplier": 1.4,
+    "vulnerability": "백내장, 신장염, 고관절 형성 부전, 탈모",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 25,
+    "pet_type": "dog",
+    "breed_name": "믹스견",
+    "english_name": "Mixed Breed Dog",
+    "risk_group": "normal",
+    "multiplier": 1,
+    "vulnerability": "잡종 강세로 유전 질환이 매우 적으며 가장 튼튼함",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 26,
+    "pet_type": "cat",
+    "breed_name": "코리안 쇼트헤어",
+    "english_name": "Korean Shorthair",
+    "risk_group": "discount",
+    "multiplier": 0.95,
+    "vulnerability": "튼튼함, 하부 요로계 질환(결석, 방광염)",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 27,
+    "pet_type": "cat",
+    "breed_name": "러시안블루",
+    "english_name": "Russian Blue",
+    "risk_group": "normal",
+    "multiplier": 1.05,
+    "vulnerability": "당뇨병, 비만, 요로 결석",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 28,
+    "pet_type": "cat",
+    "breed_name": "샴",
+    "english_name": "Siamese",
+    "risk_group": "normal",
+    "multiplier": 1.05,
+    "vulnerability": "림프종, 만성 신부전, 사시, 유선 종양",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 29,
+    "pet_type": "cat",
+    "breed_name": "벵갈",
+    "english_name": "Bengal",
+    "risk_group": "normal",
+    "multiplier": 1.05,
+    "vulnerability": "비대성 심근증(HCM), 점진적 망막 위축, 신장 결석",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 30,
+    "pet_type": "cat",
+    "breed_name": "아비시니안",
+    "english_name": "Abyssinian",
+    "risk_group": "normal",
+    "multiplier": 1.05,
+    "vulnerability": "신장 아밀로이드증(기능 저하), 치은염, 백내장",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 31,
+    "pet_type": "cat",
+    "breed_name": "아메리칸 쇼트헤어",
+    "english_name": "American Shorthair",
+    "risk_group": "normal",
+    "multiplier": 1.05,
+    "vulnerability": "비대성 심근증(HCM), 당뇨병, 비만 및 관절염",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 32,
+    "pet_type": "cat",
+    "breed_name": "브리티시 쇼트헤어",
+    "english_name": "British Shorthair",
+    "risk_group": "normal",
+    "multiplier": 1.05,
+    "vulnerability": "비대성 심근증(HCM), 혈우병, 신장 결석",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 33,
+    "pet_type": "cat",
+    "breed_name": "스코티시",
+    "english_name": "Scottish Fold",
+    "risk_group": "high",
+    "multiplier": 1.15,
+    "vulnerability": "유전적 골연골 이형성증(관절염), 비대성 심근증(HCM)",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 34,
+    "pet_type": "cat",
+    "breed_name": "페르시안",
+    "english_name": "Persian",
+    "risk_group": "high",
+    "multiplier": 1.15,
+    "vulnerability": "다낭성 신장질환(PKD), 단두종 호흡기 장애, 각막염",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 35,
+    "pet_type": "cat",
+    "breed_name": "랙돌",
+    "english_name": "Ragdoll",
+    "risk_group": "high",
+    "multiplier": 1.15,
+    "vulnerability": "비대성 심근증(HCM), 신장 결석, 요도염",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 36,
+    "pet_type": "cat",
+    "breed_name": "노르웨이 숲",
+    "english_name": "Norwegian Forest Cat",
+    "risk_group": "high",
+    "multiplier": 1.15,
+    "vulnerability": "글리코겐 저장 질환, 망막 형성이상, 심근증",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 37,
+    "pet_type": "cat",
+    "breed_name": "메인쿤",
+    "english_name": "Maine Coon",
+    "risk_group": "high",
+    "multiplier": 1.15,
+    "vulnerability": "고관절 형성이상, 비대성 심근증(HCM), 근육위축증",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  },
+  {
+    "id": 38,
+    "pet_type": "cat",
+    "breed_name": "믹스묘",
+    "english_name": "Mixed Breed Cat",
+    "risk_group": "discount",
+    "multiplier": 0.95,
+    "vulnerability": "자연 믹스로 유전 질환이 극히 적고 전염병 면역력 우수",
+    "created_at": "2026-05-29T14:40:48.635303+00:00"
+  }
+]

@@ -1,0 +1,344 @@
+[
+  {
+    "id": 93,
+    "product_name": "(무)Top3 시그니처안심보험",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 190700,
+    "coverage_limit_hole_in_one": "미탑재",
+    "coverage_limit_liability": "미탑재",
+    "coverage_limit_equipment": "미탑재",
+    "details": {
+      "policy_years": 1,
+      "payment_cycle": "연납",
+      "payment_period": "1년납",
+      "original_premium_male": 190700,
+      "original_premium_female": 86125
+    },
+    "updated_at": "2026-06-10T10:11:10.338318+00:00"
+  },
+  {
+    "id": 94,
+    "product_name": "(무)Top3 시그니처안심보험",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 86125,
+    "coverage_limit_hole_in_one": "미탑재",
+    "coverage_limit_liability": "미탑재",
+    "coverage_limit_equipment": "미탑재",
+    "details": {
+      "policy_years": 1,
+      "payment_cycle": "연납",
+      "payment_period": "1년납",
+      "original_premium_male": 190700,
+      "original_premium_female": 86125
+    },
+    "updated_at": "2026-06-10T10:11:10.338318+00:00"
+  },
+  {
+    "id": 95,
+    "product_name": "한화생명 간편가입 포켓레저보험 무배당",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 7666,
+    "coverage_limit_hole_in_one": "150만원",
+    "coverage_limit_liability": "2000만원",
+    "coverage_limit_equipment": "미탑재",
+    "details": {
+      "policy_years": 1,
+      "payment_cycle": "월납",
+      "payment_period": "1년납",
+      "original_premium_male": 7666,
+      "original_premium_female": 4699
+    },
+    "updated_at": "2026-06-10T10:11:10.338318+00:00"
+  },
+  {
+    "id": 96,
+    "product_name": "한화생명 간편가입 포켓레저보험 무배당",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 4699,
+    "coverage_limit_hole_in_one": "150만원",
+    "coverage_limit_liability": "2000만원",
+    "coverage_limit_equipment": "미탑재",
+    "details": {
+      "policy_years": 1,
+      "payment_cycle": "월납",
+      "payment_period": "1년납",
+      "original_premium_male": 7666,
+      "original_premium_female": 4699
+    },
+    "updated_at": "2026-06-10T10:11:10.338318+00:00"
+  },
+  {
+    "id": 97,
+    "product_name": "한화생명 포켓레저보험 무배당",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 4376,
+    "coverage_limit_hole_in_one": "150만원",
+    "coverage_limit_liability": "2000만원",
+    "coverage_limit_equipment": "미탑재",
+    "details": {
+      "policy_years": 1,
+      "payment_cycle": "월납",
+      "payment_period": "1년납",
+      "original_premium_male": 4376,
+      "original_premium_female": 2906
+    },
+    "updated_at": "2026-06-10T10:11:10.338318+00:00"
+  },
+  {
+    "id": 98,
+    "product_name": "한화생명 포켓레저보험 무배당",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 2906,
+    "coverage_limit_hole_in_one": "150만원",
+    "coverage_limit_liability": "2000만원",
+    "coverage_limit_equipment": "미탑재",
+    "details": {
+      "policy_years": 1,
+      "payment_cycle": "월납",
+      "payment_period": "1년납",
+      "original_premium_male": 4376,
+      "original_premium_female": 2906
+    },
+    "updated_at": "2026-06-10T10:11:10.338318+00:00"
+  },
+  {
+    "id": 99,
+    "product_name": "(무)처음만난흥국생명상해보험",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 3000,
+    "coverage_limit_hole_in_one": "100만원",
+    "coverage_limit_liability": "1000만원",
+    "coverage_limit_equipment": "미탑재",
+    "details": {
+      "policy_years": 1,
+      "payment_cycle": "연납",
+      "payment_period": "1년납",
+      "original_premium_male": 3000,
+      "original_premium_female": 3000
+    },
+    "updated_at": "2026-06-10T10:11:10.338318+00:00"
+  },
+  {
+    "id": 100,
+    "product_name": "(무)처음만난흥국생명상해보험",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 3000,
+    "coverage_limit_hole_in_one": "100만원",
+    "coverage_limit_liability": "1000만원",
+    "coverage_limit_equipment": "미탑재",
+    "details": {
+      "policy_years": 1,
+      "payment_cycle": "연납",
+      "payment_period": "1년납",
+      "original_premium_male": 3000,
+      "original_premium_female": 3000
+    },
+    "updated_at": "2026-06-10T10:11:10.338318+00:00"
+  },
+  {
+    "id": 101,
+    "product_name": "(무)백년친구 생활보험(2602)(3종:레저보장형)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 10100,
+    "coverage_limit_hole_in_one": "300만원",
+    "coverage_limit_liability": "3000만원",
+    "coverage_limit_equipment": "미탑재",
+    "details": {
+      "policy_years": 1,
+      "payment_cycle": "월납",
+      "payment_period": "1년납",
+      "original_premium_male": 10100,
+      "original_premium_female": 7000
+    },
+    "updated_at": "2026-06-10T10:11:10.338318+00:00"
+  },
+  {
+    "id": 102,
+    "product_name": "(무)백년친구 생활보험(2602)(3종:레저보장형)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 7000,
+    "coverage_limit_hole_in_one": "300만원",
+    "coverage_limit_liability": "3000만원",
+    "coverage_limit_equipment": "미탑재",
+    "details": {
+      "policy_years": 1,
+      "payment_cycle": "월납",
+      "payment_period": "1년납",
+      "original_premium_male": 10100,
+      "original_premium_female": 7000
+    },
+    "updated_at": "2026-06-10T10:11:10.338318+00:00"
+  },
+  {
+    "id": 103,
+    "product_name": "(무)다이렉트 오잘공 골프보험2601(CM)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 5520,
+    "coverage_limit_hole_in_one": "200만원",
+    "coverage_limit_liability": "2000만원",
+    "coverage_limit_equipment": "100만원",
+    "details": {
+      "policy_years": 1,
+      "payment_cycle": "연납",
+      "payment_period": "1년납",
+      "original_premium_male": 5520,
+      "original_premium_female": 5520
+    },
+    "updated_at": "2026-06-10T10:11:10.338318+00:00"
+  },
+  {
+    "id": 104,
+    "product_name": "(무)다이렉트 오잘공 골프보험2601(CM)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 5520,
+    "coverage_limit_hole_in_one": "200만원",
+    "coverage_limit_liability": "2000만원",
+    "coverage_limit_equipment": "100만원",
+    "details": {
+      "policy_years": 1,
+      "payment_cycle": "연납",
+      "payment_period": "1년납",
+      "original_premium_male": 5520,
+      "original_premium_female": 5520
+    },
+    "updated_at": "2026-06-10T10:11:10.338318+00:00"
+  },
+  {
+    "id": 105,
+    "product_name": "한화 다이렉트 홀인원보험(무)2604",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 6006,
+    "coverage_limit_hole_in_one": "보험가입금액 한도 실손보상 (최초1회에 한하며, 깔때기홀은 제외)",
+    "coverage_limit_liability": "보험가입금액 한도 실손보상(자기부담금 : 2만원)",
+    "coverage_limit_equipment": "미탑재",
+    "details": {
+      "policy_years": 1,
+      "payment_cycle": "연납",
+      "payment_period": "1년납",
+      "original_premium_male": 6006,
+      "original_premium_female": 6006
+    },
+    "updated_at": "2026-06-10T10:11:10.338318+00:00"
+  },
+  {
+    "id": 106,
+    "product_name": "한화 다이렉트 홀인원보험(무)2604",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 6006,
+    "coverage_limit_hole_in_one": "보험가입금액 한도 실손보상 (최초1회에 한하며, 깔때기홀은 제외)",
+    "coverage_limit_liability": "보험가입금액 한도 실손보상(자기부담금 : 2만원)",
+    "coverage_limit_equipment": "미탑재",
+    "details": {
+      "policy_years": 1,
+      "payment_cycle": "연납",
+      "payment_period": "1년납",
+      "original_premium_male": 6006,
+      "original_premium_female": 6006
+    },
+    "updated_at": "2026-06-10T10:11:10.338318+00:00"
+  },
+  {
+    "id": 107,
+    "product_name": "삼성화재 다이렉트 착한골프보험",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 9500,
+    "coverage_limit_hole_in_one": "200만원",
+    "coverage_limit_liability": "2000만원",
+    "coverage_limit_equipment": "100만원",
+    "details": {
+      "policy_years": 1,
+      "payment_cycle": "연납",
+      "payment_period": "1년납",
+      "original_premium_male": 9500,
+      "original_premium_female": 9500
+    },
+    "updated_at": "2026-06-10T10:11:10.338318+00:00"
+  },
+  {
+    "id": 108,
+    "product_name": "삼성화재 다이렉트 착한골프보험",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 9500,
+    "coverage_limit_hole_in_one": "200만원",
+    "coverage_limit_liability": "2000만원",
+    "coverage_limit_equipment": "100만원",
+    "details": {
+      "policy_years": 1,
+      "payment_cycle": "연납",
+      "payment_period": "1년납",
+      "original_premium_male": 9500,
+      "original_premium_female": 9500
+    },
+    "updated_at": "2026-06-10T10:11:10.338318+00:00"
+  },
+  {
+    "id": 109,
+    "product_name": "현대해상 다이렉트 골프보험",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 10800,
+    "coverage_limit_hole_in_one": "200만원",
+    "coverage_limit_liability": "2000만원",
+    "coverage_limit_equipment": "100만원",
+    "details": {
+      "policy_years": 1,
+      "payment_cycle": "연납",
+      "payment_period": "1년납",
+      "original_premium_male": 10800,
+      "original_premium_female": 10800
+    },
+    "updated_at": "2026-06-10T10:11:10.338318+00:00"
+  },
+  {
+    "id": 110,
+    "product_name": "현대해상 다이렉트 골프보험",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 10800,
+    "coverage_limit_hole_in_one": "200만원",
+    "coverage_limit_liability": "2000만원",
+    "coverage_limit_equipment": "100만원",
+    "details": {
+      "policy_years": 1,
+      "payment_cycle": "연납",
+      "payment_period": "1년납",
+      "original_premium_male": 10800,
+      "original_premium_female": 10800
+    },
+    "updated_at": "2026-06-10T10:11:10.338318+00:00"
+  }
+]

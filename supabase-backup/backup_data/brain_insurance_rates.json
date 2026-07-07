@@ -1,0 +1,6850 @@
+[
+  {
+    "id": 19027,
+    "product_name": "(무)드림빅비즈니스보장보험2601(2종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 97490,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:12.07336",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19028,
+    "product_name": "(무)드림빅비즈니스보장보험2601(2종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 82750,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:12.352166",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19029,
+    "product_name": "무배당 삼성화재 건강보험 마이스타0515(2601.7)(납입면제, 해약환급금 미지급형Ⅱ)",
+    "gender": "M",
+    "age": 40,
+    "premium": 113368,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:12.611087",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19030,
+    "product_name": "무배당 삼성화재 건강보험 마이스타0515(2601.7)(납입면제, 해약환급금 미지급형Ⅱ)",
+    "gender": "F",
+    "age": 40,
+    "premium": 93946,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:12.870032",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19031,
+    "product_name": "무배당 삼성화재 건강보험 마이스타0515(2601.7)(납입면제형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 146347,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:13.132398",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19032,
+    "product_name": "무배당 삼성화재 건강보험 마이스타0515(2601.7)(납입면제형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 118669,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:13.386502",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19033,
+    "product_name": "(무) Only You 통합보험2601(10년건강고지형)(1종)(2형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 45774,
+    "benefit_name": "뇌혈관질환진단비(10년건강가입)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:13.650267",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19034,
+    "product_name": "(무) Only You 통합보험2601(10년건강고지형)(1종)(2형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 36730,
+    "benefit_name": "뇌혈관질환진단비(10년건강가입)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:13.910227",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19035,
+    "product_name": "(무) Only You 통합보험2601(10년건강고지형)(2종)(1형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 63038,
+    "benefit_name": "뇌혈관질환진단비(10년건강가입)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:14.175639",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19036,
+    "product_name": "(무) Only You 통합보험2601(10년건강고지형)(2종)(1형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 48354,
+    "benefit_name": "뇌혈관질환진단비(10년건강가입)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:14.449033",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19037,
+    "product_name": "(무) Only You 통합보험2601(10년건강고지형)(3종)(2형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 47429,
+    "benefit_name": "뇌혈관질환진단비(10년건강가입)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:14.708471",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19038,
+    "product_name": "(무) Only You 통합보험2601(10년건강고지형)(3종)(2형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 37944,
+    "benefit_name": "뇌혈관질환진단비(10년건강가입)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:14.979419",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19039,
+    "product_name": "(무) Only You 통합보험2601(일반고지형)(1종)(2형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 57274,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:15.240739",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19040,
+    "product_name": "(무) Only You 통합보험2601(일반고지형)(1종)(2형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 52137,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:15.50596",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19041,
+    "product_name": "(무) Only You 통합보험2601(일반고지형)(2종)(1형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 79925,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:15.765158",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19042,
+    "product_name": "(무) Only You 통합보험2601(일반고지형)(2종)(1형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 69656,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:16.027942",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19043,
+    "product_name": "(무) Only You 통합보험2601(일반고지형)(3종)(2형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 59922,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:16.292405",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19044,
+    "product_name": "(무) Only You 통합보험2601(일반고지형)(3종)(2형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 54266,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:16.549455",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19045,
+    "product_name": "(무) 메리츠 프리미엄 건강보험2602(2종)(2형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 137712,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:16.80704",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19046,
+    "product_name": "(무) 메리츠 프리미엄 건강보험2602(2종)(2형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 113936,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:17.069773",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19047,
+    "product_name": "(무) 메리츠 The좋은 내Mom대로 보장보험2601(1종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 23460,
+    "benefit_name": "갱신형 뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:17.329966",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19048,
+    "product_name": "(무) 메리츠 The좋은 내Mom대로 보장보험2601(1종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 28922,
+    "benefit_name": "갱신형 뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:17.605923",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19049,
+    "product_name": "(무) 메리츠 The좋은 내Mom대로 보장보험2601(5종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 24874,
+    "benefit_name": "갱신형 뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:17.86267",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19050,
+    "product_name": "(무) 메리츠 The좋은 내Mom대로 보장보험2601(5종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 30466,
+    "benefit_name": "갱신형 뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:18.119604",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19051,
+    "product_name": "(무) 메리츠 The좋은 내Mom대로 보장보험2601(6종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 37432,
+    "benefit_name": "갱신형 뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:18.375335",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19052,
+    "product_name": "(무) 메리츠 The좋은 내Mom대로 보장보험2601(6종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 39212,
+    "benefit_name": "갱신형 뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:18.631752",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19053,
+    "product_name": "한화 시그니처 여성 건강보험4.0 (무) 5종(납입면제 미운영형,납입후50‰해약환급금지급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 101495,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:18.890682",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19054,
+    "product_name": "한화 시그니처 여성 건강보험4.0 (무) 5종(납입면제 미운영형,납입후50‰해약환급금지급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 76890,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:19.147053",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19055,
+    "product_name": "한화 시그니처 여성 건강보험4.0 (무) 4종(납입면제형,납입후50‰해약환급금지급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 106154,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:19.40111",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19056,
+    "product_name": "한화 시그니처 여성 건강보험4.0 (무) 4종(납입면제형,납입후50‰해약환급금지급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 80420,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:19.655001",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19057,
+    "product_name": "한화 시그니처 여성 건강보험4.0 (무) 3종(납입면제형,기본형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 123737,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:19.916756",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19058,
+    "product_name": "한화 시그니처 여성 건강보험4.0 (무) 3종(납입면제형,기본형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 93740,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:20.180392",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19059,
+    "product_name": "한화 시그니처 여성 건강보험4.0 (무) 2종(납입면제 강화형,납입후50‰해약환급금지급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 113454,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:20.434109",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19060,
+    "product_name": "한화 시그니처 여성 건강보험4.0 (무) 2종(납입면제 강화형,납입후50‰해약환급금지급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 85950,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:20.705059",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19061,
+    "product_name": "한화 시그니처 여성 건강보험4.0 (무) 1종(납입면제 강화형,기본형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 128660,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:20.959367",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19062,
+    "product_name": "한화 시그니처 여성 건강보험4.0 (무) 1종(납입면제 강화형,기본형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 97470,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:21.211638",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19063,
+    "product_name": "한화 시그니처 여성 건강보험4.0(건강관리형) (무) 1종(납입면제 강화형,기본형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 128660,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:21.463714",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19064,
+    "product_name": "한화 시그니처 여성 건강보험4.0(건강관리형) (무) 1종(납입면제 강화형,기본형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 97470,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:21.712552",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19065,
+    "product_name": "한화 시그니처 여성 건강보험4.0(건강관리형) (무) 2종(납입면제 강화형,납입후50‰해약환급금지급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 113454,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:21.969809",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19066,
+    "product_name": "한화 시그니처 여성 건강보험4.0(건강관리형) (무) 2종(납입면제 강화형,납입후50‰해약환급금지급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 85950,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:22.240937",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19067,
+    "product_name": "한화 시그니처 여성 건강보험4.0(건강관리형) (무) 4종(납입면제형,납입후50‰해약환급금지급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 106154,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:22.505548",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19068,
+    "product_name": "한화 시그니처 여성 건강보험4.0(건강관리형) (무) 4종(납입면제형,납입후50‰해약환급금지급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 80420,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:22.761376",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19069,
+    "product_name": "한화 시그니처 여성 건강보험4.0(건강관리형) (무) 5종(납입면제 미운영형,납입후50‰해약환급금지급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 101495,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:23.019139",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19070,
+    "product_name": "한화 시그니처 여성 건강보험4.0(건강관리형) (무) 5종(납입면제 미운영형,납입후50‰해약환급금지급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 76890,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:23.271683",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19071,
+    "product_name": "한화 시그니처 여성 건강보험4.0(건강관리형) (무) 3종(납입면제형,기본형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 123737,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:23.527257",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19072,
+    "product_name": "한화 시그니처 여성 건강보험4.0(건강관리형) (무) 3종(납입면제형,기본형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 93740,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:23.781217",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19073,
+    "product_name": "무배당 삼성화재 다이렉트 AI맞춤보장보험(2601.5)(자동갱신형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 33390,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:24.036683",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19074,
+    "product_name": "무배당 삼성화재 다이렉트 AI맞춤보장보험(2601.5)(자동갱신형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 43670,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:24.289253",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19075,
+    "product_name": "무배당 삼성화재 다이렉트 건강보험(2601.16)(자동갱신형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 40740,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:24.547616",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19076,
+    "product_name": "무배당 삼성화재 다이렉트 건강보험(2601.16)(자동갱신형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 37480,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:24.800364",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19077,
+    "product_name": "무배당 삼성화재 다이렉트 비갱신 건강보험(2601.19)(해약환급금 미지급형Ⅱ)",
+    "gender": "M",
+    "age": 40,
+    "premium": 92415,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:25.052497",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19078,
+    "product_name": "무배당 삼성화재 다이렉트 비갱신 건강보험(2601.19)(해약환급금 미지급형Ⅱ)",
+    "gender": "F",
+    "age": 40,
+    "premium": 67750,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:25.318201",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19079,
+    "product_name": "무배당 삼성화재 건강보험 마이핏4180(2601.7)(납입면제,해약환급금 미지급형Ⅱ)",
+    "gender": "M",
+    "age": 40,
+    "premium": 220061,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:25.573789",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19080,
+    "product_name": "무배당 삼성화재 건강보험 마이핏4180(2601.7)(납입면제,해약환급금 미지급형Ⅱ)",
+    "gender": "F",
+    "age": 40,
+    "premium": 145001,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:25.824525",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19081,
+    "product_name": "무배당 삼성화재 건강보험 마이핏1640(2601.7)(납입면제,해약환급금 미지급형Ⅱ)",
+    "gender": "M",
+    "age": 40,
+    "premium": 175452,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:26.084535",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19082,
+    "product_name": "무배당 삼성화재 건강보험 마이핏1640(2601.7)(납입면제,해약환급금 미지급형Ⅱ)",
+    "gender": "F",
+    "age": 40,
+    "premium": 130597,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:26.340134",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19083,
+    "product_name": "무배당 삼성화재 건강보험 New내돈내삼1640(2601.7)(납입면제형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 197047,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:26.591855",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19084,
+    "product_name": "무배당 삼성화재 건강보험 New내돈내삼1640(2601.7)(납입면제형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 141393,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:26.846708",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19085,
+    "product_name": "무배당 삼성화재 건강보험 New내돈내삼4170(2601.7)(납입면제형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 248721,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:27.113604",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19086,
+    "product_name": "무배당 삼성화재 건강보험 New내돈내삼4170(2601.7)(납입면제형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 158236,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:27.366489",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19087,
+    "product_name": "무배당 삼성화재 건강보험 안심케어(2601.5)(자동갱신형) 1종(납입면제형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 95401,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:27.617208",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19088,
+    "product_name": "무배당 삼성화재 건강보험 안심케어(2601.5)(자동갱신형) 1종(납입면제형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 84330,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:27.87816",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19089,
+    "product_name": "무배당 삼성화재 건강보험 안심케어(2601.5)(자동갱신형) 2종(일반형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 87980,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:28.128512",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19090,
+    "product_name": "무배당 삼성화재 건강보험 안심케어(2601.5)(자동갱신형) 2종(일반형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 79580,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:28.396628",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19091,
+    "product_name": "무배당 삼성화재 건강보험 안심케어(2601.5)(자동갱신형) 4종(납입면제형,해약환급금미지급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 74504,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:28.654874",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19092,
+    "product_name": "무배당 삼성화재 건강보험 안심케어(2601.5)(자동갱신형) 4종(납입면제형,해약환급금미지급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 70134,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:28.911153",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19093,
+    "product_name": "무배당 삼성화재 건강보험 천만안심(2601.13)(자동갱신형) 1종(납입면제형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 95401,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:29.169055",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19094,
+    "product_name": "무배당 삼성화재 건강보험 천만안심(2601.13)(자동갱신형) 1종(납입면제형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 84330,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:29.422635",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19095,
+    "product_name": "무배당 삼성화재 건강보험 천만안심(2601.13)(자동갱신형) 2종(일반형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 87980,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:29.678689",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19096,
+    "product_name": "무배당 삼성화재 건강보험 천만안심(2601.13)(자동갱신형) 2종(일반형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 79580,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:29.932955",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19097,
+    "product_name": "무배당 삼성화재 건강보험 천만안심(2601.13)(자동갱신형) 4종(납입면제형,해약환급금미지급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 74504,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:30.210848",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19098,
+    "product_name": "무배당 삼성화재 건강보험 천만안심(2601.13)(자동갱신형) 4종(납입면제형,해약환급금미지급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 70134,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:30.467586",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19099,
+    "product_name": "무배당 삼성화재 건강보험 New내돈내삼4170(2603.8)(납입면제,해약환급금 미지급형Ⅱ)",
+    "gender": "M",
+    "age": 40,
+    "premium": 197820,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:30.726754",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19100,
+    "product_name": "무배당 삼성화재 건강보험 New내돈내삼4170(2603.8)(납입면제,해약환급금 미지급형Ⅱ)",
+    "gender": "F",
+    "age": 40,
+    "premium": 133944,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:30.9898",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19101,
+    "product_name": "무배당 삼성화재 건강보험 New내돈내삼1640(2603.8)(납입면제,해약환급금 미지급형Ⅱ)",
+    "gender": "M",
+    "age": 40,
+    "premium": 149823,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:31.251082",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19102,
+    "product_name": "무배당 삼성화재 건강보험 New내돈내삼1640(2603.8)(납입면제,해약환급금 미지급형Ⅱ)",
+    "gender": "F",
+    "age": 40,
+    "premium": 114493,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:31.507283",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19103,
+    "product_name": "무배당 삼성화재 건강보험 New마이헬스 파트너(2603.8)(납입면제형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 199167,
+    "benefit_name": "뇌혈관질환 진단비(1년50%)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:31.762729",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19104,
+    "product_name": "무배당 삼성화재 건강보험 New마이헬스 파트너(2603.8)(납입면제형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 143461,
+    "benefit_name": "뇌혈관질환 진단비(1년50%)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:32.014133",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19105,
+    "product_name": "무배당 삼성화재 건강보험 New마이헬스 파트너(2603.8)(일반형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 194120,
+    "benefit_name": "뇌혈관질환 진단비(1년50%)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:32.303714",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19106,
+    "product_name": "무배당 삼성화재 건강보험 New마이헬스 파트너(2603.8)(일반형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 140270,
+    "benefit_name": "뇌혈관질환 진단비(1년50%)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:32.558043",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19107,
+    "product_name": "KB 다이렉트 건강맞춤보장보험(무배당)(26.01)_해약환급금 미지급형",
+    "gender": "M",
+    "age": 40,
+    "premium": 68290,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:32.813876",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19108,
+    "product_name": "KB 다이렉트 건강맞춤보장보험(무배당)(26.01)_해약환급금 미지급형",
+    "gender": "F",
+    "age": 40,
+    "premium": 48200,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:33.066325",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19109,
+    "product_name": "KB 다이렉트 건강맞춤보장보험(무배당)(26.01)_연만기갱신형",
+    "gender": "M",
+    "age": 40,
+    "premium": 17020,
+    "benefit_name": "뇌혈관질환진단비【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:33.334137",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19110,
+    "product_name": "KB 다이렉트 건강맞춤보장보험(무배당)(26.01)_연만기갱신형",
+    "gender": "F",
+    "age": 40,
+    "premium": 18620,
+    "benefit_name": "뇌혈관질환진단비【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:33.592953",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19111,
+    "product_name": "KB 골드클래스 건강보험(무배당)(26.01)",
+    "gender": "M",
+    "age": 40,
+    "premium": 193420,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:33.848235",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19112,
+    "product_name": "KB 골드클래스 건강보험(무배당)(26.01)",
+    "gender": "F",
+    "age": 40,
+    "premium": 113310,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:34.109734",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19113,
+    "product_name": "KB 5.10.10 금쪽같은 건강보험(무배당)(26.01)_1종(세만기)_1형(해약환급금지급형)_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 66530,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:34.360322",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19114,
+    "product_name": "KB 5.10.10 금쪽같은 건강보험(무배당)(26.01)_1종(세만기)_1형(해약환급금지급형)_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 42060,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:34.61612",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19115,
+    "product_name": "KB 5.10.10 금쪽같은 건강보험(무배당)(26.01)_1종(세만기)_2형(표준형해약환급금의 50‰지급형(납입기간이후))_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 56540,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:34.867954",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19116,
+    "product_name": "KB 5.10.10 금쪽같은 건강보험(무배당)(26.01)_1종(세만기)_2형(표준형해약환급금의 50‰지급형(납입기간이후))_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 37100,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:35.128291",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19117,
+    "product_name": "KB 5.10.10 금쪽같은 건강보험(무배당)(26.01)_2종(연만기갱신형)_해약환급금 미지급형_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 23010,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:35.387003",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19118,
+    "product_name": "KB 5.10.10 금쪽같은 건강보험(무배당)(26.01)_2종(연만기갱신형)_해약환급금 미지급형_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 20000,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:35.7156",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19119,
+    "product_name": "KB The좋은닥터플러스 건강보험(연만기갱신형)(무배당)(26.01)_1형(해약환급금지급형)_1종(5대 납입면제 환급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 42890,
+    "benefit_name": "뇌혈관질환진단비【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:35.982025",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19120,
+    "product_name": "KB The좋은닥터플러스 건강보험(연만기갱신형)(무배당)(26.01)_1형(해약환급금지급형)_1종(5대 납입면제 환급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 31820,
+    "benefit_name": "뇌혈관질환진단비【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:36.260886",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19121,
+    "product_name": "KB The좋은닥터플러스 건강보험(연만기갱신형)(무배당)(26.01)_1형(해약환급금지급형)_2종(8대 납입면제 기본형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 32240,
+    "benefit_name": "뇌혈관질환진단비【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:36.513003",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19122,
+    "product_name": "KB The좋은닥터플러스 건강보험(연만기갱신형)(무배당)(26.01)_1형(해약환급금지급형)_2종(8대 납입면제 기본형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 26540,
+    "benefit_name": "뇌혈관질환진단비【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:36.769458",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19123,
+    "product_name": "KB 해피라이프 건강보험(세만기)(해약환급금미지급형)(무배당)(26.01)_표준형해약환급금의 50‰지급형(납입기간이후)",
+    "gender": "M",
+    "age": 40,
+    "premium": 78060,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:37.025429",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19124,
+    "product_name": "KB 해피라이프 건강보험(세만기)(해약환급금미지급형)(무배당)(26.01)_표준형해약환급금의 50‰지급형(납입기간이후)",
+    "gender": "F",
+    "age": 40,
+    "premium": 55360,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:37.275924",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19125,
+    "product_name": "KB The좋은닥터플러스 건강보험(연만기갱신형)(무배당)(26.01)_2형(해약환급금 미지급형)_3종(9대 납입면제 기본형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 28220,
+    "benefit_name": "뇌혈관질환진단비【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:37.526611",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19126,
+    "product_name": "KB The좋은닥터플러스 건강보험(연만기갱신형)(무배당)(26.01)_2형(해약환급금 미지급형)_3종(9대 납입면제 기본형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 24550,
+    "benefit_name": "뇌혈관질환진단비【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:37.781107",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19127,
+    "product_name": "KB 금쪽같은 희망플러스 건강보험(무배당)(26.01)_2종(납입면제 표준형 해약환급금의 50‰지급형(납입기간 이후))",
+    "gender": "M",
+    "age": 40,
+    "premium": 83390,
+    "benefit_name": "뇌혈관질환진단비(감액없음)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:38.032961",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19128,
+    "product_name": "KB 금쪽같은 희망플러스 건강보험(무배당)(26.01)_2종(납입면제 표준형 해약환급금의 50‰지급형(납입기간 이후))",
+    "gender": "F",
+    "age": 40,
+    "premium": 57720,
+    "benefit_name": "뇌혈관질환진단비(감액없음)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:38.285554",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19129,
+    "product_name": "KB 닥터플러스 건강보험(세만기)(해약환급금미지급형)(무배당)(26.01)_표준형해약환급금의 50‰지급형(납입기간이후)",
+    "gender": "M",
+    "age": 40,
+    "premium": 78060,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:38.540433",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19130,
+    "product_name": "KB 닥터플러스 건강보험(세만기)(해약환급금미지급형)(무배당)(26.01)_표준형해약환급금의 50‰지급형(납입기간이후)",
+    "gender": "F",
+    "age": 40,
+    "premium": 55360,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:38.793562",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19131,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_1형(해약환급금지급형)_1종_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 25810,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:39.045615",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19132,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_1형(해약환급금지급형)_1종_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 23220,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:39.302136",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19133,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_1형(해약환급금지급형)_2종_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 94550,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:39.557857",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19134,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_1형(해약환급금지급형)_2종_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 46870,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:39.814114",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19135,
+    "product_name": "KB 닥터플러스 건강보험(세만기)(무배당)(26.01)_3종(2대 납입면제 기본형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 86630,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:40.073095",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19136,
+    "product_name": "KB 닥터플러스 건강보험(세만기)(무배당)(26.01)_3종(2대 납입면제 기본형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 59540,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:40.345199",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19137,
+    "product_name": "KB 닥터플러스 건강보험(세만기)(무배당)(26.01)_2종(8대 납입면제 기본형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 90290,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:40.607086",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19138,
+    "product_name": "KB 닥터플러스 건강보험(세만기)(무배당)(26.01)_2종(8대 납입면제 기본형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 61710,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:40.86664",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19139,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_1형(해약환급금지급형)_3종_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 23430,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:41.121392",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19140,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_1형(해약환급금지급형)_3종_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 21390,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:41.377586",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19141,
+    "product_name": "KB 닥터플러스 건강보험(세만기)(무배당)(26.01)_1종(5대 납입면제 환급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 100110,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:41.637403",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19142,
+    "product_name": "KB 닥터플러스 건강보험(세만기)(무배당)(26.01)_1종(5대 납입면제 환급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 67650,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:41.909647",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19143,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_2형(해약환급금 미지급형)_4종_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 22420,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:42.163013",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19144,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_2형(해약환급금 미지급형)_4종_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 21330,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:42.427474",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19145,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_2형(해약환급금 미지급형)_5종_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 85810,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:42.67807",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19146,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_2형(해약환급금 미지급형)_5종_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 44430,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:42.935128",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19147,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_2형(해약환급금 미지급형)_6종_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 20610,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:43.187842",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19148,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_2형(해약환급금 미지급형)_6종_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 19860,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:43.44426",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19149,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_1종_1형(해약환급금지급형)_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 68610,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:43.704658",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19150,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_1종_1형(해약환급금지급형)_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 44550,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:43.963108",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19151,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_2종_1형(해약환급금지급형)_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 113240,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:44.229679",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19152,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_2종_1형(해약환급금지급형)_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 55500,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:44.484845",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19153,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_3종_1형(해약환급금지급형)_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 65110,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:44.738502",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19154,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_3종_1형(해약환급금지급형)_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 42670,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:45.000435",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19155,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_4종_2형(표준형해약환급금의 50‰지급형(납입기간이후))_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 58560,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:45.257191",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19156,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_4종_2형(표준형해약환급금의 50‰지급형(납입기간이후))_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 39390,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:45.521854",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19157,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_5종_2형(표준형해약환급금의 50‰지급형(납입기간이후))_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 104830,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:45.775273",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19158,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_5종_2형(표준형해약환급금의 50‰지급형(납입기간이후))_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 52170,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:46.036555",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19159,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_6종_2형(표준형해약환급금의 50‰지급형(납입기간이후))_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 55570,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:46.29169",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19160,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_6종_2형(표준형해약환급금의 50‰지급형(납입기간이후))_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 37840,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:46.541805",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19161,
+    "product_name": "KB 금쪽같은 희망플러스 건강보험(무배당)(26.01)_1종 1형(납입면제 환급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 121380,
+    "benefit_name": "뇌혈관질환진단비(감액없음)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:46.804748",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19162,
+    "product_name": "KB 금쪽같은 희망플러스 건강보험(무배당)(26.01)_1종 1형(납입면제 환급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 78040,
+    "benefit_name": "뇌혈관질환진단비(감액없음)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:47.057082",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19163,
+    "product_name": "KB 금쪽같은 희망플러스 건강보험(무배당)(26.01)_1종 2형(납입면제 기본형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 97670,
+    "benefit_name": "뇌혈관질환진단비(감액없음)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:47.30985",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19164,
+    "product_name": "KB 금쪽같은 희망플러스 건강보험(무배당)(26.01)_1종 2형(납입면제 기본형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 65340,
+    "benefit_name": "뇌혈관질환진단비(감액없음)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:47.566092",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19165,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(1종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 179660,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:47.818567",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19166,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(1종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 121360,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:48.069414",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19167,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(2종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 99140,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:48.329116",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19168,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(2종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 84080,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:48.585373",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19169,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(3종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 49520,
+    "benefit_name": "뇌혈관질환진단비(갱신형)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:48.835416",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19170,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(3종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 41430,
+    "benefit_name": "뇌혈관질환진단비(갱신형)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:49.088959",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19171,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(4종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 33590,
+    "benefit_name": "뇌혈관질환진단비(갱신형)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:49.342144",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19172,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(4종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 32780,
+    "benefit_name": "뇌혈관질환진단비(갱신형)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:49.591624",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19173,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(7종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 153400,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:49.845389",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19174,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(7종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 106390,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:50.101256",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19175,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(8종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 80090,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:50.355474",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19176,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(8종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 69530,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:50.613712",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19177,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(9종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 105590,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:50.868688",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19178,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(9종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 89480,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:51.12569",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19179,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(10종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 84770,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:51.378207",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19180,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(10종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 73540,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:51.629264",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19181,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(11종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 36480,
+    "benefit_name": "뇌혈관질환진단비(갱신형)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:51.88016",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19182,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(11종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 34900,
+    "benefit_name": "뇌혈관질환진단비(갱신형)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:52.131824",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19183,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(12종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 47490,
+    "benefit_name": "뇌혈관질환진단비(갱신형)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:52.392372",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19184,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(12종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 40590,
+    "benefit_name": "뇌혈관질환진단비(갱신형)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:52.684397",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19185,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(1640)(2601) 1종(세만기형, 표준형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 70610,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:52.939796",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19186,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(1640)(2601) 1종(세만기형, 표준형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 49070,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:53.188265",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19187,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(1640)(2601) 2종(세만기형, 해약환급금미지급형Ⅱ)",
+    "gender": "M",
+    "age": 40,
+    "premium": 56060,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:53.444531",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19188,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(1640)(2601) 2종(세만기형, 해약환급금미지급형Ⅱ)",
+    "gender": "F",
+    "age": 40,
+    "premium": 40230,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:53.699661",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19225,
+    "product_name": "(무) NH가성비굿건강보험[6종:표준형]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 60190,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:03.27735",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19189,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(1640)(2601) 3종(갱신형, 표준형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 18100,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:53.954472",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19190,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(1640)(2601) 3종(갱신형, 표준형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 20150,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:54.206391",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19191,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(4165)(2601) 1종(세만기형, 표준형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 91270,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:54.467864",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19192,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(4165)(2601) 1종(세만기형, 표준형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 55010,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:54.72451",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19193,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(4165)(2601) 2종(세만기형, 해약환급금미지급형Ⅱ)",
+    "gender": "M",
+    "age": 40,
+    "premium": 71840,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:54.97484",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19194,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(4165)(2601) 2종(세만기형, 해약환급금미지급형Ⅱ)",
+    "gender": "F",
+    "age": 40,
+    "premium": 43930,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:55.231366",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19195,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(4165)(2601) 3종(갱신형, 표준형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 35280,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:55.486462",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19196,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(4165)(2601) 3종(갱신형, 표준형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 25310,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:55.748768",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19197,
+    "product_name": "무배당 하나더퍼스트 더건강 보험(2601) 1종(세만기형, 일반형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 39162,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:56.00256",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19198,
+    "product_name": "무배당 하나더퍼스트 더건강 보험(2601) 1종(세만기형, 일반형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 26724,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:56.269558",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19199,
+    "product_name": "무배당 하나더퍼스트 더건강 보험(2601) 2종(세만기형, 해약환급금미지급형Ⅱ)",
+    "gender": "M",
+    "age": 40,
+    "premium": 31336,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:56.530602",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19200,
+    "product_name": "무배당 하나더퍼스트 더건강 보험(2601) 2종(세만기형, 해약환급금미지급형Ⅱ)",
+    "gender": "F",
+    "age": 40,
+    "premium": 21350,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:56.796658",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19201,
+    "product_name": "무배당 하나더퍼스트 더건강 보험(2601) 3종(갱신형, 일반형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 10844,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:57.046385",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19202,
+    "product_name": "무배당 하나더퍼스트 더건강 보험(2601) 3종(갱신형, 일반형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 7656,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:57.300916",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19203,
+    "product_name": "무배당 하나더스타트 건강보험(2601)(해약환급금미지급형Ⅱ)",
+    "gender": "M",
+    "age": 40,
+    "premium": 13097,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:57.553913",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19204,
+    "product_name": "무배당 하나더스타트 건강보험(2601)(해약환급금미지급형Ⅱ)",
+    "gender": "F",
+    "age": 40,
+    "premium": 10048,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:57.807269",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19205,
+    "product_name": "신한 이지로운 건강보험(무배당)(2종)(해약환급금 미지급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 77840,
+    "benefit_name": "뇌혈관질환 진단비(최초1회한)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:58.059861",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19206,
+    "product_name": "신한 이지로운 건강보험(무배당)(2종)(해약환급금 미지급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 55550,
+    "benefit_name": "뇌혈관질환 진단비(최초1회한)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:58.312527",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19207,
+    "product_name": "신한 이지로운 건강보험(무배당)(1종)(납입면제, 해약환급금 미지급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 80946,
+    "benefit_name": "뇌혈관질환 진단비(최초1회한)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:58.566942",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19208,
+    "product_name": "신한 이지로운 건강보험(무배당)(1종)(납입면제, 해약환급금 미지급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 57874,
+    "benefit_name": "뇌혈관질환 진단비(최초1회한)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:58.82195",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19209,
+    "product_name": "신한 이지로운 건강보험 1540(무배당)(납입면제, 해약환급금 미지급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 71774,
+    "benefit_name": "뇌혈관질환 진단비(최초1회한)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:59.074712",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19210,
+    "product_name": "신한 이지로운 건강보험 1540(무배당)(납입면제, 해약환급금 미지급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 51737,
+    "benefit_name": "뇌혈관질환 진단비(최초1회한)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:59.325675",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19211,
+    "product_name": "(무) NH굿스타트건강보험[1종:해약환급금미지급형Ⅱ]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 24688,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:59.584834",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19212,
+    "product_name": "(무) NH굿스타트건강보험[1종:해약환급금미지급형Ⅱ]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 15695,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:12:59.835102",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19213,
+    "product_name": "(무) NH굿스타트건강보험[2종:표준형]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 33924,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:00.09805",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19214,
+    "product_name": "(무) NH굿스타트건강보험[2종:표준형]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 21619,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:00.356632",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19215,
+    "product_name": "(무) NH가성비굿건강보험[1종:납입면제형/표준형/갱신형]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 31616,
+    "benefit_name": "갱신형 뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:00.616747",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19216,
+    "product_name": "(무) NH가성비굿건강보험[1종:납입면제형/표준형/갱신형]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 17751,
+    "benefit_name": "갱신형 뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:00.881764",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19217,
+    "product_name": "(무) NH가성비굿건강보험[2종:표준형/갱신형]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 26712,
+    "benefit_name": "갱신형 뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:01.13567",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19218,
+    "product_name": "(무) NH가성비굿건강보험[2종:표준형/갱신형]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 15816,
+    "benefit_name": "갱신형 뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:01.393175",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19219,
+    "product_name": "(무) NH가성비굿건강보험[3종:납입면제형/해약환급금미지급형Ⅱ]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 55407,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:01.648141",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19220,
+    "product_name": "(무) NH가성비굿건강보험[3종:납입면제형/해약환급금미지급형Ⅱ]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 31640,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:01.900665",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19221,
+    "product_name": "(무) NH가성비굿건강보험[4종:해약환급금미지급형Ⅱ]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 52113,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:02.15967",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19222,
+    "product_name": "(무) NH가성비굿건강보험[4종:해약환급금미지급형Ⅱ]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 31202,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:02.410609",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19223,
+    "product_name": "(무) NH가성비굿건강보험[5종:납입면제형/표준형]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 65153,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:02.690526",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19224,
+    "product_name": "(무) NH가성비굿건강보험[5종:납입면제형/표준형]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 37822,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:02.958301",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19226,
+    "product_name": "(무) NH가성비굿건강보험[6종:표준형]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 35579,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:03.534754",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19227,
+    "product_name": "(무) NH건강할때굿플러스건강보험[1종:해약환급금미지급형Ⅱ/7대납면형]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 18010,
+    "benefit_name": "뇌혈관질환진단비(건강고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:03.803609",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19228,
+    "product_name": "(무) NH건강할때굿플러스건강보험[1종:해약환급금미지급형Ⅱ/7대납면형]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 11670,
+    "benefit_name": "뇌혈관질환진단비(건강고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:04.056446",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19229,
+    "product_name": "(무) NH건강할때굿플러스건강보험[2종:표준형/7대납면형]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 22310,
+    "benefit_name": "뇌혈관질환진단비(건강고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:04.308727",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19230,
+    "product_name": "(무) NH건강할때굿플러스건강보험[2종:표준형/7대납면형]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 14320,
+    "benefit_name": "뇌혈관질환진단비(건강고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:04.562824",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19231,
+    "product_name": "(무) NH건강할때굿플러스건강보험[3종:해약환급금미지급형Ⅱ/8대납면형]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 32400,
+    "benefit_name": "뇌혈관질환진단비(건강고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:04.818153",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19232,
+    "product_name": "(무) NH건강할때굿플러스건강보험[3종:해약환급금미지급형Ⅱ/8대납면형]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 20720,
+    "benefit_name": "뇌혈관질환진단비(건강고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:05.074546",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19233,
+    "product_name": "(무) NH건강할때굿플러스건강보험[4종:표준형/8대납면형]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 38480,
+    "benefit_name": "뇌혈관질환진단비(건강고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:05.342873",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19234,
+    "product_name": "(무) NH건강할때굿플러스건강보험[4종:표준형/8대납면형]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 24140,
+    "benefit_name": "뇌혈관질환진단비(건강고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:05.597239",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19235,
+    "product_name": "(무) 첫날부터든든한뇌심보험[1종:일반심사형]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 77780,
+    "benefit_name": "통합뇌질환진단비(뇌전증진단비)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:05.852834",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19236,
+    "product_name": "(무) 첫날부터든든한뇌심보험[1종:일반심사형]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 57321,
+    "benefit_name": "통합뇌질환진단비(뇌전증진단비)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:06.11267",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19237,
+    "product_name": "(무)AXA나를지켜주는건강보험Ⅱ(갱신형)2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 8720,
+    "benefit_name": "(갱신형)뇌출혈진단금(간편심사)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:06.371736",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19238,
+    "product_name": "(무)AXA나를지켜주는건강보험Ⅱ(갱신형)2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 11930,
+    "benefit_name": "(갱신형)뇌출혈진단금(간편심사)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:06.624146",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19239,
+    "product_name": "(무)건강보험",
+    "gender": "M",
+    "age": 40,
+    "premium": 85351,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:06.881826",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19240,
+    "product_name": "(무)건강보험",
+    "gender": "F",
+    "age": 40,
+    "premium": 63072,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:07.143339",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19241,
+    "product_name": "(무)드림빅비즈니스보장보험2601(2종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 97490,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:07.39804",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19242,
+    "product_name": "(무)드림빅비즈니스보장보험2601(2종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 82750,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:07.667987",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19243,
+    "product_name": "무배당 삼성화재 건강보험 마이스타0515(2601.7)(납입면제, 해약환급금 미지급형Ⅱ)",
+    "gender": "M",
+    "age": 40,
+    "premium": 113368,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:07.925127",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19244,
+    "product_name": "무배당 삼성화재 건강보험 마이스타0515(2601.7)(납입면제, 해약환급금 미지급형Ⅱ)",
+    "gender": "F",
+    "age": 40,
+    "premium": 93946,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:08.180855",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19245,
+    "product_name": "무배당 삼성화재 건강보험 마이스타0515(2601.7)(납입면제형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 146347,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:08.457375",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19246,
+    "product_name": "무배당 삼성화재 건강보험 마이스타0515(2601.7)(납입면제형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 118669,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:08.71493",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19247,
+    "product_name": "(무) Only You 통합보험2601(10년건강고지형)(1종)(2형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 45774,
+    "benefit_name": "뇌혈관질환진단비(10년건강가입)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:08.973655",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19248,
+    "product_name": "(무) Only You 통합보험2601(10년건강고지형)(1종)(2형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 36730,
+    "benefit_name": "뇌혈관질환진단비(10년건강가입)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:09.228945",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19249,
+    "product_name": "(무) Only You 통합보험2601(10년건강고지형)(2종)(1형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 63038,
+    "benefit_name": "뇌혈관질환진단비(10년건강가입)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:09.4821",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19250,
+    "product_name": "(무) Only You 통합보험2601(10년건강고지형)(2종)(1형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 48354,
+    "benefit_name": "뇌혈관질환진단비(10년건강가입)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:09.738433",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19251,
+    "product_name": "(무) Only You 통합보험2601(10년건강고지형)(3종)(2형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 47429,
+    "benefit_name": "뇌혈관질환진단비(10년건강가입)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:10.004199",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19252,
+    "product_name": "(무) Only You 통합보험2601(10년건강고지형)(3종)(2형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 37944,
+    "benefit_name": "뇌혈관질환진단비(10년건강가입)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:10.263043",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19253,
+    "product_name": "(무) Only You 통합보험2601(일반고지형)(1종)(2형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 57274,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:10.520268",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19254,
+    "product_name": "(무) Only You 통합보험2601(일반고지형)(1종)(2형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 52137,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:10.782328",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19255,
+    "product_name": "(무) Only You 통합보험2601(일반고지형)(2종)(1형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 79925,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:11.069597",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19256,
+    "product_name": "(무) Only You 통합보험2601(일반고지형)(2종)(1형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 69656,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:11.345379",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19257,
+    "product_name": "(무) Only You 통합보험2601(일반고지형)(3종)(2형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 59922,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:11.599804",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19258,
+    "product_name": "(무) Only You 통합보험2601(일반고지형)(3종)(2형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 54266,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:11.852828",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19259,
+    "product_name": "(무) 메리츠 프리미엄 건강보험2602(2종)(2형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 137712,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:12.112324",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19260,
+    "product_name": "(무) 메리츠 프리미엄 건강보험2602(2종)(2형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 113936,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:12.378368",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19261,
+    "product_name": "(무) 메리츠 The좋은 내Mom대로 보장보험2601(1종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 23460,
+    "benefit_name": "갱신형 뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:12.636799",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19262,
+    "product_name": "(무) 메리츠 The좋은 내Mom대로 보장보험2601(1종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 28922,
+    "benefit_name": "갱신형 뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:12.896716",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19263,
+    "product_name": "(무) 메리츠 The좋은 내Mom대로 보장보험2601(5종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 24874,
+    "benefit_name": "갱신형 뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:13.157739",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19264,
+    "product_name": "(무) 메리츠 The좋은 내Mom대로 보장보험2601(5종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 30466,
+    "benefit_name": "갱신형 뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:13.415746",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19265,
+    "product_name": "(무) 메리츠 The좋은 내Mom대로 보장보험2601(6종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 37432,
+    "benefit_name": "갱신형 뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:13.676885",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19266,
+    "product_name": "(무) 메리츠 The좋은 내Mom대로 보장보험2601(6종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 39212,
+    "benefit_name": "갱신형 뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:13.959049",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19267,
+    "product_name": "한화 시그니처 여성 건강보험4.0 (무) 5종(납입면제 미운영형,납입후50‰해약환급금지급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 101495,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:14.223431",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19268,
+    "product_name": "한화 시그니처 여성 건강보험4.0 (무) 5종(납입면제 미운영형,납입후50‰해약환급금지급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 76890,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:14.487423",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19269,
+    "product_name": "한화 시그니처 여성 건강보험4.0 (무) 4종(납입면제형,납입후50‰해약환급금지급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 106154,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:14.741019",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19270,
+    "product_name": "한화 시그니처 여성 건강보험4.0 (무) 4종(납입면제형,납입후50‰해약환급금지급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 80420,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:14.999735",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19271,
+    "product_name": "한화 시그니처 여성 건강보험4.0 (무) 3종(납입면제형,기본형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 123737,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:15.253798",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19272,
+    "product_name": "한화 시그니처 여성 건강보험4.0 (무) 3종(납입면제형,기본형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 93740,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:15.511462",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19273,
+    "product_name": "한화 시그니처 여성 건강보험4.0 (무) 2종(납입면제 강화형,납입후50‰해약환급금지급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 113454,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:15.768745",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19274,
+    "product_name": "한화 시그니처 여성 건강보험4.0 (무) 2종(납입면제 강화형,납입후50‰해약환급금지급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 85950,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:16.034565",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19275,
+    "product_name": "한화 시그니처 여성 건강보험4.0 (무) 1종(납입면제 강화형,기본형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 128660,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:16.293087",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19276,
+    "product_name": "한화 시그니처 여성 건강보험4.0 (무) 1종(납입면제 강화형,기본형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 97470,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:16.550172",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19277,
+    "product_name": "한화 시그니처 여성 건강보험4.0(건강관리형) (무) 1종(납입면제 강화형,기본형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 128660,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:16.813118",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19278,
+    "product_name": "한화 시그니처 여성 건강보험4.0(건강관리형) (무) 1종(납입면제 강화형,기본형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 97470,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:17.078692",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19279,
+    "product_name": "한화 시그니처 여성 건강보험4.0(건강관리형) (무) 2종(납입면제 강화형,납입후50‰해약환급금지급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 113454,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:17.328956",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19280,
+    "product_name": "한화 시그니처 여성 건강보험4.0(건강관리형) (무) 2종(납입면제 강화형,납입후50‰해약환급금지급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 85950,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:17.584294",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19281,
+    "product_name": "한화 시그니처 여성 건강보험4.0(건강관리형) (무) 4종(납입면제형,납입후50‰해약환급금지급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 106154,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:17.846559",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19282,
+    "product_name": "한화 시그니처 여성 건강보험4.0(건강관리형) (무) 4종(납입면제형,납입후50‰해약환급금지급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 80420,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:18.108946",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19283,
+    "product_name": "한화 시그니처 여성 건강보험4.0(건강관리형) (무) 5종(납입면제 미운영형,납입후50‰해약환급금지급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 101495,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:18.36407",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19284,
+    "product_name": "한화 시그니처 여성 건강보험4.0(건강관리형) (무) 5종(납입면제 미운영형,납입후50‰해약환급금지급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 76890,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:18.624253",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19285,
+    "product_name": "한화 시그니처 여성 건강보험4.0(건강관리형) (무) 3종(납입면제형,기본형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 123737,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:18.878506",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19286,
+    "product_name": "한화 시그니처 여성 건강보험4.0(건강관리형) (무) 3종(납입면제형,기본형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 93740,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:19.133569",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19287,
+    "product_name": "무배당 삼성화재 다이렉트 AI맞춤보장보험(2601.5)(자동갱신형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 33390,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:19.395647",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19288,
+    "product_name": "무배당 삼성화재 다이렉트 AI맞춤보장보험(2601.5)(자동갱신형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 43670,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:19.652709",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19289,
+    "product_name": "무배당 삼성화재 다이렉트 건강보험(2601.16)(자동갱신형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 40740,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:19.913205",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19290,
+    "product_name": "무배당 삼성화재 다이렉트 건강보험(2601.16)(자동갱신형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 37480,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:20.191032",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19291,
+    "product_name": "무배당 삼성화재 다이렉트 비갱신 건강보험(2601.19)(해약환급금 미지급형Ⅱ)",
+    "gender": "M",
+    "age": 40,
+    "premium": 92415,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:20.475309",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19292,
+    "product_name": "무배당 삼성화재 다이렉트 비갱신 건강보험(2601.19)(해약환급금 미지급형Ⅱ)",
+    "gender": "F",
+    "age": 40,
+    "premium": 67750,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:20.745667",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19293,
+    "product_name": "무배당 삼성화재 건강보험 마이핏4180(2601.7)(납입면제,해약환급금 미지급형Ⅱ)",
+    "gender": "M",
+    "age": 40,
+    "premium": 220061,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:21.017291",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19294,
+    "product_name": "무배당 삼성화재 건강보험 마이핏4180(2601.7)(납입면제,해약환급금 미지급형Ⅱ)",
+    "gender": "F",
+    "age": 40,
+    "premium": 145001,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:21.298111",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19295,
+    "product_name": "무배당 삼성화재 건강보험 마이핏1640(2601.7)(납입면제,해약환급금 미지급형Ⅱ)",
+    "gender": "M",
+    "age": 40,
+    "premium": 175452,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:21.608296",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19296,
+    "product_name": "무배당 삼성화재 건강보험 마이핏1640(2601.7)(납입면제,해약환급금 미지급형Ⅱ)",
+    "gender": "F",
+    "age": 40,
+    "premium": 130597,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:21.877821",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19297,
+    "product_name": "무배당 삼성화재 건강보험 New내돈내삼1640(2601.7)(납입면제형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 197047,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:22.162826",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19298,
+    "product_name": "무배당 삼성화재 건강보험 New내돈내삼1640(2601.7)(납입면제형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 141393,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:22.441694",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19299,
+    "product_name": "무배당 삼성화재 건강보험 New내돈내삼4170(2601.7)(납입면제형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 248721,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:22.718475",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19300,
+    "product_name": "무배당 삼성화재 건강보험 New내돈내삼4170(2601.7)(납입면제형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 158236,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:23.005484",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19301,
+    "product_name": "무배당 삼성화재 건강보험 안심케어(2601.5)(자동갱신형) 1종(납입면제형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 95401,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:23.280612",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19302,
+    "product_name": "무배당 삼성화재 건강보험 안심케어(2601.5)(자동갱신형) 1종(납입면제형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 84330,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:23.552233",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19303,
+    "product_name": "무배당 삼성화재 건강보험 안심케어(2601.5)(자동갱신형) 2종(일반형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 87980,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:23.824217",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19304,
+    "product_name": "무배당 삼성화재 건강보험 안심케어(2601.5)(자동갱신형) 2종(일반형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 79580,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:24.098993",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19305,
+    "product_name": "무배당 삼성화재 건강보험 안심케어(2601.5)(자동갱신형) 4종(납입면제형,해약환급금미지급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 74504,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:24.369676",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19306,
+    "product_name": "무배당 삼성화재 건강보험 안심케어(2601.5)(자동갱신형) 4종(납입면제형,해약환급금미지급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 70134,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:24.643147",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19307,
+    "product_name": "무배당 삼성화재 건강보험 천만안심(2601.13)(자동갱신형) 1종(납입면제형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 95401,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:24.917009",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19308,
+    "product_name": "무배당 삼성화재 건강보험 천만안심(2601.13)(자동갱신형) 1종(납입면제형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 84330,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:25.190148",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19309,
+    "product_name": "무배당 삼성화재 건강보험 천만안심(2601.13)(자동갱신형) 2종(일반형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 87980,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:25.46733",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19310,
+    "product_name": "무배당 삼성화재 건강보험 천만안심(2601.13)(자동갱신형) 2종(일반형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 79580,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:25.748746",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19311,
+    "product_name": "무배당 삼성화재 건강보험 천만안심(2601.13)(자동갱신형) 4종(납입면제형,해약환급금미지급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 74504,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:26.037353",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19312,
+    "product_name": "무배당 삼성화재 건강보험 천만안심(2601.13)(자동갱신형) 4종(납입면제형,해약환급금미지급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 70134,
+    "benefit_name": "뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:26.318651",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19313,
+    "product_name": "무배당 삼성화재 건강보험 New내돈내삼4170(2603.8)(납입면제,해약환급금 미지급형Ⅱ)",
+    "gender": "M",
+    "age": 40,
+    "premium": 197820,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:26.590401",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19314,
+    "product_name": "무배당 삼성화재 건강보험 New내돈내삼4170(2603.8)(납입면제,해약환급금 미지급형Ⅱ)",
+    "gender": "F",
+    "age": 40,
+    "premium": 133944,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:26.900094",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19315,
+    "product_name": "무배당 삼성화재 건강보험 New내돈내삼1640(2603.8)(납입면제,해약환급금 미지급형Ⅱ)",
+    "gender": "M",
+    "age": 40,
+    "premium": 149823,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:27.173518",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19316,
+    "product_name": "무배당 삼성화재 건강보험 New내돈내삼1640(2603.8)(납입면제,해약환급금 미지급형Ⅱ)",
+    "gender": "F",
+    "age": 40,
+    "premium": 114493,
+    "benefit_name": "[건강]뇌혈관질환 진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:27.447149",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19317,
+    "product_name": "무배당 삼성화재 건강보험 New마이헬스 파트너(2603.8)(납입면제형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 199167,
+    "benefit_name": "뇌혈관질환 진단비(1년50%)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:27.728306",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19318,
+    "product_name": "무배당 삼성화재 건강보험 New마이헬스 파트너(2603.8)(납입면제형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 143461,
+    "benefit_name": "뇌혈관질환 진단비(1년50%)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:28.011546",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19319,
+    "product_name": "무배당 삼성화재 건강보험 New마이헬스 파트너(2603.8)(일반형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 194120,
+    "benefit_name": "뇌혈관질환 진단비(1년50%)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:28.294582",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19320,
+    "product_name": "무배당 삼성화재 건강보험 New마이헬스 파트너(2603.8)(일반형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 140270,
+    "benefit_name": "뇌혈관질환 진단비(1년50%)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:28.563943",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19321,
+    "product_name": "KB 다이렉트 건강맞춤보장보험(무배당)(26.01)_해약환급금 미지급형",
+    "gender": "M",
+    "age": 40,
+    "premium": 68290,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:28.835546",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19322,
+    "product_name": "KB 다이렉트 건강맞춤보장보험(무배당)(26.01)_해약환급금 미지급형",
+    "gender": "F",
+    "age": 40,
+    "premium": 48200,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:29.121505",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19323,
+    "product_name": "KB 다이렉트 건강맞춤보장보험(무배당)(26.01)_연만기갱신형",
+    "gender": "M",
+    "age": 40,
+    "premium": 17020,
+    "benefit_name": "뇌혈관질환진단비【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:29.40839",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19324,
+    "product_name": "KB 다이렉트 건강맞춤보장보험(무배당)(26.01)_연만기갱신형",
+    "gender": "F",
+    "age": 40,
+    "premium": 18620,
+    "benefit_name": "뇌혈관질환진단비【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:29.682383",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19325,
+    "product_name": "KB 골드클래스 건강보험(무배당)(26.01)",
+    "gender": "M",
+    "age": 40,
+    "premium": 193420,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:29.95552",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19326,
+    "product_name": "KB 골드클래스 건강보험(무배당)(26.01)",
+    "gender": "F",
+    "age": 40,
+    "premium": 113310,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:30.223586",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19327,
+    "product_name": "KB 5.10.10 금쪽같은 건강보험(무배당)(26.01)_1종(세만기)_1형(해약환급금지급형)_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 66530,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:30.493333",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19328,
+    "product_name": "KB 5.10.10 금쪽같은 건강보험(무배당)(26.01)_1종(세만기)_1형(해약환급금지급형)_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 42060,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:30.76721",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19329,
+    "product_name": "KB 5.10.10 금쪽같은 건강보험(무배당)(26.01)_1종(세만기)_2형(표준형해약환급금의 50‰지급형(납입기간이후))_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 56540,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:31.042527",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19388,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(7종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 106390,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:47.295851",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19330,
+    "product_name": "KB 5.10.10 금쪽같은 건강보험(무배당)(26.01)_1종(세만기)_2형(표준형해약환급금의 50‰지급형(납입기간이후))_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 37100,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:31.317414",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19331,
+    "product_name": "KB 5.10.10 금쪽같은 건강보험(무배당)(26.01)_2종(연만기갱신형)_해약환급금 미지급형_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 23010,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:31.605951",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19332,
+    "product_name": "KB 5.10.10 금쪽같은 건강보험(무배당)(26.01)_2종(연만기갱신형)_해약환급금 미지급형_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 20000,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:31.887159",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19333,
+    "product_name": "KB The좋은닥터플러스 건강보험(연만기갱신형)(무배당)(26.01)_1형(해약환급금지급형)_1종(5대 납입면제 환급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 42890,
+    "benefit_name": "뇌혈관질환진단비【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:32.169144",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19334,
+    "product_name": "KB The좋은닥터플러스 건강보험(연만기갱신형)(무배당)(26.01)_1형(해약환급금지급형)_1종(5대 납입면제 환급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 31820,
+    "benefit_name": "뇌혈관질환진단비【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:32.451784",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19335,
+    "product_name": "KB The좋은닥터플러스 건강보험(연만기갱신형)(무배당)(26.01)_1형(해약환급금지급형)_2종(8대 납입면제 기본형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 32240,
+    "benefit_name": "뇌혈관질환진단비【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:32.745559",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19336,
+    "product_name": "KB The좋은닥터플러스 건강보험(연만기갱신형)(무배당)(26.01)_1형(해약환급금지급형)_2종(8대 납입면제 기본형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 26540,
+    "benefit_name": "뇌혈관질환진단비【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:33.032928",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19337,
+    "product_name": "KB 해피라이프 건강보험(세만기)(해약환급금미지급형)(무배당)(26.01)_표준형해약환급금의 50‰지급형(납입기간이후)",
+    "gender": "M",
+    "age": 40,
+    "premium": 78060,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:33.308221",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19338,
+    "product_name": "KB 해피라이프 건강보험(세만기)(해약환급금미지급형)(무배당)(26.01)_표준형해약환급금의 50‰지급형(납입기간이후)",
+    "gender": "F",
+    "age": 40,
+    "premium": 55360,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:33.580423",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19339,
+    "product_name": "KB The좋은닥터플러스 건강보험(연만기갱신형)(무배당)(26.01)_2형(해약환급금 미지급형)_3종(9대 납입면제 기본형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 28220,
+    "benefit_name": "뇌혈관질환진단비【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:33.856843",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19340,
+    "product_name": "KB The좋은닥터플러스 건강보험(연만기갱신형)(무배당)(26.01)_2형(해약환급금 미지급형)_3종(9대 납입면제 기본형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 24550,
+    "benefit_name": "뇌혈관질환진단비【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:34.133029",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19341,
+    "product_name": "KB 금쪽같은 희망플러스 건강보험(무배당)(26.01)_2종(납입면제 표준형 해약환급금의 50‰지급형(납입기간 이후))",
+    "gender": "M",
+    "age": 40,
+    "premium": 83390,
+    "benefit_name": "뇌혈관질환진단비(감액없음)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:34.41543",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19342,
+    "product_name": "KB 금쪽같은 희망플러스 건강보험(무배당)(26.01)_2종(납입면제 표준형 해약환급금의 50‰지급형(납입기간 이후))",
+    "gender": "F",
+    "age": 40,
+    "premium": 57720,
+    "benefit_name": "뇌혈관질환진단비(감액없음)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:34.687207",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19343,
+    "product_name": "KB 닥터플러스 건강보험(세만기)(해약환급금미지급형)(무배당)(26.01)_표준형해약환급금의 50‰지급형(납입기간이후)",
+    "gender": "M",
+    "age": 40,
+    "premium": 78060,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:34.959274",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19344,
+    "product_name": "KB 닥터플러스 건강보험(세만기)(해약환급금미지급형)(무배당)(26.01)_표준형해약환급금의 50‰지급형(납입기간이후)",
+    "gender": "F",
+    "age": 40,
+    "premium": 55360,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:35.232742",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19345,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_1형(해약환급금지급형)_1종_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 25810,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:35.515103",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19346,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_1형(해약환급금지급형)_1종_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 23220,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:35.787405",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19347,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_1형(해약환급금지급형)_2종_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 94550,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:36.062196",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19348,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_1형(해약환급금지급형)_2종_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 46870,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:36.346133",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19349,
+    "product_name": "KB 닥터플러스 건강보험(세만기)(무배당)(26.01)_3종(2대 납입면제 기본형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 86630,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:36.620871",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19350,
+    "product_name": "KB 닥터플러스 건강보험(세만기)(무배당)(26.01)_3종(2대 납입면제 기본형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 59540,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:36.900124",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19351,
+    "product_name": "KB 닥터플러스 건강보험(세만기)(무배당)(26.01)_2종(8대 납입면제 기본형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 90290,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:37.16825",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19352,
+    "product_name": "KB 닥터플러스 건강보험(세만기)(무배당)(26.01)_2종(8대 납입면제 기본형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 61710,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:37.4363",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19353,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_1형(해약환급금지급형)_3종_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 23430,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:37.705525",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19354,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_1형(해약환급금지급형)_3종_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 21390,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:37.975056",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19355,
+    "product_name": "KB 닥터플러스 건강보험(세만기)(무배당)(26.01)_1종(5대 납입면제 환급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 100110,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:38.281631",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19356,
+    "product_name": "KB 닥터플러스 건강보험(세만기)(무배당)(26.01)_1종(5대 납입면제 환급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 67650,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:38.552466",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19357,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_2형(해약환급금 미지급형)_4종_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 22420,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:38.820988",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19358,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_2형(해약환급금 미지급형)_4종_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 21330,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:39.092769",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19359,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_2형(해약환급금 미지급형)_5종_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 85810,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:39.361532",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19360,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_2형(해약환급금 미지급형)_5종_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 44430,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:39.640931",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19361,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_2형(해약환급금 미지급형)_6종_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 20610,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:39.909794",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19362,
+    "product_name": "KB 5.10.10 플러스 건강보험(연만기갱신형)(무배당)(26.01)_2형(해약환급금 미지급형)_6종_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 19860,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)【갱신계약】",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:40.182773",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19363,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_1종_1형(해약환급금지급형)_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 68610,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:40.456752",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19364,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_1종_1형(해약환급금지급형)_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 44550,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:40.725575",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19365,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_2종_1형(해약환급금지급형)_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 113240,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:41.012994",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19366,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_2종_1형(해약환급금지급형)_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 55500,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:41.286324",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19367,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_3종_1형(해약환급금지급형)_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 65110,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:41.55731",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19368,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_3종_1형(해약환급금지급형)_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 42670,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:41.828537",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19369,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_4종_2형(표준형해약환급금의 50‰지급형(납입기간이후))_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 58560,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:42.103228",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19370,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_4종_2형(표준형해약환급금의 50‰지급형(납입기간이후))_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 39390,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:42.373694",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19371,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_5종_2형(표준형해약환급금의 50‰지급형(납입기간이후))_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 104830,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:42.64364",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19372,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_5종_2형(표준형해약환급금의 50‰지급형(납입기간이후))_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 52170,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:42.921555",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19373,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_6종_2형(표준형해약환급금의 50‰지급형(납입기간이후))_건강고지형(10년고지)",
+    "gender": "M",
+    "age": 40,
+    "premium": 55570,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:43.201738",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19374,
+    "product_name": "KB 5.10.10 플러스 건강보험(세만기)(무배당)(26.01)_6종_2형(표준형해약환급금의 50‰지급형(납입기간이후))_건강고지형(10년고지)",
+    "gender": "F",
+    "age": 40,
+    "premium": 37840,
+    "benefit_name": "뇌혈관질환진단비(맞춤고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:43.47276",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19375,
+    "product_name": "KB 금쪽같은 희망플러스 건강보험(무배당)(26.01)_1종 1형(납입면제 환급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 121380,
+    "benefit_name": "뇌혈관질환진단비(감액없음)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:43.753469",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19376,
+    "product_name": "KB 금쪽같은 희망플러스 건강보험(무배당)(26.01)_1종 1형(납입면제 환급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 78040,
+    "benefit_name": "뇌혈관질환진단비(감액없음)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:44.02485",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19377,
+    "product_name": "KB 금쪽같은 희망플러스 건강보험(무배당)(26.01)_1종 2형(납입면제 기본형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 97670,
+    "benefit_name": "뇌혈관질환진단비(감액없음)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:44.295094",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19378,
+    "product_name": "KB 금쪽같은 희망플러스 건강보험(무배당)(26.01)_1종 2형(납입면제 기본형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 65340,
+    "benefit_name": "뇌혈관질환진단비(감액없음)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:44.566499",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19379,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(1종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 179660,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:44.835861",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19380,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(1종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 121360,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:45.108242",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19381,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(2종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 99140,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:45.38604",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19382,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(2종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 84080,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:45.66392",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19383,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(3종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 49520,
+    "benefit_name": "뇌혈관질환진단비(갱신형)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:45.939754",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19384,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(3종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 41430,
+    "benefit_name": "뇌혈관질환진단비(갱신형)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:46.212539",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19385,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(4종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 33590,
+    "benefit_name": "뇌혈관질환진단비(갱신형)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:46.479675",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19386,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(4종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 32780,
+    "benefit_name": "뇌혈관질환진단비(갱신형)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:46.751692",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19387,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(7종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 153400,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:47.023311",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19389,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(8종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 80090,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:47.571751",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19390,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(8종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 69530,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:47.844918",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19391,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(9종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 105590,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:48.114333",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19392,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(9종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 89480,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:48.393461",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19393,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(10종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 84770,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:48.665455",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19394,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(10종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 73540,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:48.943486",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19395,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(11종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 36480,
+    "benefit_name": "뇌혈관질환진단비(갱신형)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:49.217853",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19396,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(11종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 34900,
+    "benefit_name": "뇌혈관질환진단비(갱신형)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:49.495876",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19397,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(12종)",
+    "gender": "M",
+    "age": 40,
+    "premium": 47490,
+    "benefit_name": "뇌혈관질환진단비(갱신형)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:49.767915",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19398,
+    "product_name": "(무)다이렉트 걸을수록 THE좋은 건강보험2601(CM)(12종)",
+    "gender": "F",
+    "age": 40,
+    "premium": 40590,
+    "benefit_name": "뇌혈관질환진단비(갱신형)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:50.038775",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19399,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(1640)(2601) 1종(세만기형, 표준형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 70610,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:50.319583",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19400,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(1640)(2601) 1종(세만기형, 표준형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 49070,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:50.607803",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19401,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(1640)(2601) 2종(세만기형, 해약환급금미지급형Ⅱ)",
+    "gender": "M",
+    "age": 40,
+    "premium": 56060,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:50.880762",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19402,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(1640)(2601) 2종(세만기형, 해약환급금미지급형Ⅱ)",
+    "gender": "F",
+    "age": 40,
+    "premium": 40230,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:51.151216",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19403,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(1640)(2601) 3종(갱신형, 표준형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 18100,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:51.424236",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19404,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(1640)(2601) 3종(갱신형, 표준형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 20150,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:51.704645",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19405,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(4165)(2601) 1종(세만기형, 표준형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 91270,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:51.984591",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19406,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(4165)(2601) 1종(세만기형, 표준형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 55010,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:52.255868",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19407,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(4165)(2601) 2종(세만기형, 해약환급금미지급형Ⅱ)",
+    "gender": "M",
+    "age": 40,
+    "premium": 71840,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:52.522541",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19408,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(4165)(2601) 2종(세만기형, 해약환급금미지급형Ⅱ)",
+    "gender": "F",
+    "age": 40,
+    "premium": 43930,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:52.795334",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19409,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(4165)(2601) 3종(갱신형, 표준형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 35280,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:53.072651",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19410,
+    "product_name": "무배당 하나더퍼스트 5N5 건강보험(4165)(2601) 3종(갱신형, 표준형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 25310,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:53.351406",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19411,
+    "product_name": "무배당 하나더퍼스트 더건강 보험(2601) 1종(세만기형, 일반형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 39162,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:53.628721",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19412,
+    "product_name": "무배당 하나더퍼스트 더건강 보험(2601) 1종(세만기형, 일반형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 26724,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:53.908101",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19413,
+    "product_name": "무배당 하나더퍼스트 더건강 보험(2601) 2종(세만기형, 해약환급금미지급형Ⅱ)",
+    "gender": "M",
+    "age": 40,
+    "premium": 31336,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:54.181062",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19414,
+    "product_name": "무배당 하나더퍼스트 더건강 보험(2601) 2종(세만기형, 해약환급금미지급형Ⅱ)",
+    "gender": "F",
+    "age": 40,
+    "premium": 21350,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:54.458737",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19415,
+    "product_name": "무배당 하나더퍼스트 더건강 보험(2601) 3종(갱신형, 일반형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 10844,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:54.737855",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19416,
+    "product_name": "무배당 하나더퍼스트 더건강 보험(2601) 3종(갱신형, 일반형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 7656,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:55.015161",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19417,
+    "product_name": "무배당 하나더스타트 건강보험(2601)(해약환급금미지급형Ⅱ)",
+    "gender": "M",
+    "age": 40,
+    "premium": 13097,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:55.283852",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19418,
+    "product_name": "무배당 하나더스타트 건강보험(2601)(해약환급금미지급형Ⅱ)",
+    "gender": "F",
+    "age": 40,
+    "premium": 10048,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:55.572422",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19419,
+    "product_name": "신한 이지로운 건강보험(무배당)(2종)(해약환급금 미지급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 77840,
+    "benefit_name": "뇌혈관질환 진단비(최초1회한)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:55.877698",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19420,
+    "product_name": "신한 이지로운 건강보험(무배당)(2종)(해약환급금 미지급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 55550,
+    "benefit_name": "뇌혈관질환 진단비(최초1회한)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:56.151035",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19421,
+    "product_name": "신한 이지로운 건강보험(무배당)(1종)(납입면제, 해약환급금 미지급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 80946,
+    "benefit_name": "뇌혈관질환 진단비(최초1회한)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:56.42776",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19422,
+    "product_name": "신한 이지로운 건강보험(무배당)(1종)(납입면제, 해약환급금 미지급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 57874,
+    "benefit_name": "뇌혈관질환 진단비(최초1회한)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:56.70166",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19423,
+    "product_name": "신한 이지로운 건강보험 1540(무배당)(납입면제, 해약환급금 미지급형)",
+    "gender": "M",
+    "age": 40,
+    "premium": 71774,
+    "benefit_name": "뇌혈관질환 진단비(최초1회한)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:56.977948",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19424,
+    "product_name": "신한 이지로운 건강보험 1540(무배당)(납입면제, 해약환급금 미지급형)",
+    "gender": "F",
+    "age": 40,
+    "premium": 51737,
+    "benefit_name": "뇌혈관질환 진단비(최초1회한)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:57.248476",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19425,
+    "product_name": "(무) NH굿스타트건강보험[1종:해약환급금미지급형Ⅱ]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 24688,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:57.525661",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19426,
+    "product_name": "(무) NH굿스타트건강보험[1종:해약환급금미지급형Ⅱ]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 15695,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:57.807458",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19427,
+    "product_name": "(무) NH굿스타트건강보험[2종:표준형]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 33924,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:58.087197",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19428,
+    "product_name": "(무) NH굿스타트건강보험[2종:표준형]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 21619,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:58.386844",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19429,
+    "product_name": "(무) NH가성비굿건강보험[1종:납입면제형/표준형/갱신형]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 31616,
+    "benefit_name": "갱신형 뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:58.66972",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19430,
+    "product_name": "(무) NH가성비굿건강보험[1종:납입면제형/표준형/갱신형]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 17751,
+    "benefit_name": "갱신형 뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:58.945608",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19431,
+    "product_name": "(무) NH가성비굿건강보험[2종:표준형/갱신형]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 26712,
+    "benefit_name": "갱신형 뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:59.221016",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19432,
+    "product_name": "(무) NH가성비굿건강보험[2종:표준형/갱신형]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 15816,
+    "benefit_name": "갱신형 뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:59.494779",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19433,
+    "product_name": "(무) NH가성비굿건강보험[3종:납입면제형/해약환급금미지급형Ⅱ]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 55407,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:13:59.778126",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19434,
+    "product_name": "(무) NH가성비굿건강보험[3종:납입면제형/해약환급금미지급형Ⅱ]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 31640,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:14:00.052877",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19435,
+    "product_name": "(무) NH가성비굿건강보험[4종:해약환급금미지급형Ⅱ]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 52113,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:14:00.326382",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19436,
+    "product_name": "(무) NH가성비굿건강보험[4종:해약환급금미지급형Ⅱ]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 31202,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:14:00.596349",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19437,
+    "product_name": "(무) NH가성비굿건강보험[5종:납입면제형/표준형]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 65153,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:14:00.867951",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19438,
+    "product_name": "(무) NH가성비굿건강보험[5종:납입면제형/표준형]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 37822,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:14:01.143744",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19439,
+    "product_name": "(무) NH가성비굿건강보험[6종:표준형]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 60190,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:14:01.430613",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19440,
+    "product_name": "(무) NH가성비굿건강보험[6종:표준형]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 35579,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:14:01.708531",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19441,
+    "product_name": "(무) NH건강할때굿플러스건강보험[1종:해약환급금미지급형Ⅱ/7대납면형]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 18010,
+    "benefit_name": "뇌혈관질환진단비(건강고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:14:01.984251",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19442,
+    "product_name": "(무) NH건강할때굿플러스건강보험[1종:해약환급금미지급형Ⅱ/7대납면형]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 11670,
+    "benefit_name": "뇌혈관질환진단비(건강고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:14:02.257669",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19443,
+    "product_name": "(무) NH건강할때굿플러스건강보험[2종:표준형/7대납면형]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 22310,
+    "benefit_name": "뇌혈관질환진단비(건강고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:14:02.52735",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19444,
+    "product_name": "(무) NH건강할때굿플러스건강보험[2종:표준형/7대납면형]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 14320,
+    "benefit_name": "뇌혈관질환진단비(건강고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:14:02.809941",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19445,
+    "product_name": "(무) NH건강할때굿플러스건강보험[3종:해약환급금미지급형Ⅱ/8대납면형]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 32400,
+    "benefit_name": "뇌혈관질환진단비(건강고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:14:03.083037",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19446,
+    "product_name": "(무) NH건강할때굿플러스건강보험[3종:해약환급금미지급형Ⅱ/8대납면형]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 20720,
+    "benefit_name": "뇌혈관질환진단비(건강고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:14:03.369956",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19447,
+    "product_name": "(무) NH건강할때굿플러스건강보험[4종:표준형/8대납면형]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 38480,
+    "benefit_name": "뇌혈관질환진단비(건강고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:14:03.645348",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19448,
+    "product_name": "(무) NH건강할때굿플러스건강보험[4종:표준형/8대납면형]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 24140,
+    "benefit_name": "뇌혈관질환진단비(건강고지)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:14:03.932355",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19449,
+    "product_name": "(무) 첫날부터든든한뇌심보험[1종:일반심사형]2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 77780,
+    "benefit_name": "통합뇌질환진단비(뇌전증진단비)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:14:04.205728",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19450,
+    "product_name": "(무) 첫날부터든든한뇌심보험[1종:일반심사형]2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 57321,
+    "benefit_name": "통합뇌질환진단비(뇌전증진단비)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:14:04.501296",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19451,
+    "product_name": "(무)AXA나를지켜주는건강보험Ⅱ(갱신형)2601",
+    "gender": "M",
+    "age": 40,
+    "premium": 8720,
+    "benefit_name": "(갱신형)뇌출혈진단금(간편심사)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:14:04.775218",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19452,
+    "product_name": "(무)AXA나를지켜주는건강보험Ⅱ(갱신형)2601",
+    "gender": "F",
+    "age": 40,
+    "premium": 11930,
+    "benefit_name": "(갱신형)뇌출혈진단금(간편심사)",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:14:05.061524",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19453,
+    "product_name": "(무)건강보험",
+    "gender": "M",
+    "age": 40,
+    "premium": 85351,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:14:05.340821",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  },
+  {
+    "id": 19454,
+    "product_name": "(무)건강보험",
+    "gender": "F",
+    "age": 40,
+    "premium": 63072,
+    "benefit_name": "뇌혈관질환진단비",
+    "benefit_amount": "nan",
+    "raw_data": {
+      "renewal_type": "nan"
+    },
+    "updated_at": "2026-06-10T02:14:05.615192",
+    "company_name": null,
+    "is_renewable": false,
+    "category": "뇌혈관"
+  }
+]

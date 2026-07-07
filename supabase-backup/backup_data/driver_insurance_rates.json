@@ -1,0 +1,5078 @@
+[
+  {
+    "id": 4027,
+    "product_name": "(무)참좋은라이더 보험2601(1종)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 26460,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4028,
+    "product_name": "(무)참좋은라이더 보험2601(1종)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 26460,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4029,
+    "product_name": "(무)참좋은라이더 보험2601(1종)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 36460,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4030,
+    "product_name": "(무)참좋은라이더 보험2601(1종)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 36460,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4031,
+    "product_name": "(무)참좋은라이더 보험2601(4종)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 18740,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4032,
+    "product_name": "(무)참좋은라이더 보험2601(4종)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 18740,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4033,
+    "product_name": "(무)참좋은라이더 보험2601(4종)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 23740,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4034,
+    "product_name": "(무)참좋은라이더 보험2601(4종)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 23740,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4035,
+    "product_name": "(무)참좋은라이더 보험2601(4종)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 33740,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4036,
+    "product_name": "(무)참좋은라이더 보험2601(4종)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 33740,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4037,
+    "product_name": "(무)참좋은운전자보험2604(CM)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 14240,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4038,
+    "product_name": "(무)참좋은운전자보험2604(CM)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 12640,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4039,
+    "product_name": "(무)참좋은운전자보험2604(CM)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 19240,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4040,
+    "product_name": "(무)참좋은운전자보험2604(CM)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 17640,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4041,
+    "product_name": "(무)참좋은운전자보험2604(CM)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 29240,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4042,
+    "product_name": "(무)참좋은운전자보험2604(CM)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 27640,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4043,
+    "product_name": "(무)AXA마일리지운전자상해보험Ⅱ2601",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 10830,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4044,
+    "product_name": "(무)AXA마일리지운전자상해보험Ⅱ2601",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 9900,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4045,
+    "product_name": "(무)AXA마일리지운전자상해보험Ⅱ2601",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 15830,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4046,
+    "product_name": "(무)AXA마일리지운전자상해보험Ⅱ2601",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15000,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4047,
+    "product_name": "(무)AXA마일리지운전자상해보험Ⅱ2601",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 25830,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4048,
+    "product_name": "(무)AXA마일리지운전자상해보험Ⅱ2601",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 25000,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4049,
+    "product_name": "(무)AXA늘안심운전자상해보험Ⅱ2604",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 10830,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4050,
+    "product_name": "(무)AXA늘안심운전자상해보험Ⅱ2604",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 9900,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4051,
+    "product_name": "(무)AXA늘안심운전자상해보험Ⅱ2604",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 15830,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4052,
+    "product_name": "(무)AXA늘안심운전자상해보험Ⅱ2604",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15000,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4053,
+    "product_name": "(무)AXA늘안심운전자상해보험Ⅱ2604",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 25830,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4054,
+    "product_name": "(무)AXA늘안심운전자상해보험Ⅱ2604",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 25000,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4055,
+    "product_name": "무배당 하나더베스트 운전자상해종합보험(2604)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 13028,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4056,
+    "product_name": "무배당 하나더베스트 운전자상해종합보험(2604)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 11545,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4057,
+    "product_name": "무배당 하나더베스트 운전자상해종합보험(2604)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 18028,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4058,
+    "product_name": "무배당 하나더베스트 운전자상해종합보험(2604)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 16545,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4059,
+    "product_name": "무배당 하나더베스트 운전자상해종합보험(2604)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 28028,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4060,
+    "product_name": "무배당 하나더베스트 운전자상해종합보험(2604)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 26545,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4061,
+    "product_name": "무배당 하나더베스트 운전자보험(다이렉트)(2604)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 11215,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4062,
+    "product_name": "무배당 하나더베스트 운전자보험(다이렉트)(2604)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 10037,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4063,
+    "product_name": "무배당 하나더베스트 운전자보험(다이렉트)(2604)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 16215,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4064,
+    "product_name": "무배당 하나더베스트 운전자보험(다이렉트)(2604)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15037,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4065,
+    "product_name": "무배당 하나더베스트 운전자보험(다이렉트)(2604)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 26215,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4066,
+    "product_name": "무배당 하나더베스트 운전자보험(다이렉트)(2604)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 25037,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4067,
+    "product_name": "신한 이지로운 운전자보험(무배당)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 13881,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4068,
+    "product_name": "신한 이지로운 운전자보험(무배당)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 12693,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4069,
+    "product_name": "신한 이지로운 운전자보험(무배당)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 18881,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4070,
+    "product_name": "신한 이지로운 운전자보험(무배당)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 17693,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4071,
+    "product_name": "신한 이지로운 운전자보험(무배당)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 28881,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4072,
+    "product_name": "신한 이지로운 운전자보험(무배당)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 27693,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4073,
+    "product_name": "신한 SOL 처음운전자보험(무배당)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 10675,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4074,
+    "product_name": "신한 SOL 처음운전자보험(무배당)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 10463,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4075,
+    "product_name": "신한 SOL 처음운전자보험(무배당)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 15675,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4076,
+    "product_name": "신한 SOL 처음운전자보험(무배당)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15463,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.441685"
+  },
+  {
+    "id": 4077,
+    "product_name": "신한 SOL 처음운전자보험(무배당)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 25675,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4078,
+    "product_name": "신한 SOL 처음운전자보험(무배당)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 25463,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4079,
+    "product_name": "(무) NH다이렉트운전자보험2601",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 16311,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4080,
+    "product_name": "(무) NH다이렉트운전자보험2601",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 11819,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4081,
+    "product_name": "(무) NH다이렉트운전자보험2601",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 21311,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4082,
+    "product_name": "(무) NH다이렉트운전자보험2601",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 16819,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4083,
+    "product_name": "(무) NH다이렉트운전자보험2601",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 31311,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4084,
+    "product_name": "(무) NH다이렉트운전자보험2601",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 26819,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4085,
+    "product_name": "(무) NH올바른운전자보험[1종:이륜자동차보장형]",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 20619,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4086,
+    "product_name": "(무) NH올바른운전자보험[1종:이륜자동차보장형]",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 14629,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4087,
+    "product_name": "(무) NH올바른운전자보험[1종:이륜자동차보장형]",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 25619,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4088,
+    "product_name": "(무) NH올바른운전자보험[1종:이륜자동차보장형]",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 19629,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4089,
+    "product_name": "(무) NH올바른운전자보험[1종:이륜자동차보장형]",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 35619,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4090,
+    "product_name": "(무) NH올바른운전자보험[1종:이륜자동차보장형]",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 29629,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4091,
+    "product_name": "(무) NH올바른운전자보험[2종:일반형]",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 21034,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4092,
+    "product_name": "(무) NH올바른운전자보험[2종:일반형]",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15068,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4093,
+    "product_name": "(무) NH올바른운전자보험[2종:일반형]",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 26034,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4094,
+    "product_name": "(무) NH올바른운전자보험[2종:일반형]",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 20068,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4095,
+    "product_name": "(무) NH올바른운전자보험[2종:일반형]",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 36034,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4096,
+    "product_name": "(무) NH올바른운전자보험[2종:일반형]",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 30068,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4097,
+    "product_name": "캐롯 운전자보험 (무)2604 1종(자가용, 실속형)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 9900,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4098,
+    "product_name": "캐롯 운전자보험 (무)2604 1종(자가용, 실속형)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 9900,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4099,
+    "product_name": "캐롯 운전자보험 (무)2604 1종(자가용, 실속형)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 15000,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4100,
+    "product_name": "캐롯 운전자보험 (무)2604 1종(자가용, 실속형)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15000,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4101,
+    "product_name": "캐롯 운전자보험 (무)2604 1종(자가용, 실속형)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 25000,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4102,
+    "product_name": "캐롯 운전자보험 (무)2604 1종(자가용, 실속형)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 25000,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4103,
+    "product_name": "캐롯 운전자보험 (무)2604 3종(영업용, 실속형)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 24544,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4104,
+    "product_name": "캐롯 운전자보험 (무)2604 3종(영업용, 실속형)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 24544,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4105,
+    "product_name": "캐롯 운전자보험 (무)2604 3종(영업용, 실속형)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 29544,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4106,
+    "product_name": "캐롯 운전자보험 (무)2604 3종(영업용, 실속형)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 29544,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4107,
+    "product_name": "캐롯 운전자보험 (무)2604 3종(영업용, 실속형)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 39544,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 4108,
+    "product_name": "캐롯 운전자보험 (무)2604 3종(영업용, 실속형)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 39544,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.701171"
+  },
+  {
+    "id": 3827,
+    "product_name": "(무) 메리츠 안전한 MY바이크 운전자보험2601",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 15500,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3828,
+    "product_name": "(무) 메리츠 안전한 MY바이크 운전자보험2601",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15500,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3829,
+    "product_name": "(무) 메리츠 안전한 MY바이크 운전자보험2601",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 20500,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3830,
+    "product_name": "(무) 메리츠 안전한 MY바이크 운전자보험2601",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 20500,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3831,
+    "product_name": "(무) 메리츠 안전한 MY바이크 운전자보험2601",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 30500,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3832,
+    "product_name": "(무) 메리츠 안전한 MY바이크 운전자보험2601",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 30500,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3833,
+    "product_name": "(무) 메리츠 운전자 상해 종합보험2604(1종)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 11934,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3834,
+    "product_name": "(무) 메리츠 운전자 상해 종합보험2604(1종)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 10911,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3835,
+    "product_name": "(무) 메리츠 운전자 상해 종합보험2604(1종)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 16934,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3836,
+    "product_name": "(무) 메리츠 운전자 상해 종합보험2604(1종)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15911,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3837,
+    "product_name": "(무) 메리츠 운전자 상해 종합보험2604(1종)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 26934,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3838,
+    "product_name": "(무) 메리츠 운전자 상해 종합보험2604(1종)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 25911,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3839,
+    "product_name": "(무) 메리츠 운전자 상해 종합보험2604(2종)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 11990,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3840,
+    "product_name": "(무) 메리츠 운전자 상해 종합보험2604(2종)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 10955,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3841,
+    "product_name": "(무) 메리츠 운전자 상해 종합보험2604(2종)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 16990,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3842,
+    "product_name": "(무) 메리츠 운전자 상해 종합보험2604(2종)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15955,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3843,
+    "product_name": "(무) 메리츠 운전자 상해 종합보험2604(2종)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 26990,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3844,
+    "product_name": "(무) 메리츠 운전자 상해 종합보험2604(2종)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 25955,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3845,
+    "product_name": "한화 운전자상해보험 (무)2604 1종(운전자보장형)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 10913,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3846,
+    "product_name": "한화 운전자상해보험 (무)2604 1종(운전자보장형)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 9900,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3847,
+    "product_name": "한화 운전자상해보험 (무)2604 1종(운전자보장형)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 15913,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3848,
+    "product_name": "한화 운전자상해보험 (무)2604 1종(운전자보장형)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15000,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3849,
+    "product_name": "한화 운전자상해보험 (무)2604 1종(운전자보장형)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 25913,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3850,
+    "product_name": "한화 운전자상해보험 (무)2604 1종(운전자보장형)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 25000,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3851,
+    "product_name": "한화 운전자상해보험 (무)2604 2종(상해보장형)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 10799,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3852,
+    "product_name": "한화 운전자상해보험 (무)2604 2종(상해보장형)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 9900,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3853,
+    "product_name": "한화 운전자상해보험 (무)2604 2종(상해보장형)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 15799,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3854,
+    "product_name": "한화 운전자상해보험 (무)2604 2종(상해보장형)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15000,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3855,
+    "product_name": "한화 운전자상해보험 (무)2604 2종(상해보장형)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 25799,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3856,
+    "product_name": "한화 운전자상해보험 (무)2604 2종(상해보장형)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 25000,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3857,
+    "product_name": "캐롯 운전자보험 (무)2604 2종(자가용, 표준형)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 10666,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3858,
+    "product_name": "캐롯 운전자보험 (무)2604 2종(자가용, 표준형)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 9900,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3859,
+    "product_name": "캐롯 운전자보험 (무)2604 2종(자가용, 표준형)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 15666,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3860,
+    "product_name": "캐롯 운전자보험 (무)2604 2종(자가용, 표준형)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15000,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3861,
+    "product_name": "캐롯 운전자보험 (무)2604 2종(자가용, 표준형)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 25666,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3862,
+    "product_name": "캐롯 운전자보험 (무)2604 2종(자가용, 표준형)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 25000,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3863,
+    "product_name": "캐롯 운전자보험 (무)2604 4종(영업용, 표준형)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 27594,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3864,
+    "product_name": "캐롯 운전자보험 (무)2604 4종(영업용, 표준형)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 26934,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3865,
+    "product_name": "캐롯 운전자보험 (무)2604 4종(영업용, 표준형)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 32594,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3866,
+    "product_name": "캐롯 운전자보험 (무)2604 4종(영업용, 표준형)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 31934,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3867,
+    "product_name": "캐롯 운전자보험 (무)2604 4종(영업용, 표준형)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 42594,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3868,
+    "product_name": "캐롯 운전자보험 (무)2604 4종(영업용, 표준형)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 41934,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3869,
+    "product_name": "(무) let:drive 운전자보험(2604)_1종(연만기,운전자형)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 12739,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3870,
+    "product_name": "(무) let:drive 운전자보험(2604)_1종(연만기,운전자형)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 11697,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3871,
+    "product_name": "(무) let:drive 운전자보험(2604)_1종(연만기,운전자형)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 17739,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3872,
+    "product_name": "(무) let:drive 운전자보험(2604)_1종(연만기,운전자형)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 16697,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3873,
+    "product_name": "(무) let:drive 운전자보험(2604)_1종(연만기,운전자형)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 27739,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3874,
+    "product_name": "(무) let:drive 운전자보험(2604)_1종(연만기,운전자형)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 26697,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3875,
+    "product_name": "(무) 운전자보험(2604)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 9900,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3876,
+    "product_name": "(무) 운전자보험(2604)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 9900,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.113704"
+  },
+  {
+    "id": 3877,
+    "product_name": "(무) 운전자보험(2604)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 15000,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3878,
+    "product_name": "(무) 운전자보험(2604)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15000,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3879,
+    "product_name": "(무) 운전자보험(2604)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 25000,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3880,
+    "product_name": "(무) 운전자보험(2604)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 25000,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3881,
+    "product_name": "무배당 흥Good 다이렉트 운전자보험(26.04)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 9900,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3882,
+    "product_name": "무배당 흥Good 다이렉트 운전자보험(26.04)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 9900,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3883,
+    "product_name": "무배당 흥Good 다이렉트 운전자보험(26.04)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 15000,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3884,
+    "product_name": "무배당 흥Good 다이렉트 운전자보험(26.04)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15000,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3885,
+    "product_name": "무배당 흥Good 다이렉트 운전자보험(26.04)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 25000,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3886,
+    "product_name": "무배당 흥Good 다이렉트 운전자보험(26.04)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 25000,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3887,
+    "product_name": "무배당 흥Good The편한 운전자상해보험(26.05)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 9900,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3888,
+    "product_name": "무배당 흥Good The편한 운전자상해보험(26.05)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 9900,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3889,
+    "product_name": "무배당 흥Good The편한 운전자상해보험(26.05)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 15000,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3890,
+    "product_name": "무배당 흥Good The편한 운전자상해보험(26.05)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15000,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3891,
+    "product_name": "무배당 흥Good The편한 운전자상해보험(26.05)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 25000,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3892,
+    "product_name": "무배당 흥Good The편한 운전자상해보험(26.05)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 25000,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3893,
+    "product_name": "무배당 흥Good 든든한 SMILE 운전자 종합보험(26.05)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 11205,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3894,
+    "product_name": "무배당 흥Good 든든한 SMILE 운전자 종합보험(26.05)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 10102,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3895,
+    "product_name": "무배당 흥Good 든든한 SMILE 운전자 종합보험(26.05)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 16205,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3896,
+    "product_name": "무배당 흥Good 든든한 SMILE 운전자 종합보험(26.05)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15102,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3897,
+    "product_name": "무배당 흥Good 든든한 SMILE 운전자 종합보험(26.05)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 26205,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3898,
+    "product_name": "무배당 흥Good 든든한 SMILE 운전자 종합보험(26.05)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 25102,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3899,
+    "product_name": "무배당 삼성화재 다이렉트 운전자보험(2601.24)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 10635,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3900,
+    "product_name": "무배당 삼성화재 다이렉트 운전자보험(2601.24)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 9900,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3901,
+    "product_name": "무배당 삼성화재 다이렉트 운전자보험(2601.24)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 15635,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3902,
+    "product_name": "무배당 삼성화재 다이렉트 운전자보험(2601.24)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15000,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3903,
+    "product_name": "무배당 삼성화재 다이렉트 운전자보험(2601.24)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 25635,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3904,
+    "product_name": "무배당 삼성화재 다이렉트 운전자보험(2601.24)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 25000,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3905,
+    "product_name": "무배당 삼성화재 다이렉트 오토바이 운전자보험(2601.3)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 17719,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3906,
+    "product_name": "무배당 삼성화재 다이렉트 오토바이 운전자보험(2601.3)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 17719,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3907,
+    "product_name": "무배당 삼성화재 다이렉트 오토바이 운전자보험(2601.3)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 22719,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3908,
+    "product_name": "무배당 삼성화재 다이렉트 오토바이 운전자보험(2601.3)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 22719,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3909,
+    "product_name": "무배당 삼성화재 다이렉트 오토바이 운전자보험(2601.3)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 32719,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3910,
+    "product_name": "무배당 삼성화재 다이렉트 오토바이 운전자보험(2601.3)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 32719,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3911,
+    "product_name": "무배당 삼성화재 다이렉트 국방가족안심 운전자보험(2603.2)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 11701,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3912,
+    "product_name": "무배당 삼성화재 다이렉트 국방가족안심 운전자보험(2603.2)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 10501,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3913,
+    "product_name": "무배당 삼성화재 다이렉트 국방가족안심 운전자보험(2603.2)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 16701,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3914,
+    "product_name": "무배당 삼성화재 다이렉트 국방가족안심 운전자보험(2603.2)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15501,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3915,
+    "product_name": "무배당 삼성화재 다이렉트 국방가족안심 운전자보험(2603.2)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 26701,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3916,
+    "product_name": "무배당 삼성화재 다이렉트 국방가족안심 운전자보험(2603.2)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 25501,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3917,
+    "product_name": "무배당 삼성화재 다이렉트 국방가족안심 운전자보험(2603.2)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 15058,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3918,
+    "product_name": "무배당 삼성화재 다이렉트 국방가족안심 운전자보험(2603.2)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 12496,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3919,
+    "product_name": "무배당 삼성화재 다이렉트 국방가족안심 운전자보험(2603.2)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 20058,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3920,
+    "product_name": "무배당 삼성화재 다이렉트 국방가족안심 운전자보험(2603.2)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 17496,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3921,
+    "product_name": "무배당 삼성화재 다이렉트 국방가족안심 운전자보험(2603.2)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 30058,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3922,
+    "product_name": "무배당 삼성화재 다이렉트 국방가족안심 운전자보험(2603.2)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 27496,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3923,
+    "product_name": "(무)현대해상뉴하이카운전자상해보험(Hi2601) 3종",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 22281,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3924,
+    "product_name": "(무)현대해상뉴하이카운전자상해보험(Hi2601) 3종",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 19753,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3925,
+    "product_name": "(무)현대해상뉴하이카운전자상해보험(Hi2601) 3종",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 27281,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3926,
+    "product_name": "(무)현대해상뉴하이카운전자상해보험(Hi2601) 3종",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 24753,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.479723"
+  },
+  {
+    "id": 3927,
+    "product_name": "(무)현대해상뉴하이카운전자상해보험(Hi2601) 3종",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 37281,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3928,
+    "product_name": "(무)현대해상뉴하이카운전자상해보험(Hi2601) 3종",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 34753,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3929,
+    "product_name": "(무)현대해상뉴하이카운전자상해보험(Hi2601) 2종",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 14989,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3930,
+    "product_name": "(무)현대해상뉴하이카운전자상해보험(Hi2601) 2종",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 14641,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3931,
+    "product_name": "(무)현대해상뉴하이카운전자상해보험(Hi2601) 2종",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 19989,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3932,
+    "product_name": "(무)현대해상뉴하이카운전자상해보험(Hi2601) 2종",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 19641,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3933,
+    "product_name": "(무)현대해상뉴하이카운전자상해보험(Hi2601) 2종",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 29989,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3934,
+    "product_name": "(무)현대해상뉴하이카운전자상해보험(Hi2601) 2종",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 29641,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3935,
+    "product_name": "(무)현대해상뉴하이카운전자상해보험(Hi2601) 1종",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 16900,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3936,
+    "product_name": "(무)현대해상뉴하이카운전자상해보험(Hi2601) 1종",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 16753,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3937,
+    "product_name": "(무)현대해상뉴하이카운전자상해보험(Hi2601) 1종",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 21900,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3938,
+    "product_name": "(무)현대해상뉴하이카운전자상해보험(Hi2601) 1종",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 21753,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3939,
+    "product_name": "(무)현대해상뉴하이카운전자상해보험(Hi2601) 1종",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 31900,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3940,
+    "product_name": "(무)현대해상뉴하이카운전자상해보험(Hi2601) 1종",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 31753,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3941,
+    "product_name": "(무)현대해상하이바이크운전자보험(Hi2601)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 15496,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3942,
+    "product_name": "(무)현대해상하이바이크운전자보험(Hi2601)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15496,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3943,
+    "product_name": "(무)현대해상하이바이크운전자보험(Hi2601)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 20496,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3944,
+    "product_name": "(무)현대해상하이바이크운전자보험(Hi2601)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 20496,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3945,
+    "product_name": "(무)현대해상하이바이크운전자보험(Hi2601)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 30496,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3946,
+    "product_name": "(무)현대해상하이바이크운전자보험(Hi2601)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 30496,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3947,
+    "product_name": "(무)현대해상다이렉트오토바이운전자보험(Hi2601)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 15430,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3948,
+    "product_name": "(무)현대해상다이렉트오토바이운전자보험(Hi2601)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15430,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3949,
+    "product_name": "(무)현대해상다이렉트오토바이운전자보험(Hi2601)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 20430,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3950,
+    "product_name": "(무)현대해상다이렉트오토바이운전자보험(Hi2601)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 20430,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3951,
+    "product_name": "(무)현대해상다이렉트오토바이운전자보험(Hi2601)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 30430,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3952,
+    "product_name": "(무)현대해상다이렉트오토바이운전자보험(Hi2601)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 30430,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3953,
+    "product_name": "(무)현대해상다이렉트운전자보험(Hi2605) 2종",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 11479,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3954,
+    "product_name": "(무)현대해상다이렉트운전자보험(Hi2605) 2종",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 10794,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3955,
+    "product_name": "(무)현대해상다이렉트운전자보험(Hi2605) 2종",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 16479,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3956,
+    "product_name": "(무)현대해상다이렉트운전자보험(Hi2605) 2종",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15794,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3957,
+    "product_name": "(무)현대해상다이렉트운전자보험(Hi2605) 2종",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 26479,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3958,
+    "product_name": "(무)현대해상다이렉트운전자보험(Hi2605) 2종",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 25794,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3959,
+    "product_name": "(무)현대해상다이렉트운전자보험(Hi2605) 1종",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 12394,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3960,
+    "product_name": "(무)현대해상다이렉트운전자보험(Hi2605) 1종",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 11759,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3961,
+    "product_name": "(무)현대해상다이렉트운전자보험(Hi2605) 1종",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 17394,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3962,
+    "product_name": "(무)현대해상다이렉트운전자보험(Hi2605) 1종",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 16759,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3963,
+    "product_name": "(무)현대해상다이렉트운전자보험(Hi2605) 1종",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 27394,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3964,
+    "product_name": "(무)현대해상다이렉트운전자보험(Hi2605) 1종",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 26759,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3965,
+    "product_name": "KB 다이렉트 플러스 오토바이 운전자보험(무배당)(26.01)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 18928,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3966,
+    "product_name": "KB 다이렉트 플러스 오토바이 운전자보험(무배당)(26.01)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 18928,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3967,
+    "product_name": "KB 다이렉트 플러스 오토바이 운전자보험(무배당)(26.01)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 23928,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3968,
+    "product_name": "KB 다이렉트 플러스 오토바이 운전자보험(무배당)(26.01)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 23928,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3969,
+    "product_name": "KB 다이렉트 플러스 오토바이 운전자보험(무배당)(26.01)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 33928,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3970,
+    "product_name": "KB 다이렉트 플러스 오토바이 운전자보험(무배당)(26.01)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 33928,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3971,
+    "product_name": "KB 다이렉트 플러스 운전자보험(무배당)(26.01)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 10626,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3972,
+    "product_name": "KB 다이렉트 플러스 운전자보험(무배당)(26.01)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 9900,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3973,
+    "product_name": "KB 다이렉트 플러스 운전자보험(무배당)(26.01)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 15626,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3974,
+    "product_name": "KB 다이렉트 플러스 운전자보험(무배당)(26.01)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15000,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3975,
+    "product_name": "KB 다이렉트 플러스 운전자보험(무배당)(26.01)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 25626,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3976,
+    "product_name": "KB 다이렉트 플러스 운전자보험(무배당)(26.01)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 25000,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:17.824687"
+  },
+  {
+    "id": 3977,
+    "product_name": "KB 플러스 오토바이 운전자보험(무배당)(26.01)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 11101,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 3978,
+    "product_name": "KB 플러스 오토바이 운전자보험(무배당)(26.01)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 10081,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 3979,
+    "product_name": "KB 플러스 오토바이 운전자보험(무배당)(26.01)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 16101,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 3980,
+    "product_name": "KB 플러스 오토바이 운전자보험(무배당)(26.01)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15081,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 3981,
+    "product_name": "KB 플러스 오토바이 운전자보험(무배당)(26.01)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 26101,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 3982,
+    "product_name": "KB 플러스 오토바이 운전자보험(무배당)(26.01)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 25081,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 3983,
+    "product_name": "(무)참좋은운전자상해보험2602",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 17980,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 3984,
+    "product_name": "(무)참좋은운전자상해보험2602",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15290,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 3985,
+    "product_name": "(무)참좋은운전자상해보험2602",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 22980,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 3986,
+    "product_name": "(무)참좋은운전자상해보험2602",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 20290,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 3987,
+    "product_name": "(무)참좋은운전자상해보험2602",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 32980,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 3988,
+    "product_name": "(무)참좋은운전자상해보험2602",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 30290,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 3989,
+    "product_name": "(무)참좋은운전자상해보험(TM)2602(1종)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 18330,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 3990,
+    "product_name": "(무)참좋은운전자상해보험(TM)2602(1종)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15510,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 3991,
+    "product_name": "(무)참좋은운전자상해보험(TM)2602(1종)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 23330,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 3992,
+    "product_name": "(무)참좋은운전자상해보험(TM)2602(1종)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 20510,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 3993,
+    "product_name": "(무)참좋은운전자상해보험(TM)2602(1종)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 33330,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 3994,
+    "product_name": "(무)참좋은운전자상해보험(TM)2602(1종)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 30510,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 3995,
+    "product_name": "(무)참좋은운전자상해보험(TM)2602(2종)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 18330,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 3996,
+    "product_name": "(무)참좋은운전자상해보험(TM)2602(2종)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15510,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 3997,
+    "product_name": "(무)참좋은운전자상해보험(TM)2602(2종)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 23330,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 3998,
+    "product_name": "(무)참좋은운전자상해보험(TM)2602(2종)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 20510,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 3999,
+    "product_name": "(무)참좋은운전자상해보험(TM)2602(2종)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 33330,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4000,
+    "product_name": "(무)참좋은운전자상해보험(TM)2602(2종)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 30510,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4001,
+    "product_name": "(무)참좋은운전자상해보험2604",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 17980,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4002,
+    "product_name": "(무)참좋은운전자상해보험2604",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15290,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4003,
+    "product_name": "(무)참좋은운전자상해보험2604",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 22980,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4004,
+    "product_name": "(무)참좋은운전자상해보험2604",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 20290,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4005,
+    "product_name": "(무)참좋은운전자상해보험2604",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 32980,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4006,
+    "product_name": "(무)참좋은운전자상해보험2604",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 30290,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4007,
+    "product_name": "(무)참좋은운전자상해보험(TM)2604",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 18330,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4008,
+    "product_name": "(무)참좋은운전자상해보험(TM)2604",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 15510,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4009,
+    "product_name": "(무)참좋은운전자상해보험(TM)2604",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 23330,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4010,
+    "product_name": "(무)참좋은운전자상해보험(TM)2604",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 20510,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4011,
+    "product_name": "(무)참좋은운전자상해보험(TM)2604",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 33330,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4012,
+    "product_name": "(무)참좋은운전자상해보험(TM)2604",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 30510,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4013,
+    "product_name": "(무)다이렉트 참좋은라이더 보험2601(CM)(1종)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 23650,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4014,
+    "product_name": "(무)다이렉트 참좋은라이더 보험2601(CM)(1종)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 23650,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4015,
+    "product_name": "(무)다이렉트 참좋은라이더 보험2601(CM)(1종)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 28650,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4016,
+    "product_name": "(무)다이렉트 참좋은라이더 보험2601(CM)(1종)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 28650,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4017,
+    "product_name": "(무)다이렉트 참좋은라이더 보험2601(CM)(1종)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 38650,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4018,
+    "product_name": "(무)다이렉트 참좋은라이더 보험2601(CM)(1종)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 38650,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4019,
+    "product_name": "(무)다이렉트 참좋은라이더 보험2601(CM)(2종)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 11640,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4020,
+    "product_name": "(무)다이렉트 참좋은라이더 보험2601(CM)(2종)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 11640,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4021,
+    "product_name": "(무)다이렉트 참좋은라이더 보험2601(CM)(2종)",
+    "plan_level": "표준형",
+    "gender": "M",
+    "age": 40,
+    "premium": 16640,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4022,
+    "product_name": "(무)다이렉트 참좋은라이더 보험2601(CM)(2종)",
+    "plan_level": "표준형",
+    "gender": "F",
+    "age": 40,
+    "premium": 16640,
+    "coverage_limit_traffic_accident": "1.5억 원",
+    "coverage_limit_lawyer": "5,000만 원",
+    "coverage_limit_fine": "대인 3,000만 원",
+    "details": {
+      "벌금": "대인 3,000만 원 한도",
+      "자부상": "14급 기준 10만 원",
+      "변호사선임비용": "5,000만 원 한도",
+      "교통사고처리지원금": "1.5억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4023,
+    "product_name": "(무)다이렉트 참좋은라이더 보험2601(CM)(2종)",
+    "plan_level": "VIP안심형",
+    "gender": "M",
+    "age": 40,
+    "premium": 26640,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4024,
+    "product_name": "(무)다이렉트 참좋은라이더 보험2601(CM)(2종)",
+    "plan_level": "VIP안심형",
+    "gender": "F",
+    "age": 40,
+    "premium": 26640,
+    "coverage_limit_traffic_accident": "2억 원",
+    "coverage_limit_lawyer": "5,000만 원 (경찰조사 선지원 포함)",
+    "coverage_limit_fine": "대인 3,000만 / 대물 500만 원",
+    "details": {
+      "벌금": "대인 3,000만 / 대물 500만 원 한도",
+      "자부상": "14급 기준 30만 원",
+      "변호사선임비용": "5,000만 원 한도 (경찰조사 선지원 포함)",
+      "교통사고처리지원금": "2억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4025,
+    "product_name": "(무)참좋은라이더 보험2601(1종)",
+    "plan_level": "실속형",
+    "gender": "M",
+    "age": 40,
+    "premium": 21460,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  },
+  {
+    "id": 4026,
+    "product_name": "(무)참좋은라이더 보험2601(1종)",
+    "plan_level": "실속형",
+    "gender": "F",
+    "age": 40,
+    "premium": 21460,
+    "coverage_limit_traffic_accident": "1억 원",
+    "coverage_limit_lawyer": "3,000만 원",
+    "coverage_limit_fine": "대인 2,000만 원",
+    "details": {
+      "벌금": "대인 2,000만 원 한도",
+      "자부상": "미탑재",
+      "변호사선임비용": "3,000만 원 한도",
+      "교통사고처리지원금": "1억 원 한도"
+    },
+    "updated_at": "2026-06-10T07:46:18.176036"
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "9246f04b-77f6-4eca-84ef-754dd6df4a5e",
+    "planner_id": "11111111-1111-4111-a111-111111111111",
+    "subscription": {
+      "keys": {
+        "auth": "al5vQclnrW23_pkv98sTJg",
+        "p256dh": "BNyTf-9rZ8gyA1M8FJ9615HD14BzrtmdpMLBxownXe7Y6h5TeYST-itP5Oy2xHrlryulTOIN0bX1Mw7VnFEzq0s"
+      },
+      "endpoint": "https://fcm.googleapis.com/fcm/send/fVSSG5U_vKc:APA91bEsOmqGY-0Ig-Eq7Y7aeAHxINuEyd6MUGOAqyOolcmluywDTQ5_lNbtBu-nktOHEdbV9QB-9Zqw1ehVMAUUogNKxTyN4Fcv3Q1ML7uqmuOMXsUeFZwKJHoNxe95VBqOlAEvvM4w",
+      "expirationTime": null
+    },
+    "device_info": {
+      "language": "ko-KR",
+      "platform": "Win32",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "registeredAt": "2026-06-27T03:18:12.870Z"
+    },
+    "created_at": "2026-06-27T01:43:11.741555+00:00",
+    "updated_at": "2026-06-27T03:18:14.152+00:00"
+  },
+  {
+    "id": "96e18e69-d50f-4ab8-9f53-14330ef2243c",
+    "planner_id": "11111111-1111-4111-a111-111111111111",
+    "subscription": {
+      "keys": {
+        "auth": "17MxsqJDdu8hCsK51d5TcQ",
+        "p256dh": "BGO8CvcHHS3bln8X93lguJ0vHbv0TDEt2v0Fn7o6rZvJ-b9GX0Xvu8CThZ4kzozeIJwWk6TDHCM0ciXDBUgQqUQ"
+      },
+      "endpoint": "https://fcm.googleapis.com/fcm/send/fBsKUBYrIVs:APA91bEiwd8WncvrTRqfUek_EpHucokFP4TCiHopm80akyri4zblLbBKQTt0LkMLvAoZlS-1B1BGSeScObq-i6MVsZJ0Bi4OwXewmxELpT8KI4e3WW-7viDXyhOBjnZIs7oKYb9C52OG",
+      "expirationTime": null
+    },
+    "device_info": {
+      "language": "ko-KR",
+      "platform": "Win32",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "registeredAt": "2026-06-20T01:32:54.025Z"
+    },
+    "created_at": "2026-06-20T01:11:45.544534+00:00",
+    "updated_at": "2026-06-20T01:32:54.195+00:00"
+  },
+  {
+    "id": "1a98efdb-6985-4c4e-aae6-3a877e618764",
+    "planner_id": "11111111-1111-4111-a111-111111111111",
+    "subscription": {
+      "keys": {
+        "auth": "Dkuphenpju_QFo0yrHgEVw",
+        "p256dh": "BLHRfHH-hHd558qxOo042kIMyNR0KWnWD985WhvHd_gjPQxQ6Yg_NVp2_pXAcSZOUSGVPW7nsBmpN7le3lu85w8"
+      },
+      "endpoint": "https://fcm.googleapis.com/fcm/send/cwhw5KfMfJE:APA91bHqzIPdDwd86LtXK1OG_ocpTEyZmeHWfoBEta5wdMdcTvUNk5k-hOW3JpDwgxYK4mQO7ImFgUJMclgy9zylTxpfjP2r11LmZpPP6cKS4pCDbYrloIFBhhNFznTiHWKtl6ik6jEG",
+      "expirationTime": null
+    },
+    "device_info": {
+      "language": "ko-KR",
+      "platform": "Win32",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "registeredAt": "2026-06-20T12:18:15.206Z"
+    },
+    "created_at": "2026-06-20T12:18:15.588732+00:00",
+    "updated_at": "2026-06-20T12:18:15.588732+00:00"
+  },
+  {
+    "id": "1d8fd1ae-130c-4bb6-b627-13ac4c6e9fef",
+    "planner_id": "11111111-1111-4111-a111-111111111111",
+    "subscription": {
+      "keys": {
+        "auth": "nHBucC1cHrym4BRBMOPJCA",
+        "p256dh": "BGSZV3IgtyHB_zqrMGIG9j_LInoskQaKTiI1yJ_2oM8lOE5czni2D8AgKfxfLzND5YjwK50KPgI45JKjAVWirck"
+      },
+      "endpoint": "https://fcm.googleapis.com/fcm/send/crB1CiX2qGw:APA91bEB7mNS_lzO_U4Ej-wJaiD3VJjLGuUvM_hUNOPzbJA3gwXXagT5uZWxw4Oi8ACn8pGPYNPfm5PBgW5SOGAJGlLDkt2RoULMu2_LGFj2IJqOhpWUKjHNyXZaixEzBrm00FdmH3Fi",
+      "expirationTime": null
+    },
+    "device_info": {
+      "language": "ko-KR",
+      "platform": "Win32",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+      "registeredAt": "2026-06-27T01:43:10.294Z"
+    },
+    "created_at": "2026-06-27T01:43:11.610575+00:00",
+    "updated_at": "2026-06-27T01:43:11.610575+00:00"
+  }
+]

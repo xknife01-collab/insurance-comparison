@@ -1,0 +1,2952 @@
+[
+  {
+    "id": 1042,
+    "company": "미래에셋생명",
+    "product_name": "미래에셋생명 변액종신보험 무배당 미담",
+    "refund_type": "standard",
+    "declared_rate": 2.85,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.85%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1043,
+    "company": "미래에셋생명",
+    "product_name": "미래에셋생명 변액종신보험 무배당 미래의 약속",
+    "refund_type": "standard",
+    "declared_rate": 1,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (1.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1044,
+    "company": "미래에셋생명",
+    "product_name": "미래에셋생명 헤리티지 변액유니버셜종신보험 무배당",
+    "refund_type": "standard",
+    "declared_rate": 2.85,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.85%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1045,
+    "company": "메트라이프생명",
+    "product_name": "무배당 변액유니버셜 모두의상속종신보험(간편가입형)",
+    "refund_type": "standard",
+    "declared_rate": 1,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (1.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1046,
+    "company": "메트라이프생명",
+    "product_name": "무배당 변액유니버셜 오늘의(VIP) 종신보험 Plus",
+    "refund_type": "standard",
+    "declared_rate": 1,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (1.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1047,
+    "company": "메트라이프생명",
+    "product_name": "무배당 변액유니버셜 모두의상속종신보험",
+    "refund_type": "standard",
+    "declared_rate": 1,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (1.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1048,
+    "company": "신한라이프생명",
+    "product_name": "신한변액유니버설종신보험 레벨업(무배당)",
+    "refund_type": "standard",
+    "declared_rate": 2.85,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.85%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1049,
+    "company": "처브라이프생명",
+    "product_name": "Chubb VIP 변액유니버셜종신보험 무배당",
+    "refund_type": "standard",
+    "declared_rate": 1,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (1.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1050,
+    "company": "미래에셋생명",
+    "product_name": "건강담은 GI변액종신보험 무배당",
+    "refund_type": "standard",
+    "declared_rate": 1,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (1.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1051,
+    "company": "한화생명",
+    "product_name": "한화생명 제로백H종신보험 무배당",
+    "refund_type": "standard",
+    "declared_rate": 2.7,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.70%) 반영 | 유연한 추가납입 및 납입유예 유동성 제공",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1052,
+    "company": "한화생명",
+    "product_name": "한화생명 간편가입 제로백H종신보험 무배당",
+    "refund_type": "standard",
+    "declared_rate": 2.7,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.70%) 반영 | 유연한 추가납입 및 납입유예 유동성 제공",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1053,
+    "company": "한화생명",
+    "product_name": "한화생명 H종신보험 무배당[1종 기본납입면제형](해약환급금 일부지급형l)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 유연한 추가납입 및 납입유예 유동성 제공",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1054,
+    "company": "한화생명",
+    "product_name": "한화생명 H종신보험 무배당[2종 3대질병납입면제형](해약환급금 일부지급형ㅣ)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 유연한 추가납입 및 납입유예 유동성 제공",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1055,
+    "company": "한화생명",
+    "product_name": "한화생명 간편가입 H종신보험 무배당[1종 기본납입면제형](해약환급금 일부지급형l)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 유연한 추가납입 및 납입유예 유동성 제공",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1056,
+    "company": "한화생명",
+    "product_name": "한화생명 간편가입 H종신보험 무배당[2종 3대질병납입면제형](해약환급금 일부지급형l)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 유연한 추가납입 및 납입유예 유동성 제공",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1057,
+    "company": "한화생명",
+    "product_name": "한화생명 간편가입 상속H종신보험 무배당",
+    "refund_type": "standard",
+    "declared_rate": 2.7,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.70%) 반영 | 유연한 추가납입 및 납입유예 유동성 제공",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1058,
+    "company": "한화생명",
+    "product_name": "한화생명 상속H종신보험 무배당",
+    "refund_type": "standard",
+    "declared_rate": 2.7,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.70%) 반영 | 유연한 추가납입 및 납입유예 유동성 제공",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1059,
+    "company": "ABL생명",
+    "product_name": "(무)우리WON상속종신보험Trust(해약환급금 미지급형)[간편심사형,총납입P플러스형]",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1060,
+    "company": "ABL생명",
+    "product_name": "(무)우리WON상속종신보험Trust(해약환급금 미지급형)[일반심사형,기납입P플러스형]",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1061,
+    "company": "ABL생명",
+    "product_name": "(무)우리WON상속종신보험Trust(해약환급금 미지급형)[간편심사형,기납입P플러스형]",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1062,
+    "company": "ABL생명",
+    "product_name": "(무)우리WON상속종신보험Trust(해약환급금 미지급형)[일반심사형,총납입P플러스형]",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1063,
+    "company": "ABL생명",
+    "product_name": "(무)우리WON상속종신보험(해약환급금 미지급형)[간편심사형,기납입P플러스형]",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1064,
+    "company": "ABL생명",
+    "product_name": "(무)우리WON상속종신보험(해약환급금 미지급형)[간편심사형,총납입P플러스형]",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1065,
+    "company": "ABL생명",
+    "product_name": "(무)우리WON상속종신보험(해약환급금 미지급형)[일반심사형,기납입P플러스형]",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1066,
+    "company": "ABL생명",
+    "product_name": "(무)우리WON상속종신보험(해약환급금 미지급형)[일반심사형,총납입P플러스형]",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1067,
+    "company": "ABL생명",
+    "product_name": "(무)우리WON더블종신보험(해약환급금 일부지급형)[일반심사형,암납입면제형]",
+    "refund_type": "low",
+    "declared_rate": 2.25,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1068,
+    "company": "ABL생명",
+    "product_name": "(무)우리WON더블종신보험(해약환급금 일부지급형)[간편심사형,3대질병납입면제형]",
+    "refund_type": "low",
+    "declared_rate": 2.25,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1069,
+    "company": "ABL생명",
+    "product_name": "(무)우리WON더블종신보험(해약환급금 일부지급형)[간편심사형,암납입면제형]",
+    "refund_type": "low",
+    "declared_rate": 2.25,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1070,
+    "company": "ABL생명",
+    "product_name": "(무)우리WON더블종신보험(해약환급금 일부지급형)[일반심사형,3대질병납입면제형]",
+    "refund_type": "low",
+    "declared_rate": 2.25,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1071,
+    "company": "ABL생명",
+    "product_name": "(무)우리WON트리플종신보험(해약환급금 일부지급형)[간편심사형]",
+    "refund_type": "low",
+    "declared_rate": 3,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1072,
+    "company": "ABL생명",
+    "product_name": "(무)우리WON트리플종신보험(해약환급금 일부지급형)[일반심사형]",
+    "refund_type": "low",
+    "declared_rate": 3,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1073,
+    "company": "ABL생명",
+    "product_name": "(무)우리WON더드림종신보험(해약환급금 일부지급형)[간편심사형,평준형]",
+    "refund_type": "low",
+    "declared_rate": 3,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1074,
+    "company": "ABL생명",
+    "product_name": "(무)우리WON더드림종신보험(해약환급금 일부지급형)[일반심사형,평준형]",
+    "refund_type": "low",
+    "declared_rate": 3,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1075,
+    "company": "ABL생명",
+    "product_name": "(무)우리WON더드림종신보험(해약환급금 일부지급형)[간편심사형,체증형]",
+    "refund_type": "low",
+    "declared_rate": 3,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1076,
+    "company": "ABL생명",
+    "product_name": "(무)우리WON더드림종신보험(해약환급금 일부지급형)[일반심사형,체증형]",
+    "refund_type": "low",
+    "declared_rate": 3,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1077,
+    "company": "ABL생명",
+    "product_name": "(무)우리WON세븐종신보험(해약환급금 일부지급형Ⅱ) [일반심사형]",
+    "refund_type": "low",
+    "declared_rate": 3,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1078,
+    "company": "ABL생명",
+    "product_name": "(무)우리WON세븐종신보험(해약환급금 일부지급형Ⅱ) [간편심사형]",
+    "refund_type": "low",
+    "declared_rate": 3,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1079,
+    "company": "삼성생명",
+    "product_name": "삼성 암치료플러스종신보험(2605)(무배당,저해약환급금형)",
+    "refund_type": "standard",
+    "declared_rate": 1.9,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (1.90%) 반영 | 자산 규모 1위 삼성생명의 높은 안정성",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1080,
+    "company": "삼성생명",
+    "product_name": "삼성 간편 암치료플러스종신보험(2605)(무배당,저해약환급금형)",
+    "refund_type": "standard",
+    "declared_rate": 1.9,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (1.90%) 반영 | 자산 규모 1위 삼성생명의 높은 안정성",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1081,
+    "company": "삼성생명",
+    "product_name": "삼성 간편 VVIP 종신보험(2601)(무배당,보증비용부과형)[무해약환급금형]",
+    "refund_type": "standard",
+    "declared_rate": 2.05,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.05%) 반영 | 자산 규모 1위 삼성생명의 높은 안정성",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1082,
+    "company": "삼성생명",
+    "product_name": "삼성 더착한종신보험(2601)(무배당,보증비용부과형)[무해약환급금형]",
+    "refund_type": "standard",
+    "declared_rate": 2.05,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.05%) 반영 | 자산 규모 1위 삼성생명의 높은 안정성",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1083,
+    "company": "삼성생명",
+    "product_name": "삼성 The 안심 종신보험(2601)(무배당,보증비용부과형)[계약전환용]",
+    "refund_type": "standard",
+    "declared_rate": 2.05,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.05%) 반영 | 자산 규모 1위 삼성생명의 높은 안정성",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1084,
+    "company": "삼성생명",
+    "product_name": "삼성 골든종신보험(2601)(무배당,보증비용부과형)[저해지환급금형] 1종 1형",
+    "refund_type": "low",
+    "declared_rate": 2.05,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.05%) 반영 | 자산 규모 1위 삼성생명의 높은 안정성",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1085,
+    "company": "삼성생명",
+    "product_name": "삼성 간편 더착한종신보험(2601)(무배당,보증비용부과형)[무해약환급금형]",
+    "refund_type": "standard",
+    "declared_rate": 2.05,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.05%) 반영 | 자산 규모 1위 삼성생명의 높은 안정성",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1086,
+    "company": "삼성생명",
+    "product_name": "삼성 VVIP 종신보험(2601)(무배당,보증비용부과형)[무해약환급금형]",
+    "refund_type": "standard",
+    "declared_rate": 2.05,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.05%) 반영 | 자산 규모 1위 삼성생명의 높은 안정성",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1087,
+    "company": "삼성생명",
+    "product_name": "삼성 간편 밸런스종신보험(2603)(무배당,보증비용부과형)[저해약환급금형]",
+    "refund_type": "standard",
+    "declared_rate": 2.05,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.05%) 반영 | 자산 규모 1위 삼성생명의 높은 안정성",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1088,
+    "company": "삼성생명",
+    "product_name": "삼성 밸런스종신보험(2603)(무배당,보증비용부과형)[저해약환급금형]",
+    "refund_type": "standard",
+    "declared_rate": 2.05,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.05%) 반영 | 자산 규모 1위 삼성생명의 높은 안정성",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1089,
+    "company": "삼성생명",
+    "product_name": "삼성 간편더사랑종신보험(2601)(무배당,저해약환급금형)",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 자산 규모 1위 삼성생명의 높은 안정성",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1090,
+    "company": "삼성생명",
+    "product_name": "삼성 간편 올백(ALL 100) 종신보험(2601)(무배당,무해약환급금형)",
+    "refund_type": "standard",
+    "declared_rate": 1.9,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (1.90%) 반영 | 자산 규모 1위 삼성생명의 높은 안정성",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1091,
+    "company": "삼성생명",
+    "product_name": "삼성인터넷더플러스종신보험(2601)(무배당,저해약환급금형)",
+    "refund_type": "standard",
+    "declared_rate": 2.4,
+    "business_fee": 6.5,
+    "features": "인터넷 CM 전용 최저 수수료 적용 | 적용이율 (2.40%) 반영 | 자산 규모 1위 삼성생명의 높은 안정성",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1092,
+    "company": "삼성생명",
+    "product_name": "삼성 더행복종신보험(2601)(무배당,저해약환급금형)",
+    "refund_type": "standard",
+    "declared_rate": 2.4,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.40%) 반영 | 자산 규모 1위 삼성생명의 높은 안정성",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1093,
+    "company": "삼성생명",
+    "product_name": "삼성 올백(ALL 100) 종신보험(2601)(무배당,무해약환급금형)",
+    "refund_type": "standard",
+    "declared_rate": 1.9,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (1.90%) 반영 | 자산 규모 1위 삼성생명의 높은 안정성",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1094,
+    "company": "흥국생명",
+    "product_name": "(무)흥국생명 생활비주는종신보험(해약환급금 일부지급형)(사망보장강화형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1095,
+    "company": "흥국생명",
+    "product_name": "(무)흥국생명 해탈다비종신보험(해약환급금미지급형V2)",
+    "refund_type": "low",
+    "declared_rate": 2.25,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1096,
+    "company": "흥국생명",
+    "product_name": "(무)흥국생명 49재하늘소풍제례종신보험",
+    "refund_type": "standard",
+    "declared_rate": 2.25,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1097,
+    "company": "흥국생명",
+    "product_name": "(무)흥국생명 49재하늘소풍제례종신보험(해약환급금 미지급형V2)",
+    "refund_type": "low",
+    "declared_rate": 2.25,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1098,
+    "company": "흥국생명",
+    "product_name": "(무)흥국생명 생활비주는종신보험(해약환급금 미지급형V2)(사망보장강화형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1099,
+    "company": "흥국생명",
+    "product_name": "(무)흥국생명 생활비주는종신보험(해약환급금 미지급형V2)(생활자금집중형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1100,
+    "company": "흥국생명",
+    "product_name": "(무)흥국생명 미리받는트리플더블업종신보험 (1형)",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1101,
+    "company": "흥국생명",
+    "product_name": "(무)흥국생명 생활비주는종신보험(사망보장강화형)",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1102,
+    "company": "흥국생명",
+    "product_name": "(무)흥국생명 생활비주는종신보험(생활자금집중형)",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1103,
+    "company": "흥국생명",
+    "product_name": "(무)흥국생명 미리받는트리플더블업건강종신보험(해약환급금일부지급형) (1형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1104,
+    "company": "흥국생명",
+    "product_name": "(무)흥국생명 미리받는트리플더블업건강종신보험(해약환급금미지급형V2) (1형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1105,
+    "company": "흥국생명",
+    "product_name": "(무)흥국생명 생활비주는종신보험(해약환급금 일부지급형)(생활자금집중형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1106,
+    "company": "흥국생명",
+    "product_name": "(무)흥국생명 미리받는트리플더블업건강종신보험",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1107,
+    "company": "흥국생명",
+    "product_name": "(무)흥국생명 미리받는트리플더블업건강종신보험(해약환급금일부지급형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1108,
+    "company": "흥국생명",
+    "product_name": "(무)흥국생명 미리받는트리플더블업건강종신보험(해약환급금미지급형V2)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1109,
+    "company": "교보생명",
+    "product_name": "교보간편K-실속종신보험 [D](무배당)",
+    "refund_type": "standard",
+    "declared_rate": 2.25,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 자산관리 및 연금전환 특화 솔루션",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1110,
+    "company": "교보생명",
+    "product_name": "교보간편K-실속종신보험 (무배당)",
+    "refund_type": "standard",
+    "declared_rate": 2.25,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 자산관리 및 연금전환 특화 솔루션",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1111,
+    "company": "교보생명",
+    "product_name": "교보간편상속든든종신보험 (무배당,보험금보증비용부과형)",
+    "refund_type": "standard",
+    "declared_rate": 2.07,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.07%) 반영 | 자산관리 및 연금전환 특화 솔루션",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1112,
+    "company": "교보생명",
+    "product_name": "교보상속든든종신보험 (무배당,보험금보증비용부과형)",
+    "refund_type": "standard",
+    "declared_rate": 2.07,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.07%) 반영 | 자산관리 및 연금전환 특화 솔루션",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1113,
+    "company": "교보생명",
+    "product_name": "교보K-실속종신보험 (무배당)",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 자산관리 및 연금전환 특화 솔루션",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1114,
+    "company": "교보생명",
+    "product_name": "교보뉴프리미어종신보험 (무배당,보증비용부과형)",
+    "refund_type": "standard",
+    "declared_rate": 2.07,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.07%) 반영 | 자산관리 및 연금전환 특화 솔루션",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1115,
+    "company": "교보생명",
+    "product_name": "교보뉴프리미어VIP종신보험 (무배당,보증비용부과형)",
+    "refund_type": "standard",
+    "declared_rate": 2.07,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.07%) 반영 | 자산관리 및 연금전환 특화 솔루션",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1116,
+    "company": "교보생명",
+    "product_name": "교보K-실속종신보험 [D](무배당)",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 자산관리 및 연금전환 특화 솔루션",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1117,
+    "company": "교보생명",
+    "product_name": "교보간편K-밸류업종신보험 (무배당)",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 자산관리 및 연금전환 특화 솔루션",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1118,
+    "company": "교보생명",
+    "product_name": "교보K-밸류업종신보험 (무배당)",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 자산관리 및 연금전환 특화 솔루션",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1119,
+    "company": "iM라이프",
+    "product_name": "당당한인생간편종신보험 무배당 2601 (해약환급금 일부지급형)",
+    "refund_type": "low",
+    "declared_rate": 2.25,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1120,
+    "company": "iM라이프",
+    "product_name": "당당한인생종신보험 무배당 2601 (해약환급금 일부지급형)",
+    "refund_type": "low",
+    "declared_rate": 2.25,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1121,
+    "company": "iM라이프",
+    "product_name": "THE당당한인생간편종신보험S 무배당 2601 (해약환급금 일부지급형)",
+    "refund_type": "low",
+    "declared_rate": 2.25,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1122,
+    "company": "iM라이프",
+    "product_name": "THE당당한인생종신보험S 무배당 2601 (해약환급금 일부지급형)",
+    "refund_type": "low",
+    "declared_rate": 2.25,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1123,
+    "company": "iM라이프",
+    "product_name": "iM Plus세븐UP골드종신보험 무배당 2601 (해약환급금 일부지급형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1124,
+    "company": "iM라이프",
+    "product_name": "iM Plus세븐UP골드간편종신보험 무배당 2601 (해약환급금 일부지급형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1125,
+    "company": "iM라이프",
+    "product_name": "iM Plus세븐UP더좋은간편종신보험 무배당 2604 (해약환급금 일부지급형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1126,
+    "company": "iM라이프",
+    "product_name": "iM Plus세븐UP더좋은종신보험 무배당 2604 (해약환급금 일부지급형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1127,
+    "company": "iM라이프",
+    "product_name": "마음든든플러스유니버셜종신보험 무배당 2601 (보증비용부과형) 2종(체증형)",
+    "refund_type": "standard",
+    "declared_rate": 2.15,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.15%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1128,
+    "company": "iM라이프",
+    "product_name": "마음든든플러스유니버셜종신보험 무배당 2601 (보증비용부과형) 1종(기본형)",
+    "refund_type": "standard",
+    "declared_rate": 2.15,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.15%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1129,
+    "company": "iM라이프",
+    "product_name": "SMART유니버셜종신보험 무배당 2601(보증비용부과형) 2종(체증형)",
+    "refund_type": "standard",
+    "declared_rate": 2.15,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.15%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1130,
+    "company": "iM라이프",
+    "product_name": "SMART유니버셜종신보험 무배당 2601(보증비용부과형) 1종(기본형)",
+    "refund_type": "standard",
+    "declared_rate": 2.15,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.15%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1131,
+    "company": "미래에셋생명",
+    "product_name": "미래에셋생명 헤리티지 라이트 종신보험 무배당 (보증비용부과형) [해약환급금이 없는 유형] 일반가입형",
+    "refund_type": "low",
+    "declared_rate": 2.75,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.75%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1132,
+    "company": "미래에셋생명",
+    "product_name": "간편하게 선택하는 종신보험 무배당 [해약환급금이 적은 유형] (체증Plan)",
+    "refund_type": "low",
+    "declared_rate": 2.75,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.75%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1133,
+    "company": "미래에셋생명",
+    "product_name": "간편하게 선택하는 종신보험 무배당 [해약환급금이 적은 유형] (기본Plan)",
+    "refund_type": "low",
+    "declared_rate": 2.75,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.75%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1134,
+    "company": "미래에셋생명",
+    "product_name": "미래를 선택하는 종신보험 무배당 [해약환급금이 적은 유형] (체증Plan)",
+    "refund_type": "low",
+    "declared_rate": 2.75,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.75%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1135,
+    "company": "미래에셋생명",
+    "product_name": "미래를 선택하는 종신보험 무배당 [해약환급금이 적은 유형] (기본Plan)",
+    "refund_type": "low",
+    "declared_rate": 2.75,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.75%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1136,
+    "company": "미래에셋생명",
+    "product_name": "미래에셋생명 헤리티지 종신보험 무배당 [해약환급금이 적은 유형] [가입금액형(일반가입형)]",
+    "refund_type": "low",
+    "declared_rate": 2.75,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.75%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1137,
+    "company": "미래에셋생명",
+    "product_name": "미래에셋생명 헤리티지 종신보험 무배당 [해약환급금이 적은 유형] [납입보험료플러스형(일반가입형)]",
+    "refund_type": "low",
+    "declared_rate": 2.75,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.75%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1138,
+    "company": "KDB생명",
+    "product_name": "더!행복세븐종신보험(무)_프라임형",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1139,
+    "company": "KDB생명",
+    "product_name": "더!행복세븐종신보험(무)_골드형",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1140,
+    "company": "KDB생명",
+    "product_name": "더블찬스종신보험Ⅱ(무)_非납입면제형(일반)",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1141,
+    "company": "KDB생명",
+    "product_name": "더블찬스종신보험Ⅱ(무)_ 납입면제형(일반)",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1142,
+    "company": "KDB생명",
+    "product_name": "행복을 지켜주는 유니버셜종신보험(보증비용부과형)(해약환급금미보증)(무)",
+    "refund_type": "standard",
+    "declared_rate": 2.05,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.05%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1143,
+    "company": "KDB생명",
+    "product_name": "서포트100건강종신보험(암보장형)(무)",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1144,
+    "company": "KDB생명",
+    "product_name": "서포트100건강종신보험(3대질병보장형)(무)",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1145,
+    "company": "KDB생명",
+    "product_name": "행복을 지켜주는 유니버셜종신보험(보증비용부과형)(해약환급금보증)(무)",
+    "refund_type": "standard",
+    "declared_rate": 2.05,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.05%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1146,
+    "company": "KDB생명",
+    "product_name": "더블찬스종신보험Ⅲ(무)_ 납입면제형(일반)",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1147,
+    "company": "KDB생명",
+    "product_name": "무심사 버팀목 종신보험(무)",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1148,
+    "company": "KDB생명",
+    "product_name": "트리플찬스종신보험(3대질병보장형)(무)",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1149,
+    "company": "KDB생명",
+    "product_name": "트리플찬스종신보험(암보장형)(무)",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1150,
+    "company": "KDB생명",
+    "product_name": "더블찬스종신보험Ⅲ(무)_ 非납입면제형(일반)",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1151,
+    "company": "DB생명",
+    "product_name": "(무)백년친구 700 종신보험(해약환급금 일부지급형Ⅳ)(2601)(1형:일반심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1152,
+    "company": "DB생명",
+    "product_name": "(무)백년친구 700 종신보험(해약환급금 일부지급형Ⅳ)(2601)(2형:간편심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1153,
+    "company": "DB생명",
+    "product_name": "(무)백년친구 700 골드 종신보험(해약환급금 일부지급형Ⅳ)(2601)(1형:일반심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1154,
+    "company": "DB생명",
+    "product_name": "(무)백년친구 700 골드 종신보험(해약환급금 일부지급형Ⅳ)(2601)(2형:간편심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1155,
+    "company": "DB생명",
+    "product_name": "(무)백년친구 700 암치료+ 종신보험(해약환급금 일부지급형Ⅳ)(2602)(1종:암납입면제형,1형:일반심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1156,
+    "company": "DB생명",
+    "product_name": "(무)백년친구 700 암치료+ 종신보험(해약환급금 일부지급형Ⅳ)(2602)(1종:암납입면제형,2형:간편심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1157,
+    "company": "DB생명",
+    "product_name": "(무)백년친구 700 암치료+ 종신보험(해약환급금 일부지급형Ⅳ)(2602)(2종:일반형,1형:일반심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1158,
+    "company": "DB생명",
+    "product_name": "(무)백년친구 700 암치료+ 종신보험(해약환급금 일부지급형Ⅳ)(2602)(2종:일반형,2형:간편심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1159,
+    "company": "DB생명",
+    "product_name": "(무)백년친구 알차고 행복한 종신보험Ⅱ(해약환급금 일부지급형)(2602)(2종: 체증형, 1형: 일반심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1160,
+    "company": "DB생명",
+    "product_name": "(무)백년친구 뉴-알차고 행복한 Plus 종신보험(해약환급금 일부지급형)(2601)(1종: 기본형, 2형: 간편심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1161,
+    "company": "DB생명",
+    "product_name": "(무)백년친구 뉴-알차고 행복한 Plus 종신보험(해약환급금 일부지급형)(2601)(2종: 체증형, 1형: 일반심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1162,
+    "company": "DB생명",
+    "product_name": "(무)백년친구 알차고 행복한 종신보험Ⅱ(해약환급금 일부지급형)(2602)(1종: 기본형, 2형: 간편심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1163,
+    "company": "DB생명",
+    "product_name": "(무)백년친구 뉴-알차고 행복한 Plus 종신보험(해약환급금 일부지급형)(2601)(2종: 체증형, 2형: 간편심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1164,
+    "company": "DB생명",
+    "product_name": "(무)백년친구 뉴-알차고 행복한 Plus 종신보험(해약환급금 일부지급형)(2601)(1종: 기본형, 1형: 일반심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1165,
+    "company": "DB생명",
+    "product_name": "(무)백년친구 알차고 행복한 종신보험Ⅱ(해약환급금 일부지급형)(2602)(2종: 체증형, 2형: 간편심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1166,
+    "company": "DB생명",
+    "product_name": "(무)백년친구 알차고 행복한 종신보험Ⅱ(해약환급금 일부지급형)(2602)(1종: 기본형, 1형: 일반심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1167,
+    "company": "DB생명",
+    "product_name": "(무)10년 더 드림 플러스 유니버셜 종신보험(보증비용부과형)(2404)(1종: 해약환급금 보증형, 3형: 체증형)",
+    "refund_type": "standard",
+    "declared_rate": 2.05,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.05%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1168,
+    "company": "DB생명",
+    "product_name": "(무)10년 더 드림 플러스 유니버셜 종신보험(보증비용부과형)(2404)(1종: 해약환급금 보증형, 1형: 100%형)",
+    "refund_type": "standard",
+    "declared_rate": 2.05,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.05%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1169,
+    "company": "DB생명",
+    "product_name": "(무)10년 더 드림 플러스 유니버셜 종신보험(보증비용부과형)(2404)(2종: 해약환급금 미보증형, 1형: 100%형)",
+    "refund_type": "standard",
+    "declared_rate": 2.05,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.05%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1170,
+    "company": "DB생명",
+    "product_name": "(무)10년 더 드림 플러스 유니버셜 종신보험(보증비용부과형)(2404)(2종: 해약환급금 미보증형, 2형: 50%형)",
+    "refund_type": "standard",
+    "declared_rate": 2.05,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.05%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1171,
+    "company": "DB생명",
+    "product_name": "(무)10년 더 드림 플러스 유니버셜 종신보험(보증비용부과형)(2404)(1종: 해약환급금 보증형, 2형: 50%형)",
+    "refund_type": "standard",
+    "declared_rate": 2.05,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.05%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1172,
+    "company": "DB생명",
+    "product_name": "(무)10년 더 드림 플러스 유니버셜 종신보험(보증비용부과형)(2404)(2종: 해약환급금 미보증형, 3형: 체증형)",
+    "refund_type": "standard",
+    "declared_rate": 2.05,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.05%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1173,
+    "company": "DB생명",
+    "product_name": "(무)10년 더 드림 플러스 유니버셜 간편종신보험(보증비용부과형)(2404)(1종: 해약환급금 보증형, 1형: 100%형)",
+    "refund_type": "standard",
+    "declared_rate": 2.05,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.05%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1174,
+    "company": "DB생명",
+    "product_name": "(무)10년 더 드림 플러스 유니버셜 간편종신보험(보증비용부과형)(2404)(1종: 해약환급금 보증형, 2형: 50%형)",
+    "refund_type": "standard",
+    "declared_rate": 2.05,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.05%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1175,
+    "company": "DB생명",
+    "product_name": "(무)10년 더 드림 플러스 유니버셜 간편종신보험(보증비용부과형)(2404)(2종: 해약환급금 미보증형, 1형: 100%형)",
+    "refund_type": "standard",
+    "declared_rate": 2.05,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.05%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1176,
+    "company": "DB생명",
+    "product_name": "(무)10년 더 드림 플러스 유니버셜 간편종신보험(보증비용부과형)(2404)(2종: 해약환급금 미보증형, 2형: 50%형)",
+    "refund_type": "standard",
+    "declared_rate": 2.05,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.05%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1177,
+    "company": "DB생명",
+    "product_name": "(무)10년 더 드림 플러스 유니버셜 간편종신보험(보증비용부과형)(2404)(1종: 해약환급금 보증형, 3형: 체증형)",
+    "refund_type": "standard",
+    "declared_rate": 2.05,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.05%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1178,
+    "company": "DB생명",
+    "product_name": "(무)10년 더 드림 플러스 유니버셜 간편종신보험(보증비용부과형)(2404)(2종: 해약환급금 보증형, 3형: 체증형)",
+    "refund_type": "standard",
+    "declared_rate": 2.05,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.05%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1179,
+    "company": "동양생명",
+    "product_name": "(무)우리WON하는7년안심종신보험_일반심사형",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1180,
+    "company": "동양생명",
+    "product_name": "(무)우리WON하는7년안심종신보험_간편심사형",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1181,
+    "company": "동양생명",
+    "product_name": "(무)우리WON하는알뜰플러스종신보험",
+    "refund_type": "standard",
+    "declared_rate": 2.75,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.75%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1182,
+    "company": "동양생명",
+    "product_name": "(무)우리WON하는간편알뜰플러스종신보험",
+    "refund_type": "standard",
+    "declared_rate": 2.75,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.75%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1183,
+    "company": "동양생명",
+    "product_name": "(무)우리WON하는5배더행복한플러스종신보험(20년체증형, 일반심사형)",
+    "refund_type": "standard",
+    "declared_rate": 2.75,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.75%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1184,
+    "company": "동양생명",
+    "product_name": "(무)우리WON하는5배더행복한플러스종신보험(20년체증형, 간편심사형)",
+    "refund_type": "standard",
+    "declared_rate": 2.75,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.75%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1185,
+    "company": "동양생명",
+    "product_name": "(무)우리WON하는5배더행복한플러스종신보험(15년체증형, 간편심사형)",
+    "refund_type": "standard",
+    "declared_rate": 2.75,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.75%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1186,
+    "company": "동양생명",
+    "product_name": "(무)우리WON하는5배더행복한플러스종신보험(15년체증형, 일반심사형)",
+    "refund_type": "standard",
+    "declared_rate": 2.75,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.75%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1187,
+    "company": "동양생명",
+    "product_name": "(무)우리WON하는유니버셜종신보험(일반심사형)",
+    "refund_type": "standard",
+    "declared_rate": 2.75,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.75%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1227,
+    "company": "KB라이프생명",
+    "product_name": "KB 종신보험 무배당(일반심사형)",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1188,
+    "company": "동양생명",
+    "product_name": "(무)우리WON하는유니버셜종신보험(간편심사형)",
+    "refund_type": "standard",
+    "declared_rate": 2.75,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.75%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1189,
+    "company": "동양생명",
+    "product_name": "(무)우리WON하는안심상속종신보험(보증비용부과형)(간편심사형)",
+    "refund_type": "standard",
+    "declared_rate": 2.15,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.15%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1190,
+    "company": "동양생명",
+    "product_name": "(무)우리WON하는안심상속종신보험(보증비용부과형)(일반심사형)",
+    "refund_type": "standard",
+    "declared_rate": 2.15,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.15%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1191,
+    "company": "메트라이프생명",
+    "product_name": "무배당 모두의 종신보험(무해약환급금형)_체증형",
+    "refund_type": "standard",
+    "declared_rate": 2.9,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.90%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1192,
+    "company": "메트라이프생명",
+    "product_name": "무배당 미리받는 GI종신보험 2종(저해약환급금형)",
+    "refund_type": "standard",
+    "declared_rate": 3.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1193,
+    "company": "메트라이프생명",
+    "product_name": "무배당 미리받는 GI종신보험 1종(무해약환급금형)",
+    "refund_type": "standard",
+    "declared_rate": 3.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1194,
+    "company": "메트라이프생명",
+    "product_name": "무배당 간편가입 백만인을 위한 달러종신보험plus(저해약환급금형 2형)",
+    "refund_type": "standard",
+    "declared_rate": 3.25,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1195,
+    "company": "메트라이프생명",
+    "product_name": "무배당 간편가입 백만인을 위한 달러종신보험plus(저해약환급금형 1형)",
+    "refund_type": "standard",
+    "declared_rate": 3.25,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1196,
+    "company": "메트라이프생명",
+    "product_name": "무배당 백만인을 위한 달러종신보험plus(저해약환급금형 2형)",
+    "refund_type": "standard",
+    "declared_rate": 3.25,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1197,
+    "company": "메트라이프생명",
+    "product_name": "무배당 백만인을 위한 달러종신보험plus(저해약환급금형 1형)",
+    "refund_type": "standard",
+    "declared_rate": 3.25,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1198,
+    "company": "메트라이프생명",
+    "product_name": "무배당 간편가입 모두의 달러 종신보험(무해약환급금형)",
+    "refund_type": "standard",
+    "declared_rate": 3.6,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1199,
+    "company": "메트라이프생명",
+    "product_name": "무배당 모두의 달러 종신보험(무해약환급금형)",
+    "refund_type": "standard",
+    "declared_rate": 3.6,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1200,
+    "company": "메트라이프생명",
+    "product_name": "무배당 간편가입 3년내고만족하는달러종신보험(무해약환급금형)",
+    "refund_type": "standard",
+    "declared_rate": 3.6,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1201,
+    "company": "메트라이프생명",
+    "product_name": "무배당 3년내고만족하는달러종신보험(무해약환급금형)",
+    "refund_type": "standard",
+    "declared_rate": 3.6,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1202,
+    "company": "메트라이프생명",
+    "product_name": "무배당유니버셜달러종신보험Plus(보증비용부과형)_해약환급금미보증형",
+    "refund_type": "standard",
+    "declared_rate": 4.87,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (4.87%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1203,
+    "company": "메트라이프생명",
+    "product_name": "무배당유니버셜달러종신보험Plus(보증비용부과형)_해약환급금보증형",
+    "refund_type": "standard",
+    "declared_rate": 4.87,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (4.87%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1204,
+    "company": "메트라이프생명",
+    "product_name": "무배당 간편가입 백만인을 위한 종신보험plus(저해약환급금형)",
+    "refund_type": "standard",
+    "declared_rate": 3.25,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1205,
+    "company": "메트라이프생명",
+    "product_name": "무배당 백만인을 위한 종신보험plus(저해약환급금형)",
+    "refund_type": "standard",
+    "declared_rate": 3.25,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1206,
+    "company": "메트라이프생명",
+    "product_name": "무배당 간편가입 모두의 종신보험(무해약환급금형)_기본형",
+    "refund_type": "standard",
+    "declared_rate": 2.9,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.90%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1207,
+    "company": "메트라이프생명",
+    "product_name": "무배당 모두의 종신보험(무해약환급금형)_기본형",
+    "refund_type": "standard",
+    "declared_rate": 2.9,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.90%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1208,
+    "company": "메트라이프생명",
+    "product_name": "무배당 간편가입 모두의 종신보험(무해약환급금형)_체증형",
+    "refund_type": "standard",
+    "declared_rate": 2.9,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.90%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1209,
+    "company": "KB라이프생명",
+    "product_name": "KB 역모기지 일시납종신보험 무배당(간편심사형)",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1210,
+    "company": "KB라이프생명",
+    "product_name": "KB 더블업 역모기지 종신보험 무배당(해약환급금 미지급형)(일반심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1211,
+    "company": "KB라이프생명",
+    "product_name": "KB 더블업 역모기지 종신보험 무배당(해약환급금 미지급형)(간편심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1212,
+    "company": "KB라이프생명",
+    "product_name": "KB Trust 라이프 파트너 종신보험 무배당(해약환급금 일부지급형)(2종 간편심사형)",
+    "refund_type": "low",
+    "declared_rate": 3.1,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.10%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1213,
+    "company": "KB라이프생명",
+    "product_name": "KB Trust 라이프 파트너 종신보험 무배당(해약환급금 일부지급형)(1종 일반심사형)",
+    "refund_type": "low",
+    "declared_rate": 3.1,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.10%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1214,
+    "company": "KB라이프생명",
+    "product_name": "KB 라이프 파트너 종신보험 무배당(해약환급금 일부지급형)(간편심사형)",
+    "refund_type": "low",
+    "declared_rate": 3.1,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.10%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1215,
+    "company": "KB라이프생명",
+    "product_name": "KB 라이프 파트너 종신보험 무배당(해약환급금 일부지급형)(일반심사형)",
+    "refund_type": "low",
+    "declared_rate": 3.1,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.10%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1216,
+    "company": "KB라이프생명",
+    "product_name": "KB 약속플러스 종신보험 무배당(해약환급금 일부지급형)(일반심사형) 2종",
+    "refund_type": "low",
+    "declared_rate": 2.7,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.70%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1217,
+    "company": "KB라이프생명",
+    "product_name": "KB 약속플러스 종신보험 무배당(해약환급금 일부지급형)(일반심사형) 1종",
+    "refund_type": "low",
+    "declared_rate": 2.7,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.70%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1218,
+    "company": "KB라이프생명",
+    "product_name": "KB 약속플러스 종신보험 무배당(해약환급금 일부지급형)(간편심사형) 1종",
+    "refund_type": "low",
+    "declared_rate": 2.7,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.70%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1219,
+    "company": "KB라이프생명",
+    "product_name": "KB 약속플러스 종신보험 무배당(해약환급금 일부지급형)(간편심사형) 2종",
+    "refund_type": "low",
+    "declared_rate": 2.7,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.70%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1220,
+    "company": "KB라이프생명",
+    "product_name": "KB 라이프 역모기지 종신보험 무배당(해약환급금 일부지급형)(일반심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1221,
+    "company": "KB라이프생명",
+    "product_name": "KB 라이프 역모기지 종신보험 무배당(해약환급금 일부지급형)(간편심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1222,
+    "company": "KB라이프생명",
+    "product_name": "KB 라이프 역모기지 종신보험 무배당(해약환급금 미지급형)(일반심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1223,
+    "company": "KB라이프생명",
+    "product_name": "KB 라이프 역모기지 종신보험 무배당(해약환급금 미지급형)(간편심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1224,
+    "company": "KB라이프생명",
+    "product_name": "KB 역모기지 체증종신보험 무배당(해약환급금 일부지급형)(일반심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1225,
+    "company": "KB라이프생명",
+    "product_name": "KB 역모기지 체증종신보험 무배당(해약환급금 일부지급형)(간편심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1226,
+    "company": "KB라이프생명",
+    "product_name": "KB 종신보험 무배당(간편심사형)",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1228,
+    "company": "KB라이프생명",
+    "product_name": "KB 7년의약속 플러스 평생종신보험무배당(해약환급금 일부지급형)(간편심사형)",
+    "refund_type": "low",
+    "declared_rate": 3,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1229,
+    "company": "KB라이프생명",
+    "product_name": "KB 7년의약속 플러스 평생종신보험무배당(해약환급금 일부지급형)(일반심사형)",
+    "refund_type": "low",
+    "declared_rate": 3,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1230,
+    "company": "KB라이프생명",
+    "product_name": "KB 역모기지 일시납종신보험 무배당(일반심사형)",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1231,
+    "company": "신한라이프생명",
+    "product_name": "신한(간편가입)종신보험모아더드림(무배당, 해약환급금 일부지급형)_일반심사형",
+    "refund_type": "low",
+    "declared_rate": 2.6,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1232,
+    "company": "신한라이프생명",
+    "product_name": "신한(간편가입)종신보험 모아더드림Plus(무배당, 해약환급금 일부지급형)_일반심사형",
+    "refund_type": "low",
+    "declared_rate": 2.6,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1233,
+    "company": "신한라이프생명",
+    "product_name": "신한(간편가입)종신보험 밸런스핏(Fit)Plus(무배당, 해약환급금 일부지급형)",
+    "refund_type": "low",
+    "declared_rate": 2.6,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1234,
+    "company": "신한라이프생명",
+    "product_name": "신한(간편가입)통합종신보험 원(ONE)(무배당)",
+    "refund_type": "standard",
+    "declared_rate": 2.6,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1235,
+    "company": "신한라이프생명",
+    "product_name": "신한(간편가입)종신보험 드림UP(무배당, 해약환급금 일부지급형)",
+    "refund_type": "low",
+    "declared_rate": 2.6,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1236,
+    "company": "신한라이프생명",
+    "product_name": "신한(간편가입)통합종신보험 원(ONE)(무배당, 해약환급금 일부지급형)",
+    "refund_type": "low",
+    "declared_rate": 2.6,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1237,
+    "company": "신한라이프생명",
+    "product_name": "신한 종신보험 패밀리케어(무배당, 해약환급금 일부지급형)",
+    "refund_type": "low",
+    "declared_rate": 2.6,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1238,
+    "company": "신한라이프생명",
+    "product_name": "신한(간편가입)종신보험 더블플랜(무배당, 보증비용부과형)[해약환급금 일부지급형]",
+    "refund_type": "low",
+    "declared_rate": 2.15,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.15%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1239,
+    "company": "신한라이프생명",
+    "product_name": "신한놀라운종신보험(무배당, 해약환급금 일부지급형)",
+    "refund_type": "low",
+    "declared_rate": 2.6,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1240,
+    "company": "신한라이프생명",
+    "product_name": "신한(간편가입)든든한WM상속종신보험(무배당, 보증비용부과형)[해약환급금 미지급형]",
+    "refund_type": "low",
+    "declared_rate": 2.15,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.15%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1241,
+    "company": "신한라이프생명",
+    "product_name": "신한(간편가입)든든한VIP상속종신보험(무배당, 보증비용부과형)[해약환급금 미지급형]",
+    "refund_type": "low",
+    "declared_rate": 2.15,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.15%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1242,
+    "company": "신한라이프생명",
+    "product_name": "신한(간편가입)든든한실속종신보험(무배당, 보증비용부과형)[해약환급금 미지급형]",
+    "refund_type": "low",
+    "declared_rate": 2.15,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.15%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1243,
+    "company": "신한라이프생명",
+    "product_name": "신한(간편가입)The든든한종신보험(무배당, 해약환급금 미지급형)(1형)",
+    "refund_type": "low",
+    "declared_rate": 2.6,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1244,
+    "company": "신한라이프생명",
+    "product_name": "신한(간편가입)The든든한종신보험(무배당, 해약환급금 미지급형)(2형)",
+    "refund_type": "low",
+    "declared_rate": 2.6,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1245,
+    "company": "신한라이프생명",
+    "product_name": "신한(간편가입)종신보험 세븐PlusⅡ(무배당, 해약환급금 일부지급형)",
+    "refund_type": "low",
+    "declared_rate": 2.6,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1246,
+    "company": "신한라이프생명",
+    "product_name": "신한(간편가입)종신보험 세븐Plus골드(무배당, 해약환급금 일부지급형)",
+    "refund_type": "low",
+    "declared_rate": 2.6,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1247,
+    "company": "신한라이프생명",
+    "product_name": "신한놀라운ONE더보장종신보험(무배당, 해약환급금 일부지급형)",
+    "refund_type": "low",
+    "declared_rate": 2.6,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1248,
+    "company": "처브라이프생명",
+    "product_name": "Chubb 간편가입 New Medical 종신보험 무배당(해약환급금 일부지급형) 1종",
+    "refund_type": "low",
+    "declared_rate": 3.3,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.30%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1249,
+    "company": "처브라이프생명",
+    "product_name": "Chubb 간편가입 New Medical 종신보험 무배당(해약환급금 일부지급형) 2종",
+    "refund_type": "low",
+    "declared_rate": 3.3,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.30%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1250,
+    "company": "처브라이프생명",
+    "product_name": "Chubb New Medical 종신보험 무배당(해약환급금 일부지급형) 1종",
+    "refund_type": "low",
+    "declared_rate": 3.3,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.30%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1251,
+    "company": "처브라이프생명",
+    "product_name": "Chubb New Medical 종신보험 무배당(해약환급금 일부지급형) 2종",
+    "refund_type": "low",
+    "declared_rate": 3.3,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.30%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1252,
+    "company": "처브라이프생명",
+    "product_name": "Chubb 간편가입 New 수(秀) 종신보험 무배당(해약환급금 일부지급형) 1종 일반납입형",
+    "refund_type": "low",
+    "declared_rate": 3.3,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.30%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1253,
+    "company": "처브라이프생명",
+    "product_name": "Chubb 간편가입 New 수(秀) 종신보험 무배당(해약환급금 일부지급형) 2종 체감납입형",
+    "refund_type": "low",
+    "declared_rate": 3.3,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.30%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1254,
+    "company": "처브라이프생명",
+    "product_name": "Chubb New 수(秀) 종신보험 무배당(해약환급금 일부지급형) 1종 일반납입형",
+    "refund_type": "low",
+    "declared_rate": 3.3,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.30%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1255,
+    "company": "처브라이프생명",
+    "product_name": "Chubb New 수(秀) 종신보험 무배당(해약환급금 일부지급형) 2종 체감납입형",
+    "refund_type": "low",
+    "declared_rate": 3.3,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.30%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1256,
+    "company": "처브라이프생명",
+    "product_name": "Chubb 종신보험(전환용) 무배당",
+    "refund_type": "standard",
+    "declared_rate": 2.3,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.30%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1257,
+    "company": "처브라이프생명",
+    "product_name": "Chubb 간편가입 유니버셜 종신보험(전환용) 무배당",
+    "refund_type": "standard",
+    "declared_rate": 2.3,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.30%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1258,
+    "company": "처브라이프생명",
+    "product_name": "Chubb 유니버셜 종신보험(전환용) 무배당",
+    "refund_type": "standard",
+    "declared_rate": 2.3,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.30%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1259,
+    "company": "하나생명",
+    "product_name": "(무)하나로 THE 연결된 종신보험(해약환급금 일부지급형)_일반심사형",
+    "refund_type": "low",
+    "declared_rate": 2.75,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.75%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1260,
+    "company": "하나생명",
+    "product_name": "(무)하나로 THE 연결된 종신보험(해약환급금 일부지급형)_간편심사형",
+    "refund_type": "low",
+    "declared_rate": 2.75,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.75%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1261,
+    "company": "하나생명",
+    "product_name": "(무)하나로 100UP 종신보험(해약환급금 일부지급형)_일반심사형",
+    "refund_type": "low",
+    "declared_rate": 2.75,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.75%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1262,
+    "company": "하나생명",
+    "product_name": "(무)하나로 100UP 종신보험(해약환급금 일부지급형)_간편심사형",
+    "refund_type": "low",
+    "declared_rate": 2.75,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.75%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1263,
+    "company": "푸본현대생명",
+    "product_name": "MAX 종신보험 원픽 무배당/해약환급금 일부지급형(2603)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1264,
+    "company": "푸본현대생명",
+    "product_name": "MAX 종신보험 무배당/보증비용부과형(2404) 기본형",
+    "refund_type": "standard",
+    "declared_rate": 2.55,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.55%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1265,
+    "company": "푸본현대생명",
+    "product_name": "MAX 종신보험 무배당/보증비용부과형(2404) 집중보장형",
+    "refund_type": "standard",
+    "declared_rate": 2.55,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.55%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1266,
+    "company": "푸본현대생명",
+    "product_name": "MAX 종신보험 세븐 하이픽 간편가입 무배당/해약환급금 일부지급형(2604)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1267,
+    "company": "푸본현대생명",
+    "product_name": "MAX 종신보험 세븐 하이픽 무배당/해약환급금 일부지급형(2604)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1268,
+    "company": "푸본현대생명",
+    "product_name": "MAX 미리받는 종신보험 무배당(2601)",
+    "refund_type": "standard",
+    "declared_rate": 3,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1269,
+    "company": "푸본현대생명",
+    "product_name": "MAX 미리받는 종신보험 무배당/해약환급금 일부지급형(2601)",
+    "refund_type": "low",
+    "declared_rate": 3,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1270,
+    "company": "푸본현대생명",
+    "product_name": "MAX 종신보험 원픽 간편가입 무배당/해약환급금 일부지급형(2603)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1271,
+    "company": "라이나생명",
+    "product_name": "(무)THE착한간편고지종신보험(기본형)_가입금액형",
+    "refund_type": "standard",
+    "declared_rate": 2.25,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1272,
+    "company": "라이나생명",
+    "product_name": "(무)THE착한간편고지종신보험(해약환급금미지급형)_가입금액형",
+    "refund_type": "low",
+    "declared_rate": 2.25,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1273,
+    "company": "라이나생명",
+    "product_name": "(무)THE건강해지는종신보험(해약환급금미지급형)_가입금액형",
+    "refund_type": "low",
+    "declared_rate": 2.25,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1274,
+    "company": "라이나생명",
+    "product_name": "(무)THE건강해지는종신보험(해약환급금미지급형)_기납입P플러스형",
+    "refund_type": "low",
+    "declared_rate": 2.25,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1275,
+    "company": "라이나생명",
+    "product_name": "(무)THE건강해지는종신보험(기본형)_가입금액형",
+    "refund_type": "standard",
+    "declared_rate": 2.25,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1276,
+    "company": "라이나생명",
+    "product_name": "(무)THE건강해지는종신보험(기본형)_기납입P플러스형",
+    "refund_type": "standard",
+    "declared_rate": 2.25,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1277,
+    "company": "라이나생명",
+    "product_name": "(무)THE간편고지종신보험(해약환급금미지급형)_기납입P플러스형",
+    "refund_type": "low",
+    "declared_rate": 2.25,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1278,
+    "company": "라이나생명",
+    "product_name": "(무)THE간편고지종신보험(기본형)_기납입P플러스형",
+    "refund_type": "standard",
+    "declared_rate": 2.25,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1279,
+    "company": "라이나생명",
+    "product_name": "(무)THE간편고지종신보험(해약환급금미지급형)_가입금액형",
+    "refund_type": "low",
+    "declared_rate": 2.25,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1280,
+    "company": "라이나생명",
+    "product_name": "(무)THE간편고지종신보험(기본형)_가입금액형",
+    "refund_type": "standard",
+    "declared_rate": 2.25,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1309,
+    "company": "NH농협생명",
+    "product_name": "퍼펙트라이프NH종신보험(해약환급금일부지급형,무배당)",
+    "refund_type": "low",
+    "declared_rate": 2.6,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1281,
+    "company": "라이나생명",
+    "product_name": "(무)THE채우는종신보험(해약환급금 일부지급형)_기납입P플러스형",
+    "refund_type": "low",
+    "declared_rate": 2.25,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1282,
+    "company": "라이나생명",
+    "product_name": "(무)THE채우는종신보험(해약환급금 일부지급형)_체증형",
+    "refund_type": "low",
+    "declared_rate": 2.25,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1283,
+    "company": "라이나생명",
+    "product_name": "(무)THE착한간편고지종신보험(해약환급금미지급형)_기납입P플러스형",
+    "refund_type": "low",
+    "declared_rate": 2.25,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1284,
+    "company": "라이나생명",
+    "product_name": "(무)THE착한간편고지종신보험(기본형)_기납입P플러스형",
+    "refund_type": "standard",
+    "declared_rate": 2.25,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1285,
+    "company": "라이나생명",
+    "product_name": "(무)THE채우는335간편고지종신보험(해약환급금 일부지급형)_기납입P플러스형",
+    "refund_type": "low",
+    "declared_rate": 2.25,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1286,
+    "company": "라이나생명",
+    "product_name": "(무)THE채우는335간편고지종신보험(해약환급금 일부지급형)_체증형",
+    "refund_type": "low",
+    "declared_rate": 2.25,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1287,
+    "company": "라이나생명",
+    "product_name": "(무)채우는종신보험(해약환급금 일부지급형)_체증형",
+    "refund_type": "low",
+    "declared_rate": 2.25,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1288,
+    "company": "라이나생명",
+    "product_name": "(무)채우는종신보험(해약환급금 일부지급형)_기납입P플러스형",
+    "refund_type": "low",
+    "declared_rate": 2.25,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.25%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1289,
+    "company": "AIA생명",
+    "product_name": "(무) AIA 평생 안심+ 유니버셜 종신보험",
+    "refund_type": "standard",
+    "declared_rate": 4,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (4.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1290,
+    "company": "AIA생명",
+    "product_name": "(무) AIA 글로벌 레거시 미국달러 상속종신보험 2형 (비흡연자 우량체)",
+    "refund_type": "standard",
+    "declared_rate": 5.27,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (5.27%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1291,
+    "company": "AIA생명",
+    "product_name": "(무) AIA 글로벌 레거시 미국달러 상속종신보험 2형",
+    "refund_type": "standard",
+    "declared_rate": 5.27,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (5.27%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1292,
+    "company": "AIA생명",
+    "product_name": "(무) AIA 글로벌 레거시 미국달러 상속종신보험 1형",
+    "refund_type": "standard",
+    "declared_rate": 5.27,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (5.27%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1293,
+    "company": "AIA생명",
+    "product_name": "(무) AIA 평생 안심+ 달러 유니버셜 종신보험 2형",
+    "refund_type": "standard",
+    "declared_rate": 4.7,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (4.70%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1294,
+    "company": "AIA생명",
+    "product_name": "(무) AIA 평생 안심+ 달러 유니버셜 종신보험 1형",
+    "refund_type": "standard",
+    "declared_rate": 4.7,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (4.70%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1295,
+    "company": "AIA생명",
+    "product_name": "(무) AIA 안심+ 프라임 달러종신보험(해약환급금 50%지급형) 2형 2종",
+    "refund_type": "standard",
+    "declared_rate": 3,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1296,
+    "company": "AIA생명",
+    "product_name": "(무) AIA 안심+ 프라임 달러종신보험(해약환급금 50%지급형) 2형 1종",
+    "refund_type": "standard",
+    "declared_rate": 3,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1297,
+    "company": "AIA생명",
+    "product_name": "(무) AIA 안심+ 프라임 달러종신보험(해약환급금 50%지급형) 1형 2종",
+    "refund_type": "standard",
+    "declared_rate": 3,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1298,
+    "company": "AIA생명",
+    "product_name": "(무) AIA 안심+ 프라임 달러종신보험(해약환급금 50%지급형) 1형 1종",
+    "refund_type": "standard",
+    "declared_rate": 3,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1299,
+    "company": "AIA생명",
+    "product_name": "(무) AIA 안심+ 프라임 종신보험IV (해약환급금 50%지급형) 2형",
+    "refund_type": "standard",
+    "declared_rate": 3,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1300,
+    "company": "AIA생명",
+    "product_name": "(무) AIA 안심+ 프라임 종신보험IV (해약환급금 50%지급형) 1형",
+    "refund_type": "standard",
+    "declared_rate": 3,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (3.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1301,
+    "company": "AIA생명",
+    "product_name": "(무) AIA 꼭 필요한 더해주는 종신보험 2형 2종",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1302,
+    "company": "AIA생명",
+    "product_name": "(무) AIA 꼭 필요한 더해주는 종신보험 2형 1종",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1303,
+    "company": "AIA생명",
+    "product_name": "(무) AIA 꼭 필요한 더해주는 종신보험 1형 2종",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1304,
+    "company": "AIA생명",
+    "product_name": "(무) AIA 꼭 필요한 더해주는 종신보험 1형 1종",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1305,
+    "company": "AIA생명",
+    "product_name": "(무) AIA 더해주는 종신보험 2형 2종",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1306,
+    "company": "AIA생명",
+    "product_name": "(무) AIA 더해주는 종신보험 2형 1종",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1307,
+    "company": "AIA생명",
+    "product_name": "(무) AIA 더해주는 종신보험 1형 2종",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1308,
+    "company": "AIA생명",
+    "product_name": "(무) AIA 더해주는 종신보험 1형 1종",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1310,
+    "company": "NH농협생명",
+    "product_name": "마이초이스NH종신보험(표준형,무배당)_2601",
+    "refund_type": "standard",
+    "declared_rate": 2.6,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1311,
+    "company": "NH농협생명",
+    "product_name": "트루라이프NH종신보험(해약환급금 일부지급형,무배당)",
+    "refund_type": "low",
+    "declared_rate": 2.6,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1312,
+    "company": "NH농협생명",
+    "product_name": "트루라이프NH종신보험(표준형,무배당)",
+    "refund_type": "standard",
+    "declared_rate": 2.6,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1313,
+    "company": "NH농협생명",
+    "product_name": "마이초이스NH종신보험(해약환급금 일부지급형,무배당)_2601",
+    "refund_type": "low",
+    "declared_rate": 2.6,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1314,
+    "company": "NH농협생명",
+    "product_name": "인생든든NH유니버셜종신보험(무배당,보증비용부과형,체증형)_2601",
+    "refund_type": "standard",
+    "declared_rate": 2.15,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.15%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1315,
+    "company": "NH농협생명",
+    "product_name": "인생든든NH유니버셜종신보험(무배당,보증비용부과형,기본형)_2601",
+    "refund_type": "standard",
+    "declared_rate": 2.15,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.15%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1316,
+    "company": "NH농협생명",
+    "product_name": "간편가입NH유니버셜종신보험(무배당,보증비용부과형)_2601",
+    "refund_type": "standard",
+    "declared_rate": 2.15,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.15%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1317,
+    "company": "NH농협생명",
+    "product_name": "스텝업700NH종신보험(해약환급금일부지급형,무배당)_2603",
+    "refund_type": "low",
+    "declared_rate": 1,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (1.00%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1318,
+    "company": "NH농협생명",
+    "product_name": "스텝업700NH종신보험(해약환급금일부지급형,무배당)",
+    "refund_type": "low",
+    "declared_rate": 2.6,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1319,
+    "company": "교보라이프플래닛생명",
+    "product_name": "(무)교보라플 종신보험(해약환급금 미지급형)(표준체)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 자산관리 및 연금전환 특화 솔루션",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1320,
+    "company": "교보라이프플래닛생명",
+    "product_name": "(무)교보라플 종신보험(해약환급금 미지급형)(건강체)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 자산관리 및 연금전환 특화 솔루션",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1321,
+    "company": "교보라이프플래닛생명",
+    "product_name": "(무)교보라플 종신보험(해약환급금 미지급형)(비흡연체)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 자산관리 및 연금전환 특화 솔루션",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1322,
+    "company": "교보생명",
+    "product_name": "교보내생애맞춤건강종신보험 (무배당,보증비용부과형)",
+    "refund_type": "standard",
+    "declared_rate": 2.07,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.07%) 반영 | 자산관리 및 연금전환 특화 솔루션",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1323,
+    "company": "교보생명",
+    "product_name": "교보실속건강종신보험 [2409](무배당,보증비용부과형)_일반형",
+    "refund_type": "standard",
+    "declared_rate": 2.07,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.07%) 반영 | 자산관리 및 연금전환 특화 솔루션",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1324,
+    "company": "교보생명",
+    "product_name": "교보실속건강종신보험 [2409](무배당,보증비용부과형)_저해약환급금형(50%해지지급형)",
+    "refund_type": "standard",
+    "declared_rate": 2.07,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.07%) 반영 | 자산관리 및 연금전환 특화 솔루션",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1325,
+    "company": "교보생명",
+    "product_name": "교보실속간편건강종신보험 [2409](무배당,보증비용부과형)_일반형",
+    "refund_type": "standard",
+    "declared_rate": 2.07,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.07%) 반영 | 자산관리 및 연금전환 특화 솔루션",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1326,
+    "company": "교보생명",
+    "product_name": "교보실속간편건강종신보험 [2409](무배당,보증비용부과형)_저해약환급금형(50%해지지급형)",
+    "refund_type": "standard",
+    "declared_rate": 2.07,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.07%) 반영 | 자산관리 및 연금전환 특화 솔루션",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1327,
+    "company": "교보생명",
+    "product_name": "교보실속여성건강종신보험 [2409](무배당)",
+    "refund_type": "standard",
+    "declared_rate": 2.5,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 자산관리 및 연금전환 특화 솔루션",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1328,
+    "company": "미래에셋생명",
+    "product_name": "미리 주는 건강종신보험 무배당",
+    "refund_type": "standard",
+    "declared_rate": 2.75,
+    "business_fee": 6.5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.75%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1329,
+    "company": "DB생명",
+    "product_name": "(무)백년친구 713 종신보험(해약환급금 일부지급형Ⅳ)(2601)(2형:간편심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1330,
+    "company": "DB생명",
+    "product_name": "(무)간편한(325) 뉴-올케어 암종신보험(해약환급금 일부지급형)(2601)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1331,
+    "company": "DB생명",
+    "product_name": "(무)뉴-올케어 암종신보험(해약환급금 일부지급형)(2601)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1332,
+    "company": "DB생명",
+    "product_name": "(무)백년친구 713 골드 종신보험(해약환급금 일부지급형Ⅳ)(2601)(2형:간편심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1333,
+    "company": "DB생명",
+    "product_name": "(무)백년친구 713 골드 종신보험(해약환급금 일부지급형Ⅳ)(2601)(1형:일반심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1334,
+    "company": "DB생명",
+    "product_name": "(무)백년친구 713 종신보험(해약환급금 일부지급형Ⅳ)(2601)(1형:일반심사형)",
+    "refund_type": "low",
+    "declared_rate": 2.5,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.50%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1335,
+    "company": "신한라이프생명",
+    "product_name": "신한(간편가입)리필종신보험(무배당, 해약환급금 일부지급형)(일반심사형/집중납입형)",
+    "refund_type": "low",
+    "declared_rate": 2.6,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  },
+  {
+    "id": 1336,
+    "company": "신한라이프생명",
+    "product_name": "신한(간편가입)리필종신보험(무배당, 해약환급금 일부지급형)(일반심사형/기본납입형)",
+    "refund_type": "low",
+    "declared_rate": 2.6,
+    "business_fee": 5,
+    "features": "오프라인 전담 밀착 케어 서비스 | 적용이율 (2.60%) 반영 | 예금자보호법 및 해약환급 보장 안전망",
+    "created_at": "2026-06-10T10:59:58.021956+00:00"
+  }
+]

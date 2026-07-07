@@ -14,11 +14,32 @@ self.addEventListener('fetch', (event) => {
   if (!event.request.url.startsWith('http')) {
     return;
   }
-  // Bypass API requests to let the browser handle them directly
-  if (event.request.url.includes('/api/')) {
+
+  const url = new URL(event.request.url);
+  
+  // 1. Bypass external/third-party domains (e.g. Supabase, Aligo, fonts)
+  // to avoid service worker network errors on external calls.
+  if (url.hostname !== self.location.hostname) {
     return;
   }
-  event.respondWith(fetch(event.request));
+
+  // 2. Bypass local API requests to let the browser handle them directly
+  if (url.pathname.includes('/api/')) {
+    return;
+  }
+
+  // 3. For local requests, catch fetch errors gracefully (e.g. offline status)
+  // to prevent unhandled service worker fetch exceptions in the console.
+  event.respondWith(
+    fetch(event.request).catch((err) => {
+      console.warn('[Service Worker] Local fetch failed:', event.request.url, err);
+      return new Response('Offline / Network connection lost', {
+        status: 503,
+        statusText: 'Service Unavailable',
+        headers: { 'Content-Type': 'text/plain' }
+      });
+    })
+  );
 });
 
 // Push notification event listener

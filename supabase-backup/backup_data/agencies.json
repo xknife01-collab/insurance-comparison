@@ -1,0 +1,19 @@
+[
+  {
+    "id": "88888888-8888-4888-a888-888888888888",
+    "name": "스마트보험파트너스 데모 대리점",
+    "subscription_status": "active",
+    "lead_routing_type": "distribute_auto_round_robin",
+    "logo_url": "/logo.png",
+    "phone": "02-1234-5678",
+    "address": "서울시 강남구 테헤란로 123",
+    "created_at": "2026-06-13T13:03:38.299404+00:00",
+    "current_credits": 150300,
+    "low_credit_alert_threshold": 2000,
+    "low_credit_alert_phone": null,
+    "email": "demo@insurance-partner.com",
+    "subscription_tier": "pro",
+    "max_planner_limit": 28,
+    "is_demo": true
+  }
+]

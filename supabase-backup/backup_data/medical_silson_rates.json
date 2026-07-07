@@ -1,0 +1,1010 @@
+[
+  {
+    "id": 1311,
+    "product_code": "메리츠화재_메리츠_노후실손의료비보험",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 60078,
+      "coverages": [
+        {
+          "name": "노후실손의료비_상해형",
+          "f_prem": 65195,
+          "m_prem": 60078
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1312,
+    "product_code": "메리츠화재_메리츠_노후실손의료비보험",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 65195,
+      "coverages": [
+        {
+          "name": "노후실손의료비_상해형",
+          "f_prem": 65195,
+          "m_prem": 60078
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1313,
+    "product_code": "롯데손보_let_care_노후실손의료보험_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 56773,
+      "coverages": [
+        {
+          "name": "노후실손의료비(상해형)(갱신형)",
+          "f_prem": 43637,
+          "m_prem": 56773
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1314,
+    "product_code": "롯데손보_let_care_노후실손의료보험_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 43637,
+      "coverages": [
+        {
+          "name": "노후실손의료비(상해형)(갱신형)",
+          "f_prem": 43637,
+          "m_prem": 56773
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1315,
+    "product_code": "삼성화재_삼성화재_노후실손의료비보험",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 54476,
+      "coverages": [
+        {
+          "name": "노후실손의료비B(상해형)",
+          "f_prem": 65652,
+          "m_prem": 54476
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1316,
+    "product_code": "삼성화재_삼성화재_노후실손의료비보험",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 65652,
+      "coverages": [
+        {
+          "name": "노후실손의료비B(상해형)",
+          "f_prem": 65652,
+          "m_prem": 54476
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1317,
+    "product_code": "현대해상_현대해상노후실손의료비보장보험_Hi_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 61656,
+      "coverages": [
+        {
+          "name": "노후실손의료비 상해(갱신형)",
+          "f_prem": 70738,
+          "m_prem": 61656
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1318,
+    "product_code": "현대해상_현대해상노후실손의료비보장보험_Hi_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 70738,
+      "coverages": [
+        {
+          "name": "노후실손의료비 상해(갱신형)",
+          "f_prem": 70738,
+          "m_prem": 61656
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1319,
+    "product_code": "KB손보_KB손보_노후실손의료비보장보험",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 54490,
+      "coverages": [
+        {
+          "name": "노후실손의료비(상해형)【갱신계약】",
+          "f_prem": 46556,
+          "m_prem": 54490
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1320,
+    "product_code": "KB손보_KB손보_노후실손의료비보장보험",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 46556,
+      "coverages": [
+        {
+          "name": "노후실손의료비(상해형)【갱신계약】",
+          "f_prem": 46556,
+          "m_prem": 54490
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1321,
+    "product_code": "DB손보_프로미라이프_노후실손의료비보험_1종_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 38174,
+      "coverages": [
+        {
+          "name": "상해외래의료비(간편고지)",
+          "f_prem": 54301,
+          "m_prem": 38174
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1322,
+    "product_code": "DB손보_프로미라이프_노후실손의료비보험_1종_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 54301,
+      "coverages": [
+        {
+          "name": "상해외래의료비(간편고지)",
+          "f_prem": 54301,
+          "m_prem": 38174
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1323,
+    "product_code": "DB손보_프로미라이프_노후실손의료비보험_2종_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 36362,
+      "coverages": [
+        {
+          "name": "상해외래의료비(간편고지)",
+          "f_prem": 51724,
+          "m_prem": 36362
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1324,
+    "product_code": "DB손보_프로미라이프_노후실손의료비보험_2종_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 51724,
+      "coverages": [
+        {
+          "name": "상해외래의료비(간편고지)",
+          "f_prem": 51724,
+          "m_prem": 36362
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1325,
+    "product_code": "NH농협손보_헤아림노후실손의료보험",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 42232,
+      "coverages": [
+        {
+          "name": "상급병실료차액보장",
+          "f_prem": 47032,
+          "m_prem": 42232
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1326,
+    "product_code": "NH농협손보_헤아림노후실손의료보험",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 47032,
+      "coverages": [
+        {
+          "name": "상급병실료차액보장",
+          "f_prem": 47032,
+          "m_prem": 42232
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1327,
+    "product_code": "한화손보_한화간편실손의료보험_무배당_간편고지_실손_신규계약용_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 25395,
+      "coverages": [
+        {
+          "name": "실손의료비(상해외래형)(갱신형)",
+          "f_prem": 33167,
+          "m_prem": 25395
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1328,
+    "product_code": "한화손보_한화간편실손의료보험_무배당_간편고지_실손_신규계약용_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 33167,
+      "coverages": [
+        {
+          "name": "실손의료비(상해외래형)(갱신형)",
+          "f_prem": 33167,
+          "m_prem": 25395
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1329,
+    "product_code": "NH농협손보_간편가입헤아림실손의료비보험",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 19561,
+      "coverages": [
+        {
+          "name": "상해입원 실손의료비(간편가입)",
+          "f_prem": 26976,
+          "m_prem": 19561
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1330,
+    "product_code": "NH농협손보_간편가입헤아림실손의료비보험",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 26976,
+      "coverages": [
+        {
+          "name": "상해입원 실손의료비(간편가입)",
+          "f_prem": 26976,
+          "m_prem": 19561
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1331,
+    "product_code": "메리츠화재_메리츠_다이렉트_실손의료비보험_v5",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 13513,
+      "coverages": [
+        {
+          "name": "비중증 비급여 자기공명영상진단",
+          "f_prem": 16598,
+          "m_prem": 13513
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1332,
+    "product_code": "메리츠화재_메리츠_다이렉트_실손의료비보험_v5",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 16598,
+      "coverages": [
+        {
+          "name": "비중증 비급여 자기공명영상진단",
+          "f_prem": 16598,
+          "m_prem": 13513
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1333,
+    "product_code": "메리츠화재_메리츠_실손의료비보험_v5",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 14156,
+      "coverages": [
+        {
+          "name": "비중증 비급여 자기공명영상진단",
+          "f_prem": 17387,
+          "m_prem": 14156
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1334,
+    "product_code": "메리츠화재_메리츠_실손의료비보험_v5",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 17387,
+      "coverages": [
+        {
+          "name": "비중증 비급여 자기공명영상진단",
+          "f_prem": 17387,
+          "m_prem": 14156
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1335,
+    "product_code": "한화손보_한화실손의료보험__무배당",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 13807,
+      "coverages": [
+        {
+          "name": "기본형 실손의료비(상해급여)(갱신형)",
+          "f_prem": 16531,
+          "m_prem": 13807
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1336,
+    "product_code": "한화손보_한화실손의료보험__무배당",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 16531,
+      "coverages": [
+        {
+          "name": "기본형 실손의료비(상해급여)(갱신형)",
+          "f_prem": 16531,
+          "m_prem": 13807
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1337,
+    "product_code": "한화손보_한화다이렉트실손의료보험__무배당",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 13295,
+      "coverages": [
+        {
+          "name": "기본형 실손의료비(상해급여)(갱신형)",
+          "f_prem": 15918,
+          "m_prem": 13295
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1338,
+    "product_code": "한화손보_한화다이렉트실손의료보험__무배당",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 15918,
+      "coverages": [
+        {
+          "name": "기본형 실손의료비(상해급여)(갱신형)",
+          "f_prem": 15918,
+          "m_prem": 13295
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1339,
+    "product_code": "롯데손보_let_care_실손의료보험__v5",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 23321,
+      "coverages": [
+        {
+          "name": "상해급여 실손의료비(갱신형)",
+          "f_prem": 21437,
+          "m_prem": 23321
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1340,
+    "product_code": "롯데손보_let_care_실손의료보험__v5",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 21437,
+      "coverages": [
+        {
+          "name": "상해급여 실손의료비(갱신형)",
+          "f_prem": 21437,
+          "m_prem": 23321
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1341,
+    "product_code": "흥국화재_흥Good_실손의료보험_v5",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 16613,
+      "coverages": [
+        {
+          "name": "비중증비급여자기공명영상진단의료비(갱신형_1년)",
+          "f_prem": 20529,
+          "m_prem": 16613
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1342,
+    "product_code": "흥국화재_흥Good_실손의료보험_v5",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 20529,
+      "coverages": [
+        {
+          "name": "비중증비급여자기공명영상진단의료비(갱신형_1년)",
+          "f_prem": 20529,
+          "m_prem": 16613
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1343,
+    "product_code": "흥국화재_흥Good_다이렉트_실손의료보험_v5",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 15671,
+      "coverages": [
+        {
+          "name": "비중증비급여자기공명영상진단의료비(갱신형_1년)",
+          "f_prem": 19364,
+          "m_prem": 15671
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1344,
+    "product_code": "흥국화재_흥Good_다이렉트_실손의료보험_v5",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 19364,
+      "coverages": [
+        {
+          "name": "비중증비급여자기공명영상진단의료비(갱신형_1년)",
+          "f_prem": 19364,
+          "m_prem": 15671
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1345,
+    "product_code": "삼성화재_삼성화재_실손의료비보험_v5",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 14828,
+      "coverages": [
+        {
+          "name": "급여 실손의료비(상해)",
+          "f_prem": 18682,
+          "m_prem": 14828
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1346,
+    "product_code": "삼성화재_삼성화재_실손의료비보험_v5",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 18682,
+      "coverages": [
+        {
+          "name": "급여 실손의료비(상해)",
+          "f_prem": 18682,
+          "m_prem": 14828
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1347,
+    "product_code": "삼성화재_삼성화재_다이렉트_실손의료비보험_v5",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 14168,
+      "coverages": [
+        {
+          "name": "급여 실손의료비(상해)",
+          "f_prem": 17850,
+          "m_prem": 14168
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1348,
+    "product_code": "삼성화재_삼성화재_다이렉트_실손의료비보험_v5",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 17850,
+      "coverages": [
+        {
+          "name": "급여 실손의료비(상해)",
+          "f_prem": 17850,
+          "m_prem": 14168
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1349,
+    "product_code": "현대해상_현대해상실손의료비보장보험_Hi__v5",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 13286,
+      "coverages": [
+        {
+          "name": "비중증비급여자기공명영상진단",
+          "f_prem": 14193,
+          "m_prem": 13286
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1350,
+    "product_code": "현대해상_현대해상실손의료비보장보험_Hi__v5",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 14193,
+      "coverages": [
+        {
+          "name": "비중증비급여자기공명영상진단",
+          "f_prem": 14193,
+          "m_prem": 13286
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1351,
+    "product_code": "현대해상_현대해상다이렉트실손의료비보장보험_Hi__v5",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 12568,
+      "coverages": [
+        {
+          "name": "비중증비급여자기공명영상진단",
+          "f_prem": 13523,
+          "m_prem": 12568
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1352,
+    "product_code": "현대해상_현대해상다이렉트실손의료비보장보험_Hi__v5",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 13523,
+      "coverages": [
+        {
+          "name": "비중증비급여자기공명영상진단",
+          "f_prem": 13523,
+          "m_prem": 12568
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1353,
+    "product_code": "KB손보_KB손보_다이렉트실손의료비보장보험_v5",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 14411,
+      "coverages": [
+        {
+          "name": "5세대 비중증 비급여 자기공명영상진단 실손의료비【갱신계약】",
+          "f_prem": 18451,
+          "m_prem": 14411
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1354,
+    "product_code": "KB손보_KB손보_다이렉트실손의료비보장보험_v5",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 18451,
+      "coverages": [
+        {
+          "name": "5세대 비중증 비급여 자기공명영상진단 실손의료비【갱신계약】",
+          "f_prem": 18451,
+          "m_prem": 14411
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1355,
+    "product_code": "KB손보_KB손보_실손의료비보장보험_v5",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 15131,
+      "coverages": [
+        {
+          "name": "5세대 비중증 비급여 자기공명영상진단 실손의료비【갱신계약】",
+          "f_prem": 19372,
+          "m_prem": 15131
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1356,
+    "product_code": "KB손보_KB손보_실손의료비보장보험_v5",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 19372,
+      "coverages": [
+        {
+          "name": "5세대 비중증 비급여 자기공명영상진단 실손의료비【갱신계약】",
+          "f_prem": 19372,
+          "m_prem": 15131
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1357,
+    "product_code": "DB손보_실손의료비보험_1종__v5",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 14845,
+      "coverages": [
+        {
+          "name": "(기본형)상해급여의료비",
+          "f_prem": 18133,
+          "m_prem": 14845
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1358,
+    "product_code": "DB손보_실손의료비보험_1종__v5",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 18133,
+      "coverages": [
+        {
+          "name": "(기본형)상해급여의료비",
+          "f_prem": 18133,
+          "m_prem": 14845
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1359,
+    "product_code": "DB손보_실손의료비보험_2종__v5",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 14106,
+      "coverages": [
+        {
+          "name": "(기본형)상해급여의료비",
+          "f_prem": 17230,
+          "m_prem": 14106
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1360,
+    "product_code": "DB손보_실손의료비보험_2종__v5",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 17230,
+      "coverages": [
+        {
+          "name": "(기본형)상해급여의료비",
+          "f_prem": 17230,
+          "m_prem": 14106
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1361,
+    "product_code": "DB손보_다이렉트_실손의료비보험_CM__v5",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 14012,
+      "coverages": [
+        {
+          "name": "(기본형)상해급여의료비",
+          "f_prem": 17116,
+          "m_prem": 14012
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1362,
+    "product_code": "DB손보_다이렉트_실손의료비보험_CM__v5",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 17116,
+      "coverages": [
+        {
+          "name": "(기본형)상해급여의료비",
+          "f_prem": 17116,
+          "m_prem": 14012
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1363,
+    "product_code": "NH농협손보_헤아림실손의료비보험_v5",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 11636,
+      "coverages": [
+        {
+          "name": "비중증비급여자기공명영상진단",
+          "f_prem": 12004,
+          "m_prem": 11636
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1364,
+    "product_code": "NH농협손보_헤아림실손의료비보험_v5",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 12004,
+      "coverages": [
+        {
+          "name": "비중증비급여자기공명영상진단",
+          "f_prem": 12004,
+          "m_prem": 11636
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1365,
+    "product_code": "NH농협손보_헤아림다이렉트실손의료비보험_v5",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 11171,
+      "coverages": [
+        {
+          "name": "비중증비급여자기공명영상진단",
+          "f_prem": 11525,
+          "m_prem": 11171
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  },
+  {
+    "id": 1366,
+    "product_code": "NH농협손보_헤아림다이렉트실손의료비보험_v5",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "premium": 11525,
+      "coverages": [
+        {
+          "name": "비중증비급여자기공명영상진단",
+          "f_prem": 11525,
+          "m_prem": 11171
+        }
+      ]
+    },
+    "created_at": "2026-06-10T02:14:24.294193+00:00"
+  }
+]

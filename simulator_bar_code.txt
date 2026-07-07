@@ -1,0 +1,42 @@
+3675:   return (
+3676:     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-orange-500/30 selection:text-orange-200">
+3677:       
+3678:       {/* ── 상단 시뮬레이터 퀵 토글 바 ── */}
+3679:       <div className="bg-slate-900 border-b border-slate-800 px-4 py-2.5 text-xs flex flex-wrap items-center justify-between gap-4">
+3680:         <div className="flex items-center gap-2 text-slate-400 font-semibold">
+3681:           <Sparkles className="w-3.5 h-3.5 text-orange-500 animate-pulse" />
+3682:           <span>B2B SaaS 시뮬레이터 테스트 패널:</span>
+3683:         </div>
+3684:         <div className="flex flex-wrap items-center gap-1.5">
+3685:           <button 
+3686:             onClick={() => handleSimulateLogin('super')}
+3687:             className={`px-3 py-1 rounded-md font-bold transition-all cursor-pointer ${currentUser.role === 'super' ? 'bg-purple-600 text-white shadow-lg' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'}`}
+3688:           >
+3689:             총관리자 뷰
+3690:           </button>
+3691:           <button 
+3692:             onClick={() => handleSimulateLogin('agency')}
+3693:             className={`px-3 py-1 rounded-md font-bold transition-all cursor-pointer ${currentUser.role === 'agency' ? 'bg-blue-600 text-white shadow-lg' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'}`}
+3694:           >
+3695:             대리점주 뷰
+3696:           </button>
+3697:           <button 
+3698:             onClick={() => handleSimulateLogin('planner')}
+3699:             className={`px-3 py-1 rounded-md font-bold transition-all cursor-pointer ${currentUser.role === 'planner' ? 'bg-emerald-600 text-white shadow-lg' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'}`}
+3700:           >
+3701:             설계사 뷰
+3702:           </button>
+3703:           <div className="h-4 w-px bg-slate-800 mx-1" />
+3704:           {currentUser.role !== 'guest' && (
+3705:             <button 
+3706:               onClick={() => setCurrentUser({ role: 'guest' })}
+3707:               className="px-2.5 py-1 bg-red-950/40 text-red-400 border border-red-900/30 rounded-md hover:bg-red-900/40 hover:text-white transition-all text-[11px] font-bold cursor-pointer"
+3708:             >
+3709:               로그아웃 (가입 폼 이동)
+3710:             </button>
+3711:           )}
+3712:         </div>
+3713:       </div>
+3714: 
+3715:       {/* ── GUEST / ONBOARDING SIGNUP VIEW ── */}
+3716:       {currentUser.role === 'guest' ? (

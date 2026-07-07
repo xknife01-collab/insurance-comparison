@@ -1,0 +1,1130 @@
+[
+  {
+    "id": 2092,
+    "product_code": "DENT_메리츠화재_메리츠_치아보험_이목구비_1종_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 78105
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2093,
+    "product_code": "DENT_메리츠화재_메리츠_치아보험_이목구비_2종_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 79272
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2094,
+    "product_code": "DENT_메리츠화재_메리츠_치아보험_이목구비_2종_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 78123
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2095,
+    "product_code": "DENT_메리츠화재_올케어_꽉_채운_치아보험",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 73803
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2096,
+    "product_code": "DENT_메리츠화재_올케어_꽉_채운_치아보험",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 72896
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2097,
+    "product_code": "DENT_한화손보_한화_다이렉트_치아안심보험",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 42611
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2069,
+    "product_code": "DENT_라이나생명_THE_이로운_치아충전치료보장보험_1종",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 37410
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2070,
+    "product_code": "DENT_라이나생명_THE_이로운_치아충전치료보장보험_1종",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 40670
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2071,
+    "product_code": "DENT_라이나생명_THE_이로운_치아충전치료보장보험_2종_비_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 58030
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2072,
+    "product_code": "DENT_라이나생명_THE_이로운_치아충전치료보장보험_2종_비_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 54370
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2073,
+    "product_code": "DENT_라이나생명_THE_이로운_치아보험_1종_1형",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 37800
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2074,
+    "product_code": "DENT_라이나생명_THE_이로운_치아보험_1종_1형",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 35760
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2075,
+    "product_code": "DENT_라이나생명_THE_이로운_치아보험_1종_2형",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 40430
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2076,
+    "product_code": "DENT_라이나생명_THE_이로운_치아보험_1종_2형",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 38380
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2077,
+    "product_code": "DENT_라이나생명_THE_이로운_치아보험_1종_3형",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 43050
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2078,
+    "product_code": "DENT_라이나생명_THE_이로운_치아보험_1종_3형",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 41010
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2079,
+    "product_code": "DENT_라이나생명_THE_이로운_치아보험_1종_4형",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 38300
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2080,
+    "product_code": "DENT_라이나생명_THE_이로운_치아보험_1종_4형",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 36320
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2081,
+    "product_code": "DENT_라이나생명_THE_이로운_치아보험_2종_비__1형",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 48130
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2082,
+    "product_code": "DENT_라이나생명_THE_이로운_치아보험_2종_비__1형",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 44250
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2083,
+    "product_code": "DENT_라이나생명_THE_이로운_치아보험_2종_비__2형",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 50280
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2084,
+    "product_code": "DENT_라이나생명_THE_이로운_치아보험_2종_비__2형",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 46400
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2085,
+    "product_code": "DENT_라이나생명_THE_이로운_치아보험_2종_비__3형",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 52430
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2086,
+    "product_code": "DENT_라이나생명_THE_이로운_치아보험_2종_비__3형",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 48550
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2087,
+    "product_code": "DENT_라이나생명_THE_이로운_치아보험_2종_비__4형",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 48530
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2088,
+    "product_code": "DENT_라이나생명_THE_이로운_치아보험_2종_비__4형",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 44750
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2089,
+    "product_code": "DENT_메리츠화재_메리츠_The착한_올바른_치아보험",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 86558
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2090,
+    "product_code": "DENT_메리츠화재_메리츠_The착한_올바른_치아보험",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 86472
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2091,
+    "product_code": "DENT_메리츠화재_메리츠_치아보험_이목구비_1종_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 79248
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2098,
+    "product_code": "DENT_한화손보_한화_다이렉트_치아안심보험",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 38805
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2099,
+    "product_code": "DENT_한화손보_한화_하얀미소플러스치아보험__2종_연만기__",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 64181
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2100,
+    "product_code": "DENT_한화손보_한화_하얀미소플러스치아보험__2종_연만기__",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 52915
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2101,
+    "product_code": "DENT_한화손보_한화_하얀미소플러스치아보험__1종_연만기형_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 60963
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2102,
+    "product_code": "DENT_한화손보_한화_하얀미소플러스치아보험__1종_연만기형_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 50660
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2103,
+    "product_code": "DENT_롯데손보_let_care_치아보험_1종_연만기형_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 35139
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2104,
+    "product_code": "DENT_롯데손보_let_care_치아보험_1종_연만기형_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 34108
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2105,
+    "product_code": "DENT_흥국화재_무배당_흥Good_이튼튼한_치아보험_26_01_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 75187
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2106,
+    "product_code": "DENT_흥국화재_무배당_흥Good_이튼튼한_치아보험_26_01_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 73618
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2107,
+    "product_code": "DENT_현대해상_현대해상밝게웃는얼굴치아보험_Hi_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 73030
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2108,
+    "product_code": "DENT_현대해상_현대해상밝게웃는얼굴치아보험_Hi_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 68219
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2109,
+    "product_code": "DENT_KB손보_KB_다이렉트_뇌_치아보험_26_01_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 34529
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2110,
+    "product_code": "DENT_KB손보_KB_다이렉트_뇌_치아보험_26_01_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 30846
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2111,
+    "product_code": "DENT_KB손보_건강한_치아보험_이야기_26_01__실속플랜",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 42911
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2112,
+    "product_code": "DENT_KB손보_건강한_치아보험_이야기_26_01__실속플랜",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 35737
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2113,
+    "product_code": "DENT_KB손보_건강한_치아보험_이야기_26_01__기본플랜",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 44581
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2114,
+    "product_code": "DENT_KB손보_건강한_치아보험_이야기_26_01__기본플랜",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 40593
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2115,
+    "product_code": "DENT_KB손보_건강한_치아보험_이야기_26_01__일반플랜",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 53521
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2116,
+    "product_code": "DENT_KB손보_건강한_치아보험_이야기_26_01__일반플랜",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 47473
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2117,
+    "product_code": "DENT_KB손보_KB_The건강한_치아보험_26_01_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 52036
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2118,
+    "product_code": "DENT_KB손보_KB_The건강한_치아보험_26_01_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 47283
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2119,
+    "product_code": "DENT_DB손보_다이렉트참좋은치아사랑보험_CM_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 49144
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2120,
+    "product_code": "DENT_DB손보_다이렉트참좋은치아사랑보험_CM_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 45313
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2121,
+    "product_code": "DENT_DB손보_참좋은치아안심보험_VIP플랜_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 40849
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2122,
+    "product_code": "DENT_DB손보_참좋은치아안심보험_VIP플랜_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 38812
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2123,
+    "product_code": "DENT_DB손보_참좋은치아안심보험_기본강화플랜_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 34235
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2124,
+    "product_code": "DENT_DB손보_참좋은치아안심보험_기본강화플랜_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 32807
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2125,
+    "product_code": "DENT_DB손보_참좋은치아안심보험_기본플랜_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 19781
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2126,
+    "product_code": "DENT_DB손보_참좋은치아안심보험_기본플랜_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 18791
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2127,
+    "product_code": "DENT_AXA손보_AXA치아보험",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 43620
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2128,
+    "product_code": "DENT_AXA손보_AXA치아보험",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 45010
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2129,
+    "product_code": "DENT_하나손보_무배당_하나더퍼스트_치아보험_다이렉트_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 56411
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2130,
+    "product_code": "DENT_하나손보_무배당_하나더퍼스트_치아보험_다이렉트_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 43466
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2131,
+    "product_code": "DENT_AIG손보_무배당_AIG_튼튼한_NEW_치아보험",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 35566
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2132,
+    "product_code": "DENT_AIG손보_무배당_AIG_튼튼한_NEW_치아보험",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 32219
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2133,
+    "product_code": "DENT_라이나생명_치아보험_1종",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 32140
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2134,
+    "product_code": "DENT_라이나생명_치아보험_1종",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 34410
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2135,
+    "product_code": "DENT_라이나생명_치아보험_2종_비__1형_기본형_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 41110
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2136,
+    "product_code": "DENT_라이나생명_치아보험_2종_비__1형_기본형_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 41340
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2137,
+    "product_code": "DENT_라이나생명_치아보험_2종_비__2형_20_임플란트무사고환급형_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 48960
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2138,
+    "product_code": "DENT_라이나생명_치아보험_2종_비__2형_20_임플란트무사고환급형_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 47250
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2139,
+    "product_code": "DENT_라이나생명_더핏_THE든든한_치아보험_1종",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 70340
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2140,
+    "product_code": "DENT_라이나생명_더핏_THE든든한_치아보험_1종",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 71800
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2141,
+    "product_code": "DENT_라이나생명_든든한_치아안심보험_1종_1형_만기환급금_10만원_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 48740
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2142,
+    "product_code": "DENT_라이나생명_든든한_치아안심보험_1종_1형_만기환급금_10만원_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 47880
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2143,
+    "product_code": "DENT_라이나생명_든든한_치아안심보험_1종_2형_만기환급금_20만원_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 44310
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2144,
+    "product_code": "DENT_라이나생명_든든한_치아안심보험_1종_2형_만기환급금_20만원_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 43430
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2145,
+    "product_code": "DENT_라이나생명_든든한_치아안심보험_1종_3형_만기환급금_40만원_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 46980
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2146,
+    "product_code": "DENT_라이나생명_든든한_치아안심보험_1종_3형_만기환급금_40만원_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 46580
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2147,
+    "product_code": "DENT_라이나생명_든든한_치아안심보험_1종_4형_만기환급금_50만원_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 48200
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2148,
+    "product_code": "DENT_라이나생명_든든한_치아안심보험_1종_4형_만기환급금_50만원_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 47790
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2149,
+    "product_code": "DENT_라이나생명_든든한_치아안심보험_1종_5형_만기환급금_60만원_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 50620
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2150,
+    "product_code": "DENT_라이나생명_든든한_치아안심보험_1종_5형_만기환급금_60만원_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 49950
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2151,
+    "product_code": "DENT_라이나생명_든든한_치아안심보험_2종_비__1형_만기환급금_10만원_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 65860
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2152,
+    "product_code": "DENT_라이나생명_든든한_치아안심보험_2종_비__1형_만기환급금_10만원_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 61050
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2153,
+    "product_code": "DENT_라이나생명_든든한_치아안심보험_2종_비__2형_만기환급금_20만원_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 59170
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2154,
+    "product_code": "DENT_라이나생명_든든한_치아안심보험_2종_비__2형_만기환급금_20만원_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 54890
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2155,
+    "product_code": "DENT_라이나생명_든든한_치아안심보험_2종_비__3형_만기환급금_40만원_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 58930
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2156,
+    "product_code": "DENT_라이나생명_든든한_치아안심보험_2종_비__3형_만기환급금_40만원_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 55900
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2157,
+    "product_code": "DENT_라이나생명_든든한_치아안심보험_2종_비__4형_만기환급금_50만원_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 60000
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2158,
+    "product_code": "DENT_라이나생명_든든한_치아안심보험_2종_비__4형_만기환급금_50만원_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 56970
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2159,
+    "product_code": "DENT_라이나생명_든든한_치아안심보험_2종_비__5형_만기환급금_60만원_",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 61150
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2160,
+    "product_code": "DENT_라이나생명_든든한_치아안심보험_2종_비__5형_만기환급금_60만원_",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 58460
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2161,
+    "product_code": "DENT_NH농협손보_NH80튼튼치아보험",
+    "gender": "M",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 29621
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  },
+  {
+    "id": 2162,
+    "product_code": "DENT_NH농협손보_NH80튼튼치아보험",
+    "gender": "F",
+    "age": 40,
+    "job_class": null,
+    "rate_data": {
+      "basis": "XLS 비교공시",
+      "premium": 30439
+    },
+    "created_at": "2026-06-09T08:50:07.769581+00:00"
+  }
+]
