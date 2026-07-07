@@ -131,7 +131,7 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide 
       const senderName = sender ? sender.name : '소통 센터';
       new Notification("새로운 소통 메시지 💬", {
         body: `${senderName}: ${msg.message}`,
-        icon: '/logo.png'
+        icon: '/원금융.png'
       });
     }
   };
