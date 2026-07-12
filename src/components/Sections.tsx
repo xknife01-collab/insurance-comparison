@@ -1356,16 +1356,18 @@ export const Footer = () => {
                   style={{ filter: 'sepia(100%) saturate(500%) brightness(100%) hue-rotate(5deg)' }}
                 />
                 <div className="h-8 w-[1px] bg-slate-700" />
+                <img src="/6397187-1.png" alt="보험리밸런스" className="h-18 opacity-90 hover:opacity-100 transition-opacity object-contain" />
               </>
             ) : (
               branding?.logoUrl && branding.logoUrl !== "/6397187.png" && (
-                <>
-                  <img src={branding.logoUrl} alt={branding.name} className="h-18 opacity-90 hover:opacity-100 transition-opacity object-contain" />
-                  <div className="h-8 w-[1px] bg-slate-700" />
-                </>
+                <img 
+                  src={branding.logoUrl} 
+                  alt={branding.name} 
+                  className="h-18 opacity-90 hover:opacity-100 transition-opacity object-contain" 
+                  style={{ filter: 'sepia(100%) saturate(500%) brightness(100%) hue-rotate(5deg)' }}
+                />
               )
             )}
-            <img src="/6397187-1.png" alt="보험리밸런스" className="h-18 opacity-90 hover:opacity-100 transition-opacity object-contain" />
           </div>
 
           {/* Right Side: Customer Support Info (Right-aligned) */}

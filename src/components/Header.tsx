@@ -153,16 +153,13 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
                 <>
                   <img src="/logo.png" alt="Incar" className="h-12 w-auto object-contain" />
                   <div className="h-6 w-[1px] bg-gray-200" />
+                  <img src="/6397187.png" alt="보험리밸런스" className="h-12 w-auto object-contain" />
                 </>
               ) : (
                 branding?.logoUrl && branding.logoUrl !== "/6397187.png" && (
-                  <>
-                    <img src={branding.logoUrl} alt={branding.name} className="h-12 w-auto object-contain" />
-                    <div className="h-6 w-[1px] bg-gray-200" />
-                  </>
+                  <img src={branding.logoUrl} alt={branding.name} className="h-12 w-auto object-contain" />
                 )
               )}
-              <img src="/6397187.png" alt="보험리밸런스" className="h-12 w-auto object-contain" />
             </div>
 
             <div className="hidden md:flex flex-1 max-w-sm mx-6 relative">
@@ -331,16 +328,13 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
                   <>
                     <img src="/logo.png" alt="Incar" className="h-8 w-auto object-contain" />
                     <div className="h-4 w-[1px] bg-gray-200" />
+                    <img src="/6397187.png" alt="보험리밸런스" className="h-8 w-auto object-contain" />
                   </>
                 ) : (
                   branding?.logoUrl && branding.logoUrl !== "/6397187.png" && (
-                    <>
-                      <img src={branding.logoUrl} alt={branding.name} className="h-8 w-auto object-contain" />
-                      <div className="h-4 w-[1px] bg-gray-200" />
-                    </>
+                    <img src={branding.logoUrl} alt={branding.name} className="h-8 w-auto object-contain" />
                   )
                 )}
-                <img src="/6397187.png" alt="보험리밸런스" className="h-8 w-auto object-contain" />
               </div>
               <button onClick={() => setMobileOpen(false)} className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors">
                 <X className="w-5 h-5 text-gray-600" />
