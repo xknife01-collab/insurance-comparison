@@ -1964,6 +1964,9 @@ export function useAdminState(initialTab?: 'login' | 'register') {
       let userRole: 'super' | 'agency' | 'planner' = 'planner';
       if (planner.planner_code === 'admin') {
         userRole = 'super';
+        if (typeof window !== 'undefined') {
+          sessionStorage.setItem('is_super_admin_authenticated', 'true');
+        }
       } else if (planner.is_admin) {
         userRole = 'agency';
       }

@@ -551,13 +551,38 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
     checkCodeAvailability
   } = useAdminState(initialTab);
 
+  useEffect(() => {
+    if (currentUser.role === 'guest') {
+      sessionStorage.removeItem('is_super_admin_authenticated');
+    }
+  }, [currentUser.role]);
+
   // 시뮬레이터 보안 인증 모달 관련 상태 및 로직
   const [simModalOpen, setSimModalOpen] = useState(false);
   const [simRole, setSimRole] = useState<'super' | 'agency' | 'planner' | null>(null);
   const [simPassword, setSimPassword] = useState('');
   const [simError, setSimError] = useState('');
 
-  const handleSimulatorClick = (role: 'super' | 'agency' | 'planner') => {
+  const handleSimulatorClick = async (role: 'super' | 'agency' | 'planner') => {
+    const isSuperAuth = sessionStorage.getItem('is_super_admin_authenticated') === 'true';
+    if (isSuperAuth) {
+      setLoading(true);
+      try {
+        if (role === 'super') {
+          await handleLogin(undefined, 'admin', 'rlaghddlf0411*');
+        } else if (role === 'agency') {
+          await handleLogin(undefined, 'test', '1234');
+        } else if (role === 'planner') {
+          await handleLogin(undefined, 'test_planner', '1234');
+        }
+      } catch (err) {
+        console.error('Failed to switch roles:', err);
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
+
     setSimRole(role);
     setSimPassword('');
     setSimError('');
@@ -573,6 +598,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
         setSimModalOpen(false);
         try {
           await handleLogin(undefined, 'admin', 'rlaghddlf0411*');
+          sessionStorage.setItem('is_super_admin_authenticated', 'true');
         } catch (err: any) {
           setSimError('로그인 처리 중 오류가 발생했습니다.');
         }
