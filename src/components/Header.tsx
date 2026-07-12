@@ -151,7 +151,7 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
             >
               {(branding?.type === 'organic' && (!branding?.logoUrl || branding.logoUrl === '/6397187.png')) ? (
                 <>
-                  <img src="/원금융.png" alt="Incar" className="h-12 w-auto object-contain" />
+                  <img src="/logo.png" alt="Incar" className="h-12 w-auto object-contain" />
                   <div className="h-6 w-[1px] bg-gray-200" />
                 </>
               ) : (
@@ -329,7 +329,7 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
               <div className="flex items-center gap-2">
                 {(branding?.type === 'organic' && (!branding?.logoUrl || branding.logoUrl === '/6397187.png')) ? (
                   <>
-                    <img src="/원금융.png" alt="Incar" className="h-8 w-auto object-contain" />
+                    <img src="/logo.png" alt="Incar" className="h-8 w-auto object-contain" />
                     <div className="h-4 w-[1px] bg-gray-200" />
                   </>
                 ) : (

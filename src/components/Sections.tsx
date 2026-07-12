@@ -1349,7 +1349,12 @@ export const Footer = () => {
           <div className="flex justify-start items-center gap-5">
             {(branding?.type === 'organic' && (!branding?.logoUrl || branding.logoUrl === '/6397187.png')) ? (
               <>
-                <img src="/원금융.png" alt="Incar" className="h-14 opacity-80 hover:opacity-100 transition-opacity object-contain invert brightness-200" />
+                <img 
+                  src="/logo.png" 
+                  alt="Incar" 
+                  className="h-14 opacity-80 hover:opacity-100 transition-opacity object-contain" 
+                  style={{ filter: 'sepia(100%) saturate(500%) brightness(100%) hue-rotate(5deg)' }}
+                />
                 <div className="h-8 w-[1px] bg-slate-700" />
               </>
             ) : (
