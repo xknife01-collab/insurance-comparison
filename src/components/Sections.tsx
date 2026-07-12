@@ -1347,7 +1347,7 @@ export const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-12 mb-20">
           {/* Left Side: Logos (with enlarged sizes) */}
           <div className="flex justify-start items-center gap-5">
-            {(branding?.type === 'organic' && (!branding?.logoUrl || branding.logoUrl === '/6397187.png')) ? (
+            {branding?.type === 'organic' ? (
               <>
                 <img 
                   src="/logo.png" 

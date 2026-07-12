@@ -149,7 +149,7 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
               className="flex items-center gap-3 cursor-pointer transition-transform hover:scale-105 active:scale-95 shrink-0"
               onClick={() => navigate('home')}
             >
-              {(branding?.type === 'organic' && (!branding?.logoUrl || branding.logoUrl === '/6397187.png')) ? (
+              {branding?.type === 'organic' ? (
                 <>
                   <img src="/logo.png" alt="Incar" className="h-12 w-auto object-contain" />
                   <div className="h-6 w-[1px] bg-gray-200" />
@@ -324,7 +324,7 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
 
             <div className="flex items-center justify-between p-5 border-b border-gray-100 sticky top-0 bg-white z-10">
               <div className="flex items-center gap-2">
-                {(branding?.type === 'organic' && (!branding?.logoUrl || branding.logoUrl === '/6397187.png')) ? (
+                {branding?.type === 'organic' ? (
                   <>
                     <img src="/logo.png" alt="Incar" className="h-8 w-auto object-contain" />
                     <div className="h-4 w-[1px] bg-gray-200" />
