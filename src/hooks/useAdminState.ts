@@ -2734,7 +2734,9 @@ export function useAdminState(initialTab?: 'login' | 'register') {
     setLoading(true);
     try {
       const updatedBranding = {
-        type: currentUser.role === 'agency' ? 'agency' as const : 'planner' as const,
+        type: currentUser.plannerCode === 'admin' 
+          ? 'organic' as const 
+          : (currentUser.role === 'agency' ? 'agency' as const : 'planner' as const),
         plannerId: currentUser.plannerId || null,
         agencyId: currentUser.agencyId || null,
         name: editPlannerName || currentUser.name || '',
@@ -2782,6 +2784,8 @@ export function useAdminState(initialTab?: 'login' | 'register') {
         if (currentUser.role === 'agency' && currentUser.agencyId) {
           setAgencies(prev => prev.map(a => a.id === currentUser.agencyId ? {
             ...a,
+            name: editCompanyName,
+            address: editCustomAddress,
             logo_url: editLogoUrl,
             email: editEmail
           } : a));
@@ -2810,6 +2814,8 @@ export function useAdminState(initialTab?: 'login' | 'register') {
       };
 
       const agencyData = (currentUser.role === 'agency' && currentUser.agencyId) ? {
+        name: editCompanyName,
+        address: editCustomAddress,
         logo_url: editLogoUrl,
         email: editEmail
       } : null;
