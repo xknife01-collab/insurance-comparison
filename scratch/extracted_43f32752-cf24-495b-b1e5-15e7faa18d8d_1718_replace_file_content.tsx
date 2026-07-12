@@ -1,2 +1,0 @@
-"            {/* 고객 안심 보장 배너 */}\n            <div className=\"max-w-xl mx-auto bg-[#FFF8F0] border-2 border-amber-200/80 rounded-3xl p-5 flex items-center gap-3.5 text-left shadow-xl animate-in fade-in duration-500\">\n              <span 
-<truncated 396 bytes>

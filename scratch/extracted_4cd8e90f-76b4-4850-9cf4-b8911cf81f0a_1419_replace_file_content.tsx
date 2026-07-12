@@ -1,2 +1,0 @@
-"      {/* 100% 안심 자율 비교 서비스 배너 (오렌지 테두리 카드) */}\n      <div className=\"max-w-5xl mx-auto w-full px-4\">\n        <div className=\"bg-white rounded-3xl border-[3px] border-orange-500 p-8 md:p-12 text-center shadow-lg 
-<truncated 1192 bytes>

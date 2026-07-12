@@ -1,2 +1,0 @@
-"      {/* 100% 안심 자율 비교 서비스 안내 (텍스트) */}\n      <div className=\"max-w-3xl mx-auto text-center space-y-3 animate-in fade-in slide-in-from-top-4 duration-1000 font-sans\">\n        <div className=\"text-orange-500 font-extrabold
-<truncated 1393 bytes>

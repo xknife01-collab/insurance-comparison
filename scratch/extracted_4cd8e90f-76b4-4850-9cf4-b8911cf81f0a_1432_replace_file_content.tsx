@@ -1,2 +1,0 @@
-"      {/* 100% 안심 자율 비교 서비스 배너 (오렌지 테두리 카드 - 테두리 제거) */}\n      <div className=\"max-w-5xl mx-auto w-full px-4\">\n        <div className=\"bg-white rounded-3xl p-8 md:p-12 text-center shadow-lg relative ove
-<truncated 16 bytes>

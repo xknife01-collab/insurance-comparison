@@ -1,5 +1,0 @@
-Lines: 1250
-Corrupted chars (\ufffd): 0
-Suspicious ? near Korean: 0
-
-Status: CLEAN

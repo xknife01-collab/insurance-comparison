@@ -1,2 +1,0 @@
-"            <form onSubmit={handleStartAnalysis} className=\"space-y-6 max-w-xl mx-auto w-full\">\n              {/* Row 1: Gender and Birthdate */}\n              <div className=\"grid grid-cols-1 md:grid-cols-2 gap-4\">\n                <div className=\
-<truncated 2784 bytes>

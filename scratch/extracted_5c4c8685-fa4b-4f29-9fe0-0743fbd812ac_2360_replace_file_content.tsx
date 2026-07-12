@@ -1,2 +1,0 @@
-"  return (\n    <section className=\"max-w-7xl mx-auto px-4 py-40 space-y-24\">\n      <div className=\"flex flex-col items-center text-center space-y-6\">\n        <div className=\"inline-flex items-center gap-2 px-6 py-2 bg-slate-900 text-white rounded-
-<truncated 3143 bytes>

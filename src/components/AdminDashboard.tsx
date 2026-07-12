@@ -551,6 +551,63 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
     checkCodeAvailability
   } = useAdminState(initialTab);
 
+  // 시뮬레이터 보안 인증 모달 관련 상태 및 로직
+  const [simModalOpen, setSimModalOpen] = useState(false);
+  const [simRole, setSimRole] = useState<'super' | 'agency' | 'planner' | null>(null);
+  const [simPassword, setSimPassword] = useState('');
+  const [simError, setSimError] = useState('');
+
+  const handleSimulatorClick = (role: 'super' | 'agency' | 'planner') => {
+    setSimRole(role);
+    setSimPassword('');
+    setSimError('');
+    setSimModalOpen(true);
+  };
+
+  const handleVerifySimulator = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSimError('');
+
+    if (simRole === 'super') {
+      if (simPassword.trim() === 'rlaghddlf0411*') {
+        setSimModalOpen(false);
+        try {
+          await handleLogin(undefined, 'admin', 'rlaghddlf0411*');
+        } catch (err: any) {
+          setSimError('로그인 처리 중 오류가 발생했습니다.');
+        }
+      } else {
+        setSimError('총관리자 비밀번호가 일치하지 않습니다.');
+      }
+    }
+  };
+
+  const handleDemoAccess = async () => {
+    setSimModalOpen(false);
+    if (simRole === 'agency') {
+      await handleLogin(undefined, 'test', '1234');
+    } else if (simRole === 'planner') {
+      await handleLogin(undefined, 'test_planner', '1234');
+    }
+  };
+
+  const handleRealLoginGuide = () => {
+    setSimModalOpen(false);
+    setSignupTab('login');
+    setLoginCode('');
+    setLoginPassword('');
+    setLoginError('');
+    
+    setTimeout(() => {
+      const container = document.getElementById('auth-card-container');
+      if (container) {
+        container.scrollIntoView({ behavior: 'smooth' });
+        const input = container.querySelector('input');
+        if (input) input.focus();
+      }
+    }, 100);
+  };
+
   // B2B Billing Capacity Calculations
   const billingAgency = agencies.find(a => a.id === currentUser.agencyId);
   const billingTier = billingAgency?.subscription_tier || 'pro';
@@ -595,19 +652,19 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
         </div>
         <div className="flex flex-wrap items-center gap-1.5">
           <button 
-            onClick={() => handleSimulateLogin('super')}
+            onClick={() => handleSimulatorClick('super')}
             className={`px-3 py-1 rounded-md font-bold transition-all cursor-pointer ${currentUser.role === 'super' ? 'bg-purple-600 text-white shadow-lg' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'}`}
           >
             총관리자 뷰
           </button>
           <button 
-            onClick={() => handleSimulateLogin('agency')}
+            onClick={() => handleSimulatorClick('agency')}
             className={`px-3 py-1 rounded-md font-bold transition-all cursor-pointer ${currentUser.role === 'agency' ? 'bg-blue-600 text-white shadow-lg' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'}`}
           >
             대리점주 뷰
           </button>
           <button 
-            onClick={() => handleSimulateLogin('planner')}
+            onClick={() => handleSimulatorClick('planner')}
             className={`px-3 py-1 rounded-md font-bold transition-all cursor-pointer ${currentUser.role === 'planner' ? 'bg-emerald-600 text-white shadow-lg' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'}`}
           >
             설계사 뷰
@@ -3406,6 +3463,115 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
           age: adminHyphenLead?.age || 40,
         }}
       />
+
+      {/* ── B2B SaaS 시뮬레이터 보안 인증 모달 ── */}
+      {simModalOpen && (
+        <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+          <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+            <div className="p-6 md:p-8 space-y-6">
+              {/* Header */}
+              <div className="text-center space-y-3">
+                <div className="mx-auto w-12 h-12 rounded-2xl bg-orange-500/10 border border-orange-500/25 flex items-center justify-center text-orange-400">
+                  <ShieldAlert className="w-6 h-6 animate-pulse" />
+                </div>
+                <h3 className="text-lg font-black text-white">
+                  {simRole === 'super' ? '총관리자(Super Admin) 보안 인증' : 
+                   simRole === 'agency' ? '대리점주 뷰(Agency) 입장 선택' : 
+                   '설계사 뷰(Planner) 입장 선택'}
+                </h3>
+                <p className="text-xs text-slate-400 font-bold leading-relaxed break-keep">
+                  {simRole === 'super' 
+                    ? '총관리자 권한의 실제 데이터 대시보드에 접근하기 위해 비밀번호를 입력해주세요.' 
+                    : '가상의 체험용 데모 버전에 입장하시거나, 실제 가입한 본인의 정보로 로그인할 수 있습니다.'}
+                </p>
+              </div>
+
+              {/* Form/Actions */}
+              {simRole === 'super' ? (
+                <form onSubmit={handleVerifySimulator} className="space-y-4">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-wider block">총관리자 비밀번호</label>
+                    <input 
+                      type="password" 
+                      placeholder="비밀번호를 입력하세요" 
+                      value={simPassword}
+                      onChange={(e) => setSimPassword(e.target.value)}
+                      className="w-full bg-slate-950 border border-slate-800 focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/10 rounded-xl py-3 px-4 outline-none transition-all text-sm text-white font-bold text-center"
+                      autoFocus
+                    />
+                  </div>
+
+                  {simError && (
+                    <div className="flex items-center gap-2 p-3 bg-red-950/30 border border-red-900/30 text-red-400 rounded-lg text-xs font-bold">
+                      <AlertCircle className="w-4 h-4 shrink-0" />
+                      <span>{simError}</span>
+                    </div>
+                  )}
+
+                  <div className="flex gap-2">
+                    <button 
+                      type="button"
+                      onClick={() => setSimModalOpen(false)}
+                      className="flex-1 bg-slate-800 hover:bg-slate-750 text-slate-300 text-xs font-black py-3 rounded-xl transition-all cursor-pointer"
+                    >
+                      취소
+                    </button>
+                    <button 
+                      type="submit"
+                      className="flex-1 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-xs font-black py-3 rounded-xl transition-all shadow-lg shadow-orange-500/20 cursor-pointer"
+                    >
+                      인증 및 로그인
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                <div className="space-y-3">
+                  <button 
+                    onClick={handleDemoAccess}
+                    className="w-full p-4 bg-orange-500/10 hover:bg-orange-500/15 border border-orange-500/30 hover:border-orange-500/50 rounded-2xl transition-all text-left flex items-start gap-3.5 group cursor-pointer"
+                  >
+                    <div className="w-8 h-8 rounded-xl bg-orange-500/20 flex items-center justify-center text-orange-400 shrink-0 font-bold text-sm">
+                      ✨
+                    </div>
+                    <div>
+                      <div className="text-xs font-black text-white group-hover:text-orange-400 transition-colors">
+                        {simRole === 'agency' ? '데모 대리점주로 입장 (무료)' : '데모 설계사로 입장 (무료)'}
+                      </div>
+                      <div className="text-[10px] text-slate-500 font-bold mt-0.5">
+                        가상의 테스트 데이터가 채워진 어드민 화면을 바로 둘러봅니다.
+                      </div>
+                    </div>
+                  </button>
+
+                  <button 
+                    onClick={handleRealLoginGuide}
+                    className="w-full p-4 bg-slate-950 hover:bg-slate-900 border border-slate-850 hover:border-slate-800 rounded-2xl transition-all text-left flex items-start gap-3.5 group cursor-pointer"
+                  >
+                    <div className="w-8 h-8 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400 shrink-0 font-bold text-sm">
+                      🔒
+                    </div>
+                    <div>
+                      <div className="text-xs font-black text-white group-hover:text-orange-400 transition-colors">
+                        실제 가입한 본인 계정으로 로그인
+                      </div>
+                      <div className="text-[10px] text-slate-500 font-bold mt-0.5">
+                        직접 가입하여 생성한 아이디와 비밀번호로 안전하게 로그인합니다.
+                      </div>
+                    </div>
+                  </button>
+
+                  <button 
+                    onClick={() => setSimModalOpen(false)}
+                    className="w-full bg-slate-800 hover:bg-slate-750 text-slate-400 hover:text-slate-300 text-[11px] font-bold py-2.5 rounded-xl transition-all cursor-pointer"
+                  >
+                    닫기
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );

@@ -1,1 +1,0 @@
-"const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {"

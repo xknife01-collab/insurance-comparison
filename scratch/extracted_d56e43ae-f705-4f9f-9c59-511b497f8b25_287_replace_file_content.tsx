@@ -1,2 +1,0 @@
-"                        {group.items.map((item) => {\n                          const isSelected = selectedId === item.id;\n                          const pData = customPolicies[item.id] || { premium: 0, isCustom: false, included: false };\n             
-<truncated 6106 bytes>

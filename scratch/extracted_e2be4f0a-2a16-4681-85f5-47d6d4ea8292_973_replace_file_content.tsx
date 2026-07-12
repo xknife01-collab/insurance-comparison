@@ -1,1 +1,0 @@
-"  );\n};\n\nexport default AnalysisSection;"

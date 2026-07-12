@@ -1945,7 +1945,7 @@ export function useAdminState(initialTab?: 'login' | 'register') {
     try {
       const { data: planner, error } = await supabase
         .from('planners')
-        .select('*, agencies(code)')
+        .select('*, agencies(id)')
         .eq('planner_code', targetCode)
         .single();
 
@@ -1972,7 +1972,7 @@ export function useAdminState(initialTab?: 'login' | 'register') {
         role: userRole,
         plannerId: planner.id,
         agencyId: planner.agency_id,
-        agencyCode: (planner as any).agencies?.code || undefined,
+        agencyCode: (planner as any).agencies?.id || undefined,
         name: planner.name,
         plannerCode: planner.planner_code,
         subscriptionStatus: planner.subscription_status,

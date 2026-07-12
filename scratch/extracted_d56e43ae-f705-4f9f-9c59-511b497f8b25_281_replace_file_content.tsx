@@ -1,2 +1,0 @@
-"  const adjustPremium = (categoryId: string, amount: number) => {\n    setCustomPolicies(prev => {\n      const current = prev[categoryId] || { premium: 0, isCustom: false, included: false };\n      const nextPremium = amount === 0 ? 0 : Math.max(0, curre
-<truncated 652 bytes>

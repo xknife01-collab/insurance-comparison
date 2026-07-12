@@ -1,1 +1,0 @@
-"    // Check if at least one category has premium > 0\n    const activePoliciesCount = (Object.values(customPolicies) as { premium: number; isCustom: boolean }[])\n      .filter(p => p.premium > 0).length;"

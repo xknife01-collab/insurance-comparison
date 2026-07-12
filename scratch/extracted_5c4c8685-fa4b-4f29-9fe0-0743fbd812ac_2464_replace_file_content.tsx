@@ -1,1 +1,0 @@
-"        initialData={{\n          userName,\n          gender,\n          birth,\n          mobileNo,\n          age: Number(age)\n        }}"
