@@ -20,6 +20,8 @@ export interface InsuranceAnalysis {
   _productName?: string;
   _companyName?: string;
   _allOptions?: any[];
+  _allDietOptions?: any[];
+  _allUpgradeOptions?: any[];
   _remodelingCoverage?: any;
   cancer: CoverageItem;      // 일반암
   cerebrovascular: CoverageItem; // 뇌혈관

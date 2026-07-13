@@ -70,35 +70,43 @@ export function detectCategoryFromPolicy(policy: RawInsurancePolicy): string {
   const hasHeart = /심장|허혈성|cardio|infarction/i.test(cleanCombined);
   const majorCount = [hasCancer, hasBrain, hasHeart].filter(Boolean).length;
 
-  if (/종신|whole/i.test(cleanName))                           return 'whole_life';
+  // 1. Highly specific niche categories first (to prevent keyword collision)
+  if (/펫|반려/i.test(cleanCombined))                            return 'pet';
+  if (/골프|레저/i.test(cleanCombined))                          return 'golf';
+  if (/주택화재|화재/i.test(cleanCombined))                        return 'fire';
+  if (/재물|점포/i.test(cleanCombined))                          return 'property';
   if (/자동차|car\s*insurance/i.test(cleanName))                 return 'car';
   if (/운전자/i.test(cleanName))                                 return 'driver';
-  if (/실손|실비|의료실비|의료비/i.test(cleanCombined))            return 'silson';
+  if (/민사|형사|법률|소송/i.test(cleanCombined))                return 'legal';
   if (/치아|치과|덴탈|크라운|임플란트/i.test(cleanCombined))       return 'dental';
+  
+  // 2. Financial & Investment categories
+  if (/연금저축|연금/i.test(cleanCombined))                      return 'annuity';
+  if (/저축/i.test(cleanCombined))                               return 'savings';
+  if (/신용|대출|상환/i.test(cleanCombined))                     return 'credit';
+  if (/변액|정기/i.test(cleanCombined))                          return 'variable';
+  if (/종신|whole/i.test(cleanName))                           return 'whole';
+  
+  // 3. Pre-existing conditions
   if (/유병력자/i.test(cleanCombined))                           return 'pre_family';
   if (/유병자|간편고지|3\.[0-5]\.[0-5]/i.test(cleanCombined))     return 'pre_existing';
   
-  // 종합건강보험 판별: 3대 질병 중 2개 이상을 보장하거나, 상품명에 종합/통합/건강/다사랑/굿밸런스가 들어가는 경우
+  // 3.5. Comprehensive Health check (Moved up to prevent comprehensive policies from being misclassified as cancer/silson)
   if (majorCount >= 2 || /종합|통합|건강|다사랑|굿밸런스/i.test(cleanName)) return 'health';
+
+  // 4. Silson (Loss) & Care/Nursing
+  if (/실손|실비|의료실비|의료비/i.test(cleanCombined))            return 'silson';
+  if (/재가|시설|요양/i.test(cleanCombined))                      return 'nursing';
+  if (/간병인|간병지원/i.test(cleanCombined))                     return 'caregiving';
+  if (/치매/i.test(cleanCombined))                               return 'dementia';
+  if (/어린이|자녀|태아|신생아/i.test(cleanCombined))              return 'child';
   
+  // 5. General accident/surgery/specific disease categories
+  if (/상해/i.test(cleanCombined))                               return 'accident';
+  if (/수술.*입원|입원.*수술|수술비|입원일당/i.test(cleanCombined)) return 'surgery_hospital';
   if (hasCancer)                                            return 'cancer';
   if (hasBrain)                                             return 'brain';
   if (hasHeart)                                             return 'heart';
-  if (/어린이|자녀|태아|신생아/i.test(cleanCombined))              return 'child';
-  if (/간병인|간병지원/i.test(cleanCombined))                     return 'caregiving';
-  if (/치매/i.test(cleanCombined))                               return 'dementia';
-  if (/재가|시설|요양/i.test(cleanCombined))                      return 'nursing';
-  if (/상해/i.test(cleanCombined))                               return 'accident';
-  if (/주택화재|화재/i.test(cleanCombined))                        return 'fire';
-  if (/재물|점포/i.test(cleanCombined))                          return 'property';
-  if (/연금저축|연금/i.test(cleanCombined))                      return 'annuity';
-  if (/변액|정기/i.test(cleanCombined))                          return 'variable';
-  if (/민사|형사|법률|소송/i.test(cleanCombined))                return 'legal';
-  if (/저축/i.test(cleanCombined))                               return 'savings';
-  if (/신용|대출|상환/i.test(cleanCombined))                     return 'credit';
-  if (/펫|반려/i.test(cleanCombined))                            return 'pet';
-  if (/골프|레저/i.test(cleanCombined))                          return 'golf';
-  if (/수술.*입원|입원.*수술|수술비|입원일당/i.test(cleanCombined)) return 'surgery';
 
   return 'health';
 }
@@ -109,9 +117,9 @@ export function getCategoryLabel(categoryId: string): string {
     caregiving: '간병보험', driver: '운전자보험', dental: '치아보험',
     silson: '실손보험', dementia: '치매보험', child: '어린이보험',
     accident: '상해보험', pet: '펫보험', fire: '화재보험',
-    car: '자동차보험', surgery: '수술·입원보험', pre_existing: '유병자보험',
+    car: '자동차보험', surgery_hospital: '수술·입원보험', pre_existing: '유병자보험',
     pre_family: '유병력자 전용보험', nursing: '재가/시설보험',
-    golf: '골프/레저보험', annuity: '연금저축보험', whole_life: '종신보험',
+    golf: '골프/레저보험', annuity: '연금저축보험', whole: '종신보험',
     variable: '변액/정기보험', legal: '민사/형사보험', savings: '일반저축보험',
     credit: '신용보험', property: '재물종합보험', health: '종합건강보험',
   };
@@ -227,7 +235,7 @@ function buildAnalysisParams(
       break;
     }
     // ── 수술·입원 ──────────────────────────────────────────────────────────────
-    case 'surgery': {
+    case 'surgery_hospital': {
       const existing = (baseAnalysis as any).surgery || {};
       (pa as any).surgery = {
         surgeryLimit:     existing.currentAmount    || getAmount(['수술비', '1-5종수술']) || (p * 15),
@@ -380,7 +388,7 @@ function buildAnalysisParams(
       break;
     }
     // ── 종신 ─────────────────────────────────────────────────────────────────
-    case 'whole_life': {
+    case 'whole': {
       const existing = (baseAnalysis as any).wholeLife || {};
       (pa as any).wholeLife = {
         objective:     existing.objective     || 'family',
@@ -519,12 +527,12 @@ export async function fetchOptionsForPolicy(
       case 'pet':          loaderResult = await fetchPetPremium(policyAnalysis);          break;
       case 'fire':         loaderResult = await fetchFirePremium(policyAnalysis);         break;
       case 'car':          loaderResult = await fetchCarPremium(policyAnalysis);          break;
-      case 'surgery':      loaderResult = await fetchSurgeryPremium(policyAnalysis);      break;
+      case 'surgery_hospital': loaderResult = await fetchSurgeryPremium(policyAnalysis);      break;
       case 'pre_existing': loaderResult = await fetchPreExistingPremium(policyAnalysis);  break;
       // ✅ 추가 10개
       case 'golf':         loaderResult = await fetchGolfPremium(policyAnalysis);         break;
       case 'annuity':      loaderResult = await fetchAnnuityPremium(policyAnalysis);      break;
-      case 'whole_life':   loaderResult = await fetchWholeLifePremium(policyAnalysis);    break;
+      case 'whole':        loaderResult = await fetchWholeLifePremium(policyAnalysis);    break;
       case 'variable':     loaderResult = await fetchVariablePremium(policyAnalysis);     break;
       case 'nursing':      loaderResult = await fetchHomeFacilityPremium(policyAnalysis); break;
       case 'property':     loaderResult = await fetchPropertyPremium(policyAnalysis);     break;

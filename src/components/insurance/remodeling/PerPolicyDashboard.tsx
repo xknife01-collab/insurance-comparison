@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import RadarChart from '../../RadarChart';
 import { maskCompany, maskProductName } from '../../../utils/compliance';
+import { detectCategoryFromPolicy } from '../../../lib/remodeling/categoryMatcher';
 
 interface Rider { rider_name: string; coverage_amount: number; }
 interface Policy {
@@ -37,33 +38,6 @@ interface Props {
 }
 
 const COMPANIES = ['DB손해보험','KB손해보험','한화손해보험','현대해상','삼성화재','메리츠화재'];
-function detectType(name: string) {
-  if (/의료실비|실손|실비/i.test(name)) return 'silson';
-  if (/치아|치과|덴탈|크라운|임플란트/i.test(name)) return 'dental';
-  if (/유병자|간편고지|3\.2\.5|3\.3\.5|3\.5\.5/i.test(name)) return 'pre_existing';
-  if (/수술\/입원|수술비|입원비|입원일당|수술입원/i.test(name)) return 'surgery_hospital';
-  if (/암보험|암진단|3대질환/i.test(name)) return 'cancer';
-  if (/어린이|신생아|자녀|태아/i.test(name)) return 'child';
-  if (/뇌혈관|뇌졸중|뇌출혈|뇌질환/i.test(name)) return 'brain';
-  if (/심장질환|허혈성|심근경색|심혈관|심장/i.test(name)) return 'heart';
-  if (/상해/i.test(name)) return 'accident';
-  if (/간병인|간병지원|간병사용|간병\s*보험/i.test(name)) return 'caregiving';
-  if (/치매/i.test(name)) return 'dementia';
-  if (/재가\/시설|재가|시설급여|요양/i.test(name)) return 'nursing';
-  if (/자동차/i.test(name)) return 'car';
-  if (/운전자/i.test(name)) return 'driver';
-  if (/펫|pet|개|고양이|반려/i.test(name)) return 'pet';
-  if (/골프|레저/i.test(name)) return 'golf';
-  if (/주택화재|화재|풍수해/i.test(name)) return 'fire';
-  if (/재물/i.test(name)) return 'property';
-  if (/연금|annuity/i.test(name)) return 'annuity';
-  if (/종신|whole/i.test(name)) return 'whole';
-  if (/변액|정기/i.test(name)) return 'variable';
-  if (/민사\/형사|법률|소송/i.test(name)) return 'legal';
-  if (/저축|savings/i.test(name)) return 'savings';
-  if (/신용/i.test(name)) return 'credit';
-  return 'health'; // default to 종합건강보험
-}
 
 const typeLabel: Record<string,string> = { 
   silson: '의료실비',
@@ -500,7 +474,7 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen,liveDiet
       setOpenState(val);
     }
   };
-  const t=detectType(policy.product_name);
+  const t=detectCategoryFromPolicy(policy);
   const cov=extractAllCov(policy.riders);
   const p=policy.monthly_premium;
 
@@ -684,16 +658,18 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen,liveDiet
   const score=Math.round(radar.reduce((s,d)=>s+d.value,0)/radar.length);
 
   // Diet options — Supabase Loader 결과 우선 사용, 없으면 fallback
-  const hasliveOpts = liveDietOptions && liveDietOptions.length > 0;
+  const myDiet = (liveDietOptions || []).filter((o: any) => o.currentProduct === policy.product_name);
+  const hasliveOpts = myDiet.length > 0;
   const dietOpts = hasliveOpts
-    ? liveDietOptions!.map(o => ({ company: o.companyName || '', product: o.productName || '', premium: o.premium || 0 }))
+    ? myDiet.map((o: any) => ({ company: o.companyName || '', product: o.productName || '', premium: o.premium || 0 }))
     : COMPANIES.map((c,i) => ({ company: c, product: '비교 상품', premium: Math.round(p*0.76)+Math.round(p*0.024)*i }));
   const dietPremium = dietOpts[0]?.premium || Math.round(p*0.76);
   const saving = Math.max(0, p - dietPremium);
 
-  const hasLiveUpgrade = liveUpgradeOptions && liveUpgradeOptions.length > 0;
+  const myUpgrade = (liveUpgradeOptions || []).filter((o: any) => o.currentProduct === policy.product_name);
+  const hasLiveUpgrade = myUpgrade.length > 0;
   const upgradeOpts = hasLiveUpgrade
-    ? liveUpgradeOptions!.map(o => ({ company: o.companyName || '', product: o.productName || '', premium: o.premium || 0 }))
+    ? myUpgrade.map((o: any) => ({ company: o.companyName || '', product: o.productName || '', premium: o.premium || 0 }))
     : COMPANIES.map((c,i) => ({ company: c, product: '업그레이드 상품', premium: p }));
 
   // Problems

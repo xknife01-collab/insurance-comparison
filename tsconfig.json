@@ -29,6 +29,7 @@
     "dist",
     "scripts",
     "scratch",
-    "supabase"
+    "supabase",
+    "supabase-backup"
   ]
 }

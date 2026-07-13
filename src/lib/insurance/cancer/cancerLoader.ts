@@ -23,9 +23,11 @@ export async function fetchCancerPremium(analysis: InsuranceAnalysis) {
 
     if (cancerRates && cancerRates.length > 0 && cancerProds) {
       const prodMap = new Map();
-      const infoMap = new Map(cancerProds.map(p => [p.product_name, p]));
+      const rates = cancerRates as any[];
+      const prods = cancerProds as any[];
+      const infoMap = new Map(prods.map(p => [p.product_name, p]));
 
-      cancerRates.forEach(r => {
+      rates.forEach(r => {
         if (r.gender !== dbGender) return;
 
         const product = infoMap.get(r.product_name);

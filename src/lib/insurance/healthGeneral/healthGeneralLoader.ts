@@ -129,6 +129,9 @@ export const fetchHealthGeneralPremium = async (analysis: InsuranceAnalysis): Pr
       name.includes('2대질병보장형') || 
       name.includes('당뇨') || 
       name.includes('암보장') || 
+      name.includes('암진단') || 
+      name.includes('암치료') || 
+      name.includes('3대질병') || 
       name.includes('연납');
     return !isSpecialized;
   });

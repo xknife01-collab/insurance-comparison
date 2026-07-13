@@ -29,8 +29,10 @@ export async function fetchSilsonPremium(analysis: InsuranceAnalysis) {
       .eq('category', dbCategory);
 
     if (silsonRates && silsonRates.length > 0 && silsonProds) {
-      const prodMap = new Map(silsonProds.map(p => [p.product_code, p]));
-      const results = silsonRates.map(r => {
+      const rates = silsonRates as any[];
+      const prods = silsonProds as any[];
+      const prodMap = new Map(prods.map(p => [p.product_code, p]));
+      const results = rates.map(r => {
         const product = prodMap.get(r.product_code);
         if (!product) return null;
 

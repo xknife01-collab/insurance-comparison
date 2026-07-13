@@ -24,7 +24,10 @@ export async function fetchPreExistingPremium(analysis: InsuranceAnalysis) {
 
     if (error || !preData || preData.length === 0) return null;
 
-    const results = preData.map((r: any) => {
+    // Filter out products containing "암" or "cancer" to prevent showing cancer insurance in the general pre-existing/유병자 card.
+    const filteredPreData = preData.filter((r: any) => !/암|cancer/i.test(r.product_name || ''));
+
+    const results = filteredPreData.map((r: any) => {
       const getAgeIndex = (a: number): number => {
         if (a <= 25) return 0.55; if (a <= 35) return 0.80; if (a <= 45) return 1.00;
         if (a <= 55) return 1.50; if (a <= 65) return 2.10; return 3.20;

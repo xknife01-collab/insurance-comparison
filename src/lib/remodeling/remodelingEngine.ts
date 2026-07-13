@@ -1,5 +1,5 @@
 import { calculateDietPlan, calculateUpgradePlan, calculateAllUpgradePlans } from './matcher';
-import { buildCategoryOptions } from './categoryMatcher';
+import { buildCategoryOptions, detectCategoryFromPolicy } from './categoryMatcher';
 import { StandardizedCoverage } from '../../types/remodeling';
 import { InsuranceAnalysis, AnalysisResult, RecommendationPlan } from '../../types/insurance';
 import { analyzeWholeLife } from '../insurance/wholeLife/wholeLifeEngine';
@@ -15,42 +15,6 @@ import { analyzeSavings } from '../insurance/savings/savingsEngine';
 import { analyzeCredit } from '../insurance/credit/creditEngine';
 import { analyzeLegal } from '../insurance/legal/legalEngine';
 
-function detectType(name: string): string {
-  const lower = name.toLowerCase();
-  // Strip company names containing "화재" to prevent keyword collision during classification.
-  const cleanName = lower
-    .replace(/삼성\s*화재/g, '')
-    .replace(/메리츠\s*화재/g, '')
-    .replace(/흥국\s*화재/g, '')
-    .replace(/롯데\s*화재/g, '')
-    .replace(/한화\s*화재/g, '');
-
-  if (/의료실비|실손|실비/i.test(cleanName)) return 'silson';
-  if (/치아|치과|덴탈|크라운|임플란트/i.test(cleanName)) return 'dental';
-  if (/유병자|간편고지|3\.2\.5|3\.3\.5|3\.5\.5/i.test(cleanName)) return 'pre_existing';
-  if (/수술\/입원|수술비|입원비|입원일당|수술입원/i.test(cleanName)) return 'surgery_hospital';
-  if (/암보험|암진단|3대질환/i.test(cleanName)) return 'cancer';
-  if (/어린이|신생아|자녀|태아/i.test(cleanName)) return 'child';
-  if (/뇌혈관|뇌졸중|뇌출혈|뇌질환/i.test(cleanName)) return 'brain';
-  if (/심장질환|허혈성|심근경색|심혈관|심장/i.test(cleanName)) return 'heart';
-  if (/상해/i.test(cleanName)) return 'accident';
-  if (/간병인|간병지원|간병사용|간병\s*보험/i.test(cleanName)) return 'caregiving';
-  if (/치매/i.test(cleanName)) return 'dementia';
-  if (/재가\/시설|재가|시설급여|요양/i.test(cleanName)) return 'nursing';
-  if (/자동차/i.test(cleanName)) return 'car';
-  if (/운전자/i.test(cleanName)) return 'driver';
-  if (/펫|pet|개|고양이|반려/i.test(cleanName)) return 'pet';
-  if (/골프|레저/i.test(cleanName)) return 'golf';
-  if (/주택화재|화재|풍수해/i.test(cleanName)) return 'fire';
-  if (/재물/i.test(cleanName)) return 'property';
-  if (/연금|annuity/i.test(cleanName)) return 'annuity';
-  if (/종신|whole/i.test(cleanName)) return 'whole';
-  if (/변액|정기/i.test(cleanName)) return 'variable';
-  if (/민사\/형사|법률|소송/i.test(cleanName)) return 'legal';
-  if (/저축|savings/i.test(cleanName)) return 'savings';
-  if (/신용/i.test(cleanName)) return 'credit';
-  return 'health';
-}
 
 export async function analyzeRemodeling(
   analysis: InsuranceAnalysis
@@ -75,10 +39,28 @@ export async function analyzeRemodeling(
   // 💡 리모델링 가입 보험들 중 주를 이루는 보험 종류를 스캔하여 해당하는 AI 엔진 결과를 활용하여 점수 및 리포트 구성
   const policies = coverage.policies || [];
   
+  // Pre-fetch category-specific options from Supabase loader
+  let catDietOptions: any[] = [];
+  let catUpgradeOptions: any[] = [];
+  if (policies.length > 0) {
+    const analysisWithAge = {
+      ...analysis,
+      age: coverage.age || analysis.age || 40,
+      gender: coverage.gender || analysis.gender || 'M',
+    };
+    try {
+      const categoryResults = await buildCategoryOptions(policies, analysisWithAge);
+      catDietOptions = categoryResults.allDietOptions || [];
+      catUpgradeOptions = categoryResults.allUpgradeOptions || [];
+    } catch (e) {
+      console.warn('[RemodelingEngine] buildCategoryOptions failed:', e);
+    }
+  }
+
   if (policies.length > 0) {
     const typeCounts: Record<string, number> = {};
     for (const p of policies) {
-      const type = detectType(p.product_name);
+      const type = detectCategoryFromPolicy(p);
       typeCounts[type] = (typeCounts[type] || 0) + 1;
     }
     
@@ -96,8 +78,8 @@ export async function analyzeRemodeling(
       return {
         analysis: {
           ...analysis,
-          _allDietOptions: [wholeResult.recommendations.diet],
-          _allUpgradeOptions: [wholeResult.recommendations.upgrade],
+          _allDietOptions: catDietOptions.length > 0 ? catDietOptions : [wholeResult.recommendations.diet],
+          _allUpgradeOptions: catUpgradeOptions.length > 0 ? catUpgradeOptions : [wholeResult.recommendations.upgrade],
           _allOptions: [wholeResult.recommendations.diet, wholeResult.recommendations.upgrade]
         },
         scores: wholeResult.scores,
@@ -110,8 +92,8 @@ export async function analyzeRemodeling(
       return {
         analysis: {
           ...analysis,
-          _allDietOptions: [varResult.recommendations.diet],
-          _allUpgradeOptions: [varResult.recommendations.upgrade],
+          _allDietOptions: catDietOptions.length > 0 ? catDietOptions : [varResult.recommendations.diet],
+          _allUpgradeOptions: catUpgradeOptions.length > 0 ? catUpgradeOptions : [varResult.recommendations.upgrade],
           _allOptions: [varResult.recommendations.diet, varResult.recommendations.upgrade]
         },
         scores: varResult.scores,
@@ -124,8 +106,8 @@ export async function analyzeRemodeling(
       return {
         analysis: {
           ...analysis,
-          _allDietOptions: [annResult.recommendations.diet],
-          _allUpgradeOptions: [annResult.recommendations.upgrade],
+          _allDietOptions: catDietOptions.length > 0 ? catDietOptions : [annResult.recommendations.diet],
+          _allUpgradeOptions: catUpgradeOptions.length > 0 ? catUpgradeOptions : [annResult.recommendations.upgrade],
           _allOptions: [annResult.recommendations.diet, annResult.recommendations.upgrade]
         },
         scores: annResult.scores,
@@ -138,8 +120,8 @@ export async function analyzeRemodeling(
       return {
         analysis: {
           ...analysis,
-          _allDietOptions: [drvResult.recommendations.diet],
-          _allUpgradeOptions: [drvResult.recommendations.upgrade],
+          _allDietOptions: catDietOptions.length > 0 ? catDietOptions : [drvResult.recommendations.diet],
+          _allUpgradeOptions: catUpgradeOptions.length > 0 ? catUpgradeOptions : [drvResult.recommendations.upgrade],
           _allOptions: [drvResult.recommendations.diet, drvResult.recommendations.upgrade]
         },
         scores: drvResult.scores,
@@ -152,8 +134,8 @@ export async function analyzeRemodeling(
       return {
         analysis: {
           ...analysis,
-          _allDietOptions: [petResult.recommendations.diet],
-          _allUpgradeOptions: [petResult.recommendations.upgrade],
+          _allDietOptions: catDietOptions.length > 0 ? catDietOptions : [petResult.recommendations.diet],
+          _allUpgradeOptions: catUpgradeOptions.length > 0 ? catUpgradeOptions : [petResult.recommendations.upgrade],
           _allOptions: [petResult.recommendations.diet, petResult.recommendations.upgrade]
         },
         scores: petResult.scores,
@@ -162,12 +144,12 @@ export async function analyzeRemodeling(
         recommendations: petResult.recommendations
       };
     } else if (primaryType === 'car') {
-      const carResult = analyzeCar(analysis);
+      const carResult = await analyzeCar(analysis);
       return {
         analysis: {
           ...analysis,
-          _allDietOptions: [carResult.recommendations?.diet || carResult.recommendations?.hybrid],
-          _allUpgradeOptions: [carResult.recommendations?.upgrade],
+          _allDietOptions: catDietOptions.length > 0 ? catDietOptions : [carResult.recommendations?.diet || carResult.recommendations?.hybrid].filter(Boolean),
+          _allUpgradeOptions: catUpgradeOptions.length > 0 ? catUpgradeOptions : [carResult.recommendations?.upgrade].filter(Boolean),
           _allOptions: [carResult.recommendations?.diet || carResult.recommendations?.hybrid, carResult.recommendations?.upgrade].filter(Boolean)
         },
         scores: carResult.scores,
@@ -180,8 +162,8 @@ export async function analyzeRemodeling(
       return {
         analysis: {
           ...analysis,
-          _allDietOptions: [golfResult.recommendations.diet],
-          _allUpgradeOptions: [golfResult.recommendations.upgrade],
+          _allDietOptions: catDietOptions.length > 0 ? catDietOptions : [golfResult.recommendations.diet],
+          _allUpgradeOptions: catUpgradeOptions.length > 0 ? catUpgradeOptions : [golfResult.recommendations.upgrade],
           _allOptions: [golfResult.recommendations.diet, golfResult.recommendations.upgrade]
         },
         scores: golfResult.scores,
@@ -194,8 +176,8 @@ export async function analyzeRemodeling(
       return {
         analysis: {
           ...analysis,
-          _allDietOptions: [fireResult.recommendations.diet],
-          _allUpgradeOptions: [fireResult.recommendations.upgrade],
+          _allDietOptions: catDietOptions.length > 0 ? catDietOptions : [fireResult.recommendations.diet],
+          _allUpgradeOptions: catUpgradeOptions.length > 0 ? catUpgradeOptions : [fireResult.recommendations.upgrade],
           _allOptions: [fireResult.recommendations.diet, fireResult.recommendations.upgrade]
         },
         scores: fireResult.scores,
@@ -208,8 +190,8 @@ export async function analyzeRemodeling(
       return {
         analysis: {
           ...analysis,
-          _allDietOptions: [propResult.recommendations.diet],
-          _allUpgradeOptions: [propResult.recommendations.upgrade],
+          _allDietOptions: catDietOptions.length > 0 ? catDietOptions : [propResult.recommendations.diet],
+          _allUpgradeOptions: catUpgradeOptions.length > 0 ? catUpgradeOptions : [propResult.recommendations.upgrade],
           _allOptions: [propResult.recommendations.diet, propResult.recommendations.upgrade]
         },
         scores: propResult.scores,
@@ -222,8 +204,8 @@ export async function analyzeRemodeling(
       return {
         analysis: {
           ...analysis,
-          _allDietOptions: [savResult.recommendations.diet],
-          _allUpgradeOptions: [savResult.recommendations.upgrade],
+          _allDietOptions: catDietOptions.length > 0 ? catDietOptions : [savResult.recommendations.diet],
+          _allUpgradeOptions: catUpgradeOptions.length > 0 ? catUpgradeOptions : [savResult.recommendations.upgrade],
           _allOptions: [savResult.recommendations.diet, savResult.recommendations.upgrade]
         },
         scores: savResult.scores,
@@ -236,8 +218,8 @@ export async function analyzeRemodeling(
       return {
         analysis: {
           ...analysis,
-          _allDietOptions: [credResult.recommendations.diet],
-          _allUpgradeOptions: [credResult.recommendations.upgrade],
+          _allDietOptions: catDietOptions.length > 0 ? catDietOptions : [credResult.recommendations.diet],
+          _allUpgradeOptions: catUpgradeOptions.length > 0 ? catUpgradeOptions : [credResult.recommendations.upgrade],
           _allOptions: [credResult.recommendations.diet, credResult.recommendations.upgrade]
         },
         scores: credResult.scores,
@@ -250,8 +232,8 @@ export async function analyzeRemodeling(
       return {
         analysis: {
           ...analysis,
-          _allDietOptions: [legResult.recommendations.diet],
-          _allUpgradeOptions: [legResult.recommendations.upgrade],
+          _allDietOptions: catDietOptions.length > 0 ? catDietOptions : [legResult.recommendations.diet],
+          _allUpgradeOptions: catUpgradeOptions.length > 0 ? catUpgradeOptions : [legResult.recommendations.upgrade],
           _allOptions: [legResult.recommendations.diet, legResult.recommendations.upgrade]
         },
         scores: legResult.scores,

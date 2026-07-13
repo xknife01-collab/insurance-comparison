@@ -41,7 +41,7 @@ export const createClient = () => {
             return getMockSupabaseClient().from(tableName);
           }
 
-          const realQueryBuilder = realClient.from(tableName);
+          const realQueryBuilder = realClient.from(tableName) as any;
 
           // Wrap the query builder in a proxy to catch connection failures on await/.then()
           return new Proxy(realQueryBuilder, {
