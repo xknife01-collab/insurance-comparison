@@ -68,6 +68,16 @@ export function classifyPolicy(policy: any): { typeLabel: string; description: s
     description = '벌금 및 민사 보장';
     bgColor = 'bg-purple-100';
     textColor = 'text-purple-500';
+  } else if (/주택화재|화재/i.test(combined)) {
+    typeLabel = '주택화재';
+    description = '재산 피해 보호';
+    bgColor = 'bg-amber-100';
+    textColor = 'text-amber-500';
+  } else if (/재물|점포/i.test(combined)) {
+    typeLabel = '재물종합';
+    description = '상가 화재 및 소상공인 자산 보호';
+    bgColor = 'bg-amber-100';
+    textColor = 'text-amber-500';
   } else if (/실손|실비|의료실비|의료비/i.test(combined)) {
     typeLabel = '의료실비';
     description = '필수적인 의료비 보장 (자기부담금 제외)';
@@ -123,16 +133,6 @@ export function classifyPolicy(policy: any): { typeLabel: string; description: s
     description = '치매 진단비 및 생활자금';
     bgColor = 'bg-pink-100';
     textColor = 'text-pink-500';
-  } else if (/주택화재|화재/i.test(combined)) {
-    typeLabel = '주택화재';
-    description = '재산 피해 보호';
-    bgColor = 'bg-amber-100';
-    textColor = 'text-amber-500';
-  } else if (/재물|점포/i.test(combined)) {
-    typeLabel = '재물종합';
-    description = '상가 화재 및 소상공인 자산 보호';
-    bgColor = 'bg-amber-100';
-    textColor = 'text-amber-500';
   } else if (/재가|시설|요양/i.test(combined)) {
     typeLabel = '재가/시설';
     description = '국가 공인 방문 요양';
