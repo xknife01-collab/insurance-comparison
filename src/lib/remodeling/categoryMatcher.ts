@@ -584,37 +584,77 @@ export async function fetchOptionsForPolicy(
 
   const allOptions: any[] = loaderResult._allOptions || [loaderResult];
 
+  const isSavingsType = categoryId === 'annuity' || categoryId === 'savings';
+  const pool = isSavingsType 
+    ? [...allOptions].sort((a, b) => (b.declaredRate || 0) - (a.declaredRate || 0))
+    : allOptions;
+
   // 다이어트: 현재 보험료보다 저렴한 상품 먼저 (오름차순 상위 6개)
-  const dietOptions = [...allOptions]
+  const dietOptions = [...pool]
+    .map(opt => {
+      let finalPremium = opt.premium;
+      let features = `동일 보장 유지 | ${opt.category || '비갱신형'}`;
+      
+      if (isSavingsType) {
+        const baselineNet = 0.95;
+        const baselineRate = 0.025 / 12;
+        const optRate = (opt.declaredRate || 2.8) / 100 / 12;
+        const optNet = 1 - (opt.businessFee || 5.0) / 100;
+        const rateFactor = Math.pow((1 + baselineRate) / (1 + optRate), 120);
+        const netFactor = baselineNet / optNet;
+        let dietPrem = currentPremium * netFactor * rateFactor;
+        dietPrem = Math.min(currentPremium - 2000, dietPrem);
+        finalPremium = Math.max(10000, Math.round(dietPrem / 1000) * 1000);
+        
+        const rateText = opt.declaredRate ? `${opt.declaredRate.toFixed(2)}%` : '2.80%';
+        const ratioText = opt.refundRatio ? `${opt.refundRatio.toFixed(1)}%` : '120.0%';
+        features = `동일 적립 목표 | 공시이율 ${rateText} | 환급률 ${ratioText}`;
+      }
+
+      return {
+        companyName: opt.companyName || opt.company || '국내보험사',
+        productName: opt.productName || opt.product || categoryLabel,
+        premium:     finalPremium,
+        category:    categoryLabel,
+        features:    features,
+        saving:      Math.max(0, currentPremium - finalPremium),
+      };
+    })
     .sort((a, b) => a.premium - b.premium)
-    .slice(0, 6)
-    .map(opt => ({
-      companyName: opt.companyName || opt.company || '국내보험사',
-      productName: opt.productName || opt.product || categoryLabel,
-      premium:     opt.premium,
-      category:    categoryLabel,
-      features:    `동일 보장 유지 | ${opt.category || '비갱신형'}`,
-      saving:      Math.max(0, currentPremium - opt.premium),
-    }));
+    .slice(0, 6);
 
   // 업그레이드: 현재 보험료 ±20% 범위, 없으면 보험료 높은 순 상위 6개
   const budgetMin = currentPremium * 0.8;
   const budgetMax = currentPremium * 1.2;
-  let upgradePool = allOptions.filter(o => o.premium >= budgetMin && o.premium <= budgetMax);
-  if (upgradePool.length === 0) {
-    upgradePool = [...allOptions].sort((a, b) => b.premium - a.premium).slice(0, 6);
+  let upgradePool = isSavingsType 
+    ? [...pool]
+    : pool.filter(o => o.premium >= budgetMin && o.premium <= budgetMax);
+    
+  if (!isSavingsType && upgradePool.length === 0) {
+    upgradePool = [...pool].sort((a, b) => b.premium - a.premium).slice(0, 6);
   }
 
   const upgradeOptions = upgradePool
-    .slice(0, 6)
-    .map(opt => ({
-      companyName: opt.companyName || opt.company || '국내보험사',
-      productName: opt.productName || opt.product || categoryLabel,
-      premium:     opt.premium,
-      category:    categoryLabel,
-      features:    `동일 예산 보장 강화 | ${opt.category || '비갱신형'}`,
-      saving:      Math.max(0, currentPremium - opt.premium),
-    }));
+    .map(opt => {
+      let finalPremium = isSavingsType ? currentPremium : opt.premium;
+      let features = `동일 예산 보장 강화 | ${opt.category || '비갱신형'}`;
+      
+      if (isSavingsType) {
+        const rateText = opt.declaredRate ? `${opt.declaredRate.toFixed(2)}%` : '2.80%';
+        const ratioText = opt.refundRatio ? `${opt.refundRatio.toFixed(1)}%` : '120.0%';
+        features = `동일 예산 적립 강화 | 공시이율 ${rateText} | 환급률 ${ratioText}`;
+      }
+
+      return {
+        companyName: opt.companyName || opt.company || '국내보험사',
+        productName: opt.productName || opt.product || categoryLabel,
+        premium:     finalPremium,
+        category:    categoryLabel,
+        features:    features,
+        saving:      Math.max(0, currentPremium - finalPremium),
+      };
+    })
+    .slice(0, 6);
 
   return { categoryLabel, dietOptions, upgradeOptions };
 }
