@@ -142,7 +142,10 @@ export function maskProductName(name: string, isUnlocked: boolean): string {
   if (cleanLower.includes('저축') || cleanLower.includes('연금') || cleanLower.includes('pension') || cleanLower.includes('savings')) {
     return '안심 저축연금보험';
   }
-  if (cleanLower.includes('상해') || cleanLower.includes('레저') || cleanLower.includes('골프') || cleanLower.includes('accident') || cleanLower.includes('golf')) {
+  if (cleanLower.includes('골프') || cleanLower.includes('golf')) {
+    return '안심 골프파트너보험';
+  }
+  if (cleanLower.includes('상해') || cleanLower.includes('레저') || cleanLower.includes('accident')) {
     return '데일리 상해보장보험';
   }
 
