@@ -123,16 +123,6 @@ export function classifyPolicy(policy: any): { typeLabel: string; description: s
     description = '치매 진단비 및 생활자금';
     bgColor = 'bg-pink-100';
     textColor = 'text-pink-500';
-  } else if (/재가|시설|요양/i.test(combined)) {
-    typeLabel = '재가/시설';
-    description = '국가 공인 방문 요양';
-    bgColor = 'bg-orange-100';
-    textColor = 'text-orange-500';
-  } else if (/상해/i.test(combined)) {
-    typeLabel = '상해보험';
-    description = '사고 장해 및 골절 치료 자산';
-    bgColor = 'bg-orange-100';
-    textColor = 'text-orange-500';
   } else if (/주택화재|화재/i.test(combined)) {
     typeLabel = '주택화재';
     description = '재산 피해 보호';
@@ -143,6 +133,16 @@ export function classifyPolicy(policy: any): { typeLabel: string; description: s
     description = '상가 화재 및 소상공인 자산 보호';
     bgColor = 'bg-amber-100';
     textColor = 'text-amber-500';
+  } else if (/재가|시설|요양/i.test(combined)) {
+    typeLabel = '재가/시설';
+    description = '국가 공인 방문 요양';
+    bgColor = 'bg-orange-100';
+    textColor = 'text-orange-500';
+  } else if (/상해/i.test(combined)) {
+    typeLabel = '상해보험';
+    description = '사고 장해 및 골절 치료 자산';
+    bgColor = 'bg-orange-100';
+    textColor = 'text-orange-500';
   } else if (/연금저축|연금/i.test(combined)) {
     typeLabel = '연금저축';
     description = '노후 자금 준비';

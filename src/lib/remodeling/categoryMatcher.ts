@@ -324,14 +324,18 @@ function buildAnalysisParams(
       };
       break;
     }
-    // ── 화재 ──────────────────────────────────────────────────────────────────
     case 'fire': {
       const existing = (baseAnalysis as any).fire || {};
       (pa as any).fire = {
-        buildingAmt:  existing.buildingAmt  || getAmount(['건물복구', '건물']) || 100_000_000,
-        contentsAmt:  existing.contentsAmt  || getAmount(['가재도구', '가재']) || 30_000_000,
-        hasWaterLeak: existing.hasWaterLeak ?? hasRider(['급배수', '누수', '누출']),
-        liabilityAmt: existing.liabilityAmt || getAmount(['화재배상', '대물배상']) || 2_000_000_000,
+        residenceType:            existing.residenceType || 'apartment',
+        occupancyType:            existing.occupancyType || 'owner',
+        buildingArea:             existing.buildingArea || 84,
+        structureGrade:           existing.structureGrade || 1,
+        hasWaterLeakRider:        existing.hasWaterLeakRider ?? existing.hasWaterLeak ?? hasRider(['급배수', '누수', '누출']),
+        hasLiabilityRider:        existing.hasLiabilityRider ?? hasRider(['화재배상', '대물배상', '배상책임']),
+        hasTemporaryHousingRider: existing.hasTemporaryHousingRider ?? hasRider(['임시거주', '전세금']),
+        buildingLimit:            existing.buildingLimit || existing.buildingAmt || getAmount(['건물복구', '건물']) || 100_000_000,
+        householdGoodsLimit:      existing.householdGoodsLimit || existing.contentsAmt || getAmount(['가재도구', '가재']) || 30_000_000,
       };
       break;
     }
@@ -421,14 +425,23 @@ function buildAnalysisParams(
       };
       break;
     }
-    // ── 재물종합 ─────────────────────────────────────────────────────────────
     case 'property': {
       const existing = (baseAnalysis as any).property || {};
+      const bAmt = existing.buildingLimit || existing.buildingAmt || getAmount(['건물']) || 200_000_000;
+      const cAmt = existing.interiorLimit || existing.contentsAmt || getAmount(['집기비품', '재물', '가재']) || 50_000_000;
       (pa as any).property = {
-        buildingAmt:  existing.buildingAmt  || getAmount(['건물']) || 200_000_000,
-        contentsAmt:  existing.contentsAmt  || getAmount(['집기비품', '재물']) || 50_000_000,
-        liabilityAmt: existing.liabilityAmt || 2_000_000_000,
-        businessType: existing.businessType || 'store',
+        businessType:            existing.businessType            || 'restaurant',
+        buildingGrade:           existing.buildingGrade           || 'grade_1',
+        buildingLimit:           bAmt,
+        interiorLimit:           cAmt,
+        equipmentLimit:          existing.equipmentLimit          || 30_000_000,
+        inventoryLimit:          existing.inventoryLimit          || 20_000_000,
+        hasWaterLeak:            existing.hasWaterLeak            ?? hasRider(['급배수', '누수', '누출']),
+        hasPremisesLiability:    existing.hasPremisesLiability    ?? hasRider(['배상책임', '시설배상']),
+        hasBusinessInterruption: existing.hasBusinessInterruption ?? hasRider(['휴업손해', '휴업']),
+        hasFoodLiability:        existing.hasFoodLiability        ?? hasRider(['음식물', '식중독']),
+        hasMachineryBreakdown:   existing.hasMachineryBreakdown   ?? hasRider(['기계고장', '전기손해']),
+        subType:                 existing.subType                 || '상가 화재형',
       };
       break;
     }
