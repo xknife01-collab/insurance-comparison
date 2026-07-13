@@ -19,7 +19,7 @@ export const PET_PRODUCTS: PetProduct[] = [
 
 // 품종별 위험 요율 가중치 계산
 export const getBreedMultiplier = (breed: string, petType: 'dog' | 'cat'): { multiplier: number; riskGroup: string; vulnerability: string } => {
-  const normBreed = breed.trim().toLowerCase();
+  const normBreed = (breed || '').trim().toLowerCase();
   
   if (petType === 'cat') {
     const highRiskCats = ['폴드', '스코티시', '페르시안', '렉돌', '랙돌', '메인쿤'];

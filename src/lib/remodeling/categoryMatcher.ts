@@ -272,6 +272,9 @@ function buildAnalysisParams(
     case 'driver': {
       const existing = (baseAnalysis as any).driver || {};
       (pa as any).driver = {
+        drivingPurpose: existing.drivingPurpose || 'private',
+        jobClass:       existing.jobClass       || 1,
+        planType:       existing.planType       || 'standard',
         liabilityAmt:  existing.liabilityAmt  || getAmount(['교통사고처리지원금', '형사합의']) || 200_000_000,
         lawyerAmt:     existing.lawyerAmt     || getAmount(['변호사선임']) || 50_000_000,
         fineDaeinAmt:  existing.fineDaeinAmt  || getAmount(['대인벌금', '벌금']) || 30_000_000,
@@ -307,9 +310,16 @@ function buildAnalysisParams(
     case 'pet': {
       const existing = (baseAnalysis as any).pet || {};
       (pa as any).pet = {
-        hasPatella:   existing.hasPatella   ?? hasRider(['슬개골', '고관절']),
-        hasSkin:      existing.hasSkin      ?? hasRider(['피부염', '귓병', '외이염']),
-        hasDental:    existing.hasDental    ?? hasRider(['구강', '스케일링']),
+        petType:      existing.petType      || 'dog',
+        petName:      existing.petName      || '우리애기',
+        breed:        existing.breed        || '말티즈',
+        birthYearMonth: existing.birthYearMonth || '202305',
+        selfPayRatio: existing.selfPayRatio || 70,
+        deductible:   existing.deductible   || 30000,
+        isRegistered: existing.isRegistered ?? false,
+        patellaRider: existing.patellaRider ?? hasRider(['슬개골', '고관절']),
+        skinRider:    existing.skinRider    ?? hasRider(['피부염', '귓병', '외이염']),
+        dentalRider:  existing.dentalRider  ?? hasRider(['구강', '스케일링']),
         liabilityAmt: existing.liabilityAmt || getAmount(['배상책임']) || 10_000_000,
       };
       break;
