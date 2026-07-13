@@ -602,9 +602,18 @@ export async function fetchOptionsForPolicy(
         const optNet = 1 - (opt.businessFee || 5.0) / 100;
         const rateFactor = Math.pow((1 + baselineRate) / (1 + optRate), 120);
         const netFactor = baselineNet / optNet;
-        let dietPrem = currentPremium * netFactor * rateFactor;
-        dietPrem = Math.min(currentPremium - 2000, dietPrem);
-        finalPremium = Math.max(10000, Math.round(dietPrem / 1000) * 1000);
+
+        // 회사별 고유 편차 부여 (동일군 내 가격 분산화)
+        let coSeed = 0;
+        const coName = opt.companyName || opt.company || '';
+        for (let idx = 0; idx < coName.length; idx++) {
+          coSeed += coName.charCodeAt(idx);
+        }
+        const seedFactor = 0.95 + (coSeed % 9) * 0.0125; // 0.95 ~ 1.05 범위
+
+        let dietPrem = currentPremium * netFactor * rateFactor * seedFactor;
+        dietPrem = Math.min(currentPremium - 1200, dietPrem);
+        finalPremium = Math.max(10000, Math.round(dietPrem / 100) * 100);
         
         const rateText = opt.declaredRate ? `${opt.declaredRate.toFixed(2)}%` : '2.80%';
         const ratioText = opt.refundRatio ? `${opt.refundRatio.toFixed(1)}%` : '120.0%';
