@@ -87,8 +87,8 @@ export function detectCategoryFromPolicy(policy: RawInsurancePolicy): string {
   // 1. Highly specific niche categories first (to prevent keyword collision)
   if (/펫|반려/i.test(cleanCombined))                            return 'pet';
   if (/골프|홀인원/i.test(cleanCombined) || (/레저/i.test(cleanCombined) && !/상해|종합|건강|라이프/i.test(cleanName))) return 'golf';
-  if (/주택화재|화재/i.test(cleanCombined))                        return 'fire';
   if (/재물|점포/i.test(cleanCombined))                          return 'property';
+  if (/주택화재|화재/i.test(cleanCombined))                        return 'fire';
   if (/자동차|car\s*insurance/i.test(cleanName))                 return 'car';
   if (/운전자/i.test(cleanName))                                 return 'driver';
   if (/민사|형사|법률|소송/i.test(cleanCombined))                return 'legal';
