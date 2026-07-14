@@ -166,7 +166,10 @@ export const fetchAnnuityPremium = async (analysis: InsuranceAnalysis): Promise<
       totalPrincipal: totalPrincipal,
       annualTaxRefund: annualTaxRefund,
       taxCreditRateText: isHighIncome ? '13.2%' : '16.5%',
-      features: p.features || ""
+      features: p.features || "",
+      declaredRate: p.declaredRate,
+      guaranteedRate: p.guaranteedRate,
+      businessFee: p.businessFee
     };
   });
 

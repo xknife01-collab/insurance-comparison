@@ -611,8 +611,9 @@ export async function fetchOptionsForPolicy(
         }
         const seedFactor = 0.95 + (coSeed % 9) * 0.0125; // 0.95 ~ 1.05 범위
 
+        const offset = 1000 + (coSeed % 11) * 300;
         let dietPrem = currentPremium * netFactor * rateFactor * seedFactor;
-        dietPrem = Math.min(currentPremium - 1200, dietPrem);
+        dietPrem = Math.min(currentPremium - offset, dietPrem);
         finalPremium = Math.max(10000, Math.round(dietPrem / 100) * 100);
         
         const rateText = opt.declaredRate ? `${opt.declaredRate.toFixed(2)}%` : '2.80%';
