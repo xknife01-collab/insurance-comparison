@@ -51,7 +51,7 @@ import { HyphenAuthModal } from './components/insurance/remodeling/HyphenAuthMod
 import { StandardizedCoverage } from './types/remodeling';
 
 export default function App() {
-  const { branding, loading, showInAppGuide, setShowInAppGuide, isIOS, isInAppBrowser, isStandalone, updateBranding } = useB2BBranding();
+  const { branding, loading, showInAppGuide, setShowInAppGuide, isIOS, isInAppBrowser, isStandalone, updateBranding, isB2BMode } = useB2BBranding();
   const [heroImageLoaded, setHeroImageLoaded] = useState(false);
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [remodelingResult, setRemodelingResult] = useState<AnalysisResult | null>(null);
@@ -689,6 +689,17 @@ export default function App() {
     img.onerror = () => setHeroImageLoaded(true); // Prevent infinite loading if image fails
   }, [view]);
 
+  // Set document title dynamically based on B2B branding
+  useEffect(() => {
+    if (view === 'admin' || view === 'partner') return;
+    if (isB2BMode) {
+      const agencyBrand = branding.agencyName || branding.name || '공식 제휴 보험대리점';
+      document.title = `${agencyBrand} - 맞춤형 보장 비교 분석`;
+    } else {
+      document.title = '보험리밸런스 - 0.1초 맞춤 보장 분석';
+    }
+  }, [isB2BMode, branding, view]);
+
   // Render splash screen while loading B2B branding or preloading critical hero image to prevent logo/UI pop-in flickering
   if (view !== 'admin' && view !== 'partner' && (loading || !heroImageLoaded)) {
     return (
@@ -701,18 +712,18 @@ export default function App() {
           {/* Logo Symbol Container */}
           <div className="w-24 h-24 bg-white/5 border border-white/10 rounded-[2rem] flex items-center justify-center shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-md relative overflow-hidden">
             <img 
-              src="/6397187-1.png" 
-              alt="보험리밸런스" 
+              src={isB2BMode && branding?.logoUrl && !branding.logoUrl.includes('6397187') ? branding.logoUrl : "/6397187-1.png"} 
+              alt={isB2BMode ? (branding?.name || "인카금융서비스") : "보험리밸런스"} 
               className="w-16 h-16 object-contain"
             />
           </div>
           
           <div className="space-y-2">
             <h1 className="text-xl font-black tracking-tight bg-gradient-to-r from-orange-400 via-orange-500 to-amber-500 bg-clip-text text-transparent">
-              보험리밸런스
+              {isB2BMode ? (branding?.name || "인카금융서비스") : "보험리밸런스"}
             </h1>
             <p className="text-[10px] text-slate-400 font-black tracking-[0.2em] uppercase">
-              0.1s Big Data Analysis Engine
+              {isB2BMode ? "0.1s Custom Analysis Engine" : "0.1s Big Data Analysis Engine"}
             </p>
           </div>
           
@@ -726,7 +737,7 @@ export default function App() {
           <p className="text-[10px] text-slate-500 font-bold tracking-tight">
             {window.location.search.includes('planner') || window.location.search.includes('agency') || localStorage.getItem('pwa_saved_planner') || localStorage.getItem('pwa_saved_agency')
               ? '설계사 맞춤 솔루션을 안전하게 불러오는 중입니다...'
-              : '0.1초 빅데이터 분석 시스템을 안전하게 불러오는 중입니다...'}
+              : (isB2BMode ? '0.1초 비교 분석 시스템을 안전하게 불러오는 중입니다...' : '0.1초 빅데이터 분석 시스템을 안전하게 불러오는 중입니다...')}
           </p>
         </div>
       </div>
@@ -1661,7 +1672,7 @@ export default function App() {
       <PlannerWidget branding={branding} onKakaoClick={handlePlannerWidgetKakaoClick} />
 
       {/* PWA In-App Browser & iOS Safari Guidance Modal */}
-      {showInAppGuide && (
+      {showInAppGuide && !isB2BMode && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
           <div className="bg-slate-900 border border-slate-800 text-white rounded-[2.5rem] p-6 max-w-sm w-full space-y-6 shadow-2xl relative overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             {/* Header / Icon */}

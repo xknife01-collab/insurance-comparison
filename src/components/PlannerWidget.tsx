@@ -9,7 +9,7 @@ interface PlannerWidgetProps {
 }
 
 export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetProps) {
-  const { deferredPrompt, onInstallClick, isInAppBrowser, setShowInAppGuide, isIOS, isStandalone } = useB2BBranding();
+  const { deferredPrompt, onInstallClick, isInAppBrowser, setShowInAppGuide, isIOS, isStandalone, isB2BMode } = useB2BBranding();
   const [isOpen, setIsOpen] = useState(true);
   const [isMinimized, setIsMinimized] = useState(true);
 
@@ -120,7 +120,7 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
                 <MessageSquare size={14} className="fill-current text-[#191919]" />
                 정식 카톡 상담 🚀
               </button>
-              {!isStandalone && (deferredPrompt || isInAppBrowser || isIOS) && (
+              {!isB2BMode && !isStandalone && (deferredPrompt || isInAppBrowser || isIOS) && (
                 <button
                   onClick={onInstallClick}
                   className="w-full py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xs rounded-2xl flex items-center justify-center gap-2 shadow-[0_10px_20px_rgba(249,115,22,0.15)] transform hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer border border-orange-400/20"
@@ -134,7 +134,7 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
       ) : (
         /* Minimized State Floating Button Stack */
         <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3 pointer-events-none">
-          {!isStandalone && (deferredPrompt || isInAppBrowser || isIOS) && (
+          {!isB2BMode && !isStandalone && (deferredPrompt || isInAppBrowser || isIOS) && (
             <motion.button
               initial={{ opacity: 0, scale: 0.8, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -145,7 +145,6 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
               <span className="text-xs font-black tracking-tight">앱 바로 설치</span>
             </motion.button>
           )}
-          
           <motion.button
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}

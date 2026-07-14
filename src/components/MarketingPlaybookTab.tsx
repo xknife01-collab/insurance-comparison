@@ -208,7 +208,8 @@ export const MarketingPlaybookTab: React.FC<MarketingPlaybookTabProps> = ({ isSu
           canvas.height = height;
           const ctx = canvas.getContext('2d');
           ctx?.drawImage(img, 0, 0, width, height);
-          const compressedBase64 = canvas.toDataURL('image/jpeg', quality);
+          const isPng = file.type === 'image/png' || file.name.toLowerCase().endsWith('.png');
+          const compressedBase64 = isPng ? canvas.toDataURL('image/png') : canvas.toDataURL('image/jpeg', quality);
           resolve(compressedBase64);
         };
         img.onerror = (err) => reject(err);

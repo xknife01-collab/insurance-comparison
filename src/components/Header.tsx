@@ -110,7 +110,7 @@ const ALL_GROUPS: NavGroup[] = [
 ];
 
 const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
-  const { branding, deferredPrompt, onInstallClick, isInAppBrowser, setShowInAppGuide, isIOS, isStandalone } = useB2BBranding();
+  const { branding, deferredPrompt, onInstallClick, isInAppBrowser, setShowInAppGuide, isIOS, isStandalone, isB2BMode } = useB2BBranding();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -156,9 +156,11 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
                   <img src="/6397187.png" alt="보험리밸런스" className="h-12 w-auto object-contain" />
                 </>
               ) : (
-                branding?.logoUrl && branding.logoUrl !== "/6397187.png" && (
-                  <img src={branding.logoUrl} alt={branding.name} className="h-12 w-auto object-contain" />
-                )
+                <img 
+                  src={(!branding?.logoUrl || branding.logoUrl.includes('6397187')) ? "/logo.png" : branding.logoUrl} 
+                  alt={branding?.name || "인카금융서비스"} 
+                  className="h-12 w-auto object-contain" 
+                />
               )}
             </div>
 
@@ -331,9 +333,11 @@ const Header = ({ setView }: { setView: (view: ViewType) => void }) => {
                     <img src="/6397187.png" alt="보험리밸런스" className="h-8 w-auto object-contain" />
                   </>
                 ) : (
-                  branding?.logoUrl && branding.logoUrl !== "/6397187.png" && (
-                    <img src={branding.logoUrl} alt={branding.name} className="h-8 w-auto object-contain" />
-                  )
+                  <img 
+                    src={(!branding?.logoUrl || branding.logoUrl.includes('6397187')) ? "/logo.png" : branding.logoUrl} 
+                    alt={branding?.name || "인카금융서비스"} 
+                    className="h-8 w-auto object-contain" 
+                  />
                 )}
               </div>
               <button onClick={() => setMobileOpen(false)} className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors">

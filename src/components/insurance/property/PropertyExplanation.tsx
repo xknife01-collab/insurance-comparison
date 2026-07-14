@@ -3,14 +3,17 @@ import { maskCompany, maskProductName, maskText } from '../../../utils/complianc
 import { 
   Building, Flame, ShieldAlert, CheckCircle, Clock, Quote, Compass, Activity, Sparkles 
 } from 'lucide-react';
+import { useB2BBranding } from '../../../hooks/useB2BBranding';
 
 interface Props {
   isUnlocked?: boolean;
   onAction?: () => void;
 }
 
-export const PropertyExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
-  <section className="py-24 bg-orange-50/10 px-2 sm:px-4 relative overflow-hidden" id="property-detail">
+export const PropertyExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => {
+  const { isB2BMode } = useB2BBranding();
+  return (
+    <section className="py-24 bg-orange-50/10 px-2 sm:px-4 relative overflow-hidden" id="property-detail">
     <div className="max-w-7xl mx-auto">
 
       {/* ── 헤더 ── */}
@@ -263,7 +266,9 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
           </div>
           <p className="text-2xl font-black text-slate-900 tracking-tight leading-tight">
             "가게와 공장의 미래를 안전하게 보존하는 길,<br />
-            <span className="text-orange-500">보험리밸런스의 명확한 자산 분석과 비즈니스 밸런스 설계로 함께합니다.</span>"
+            <span className="text-orange-500">
+              {'맞춤형 보장 분석과 자산 관리 밸런스 설계로 함께합니다.'}
+            </span>"
           </p>
         </div>
         {onAction && (
@@ -279,3 +284,4 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
     </div>
   </section>
 );
+};

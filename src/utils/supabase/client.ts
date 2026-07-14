@@ -23,13 +23,31 @@ export const createClient = () => {
     return getMockSupabaseClient();
   }
 
-  if (!supabaseUrl || !supabaseKey) {
-    console.warn('[Supabase Client] URL or Key missing, falling back to mock client.');
+  const isUrlInvalid = !supabaseUrl || 
+                        supabaseUrl === 'undefined' || 
+                        supabaseUrl === 'null' || 
+                        supabaseUrl.trim() === '' || 
+                        !supabaseUrl.startsWith('http');
+                        
+  const isKeyInvalid = !supabaseKey || 
+                        supabaseKey === 'undefined' || 
+                        supabaseKey === 'null' || 
+                        supabaseKey.trim() === '';
+
+  if (isUrlInvalid || isKeyInvalid) {
+    console.warn('[Supabase Client] URL or Key missing or invalid, falling back to mock client.');
     useLocalFallback = true;
     return getMockSupabaseClient();
   }
 
-  const realClient = createBrowserClient(supabaseUrl, supabaseKey);
+  let realClient;
+  try {
+    realClient = createBrowserClient(supabaseUrl, supabaseKey);
+  } catch (err) {
+    console.warn('[Supabase Client] Failed to initialize real client, falling back to mock client.', err);
+    useLocalFallback = true;
+    return getMockSupabaseClient();
+  }
 
   // Return a self-healing proxy client that delegates to the real client
   // but seamlessly falls back to mock data if there are DNS or connection failures.

@@ -1,7 +1,7 @@
 {
-  "name": "보험리밸런스",
-  "short_name": "보험리밸런스",
-  "description": "0.1초 AI 빅데이터 보험 보장 진단",
+  "name": "보장비교",
+  "short_name": "보장비교",
+  "description": "보장 비교 - 인카금융서비스 소속 설계사 맞춤 분석",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

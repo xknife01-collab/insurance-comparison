@@ -216,7 +216,9 @@ export default function VerificationPage({ branding }: VerificationPageProps) {
       // 4. Automatically dispatch the permanent storage report link via SMS
       try {
         const origin = window.location.origin;
-        const msg = `[보험리밸런스]
+        const isB2B = branding?.type && branding.type !== 'organic';
+        const brandName = branding?.name || '보장비교';
+        const msg = `[${brandName}]
 안녕하세요, ${name} 고객님.
 요청하신 비교 설계안 보관 링크입니다.
 

@@ -105,7 +105,8 @@ export const compressImage = (file: File, maxWidth: number = 300, maxHeight: num
         }
 
         ctx.drawImage(img, 0, 0, width, height);
-        const dataUrl = canvas.toDataURL('image/jpeg', quality);
+        const isPng = file.type === 'image/png' || file.name.toLowerCase().endsWith('.png');
+        const dataUrl = isPng ? canvas.toDataURL('image/png') : canvas.toDataURL('image/jpeg', quality);
         resolve(dataUrl);
       };
       img.onerror = (err) => reject(err);
@@ -297,6 +298,7 @@ export function useAdminState(initialTab?: 'login' | 'register') {
   const [regProfileImg, setRegProfileImg] = useState(DEFAULT_PROFILE_IMG);
   const [regKakao, setRegKakao] = useState('');
   const [showKakaoHelp, setShowKakaoHelp] = useState(false);
+  const [regCertificationMessage, setRegCertificationMessage] = useState('');
   const [codeCheckStatus, setCodeCheckStatus] = useState<'idle' | 'checking' | 'available' | 'taken'>('idle');
 
   // Agency Specific Inputs
@@ -1262,10 +1264,16 @@ export function useAdminState(initialTab?: 'login' | 'register') {
     if (!regCode.trim()) return;
     setCodeCheckStatus('checking');
     try {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('planners')
         .select('planner_code')
         .eq('planner_code', regCode.trim());
+      
+      if (error) {
+        console.warn("Assuming available due to RLS/Network error:", error);
+        setCodeCheckStatus('available');
+        return;
+      }
       
       if (data && data.length > 0) {
         setCodeCheckStatus('taken');
@@ -1273,7 +1281,8 @@ export function useAdminState(initialTab?: 'login' | 'register') {
         setCodeCheckStatus('available');
       }
     } catch (err) {
-      setCodeCheckStatus('idle');
+      console.warn("Catch block error on checkCodeAvailability:", err);
+      setCodeCheckStatus('available');
     }
   };
 
@@ -1945,9 +1954,26 @@ export function useAdminState(initialTab?: 'login' | 'register') {
     try {
       const { data: planner, error } = await supabase
         .from('planners')
-        .select('*, agencies(id)')
+        .select('*')
         .eq('planner_code', targetCode)
-        .single();
+        .maybeSingle();
+
+      let agency = null;
+      if (!error && planner && planner.agency_id) {
+        try {
+          const { data: agencyData } = await supabase
+            .from('agencies')
+            .select('*')
+            .eq('id', planner.agency_id)
+            .maybeSingle();
+          agency = agencyData;
+        } catch (ae) {
+          console.warn("Failed to fetch agency details on login:", ae);
+        }
+      }
+      if (planner) {
+        (planner as any).agencies = agency;
+      }
 
       if (error || !planner) {
         setLoginError('등록되지 않은 설계사 고유코드입니다. 파트너 가입을 먼저 진행해 주세요.');
@@ -2024,108 +2050,39 @@ export function useAdminState(initialTab?: 'login' | 'register') {
     setLoading(true);
 
     try {
-      const { data: checkData } = await supabase
-        .from('planners')
-        .select('planner_code')
-        .eq('planner_code', regCode.trim());
-      
-      if (checkData && checkData.length > 0) {
-        alert("이미 사용 중인 설계사 코드입니다.");
+      const response = await fetch('/api/register-planner', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          signupType,
+          regName,
+          regPhone,
+          regCode,
+          regPassword,
+          regGreetingTitle,
+          regGreetingContent,
+          regProfileImg,
+          regKakao,
+          regCertificationMessage,
+          invitedAgencyId,
+          regAgencyName,
+          regAgencyPhone,
+          regAgencyAddress,
+          regLogoUrl,
+          regRoutingType,
+          regAgencyTier
+        })
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        alert(result.error || '회원가입에 실패했습니다.');
         setLoading(false);
         return;
       }
 
-      if (invitedAgencyId) {
-        const { count } = await supabase
-          .from('planners')
-          .select('*', { count: 'exact', head: true })
-          .eq('agency_id', invitedAgencyId)
-          .eq('subscription_status', 'active');
-
-        const { data: agencyData, error: agencyErr } = await supabase
-          .from('agencies')
-          .select('max_planner_limit, subscription_tier')
-          .eq('id', invitedAgencyId)
-          .single();
-
-        if (!agencyErr && agencyData) {
-          const currentCount = count || 0;
-          if (currentCount >= (agencyData.max_planner_limit || 13)) {
-            alert(`[가입 제한] 해당 대리점의 요금제(${agencyData.subscription_tier?.toUpperCase() || 'BASIC'}) 설계사 등록 한도(${agencyData.max_planner_limit || 13}명)를 초과하였습니다. 대리점 관리자에게 요금제 업그레이드를 요청해 주세요.`);
-            setLoading(false);
-            return;
-          }
-        }
-      }
-
-      let agencyId: string | undefined = undefined;
-      const trialExpiry = new Date();
-      trialExpiry.setDate(trialExpiry.getDate() + 30);
-
-      if (signupType === 'agency') {
-        if (!regAgencyName.trim()) {
-          alert("대리점명을 입력해 주세요.");
-          setLoading(false);
-          return;
-        }
-
-        const newAgency = {
-          name: regAgencyName,
-          phone: regAgencyPhone || regPhone,
-          address: regAgencyAddress,
-          logo_url: regLogoUrl,
-          subscription_status: 'active',
-          lead_routing_type: regRoutingType,
-          subscription_tier: regAgencyTier,
-          max_planner_limit: regAgencyTier === 'basic' ? 13 : regAgencyTier === 'pro' ? 28 : 150
-        };
-
-        const { data: agencyData, error: agencyError } = await supabase
-          .from('agencies')
-          .insert(newAgency)
-          .select()
-          .single();
-
-        if (agencyError || !agencyData) {
-          alert("대리점 등록에 실패했습니다: " + agencyError?.message);
-          setLoading(false);
-          return;
-        }
-
-        agencyId = agencyData.id;
-      } else if (invitedAgencyId) {
-        agencyId = invitedAgencyId;
-      }
-
-      const newPlanner = {
-        agency_id: agencyId,
-        planner_code: regCode.trim(),
-        password: regPassword.trim(),
-        name: regName,
-        phone: regPhone,
-        is_admin: signupType === 'agency',
-        profile_image_url: regProfileImg,
-        logo_url: regLogoUrl,
-        greeting_title: regGreetingTitle || `${regName} 전문 자산관리사`,
-        greeting_content: regGreetingContent || "정직하고 신뢰할 수 있는 무료 보장 진단 및 포트폴리오 리모델링을 지원합니다.",
-        custom_phone: regPhone,
-        custom_address: signupType === 'agency' ? regAgencyAddress : "보험리밸런스 공인설계사",
-        kakao_link: regKakao,
-        subscription_status: invitedAgencyId ? 'pending' : 'active',
-        subscription_expires_at: trialExpiry.toISOString()
-      };
-
-      const { data: plannerData, error: plannerError } = await supabase
-        .from('planners')
-        .insert(newPlanner)
-        .select()
-        .single();
-
-      if (plannerError || !plannerData) {
-        alert("설계사 등록에 실패했습니다: " + plannerError?.message);
-        setLoading(false);
-        return;
-      }
+      const plannerData = result.planner;
 
       await triggerWelcomeChat(plannerData.id, plannerData.name);
 
@@ -2144,8 +2101,8 @@ export function useAdminState(initialTab?: 'login' | 'register') {
         isDemo: false
       });
       setActiveTab('leads');
-    } catch (err) {
-      alert("회원가입 실패: " + err);
+    } catch (err: any) {
+      alert("회원가입 실패: " + (err.message || err));
     } finally {
       setLoading(false);
     }
@@ -2156,8 +2113,25 @@ export function useAdminState(initialTab?: 'login' | 'register') {
     setLoading(true);
 
     try {
-      const { data: plannerList } = await supabase.from('planners').select();
-      const { data: agencyList } = await supabase.from('agencies').select();
+      let plannerQuery = supabase.from('planners').select();
+      if (currentUser.role === 'agency' || currentUser.role === 'planner') {
+        if (currentUser.agencyId) {
+          plannerQuery = plannerQuery.eq('agency_id', currentUser.agencyId);
+        } else {
+          plannerQuery = plannerQuery.eq('id', currentUser.plannerId);
+        }
+      }
+      const { data: plannerList } = await plannerQuery;
+
+      let agencyQuery = supabase.from('agencies').select();
+      if (currentUser.role === 'agency' || currentUser.role === 'planner') {
+        if (currentUser.agencyId) {
+          agencyQuery = agencyQuery.eq('id', currentUser.agencyId);
+        } else {
+          agencyQuery = agencyQuery.limit(0);
+        }
+      }
+      const { data: agencyList } = await agencyQuery;
       
       const currentPlanners = plannerList && plannerList.length > 0 ? plannerList : planners;
       const currentAgencies = agencyList && agencyList.length > 0 ? agencyList : agencies;
@@ -2505,12 +2479,12 @@ export function useAdminState(initialTab?: 'login' | 'register') {
       return;
     }
 
-    const plannerName = currentUser.name || '보험리밸런스';
+    const plannerName = currentUser.name || '인카금융서비스';
     const myProfile = planners.find(p => p.id === currentUser.plannerId);
     const kakaoUrl = myProfile?.kakao_link || '';
 
     const insuranceLabel = lead.insurance_type || '보험';
-    let body = `안녕하세요, ${lead.name} 고객님! 보험리밸런스 ${plannerName} 팀장입니다. 신청하신 ${insuranceLabel} 비교 분석 리포트가 준비되어 안내차 연락드렸습니다.`;
+    let body = `안녕하세요, ${lead.name} 고객님! 인카금융서비스 소속 ${plannerName} 설계사입니다. 신청하신 ${insuranceLabel} 비교 분석 리포트가 준비되어 안내차 연락드렸습니다.`;
     
     if (kakaoUrl) {
       body += `\n\n아래 카카오톡 링크로 문의해 주시면 더 신속하게 1:1 전용 맞춤 분석 설계안을 확인해 보실 수 있습니다.\n▶ 카톡 상담하기: ${kakaoUrl}`;
@@ -3210,6 +3184,7 @@ export function useAdminState(initialTab?: 'login' | 'register') {
     regProfileImg, setRegProfileImg,
     regKakao, setRegKakao,
     showKakaoHelp, setShowKakaoHelp,
+    regCertificationMessage, setRegCertificationMessage,
     codeCheckStatus, setCodeCheckStatus,
     regAgencyName, setRegAgencyName,
     regAgencyPhone, setRegAgencyPhone,

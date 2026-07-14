@@ -65,7 +65,8 @@ const compressImage = (file: File, maxWidth: number = 300, maxHeight: number = 3
         }
 
         ctx.drawImage(img, 0, 0, width, height);
-        const dataUrl = canvas.toDataURL('image/jpeg', quality);
+        const isPng = file.type === 'image/png' || file.name.toLowerCase().endsWith('.png');
+        const dataUrl = isPng ? canvas.toDataURL('image/png') : canvas.toDataURL('image/jpeg', quality);
         resolve(dataUrl);
       };
       img.onerror = (err) => reject(err);
@@ -430,6 +431,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
     regProfileImg, setRegProfileImg,
     regKakao, setRegKakao,
     showKakaoHelp, setShowKakaoHelp,
+    regCertificationMessage, setRegCertificationMessage,
     codeCheckStatus, setCodeCheckStatus,
     regAgencyName, setRegAgencyName,
     regAgencyPhone, setRegAgencyPhone,
@@ -1452,6 +1454,46 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                           required
                         />
                       </div>
+
+                      <div className="space-y-2 animate-in fade-in duration-200">
+                        <label className="text-xs font-bold text-slate-400 block">
+                          지점 / 소속 회사 이름*
+                        </label>
+                        <input 
+                          type="text" 
+                          placeholder="예: 더윤컴퍼니 강남지점" 
+                          value={regAgencyName}
+                          onChange={(e) => setRegAgencyName(e.target.value)}
+                          className="w-full bg-slate-950 border border-slate-800 focus:border-orange-500/50 rounded-xl py-2.5 px-4 outline-none text-sm text-white font-bold"
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2 animate-in fade-in duration-200">
+                        <label className="text-xs font-bold text-slate-400 block">
+                          지점 주소*
+                        </label>
+                        <input 
+                          type="text" 
+                          placeholder="예: 서울시 서초구 서초대로 456 (인카금융서비스 소속 설계사)" 
+                          value={regAgencyAddress}
+                          onChange={(e) => setRegAgencyAddress(e.target.value)}
+                          className="w-full bg-slate-950 border border-slate-800 focus:border-orange-500/50 rounded-xl py-2.5 px-4 outline-none text-sm text-white font-bold"
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2 animate-in fade-in duration-200">
+                        <label className="text-xs font-bold text-slate-400 block">
+                          인증 문구 (선택 - 기입 시 하단 푸터 및 랜딩페이지에 상시 노출)
+                        </label>
+                        <input 
+                          type="text" 
+                          placeholder="예: 더윤컴퍼니 공식 인증 설계사 또는 생명/손해보험협회 심의필 번호" 
+                          value={regCertificationMessage}
+                          onChange={(e) => setRegCertificationMessage(e.target.value)}
+                          className="w-full bg-slate-950 border border-slate-800 focus:border-orange-500/50 rounded-xl py-2.5 px-4 outline-none text-sm text-white font-bold"
+                        />
+                      </div>
+
                       <div className="space-y-2">
                         <div className="flex items-center justify-between">
                           <label className="text-xs font-bold text-slate-400 block">카카오톡 상담 연결 링크 (오픈채팅/채널 주소)</label>
@@ -1578,18 +1620,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                         대리점 정보 및 DB 분배 정책 설정
                       </h3>
 
-                      <div className="grid md:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                          <label className="text-xs font-bold text-slate-400 block">대리점(GA) 공식 법인명*</label>
-                          <input 
-                            type="text" 
-                            placeholder="예: 스마트금융파트너스" 
-                            value={regAgencyName}
-                            onChange={(e) => setRegAgencyName(e.target.value)}
-                            className="w-full bg-slate-950 border border-slate-800 focus:border-orange-500/50 rounded-xl py-2.5 px-4 outline-none text-sm text-white font-bold"
-                            required={signupType === 'agency'}
-                          />
-                        </div>
+                      <div className="grid md:grid-cols-1 gap-6">
                         <div className="space-y-2">
                           <label className="text-xs font-bold text-slate-400 block">대리점 대표 전화번호</label>
                           <input 
@@ -1597,16 +1628,6 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                             placeholder="예: 02-1234-5678" 
                             value={regAgencyPhone}
                             onChange={(e) => setRegAgencyPhone(e.target.value)}
-                            className="w-full bg-slate-950 border border-slate-800 focus:border-orange-500/50 rounded-xl py-2.5 px-4 outline-none text-sm text-white font-bold"
-                          />
-                        </div>
-                        <div className="space-y-2 md:col-span-2">
-                          <label className="text-xs font-bold text-slate-400 block">대리점 주소 (법무 공지사항용)</label>
-                          <input 
-                            type="text" 
-                            placeholder="예: 서울특별시 강남구 역삼동 테헤란로 100 스마트타워 15층" 
-                            value={regAgencyAddress}
-                            onChange={(e) => setRegAgencyAddress(e.target.value)}
                             className="w-full bg-slate-950 border border-slate-800 focus:border-orange-500/50 rounded-xl py-2.5 px-4 outline-none text-sm text-white font-bold"
                           />
                         </div>
@@ -1662,8 +1683,8 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
 
                   <button 
                     type="submit" 
-                    disabled={loading || (signupTab === 'register' && codeCheckStatus !== 'available')}
-                    className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black py-4 rounded-xl text-sm transition-all shadow-lg shadow-orange-500/20 active:scale-95 disabled:opacity-50 cursor-pointer text-center block"
+                    disabled={loading || (signupTab === 'register' && codeCheckStatus === 'taken')}
+                    className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black py-4 rounded-xl text-sm transition-all shadow-lg shadow-orange-500/20 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer text-center block"
                   >
                     {loading ? '신청 처리 중...' : '첫 달 무료 체험 신청 완료 🚀'}
                   </button>
@@ -2276,6 +2297,16 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
               </button>
             </div>
 
+            {/* Warning / Instruction Notice for Profile Setup */}
+            <div className="bg-amber-500/10 border border-amber-500/20 rounded-2xl p-4 text-xs font-semibold text-amber-400 leading-relaxed break-keep text-left space-y-1">
+              <p className="font-extrabold flex items-center gap-1.5">
+                <span>⚠️</span> 필수: 설계사 프로필 설정 안내
+              </p>
+              <p className="text-[11px] text-slate-300 font-medium">
+                본인의 전용 홈페이지 하단에 **올바른 대리점 정보 및 광고 심의필 번호**가 노출되고, 본인의 카카오톡/연락처로 정상 상담 연결이 진행되도록 대시보드 진입 후 **[프로필 설정]** 메뉴에서 필수 항목들을 모두 기입해 주시기 바랍니다.
+              </p>
+            </div>
+
             <button 
               onClick={() => setShowWelcomeModal(false)}
               className="w-full bg-slate-800 hover:bg-slate-700 text-white font-black py-3 rounded-xl text-xs transition-all cursor-pointer"
@@ -2428,8 +2459,8 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                                 ? `${origin}/remodeling?code=${simCode}`
                                 : `${origin}/verify?code=${simCode}`;
                               const msg = isRemodeling
-                                ? `안녕하세요! 보험리밸런스 대리점입니다. 고객님의 내보험 정밀분석을 위한 하이픈 연동 링크입니다. 아래 링크를 눌러 한국신용정보원 인증을 완료하시면 0.1초 만에 실제 보험 내역이 자동으로 조회됩니다.\n▶ 하이픈 연동 링크: ${link}`
-                                : `안녕하세요! 보험리밸런스 대리점입니다. 고객님의 설계서 잠금 해제를 위한 본인인증 전용 링크입니다. 아래 링크를 눌러 간편인증을 완료하시면 0.1초 만에 마스킹이 해제됩니다.\n▶ 인증 링크: ${link}`;
+                                ? `안녕하세요! 인카금융서비스 소속 설계사입니다. 고객님의 내보험 정밀분석을 위한 하이픈 연동 링크입니다. 아래 링크를 눌러 한국신용정보원 인증을 완료하시면 0.1초 만에 실제 보험 내역이 자동으로 조회됩니다.\n▶ 하이픈 연동 링크: ${link}`
+                                : `안녕하세요! 인카금융서비스 소속 설계사입니다. 고객님의 설계서 잠금 해제를 위한 본인인증 전용 링크입니다. 아래 링크를 눌러 간편인증을 완료하시면 0.1초 만에 마스킹이 해제됩니다.\n▶ 인증 링크: ${link}`;
                               navigator.clipboard.writeText(msg);
                               setToastMessage("✨ 카톡 인증 문구가 복사되었습니다! 카톡창에 붙여넣기(Ctrl+V) 하세요.");
                               setShowToast(true);

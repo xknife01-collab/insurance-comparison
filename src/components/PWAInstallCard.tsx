@@ -101,7 +101,7 @@ export default function PWAInstallCard() {
             </div>
             <div>
               <span className="text-[9px] font-black text-orange-500 uppercase tracking-widest block">PWA APP INSTALL</span>
-              <h4 className="text-xs font-black text-white">보험리밸런스 관리자</h4>
+              <h4 className="text-xs font-black text-white">보장비교 관리자</h4>
             </div>
           </div>
 
@@ -153,7 +153,7 @@ export default function PWAInstallCard() {
               <div className="flex items-start gap-3">
                 <span className="w-5 h-5 rounded-full bg-slate-800 text-slate-300 flex items-center justify-center text-[10px] font-black shrink-0 mt-0.5">방법 B</span>
                 <p className="text-xs text-slate-300 font-bold break-keep">
-                  크레롬/웨일 우측 상단 **[메뉴(점 3개)] ➔ [보험리밸런스 관리자 설치]**를 클릭해 설치합니다.
+                  크롬/웨일 우측 상단 **[메뉴(점 3개)] ➔ [보장비교 관리자 설치]**를 클릭해 설치합니다.
                 </p>
               </div>
             </div>
@@ -208,7 +208,7 @@ export default function PWAInstallCard() {
               <div className="flex items-start gap-3">
                 <span className="w-5 h-5 rounded-full bg-slate-800 text-slate-300 flex items-center justify-center text-[10px] font-black shrink-0 mt-0.5">3</span>
                 <p className="text-xs text-slate-300 font-bold break-keep">
-                  우측 상단의 **[추가]** 버튼을 누르면 설치가 완료되며, 바탕화면에 "보험리밸런스 관리자" 앱이 생성됩니다.
+                  우측 상단의 **[추가]** 버튼을 누르면 설치가 완료되며, 바탕화면에 "보장비교 관리자" 앱이 생성됩니다.
                 </p>
               </div>
             </div>

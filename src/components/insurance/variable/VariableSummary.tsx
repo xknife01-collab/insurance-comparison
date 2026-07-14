@@ -2,6 +2,7 @@ import { scrollToInputAndHighlight } from '../../../utils/scrollHelper';
 import React from 'react';
 import { motion } from 'motion/react';
 import { ShieldCheck, Zap, CheckCircle2, PiggyBank, Star, AlertCircle, TrendingUp, Scale, ArrowRightLeft } from 'lucide-react';
+import { useB2BBranding } from '../../../hooks/useB2BBranding';
 
 interface Props {
   result: {
@@ -19,6 +20,7 @@ interface Props {
 }
 
 export const VariableSummary: React.FC<Props> = ({ result }) => {
+  const { isB2BMode } = useB2BBranding();
   const { scores, efficiency, deficiencies } = result;
   const { analysis } = result;
   
@@ -96,7 +98,7 @@ export const VariableSummary: React.FC<Props> = ({ result }) => {
               <AlertCircle className={`w-5 h-5 shrink-0 mt-0.5 ${isPremiumTheme ? 'text-blue-600' : 'text-orange-600'}`} />
               <div className="space-y-1">
                 <p className={`text-xs font-black ${isPremiumTheme ? 'text-blue-800' : 'text-orange-800'}`}>
-                  {isInvestment ? 'AI 변액자산 배분 가이드' : 'AI 보장 리모델링 설계'}
+                  {isInvestment ? (isB2BMode ? '맞춤형 변액자산 배분 가이드' : 'AI 변액자산 배분 가이드') : (isB2BMode ? '보장 비교 분석 설계' : 'AI 보장 리모델링 설계')}
                 </p>
                 <p className="text-[11px] text-slate-500 font-bold leading-relaxed">
                   {subType === 'variable_saving' ? (
@@ -235,13 +237,13 @@ export const VariableSummary: React.FC<Props> = ({ result }) => {
               <div className="space-y-3">
                 <div className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-[#FF6B00]/10 text-[#FF6B00] border border-[#FF6B00]/20 rounded-full text-[10px] font-black uppercase tracking-[0.2em]">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#FF6B00] animate-pulse" />
-                  0.1초 AI 리밸런싱 진단
+                  0.1초 리밸런싱 진단
                 </div>
                 <h4 className="text-3xl font-black tracking-tight text-white md:text-4xl">
                   1:1 맞춤형 보장 다이어트
                 </h4>
                 <p className="text-xs font-bold text-slate-400">
-                  보험리밸런스 AI가 분석한 불필요 지출 해결방안 및 숨겨진 자산 가치
+                  담당 설계사가 분석한 불필요 지출 해결방안 및 숨겨진 자산 가치
                 </p>
               </div>
               
@@ -292,7 +294,7 @@ export const VariableSummary: React.FC<Props> = ({ result }) => {
               {/* Switch Card */}
               <div className="bg-gradient-to-br from-[#FF6B00]/10 to-transparent border border-[#FF6B00]/30 rounded-3xl p-8 relative overflow-hidden group hover:border-[#FF6B00]/50 transition-all duration-300 shadow-[0_20px_40px_-15px_rgba(255,107,0,0.1)] text-left">
                 <div className="absolute top-4 right-4 text-xs font-black text-[#FF6B00] tracking-wider animate-pulse">RECOMMENDED</div>
-                <h5 className="text-lg font-black text-white mb-6">보험리밸런스 정기 교체 시</h5>
+                <h5 className="text-lg font-black text-white mb-6">추천 설계 플랜 교체 시</h5>
                 <div className="space-y-6">
                   <div>
                     <span className="text-xs font-bold text-[#FF6B00]/80">최저가 실시간 매핑 보험료</span>

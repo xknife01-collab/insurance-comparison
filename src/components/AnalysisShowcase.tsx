@@ -20,10 +20,12 @@ import { AnalysisResult } from '../types/insurance';
 import { analyzeRemodeling } from '../lib/remodeling/remodelingEngine';
 import { MOCK_REMODELING_DATA } from '../lib/insurance/remodeling/hyphenRemodelingService';
 import { maskCompany, maskProductName } from '../utils/compliance';
+import { useB2BBranding } from '../hooks/useB2BBranding';
 
 type StepType = 'input' | 'loading' | 'result';
 
 export default function AnalysisShowcase() {
+  const { isB2BMode } = useB2BBranding();
   const [activeStep, setActiveStep] = useState<StepType>('input');
   const [isPlaying, setIsPlaying] = useState(true);
   
@@ -185,9 +187,9 @@ export default function AnalysisShowcase() {
         '📡 한국신용정보원(내보험다보여) 서버 연결 중...',
         '🔍 가입된 모든 보험 상품 기본 정보 수집 중...',
         '📝 상품명, 납입료, 연령, 성별 정보 수집 완료...',
-        '🤖 제미나이 AI가 0.1초 만에 최적의 보장 금액을 정교하게 추정하는 중...',
-        '💎 Supabase 표준 설계 요율 테이블 실시간 매칭 연산 완료!',
-        '✨ 웅장한 AI 분석 포트폴리오 및 리모델링 대시보드 산출 완료!'
+        isB2BMode ? '⚙️ 비교분석 엔진이 0.1초 만에 최적의 보장 금액을 정교하게 추정하는 중...' : '🤖 제미나이 AI가 0.1초 만에 최적의 보장 금액을 정교하게 추정하는 중...',
+        isB2BMode ? '💎 표준 설계 요율 테이블 실시간 매칭 연산 완료!' : '💎 Supabase 표준 설계 요율 테이블 실시간 매칭 연산 완료!',
+        isB2BMode ? '✨ 웅장한 비교 분석 포트폴리오 및 리모델링 대시보드 산출 완료!' : '✨ 웅장한 AI 분석 포트폴리오 및 리모델링 대시보드 산출 완료!'
       ];
 
       let currentIndex = 0;
@@ -325,7 +327,7 @@ export default function AnalysisShowcase() {
                   <div className="w-2 h-2 rounded-full bg-emerald-400" />
                 </div>
                 <div className="flex-1 bg-white border border-slate-200 rounded-lg py-0.5 px-3 text-[9px] text-slate-450 font-medium text-center truncate flex items-center justify-center gap-1">
-                  <span className="text-emerald-500">🔒</span> bohum-rebalance.co.kr
+                  <span className="text-emerald-500">🔒</span> {isB2BMode ? 'ins-comparison.co.kr' : 'bohum-rebalance.co.kr'}
                 </div>
               </div>
 
@@ -337,7 +339,7 @@ export default function AnalysisShowcase() {
                   <div className="flex-1 flex flex-col p-5 bg-slate-900 text-white overflow-y-auto">
                     <div className="mb-4 text-center">
                       <div className="inline-flex items-center gap-1 px-3 py-1 bg-orange-500/10 text-orange-400 rounded-full text-[9px] font-black tracking-widest border border-orange-500/20 mb-2">
-                        🛡️ AI INSURANCE REMODELING
+                        {isB2BMode ? '🛡️ INSURANCE REMODELING' : '🛡️ AI INSURANCE REMODELING'}
                       </div>
                       <h4 className="text-sm font-black text-white leading-tight">내 보험 정밀 분석</h4>
                       <p className="text-[10px] text-slate-400 mt-1 font-semibold">간편인증 한번으로 가입된 전보험사 분석</p>
@@ -477,7 +479,7 @@ export default function AnalysisShowcase() {
                                     </div>
                                     <div className="space-y-1 flex-1">
                                       <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-[10px] font-black">
-                                        📢 AI 종합 분석 리포트 요약
+                                        📢 {isB2BMode ? '종합 분석 리포트 요약' : 'AI 종합 분석 리포트 요약'}
                                       </div>
                                       <h4 className="text-xl font-black text-slate-800 tracking-tight leading-snug">
                                         매달 합리적으로 조정 가능한 보험료 <span className="text-orange-500 underline underline-offset-4 font-black">{savingAmount.toLocaleString()}원</span>을 찾아냈습니다!
@@ -676,7 +678,7 @@ export default function AnalysisShowcase() {
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-orange-400">내 보험 정밀 분석</span> 재현
             </h2>
             <p className="text-slate-400 font-bold text-sm leading-relaxed max-w-xl break-keep">
-              단순히 이미지만 슬라이드 형태로 보여주는 더미 애니메이션이 아닙니다. 이름이나 연락처 등 개인정보를 전혀 요구하지 않고, 고객의 연령·성별 및 관심 보장 정보만을 기반으로 AI 빅데이터 엔진이 표준 설계 요율 테이블과 대조하여 분석하는 전 과정을 실제 앱의 코드로 동일하게 재현합니다.
+              단순히 이미지만 슬라이드 형태로 보여주는 더미 애니메이션이 아닙니다. 이름이나 연락처 등 개인정보를 전혀 요구하지 않고, 고객의 연령·성별 및 관심 보장 정보만을 기반으로 {isB2BMode ? '표준 설계 요율 테이블과 대조하여 분석하는' : '분석 시스템이 표준 설계 요율 테이블과 대조하여 분석하는'} 전 과정을 실제 앱의 코드로 동일하게 재현합니다.
             </p>
           </div>
 
@@ -724,9 +726,9 @@ export default function AnalysisShowcase() {
                 </div>
                 <div className="text-left">
                   <h4 className={`text-xs font-black ${activeStep === 'loading' ? 'text-orange-500' : 'text-slate-300'}`}>
-                    0.1초 AI 정밀 분석 및 매칭 (Engine)
+                    0.1초 {isB2BMode ? '정밀 분석 및 매칭' : 'AI 정밀 분석 및 매칭'} (Engine)
                   </h4>
-                  <p className="text-[10px] text-slate-500 font-semibold mt-0.5">입력된 최소한의 기본 정보와 표준 설계 요율 테이블을 0.1초 만에 실시간으로 매칭하여 자율 진단 보장 점수를 초정밀 연산합니다.</p>
+                  <p className="text-[10px] text-slate-500 font-semibold mt-0.5">입력된 최소한의 기본 정보와 표준 설계 요율 테이블을 0.1초 만에 실시간으로 매칭하여 {isB2BMode ? '자율 진단 보장 점수를' : 'AI가 자율 진단 보장 점수를'} 초정밀 연산합니다.</p>
                 </div>
               </div>
               <ChevronRight className={`w-4 h-4 ${activeStep === 'loading' ? 'text-orange-500' : 'text-slate-650'}`} />

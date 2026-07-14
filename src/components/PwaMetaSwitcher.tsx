@@ -41,7 +41,7 @@ export default function PwaMetaSwitcher() {
       const shortcutIconLink = document.querySelector('link[rel="shortcut icon"]') as HTMLLinkElement;
       const appleTouchLink = document.querySelector('link[rel="apple-touch-icon"]') as HTMLLinkElement;
 
-      const targetIcon = isConfiguringAdmin ? '/6397187-1.png' : '/6397187.png';
+      const targetIcon = isConfiguringAdmin ? '/admin-icon-192.png' : '/user-icon-192.png';
 
       if (faviconLink && faviconLink.getAttribute('href') !== targetIcon) {
         faviconLink.setAttribute('href', targetIcon);

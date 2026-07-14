@@ -124,7 +124,7 @@ export default async function handler(req, res) {
       const userId = process.env.ALIGO_USER_ID || 'rlaghddlf01';
       const sender = process.env.ALIGO_SENDER || '0808081088';
 
-      const msg = `[보험리밸런스] 본인인증 번호는 [${generatedCode}] 입니다. 3분 내에 입력해 주세요.`;
+      const msg = `[보장비교] 본인인증 번호는 [${generatedCode}] 입니다. 3분 내에 입력해 주세요.`;
 
       const params = new URLSearchParams();
       params.append('key', apiKey);

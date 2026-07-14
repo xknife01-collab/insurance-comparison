@@ -37,6 +37,7 @@ import { StandardizedCoverage } from '../types/remodeling';
 import AnalysisShowcase from './AnalysisShowcase';
 import { generateCustomMockData } from '../utils/mockGenerator';
 import { MOCK_REMODELING_DATA } from '../lib/insurance/remodeling/hyphenRemodelingService';
+import { useB2BBranding } from '../hooks/useB2BBranding';
 
 // Import all 27 insurance field components
 import { HealthFields } from './insurance/health/HealthFields';
@@ -168,6 +169,7 @@ const categoryIcons: Record<string, React.ElementType> = {
 };
 
 const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
+  const { isB2BMode } = useB2BBranding();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisStatus, setAnalysisStatus] = useState('');
@@ -1097,7 +1099,7 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
         
         {/* Description */}
         <p className="text-sm md:text-base lg:text-lg text-slate-600 font-bold leading-relaxed max-w-2xl mx-auto break-keep mb-3">
-          상담원 전화 유도 없이, 오직 AI 빅데이터 엔진을 통해 고객 스스로 자율 비교 및 진단을 완료할 수 있습니다.
+          상담원 전화 유도 없이, 오직 {isB2BMode ? '제휴 보험사 공시 요율 비교 테이블' : '보장비교 분석 엔진'}을 통해 고객 스스로 자율 비교 및 진단을 완료할 수 있습니다.
         </p>
         
         {/* Subtext */}
@@ -1214,7 +1216,7 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
                     <span className="text-[9px] font-black text-orange-500 uppercase tracking-widest">Promise 3</span>
                     <span className="text-xs font-black text-slate-800 leading-tight">상담원 없는 자율 진단</span>
                   </div>
-                  <p className="text-[10.5px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">상담원 전화 유도 없이, 오직 AI 빅데이터 엔진을 통해 고객 스스로 자율 비교 및 진단을 완료할 수 있습니다.</p>
+                  <p className="text-[10.5px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">상담원 전화 유도 없이, 오직 {isB2BMode ? '제휴 보험사 공시 요율 비교 테이블' : '보장비교 분석 엔진'}을 통해 고객 스스로 자율 비교 및 진단을 완료할 수 있습니다.</p>
                 </div>
               </div>
             </div>

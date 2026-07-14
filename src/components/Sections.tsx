@@ -1340,7 +1340,7 @@ export const PhilosophySection = () => {
 };
 
 export const Footer = () => {
-  const { branding } = useB2BBranding();
+  const { branding, isB2BMode } = useB2BBranding();
   return (
     <footer className="bg-[#111827] text-white pt-24 pb-12 px-6 overflow-hidden">
       <div className="max-w-7xl mx-auto">
@@ -1355,18 +1355,20 @@ export const Footer = () => {
                   className="h-14 opacity-80 hover:opacity-100 transition-opacity object-contain" 
                   style={{ filter: 'sepia(100%) saturate(500%) brightness(100%) hue-rotate(5deg)' }}
                 />
-                <div className="h-8 w-[1px] bg-slate-700" />
-                <img src="/6397187-1.png" alt="보험리밸런스" className="h-18 opacity-90 hover:opacity-100 transition-opacity object-contain" />
+                <div className="h-6 w-[1px] bg-slate-800" />
+                <img 
+                  src="/6397187-1.png" 
+                  alt="보험리밸런스" 
+                  className="h-10 opacity-80 hover:opacity-100 transition-opacity object-contain" 
+                />
               </>
             ) : (
-              branding?.logoUrl && branding.logoUrl !== "/6397187.png" && (
-                <img 
-                  src={branding.logoUrl} 
-                  alt={branding.name} 
-                  className="h-18 opacity-90 hover:opacity-100 transition-opacity object-contain" 
-                  style={{ filter: 'sepia(100%) saturate(500%) brightness(100%) hue-rotate(5deg)' }}
-                />
-              )
+              <img 
+                src={(!branding?.logoUrl || branding.logoUrl.includes('6397187')) ? "/logo.png" : branding.logoUrl} 
+                alt={branding?.name || "인카금융서비스"} 
+                className="h-18 opacity-90 hover:opacity-100 transition-opacity object-contain" 
+                style={(!branding?.logoUrl || branding.logoUrl.includes('6397187')) ? { filter: 'sepia(100%) saturate(500%) brightness(100%) hue-rotate(5deg)' } : undefined}
+              />
             )}
           </div>
 
@@ -1410,10 +1412,14 @@ export const Footer = () => {
             </p>
           )}
           <p className="text-slate-400 border border-slate-800 p-3 rounded-xl bg-slate-900/40 leading-relaxed font-bold">
-            ※ 상기 분석 및 추천 설계 내용은 모집종사자(또는 AI 분석 엔진)의 개인적인 의견이며, 계약체결에 따른 이익 또는 손실은 보험계약자 및 피보험자에게 귀속됩니다.
+            ※ 상기 분석 및 추천 설계 내용은 모집종사자의 개인적인 의견이며, 계약체결에 따른 이익 또는 손실은 보험계약자 및 피보험자에게 귀속됩니다.
           </p>
           <p>보험계약자가 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서 질병이력, 연령증가 등으로 가입이 거절되거나 보험료가 인상될 수 있습니다. 또한 해약환급금 손실이 발생할 수 있으니 유의하시기 바랍니다.</p>
-          <p className="text-slate-500">© 보험리밸런스 (Insure-rebalance). All Rights Reserved.</p>
+          <p className="text-slate-500">
+            {branding?.type === 'organic' 
+              ? '© 보험리밸런스 (Insure-rebalance). All Rights Reserved.' 
+              : '© 인카금융서비스 소속 설계사 맞춤 분석. All Rights Reserved.'}
+          </p>
         </div>
       </div>
     </footer>

@@ -34,9 +34,7 @@ import { SavingsFields } from './insurance/savings/SavingsFields';
 import { CreditFields } from './insurance/credit/CreditFields';
 import { LegalFields } from './insurance/legal/LegalFields';
 import MobileShowcase from './MobileShowcase';
-
-
-
+import { useB2BBranding } from '../hooks/useB2BBranding';
 
 interface SubCategory {
   id: string;
@@ -134,6 +132,46 @@ const ALL_CATEGORIES: MajorCategory[] = [
   }
 ];
 
+const NON_LIFE_LOGOS = [
+  { id: 'meritz', name: '메리츠화재' },
+  { id: 'hanwha_nonlife', name: '한화손해보험' },
+  { id: 'lotte', name: '롯데손해보험' },
+  { id: 'mg', name: 'MG손해보험' },
+  { id: 'heungkuk_nonlife', name: '흥국화재' },
+  { id: 'samsung_nonlife', name: '삼성화재' },
+  { id: 'hyundai', name: '현대해상' },
+  { id: 'kb_nonlife', name: 'KB손해보험' },
+  { id: 'db_nonlife', name: 'DB손해보험' },
+  { id: 'nh_nonlife', name: 'NH농협손해보험' },
+  { id: 'hana_nonlife', name: '하나손해보험' },
+  { id: 'aig', name: 'AIG손해보험' }
+];
+
+const LIFE_LOGOS = [
+  { id: 'samsung_life', name: '삼성생명' },
+  { id: 'kyobo', name: '교보생명' },
+  { id: 'hanwha_life', name: '한화생명' },
+  { id: 'dongyang', name: '동양생명' },
+  { id: 'metlife', name: '메트라이프생명' },
+  { id: 'db_life', name: 'DB생명' },
+  { id: 'kb_life', name: 'KB라이프생명' },
+  { id: 'shinhan', name: '신한라이프' },
+  { id: 'nh_life', name: 'NH농협생명' },
+  { id: 'kdb', name: 'KDB생명' },
+  { id: 'ibk', name: 'IBK연금보험' },
+  { id: 'lina', name: '라이나생명' },
+  { id: 'chubb', name: '처브라이프생명' },
+  { id: 'mirae', name: '미래에셋생명' },
+  { id: 'abl', name: 'ABL생명' },
+  { id: 'heungkuk_life', name: '흥국생명' },
+  { id: 'im', name: 'iM라이프생명' },
+  { id: 'aia', name: 'AIA생명' },
+  { id: 'hana_life', name: '하나생명' },
+  { id: 'fubon', name: '푸본현대생명' },
+  { id: 'cardif', name: 'BNP파리바 카디프생명' },
+  { id: 'lifeplanet', name: '교보라이프플래닛' }
+];
+
 interface InsuranceCalculatorProps {
   onCalculate?: (analysis: any) => void;
   initialTarget?: string | null;
@@ -141,6 +179,7 @@ interface InsuranceCalculatorProps {
 }
 
 export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalculate, initialTarget, isUnlocked }) => {
+  const { isB2BMode } = useB2BBranding();
   const [selectedId, setSelectedId] = useState(initialTarget || 'cancer');
   const formSectionRef = React.useRef<HTMLDivElement>(null);
 
@@ -1087,7 +1126,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
         
         {/* Description */}
         <p className="text-sm md:text-base lg:text-lg text-slate-600 font-bold leading-relaxed max-w-2xl mx-auto break-keep mb-3">
-          상담원 전화 유도 없이, 오직 AI 빅데이터 엔진을 통해 고객 스스로 자율 비교 및 진단을 완료할 수 있습니다.
+          상담원 전화 유도 없이, 오직 {isB2BMode ? '제휴 보험사 공시 요율 비교 테이블' : '보장비교 분석 엔진'}을 통해 고객 스스로 자율 비교 및 진단을 완료할 수 있습니다.
         </p>
         
         {/* Subtext */}
@@ -1140,7 +1179,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
           <div>
             <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest block mb-1">Differentiator 03</span>
             <h4 className="text-lg font-black text-slate-800 tracking-tight leading-snug">
-              0.1초 AI 내 보험 분석 &<br />
+              0.1초 {isB2BMode ? '내 보험 분석' : 'AI 내 보험 분석'} &<br />
               <span className="text-orange-500">또래 평균 보장 비교</span>
             </h4>
           </div>
@@ -1152,23 +1191,69 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
 
       <MobileShowcase />
 
-      <div className="flex flex-col items-center gap-6 mb-12 animate-in fade-in slide-in-from-top-4 duration-1000">
-        <div className="text-[0.7rem] font-black text-slate-400 uppercase tracking-[0.3em] opacity-70 mb-4">
-          국내 35개 전 보험사 실시간 통합 비교
+      <div className="flex flex-col items-center gap-8 mb-16 animate-in fade-in slide-in-from-top-4 duration-1000 w-full max-w-[1600px] mx-auto px-4 sm:px-6">
+        <div className="text-center space-y-2">
+          <div className="text-[0.7rem] sm:text-xs font-black text-slate-400 uppercase tracking-[0.3em] opacity-75">
+            제휴 협력 파트너
+          </div>
+          <h3 className="text-xl sm:text-2xl font-black text-slate-800 tracking-tight">
+            국내 33개 공식 제휴 보험사 실시간 통합 비교
+          </h3>
         </div>
 
-        {/* Static Full-width Partner Logos (Top/Bottom) */}
-        <div className="w-full space-y-6 flex flex-col items-center">
-          <img 
-            src="/insurance_logos_1.png" 
-            alt="Partner Logos 1" 
-            className="w-full max-w-6xl h-auto object-contain opacity-90" 
-          />
-          <img 
-            src="/insurance_logos_2.png" 
-            alt="Partner Logos 2" 
-            className="w-full max-w-6xl h-auto object-contain opacity-90" 
-          />
+        {/* Unified premium container for the logo grids */}
+        <div className="w-full bg-slate-50/40 rounded-[2.5rem] border border-slate-100/80 p-6 sm:p-10 space-y-10 shadow-[0_20px_50px_-20px_rgba(15,23,42,0.03)]">
+          {/* Non-life Section */}
+          <div className="space-y-4">
+            <h4 className="text-xs sm:text-sm font-black text-slate-500/80 tracking-widest uppercase border-b border-slate-200/50 pb-2.5 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+              손해보험 제휴사 (12개사)
+            </h4>
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3 sm:gap-4">
+              {NON_LIFE_LOGOS.map((company) => (
+                <div
+                  key={company.id}
+                  className="group flex items-center justify-center bg-white border border-slate-100 rounded-2xl p-2 h-16 sm:h-20 hover:border-slate-300 hover:shadow-[0_8px_24px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 transition-all duration-300 select-none overflow-hidden"
+                  title={company.name}
+                >
+                  <img
+                    src={`/logos/${company.id}.png`}
+                    alt={company.name}
+                    className="w-full h-full object-contain filter group-hover:brightness-105 transition-all duration-300"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/logo.png';
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Life Section */}
+          <div className="space-y-4">
+            <h4 className="text-xs sm:text-sm font-black text-slate-500/80 tracking-widest uppercase border-b border-slate-200/50 pb-2.5 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+              생명보험 제휴사 (22개사)
+            </h4>
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3 sm:gap-4">
+              {LIFE_LOGOS.map((company) => (
+                <div
+                  key={company.id}
+                  className="group flex items-center justify-center bg-white border border-slate-100 rounded-2xl p-2 h-16 sm:h-20 hover:border-slate-300 hover:shadow-[0_8px_24px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 transition-all duration-300 select-none overflow-hidden"
+                  title={company.name}
+                >
+                  <img
+                    src={`/logos/${company.id}.png`}
+                    alt={company.name}
+                    className="w-full h-full object-contain filter group-hover:brightness-105 transition-all duration-300"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/logo.png';
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1349,7 +1434,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                   <div className="bg-white p-5 rounded-3xl border border-orange-100 flex flex-col gap-1.5 shadow-sm hover:shadow-md transition-all duration-300">
                     <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest">Promise 3</span>
                     <span className="text-sm font-black text-slate-800 leading-tight">상담원 없는 자율 진단</span>
-                    <p className="text-[11px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">상담원 전화 유도 없이, 오직 AI 빅데이터 엔진을 통해 고객 스스로 자율 비교 및 진단을 완료할 수 있습니다.</p>
+                    <p className="text-[11px] text-slate-500 font-semibold leading-relaxed mt-0.5 break-keep">상담원 전화 유도 없이, 오직 {isB2BMode ? '제휴 보험사 공시 요율 비교 테이블' : 'AI 빅데이터 엔진'}을 통해 고객 스스로 자율 비교 및 진단을 완료할 수 있습니다.</p>
                   </div>
                 </div>
               </div>
@@ -1934,13 +2019,13 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                     </div>
                     <div className="text-left">
                       <h4 className="text-lg font-black text-slate-900 leading-tight">카카오 간편 로그인</h4>
-                      <p className="text-xs font-bold text-slate-400">보험리밸런스 연동</p>
+                      <p className="text-xs font-bold text-slate-400">{isB2BMode ? "비교분석 연동" : "보험리밸런스 연동"}</p>
                     </div>
                   </div>
 
                   <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 text-left mb-6 space-y-1">
                     <p className="text-xs font-bold text-slate-500">연동 요청 앱</p>
-                    <p className="text-sm font-black text-slate-800">보험리밸런스 (InsurRebalance)</p>
+                    <p className="text-sm font-black text-slate-800">{isB2BMode ? "보장비교분석 서비스" : "보험리밸런스 (InsurRebalance)"}</p>
                     <div className="h-px bg-slate-200/60 my-2" />
                     <p className="text-xs font-bold text-slate-500">로그인 계정</p>
                     <p className="text-sm font-black text-slate-800">rich_kim@kakao.com</p>
@@ -1995,13 +2080,13 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                     </div>
                     <div className="text-left">
                       <h4 className="text-lg font-black text-slate-900 leading-tight">네이버 아이디 로그인</h4>
-                      <p className="text-xs font-bold text-slate-400">보험리밸런스 연동</p>
+                      <p className="text-xs font-bold text-slate-400">{isB2BMode ? "비교분석 연동" : "보험리밸런스 연동"}</p>
                     </div>
                   </div>
 
                   <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 text-left mb-6 space-y-1">
                     <p className="text-xs font-bold text-slate-500">연동 요청 앱</p>
-                    <p className="text-sm font-black text-slate-800">보험리밸런스 (InsurRebalance)</p>
+                    <p className="text-sm font-black text-slate-800">{isB2BMode ? "보장비교분석 서비스" : "보험리밸런스 (InsurRebalance)"}</p>
                     <div className="h-px bg-slate-200/60 my-2" />
                     <p className="text-xs font-bold text-slate-500">로그인 계정</p>
                     <p className="text-sm font-black text-slate-800">naver_user@naver.com</p>
@@ -2135,7 +2220,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                 <div>
                   <h4 className="font-extrabold text-slate-950 mb-1">1. 개인정보 수집 및 이용 목적</h4>
                   <p>
-                    보험리밸런스는 고객님께 실시간 보험 비교 분석 서비스 및 맞춤형 리밸런싱 포트폴리오를 제공하고, 관련 1:1 상담(전화, 문자, 카카오톡 상담 포함)을 진행하기 위해 개인정보를 수집 및 이용합니다.
+                    {isB2BMode ? "본 서비스(또는 담당 설계사)" : "보험리밸런스"}는 고객님께 실시간 보험 비교 분석 서비스 및 맞춤형 리밸런싱 포트폴리오를 제공하고, 관련 1:1 상담(전화, 문자, 카카오톡 상담 포함)을 진행하기 위해 개인정보를 수집 및 이용합니다.
                   </p>
                 </div>
 

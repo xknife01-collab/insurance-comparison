@@ -1,7 +1,7 @@
 {
-  "name": "보험리밸런스 관리자",
-  "short_name": "보험리밸런스 관리자",
-  "description": "보험리밸런스 어드민 관리자 대시보드",
+  "name": "보장비교 관리자",
+  "short_name": "보장비교 관리자",
+  "description": "보장비교 어드민 관리자 대시보드",
   "start_url": "/admin",
   "scope": "/admin",
   "display": "standalone",

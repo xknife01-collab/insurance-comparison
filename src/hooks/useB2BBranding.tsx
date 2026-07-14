@@ -59,6 +59,8 @@ interface BrandingContextType {
   showInAppGuide: boolean;
   setShowInAppGuide: (show: boolean) => void;
   updateBranding: (newBranding: B2BBranding) => void;
+  isB2BMode: boolean;
+  getComplianceText: (text: string) => string;
 }
 
 const BrandingContext = createContext<BrandingContextType>({
@@ -72,6 +74,8 @@ const BrandingContext = createContext<BrandingContextType>({
   showInAppGuide: false,
   setShowInAppGuide: () => {},
   updateBranding: () => {},
+  isB2BMode: false,
+  getComplianceText: (text: string) => text,
 });
 
 export function BrandingProvider({ children }: { children: React.ReactNode }) {
@@ -328,9 +332,26 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
           // Fetch planner profile and subscription status
           const { data: planner, error: pError } = await supabase
             .from('planners')
-            .select('*, agencies(*)')
+            .select('*')
             .eq('planner_code', plannerCode)
-            .single();
+            .maybeSingle();
+
+          let agency = null;
+          if (!pError && planner && planner.agency_id) {
+            try {
+              const { data: agencyData } = await supabase
+                .from('agencies')
+                .select('*')
+                .eq('id', planner.agency_id)
+                .maybeSingle();
+              agency = agencyData;
+            } catch (ae) {
+              console.warn("Failed to fetch agency details for planner:", ae);
+            }
+          }
+          if (planner) {
+            planner.agencies = agency;
+          }
 
           if (!pError && planner && planner.subscription_status === 'active') {
             const isDemo = planner.agencies?.id === '88888888-8888-4888-a888-888888888888' || planner.planner_code === 'test_planner';
@@ -405,7 +426,7 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
               profileImageUrl: null,
               logoUrl: agency.logo_url || null,
               greetingTitle: agency.greeting_title || `${agency.name}의 실시간 최저가 비교`,
-              greetingContent: agency.greeting_content || `${agency.name}가 제공하는 0.1초 맞춤 보험 리밸런싱 솔루션입니다.`,
+              greetingContent: agency.greeting_content || `${agency.name}가 제공하는 0.1초 맞춤 보장 비교 분석 솔루션입니다.`,
               customPhone: agency.custom_phone || DEFAULT_BRANDING.customPhone,
               customAddress: agency.address || DEFAULT_BRANDING.customAddress,
               kakaoLink: null,
@@ -430,9 +451,26 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
         if (!plannerCode && !agencyId) {
           const { data: adminPlanner, error: aError } = await supabase
             .from('planners')
-            .select('*, agencies(*)')
+            .select('*')
             .eq('planner_code', 'admin')
             .maybeSingle();
+
+          let adminAgency = null;
+          if (!aError && adminPlanner && adminPlanner.agency_id) {
+            try {
+              const { data: agencyData } = await supabase
+                .from('agencies')
+                .select('*')
+                .eq('id', adminPlanner.agency_id)
+                .maybeSingle();
+              adminAgency = agencyData;
+            } catch (ae) {
+              console.warn("Failed to fetch agency details for admin planner:", ae);
+            }
+          }
+          if (adminPlanner) {
+            adminPlanner.agencies = adminAgency;
+          }
 
           if (!aError && adminPlanner) {
             const isDemo = adminPlanner.agencies?.id === '88888888-8888-4888-a888-888888888888';
@@ -443,7 +481,7 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
               agencyId: adminPlanner.agency_id || null,
               name: adminPlanner.name || '보험리밸런스',
               profileImageUrl: adminPlanner.profile_image_url || null,
-              logoUrl: adminPlanner.logo_url || adminPlanner.agencies?.logo_url || null,
+              logoUrl: adminPlanner.logo_url || adminPlanner.agencies?.logo_url || "/6397187.png",
               greetingTitle: adminPlanner.greeting_title || DEFAULT_BRANDING.greetingTitle,
               greetingContent: adminPlanner.greeting_content || DEFAULT_BRANDING.greetingContent,
               customPhone: adminPlanner.custom_phone || adminPlanner.phone || adminPlanner.agencies?.custom_phone || DEFAULT_BRANDING.customPhone,
@@ -509,6 +547,25 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
     sessionStorage.setItem(CACHE_KEY, JSON.stringify(sanitizedBranding));
   };
 
+  const isB2BMode = branding.type !== 'organic';
+
+  const getComplianceText = (text: string): string => {
+    if (!isB2BMode) return text;
+    let result = text;
+    result = result.replace(/보험리밸런스\s*AI\s*빅데이터\s*엔진/g, '맞춤 설계 분석 시스템');
+    result = result.replace(/보험리밸런스\s*AI\s*엔진/g, '비교 분석 시스템');
+    result = result.replace(/보험리밸런스\s*AI/g, '맞춤 설계 분석');
+    const agencyBrand = branding.agencyName || branding.name || '공식 제휴 보험대리점';
+    result = result.replace(/보험리밸런스/g, agencyBrand);
+    result = result.replace(/AI\s*빅데이터\s*엔진/g, '비교 분석 데이터 시스템');
+    result = result.replace(/AI\s*빅데이터/g, '비교 분석 데이터');
+    result = result.replace(/AI\s*엔진/g, '비교 분석 시스템');
+    result = result.replace(/빅데이터\s*엔진/g, '비교 분석 시스템');
+    result = result.replace(/빅데이터/g, '비교 분석');
+    result = result.replace(/AI/g, '비교 분석');
+    return result;
+  };
+
   return (
     <BrandingContext.Provider value={{ 
       branding, 
@@ -520,7 +577,9 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
       isStandalone,
       showInAppGuide,
       setShowInAppGuide,
-      updateBranding
+      updateBranding,
+      isB2BMode,
+      getComplianceText
     }}>
       {children}
     </BrandingContext.Provider>

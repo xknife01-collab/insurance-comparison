@@ -66,7 +66,7 @@ Deno.serve(async (req) => {
       formData.append('userid', aligoUserId);
       formData.append('sender', aligoSender);
       formData.append('receiver', cleanPhone);
-      formData.append('msg', `[보험리밸런스] 본인인증 번호는 [${generatedCode}] 입니다. 3분 내에 입력해 주세요.`);
+      formData.append('msg', `[보장비교] 본인인증 번호는 [${generatedCode}] 입니다. 3분 내에 입력해 주세요.`);
       
       // Send REST request to Aligo
       console.log(`✉️ Sending SMS to ${cleanPhone} with code ${generatedCode}`);

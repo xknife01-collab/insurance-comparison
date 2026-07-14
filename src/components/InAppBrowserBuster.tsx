@@ -66,14 +66,14 @@ export default function InAppBrowserBuster() {
           </div>
           <div>
             <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest block">SECURE CONNECTION</span>
-            <h2 className="text-lg font-black text-white">안전하고 빠른 앱 설치 안내</h2>
+            <h2 className="text-lg font-black text-white">안전하고 원활한 분석 진단 안내</h2>
           </div>
         </div>
 
         <p className="text-xs text-slate-400 font-bold leading-relaxed break-keep">
-          현재 접속하신 SNS(카카오톡/인스타/페이스북) 전용 브라우저에서는 개인 정보 보안 및 기기 바탕화면에 웹앱 설치를 직접 지원하지 않습니다.
+          현재 접속하신 SNS(카카오톡/인스타/페이스북) 전용 브라우저에서는 금융보안 가이드라인에 따른 개인정보 보호 및 본인인증(SMS) 서비스가 제한될 수 있습니다.
           <br /><br />
-          아래 버튼을 눌러 스마트폰 공식 기본 브라우저(크롬 또는 Safari)로 이동하여 더욱 원활하게 진단 및 앱 설치를 시작해 주세요!
+          아래 버튼을 눌러 스마트폰 공식 기본 브라우저(크롬 또는 Safari)로 이동하여 더욱 안전하고 편리하게 보장 분석 진단을 시작해 주세요!
         </p>
       </div>
 
@@ -114,7 +114,7 @@ export default function InAppBrowserBuster() {
         </button>
         
         <p className="text-[10px] text-slate-500 text-center font-bold">
-          보험리밸런스는 방송통신위원회 및 금융감독원 가이드를 준수합니다.
+          본 서비스는 방송통신위원회 및 금융감독원 가이드를 준수합니다.
         </p>
       </div>
     </div>
