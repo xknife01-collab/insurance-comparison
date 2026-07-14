@@ -46,7 +46,8 @@ export const fetchCarPremium = async (
       results = data.map((item) => ({
         companyName: item.company_name,
         productName: item.product_name,
-        basePremium: item.base_premium
+        basePremium: item.base_premium,
+        premium: item.base_premium
       }));
     }
   } catch (err) {
@@ -63,14 +64,18 @@ export const fetchCarPremium = async (
 
     // 회사별로 약 2~5% 편차 적용
     const deviations = [1.02, 0.98, 1.0, 1.01, 0.97, 1.03];
-    results = MOCK_CAR_RATES.map((item, idx) => ({
-      companyName: item.companyName,
-      productName: item.productName,
-      basePremium: Math.round(baseline * deviations[idx])
-    }));
+    results = MOCK_CAR_RATES.map((item, idx) => {
+      const prem = Math.round(baseline * deviations[idx]);
+      return {
+        companyName: item.companyName,
+        productName: item.productName,
+        basePremium: prem,
+        premium: prem
+      };
+    });
   }
 
-  const mainOption = results[0] || { companyName: '삼성화재', productName: '다이렉트 애니카', basePremium: 800000 };
+  const mainOption = results[0] || { companyName: '삼성화재', productName: '다이렉트 애니카', basePremium: 800000, premium: 800000 };
 
   return {
     premium: mainOption.basePremium,

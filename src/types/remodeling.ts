@@ -8,6 +8,7 @@ export interface RawInsurancePolicy {
   product_name: string;      // 예: "무배당 삼성화재 건강보험 새시대"
   monthly_premium: number;   // 예: 120000 (12만원)
   riders: RawRider[];
+  categoryId?: string;       // explicit category (e.g. from custom simulation)
 }
 
 export interface StandardizedCoverage {

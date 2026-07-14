@@ -140,7 +140,7 @@ export function maskProductName(name: string, isUnlocked: boolean): string {
   if (cleanLower.includes('어린이') || cleanLower.includes('자녀') || cleanLower.includes('아이') || cleanLower.includes('태아') || cleanLower.includes('child')) {
     return '희망 어린이종합보험' + suffix;
   }
-  if (cleanLower.includes('화재') || cleanLower.includes('주택') || cleanLower.includes('fire')) {
+  if ((cleanLower.includes('화재') || cleanLower.includes('주택') || cleanLower.includes('fire')) && !cleanLower.includes('상해')) {
     return '가정 주택화재보험' + suffix;
   }
   if (cleanLower.includes('치매') || cleanLower.includes('간병') || cleanLower.includes('재가') || cleanLower.includes('시설') || cleanLower.includes('dementia') || cleanLower.includes('care')) {

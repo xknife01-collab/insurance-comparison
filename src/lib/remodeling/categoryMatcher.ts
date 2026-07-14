@@ -45,6 +45,20 @@ import { InsuranceAnalysis }  from '../../types/insurance';
 
 // ─── 카테고리 판별 ────────────────────────────────────────────────────────────
 export function detectCategoryFromPolicy(policy: RawInsurancePolicy): string {
+  if (policy.categoryId) {
+    const map: Record<string, string> = {
+      whole_life: 'whole',
+      health_general: 'health',
+      indemnity: 'silson',
+      preexisting: 'pre_existing',
+      surgery: 'surgery_hospital',
+      cerebrovascular: 'brain',
+      fire_real: 'fire',
+      savings_general: 'savings'
+    };
+    return map[policy.categoryId] || policy.categoryId;
+  }
+
   const name       = (policy.product_name || '').toLowerCase();
   const riderNames = (policy.riders || []).map(r => r.rider_name).join(' ').toLowerCase();
   const combined   = name + ' ' + riderNames;
@@ -92,7 +106,8 @@ export function detectCategoryFromPolicy(policy: RawInsurancePolicy): string {
   if (/유병자|간편고지|3\.[0-5]\.[0-5]/i.test(cleanCombined))     return 'pre_existing';
   
   // 3.5. Comprehensive Health check (Moved up to prevent comprehensive policies from being misclassified as cancer/silson)
-  if (majorCount >= 2 || /종합|통합|건강|다사랑|굿밸런스/i.test(cleanName)) return 'health';
+  if (majorCount >= 2 || (/종합|통합|건강|다사랑|굿밸런스/i.test(cleanName) && !/상해/i.test(cleanName))) return 'health';
+
 
   // 4. Silson (Loss) & Care/Nursing
   if (/실손|실비|의료실비|의료비/i.test(cleanCombined))            return 'silson';
@@ -288,10 +303,15 @@ function buildAnalysisParams(
     case 'accident': {
       const existing = (baseAnalysis as any).accident || {};
       (pa as any).accident = {
-        deathAmt:      existing.deathAmt      || getAmount(['상해사망', '재해사망']) || (p * 1000),
-        disabilityAmt: existing.disabilityAmt || getAmount(['후유장해', '장해']) || (p * 500),
-        fractureAmt:   existing.fractureAmt   || getAmount(['골절']) || 300_000,
-        leisureRider:  existing.leisureRider  ?? hasRider(['레저', '스포츠']),
+        accidentDeathLimit:      existing.accidentDeathLimit      || existing.deathAmt      || getAmount(['상해사망', '재해사망']) || (p * 1000),
+        accidentDisabilityLimit: existing.accidentDisabilityLimit || existing.disabilityAmt || getAmount(['후유장해', '장해']) || (p * 500),
+        fractureLimit:           existing.fractureLimit           || existing.fractureAmt   || getAmount(['골절']) || 300_000,
+        castLimit:               existing.castLimit               || getAmount(['깁스']) || 100_000,
+        surgeryLimit:            existing.surgeryLimit            || getAmount(['상해수술']) || 500_000,
+        hospitalDailyLimit:      existing.hospitalDailyLimit      || getAmount(['입원일당', '상해입원']) || 20_000,
+        jobClass:                existing.jobClass                || 1,
+        drivingType:             existing.drivingType             || 'private',
+        hasLeisureRider:         existing.hasLeisureRider         ?? existing.leisureRider  ?? hasRider(['레저', '스포츠']),
       };
       break;
     }

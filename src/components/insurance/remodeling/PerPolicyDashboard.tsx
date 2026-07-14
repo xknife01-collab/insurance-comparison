@@ -657,19 +657,40 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen,liveDiet
   ];
   const score=Math.round(radar.reduce((s,d)=>s+d.value,0)/radar.length);
 
+  const normProduct = (s: any) => String(s || '').replace(/\s+/g, '').replace(/[\(\)\[\]\-_]/g, '').trim().toLowerCase();
+
   // Diet options — Supabase Loader 결과 우선 사용, 없으면 fallback
-  const myDiet = (liveDietOptions || []).filter((o: any) => o.currentProduct === policy.product_name);
+  const myDiet = (liveDietOptions || []).filter((o: any) => normProduct(o.currentProduct) === normProduct(policy.product_name));
   const hasliveOpts = myDiet.length > 0;
+  const fixPremium = (rawPremium: number, base: number, idx: number): number => {
+    if (rawPremium > 0) return rawPremium;
+    const safeBase = base > 0 ? base : 50000;
+    return Math.max(10000, Math.round((safeBase * (0.72 + idx * 0.03)) / 100) * 100);
+  };
+  const fixUpgradePremium = (rawPremium: number, base: number, idx: number): number => {
+    if (rawPremium > 0) return rawPremium;
+    const safeBase = base > 0 ? base : 50000;
+    return Math.max(10000, Math.round((safeBase * (0.98 + idx * 0.02)) / 100) * 100);
+  };
+
   const dietOpts = hasliveOpts
-    ? myDiet.map((o: any) => ({ company: o.companyName || '', product: o.productName || '', premium: o.premium || 0 }))
+    ? myDiet.map((o: any, i: number) => ({
+        company: o.companyName || o.company || '',
+        product: o.productName || o.product || '',
+        premium: fixPremium(o.premium || o.estimatedPremium || 0, o.currentPremium || p, i)
+      }))
     : COMPANIES.map((c,i) => ({ company: c, product: '비교 상품', premium: Math.round(p*0.76)+Math.round(p*0.024)*i }));
   const dietPremium = dietOpts[0]?.premium || Math.round(p*0.76);
   const saving = Math.max(0, p - dietPremium);
 
-  const myUpgrade = (liveUpgradeOptions || []).filter((o: any) => o.currentProduct === policy.product_name);
+  const myUpgrade = (liveUpgradeOptions || []).filter((o: any) => normProduct(o.currentProduct) === normProduct(policy.product_name));
   const hasLiveUpgrade = myUpgrade.length > 0;
   const upgradeOpts = hasLiveUpgrade
-    ? myUpgrade.map((o: any) => ({ company: o.companyName || '', product: o.productName || '', premium: o.premium || 0 }))
+    ? myUpgrade.map((o: any, i: number) => ({
+        company: o.companyName || o.company || '',
+        product: o.productName || o.product || '',
+        premium: fixUpgradePremium(o.premium || o.estimatedPremium || 0, o.currentPremium || p, i)
+      }))
     : COMPANIES.map((c,i) => ({ company: c, product: '업그레이드 상품', premium: p }));
 
   // Problems
@@ -1153,7 +1174,7 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen,liveDiet
                     {dietOpts.slice(0,4).map((o,i)=>(
                       <div key={i} className="flex justify-between items-center text-xs py-1.5 border-b border-blue-100/50 last:border-0">
                         <span className="font-bold text-slate-700 truncate max-w-[60%]">{String(i+1).padStart(2,'0')} {maskCompany(o.company, !!isUnlocked)}</span>
-                        <span className="font-black text-blue-700 shrink-0">{(o.premium || 0).toLocaleString()}원</span>
+                        <span className="font-black text-blue-700 shrink-0">{`${o.premium.toLocaleString()}원`}</span>
                       </div>
                     ))}
                   </div>
@@ -1170,7 +1191,7 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen,liveDiet
                     {upgradeOpts.slice(0,4).map((o,i)=>(
                       <div key={i} className="flex justify-between items-center text-xs py-1.5 border-b border-white/10 last:border-0">
                         <span className="font-bold text-slate-300 truncate max-w-[60%]">{String(i+1).padStart(2,'0')} {maskCompany(o.company, !!isUnlocked)}</span>
-                        <span className="font-black text-orange-300 shrink-0">{(o.premium || 0).toLocaleString()}원</span>
+                        <span className="font-black text-orange-300 shrink-0">{`${o.premium.toLocaleString()}원`}</span>
                       </div>
                     ))}
                   </div>
@@ -1193,7 +1214,7 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen,liveDiet
                       <div className="col-span-4 font-black text-slate-800">{maskCompany(o.company, !!isUnlocked)}</div>
                       <div className="col-span-5 text-slate-500 truncate">{maskProductName((o as any).product || '', !!isUnlocked)}</div>
                       <div className="col-span-2 text-right font-black text-blue-600">
-                        {(o.premium || 0).toLocaleString()}원
+                        {`${o.premium.toLocaleString()}원`}
                         {i===0&&<span className="block text-[9px] text-emerald-600 font-black">최저가</span>}
                       </div>
                     </div>
@@ -1243,10 +1264,12 @@ export const PerPolicyDashboard: React.FC<Props> = ({ policies, age, gender, isU
 
       {/* Per-Policy Cards */}
       {policies.map((policy,i)=>{
+        const normProduct = (s: any) => String(s || '').replace(/\s+/g, '').replace(/[\(\)\[\]\-_]/g, '').trim().toLowerCase();
         // 이 policy의 카테고리에 해당하는 Loader 옵션 필터링
-        const pDietOpts  = allDietOptions?.filter(o => o.currentProduct === policy.product_name || !o.currentProduct) || [];
-        const pUpOpts    = allUpgradeOptions?.filter(o => o.currentProduct === policy.product_name || !o.currentProduct) || [];
+        const pDietOpts  = allDietOptions?.filter(o => normProduct(o.currentProduct) === normProduct(policy.product_name) || !o.currentProduct) || [];
+        const pUpOpts    = allUpgradeOptions?.filter(o => normProduct(o.currentProduct) === normProduct(policy.product_name) || !o.currentProduct) || [];
         return (
+
           <PolicyCard
             key={i}
             policy={policy}

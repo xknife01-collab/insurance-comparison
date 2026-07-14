@@ -6,17 +6,25 @@ export { ACCIDENT_PRODUCTS };
 export type { AccidentProduct };
 
 export const fetchAccidentPremium = async (analysis: InsuranceAnalysis): Promise<any> => {
-  const opts = analysis.accident || {
-    accidentDeathLimit: 50000000,
-    accidentDisabilityLimit: 50000000,
-    fractureLimit: 300000,
-    castLimit: 100000,
-    surgeryLimit: 500000,
-    hospitalDailyLimit: 20000,
-    jobClass: 1,
-    drivingType: 'private',
-    hasLeisureRider: false
+  const rawOpts = (analysis.accident || {}) as any;
+  const toNum = (val: any, fallback: number): number => {
+    if (val === undefined || val === null) return fallback;
+    const num = Number(val);
+    return isNaN(num) ? fallback : num;
   };
+
+  const opts = {
+    accidentDeathLimit:      toNum(rawOpts.accidentDeathLimit      ?? (rawOpts as any).deathAmt,      50000000),
+    accidentDisabilityLimit: toNum(rawOpts.accidentDisabilityLimit ?? (rawOpts as any).disabilityAmt, 50000000),
+    fractureLimit:           toNum(rawOpts.fractureLimit           ?? (rawOpts as any).fractureAmt,   300000),
+    castLimit:               toNum(rawOpts.castLimit,               100000),
+    surgeryLimit:            toNum(rawOpts.surgeryLimit,            500000),
+    hospitalDailyLimit:      toNum(rawOpts.hospitalDailyLimit,      20000),
+    jobClass:                toNum(rawOpts.jobClass,                1),
+    drivingType:             rawOpts.drivingType             ?? 'private',
+    hasLeisureRider:         rawOpts.hasLeisureRider         ?? (rawOpts as any).leisureRider  ?? false
+  };
+
 
   // 1. 나이에 따른 위험요율 가중치 곡선
   const age = analysis.age || 40;

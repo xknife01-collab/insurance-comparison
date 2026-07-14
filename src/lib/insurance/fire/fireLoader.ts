@@ -20,17 +20,25 @@ export const FIRE_PRODUCTS: FireProduct[] = [
 ];
 
 export const fetchFirePremium = async (analysis: InsuranceAnalysis): Promise<any> => {
-  const fireOpts = analysis.fire || {
-    residenceType: 'apartment',
-    occupancyType: 'owner',
-    buildingArea: 84,
-    structureGrade: 1,
-    hasWaterLeakRider: true,
-    hasLiabilityRider: true,
-    hasTemporaryHousingRider: true,
-    householdGoodsLimit: 30000000,
-    buildingLimit: 100000000,
+  const rawOpts = (analysis.fire || {}) as any;
+  const toNum = (val: any, fallback: number): number => {
+    if (val === undefined || val === null) return fallback;
+    const num = Number(val);
+    return isNaN(num) ? fallback : num;
   };
+
+  const fireOpts = {
+    residenceType:            rawOpts.residenceType || 'apartment',
+    occupancyType:            rawOpts.occupancyType || 'owner',
+    buildingArea:             toNum(rawOpts.buildingArea, 84),
+    structureGrade:           toNum(rawOpts.structureGrade, 1),
+    hasWaterLeakRider:        rawOpts.hasWaterLeakRider ?? true,
+    hasLiabilityRider:        rawOpts.hasLiabilityRider ?? true,
+    hasTemporaryHousingRider: rawOpts.hasTemporaryHousingRider ?? true,
+    householdGoodsLimit:      toNum(rawOpts.householdGoodsLimit, 30000000),
+    buildingLimit:            toNum(rawOpts.buildingLimit, 100000000),
+  };
+
 
   // 1. 주거 형태에 따른 가중치 및 기본료 보정
   let residenceMultiplier = 1.0;

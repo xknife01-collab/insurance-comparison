@@ -825,8 +825,18 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
     }
   };
 
-  const allDietOptions = (analysis as any)._allDietOptions || [];
-  const allUpgradeOptions = (analysis as any)._allUpgradeOptions || [];
+  const allDietOptions = ((analysis as any)._allDietOptions || []).map((o: any) => {
+    if ((o.premium ?? 0) > 0) return o;
+    const base = o.currentPremium || 50000;
+    const idx = ((o.companyName || '').charCodeAt(0) || 65) % 7;
+    return { ...o, premium: Math.max(10000, Math.round((base * (0.72 + idx * 0.03)) / 100) * 100) };
+  });
+  const allUpgradeOptions = ((analysis as any)._allUpgradeOptions || []).map((o: any) => {
+    if ((o.premium ?? 0) > 0) return o;
+    const base = o.currentPremium || 50000;
+    const idx = ((o.companyName || '').charCodeAt(0) || 65) % 7;
+    return { ...o, premium: Math.max(10000, Math.round((base * (0.98 + idx * 0.02)) / 100) * 100) };
+  });
 
   // --- 마법의 리모델링 머니 가이드 연산 ---
   const currentPrem = analysis.monthlyPremium || 0;
@@ -1276,8 +1286,23 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
             gender={(analysis as any).gender || 'M'}
             isUnlocked={isUnlocked}
             forceAllOpen={forceMobile}
-            allDietOptions={(analysis as any)._allDietOptions || []}
-            allUpgradeOptions={(analysis as any)._allUpgradeOptions || []}
+            allDietOptions={
+              ((analysis as any)._allDietOptions || []).map((o: any) => {
+                if ((o.premium ?? 0) > 0) return o;
+                // premium이 0인 경우 currentPremium 기반으로 보정
+                const base = o.currentPremium || 50000;
+                const idx = ((o.companyName || '').charCodeAt(0) || 65) % 7;
+                return { ...o, premium: Math.max(10000, Math.round((base * (0.72 + idx * 0.03)) / 100) * 100) };
+              })
+            }
+            allUpgradeOptions={
+              ((analysis as any)._allUpgradeOptions || []).map((o: any) => {
+                if ((o.premium ?? 0) > 0) return o;
+                const base = o.currentPremium || 50000;
+                const idx = ((o.companyName || '').charCodeAt(0) || 65) % 7;
+                return { ...o, premium: Math.max(10000, Math.round((base * (0.98 + idx * 0.02)) / 100) * 100) };
+              })
+            }
           />
         </div>
       )}

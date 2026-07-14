@@ -170,9 +170,55 @@ export default function App() {
               setCalcTarget(isRemod ? 'remodeling' : (lead.insurance_type?.replace('_consult', '') || 'general'));
               
               if (isRemod) {
-                setRemodelingResult(lead.analysis_result);
+                const hasZeroPremium = !lead.analysis_result || 
+                  !lead.analysis_result.recommendations ||
+                  (lead.analysis_result.analysis?._allDietOptions || []).some((o: any) => !o.premium) ||
+                  lead.analysis_result.analysis?._allDietOptions?.length === 0;
+
+                if (hasZeroPremium) {
+                  runAnalysis(analysisInputs).then(async (result) => {
+                    result.simulation_code = codeParam;
+                    setRemodelingResult(result);
+                    try {
+                      await supabase
+                        .from('customer_leads')
+                        .update({
+                          analysis_result: result,
+                          monthly_premium: analysisInputs.monthlyPremium || 0
+                        })
+                        .eq('id', lead.id);
+                    } catch (e) {
+                      console.warn('Failed to update corrected lead result in DB:', e);
+                    }
+                  });
+                } else {
+                  setRemodelingResult(lead.analysis_result);
+                }
               } else {
-                setAnalysisResult(lead.analysis_result);
+                const hasZeroPremium = !lead.analysis_result || 
+                  !lead.analysis_result.recommendations ||
+                  (lead.analysis_result.analysis?._allOptions || []).some((o: any) => !o.premium) ||
+                  lead.analysis_result.analysis?._allOptions?.length === 0;
+
+                if (hasZeroPremium) {
+                  runAnalysis(analysisInputs).then(async (result) => {
+                    result.simulation_code = codeParam;
+                    setAnalysisResult(result);
+                    try {
+                      await supabase
+                        .from('customer_leads')
+                        .update({
+                          analysis_result: result,
+                          monthly_premium: result?.recommendations?.diet?.estimatedPremium || result?.estimatedPremium || 0
+                        })
+                        .eq('id', lead.id);
+                    } catch (e) {
+                      console.warn('Failed to update corrected lead result in DB:', e);
+                    }
+                  });
+                } else {
+                  setAnalysisResult(lead.analysis_result);
+                }
               }
 
               if (lead.status === 'verified') {
@@ -490,7 +536,9 @@ export default function App() {
       age: analysis.age || 40,
       insurance_type: category,
       analysis_result: resultData,
-      monthly_premium: resultData?.efficiency?.totalPremium || 0,
+      monthly_premium: category.includes('remodeling')
+        ? (analysis.monthlyPremium || 0)
+        : (resultData?.recommendations?.diet?.estimatedPremium || resultData?.estimatedPremium || 0),
       raw_payload: { 
         gender: analysis.gender, 
         jobClass: analysis.jobClass, 
@@ -552,8 +600,8 @@ export default function App() {
   };
 
   // 정밀 분석용 하이픈 연동 성공 핸들러 — floating bar에서 HyphenAuthModal 완료 시 호출
-  const handleRemodelingHyphenSuccess = (coverage: StandardizedCoverage) => {
-    handleAnalyze({
+  const handleRemodelingHyphenSuccess = async (coverage: StandardizedCoverage) => {
+    const analysisInput = {
       name: '고객',
       mobile: '010-0000-0000',
       age: coverage.age,
@@ -565,17 +613,23 @@ export default function App() {
       cardiovascular: { currentAmount: coverage.ischemic_heart, targetAmount: 30000000 },
       surgery: { currentAmount: (coverage as any).surgery_amount ?? 0, targetAmount: 10000000 },
       postDisability: { currentAmount: (coverage as any).post_disability_amount ?? 0, targetAmount: 30000000 },
-      paymentExemption: 'standard',
-      healthStatus: 'standard',
+      paymentExemption: 'standard' as const,
+      healthStatus: 'standard' as const,
       monthlyPremium: coverage.current_total_premium,
       _remodelingCoverage: coverage
-    });
+    };
+    setIsInRemodelingZone(true);
+    setShowComparisonBar(false);
+    setRemodelingApplied(false);
+    const result = await runAnalysis(analysisInput);
+    result.simulation_code = currentSimulationCode || hyphenCodeParam || '';
+    setRemodelingResult(result);
   };
 
   // 고객이 /remodeling?code= 링크 접속 후 인증 성공 → Supabase 저장 + 로컬 즉시 렌더링
   const handleExternalHyphenSuccess = async (coverage: StandardizedCoverage, customerInfo?: { name: string; phone: string }) => {
     // 1. 로컬 화면 즉시 갱신 (Supabase 성공 여부와 무관)
-    handleRemodelingHyphenSuccess(coverage);
+    await handleRemodelingHyphenSuccess(coverage);
     setShowExternalHyphenModal(false);
 
     // 2. Supabase 저장 (백그라운드)
@@ -591,6 +645,28 @@ export default function App() {
       if (!data || data.length === 0) return;
 
       const lead = data[0];
+      
+      const analysisInput = {
+        name: customerInfo?.name || lead.name || '고객',
+        mobile: customerInfo?.phone || lead.phone || '010-0000-0000',
+        age: coverage.age,
+        gender: coverage.gender,
+        jobClass: 1,
+        selectedCategory: 'remodeling',
+        cancer: { currentAmount: coverage.cancer_diagnosis, targetAmount: 50000000 },
+        cerebrovascular: { currentAmount: coverage.brain_vascular, targetAmount: 30000000 },
+        cardiovascular: { currentAmount: coverage.ischemic_heart, targetAmount: 30000000 },
+        surgery: { currentAmount: (coverage as any).surgery_amount ?? 0, targetAmount: 10000000 },
+        postDisability: { currentAmount: (coverage as any).post_disability_amount ?? 0, targetAmount: 30000000 },
+        paymentExemption: 'standard' as const,
+        healthStatus: 'standard' as const,
+        monthlyPremium: coverage.current_total_premium,
+        _remodelingCoverage: coverage
+      };
+
+      const result = await runAnalysis(analysisInput);
+      result.simulation_code = hyphenCodeParam;
+
       const updatedPayload = {
         ...(lead.raw_payload || {}),
         hyphen_coverage: coverage,
@@ -606,7 +682,12 @@ export default function App() {
         ]
       };
 
-      const updateData: any = { status: 'verified', raw_payload: updatedPayload };
+      const updateData: any = {
+        status: 'verified',
+        raw_payload: updatedPayload,
+        analysis_result: result,
+        monthly_premium: coverage.current_total_premium || 0
+      };
       if (customerInfo?.name && customerInfo.name !== '고객') updateData.name = customerInfo.name;
       if (customerInfo?.phone && customerInfo.phone !== '010-0000-0000') updateData.phone = customerInfo.phone;
 

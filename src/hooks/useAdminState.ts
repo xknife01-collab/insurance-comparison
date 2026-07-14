@@ -4,6 +4,7 @@ import { triggerWelcomeChat } from '../utils/chatHelper';
 import { registerPushSubscription, triggerTestPushNotification } from '../utils/pushNotification';
 import { useB2BBranding } from './useB2BBranding';
 import { StandardizedCoverage } from '../types/remodeling';
+import { runAnalysis } from '../lib/analysisEngine';
 
 export interface Agency {
   id: string;
@@ -574,6 +575,28 @@ export function useAdminState(initialTab?: 'login' | 'register') {
     if (!adminHyphenLead) return;
     try {
       const supabase = createClient();
+      
+      const analysisInput = {
+        name: customerInfo?.name || adminHyphenLead.name || '고객',
+        mobile: customerInfo?.phone || adminHyphenLead.phone || '010-0000-0000',
+        age: coverage.age,
+        gender: coverage.gender,
+        jobClass: 1,
+        selectedCategory: 'remodeling',
+        cancer: { currentAmount: coverage.cancer_diagnosis, targetAmount: 50000000 },
+        cerebrovascular: { currentAmount: coverage.brain_vascular, targetAmount: 30000000 },
+        cardiovascular: { currentAmount: coverage.ischemic_heart, targetAmount: 30000000 },
+        surgery: { currentAmount: (coverage as any).surgery_amount ?? 0, targetAmount: 10000000 },
+        postDisability: { currentAmount: (coverage as any).post_disability_amount ?? 0, targetAmount: 30000000 },
+        paymentExemption: 'standard' as const,
+        healthStatus: 'standard' as const,
+        monthlyPremium: coverage.current_total_premium,
+        _remodelingCoverage: coverage
+      };
+
+      const result = await runAnalysis(analysisInput);
+      result.simulation_code = adminHyphenLead.raw_payload?.simulation_code || '';
+
       const updatedPayload = {
         ...(adminHyphenLead.raw_payload || {}),
         hyphen_coverage: coverage,
@@ -589,7 +612,12 @@ export function useAdminState(initialTab?: 'login' | 'register') {
         ]
       };
 
-      const updateData: any = { status: 'verified', raw_payload: updatedPayload };
+      const updateData: any = {
+        status: 'verified',
+        raw_payload: updatedPayload,
+        analysis_result: result,
+        monthly_premium: coverage.current_total_premium || 0
+      };
       if (customerInfo?.name && customerInfo.name !== '고객') {
         updateData.name = customerInfo.name;
       }

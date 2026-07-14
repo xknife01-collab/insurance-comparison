@@ -319,7 +319,8 @@ export const generateCustomMockData = (
       monthly_premium: p,
       riders,
       isCustom: !!item.isCustom,
-      isEstimated: !item.isCustom
+      isEstimated: !item.isCustom,
+      categoryId: item.categoryId
     });
   });
 
