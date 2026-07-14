@@ -79,7 +79,17 @@ export const fetchPropertyPremium = async (analysis: InsuranceAnalysis): Promise
     console.warn('[PropertyLoader] DB rates lookup failed. Using local fallback.', err);
   }
 
-  const activeProducts = dbProducts.length > 0 ? dbProducts : FALLBACK_PROPERTY_PRODUCTS;
+  // 주택화재보험 상품 제외 (재물종합보험 전용 비교 목록 구성)
+  const isFireProduct = (name: string) =>
+    /주택화재|가정화재|가정\s*주택|화재보험|house\s*fire/i.test(name);
+
+  if (dbProducts.length > 0) {
+    dbProducts = dbProducts.filter(p => !isFireProduct(p.productName));
+  }
+
+  const activeProducts = dbProducts.length > 0
+    ? dbProducts
+    : FALLBACK_PROPERTY_PRODUCTS.filter(p => !isFireProduct(p.productName));
 
   // 2. 가입 금액 합산 및 비례 계수 계산 (표준설계 기준 2억 원 대비 비율)
   const totalAssets = propOpts.buildingLimit + propOpts.interiorLimit + propOpts.equipmentLimit + propOpts.inventoryLimit;
