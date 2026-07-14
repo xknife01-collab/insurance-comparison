@@ -660,7 +660,12 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen,liveDiet
   const normProduct = (s: any) => String(s || '').replace(/\s+/g, '').replace(/[\(\)\[\]\-_]/g, '').trim().toLowerCase();
 
   // Diet options — Supabase Loader 결과 우선 사용, 없으면 fallback
-  const myDiet = (liveDietOptions || []).filter((o: any) => normProduct(o.currentProduct) === normProduct(policy.product_name));
+  const isFireProd = (name: string) =>
+    /주택화재|가정화재|가정\s*주택|화재보험/i.test(name || '');
+  const shouldFilterFire = t === 'property';
+
+  const myDietRaw = (liveDietOptions || []).filter((o: any) => normProduct(o.currentProduct) === normProduct(policy.product_name));
+  const myDiet = shouldFilterFire ? myDietRaw.filter((o: any) => !isFireProd(o.productName || o.product || '')) : myDietRaw;
   const hasliveOpts = myDiet.length > 0;
   const fixPremium = (rawPremium: number, base: number, idx: number): number => {
     if (rawPremium > 0) return rawPremium;
@@ -683,7 +688,8 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen,liveDiet
   const dietPremium = dietOpts[0]?.premium || Math.round(p*0.76);
   const saving = Math.max(0, p - dietPremium);
 
-  const myUpgrade = (liveUpgradeOptions || []).filter((o: any) => normProduct(o.currentProduct) === normProduct(policy.product_name));
+  const myUpgradeRaw = (liveUpgradeOptions || []).filter((o: any) => normProduct(o.currentProduct) === normProduct(policy.product_name));
+  const myUpgrade = shouldFilterFire ? myUpgradeRaw.filter((o: any) => !isFireProd(o.productName || o.product || '')) : myUpgradeRaw;
   const hasLiveUpgrade = myUpgrade.length > 0;
   const upgradeOpts = hasLiveUpgrade
     ? myUpgrade.map((o: any, i: number) => ({
