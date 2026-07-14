@@ -371,14 +371,7 @@ export function LeadsTab({
                   </td>
                   <td className="py-4.5 px-4 text-right">
                     <div className="flex items-center justify-end gap-2">
-                      {lead.insurance_type?.includes('remodeling') && !lead.raw_payload?.hyphen_coverage && (
-                        <button
-                          onClick={() => { setAdminHyphenLead(lead); setShowAdminHyphen(true); }}
-                          className="inline-flex items-center gap-1 px-3 py-1.5 bg-purple-500/10 hover:bg-purple-500 text-purple-400 hover:text-white border border-purple-500/20 hover:border-transparent rounded-lg font-black transition-all cursor-pointer text-[10px]"
-                        >
-                          🔍 하이픈 연동
-                        </button>
-                      )}
+
                       {lead.raw_payload?.hyphen_coverage && (
                         <span className="px-2 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-lg text-[9px] font-black">
                           실데이터 완료 ✅
@@ -572,14 +565,7 @@ export function LeadsTab({
                             문구복사 📋
                           </button>
                         )}
-                        {lead.insurance_type?.includes('remodeling') && !lead.raw_payload?.hyphen_coverage && (
-                          <button
-                            onClick={() => { setAdminHyphenLead(lead); setShowAdminHyphen(true); }}
-                            className="px-2 py-1 bg-purple-600 text-white rounded-lg text-[9px] font-black cursor-pointer"
-                          >
-                            하이픈 연동
-                          </button>
-                        )}
+
                         <button
                           onClick={() => setSelectedLead(lead)}
                           className="px-2.5 py-1 bg-orange-500 text-white rounded-lg text-[9px] font-black cursor-pointer flex items-center gap-0.5"

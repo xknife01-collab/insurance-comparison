@@ -3,6 +3,12 @@
  * 실시간 DB 백업본 JSON 파일을 비동기(Dynamic Import)로 가져와 메모리 상에서 필터링/정렬하여 응답합니다.
  */
 
+let mockAuthUser: any = null;
+
+export const setMockAuthUser = (user: any) => {
+  mockAuthUser = user;
+};
+
 // Helper to dynamically load JSON data in browser or node
 const loadTableData = async (tableName: string): Promise<any[]> => {
   try {
@@ -39,6 +45,11 @@ class MockQueryBuilder {
 
   eq(column: string, value: any) {
     this.filters.push({ type: 'eq', column, value });
+    return this;
+  }
+
+  or(queryStr: string) {
+    // Stub implementation to prevent TypeError in mock mode
     return this;
   }
 
@@ -106,6 +117,19 @@ class MockQueryBuilder {
 
       // 2. Load mock data from JSON file
       let data = await loadTableData(this.tableName);
+
+      // 2.5. Mimic RLS for customer_leads
+      if (this.tableName === 'customer_leads') {
+        const user = mockAuthUser || { role: 'guest' };
+        if (user.role === 'guest') {
+          data = [];
+        } else if (user.role === 'planner') {
+          data = data.filter((row: any) => row.planner_id === user.plannerId);
+        } else if (user.role === 'agency') {
+          data = data.filter((row: any) => row.agency_id === user.agencyId);
+        }
+        // If super admin, return all leads
+      }
 
       // 3. Apply filters
       for (const filter of this.filters) {

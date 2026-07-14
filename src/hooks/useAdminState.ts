@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { createClient } from '../utils/supabase/client';
+import { setMockAuthUser } from '../utils/supabase/mockClient';
 import { triggerWelcomeChat } from '../utils/chatHelper';
 import { registerPushSubscription, triggerTestPushNotification } from '../utils/pushNotification';
 import { useB2BBranding } from './useB2BBranding';
@@ -259,6 +260,15 @@ export function useAdminState(initialTab?: 'login' | 'register') {
     subscriptionStatus?: string;
     isDemo?: boolean;
   }>({ role: 'guest' });
+
+  // Synchronize mock auth context with currentUser for local database RLS simulation
+  useEffect(() => {
+    try {
+      setMockAuthUser(currentUser);
+    } catch (err) {
+      console.warn('[Mock Auth Sync] Failed to sync auth context:', err);
+    }
+  }, [currentUser]);
 
   const [pushStatus, setPushStatus] = useState<'unsupported' | 'loading' | 'default' | 'granted' | 'denied' | 'registered'>('loading');
   const [isTestPushSending, setIsTestPushSending] = useState(false);
@@ -2211,11 +2221,7 @@ export function useAdminState(initialTab?: 'login' | 'register') {
       query = query.eq('is_demo', !!isUserDemo);
 
       if (currentUser.role === 'planner') {
-        if (currentUser.agencyId) {
-          query = query.or(`planner_id.eq.${currentUser.plannerId},and(planner_id.is.null,agency_id.eq.${currentUser.agencyId})`);
-        } else {
-          query = query.or(`planner_id.eq.${currentUser.plannerId},and(planner_id.is.null,agency_id.is.null)`);
-        }
+        query = query.eq('planner_id', currentUser.plannerId);
       } else if (currentUser.role === 'agency') {
         query = query.eq('agency_id', currentUser.agencyId);
       }
@@ -2223,25 +2229,17 @@ export function useAdminState(initialTab?: 'login' | 'register') {
       const { data: leadList } = await query;
       
       if (leadList && leadList.length > 0) {
-        const mappedLeads = leadList
-          .filter(lead => {
-            if (currentUser.role === 'planner') {
-              if (lead.planner_id === currentUser.plannerId) return true;
-              const isHighIntent = isLeadConsult(lead.insurance_type) || lead.insurance_type?.includes('_underwriting');
-              if (lead.planner_id === null && !isHighIntent) return true;
-              return false;
-            }
-            return true;
-          })
-          .map(lead => {
-            const matchedPlanner = currentPlanners.find(p => p.id === lead.planner_id);
-            return {
-              ...lead,
-              planner_name: matchedPlanner ? matchedPlanner.name : '미배정'
-            };
-          });
+        const mappedLeads = leadList.map(lead => {
+          const matchedPlanner = currentPlanners.find(p => p.id === lead.planner_id);
+          return {
+            ...lead,
+            planner_name: matchedPlanner ? matchedPlanner.name : '미배정'
+          };
+        });
 
         setLeads(mappedLeads);
+      } else {
+        setLeads([]);
       }
 
       let visitorQuery = supabase.from('visitor_logs').select().order('created_at', { ascending: false });

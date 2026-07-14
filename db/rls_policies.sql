@@ -24,7 +24,9 @@ DROP POLICY IF EXISTS "Enable update for all users" ON public.planners;
 
 DROP POLICY IF EXISTS "Enable insert for anonymous users" ON public.customer_leads;
 DROP POLICY IF EXISTS "Enable read for planners/agencies" ON public.customer_leads;
+DROP POLICY IF EXISTS "Enable read for authorized users" ON public.customer_leads;
 DROP POLICY IF EXISTS "Enable update for all users" ON public.customer_leads;
+DROP POLICY IF EXISTS "Enable update for authorized users" ON public.customer_leads;
 
 -- ==========================================
 -- 🏢 3. 대리점(agencies) 테이블 정책
@@ -65,13 +67,52 @@ CREATE POLICY "Enable update for all users" ON public.planners
 CREATE POLICY "Enable insert for anonymous users" ON public.customer_leads
     FOR INSERT WITH CHECK (true);
 
--- 조회: 누구나 (어드민 대시보드 리드 목록 조회용)
-CREATE POLICY "Enable read for planners/agencies" ON public.customer_leads
-    FOR SELECT USING (true);
+-- 조회: 총괄 어드민, 대리점 어드민(소속 리드), 설계사(본인 리드)에 대해 한정하여 조회 허용
+CREATE POLICY "Enable read for authorized users" ON public.customer_leads
+    FOR SELECT USING (
+        -- [Super Admin]
+        (SELECT planner_code FROM public.planners WHERE id = auth.uid()) = 'admin'
+        OR
+        -- [Agency Admin]
+        (
+            (SELECT is_admin FROM public.planners WHERE id = auth.uid()) = true
+            AND
+            agency_id = (SELECT agency_id FROM public.planners WHERE id = auth.uid())
+        )
+        OR
+        -- [Planner]
+        planner_id = auth.uid()
+    );
 
--- 수정: 누구나 (어드민 대시보드 상담 상태 수정 및 설계사 배정용)
-CREATE POLICY "Enable update for all users" ON public.customer_leads
-    FOR UPDATE USING (true) WITH CHECK (true);
+-- 수정: 총괄 어드민, 대리점 어드민(소속 리드), 설계사(본인 리드)에 대해 한정하여 수정 허용
+CREATE POLICY "Enable update for authorized users" ON public.customer_leads
+    FOR UPDATE USING (
+        -- [Super Admin]
+        (SELECT planner_code FROM public.planners WHERE id = auth.uid()) = 'admin'
+        OR
+        -- [Agency Admin]
+        (
+            (SELECT is_admin FROM public.planners WHERE id = auth.uid()) = true
+            AND
+            agency_id = (SELECT agency_id FROM public.planners WHERE id = auth.uid())
+        )
+        OR
+        -- [Planner]
+        planner_id = auth.uid()
+    ) WITH CHECK (
+        -- [Super Admin]
+        (SELECT planner_code FROM public.planners WHERE id = auth.uid()) = 'admin'
+        OR
+        -- [Agency Admin]
+        (
+            (SELECT is_admin FROM public.planners WHERE id = auth.uid()) = true
+            AND
+            agency_id = (SELECT agency_id FROM public.planners WHERE id = auth.uid())
+        )
+        OR
+        -- [Planner]
+        planner_id = auth.uid()
+    );
 
 
 -- ==========================================
