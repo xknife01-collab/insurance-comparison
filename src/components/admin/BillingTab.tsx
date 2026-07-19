@@ -77,7 +77,7 @@ export function BillingTab({
 
   const billingAgency = agencies.find(a => a.id === currentUser.agencyId);
   const billingTier = billingAgency?.subscription_tier || 'pro';
-  const billingMaxLimit = billingAgency?.max_planner_limit || 28;
+  const billingMaxLimit = billingAgency?.max_planner_limit || 50;
   const billingActivePlanners = planners.filter(p => p.agency_id === currentUser.agencyId && p.subscription_status === 'active').length;
   const billingCapacityPercent = Math.min(100, Math.round((billingActivePlanners / billingMaxLimit) * 100));
 
@@ -163,9 +163,9 @@ export function BillingTab({
               <span className="text-base font-black text-white">
                 {currentUser.role === 'agency' 
                   ? (billingTier === 'basic' 
-                      ? '월 500,000 원' 
+                      ? '별도 문의' 
                       : billingTier === 'pro' 
-                        ? '월 1,000,000 원' 
+                        ? '월 2,500,000 원' 
                         : '월 5,000,000 원')
                   : '월 50,000 원'}
               </span>
@@ -644,7 +644,7 @@ export function BillingTab({
       <div className="bg-slate-950/40 border border-slate-850 rounded-2xl p-5 text-left text-xs text-slate-400 space-y-2">
         <p className="font-extrabold text-slate-300">💡 B2B SaaS 구독 서비스 유의 사항 안내</p>
         <p className="leading-relaxed font-semibold">
-          - 모든 가입 신청자는 기본적으로 가입 승인일로부터 **30일간 무료 체험(Trial)**이 제공됩니다.<br />
+          - 모든 가입 신청자는 기본적으로 가입 승인일로부터 **14일간 무료 체험(Trial)**이 제공됩니다.<br />
           - 무료 체험 만료 전에 연장 결제를 진행할 경우 남은 무료 일수에 추가로 30일이 합산 연장됩니다.<br />
           - 구독 기간이 만료되어도 어드민은 정지되지 않으나, 고객에게 노출되는 **개인화 분석 랜딩이 중지(기본 회사 정보로 대체)**되므로 만료 전 갱신을 권장합니다.
         </p>

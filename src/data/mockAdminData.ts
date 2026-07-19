@@ -106,7 +106,7 @@ export const getDemoAgency = (): any => ({
   subscription_status: 'active',
   subscription_tier: 'pro',
   subscription_expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
-  max_planner_limit: 28,
+  max_planner_limit: 50,
   current_credits: 153000,
   lead_routing_type: 'distribute_auto_round_robin',
   logo_url: '/logo.png',

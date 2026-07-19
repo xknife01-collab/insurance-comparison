@@ -85,7 +85,7 @@ export default async function handler(req, res) {
 
       if (!countErr && !agencyErr && agencyData) {
         const currentCount = count || 0;
-        const limit = agencyData.max_planner_limit || 13;
+        const limit = agencyData.max_planner_limit || 30;
         if (currentCount >= limit) {
           return res.status(400).json({
             success: false,
@@ -111,7 +111,7 @@ export default async function handler(req, res) {
         subscription_status: 'active',
         lead_routing_type: regRoutingType || 'direct',
         subscription_tier: regAgencyTier || 'basic',
-        max_planner_limit: regAgencyTier === 'basic' ? 13 : regAgencyTier === 'pro' ? 28 : 150
+        max_planner_limit: regAgencyTier === 'basic' ? 30 : regAgencyTier === 'pro' ? 50 : 110
       };
 
       const { data: agencyData, error: agencyError } = await supabase
@@ -131,7 +131,7 @@ export default async function handler(req, res) {
 
     // 4. Register Planner
     const trialExpiry = new Date();
-    trialExpiry.setDate(trialExpiry.getDate() + 30);
+    trialExpiry.setDate(trialExpiry.getDate() + 14);
 
     const newPlanner = {
       agency_id: agencyId,

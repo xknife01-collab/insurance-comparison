@@ -639,7 +639,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
   // B2B Billing Capacity Calculations
   const billingAgency = agencies.find(a => a.id === currentUser.agencyId);
   const billingTier = billingAgency?.subscription_tier || 'pro';
-  const billingMaxLimit = billingAgency?.max_planner_limit || 28;
+  const billingMaxLimit = billingAgency?.max_planner_limit || 50;
   const billingActivePlanners = planners.filter(p => p.agency_id === currentUser.agencyId && p.subscription_status === 'active').length;
   const billingCapacityPercent = Math.min(100, Math.round((billingActivePlanners / billingMaxLimit) * 100));
 
@@ -722,7 +722,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
               나만의 독점 핀테크 플랫폼을 <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500 font-black">즉시 구축</span>하세요
             </h1>
             <p className="text-sm text-slate-400 leading-relaxed font-bold break-keep">
-              대리점과 설계사의 이름으로 즉시 생성되는 최첨단 초고속 보험 비교 엔진. 상담 현장에서 태블릿으로 0.1초 만에 보장을 진단해 신뢰를 얻고, 내 브랜드 플랫폼으로 직접 마케팅하여 자발적인 상담 신청 리드를 수집하세요. 신규 가입 시 첫 30일간 기능 제약 없이 무료 체험
+              대리점과 설계사의 이름으로 즉시 생성되는 최첨단 초고속 보험 비교 엔진. 상담 현장에서 태블릿으로 0.1초 만에 보장을 진단해 신뢰를 얻고, 내 브랜드 플랫폼으로 직접 마케팅하여 자발적인 상담 신청 리드를 수집하세요. 신규 가입 시 첫 14일간 기능 제약 없이 무료 체험
             </p>
           </div>
 
@@ -870,7 +870,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
                 </span>
                 <span className="text-xs sm:text-sm md:text-base font-black text-emerald-400 tracking-tight">
-                  🎁 신규 가입 시 첫 30일간 전 기능 무료 체험 지원 (자동 결제 없음)
+                  🎁 신규 가입 시 첫 14일간 전 기능 무료 체험 지원 (자동 결제 없음)
                 </span>
               </div>
             </div>
@@ -958,9 +958,9 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                   </div>
                   <div className="border-b border-slate-800/80 pb-4 text-left">
                     <div className="flex items-baseline gap-1">
-                      <span className="text-2xl font-black text-white">월 50만 원</span>
+                      <span className="text-2xl font-black text-white">별도 문의</span>
                     </div>
-                    <p className="text-[10px] text-slate-500 font-bold mt-1">등록 가능 인원: 최대 13명</p>
+                    <p className="text-[10px] text-slate-500 font-bold mt-1">등록 가능 인원: 최대 30명</p>
                   </div>
                   <ul className="space-y-3.5 text-[11px] text-slate-400 font-bold text-left">
                     <li className="space-y-0.5">
@@ -968,7 +968,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                       <p className="pl-5 text-[10px] text-slate-500 leading-normal">소속 설계사 전원에게 개별 전용 홈페이지 및 AI 엔진 전체 개방.</p>
                     </li>
                     <li className="space-y-0.5">
-                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>소속 설계사 최대 13명 등록 관리 👥</span></div>
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>소속 설계사 최대 30명 등록 관리 👥</span></div>
                       <p className="pl-5 text-[10px] text-slate-500 leading-normal">대리점 규모에 최적화된 소속 설계사 등록 및 관리자 승인 시스템.</p>
                     </li>
                     <li className="space-y-0.5">
@@ -993,19 +993,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                     </li>
                   </ul>
                 </div>
-                <button 
-                  onClick={() => { 
-                    setSignupTab('register'); 
-                    setSignupType('agency');
-                    setRegAgencyTier('basic');
-                    setTimeout(() => {
-                      document.getElementById('auth-card-container')?.scrollIntoView({ behavior: 'smooth' });
-                    }, 50);
-                  }} 
-                  className="w-full bg-slate-800 hover:bg-slate-700 text-white text-xs font-black py-3 rounded-xl mt-6 transition-all cursor-pointer"
-                >
-                  Basic 신청하기
-                </button>
+
               </div>
 
               {/* Card 3: 대리점 Pro (Most Popular) */}
@@ -1020,9 +1008,9 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                   </div>
                   <div className="border-b border-slate-800/80 pb-4 text-left">
                     <div className="flex items-baseline gap-1">
-                      <span className="text-2xl font-black text-orange-400">월 100만 원</span>
+                      <span className="text-2xl font-black text-orange-400">월 250만 원</span>
                     </div>
-                    <p className="text-[10px] text-slate-500 font-bold mt-1">등록 가능 인원: 최대 28명</p>
+                    <p className="text-[10px] text-slate-500 font-bold mt-1">등록 가능 인원: 최대 50명</p>
                   </div>
                   <ul className="space-y-3.5 text-[11px] text-slate-300 font-bold text-left">
                     <li className="space-y-0.5">
@@ -1030,7 +1018,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                       <p className="pl-5 text-[10px] text-slate-500 leading-normal">개인 기능 8가지 및 지점 통합 관리 기능을 기본으로 탑재.</p>
                     </li>
                     <li className="space-y-0.5">
-                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>소속 설계사 최대 28명 등록 관리 👥</span></div>
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>소속 설계사 최대 50명 등록 관리 👥</span></div>
                       <p className="pl-5 text-[10px] text-slate-500 leading-normal">중대형 지사를 여유 있게 지원하는 넉넉한 설계사 등록 한도 제공.</p>
                     </li>
                     <li className="space-y-0.5">
@@ -1081,7 +1069,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                     <div className="flex items-baseline gap-1">
                       <span className="text-2xl font-black text-white">월 500만 원</span>
                     </div>
-                    <p className="text-[10px] text-slate-500 font-bold mt-1">등록 가능 인원: 최대 150명</p>
+                    <p className="text-[10px] text-slate-500 font-bold mt-1">등록 가능 인원: 최대 110명</p>
                   </div>
                   <ul className="space-y-3.5 text-[11px] text-slate-400 font-bold text-left">
                     <li className="space-y-0.5">
@@ -1089,7 +1077,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                       <p className="pl-5 text-[10px] text-slate-500 leading-normal">자동 분배, 가중치 배정 및 리드 회수 등 최상위 라우팅 엔진 탑재.</p>
                     </li>
                     <li className="space-y-0.5">
-                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>소속 설계사 최대 150명 등록 관리 👥</span></div>
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>소속 설계사 최대 110명 등록 관리 👥</span></div>
                       <p className="pl-5 text-[10px] text-slate-500 leading-normal">대형 GA 지사 및 전체 본부 수용을 위한 메머드급 인원 관리 용량 제공.</p>
                     </li>
                     <li className="space-y-0.5">
@@ -1206,7 +1194,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                 onClick={() => setSignupTab('register')}
                 className={`flex-1 py-5 text-center font-bold text-sm transition-all border-b-2 cursor-pointer ${signupTab === 'register' ? 'border-orange-500 text-white bg-slate-950/20' : 'border-transparent text-slate-400 hover:text-slate-200'}`}
               >
-                파트너 가입 / 30일 무료 신청
+                파트너 가입 / 14일 무료 신청
               </button>
             </div>
 
@@ -1321,7 +1309,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                             </p>
                           </div>
                           <div className="border-t border-slate-800 pt-3 mt-4 flex items-end justify-between">
-                            <span className="text-[10px] bg-orange-500/10 text-orange-400 px-2 py-0.5 rounded-md font-bold">첫 달 무료 혜택</span>
+                            <span className="text-[10px] bg-orange-500/10 text-orange-400 px-2 py-0.5 rounded-md font-bold">14일 무료 혜택</span>
                             <span className="text-sm font-black text-white">월 50,000 원</span>
                           </div>
                         </div>
@@ -1369,17 +1357,17 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                             
                             <p className="text-[11px] text-slate-400 font-bold leading-normal break-keep">
                               {regAgencyTier === 'basic' 
-                                ? '소규모 대리점용. 설계사 최대 13명 등록 가능.' 
+                                ? '소규모 대리점용. 설계사 최대 30명 등록 가능.' 
                                 : regAgencyTier === 'pro' 
-                                ? '중소형 대리점용 (추천). 설계사 최대 28명. 실시간 자동 분배 지원.' 
-                                : '대형 GA 아웃소싱용. 설계사 최대 150명. 전담 기술 지원.'}
+                                ? '중소형 대리점용 (추천). 설계사 최대 50명. 실시간 자동 분배 지원.' 
+                                : '대형 GA 아웃소싱용. 설계사 최대 110명. 전담 기술 지원.'}
                             </p>
                           </div>
                           
                           <div className="border-t border-slate-800 pt-3 mt-4 flex items-end justify-between">
-                            <span className="text-[10px] bg-orange-500/10 text-orange-400 px-2 py-0.5 rounded-md font-bold">첫 달 무료 혜택</span>
+                            <span className="text-[10px] bg-orange-500/10 text-orange-400 px-2 py-0.5 rounded-md font-bold">14일 무료 혜택</span>
                             <span className="text-sm font-black text-white">
-                              {regAgencyTier === 'basic' ? '월 500,000 원' : regAgencyTier === 'pro' ? '월 1,000,000 원' : '월 5,000,000 원'}
+                              {regAgencyTier === 'basic' ? '별도 문의' : regAgencyTier === 'pro' ? '월 2,500,000 원' : '월 5,000,000 원'}
                             </span>
                           </div>
                         </div>
@@ -1686,7 +1674,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                     disabled={loading || (signupTab === 'register' && codeCheckStatus === 'taken')}
                     className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black py-4 rounded-xl text-sm transition-all shadow-lg shadow-orange-500/20 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer text-center block"
                   >
-                    {loading ? '신청 처리 중...' : '첫 달 무료 체험 신청 완료 🚀'}
+                    {loading ? '신청 처리 중...' : '14일 무료 체험 신청 완료 🚀'}
                   </button>
                 </form>
               )}

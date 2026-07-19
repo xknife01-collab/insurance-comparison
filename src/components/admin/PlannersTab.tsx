@@ -46,8 +46,8 @@ export function PlannersTab({
 
       if (!agencyErr && agencyData) {
         const activeCount = count || 0;
-        if (activeCount >= (agencyData.max_planner_limit || 13)) {
-          alert(`[승인 실패] 대리점의 요금제(${agencyData.subscription_tier?.toUpperCase() || 'BASIC'}) 설계사 등록 한도(${agencyData.max_planner_limit || 13}명)를 초과하였습니다. 설계사를 추가하려면 대리점 요금제를 업그레이드해 주세요.`);
+        if (activeCount >= (agencyData.max_planner_limit || 30)) {
+          alert(`[승인 실패] 대리점의 요금제(${agencyData.subscription_tier?.toUpperCase() || 'BASIC'}) 설계사 등록 한도(${agencyData.max_planner_limit || 30}명)를 초과하였습니다. 설계사를 추가하려면 대리점 요금제를 업그레이드해 주세요.`);
           return;
         }
       }

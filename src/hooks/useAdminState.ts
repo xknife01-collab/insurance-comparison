@@ -1362,7 +1362,7 @@ export function useAdminState(initialTab?: 'login' | 'register') {
             subscription_status: 'active',
             subscription_tier: 'pro',
             subscription_expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
-            max_planner_limit: 28,
+            max_planner_limit: 50,
             current_credits: 153000,
             lead_routing_type: 'distribute_auto_round_robin',
             logo_url: '/logo.png',
@@ -2675,8 +2675,8 @@ export function useAdminState(initialTab?: 'login' | 'register') {
 
       if (!agencyErr && agencyData) {
         const activeCount = count || 0;
-        if (activeCount >= (agencyData.max_planner_limit || 13)) {
-          alert(`[승인 실패] 대리점의 요금제(${agencyData.subscription_tier?.toUpperCase() || 'BASIC'}) 설계사 등록 한도(${agencyData.max_planner_limit || 13}명)를 초과하였습니다. 설계사를 추가하려면 대리점 요금제를 업그레이드해 주세요.`);
+        if (activeCount >= (agencyData.max_planner_limit || 30)) {
+          alert(`[승인 실패] 대리점의 요금제(${agencyData.subscription_tier?.toUpperCase() || 'BASIC'}) 설계사 등록 한도(${agencyData.max_planner_limit || 30}명)를 초과하였습니다. 설계사를 추가하려면 대리점 요금제를 업그레이드해 주세요.`);
           return;
         }
       }

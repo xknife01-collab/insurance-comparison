@@ -110,7 +110,7 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
           <div className="text-center space-y-6 max-w-4xl mx-auto pt-6">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-black animate-bounce">
               <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-              <span>첫 달 무료 체험 혜택 제공 중</span>
+              <span>14일 무료 체험 혜택 제공 중</span>
             </div>
             <h1 className="text-3xl lg:text-5xl font-black leading-tight break-keep">
               0.1초 AI 진단 플랫폼으로<br />
@@ -126,7 +126,7 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
             <div className="flex justify-center pt-2">
               <div className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-orange-500/25 via-amber-500/15 to-violet-600/25 border border-orange-500/35 text-orange-300 font-extrabold text-sm shadow-[0_4px_20px_rgba(249,115,22,0.15)] backdrop-blur-sm animate-pulse">
                 <Zap className="w-4.5 h-4.5 text-orange-400 animate-spin duration-3000" />
-                <span>지금 신청하시면 <b>30일(1달)간 전 기능 무료 체험</b> 가능합니다.</span>
+                <span>지금 신청하시면 <b>14일간 전 기능 무료 체험</b> 가능합니다.</span>
               </div>
             </div>
           </div>
@@ -645,7 +645,7 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
               </div>
               <h3 className="text-xl md:text-2xl font-black text-white">어째서 단 1건의 계약만으로도 이득일까요?</h3>
               <p className="text-slate-400 text-xs font-semibold max-w-2xl mx-auto">
-                초기 부담 비용은 0원입니다. 한 달 무료체험 기간 동안 이뤄질 놀라운 영업 효율을 검증해 보세요.
+                초기 부담 비용은 0원입니다. 14일 무료체험 기간 동안 이뤄질 놀라운 영업 효율을 검증해 보세요.
               </p>
             </div>
             
@@ -655,7 +655,7 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
               <div className="flex-1 w-full p-4 space-y-2">
                 <span className="text-xs font-bold text-slate-500">STEP 1. 초기 도입 비용</span>
                 <div className="text-2xl font-black text-white">0원</div>
-                <span className="text-[10px] font-semibold text-orange-400 bg-orange-500/10 px-2 py-0.5 rounded">30일 전기능 무료체험</span>
+                <span className="text-[10px] font-semibold text-orange-400 bg-orange-500/10 px-2 py-0.5 rounded">14일 전기능 무료체험</span>
               </div>
               
               <div className="hidden md:block text-slate-700 text-lg flex-shrink-0">➜</div>
@@ -813,10 +813,10 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
                     Special Offer
                   </span>
                   <span className="text-[10px] font-black text-violet-400 bg-violet-600/10 px-2.5 py-0.5 rounded border border-violet-600/20 uppercase tracking-widest">
-                    30 Days Free
+                    14 Days Free
                   </span>
                 </div>
-                <h3 className="text-xl md:text-2xl font-black text-white">한 달 무료체험 구독 신청</h3>
+                <h3 className="text-xl md:text-2xl font-black text-white">14일 무료체험 구독 신청</h3>
                 <p className="text-slate-400 text-xs md:text-sm font-semibold leading-relaxed break-keep">
                   신용카드 등록이나 번거로운 약정 없이 10초 만에 무료 계정을 발급받을 수 있습니다. 나만의 모바일 진단 웹사이트를 즉시 활성화하고 고객 영업을 자동화하세요.
                 </p>
@@ -827,7 +827,7 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
                 className="mt-8 w-full max-w-sm py-4 rounded-xl bg-gradient-to-r from-orange-500 to-violet-600 text-white font-black text-xs md:text-sm hover:opacity-95 transition-all text-center flex items-center justify-center gap-1.5 shadow-lg shadow-orange-500/15 cursor-pointer"
               >
                 <Sparkles className="w-4 h-4 text-orange-200 animate-pulse" />
-                <span>30일 무료체험 신청하기</span>
+                <span>14일 무료체험 신청하기</span>
                 <ChevronRight className="w-4 h-4" />
               </button>
             </div>
