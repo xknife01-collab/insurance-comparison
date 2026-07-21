@@ -208,7 +208,7 @@ export function ProfileTab({
             <div>
               <p className="font-extrabold text-slate-300">📌 대리점(GA)별 개별 심의 원칙</p>
               <p className="pl-3 leading-relaxed text-slate-450 mt-1">
-                보험협회 광고 심의는 법인(GA)별로 개별 적용됩니다. 타 대리점(예: 더윤컴퍼니 vs 에이원자산관리)의 심의필 번호를 도용하거나, 심의 없이 블로그·카페·SNS 등에 링크를 무단 배포할 경우 <strong className="text-red-400 font-bold">금융소비자보호법(금소법) 위반으로 고액의 과태료 및 자격 정지 처분</strong>을 받을 수 있습니다.
+                보험협회 광고 심의는 법인(GA)별로 개별 적용됩니다. 타 대리점(예: 소속 대리점 vs 타 대리점)의 심의필 번호를 도용하거나, 심의 없이 블로그·카페·SNS 등에 링크를 무단 배포할 경우 <strong className="text-red-400 font-bold">금융소비자보호법(금소법) 위반으로 고액의 과태료 및 자격 정지 처분</strong>을 받을 수 있습니다.
               </p>
             </div>
             <div>
