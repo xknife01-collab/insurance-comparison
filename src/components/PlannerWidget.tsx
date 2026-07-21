@@ -13,6 +13,16 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
   const [isOpen, setIsOpen] = useState(true);
   const [isMinimized, setIsMinimized] = useState(true);
 
+  const isDefaultTitle = !branding.greetingTitle || 
+                         branding.greetingTitle.trim() === '' || 
+                         branding.greetingTitle.trim() === '-';
+  const isDefaultContent = !branding.greetingContent || 
+                           branding.greetingContent.trim() === '' || 
+                           branding.greetingContent.trim() === '-';
+
+  const displayTitle = isDefaultTitle ? '나만을 위한 맞춤형 보험 비교 서비스' : branding.greetingTitle;
+  const displayContent = isDefaultContent ? '대한민국 모든 보험사의 상품을 0.1초 만에 비교 분석하여 불필요한 고정 지출을 성공적으로 줄여 드립니다.' : branding.greetingContent;
+
   if (!isOpen) {
     return null;
   }
@@ -99,9 +109,9 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
             {/* Greeting Box */}
             <div className="bg-white/5 border border-white/5 rounded-2xl p-4 text-xs font-semibold text-slate-300 leading-relaxed max-h-24 overflow-y-auto">
               <p className="font-bold text-white text-center mb-1 text-[11px] text-orange-300">
-                "{branding.greetingTitle}"
+                "{displayTitle}"
               </p>
-              <p className="text-center">{branding.greetingContent}</p>
+              <p className="text-center">{displayContent}</p>
             </div>
 
             {/* Kakao consult buttons */}
