@@ -105,7 +105,9 @@ export function maskProductName(name: string, isUnlocked: boolean): string {
     .replace(/메리츠\s*화재/g, '')
     .replace(/흥국\s*화재/g, '')
     .replace(/롯데\s*화재/g, '')
-    .replace(/한화\s*화재/g, '');
+    .replace(/한화\s*화재/g, '')
+    .replace(/let\s*:\s*care/g, '')
+    .replace(/letcare/g, '');
 
   let sum = 0;
   for (let i = 0; i < name.length; i++) {
