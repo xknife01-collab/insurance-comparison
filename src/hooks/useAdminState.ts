@@ -2124,7 +2124,7 @@ export function useAdminState(initialTab?: 'login' | 'register') {
 
       await triggerWelcomeChat(plannerData.id, plannerData.name);
 
-      const personalLink = `${window.location.origin}/?planner=${plannerData.planner_code}`;
+      const personalLink = `${window.location.origin}/${plannerData.planner_code}`;
       setGeneratedLink(personalLink);
       setShowWelcomeModal(true);
 

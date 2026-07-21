@@ -17,7 +17,7 @@ export function ComplianceGuideTab({ plannerCode, onGoToProfile }: ComplianceGui
   const [mockRegNo, setMockRegNo] = useState('생명보험협회 심의필 제 2026-99999호');
   const [mockDuration, setMockDuration] = useState('2026.06.18 ~ 2027.06.17');
 
-  const shareUrl = `${window.location.origin}/?planner=${plannerCode}`;
+  const shareUrl = `${window.location.origin}/${plannerCode}`;
 
   const handleCopy = (text: string, type: 'template' | 'link') => {
     navigator.clipboard.writeText(text);

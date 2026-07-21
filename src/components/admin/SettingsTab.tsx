@@ -99,7 +99,7 @@ export function SettingsTab({
           <div className="space-y-3">
             <h4 className="font-extrabold text-sm text-white">개인 홍보 직접배정형 (Direct)</h4>
             <p className="text-[11px] text-slate-400 font-bold leading-relaxed break-keep">
-              소속 설계사들이 각자 링크(<code className="text-orange-300 font-black bg-orange-500/5 px-1 py-0.5 rounded border border-orange-500/15 font-mono text-[10px]">?planner=코드</code>)로 직접 유치한 고객 DB를 대리점 개입 없이 설계사 본인에게 즉시 즉각 단독 노출 및 자동 지정하는 개인형 구조입니다.
+              소속 설계사들이 각자 링크(<code className="text-orange-300 font-black bg-orange-500/5 px-1 py-0.5 rounded border border-orange-500/15 font-mono text-[10px]">/코드</code>)로 직접 유치한 고객 DB를 대리점 개입 없이 설계사 본인에게 즉시 즉각 단독 노출 및 자동 지정하는 개인형 구조입니다.
             </p>
             <div className="border-t border-slate-900/60 pt-2.5">
               <p className="text-[10px] text-slate-500 font-bold leading-relaxed break-keep">
@@ -180,7 +180,7 @@ export function SettingsTab({
             </div>
           </div>
           <p className="text-xs text-slate-350 font-bold leading-relaxed break-keep">
-            현재 대리점의 분배 방식이 <span className="text-white font-extrabold font-mono">"개인 홍보 직접배정형"</span>으로 설정되어 있습니다. 이 모드에서는 대리점 통합 광고(공용 DB) 분배 기능이 동작하지 않으며, 각 설계사의 고유 링크(<code className="text-orange-400 bg-orange-500/5 px-1 py-0.5 rounded border border-orange-500/15 font-mono">?planner=코드</code>)를 통해 접수된 건만 해당 설계사에게 즉시 배정됩니다.
+            현재 대리점의 분배 방식이 <span className="text-white font-extrabold font-mono">"개인 홍보 직접배정형"</span>으로 설정되어 있습니다. 이 모드에서는 대리점 통합 광고(공용 DB) 분배 기능이 동작하지 않으며, 각 설계사의 고유 링크(<code className="text-orange-400 bg-orange-500/5 px-1 py-0.5 rounded border border-orange-500/15 font-mono">/코드</code>)를 통해 접수된 건만 해당 설계사에게 즉시 배정됩니다.
           </p>
           
           {/* 설계사 개인 링크 목록 */}
@@ -196,11 +196,11 @@ export function SettingsTab({
                   <div key={p.id} className="bg-slate-950/80 p-4 rounded-2xl border border-slate-850 flex items-center justify-between text-xs font-bold text-slate-300">
                     <div className="space-y-1 text-left">
                       <span className="text-white font-extrabold block">{p.name} ({p.planner_code})</span>
-                      <span className="text-[10px] text-slate-500 font-mono select-all">/?planner={p.planner_code}</span>
+                      <span className="text-[10px] text-slate-500 font-mono select-all">/{p.planner_code}</span>
                     </div>
                     <button
                       onClick={() => {
-                        navigator.clipboard.writeText(`${window.location.origin}/?planner=${p.planner_code}`);
+                        navigator.clipboard.writeText(`${window.location.origin}/${p.planner_code}`);
                         alert(`[${p.name}] 설계사의 개인 홍보 링크가 복사되었습니다!`);
                       }}
                       className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-orange-400 hover:text-orange-300 font-black rounded-lg text-[10px] cursor-pointer"

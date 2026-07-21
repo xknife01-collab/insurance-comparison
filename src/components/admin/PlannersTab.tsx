@@ -222,10 +222,10 @@ export function PlannersTab({
                 )}
 
                 <div className="pt-2 border-t border-slate-900 mt-2 flex items-center justify-between text-[9px] font-bold text-slate-400">
-                  <span>개인주소: /?planner={p.planner_code}</span>
+                  <span>개인주소: /{p.planner_code}</span>
                   <button
                     onClick={() => {
-                      navigator.clipboard.writeText(`${window.location.origin}/?planner=${p.planner_code}`);
+                      navigator.clipboard.writeText(`${window.location.origin}/${p.planner_code}`);
                       alert("개인 홍보 링크가 복사되었습니다!");
                     }}
                     className="text-orange-400 hover:underline inline-flex items-center gap-0.5 cursor-pointer"

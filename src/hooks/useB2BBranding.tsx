@@ -48,6 +48,26 @@ const extractDelibNumber = (raw: string | null | undefined): string | null => {
   return delibPart || null;
 };
 
+const getB2BParams = () => {
+  if (typeof window === 'undefined') return { plannerCode: null, agencyId: null };
+  const params = new URLSearchParams(window.location.search);
+  let plannerCode = params.get('planner');
+  let agencyId = params.get('agency');
+
+  if (!plannerCode && !agencyId) {
+    const SYSTEM_PATHS = ['admin', 'partner', 'verify', 'remodeling'];
+    const pathParts = window.location.pathname.split('/').filter(Boolean);
+    if (pathParts.length === 1) {
+      const part = pathParts[0];
+      if (!SYSTEM_PATHS.includes(part.toLowerCase())) {
+        plannerCode = part;
+        agencyId = part;
+      }
+    }
+  }
+  return { plannerCode, agencyId };
+};
+
 interface BrandingContextType {
   branding: B2BBranding;
   loading: boolean;
@@ -176,9 +196,7 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const handleAppInstalled = () => {
       console.log('PWA was installed successfully');
-      const params = new URLSearchParams(window.location.search);
-      const plannerCode = params.get('planner');
-      const agencyId = params.get('agency');
+      const { plannerCode, agencyId } = getB2BParams();
       if (plannerCode) {
         localStorage.setItem('pwa_saved_planner', plannerCode);
         localStorage.removeItem('pwa_saved_agency');
@@ -228,9 +246,7 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
     const { outcome } = await deferredPrompt.userChoice;
     console.log(`PWA install prompt outcome: ${outcome}`);
     if (outcome === 'accepted') {
-      const params = new URLSearchParams(window.location.search);
-      const plannerCode = params.get('planner');
-      const agencyId = params.get('agency');
+      const { plannerCode, agencyId } = getB2BParams();
       if (plannerCode) {
         localStorage.setItem('pwa_saved_planner', plannerCode);
         localStorage.removeItem('pwa_saved_agency');
@@ -245,8 +261,7 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     async function fetchBranding() {
       const params = new URLSearchParams(window.location.search);
-      const plannerCode = params.get('planner');
-      const agencyId = params.get('agency');
+      const { plannerCode, agencyId } = getB2BParams();
 
       // PWA / Link caching & auto-redirection logic
       if (params.get('clear_planner') === 'true') {
@@ -254,12 +269,15 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
         localStorage.removeItem('pwa_saved_agency');
         sessionStorage.removeItem('pwa_saved_planner');
         sessionStorage.removeItem('pwa_saved_agency');
-        params.delete('clear_planner');
-        window.location.search = params.toString();
+        window.location.href = '/';
         return;
       }
 
-      if (!window.location.pathname.startsWith('/admin')) {
+      const SYSTEM_PATHS = ['admin', 'partner', 'verify', 'remodeling'];
+      const pathParts = window.location.pathname.split('/').filter(Boolean);
+      const isSystemPath = pathParts.length > 0 && SYSTEM_PATHS.includes(pathParts[0].toLowerCase());
+
+      if (!isSystemPath) {
         if (!plannerCode && !agencyId) {
           const isStandaloneApp = typeof window !== 'undefined' && (
             window.matchMedia('(display-mode: standalone)').matches ||
@@ -275,12 +293,10 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
             : sessionStorage.getItem('pwa_saved_agency');
 
           if (savedPlanner) {
-            params.set('planner', savedPlanner);
-            window.location.search = params.toString();
+            window.location.pathname = '/' + savedPlanner;
             return;
           } else if (savedAgency) {
-            params.set('agency', savedAgency);
-            window.location.search = params.toString();
+            window.location.pathname = '/' + savedAgency;
             return;
           }
         } else {
@@ -379,8 +395,12 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
             
             if (isStandaloneApp) {
               localStorage.setItem(CACHE_KEY, JSON.stringify(plannerBranding));
+              localStorage.setItem('pwa_saved_planner', planner.planner_code);
+              localStorage.removeItem('pwa_saved_agency');
             } else {
               sessionStorage.setItem(CACHE_KEY, JSON.stringify(plannerBranding));
+              sessionStorage.setItem('pwa_saved_planner', planner.planner_code);
+              sessionStorage.removeItem('pwa_saved_agency');
             }
 
             // Log visit in visitor_logs table in Supabase
@@ -439,8 +459,12 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
             
             if (isStandaloneApp) {
               localStorage.setItem(CACHE_KEY, JSON.stringify(agencyBranding));
+              localStorage.setItem('pwa_saved_agency', agency.code || agency.id);
+              localStorage.removeItem('pwa_saved_planner');
             } else {
               sessionStorage.setItem(CACHE_KEY, JSON.stringify(agencyBranding));
+              sessionStorage.setItem('pwa_saved_agency', agency.code || agency.id);
+              sessionStorage.removeItem('pwa_saved_planner');
             }
             setLoading(false);
             return;

@@ -152,7 +152,7 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Card 1: B2C Client Diagnosis Demo */}
               <a 
-                href="/?planner=test" 
+                href="/test" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="group relative overflow-hidden bg-gradient-to-br from-slate-900/40 via-slate-950/60 to-orange-500/5 border border-slate-800/80 hover:border-orange-500/40 rounded-3xl p-6 text-left transition-all duration-300 hover:shadow-[0_12px_30px_rgba(249,115,22,0.08)] flex flex-col justify-between min-h-[240px]"

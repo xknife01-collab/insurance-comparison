@@ -89,8 +89,8 @@ export function ProfileTab({
   const myHomepageUrl = currentUser.role === 'super'
     ? `${window.location.origin}/`
     : currentUser.role === 'planner'
-      ? `${window.location.origin}/?planner=${currentUser.plannerCode || ''}`
-      : `${window.location.origin}/?agency=${currentUser.agencyCode || currentUser.agencyId || ''}`;
+      ? `${window.location.origin}/${currentUser.plannerCode || ''}`
+      : `${window.location.origin}/${currentUser.agencyCode || currentUser.agencyId || ''}`;
 
   return (
     <form key="profile" onSubmit={handleSaveProfile} className="active-tab-fade-slide space-y-8 text-left">

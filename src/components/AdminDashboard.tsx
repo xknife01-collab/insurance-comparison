@@ -903,7 +903,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                   <ul className="space-y-3.5 text-[11px] text-slate-400 font-bold text-left">
                     <li className="space-y-0.5">
                       <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>개인 홈페이지 제공 (Personal URL) 🔗</span></div>
-                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">설계사 이름, 프로필 사진, 연락처, 개인 인사말이 적용된 단독 주소(.../?planner=코드) 제공.</p>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">설계사 이름, 프로필 사진, 연락처, 개인 인사말이 적용된 단독 주소(.../코드) 제공.</p>
                     </li>
                     <li className="space-y-0.5">
                       <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>0.1초 AI 실시간 보장 진단 무제한 ⚡</span></div>
@@ -1637,7 +1637,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                                 개인 홍보 직접배정형 (Direct)
                               </h4>
                               <p className="text-[11px] text-slate-400 font-bold leading-relaxed break-keep">
-                                소속 설계사들이 각자의 홍보 주소(`?planner=코드`)로 다이렉트 마케팅 광고를 진행합니다. 고객 상담 신청(DB)이 접수되면, 본사가 개입하지 않고 **해당 설계사에게 0.1초 만에 즉시 단독 배정**되어 설계 업무를 보게 됩니다.
+                                소속 설계사들이 각자의 홍보 주소(`/코드`)로 다이렉트 마케팅 광고를 진행합니다. 고객 상담 신청(DB)이 접수되면, 본사가 개입하지 않고 **해당 설계사에게 0.1초 만에 즉시 단독 배정**되어 설계 업무를 보게 됩니다.
                               </p>
                             </div>
                             <div className="text-[10px] text-slate-500 border-t border-slate-800 pt-2 font-bold uppercase">
@@ -1656,7 +1656,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                                 대리점 집중 분배형 (Distribute)
                               </h4>
                               <p className="text-[11px] text-slate-400 font-bold leading-relaxed break-keep">
-                                대리점 통합 대표 링크(`?agency=대리점ID`) 혹은 공용 광고로 고객 DB를 집중 모집합니다. 수집된 모든 리드는 **대리점 공용 대기 풀(Pool)**로 들어가며, 대리점주(관리자)가 어드민에서 특정 설계사에게 **수동 지정**하여 권한을 배분합니다.
+                                대리점 통합 대표 링크(`/대리점ID`) 혹은 공용 광고로 고객 DB를 집중 모집합니다. 수집된 모든 리드는 **대리점 공용 대기 풀(Pool)**로 들어가며, 대리점주(관리자)가 어드민에서 특정 설계사에게 **수동 지정**하여 권한을 배분합니다.
                               </p>
                             </div>
                             <div className="text-[10px] text-slate-500 border-t border-slate-800 pt-2 font-bold uppercase">
