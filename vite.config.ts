@@ -273,7 +273,8 @@ export default defineConfig(({mode}) => {
                     regAgencyAddress,
                     regLogoUrl,
                     regRoutingType,
-                    regAgencyTier
+                    regAgencyTier,
+                    regAgencyCode
                   } = parsedBody;
 
                   res.setHeader('Content-Type', 'application/json');
@@ -344,7 +345,8 @@ export default defineConfig(({mode}) => {
                       subscription_status: 'active',
                       lead_routing_type: regRoutingType || 'direct',
                       subscription_tier: regAgencyTier || 'basic',
-                      max_planner_limit: regAgencyTier === 'basic' ? 30 : regAgencyTier === 'pro' ? 50 : 110
+                      max_planner_limit: regAgencyTier === 'basic' ? 30 : regAgencyTier === 'pro' ? 50 : 110,
+                      code: regAgencyCode ? regAgencyCode.trim().toLowerCase() : null
                     };
 
                     const { data: agencyData, error: agencyError } = await supabase
