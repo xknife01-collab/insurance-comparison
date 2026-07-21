@@ -28,6 +28,11 @@ interface ProfileTabProps {
   setEditGreetingContent: (val: string) => void;
   editCompanyName: string;
   setEditCompanyName: (val: string) => void;
+  editAgencyCode?: string;
+  setEditAgencyCode?: (val: string) => void;
+  agencyCodeCheckStatus?: 'idle' | 'checking' | 'available' | 'taken';
+  setAgencyCodeCheckStatus?: (status: 'idle' | 'checking' | 'available' | 'taken') => void;
+  checkAgencyCodeAvailability?: () => Promise<void>;
   editCustomAddress: string;
   setEditCustomAddress: (val: string) => void;
   editCertificationMessage: string;
@@ -70,6 +75,11 @@ export function ProfileTab({
   setEditGreetingContent,
   editCompanyName,
   setEditCompanyName,
+  editAgencyCode,
+  setEditAgencyCode,
+  agencyCodeCheckStatus,
+  setAgencyCodeCheckStatus,
+  checkAgencyCodeAvailability,
   editCustomAddress,
   setEditCustomAddress,
   editCertificationMessage,
@@ -471,6 +481,42 @@ export function ProfileTab({
               required
             />
           </div>
+
+          {currentUser.role === 'agency' && editAgencyCode !== undefined && setEditAgencyCode !== undefined && (
+            <div className="space-y-2 md:col-span-2 animate-in fade-in duration-200">
+              <label className="text-xs font-black text-slate-400 uppercase tracking-wider block">
+                대리점 고유 코드 (단축 주소용, 필수)
+              </label>
+              <div className="flex gap-2">
+                <input 
+                  type="text"
+                  value={editAgencyCode}
+                  onChange={(e) => {
+                    setEditAgencyCode(e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, ''));
+                    if (setAgencyCodeCheckStatus) setAgencyCodeCheckStatus('idle');
+                  }}
+                  placeholder="예: won-novel"
+                  className="flex-1 bg-slate-950 border border-slate-800 focus:border-orange-500/50 rounded-xl py-2.5 px-4 outline-none text-xs text-white font-bold"
+                  required
+                />
+                {checkAgencyCodeAvailability && (
+                  <button 
+                    type="button"
+                    onClick={checkAgencyCodeAvailability}
+                    className="bg-slate-800 hover:bg-slate-700 text-white font-bold px-4 rounded-xl text-xs transition-all cursor-pointer shrink-0"
+                  >
+                    중복 검사
+                  </button>
+                )}
+              </div>
+              {agencyCodeCheckStatus === 'checking' && <p className="text-[10px] text-blue-400 font-bold">코드 검사 중...</p>}
+              {agencyCodeCheckStatus === 'available' && <p className="text-[10px] text-emerald-400 font-bold">✓ 사용 가능한 대리점 고유코드입니다.</p>}
+              {agencyCodeCheckStatus === 'taken' && <p className="text-[10px] text-red-400 font-bold">✗ 이미 사용 중인 대리점 코드입니다. 다른 코드를 사용해 주세요.</p>}
+              <p className="text-[10px] text-slate-500 font-medium">
+                💡 변경 시 대리점 및 소속 설계사의 모든 홍보 주소가 즉시 변경되므로 신중히 변경해 주세요!
+              </p>
+            </div>
+          )}
 
           {/* 지점 주소 */}
           <div className="space-y-2 md:col-span-2">

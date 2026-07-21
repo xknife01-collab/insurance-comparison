@@ -434,6 +434,9 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
     regCertificationMessage, setRegCertificationMessage,
     codeCheckStatus, setCodeCheckStatus,
     regAgencyName, setRegAgencyName,
+    regAgencyCode, setRegAgencyCode,
+    agencyCodeCheckStatus, setAgencyCodeCheckStatus,
+    checkAgencyCodeAvailability,
     regAgencyPhone, setRegAgencyPhone,
     regAgencyAddress, setRegAgencyAddress,
     regLogoUrl, setRegLogoUrl,
@@ -1458,6 +1461,34 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                       </div>
                       <div className="space-y-2 animate-in fade-in duration-200">
                         <label className="text-xs font-bold text-slate-400 block">
+                          대리점 고유 코드* (단축 주소용, 영문/숫자만 가능)
+                        </label>
+                        <div className="flex gap-2">
+                          <input 
+                            type="text" 
+                            placeholder="예: won-novel" 
+                            value={regAgencyCode}
+                            onChange={(e) => {
+                              setRegAgencyCode(e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, ''));
+                              setAgencyCodeCheckStatus('idle');
+                            }}
+                            className="flex-1 bg-slate-950 border border-slate-800 focus:border-orange-500/50 rounded-xl py-2.5 px-4 outline-none text-sm text-white font-bold"
+                            required
+                          />
+                          <button 
+                            type="button"
+                            onClick={checkAgencyCodeAvailability}
+                            className="bg-slate-800 hover:bg-slate-700 text-white font-bold px-4 rounded-xl text-xs transition-all cursor-pointer shrink-0"
+                          >
+                            중복 검사
+                          </button>
+                        </div>
+                        {agencyCodeCheckStatus === 'checking' && <p className="text-[10px] text-blue-400 font-bold">코드 검사 중...</p>}
+                        {agencyCodeCheckStatus === 'available' && <p className="text-[10px] text-emerald-400 font-bold">✓ 사용 가능한 대리점 고유코드입니다.</p>}
+                        {agencyCodeCheckStatus === 'taken' && <p className="text-[10px] text-red-400 font-bold">✗ 이미 사용 중인 대리점 코드입니다. 다른 코드를 사용해 주세요.</p>}
+                      </div>
+                      <div className="space-y-2 animate-in fade-in duration-200">
+                        <label className="text-xs font-bold text-slate-400 block">
                           지점 주소*
                         </label>
                         <input 
@@ -2130,6 +2161,11 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                   setEditGreetingContent={setEditGreetingContent}
                   editCompanyName={editCompanyName}
                   setEditCompanyName={setEditCompanyName}
+                  editAgencyCode={editAgencyCode}
+                  setEditAgencyCode={setEditAgencyCode}
+                  agencyCodeCheckStatus={agencyCodeCheckStatus}
+                  setAgencyCodeCheckStatus={setAgencyCodeCheckStatus}
+                  checkAgencyCodeAvailability={checkAgencyCodeAvailability}
                   editCustomAddress={editCustomAddress}
                   setEditCustomAddress={setEditCustomAddress}
                   editCertificationMessage={editCertificationMessage}

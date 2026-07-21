@@ -44,6 +44,7 @@ export default async function handler(req, res) {
       regCertificationMessage,
       invitedAgencyId,
       regAgencyName,
+      regAgencyCode,
       regAgencyPhone,
       regAgencyAddress,
       regLogoUrl,
@@ -102,6 +103,26 @@ export default async function handler(req, res) {
       if (!regAgencyName || !regAgencyName.trim()) {
         return res.status(400).json({ success: false, error: '대리점명을 입력해 주세요.' });
       }
+      if (!regAgencyCode || !regAgencyCode.trim()) {
+        return res.status(400).json({ success: false, error: '대리점 고유 코드를 입력해 주세요.' });
+      }
+
+      const cleanAgencyCode = regAgencyCode.trim().toLowerCase();
+      
+      // Check duplicate agency code in database
+      const SYSTEM_PATHS = ['admin', 'partner', 'verify', 'remodeling', 'demo'];
+      if (SYSTEM_PATHS.includes(cleanAgencyCode)) {
+        return res.status(400).json({ success: false, error: '사용할 수 없는 대리점 코드입니다. 다른 코드를 사용해 주세요.' });
+      }
+
+      const { data: checkAgency, error: checkAgencyErr } = await supabase
+        .from('agencies')
+        .select('code')
+        .eq('code', cleanAgencyCode);
+
+      if (checkAgency && checkAgency.length > 0) {
+        return res.status(400).json({ success: false, duplicate: true, error: '이미 사용 중인 대리점 코드입니다.' });
+      }
 
       const newAgency = {
         name: regAgencyName,
@@ -111,7 +132,8 @@ export default async function handler(req, res) {
         subscription_status: 'active',
         lead_routing_type: regRoutingType || 'direct',
         subscription_tier: regAgencyTier || 'basic',
-        max_planner_limit: regAgencyTier === 'basic' ? 30 : regAgencyTier === 'pro' ? 50 : 110
+        max_planner_limit: regAgencyTier === 'basic' ? 30 : regAgencyTier === 'pro' ? 50 : 110,
+        code: cleanAgencyCode
       };
 
       const { data: agencyData, error: agencyError } = await supabase

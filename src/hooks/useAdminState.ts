@@ -314,6 +314,8 @@ export function useAdminState(initialTab?: 'login' | 'register') {
 
   // Agency Specific Inputs
   const [regAgencyName, setRegAgencyName] = useState('');
+  const [regAgencyCode, setRegAgencyCode] = useState('');
+  const [agencyCodeCheckStatus, setAgencyCodeCheckStatus] = useState<'idle' | 'checking' | 'available' | 'taken'>('idle');
   const [regAgencyPhone, setRegAgencyPhone] = useState('');
   const [regAgencyAddress, setRegAgencyAddress] = useState('');
   const [regLogoUrl, setRegLogoUrl] = useState(DEFAULT_LOGO_IMG);
@@ -405,6 +407,7 @@ export function useAdminState(initialTab?: 'login' | 'register') {
   const [editCustomAddress, setEditCustomAddress] = useState('');
   const [editPassword, setEditPassword] = useState('');
   const [editCompanyName, setEditCompanyName] = useState('');
+  const [editAgencyCode, setEditAgencyCode] = useState('');
   const [editRegistrationNumber, setEditRegistrationNumber] = useState('');
   const [editEmail, setEditEmail] = useState('');
   const [editCertificationMessage, setEditCertificationMessage] = useState('');
@@ -1334,6 +1337,38 @@ export function useAdminState(initialTab?: 'login' | 'register') {
     }
   };
 
+  const checkAgencyCodeAvailability = async () => {
+    if (!regAgencyCode.trim()) return;
+    setAgencyCodeCheckStatus('checking');
+    try {
+      const SYSTEM_PATHS = ['admin', 'partner', 'verify', 'remodeling', 'demo'];
+      if (SYSTEM_PATHS.includes(regAgencyCode.trim().toLowerCase())) {
+        setAgencyCodeCheckStatus('taken');
+        return;
+      }
+      
+      const { data, error } = await supabase
+        .from('agencies')
+        .select('code')
+        .eq('code', regAgencyCode.trim().toLowerCase());
+      
+      if (error) {
+        console.warn("Assuming available due to RLS/Network error:", error);
+        setAgencyCodeCheckStatus('available');
+        return;
+      }
+      
+      if (data && data.length > 0) {
+        setAgencyCodeCheckStatus('taken');
+      } else {
+        setAgencyCodeCheckStatus('available');
+      }
+    } catch (err) {
+      console.warn("Catch block error on checkAgencyCodeAvailability:", err);
+      setAgencyCodeCheckStatus('available');
+    }
+  };
+
   const handleLogin = async (e?: React.FormEvent, codeOverride?: string, passwordOverride?: string) => {
     if (e) e.preventDefault();
     setLoginError('');
@@ -2118,7 +2153,8 @@ export function useAdminState(initialTab?: 'login' | 'register') {
           regAgencyAddress,
           regLogoUrl,
           regRoutingType,
-          regAgencyTier
+          regAgencyTier,
+          regAgencyCode
         })
       });
 
@@ -2142,6 +2178,7 @@ export function useAdminState(initialTab?: 'login' | 'register') {
         role: plannerData.is_admin ? 'agency' : 'planner',
         plannerId: plannerData.id,
         agencyId: plannerData.agency_id,
+        agencyCode: plannerData.is_admin ? regAgencyCode : undefined,
         name: plannerData.name,
         plannerCode: plannerData.planner_code,
         subscriptionStatus: plannerData.subscription_status,
@@ -2286,6 +2323,13 @@ export function useAdminState(initialTab?: 'login' | 'register') {
           setEditEmail(myProfile.email || '');
           setEditCertificationMessage(myProfile.certification_message || '');
           setEditPlannerName(myProfile.name || '');
+
+          if (currentUser.agencyId) {
+            const myAgency = currentAgencies.find(a => a.id === currentUser.agencyId);
+            if (myAgency) {
+              setEditAgencyCode(myAgency.code || myAgency.id || '');
+            }
+          }
         }
       }
     } catch (err) {
@@ -2744,6 +2788,35 @@ export function useAdminState(initialTab?: 'login' | 'register') {
       alert("지점 주소는 필수 입력 항목입니다. (예: 서울시 강남구 테헤란로 123)");
       return;
     }
+
+    if (currentUser.role === 'agency' && currentUser.agencyId) {
+      if (!editAgencyCode || !editAgencyCode.trim()) {
+        alert("대리점 고유 코드는 필수 입력 항목입니다.");
+        return;
+      }
+      
+      const cleanAgencyCode = editAgencyCode.trim().toLowerCase();
+      const SYSTEM_PATHS = ['admin', 'partner', 'verify', 'remodeling', 'demo'];
+      if (SYSTEM_PATHS.includes(cleanAgencyCode)) {
+        alert("사용할 수 없는 대리점 코드입니다. 다른 코드를 사용해 주세요.");
+        return;
+      }
+      
+      const isDemo = currentUser.plannerCode === 'test' || currentUser.plannerCode === 'test_planner' || currentUser.agencyId === '88888888-8888-4888-a888-888888888888' || currentUser.isDemo;
+      if (!isDemo) {
+        const { data: duplicateAgencies } = await supabase
+          .from('agencies')
+          .select('id')
+          .eq('code', cleanAgencyCode)
+          .neq('id', currentUser.agencyId);
+          
+        if (duplicateAgencies && duplicateAgencies.length > 0) {
+          alert("이미 사용 중인 대리점 코드입니다. 다른 코드를 입력해 주세요.");
+          return;
+        }
+      }
+    }
+
     setLoading(true);
     try {
       const updatedBranding = {
@@ -2800,7 +2873,8 @@ export function useAdminState(initialTab?: 'login' | 'register') {
             name: editCompanyName,
             address: editCustomAddress,
             logo_url: editLogoUrl,
-            email: editEmail
+            email: editEmail,
+            code: editAgencyCode.trim().toLowerCase()
           } : a));
         }
         updateBranding(updatedBranding);
@@ -2830,7 +2904,8 @@ export function useAdminState(initialTab?: 'login' | 'register') {
         name: editCompanyName,
         address: editCustomAddress,
         logo_url: editLogoUrl,
-        email: editEmail
+        email: editEmail,
+        code: editAgencyCode.trim().toLowerCase()
       } : null;
 
       const res = await fetch('/api/save-profile', {
@@ -3223,6 +3298,9 @@ export function useAdminState(initialTab?: 'login' | 'register') {
     regCertificationMessage, setRegCertificationMessage,
     codeCheckStatus, setCodeCheckStatus,
     regAgencyName, setRegAgencyName,
+    regAgencyCode, setRegAgencyCode,
+    agencyCodeCheckStatus, setAgencyCodeCheckStatus,
+    checkAgencyCodeAvailability,
     regAgencyPhone, setRegAgencyPhone,
     regAgencyAddress, setRegAgencyAddress,
     regLogoUrl, setRegLogoUrl,
@@ -3265,6 +3343,7 @@ export function useAdminState(initialTab?: 'login' | 'register') {
     editCustomAddress, setEditCustomAddress,
     editPassword, setEditPassword,
     editCompanyName, setEditCompanyName,
+    editAgencyCode, setEditAgencyCode,
     editRegistrationNumber, setEditRegistrationNumber,
     editEmail, setEditEmail,
     editCertificationMessage, setEditCertificationMessage,
