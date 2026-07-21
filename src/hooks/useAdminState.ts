@@ -2828,8 +2828,8 @@ export function useAdminState(initialTab?: 'login' | 'register') {
         name: editPlannerName || currentUser.name || '',
         profileImageUrl: editProfileImg || null,
         logoUrl: editLogoUrl || null,
-        greetingTitle: editGreetingTitle || '',
-        greetingContent: editGreetingContent || '',
+        greetingTitle: editGreetingTitle || null,
+        greetingContent: editGreetingContent || null,
         customPhone: editCustomPhone || '',
         customAddress: editCustomAddress || '',
         certificationMessage: editCertificationMessage || null,
@@ -2875,7 +2875,9 @@ export function useAdminState(initialTab?: 'login' | 'register') {
             address: editCustomAddress,
             logo_url: editLogoUrl,
             email: editEmail,
-            code: editAgencyCode.trim().toLowerCase()
+            code: editAgencyCode.trim().toLowerCase(),
+            greeting_title: editGreetingTitle,
+            greeting_content: editGreetingContent
           } : a));
         }
         updateBranding(updatedBranding);
@@ -2907,7 +2909,9 @@ export function useAdminState(initialTab?: 'login' | 'register') {
         address: editCustomAddress,
         logo_url: editLogoUrl,
         email: editEmail,
-        code: editAgencyCode.trim().toLowerCase()
+        code: editAgencyCode.trim().toLowerCase(),
+        greeting_title: editGreetingTitle,
+        greeting_content: editGreetingContent
       } : null;
 
       const res = await fetch('/api/save-profile', {
@@ -2927,7 +2931,7 @@ export function useAdminState(initialTab?: 'login' | 'register') {
       }
 
       updateBranding(updatedBranding);
-      if (resData.warning === 'certification_message_missing') {
+      if (resData.warning === 'missing_columns' || resData.warning === 'certification_message_missing') {
         alert(resData.message);
         setToastMessage("⚠️ 일부 항목 제외 저장됨");
       } else {

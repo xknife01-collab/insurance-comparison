@@ -37,7 +37,8 @@ export default async function handler(req, res) {
     }
 
     // 1. Update Planner Data
-    let hasCertWarning = false;
+    let plannerWarning = false;
+    let agencyWarning = false;
     if (plannerData && Object.keys(plannerData).length > 0) {
       let { error: plannerErr } = await supabase
         .from('planners')
@@ -53,13 +54,13 @@ export default async function handler(req, res) {
           .eq('id', plannerId);
         
         if (!retryErr) {
-          hasCertWarning = true;
+          plannerWarning = true;
         } else {
           plannerErr = retryErr;
         }
       }
 
-      if (plannerErr && !hasCertWarning) {
+      if (plannerErr && !plannerWarning) {
         console.error('Error updating planner:', plannerErr);
         return res.status(500).json({ success: false, error: `Planner update failed: ${plannerErr.message}` });
       }
@@ -67,10 +68,25 @@ export default async function handler(req, res) {
 
     // 2. Update Agency Data if agencyId and agencyData provided
     if (agencyId && agencyData && Object.keys(agencyData).length > 0) {
-      const { error: agencyErr } = await supabase
+      let { error: agencyErr } = await supabase
         .from('agencies')
         .update(agencyData)
         .eq('id', agencyId);
+
+      if (agencyErr && (agencyErr.message.includes('greeting_title') || agencyErr.message.includes('greeting_content'))) {
+        console.warn('greeting_title or greeting_content column missing in agencies table, retrying without them...');
+        const { greeting_title, greeting_content, ...fallbackAgencyData } = agencyData;
+        const { error: retryErr } = await supabase
+          .from('agencies')
+          .update(fallbackAgencyData)
+          .eq('id', agencyId);
+        
+        if (!retryErr) {
+          agencyWarning = true;
+        } else {
+          agencyErr = retryErr;
+        }
+      }
 
       if (agencyErr) {
         console.error('Error updating agency:', agencyErr);
@@ -78,11 +94,18 @@ export default async function handler(req, res) {
       }
     }
 
-    if (hasCertWarning) {
+    if (plannerWarning || agencyWarning) {
+      let warningMsg = '일부 커스텀 필드를 제외하고 프로필 정보가 정상 저장되었습니다.';
+      if (plannerWarning) {
+        warningMsg += '\n- [설계사] 인증 문구 기능 활성화를 위해 Supabase SQL Editor에서 다음 명령을 실행해 주세요: ALTER TABLE planners ADD COLUMN certification_message text;';
+      }
+      if (agencyWarning) {
+        warningMsg += '\n- [대리점] 인사말 기능 활성화를 위해 Supabase SQL Editor에서 다음 명령을 실행해 주세요: ALTER TABLE agencies ADD COLUMN greeting_title text, ADD COLUMN greeting_content text;';
+      }
       return res.status(200).json({
         success: true,
-        warning: 'certification_message_missing',
-        message: '인증 문구를 제외한 프로필 정보가 정상 저장되었습니다. 인증 문구 기능도 활성화하려면 Supabase SQL Editor에서 ALTER TABLE planners ADD COLUMN certification_message text; 명령어를 실행해 주세요.'
+        warning: 'missing_columns',
+        message: warningMsg
       });
     }
 

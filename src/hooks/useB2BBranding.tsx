@@ -354,11 +354,17 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
 
         if (plannerCode) {
           // Fetch planner profile and subscription status
-          const { data: planner, error: pError } = await supabase
+          let plannerQuery = supabase
             .from('planners')
-            .select('*')
-            .eq('planner_code', plannerCode)
-            .maybeSingle();
+            .select('*');
+            
+          if (plannerCode.length === 36) {
+            plannerQuery = plannerQuery.eq('id', plannerCode);
+          } else {
+            plannerQuery = plannerQuery.eq('planner_code', plannerCode);
+          }
+          
+          const { data: planner, error: pError } = await plannerQuery.maybeSingle();
 
           let agency = null;
           if (!pError && planner && planner.agency_id) {
@@ -387,8 +393,8 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
               name: planner.name,
               profileImageUrl: planner.profile_image_url || null,
               logoUrl: planner.logo_url || planner.agencies?.logo_url || null,
-              greetingTitle: planner.greeting_title || `${planner.name} 플래너의 맞춤 안심 보장`,
-              greetingContent: planner.greeting_content || `${planner.name} 설계사가 양심을 걸고 정직하게 분석해 드립니다.`,
+              greetingTitle: planner.greeting_title || null,
+              greetingContent: planner.greeting_content || null,
               customPhone: planner.custom_phone || planner.phone || planner.agencies?.phone || planner.agencies?.custom_phone || DEFAULT_BRANDING.customPhone,
               customAddress: planner.custom_address || planner.agencies?.address || DEFAULT_BRANDING.customAddress,
               certificationMessage: planner.certification_message || null,
@@ -460,8 +466,8 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
               name: agency.name,
               profileImageUrl: null,
               logoUrl: agency.logo_url || null,
-              greetingTitle: agency.greeting_title || `${agency.name}의 실시간 최저가 비교`,
-              greetingContent: agency.greeting_content || `${agency.name}가 제공하는 0.1초 맞춤 보장 비교 분석 솔루션입니다.`,
+              greetingTitle: agency.greeting_title || null,
+              greetingContent: agency.greeting_content || null,
               customPhone: agency.phone || agency.custom_phone || DEFAULT_BRANDING.customPhone,
               customAddress: agency.address || DEFAULT_BRANDING.customAddress,
               kakaoLink: null,
@@ -521,8 +527,8 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
               name: adminPlanner.name || '보험리밸런스',
               profileImageUrl: adminPlanner.profile_image_url || null,
               logoUrl: adminPlanner.logo_url || adminPlanner.agencies?.logo_url || "/6397187.png",
-              greetingTitle: adminPlanner.greeting_title || DEFAULT_BRANDING.greetingTitle,
-              greetingContent: adminPlanner.greeting_content || DEFAULT_BRANDING.greetingContent,
+              greetingTitle: adminPlanner.greeting_title || null,
+              greetingContent: adminPlanner.greeting_content || null,
               customPhone: adminPlanner.custom_phone || adminPlanner.phone || adminPlanner.agencies?.phone || adminPlanner.agencies?.custom_phone || DEFAULT_BRANDING.customPhone,
               customAddress: adminPlanner.custom_address || adminPlanner.agencies?.address || DEFAULT_BRANDING.customAddress,
               certificationMessage: adminPlanner.certification_message || null,

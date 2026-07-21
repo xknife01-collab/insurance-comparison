@@ -1271,7 +1271,7 @@ export const PhilosophySection = () => {
   // 4. Certification (소속) Dynamic Binding
   const displayCert = branding.certificationMessage
     ? branding.certificationMessage
-    : (branding.agencyName ? `${branding.agencyName} 공식 인증 설계사` : '인카금융서비스 공식 인증 설계사');
+    : (branding.agencyName ? `${branding.agencyName} 공식 인증 설계사` : '보험리밸런스 공식 인증 설계사');
 
   // 5. Profile Image Dynamic Binding
   const profileImg = branding.profileImageUrl
@@ -1365,7 +1365,7 @@ export const Footer = () => {
             ) : (
               <img 
                 src={(!branding?.logoUrl || branding.logoUrl.includes('6397187')) ? "/logo.png" : branding.logoUrl} 
-                alt={branding?.name || "인카금융서비스"} 
+                alt={branding?.name || "보험리밸런스"} 
                 className="h-18 opacity-90 hover:opacity-100 transition-opacity object-contain" 
                 style={(!branding?.logoUrl || branding.logoUrl.includes('6397187')) ? { filter: 'sepia(100%) saturate(500%) brightness(100%) hue-rotate(5deg)' } : undefined}
               />
@@ -1402,8 +1402,8 @@ export const Footer = () => {
           <p className="text-slate-300">[ 필수안내사항 ]</p>
           <p>
             {branding?.type === 'planner'
-              ? `보험대리점 : ${branding.agencyName || '인카금융서비스'} | 지점 주소 : ${branding.customAddress || '등록된 주소가 없습니다.'} | 본 광고는 광고심의기준을 준수하였으며, 유효기간은 심의일로부터 1년입니다.`
-              : (branding?.customAddress || "보험대리점 : 인카금융서비스 (등록번호 : 제2006038313호) 본 광고는 광고심의기준을 준수하였으며, 유효기간은 심의일로부터 1년입니다.")
+              ? `보험대리점 : ${branding.agencyName || '보험리밸런스'} | 지점 주소 : ${branding.customAddress || '등록된 주소가 없습니다.'} | 본 광고는 광고심의기준을 준수하였으며, 유효기간은 심의일로부터 1년입니다.`
+              : (branding?.customAddress || "보험대리점 : 보험리밸런스 | 본 광고는 광고심의기준을 준수하였으며, 유효기간은 심의일로부터 1년입니다.")
             }
           </p>
           {branding?.registrationNumber && (
@@ -1416,9 +1416,7 @@ export const Footer = () => {
           </p>
           <p>보험계약자가 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서 질병이력, 연령증가 등으로 가입이 거절되거나 보험료가 인상될 수 있습니다. 또한 해약환급금 손실이 발생할 수 있으니 유의하시기 바랍니다.</p>
           <p className="text-slate-500">
-            {branding?.type === 'organic' 
-              ? '© 보험리밸런스 (Insure-rebalance). All Rights Reserved.' 
-              : '© 인카금융서비스 소속 설계사 맞춤 분석. All Rights Reserved.'}
+            © {branding?.agencyName || '보험리밸런스'} 소속 설계사 맞춤 분석. All Rights Reserved.
           </p>
         </div>
       </div>
