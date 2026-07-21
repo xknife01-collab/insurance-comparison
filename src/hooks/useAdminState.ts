@@ -2871,6 +2871,7 @@ export function useAdminState(initialTab?: 'login' | 'register') {
           setAgencies(prev => prev.map(a => a.id === currentUser.agencyId ? {
             ...a,
             name: editCompanyName,
+            phone: editCustomPhone,
             address: editCustomAddress,
             logo_url: editLogoUrl,
             email: editEmail,
@@ -2902,6 +2903,7 @@ export function useAdminState(initialTab?: 'login' | 'register') {
 
       const agencyData = (currentUser.role === 'agency' && currentUser.agencyId) ? {
         name: editCompanyName,
+        phone: editCustomPhone,
         address: editCustomAddress,
         logo_url: editLogoUrl,
         email: editEmail,
