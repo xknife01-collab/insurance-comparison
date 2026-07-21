@@ -483,6 +483,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
     editEmail, setEditEmail,
     editCertificationMessage, setEditCertificationMessage,
     editPlannerName, setEditPlannerName,
+    editAgencyCode, setEditAgencyCode,
     selectedLead, setSelectedLead,
     leadSearchTerm, setLeadSearchTerm,
     newMemoText, setNewMemoText,
