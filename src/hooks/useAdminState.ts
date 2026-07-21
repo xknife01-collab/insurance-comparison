@@ -1266,10 +1266,20 @@ export function useAdminState(initialTab?: 'login' | 'register') {
         }
 
         if (testPlanner) {
+          let testAgency = null;
+          if (testPlanner.agency_id) {
+            try {
+              const { data: tag } = await supabase.from('agencies').select('*').eq('id', testPlanner.agency_id).maybeSingle();
+              testAgency = tag;
+            } catch (e) {
+              console.warn("Failed to fetch agency for testPlanner:", e);
+            }
+          }
           setCurrentUser({
             role: 'planner',
             plannerId: testPlanner.id,
             agencyId: testPlanner.agency_id,
+            agencyCode: testAgency?.code || testAgency?.id || undefined,
             name: testPlanner.name,
             plannerCode: testPlanner.planner_code,
             subscriptionStatus: testPlanner.subscription_status,
@@ -2039,7 +2049,7 @@ export function useAdminState(initialTab?: 'login' | 'register') {
         role: userRole,
         plannerId: planner.id,
         agencyId: planner.agency_id,
-        agencyCode: (planner as any).agencies?.id || undefined,
+        agencyCode: (planner as any).agencies?.code || (planner as any).agencies?.id || undefined,
         name: planner.name,
         plannerCode: planner.planner_code,
         subscriptionStatus: planner.subscription_status,

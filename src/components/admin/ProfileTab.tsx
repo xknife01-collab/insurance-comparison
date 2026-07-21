@@ -86,11 +86,20 @@ export function ProfileTab({
   renderHelpGuideToggle
 }: ProfileTabProps) {
 
+  const formatAgencyCode = (codeOrId: string) => {
+    if (!codeOrId) return '';
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(codeOrId);
+    if (isUuid) {
+      return codeOrId.substring(0, 8);
+    }
+    return codeOrId;
+  };
+
   const myHomepageUrl = currentUser.role === 'super'
     ? `${window.location.origin}/`
     : currentUser.role === 'planner'
       ? `${window.location.origin}/${currentUser.plannerCode || ''}`
-      : `${window.location.origin}/${currentUser.agencyCode || currentUser.agencyId || ''}`;
+      : `${window.location.origin}/${formatAgencyCode(currentUser.agencyCode || currentUser.agencyId || '')}`;
 
   return (
     <form key="profile" onSubmit={handleSaveProfile} className="active-tab-fade-slide space-y-8 text-left">

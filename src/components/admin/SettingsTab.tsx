@@ -196,11 +196,19 @@ export function SettingsTab({
                   <div key={p.id} className="bg-slate-950/80 p-4 rounded-2xl border border-slate-850 flex items-center justify-between text-xs font-bold text-slate-300">
                     <div className="space-y-1 text-left">
                       <span className="text-white font-extrabold block">{p.name} ({p.planner_code})</span>
-                      <span className="text-[10px] text-slate-500 font-mono select-all">/{p.planner_code}</span>
+                      <span className="text-[10px] text-slate-500 font-mono select-all">
+                        /
+                        {currentUser.agencyId 
+                          ? `${currentUser.agencyCode ? (currentUser.agencyCode.length > 8 ? currentUser.agencyCode.substring(0, 8) : currentUser.agencyCode) : (currentUser.agencyId ? currentUser.agencyId.substring(0, 8) : '')}/${p.planner_code}`
+                          : p.planner_code}
+                      </span>
                     </div>
                     <button
                       onClick={() => {
-                        navigator.clipboard.writeText(`${window.location.origin}/${p.planner_code}`);
+                        const agencyPath = currentUser.agencyId 
+                          ? `${currentUser.agencyCode ? (currentUser.agencyCode.length > 8 ? currentUser.agencyCode.substring(0, 8) : currentUser.agencyCode) : (currentUser.agencyId ? currentUser.agencyId.substring(0, 8) : '')}/`
+                          : '';
+                        navigator.clipboard.writeText(`${window.location.origin}/${agencyPath}${p.planner_code}`);
                         alert(`[${p.name}] 설계사의 개인 홍보 링크가 복사되었습니다!`);
                       }}
                       className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-orange-400 hover:text-orange-300 font-black rounded-lg text-[10px] cursor-pointer"

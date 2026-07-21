@@ -57,11 +57,19 @@ const getB2BParams = () => {
   if (!plannerCode && !agencyId) {
     const SYSTEM_PATHS = ['admin', 'partner', 'verify', 'remodeling'];
     const pathParts = window.location.pathname.split('/').filter(Boolean);
-    if (pathParts.length === 1) {
-      const part = pathParts[0];
-      if (!SYSTEM_PATHS.includes(part.toLowerCase())) {
-        plannerCode = part;
-        agencyId = part;
+    
+    if (pathParts.length > 0) {
+      const firstPart = pathParts[0];
+      if (!SYSTEM_PATHS.includes(firstPart.toLowerCase())) {
+        if (pathParts.length === 2) {
+          // Format: /agencyCode/plannerCode (e.g. /won-novel/gildong)
+          agencyId = firstPart;
+          plannerCode = pathParts[1];
+        } else if (pathParts.length === 1) {
+          // Format: /code (could be agencyCode or plannerCode)
+          plannerCode = firstPart;
+          agencyId = firstPart;
+        }
       }
     }
   }
@@ -425,15 +433,22 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
         }
 
         if (agencyId) {
-          // Fetch agency profile and subscription status (Supports both UUID and short code)
+          // Fetch agency profile and subscription status (Supports full UUID, 8-character short UUID, and custom short code)
           const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(agencyId);
+          const isShortUuid = agencyId.length === 8 && /^[0-9a-f]{8}$/i.test(agencyId);
           let query = supabase.from('agencies').select('*');
+          
           if (isUuid) {
             query = query.eq('id', agencyId);
+          } else if (isShortUuid) {
+            // Range check to support 8-character prefix match on UUIDs without casting
+            query = query.gte('id', `${agencyId.toLowerCase()}-0000-0000-0000-000000000000`)
+                          .lte('id', `${agencyId.toLowerCase()}-ffff-ffff-ffff-ffffffffffff`);
           } else {
             query = query.eq('code', agencyId);
           }
-          const { data: agency, error: aError } = await query.single();
+          const { data: agencyData, error: aError } = await query;
+          const agency = agencyData?.[0] || null;
 
           if (!aError && agency && agency.subscription_status === 'active') {
             const isDemo = agency.id === '88888888-8888-4888-a888-888888888888';
