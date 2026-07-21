@@ -434,7 +434,7 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
 
         if (agencyId) {
           // Fetch agency profile and subscription status (Supports full UUID, 8-character short UUID, and custom short code)
-          const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(agencyId);
+          const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(agencyId);
           const isShortUuid = agencyId.length === 8 && /^[0-9a-f]{8}$/i.test(agencyId);
           let query = supabase.from('agencies').select('*');
           

@@ -98,7 +98,7 @@ export function ProfileTab({
 
   const formatAgencyCode = (codeOrId: string) => {
     if (!codeOrId) return '';
-    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(codeOrId);
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(codeOrId);
     if (isUuid) {
       return codeOrId.substring(0, 8);
     }
@@ -167,6 +167,20 @@ export function ProfileTab({
               </a>
             </div>
           </div>
+
+          {currentUser.role === 'agency' && (
+            <div className="text-xs text-slate-400 bg-slate-950/60 rounded-xl p-4 border border-slate-800/80 space-y-2 mt-2 leading-relaxed">
+              <p className="font-extrabold text-amber-400 flex items-center gap-1">
+                <span>📢</span> 대리점 주소 안내 및 동적 변경 안내
+              </p>
+              <p className="font-semibold text-slate-300 break-keep">
+                현재 대리점의 고유 코드를 설정하여 단축 주소(<code className="text-orange-400 font-black font-mono">/{formatAgencyCode(currentUser.agencyCode || currentUser.agencyId || '')}</code>)를 사용하실 수 있습니다.
+              </p>
+              <p className="font-semibold text-slate-400 break-keep">
+                💡 <span className="text-slate-300">하단 프로필 설정에서 <strong>'대리점 고유 코드'</strong>를 원하시는 단축 코드(예: <code className="text-orange-400 font-black font-mono">won-novel</code>)로 수정하고 저장하시면, 위의 홈페이지 홍보 주소 및 소속 설계사의 모든 링크가 새로운 단축 주소로 실시간 자동 변경됩니다!</span>
+              </p>
+            </div>
+          )}
         </div>
 
         {showHelpGuide && (
