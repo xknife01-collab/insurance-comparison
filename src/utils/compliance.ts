@@ -145,8 +145,14 @@ export function maskProductName(name: string, isUnlocked: boolean): string {
   if ((cleanLower.includes('화재') || cleanLower.includes('주택') || cleanLower.includes('fire')) && !cleanLower.includes('상해')) {
     return '가정 주택화재보험' + suffix;
   }
-  if (cleanLower.includes('치매') || cleanLower.includes('간병') || cleanLower.includes('재가') || cleanLower.includes('시설') || cleanLower.includes('dementia') || cleanLower.includes('care')) {
-    return '실버 치매간병보험' + suffix;
+  if (cleanLower.includes('치매') || cleanLower.includes('dementia')) {
+    return '실버 치매보장보험' + suffix;
+  }
+  if (cleanLower.includes('재가') || cleanLower.includes('시설')) {
+    return '실속 재가시설지원보험' + suffix;
+  }
+  if (cleanLower.includes('간병') || cleanLower.includes('care')) {
+    return '안심 간병비지원보험' + suffix;
   }
   if (cleanLower.includes('저축') || cleanLower.includes('연금') || cleanLower.includes('pension') || cleanLower.includes('savings')) {
     return '안심 저축연금보험' + suffix;
