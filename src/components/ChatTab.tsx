@@ -349,6 +349,31 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide,
   const supabase = createClient();
   const currentUserId = currentUser.plannerId || currentUser.agencyId || ADMIN_ID;
 
+  const [plannerRegNumber, setPlannerRegNumber] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!currentUserId) return;
+    const fetchReg = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('planners')
+          .select('registration_number')
+          .eq('id', currentUserId)
+          .maybeSingle();
+        if (!error && data) {
+          setPlannerRegNumber(data.registration_number || '');
+        }
+      } catch (err) {
+        console.warn('Failed to fetch planner reg number:', err);
+      }
+    };
+    fetchReg();
+  }, [currentUserId]);
+
+  const cleanReg = plannerRegNumber ? (plannerRegNumber.includes('|') ? plannerRegNumber.split('|')[0] : (plannerRegNumber.startsWith('dist_') ? '' : plannerRegNumber)) : '';
+  const isRegMissing = !cleanReg || cleanReg.trim() === '';
+  const isDemoMode = window.location.search.includes('demo=');
+
   const [subTab, setSubTab] = useState<'rooms' | 'contacts'>('rooms');
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [rooms, setRooms] = useState<ChatRoom[]>([]);
@@ -1414,6 +1439,10 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide,
                       <button
                         type="button"
                         onClick={async () => {
+                          if (!isBotActive && isRegMissing && !isDemoMode) {
+                            alert('광고 심의필(등록번호) 정보가 등록되지 않아 실시간 AI 상담을 활성화할 수 없습니다. 프로필 설정 탭에서 심의필 번호를 먼저 등록해 주세요.');
+                            return;
+                          }
                           const newStatus = !isBotActive;
                           try {
                             const updatedPayload = {
@@ -1445,10 +1474,12 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide,
                         className={`text-[9.5px] font-black px-2.5 py-1.5 rounded-lg border transition-all cursor-pointer ${
                           isBotActive 
                             ? 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white' 
+                            : (!isBotActive && isRegMissing && !isDemoMode)
+                            ? 'bg-slate-900/40 border-slate-800 text-slate-500 cursor-not-allowed opacity-50'
                             : 'bg-orange-600 border-orange-500 text-white hover:bg-orange-500'
                         }`}
                       >
-                        {isBotActive ? 'AI 상담 일시정지' : 'AI 상담 활성화'}
+                        {isBotActive ? 'AI 상담 일시정지' : 'AI 상담 활성화' + ((isRegMissing && !isDemoMode) ? ' (비활성화)' : '')}
                       </button>
                     </div>
                   )}
@@ -1943,6 +1974,10 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide,
                     <button
                       type="button"
                       onClick={async () => {
+                        if (isRegMissing && !isDemoMode) {
+                          alert('광고 심의필(등록번호) 정보가 등록되지 않아 전체 AI 상담을 일괄 활성화할 수 없습니다. 프로필 설정 탭에서 심의필 번호를 먼저 등록해 주세요.');
+                          return;
+                        }
                         updateGlobalAiActive(true);
                         try {
                           const roomIdsToUpdate = rooms.filter(r => !pinnedRoomIds.includes(r.id)).map(r => r.id);
@@ -1996,10 +2031,12 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide,
                       className={`px-4 py-2.5 text-xs font-black rounded-xl transition-all cursor-pointer border ${
                         globalAiActive
                           ? 'bg-orange-600 border-orange-500 text-white shadow-md shadow-orange-600/30 scale-105 ring-2 ring-orange-500/15'
+                          : (isRegMissing && !isDemoMode)
+                          ? 'bg-slate-900/40 border-slate-800 text-slate-500 cursor-not-allowed opacity-50'
                           : 'bg-slate-900/40 border-slate-800 text-slate-500 hover:text-slate-300 hover:bg-slate-800 opacity-60'
                       }`}
                     >
-                      🤖 전체 AI 상담 시작
+                      🤖 전체 AI 상담 시작 {isRegMissing && !isDemoMode && '(비활성화)'}
                     </button>
                     <button
                       type="button"
