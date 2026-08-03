@@ -162,6 +162,8 @@ interface AiChatWidgetProps {
   plannerId: string;
   plannerName: string;
   agencyName?: string | null;
+  agencyId?: string | null;
+  leadSource?: string | null;
   currentSimulationCode: string;
   onTriggerAuth: () => void;
   isUnlocked: boolean;
@@ -182,6 +184,8 @@ export default function AiChatWidget({
   plannerId,
   plannerName,
   agencyName,
+  agencyId,
+  leadSource,
   currentSimulationCode,
   onTriggerAuth,
   isUnlocked,
@@ -650,13 +654,61 @@ export default function AiChatWidget({
             is_read: false
           });
         }
+
+        // Check if there is already a lead linked to this chat room
+        const { data: existingLead } = await supabase
+          .from('customer_leads')
+          .select('id, is_bot_active')
+          .eq('raw_payload->>chat_room_id', guestRoomId)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+
+        if (existingLead) {
+          setCurrentLeadId(existingLead.id);
+          setIsBotActive(existingLead.is_bot_active !== false);
+        } else if (!currentSimulationCode) {
+          // Create a dynamic guest lead if no simulation code has been run yet
+          const { data: newLead } = await supabase
+            .from('customer_leads')
+            .insert({
+              planner_id: plannerId,
+              agency_id: agencyId || null,
+              name: '고객님',
+              phone: '010-0000-0000',
+              age: 40,
+              insurance_type: 'general',
+              lead_source: leadSource || 'organic',
+              status: 'new',
+              raw_payload: {
+                chat_room_id: guestRoomId,
+                utm_source: sessionStorage.getItem('ins_utm_source') || localStorage.getItem('ins_utm_source') || 'organic',
+                timeline: [
+                  {
+                    id: `chat-init-${Date.now()}`,
+                    type: 'system_log',
+                    author: '시스템',
+                    detail: '고객이 실시간 AI 상담을 시작하여 상담방이 개설되었습니다.',
+                    created_at: new Date().toISOString()
+                  }
+                ]
+              }
+            })
+            .select()
+            .single();
+
+          if (newLead) {
+            setCurrentLeadId(newLead.id);
+            setIsBotActive(true);
+          }
+        }
       } catch (err) {
         console.error('Failed to initialize guest chat room:', err);
       }
     };
 
     initRoom();
-  }, [plannerId, plannerName, guestRoomId]);
+  }, [plannerId, plannerName, guestRoomId, agencyId, leadSource, currentSimulationCode]);
 
   // ── [기능8] 앱 로딩 시 누락된 임베딩 벡터 자동 생성 동기화 ──────────────────────
   useEffect(() => {

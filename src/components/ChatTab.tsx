@@ -1649,9 +1649,10 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide,
                         const cleanMsg = msg.message.trim();
                         const cleanText = (s.message_text || '').trim();
                         const cleanAi = (s.ai_response || '').trim();
+                        const isShort = cleanMsg.length < 5;
                         return isMe 
-                          ? (cleanText === cleanMsg || cleanAi === cleanMsg)
-                          : (cleanText === cleanMsg);
+                          ? (cleanText === cleanMsg || cleanAi === cleanMsg || (!isShort && cleanAi.includes(cleanMsg)))
+                          : (cleanText === cleanMsg || (!isShort && cleanText.includes(cleanMsg)));
                       });
 
                       return (

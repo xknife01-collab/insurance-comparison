@@ -2061,6 +2061,8 @@ export default function App() {
           plannerId={branding.plannerId}
           plannerName={branding.name || '담당'}
           agencyName={branding.agencyName}
+          agencyId={branding.agencyId}
+          leadSource={branding.type === 'planner' ? 'direct' : (branding.type === 'agency' ? 'distribute' : 'organic')}
           currentSimulationCode={currentSimulationCode}
           onTriggerAuth={() => setIsRemodelingHyphenOpen(true)}
           isUnlocked={isUnlocked}
