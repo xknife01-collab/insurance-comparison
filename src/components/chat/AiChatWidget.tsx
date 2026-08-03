@@ -225,16 +225,17 @@ export default function AiChatWidget({
   const usedScriptIdsRef = useRef<number[]>([]); // [기능5] 전환율 추적용 스크립트 ID
   const supabase = createClient();
 
-  // 1. guest_chat_room_id and guest_user_id from localStorage
+  // 1. guest_chat_room_id and guest_user_id from localStorage (Scoped by plannerId to avoid cross-planner message bleed)
   const getOrCreateGuestDetails = () => {
-    let roomId = localStorage.getItem('ins_guest_chat_room_id');
+    const roomKey = `ins_guest_chat_room_id_${plannerId}`;
+    let roomId = localStorage.getItem(roomKey);
     if (!roomId) {
       roomId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
         const r = (Math.random() * 16) | 0;
         const v = c === 'x' ? r : (r & 0x3) | 0x8;
         return v.toString(16);
       });
-      localStorage.setItem('ins_guest_chat_room_id', roomId);
+      localStorage.setItem(roomKey, roomId);
     }
 
     let guestId = localStorage.getItem('ins_guest_user_id');
