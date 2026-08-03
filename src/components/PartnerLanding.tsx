@@ -265,7 +265,7 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="text-[10px] font-black text-orange-400 bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 rounded">업계 최초</span>
-                    <span className="text-[10px] font-black text-violet-400 bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 rounded">구독형 솔루션</span>
+                    <span className="text-[10px] font-black text-violet-400 bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 rounded">파트너 구독 기본 제공</span>
                   </div>
                   <h3 className="text-lg font-black text-white mt-1.5 leading-tight">
                     진짜 사람보다 더 똑똑한<br />
@@ -287,14 +287,14 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
               {/* 오른쪽: 가입을 유도하는 CTA 버튼 */}
               <div className="shrink-0 w-full lg:w-auto text-center lg:text-right">
                 <button
-                  onClick={() => onNavigate('admin', { tab: 'register' })}
+                  onClick={() => onNavigate('home')}
                   className="w-full lg:w-auto px-6 py-4 bg-gradient-to-r from-violet-600 to-orange-600 hover:from-violet-500 hover:to-orange-500 text-white text-xs font-black rounded-2xl transition-all duration-300 shadow-lg shadow-violet-950/20 hover:scale-[1.03] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <span>프리미엄 AI 인프라 구독하기</span>
+                  <span>실시간 AI 비서 데모 체험하기 ⚡</span>
                   <ChevronRight className="w-4 h-4" />
                 </button>
-                <p className="text-[9.5px] text-slate-500 mt-2 font-bold tracking-wide">
-                  GA 대리점 전용 / 소속 설계사 일괄 라이선스 지원
+                <p className="text-[9.5px] text-slate-500 mt-2 font-bold tracking-wide break-keep">
+                  인슈어밸런스 파트너 구독 시 추가 비용 없이 라이선스가 일괄 활성화됩니다.
                 </p>
               </div>
             </div>
