@@ -64,6 +64,7 @@ async function extractAndSaveMemory(
     }
 
     if (text.includes('비싸') || text.includes('부담') || text.includes('부족') || text.includes('비용')) pain_points.add('보험료 부담');
+    if (text.includes('갱신형') || text.includes('오르') || text.includes('인상') || text.includes('갱신')) pain_points.add('갱신형 보험료 부담');
     if (text.includes('중복') || text.includes('비슷')) pain_points.add('보장 중복 우려');
     if (text.includes('어려') || text.includes('모르')) pain_points.add('보험 용어 이해의 어려움');
 
@@ -232,6 +233,45 @@ function getActionInfo(score: number): { label: string; color: string } {
   return ACTION_SCORE_LABELS[0];
 }
 
+// AI 실시간 요약 브리핑을 위한 진행상황 및 개입 전략 헬퍼 함수
+function getLeadProgressText(lead: any): string {
+  const score = lead?.action_score || 0;
+  if (score >= 10) return '🔥 맞춤 제안 및 설계안 발송 요청 완료!';
+  if (score >= 7) return '💬 비교 분석표 확인 후 상세 보장 및 보험료 상담 진행 중';
+  if (score >= 5) return '📍 본인인증을 완료하고 35개사 비교 분석표 대기 중';
+  if (score >= 3) return '📱 SMS 본인인증 안내 발송 후 대기 중';
+  if (score >= 2) return '🔍 설계 분석용 코드 인식 완료';
+  if (score >= 1) return '👋 첫 대화 및 인사 나누는 중';
+  return '😐 상담 대기 중';
+}
+
+function getLeadStrategyText(lead: any): string {
+  const memory = lead?.raw_payload?.customer_memory;
+  if (!memory) return '고객과의 대화가 조금 더 필요합니다. AI 비서가 성향을 탐색하는 중입니다. 😐';
+
+  const painPoints = memory.pain_points || [];
+  const lastContext = (memory.last_context || '').toLowerCase();
+  const score = lead?.action_score || 0;
+
+  if (painPoints.includes('갱신형 보험료 부담') || painPoints.includes('보험료 부담') || lastContext.includes('갱신형') || lastContext.includes('오르') || lastContext.includes('비싸')) {
+    if (score >= 5) {
+      return '현재 기존 보험료 인상에 대한 거부감이 크므로, "비갱신형 전환 시 보험료가 고정된다"는 점을 어필하며 설계안 제안을 클로징 하세요!';
+    }
+    return '현재 기존 보험료 인상에 대한 거부감이 큽니다. "35개사 최저가 비갱신형 플랜 비교로 평생 보험료를 동결해 드리겠다"고 강조하며 본인인증을 유도하세요!';
+  }
+  if (painPoints.includes('보장 중복 우려') || lastContext.includes('보장') || lastContext.includes('한도') || lastContext.includes('중복')) {
+    return '현재 기존 보험 보장 상태의 누락과 중복에 대해 고민하고 있습니다. "무료로 불필요한 거품을 빼고 핵심 3대 질병 진단금을 꽉 채워 설계해 드리겠다"며 인증 완료 후 세부 상담을 제안하세요!';
+  }
+  if (painPoints.includes('보험 용어 이해의 어려움') || lastContext.includes('사기') || lastContext.includes('의심') || lastContext.includes('믿을')) {
+    return '플랫폼에 대한 가벼운 의심이나 경계심이 있습니다. "GA 35개사 통합 전산 실시간 조회 화면을 직접 공유해 드려 투명하게 비교해 드리겠다"며 설계사 본인의 실명과 대리점명을 어필하여 신뢰를 형성하세요!';
+  }
+  
+  if (score >= 5) {
+    return '본인인증이 완료된 고객입니다. "비교분석표가 나왔으니 직접 통화나 카톡으로 최종 맞춤 설계를 발송해 드리겠다"며 신속히 통화 상담으로 개입해 계약을 클로징 하세요!';
+  }
+  return '아직 첫 탐색 단계입니다. AI 비서가 친근하게 아이스브레이킹을 진행하여 코드를 획득하고 본인인증으로 넘어갈 수 있도록 대기를 추천합니다.';
+}
+
 interface ChatTabProps {
   currentUser: {
     role: 'super' | 'agency' | 'planner' | 'guest';
@@ -314,6 +354,7 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide,
   const [rooms, setRooms] = useState<ChatRoom[]>([]);
   const [selectedRoom, setSelectedRoom] = useState<ChatRoom | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
+  const [conversationScores, setConversationScores] = useState<any[]>([]);
   const [newMessageText, setNewMessageText] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   
@@ -677,6 +718,18 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide,
       if (error) throw error;
       setMessages(data || []);
 
+      // Fetch conversation scores for displaying individual message points
+      const { data: scoreData, error: scoreErr } = await supabase
+        .from('ai_conversation_scores')
+        .select('*')
+        .eq('chat_room_id', roomId);
+      if (!scoreErr) {
+        setConversationScores(scoreData || []);
+      }
+
+      // Sync lead and bot active status to keep memory/briefing fresh
+      await syncLeadBotStatus(roomId);
+
       // Mark messages as read
       await supabase
         .from('chat_messages')
@@ -929,7 +982,7 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide,
     }
   }, [contacts]);
 
-  // Real-time subscription for messages in selected room
+  // Real-time subscription for messages and scores in selected room
   useEffect(() => {
     if (!selectedRoom) return;
 
@@ -963,15 +1016,42 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide,
 
             // [기능8] 고객의 실시간 메시지에서 기억(기호, 직업, 가족 등) 추출
             if (selectedLead?.id) {
-              extractAndSaveMemory(supabase, selectedLead.id, newMsg.message).catch(() => {});
+              extractAndSaveMemory(supabase, selectedLead.id, newMsg.message)
+                .then(() => {
+                  setTimeout(() => {
+                    syncLeadBotStatus(selectedRoom.id);
+                  }, 600);
+                })
+                .catch(() => {});
             }
           }
         }
       )
       .subscribe();
 
+    // Subscribe to conversation scores to update score badges in real-time
+    const scoreChannel = supabase
+      .channel(`ai_conversation_scores:${selectedRoom.id}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'ai_conversation_scores',
+          filter: `chat_room_id=eq.${selectedRoom.id}`
+        },
+        (payload) => {
+          setConversationScores((prev) => {
+            if (prev.some(s => s.id === payload.new.id)) return prev;
+            return [...prev, payload.new];
+          });
+        }
+      )
+      .subscribe();
+
     return () => {
       supabase.removeChannel(channel);
+      supabase.removeChannel(scoreChannel);
     };
   }, [selectedRoom?.id]);
 
@@ -1503,6 +1583,7 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide,
                     {messages.map((msg) => {
                       const isMe = msg.sender_id === currentUserId;
                       const msgTime = new Date(msg.created_at).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false });
+                      const matchedScore = !isMe ? conversationScores.find(s => s.message_text === msg.message) : null;
 
                       return (
                         <div 
@@ -1521,12 +1602,33 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide,
                             </div>
                           )}
 
-                          {/* Message bubble */}
-                          <div 
-                            className={`max-w-md px-4 py-2.5 rounded-2xl text-xs font-medium leading-relaxed ${isMe ? 'bg-violet-600 text-white rounded-br-none shadow-md shadow-violet-700/10' : 'bg-slate-800 text-slate-100 rounded-bl-none'}`}
-                          >
-                            {msg.message}
-                          </div>
+                          {/* Message bubble / Score block */}
+                          {!isMe ? (
+                            <div className="flex flex-col gap-1.5 items-start max-w-md">
+                              <div 
+                                className="px-4 py-2.5 rounded-2xl text-xs font-medium leading-relaxed bg-slate-800 text-slate-100 rounded-bl-none"
+                              >
+                                {msg.message}
+                              </div>
+                              {matchedScore && (
+                                <div className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-slate-900/80 border border-slate-800/80 text-[10px] font-semibold text-slate-400 select-none animate-in fade-in slide-in-from-top-1 duration-200">
+                                  <span className="text-emerald-400 font-bold">🟢 +{matchedScore.pos_score ?? 0}</span>
+                                  <span className="text-slate-700">|</span>
+                                  <span className="text-rose-400 font-bold">🔴 -{matchedScore.neg_score ?? 0}</span>
+                                  <span className="text-slate-700">|</span>
+                                  <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${getActionInfo(matchedScore.action_score || 0).color}`}>
+                                    {getActionInfo(matchedScore.action_score || 0).label} ({matchedScore.action_score ?? 0}pt)
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+                          ) : (
+                            <div 
+                              className="max-w-md px-4 py-2.5 rounded-2xl text-xs font-medium leading-relaxed bg-violet-600 text-white rounded-br-none shadow-md shadow-violet-700/10"
+                            >
+                              {msg.message}
+                            </div>
+                          )}
 
                           {/* Right: display timestamp for incoming message */}
                           {!isMe && (
@@ -1568,114 +1670,62 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide,
                     <div className="flex items-center gap-1.5 mb-4 border-b border-slate-800/80 pb-2">
                       <Zap className="w-4 h-4 text-orange-400" />
                       <h4 className="text-xs font-black text-white uppercase tracking-wider">
-                        AI 상담 브리핑
+                        🤖 AI 실시간 요약 브리핑
                       </h4>
                     </div>
 
-                    {/* 1. 성향 및 정보 */}
                     <div className="space-y-4 flex-1">
-                      {/* 성향 요약 배지 */}
-                      <div className="bg-slate-900/60 border border-slate-800/80 p-3 rounded-2xl">
-                        <span className="text-[10px] text-slate-500 font-bold block mb-1.5">고객 유형 분석</span>
-                        {(() => {
-                          const seg = detectCustomerSegment(selectedLead);
-                          if (!seg) return <span className="text-[10px] text-slate-600">대화 정보 축적 중... 😐</span>;
-                          return (
-                            <div className="flex items-center gap-2">
-                              <span className={`px-2.5 py-1 rounded-lg border text-[10px] font-black ${seg.bg} ${seg.text} ${seg.border}`}>
-                                {seg.label}
-                              </span>
-                              <span className="text-[9px] text-slate-400 font-bold">맞춤 화법 가동 중</span>
-                            </div>
-                          );
-                        })()}
-                      </div>
-
-                      {/* 관심사 및 기억 프로필 */}
-                      <div className="bg-slate-900/60 border border-slate-800/80 p-3 rounded-2xl space-y-3">
-                        <span className="text-[10px] text-slate-500 font-bold block">🧠 고객 기억 정보</span>
-                        
-                        {/* 관심 보험 */}
+                      {/* 관심사, 고민거리, 진행상황 카드 */}
+                      <div className="bg-slate-900/60 border border-slate-800/80 p-4 rounded-2xl space-y-3.5">
+                        {/* 📌 관심사 */}
                         <div>
-                          <span className="text-[9px] text-slate-600 block mb-1">관심 상품</span>
-                          <div className="flex flex-wrap gap-1">
+                          <span className="text-[10px] text-slate-500 font-bold block mb-1">📌 관심사</span>
+                          <div className="flex flex-wrap gap-1.5">
                             {selectedLead.raw_payload?.customer_memory?.interests?.length > 0 ? (
                               selectedLead.raw_payload.customer_memory.interests.map((it: string, i: number) => (
-                                <span key={i} className="text-[9px] bg-violet-600/15 border border-violet-500/20 text-violet-300 px-1.5 py-0.5 rounded-md font-bold">
+                                <span key={i} className="text-[9px] bg-violet-600/15 border border-violet-500/20 text-violet-300 px-2 py-0.5 rounded-md font-bold">
                                   {it}
                                 </span>
                               ))
                             ) : (
-                              <span className="text-[9px] text-slate-600">미확인</span>
+                              <span className="text-[10px] text-slate-500">분석 중... 😐</span>
                             )}
                           </div>
                         </div>
 
-                        {/* 신상 정보 */}
-                        <div className="grid grid-cols-2 gap-2 border-t border-slate-900 pt-2.5">
-                          <div>
-                            <span className="text-[9px] text-slate-600 block">직업</span>
-                            <span className="text-[10px] text-slate-300 font-bold">
-                              {selectedLead.raw_payload?.customer_memory?.job || '미확인'}
-                            </span>
-                          </div>
-                          <div>
-                            <span className="text-[9px] text-slate-600 block">가족 관계</span>
-                            <span className="text-[10px] text-slate-300 font-bold">
-                              {(() => {
-                                const f = selectedLead.raw_payload?.customer_memory?.family;
-                                if (!f) return '미확인';
-                                const parts = [];
-                                if (f.spouse) parts.push('배우자');
-                                if (f.children) parts.push(`자녀 ${f.children}명`);
-                                return parts.join(', ') || '독신';
-                              })()}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* 페인 포인트 */}
-                        <div className="border-t border-slate-900 pt-2.5">
-                          <span className="text-[9px] text-slate-600 block mb-1">핵심 고민거리</span>
-                          <div className="flex flex-wrap gap-1">
+                        {/* 🔥 고민거리 */}
+                        <div className="border-t border-slate-850 pt-3">
+                          <span className="text-[10px] text-slate-500 font-bold block mb-1">🔥 고민거리</span>
+                          <div className="flex flex-wrap gap-1.5">
                             {selectedLead.raw_payload?.customer_memory?.pain_points?.length > 0 ? (
                               selectedLead.raw_payload.customer_memory.pain_points.map((pt: string, i: number) => (
-                                <span key={i} className="text-[9px] bg-rose-600/10 border border-rose-500/20 text-rose-400 px-1.5 py-0.5 rounded-md font-bold">
+                                <span key={i} className="text-[9px] bg-rose-600/10 border border-rose-500/20 text-rose-400 px-2 py-0.5 rounded-md font-bold">
                                   {pt}
                                 </span>
                               ))
                             ) : (
-                              <span className="text-[9px] text-slate-600">미확인</span>
+                              <span className="text-[10px] text-slate-500">분석 중... 😐</span>
                             )}
                           </div>
                         </div>
+
+                        {/* 📍 진행 상황 */}
+                        <div className="border-t border-slate-850 pt-3">
+                          <span className="text-[10px] text-slate-500 font-bold block mb-1.5">📍 진행 상황</span>
+                          <span className="text-[10px] text-slate-300 font-black leading-relaxed block break-keep">
+                            {getLeadProgressText(selectedLead)}
+                          </span>
+                        </div>
                       </div>
 
-                      {/* 💡 설계사 전용 추천 개입 전략 카드 */}
-                      <div className="bg-gradient-to-br from-violet-950/20 to-slate-900 border border-violet-500/20 p-3.5 rounded-2xl">
-                        <div className="flex items-center gap-1 mb-1.5">
+                      {/* 💡 설계사 추천 개입 전략 */}
+                      <div className="bg-gradient-to-br from-violet-950/20 to-slate-900 border border-violet-500/20 p-4 rounded-2xl">
+                        <div className="flex items-center gap-1.5 mb-2">
                           <Zap className="w-3.5 h-3.5 text-orange-400" />
-                          <span className="text-[10px] text-orange-400 font-black">설계사 전용 클로징 팁</span>
+                          <span className="text-[10px] text-orange-400 font-black">💡 [설계사 추천 개입 전략]</span>
                         </div>
-                        <p className="text-[10px] text-slate-300 leading-relaxed font-bold break-keep">
-                          {(() => {
-                            const memory = selectedLead.raw_payload?.customer_memory;
-                            if (!memory) return '고객과의 대화가 조금 더 필요합니다. AI 비서가 성향을 탐색하는 중입니다. 😐';
-                            
-                            const painPoints = memory.pain_points || [];
-                            const lastContext = (memory.last_context || '').toLowerCase();
-
-                            if (painPoints.includes('보험료 부담') || lastContext.includes('비싸') || lastContext.includes('절약')) {
-                              return '💰 현재 기존 보험료 상승에 큰 부담을 느끼고 있습니다. "35개사 비교 분석을 통해 보장은 똑같이 지키면서 거품을 다이어트해 드린다"는 점을 필두로 직접 개입해 클로징을 유도하세요!';
-                            }
-                            if (painPoints.includes('보장 중복 우려') || lastContext.includes('보장') || lastContext.includes('한도')) {
-                              return '🛡️ 가입은 되어있으나 나중에 보장을 못 받을까 우려 중입니다. "뇌/심장/암 핵심 3대 질환 진단금의 누락을 점검해 드린다"고 강조하며 개입해 보세요!';
-                            }
-                            if (painPoints.includes('보험 용어 이해의 어려움') || lastContext.includes('사기') || lastContext.includes('의심')) {
-                              return '🤝 플랫폼 가입 유도나 강요를 우려해 경계하고 있습니다. "설계사가 직접 1:1 전담 마크하여 가입 강요 없이 안심 모니터링만 해드린다"며 신뢰 후기 위주로 설명하세요!';
-                            }
-                            return '⚡ 빠른 결정을 원하거나 단순 관심사 고객입니다. 인사말은 줄이고 즉각 "0.1초 본인인증으로 리밸런싱 보고서 잠금 해제를 도와드릴까요?" 하고 직접 개입하세요!';
-                          })()}
+                        <p className="text-[10px] text-slate-200 leading-relaxed font-bold break-keep">
+                          "{getLeadStrategyText(selectedLead)}"
                         </p>
                       </div>
                     </div>

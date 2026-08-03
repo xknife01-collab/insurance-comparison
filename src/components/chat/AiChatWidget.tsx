@@ -65,6 +65,7 @@ async function extractAndSaveMemory(
 
     // 페인 포인트 (고민거리)
     if (text.includes('비싸') || text.includes('부담') || text.includes('부족') || text.includes('비용')) pain_points.add('보험료 부담');
+    if (text.includes('갱신형') || text.includes('오르') || text.includes('인상') || text.includes('갱신')) pain_points.add('갱신형 보험료 부담');
     if (text.includes('중복') || text.includes('비슷')) pain_points.add('보장 중복 우려');
     if (text.includes('어려') || text.includes('모르')) pain_points.add('보험 용어 이해의 어려움');
 
@@ -214,6 +215,7 @@ export default function AiChatWidget({
   const [currentLeadId, setCurrentLeadId] = useState<number | null>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const initCompletedRef = useRef(false);
   const usedScriptIdsRef = useRef<number[]>([]); // [기능5] 전환율 추적용 스크립트 ID
   const supabase = createClient();
 
@@ -613,7 +615,8 @@ export default function AiChatWidget({
 
   // 2. Initialize chat room in database
   useEffect(() => {
-    if (!plannerId) return;
+    if (!plannerId || initCompletedRef.current) return;
+    initCompletedRef.current = true;
 
     const initRoom = async () => {
       try {
@@ -1029,7 +1032,7 @@ export default function AiChatWidget({
                 <div className="text-left">
                   <h4 className="text-xs font-black text-slate-100">실시간 고객 상담</h4>
                   <p className="text-[10px] text-slate-400 font-bold">
-                    {isBotActive ? `${plannerName} 설계사 비서 상담중` : `${plannerName} 설계사 직접 대화중`}
+                    {isBotActive ? `${plannerName} 설계사 (온라인)` : `${plannerName} 설계사 직접 대화중`}
                   </p>
                 </div>
               </div>
@@ -1098,7 +1101,7 @@ export default function AiChatWidget({
               {/* Typing indicator */}
               {isTyping && (
                 <div className="flex flex-col items-start space-y-1">
-                  <span className="text-[9px] text-slate-500 font-bold ml-1">{plannerName} AI</span>
+                  <span className="text-[9px] text-slate-500 font-bold ml-1">{plannerName} 설계사</span>
                   <div className="bg-slate-900 text-slate-400 border border-slate-850 px-4 py-2.5 rounded-2xl rounded-tl-sm flex items-center gap-1">
                     <span className="w-1.5 h-1.5 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
                     <span className="w-1.5 h-1.5 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>

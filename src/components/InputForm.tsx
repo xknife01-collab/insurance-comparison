@@ -24,7 +24,7 @@ import {
   Activity
 } from 'lucide-react';
 import { InsuranceAnalysis } from '../types/insurance';
-import { BrainFields } from './calculator/fields/BrainFields';
+import { BrainFields } from './insurance/brain/BrainFields';
 
 const INSURANCE_TYPES = [
   { id: 'cancer', label: '암', icon: <div className="p-3 bg-orange-100 rounded-2xl text-orange-600"><ShieldCheck className="w-8 h-8" /></div> },
