@@ -711,14 +711,19 @@ export default function AiChatWidget({
 
   // 4. Check customer_leads for lead status (active bot status, unmasking code linkage)
   useEffect(() => {
-    if (!currentSimulationCode) return;
-
     const checkLeadStatus = async () => {
       try {
-        const { data, error } = await supabase
-          .from('customer_leads')
-          .select('id, is_bot_active, raw_payload')
-          .eq('raw_payload->>simulation_code', currentSimulationCode)
+        let query = supabase.from('customer_leads').select('id, is_bot_active, raw_payload');
+        
+        if (currentSimulationCode) {
+          query = query.eq('raw_payload->>simulation_code', currentSimulationCode);
+        } else if (guestRoomId) {
+          query = query.eq('raw_payload->>chat_room_id', guestRoomId);
+        } else {
+          return;
+        }
+
+        const { data, error } = await query
           .order('created_at', { ascending: false })
           .limit(1);
 
@@ -748,27 +753,34 @@ export default function AiChatWidget({
     checkLeadStatus();
 
     // Listen to changes on the lead
-    const leadChannel = supabase
-      .channel(`lead_chat_sync:${currentSimulationCode}`)
-      .on(
-        'postgres_changes',
-        {
-          event: 'UPDATE',
-          schema: 'public',
-          table: 'customer_leads'
-        },
-        (payload) => {
-          const leadCode = payload.new?.raw_payload?.simulation_code;
-          if (leadCode === currentSimulationCode) {
-            setIsBotActive(payload.new?.is_bot_active !== false);
-            setCurrentLeadId(payload.new?.id);
+    let leadChannel: any = null;
+    const activeCode = currentSimulationCode;
+    
+    if (activeCode) {
+      leadChannel = supabase
+        .channel(`lead_chat_sync:${activeCode}`)
+        .on(
+          'postgres_changes',
+          {
+            event: 'UPDATE',
+            schema: 'public',
+            table: 'customer_leads'
+          },
+          (payload) => {
+            const leadCode = payload.new?.raw_payload?.simulation_code;
+            if (leadCode === activeCode) {
+              setIsBotActive(payload.new?.is_bot_active !== false);
+              setCurrentLeadId(payload.new?.id);
+            }
           }
-        }
-      )
-      .subscribe();
+        )
+        .subscribe();
+    }
 
     return () => {
-      supabase.removeChannel(leadChannel);
+      if (leadChannel) {
+        supabase.removeChannel(leadChannel);
+      }
     };
   }, [currentSimulationCode, guestRoomId]);
 

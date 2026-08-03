@@ -70,7 +70,22 @@ export default function App() {
   const [remodelingApplied, setRemodelingApplied] = useState(false);
   const [submittedLeads, setSubmittedLeads] = useState<string[]>([]);
   const [lastSubmittedLeadId, setLastSubmittedLeadId] = useState<number | null>(null);
-  const [currentSimulationCode, setCurrentSimulationCode] = useState<string>('');
+  const [currentSimulationCode, setCurrentSimulationCode] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('ins_current_simulation_code') || '';
+    }
+    return '';
+  });
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (currentSimulationCode) {
+        localStorage.setItem('ins_current_simulation_code', currentSimulationCode);
+      } else {
+        localStorage.removeItem('ins_current_simulation_code');
+      }
+    }
+  }, [currentSimulationCode]);
   const [showUnlockModal, setShowUnlockModal] = useState<boolean>(false);
   const [isInRemodelingZone, setIsInRemodelingZone] = useState<boolean>(false);
   const [showComparisonBar, setShowComparisonBar] = useState<boolean>(false);
