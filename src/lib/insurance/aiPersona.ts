@@ -391,8 +391,10 @@ function getAI(): GoogleGenAI | null {
   if (key) {
     _ai = new GoogleGenAI({ apiKey: key });
     console.log('✅ Insurance Gemini AI initialized successfully');
+    return _ai;
   } else {
     console.warn('⚠️ Gemini API key not found for AI Counselor.');
+    return null;
   }
 }
 
