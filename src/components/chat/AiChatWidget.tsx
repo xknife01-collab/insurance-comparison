@@ -221,7 +221,7 @@ export default function AiChatWidget({
   const [currentLeadId, setCurrentLeadId] = useState<number | null>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const initCompletedRef = useRef(false);
+  const initializedRoomIdRef = useRef<string | null>(null);
   const usedScriptIdsRef = useRef<number[]>([]); // [기능5] 전환율 추적용 스크립트 ID
   const supabase = createClient();
 
@@ -622,8 +622,8 @@ export default function AiChatWidget({
 
   // 2. Initialize chat room in database
   useEffect(() => {
-    if (!plannerId || initCompletedRef.current) return;
-    initCompletedRef.current = true;
+    if (!plannerId || !guestRoomId || initializedRoomIdRef.current === guestRoomId) return;
+    initializedRoomIdRef.current = guestRoomId;
 
     const initRoom = async () => {
       try {
