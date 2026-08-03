@@ -249,6 +249,58 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
           </p>
         </div>
 
+        {/* 🤖 초고도화 AI 고객상담 & 감정분석 구독 마케팅 배너 */}
+        <div className="max-w-[1300px] mx-auto px-4 pb-4 select-none">
+          <div className="relative p-6 sm:p-8 bg-gradient-to-br from-violet-950/45 via-slate-900/90 to-slate-950/85 border border-violet-500/30 rounded-[2rem] shadow-2xl overflow-hidden group">
+            {/* 배경 그라데이션 빛 효과 */}
+            <div className="absolute -top-24 -left-24 w-48 h-48 bg-violet-600/10 rounded-full blur-3xl pointer-events-none group-hover:bg-violet-600/15 transition-all duration-500" />
+            <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-orange-500/5 rounded-full blur-3xl pointer-events-none group-hover:bg-orange-500/10 transition-all duration-500" />
+            
+            <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-10 relative z-10 text-left">
+              {/* 왼쪽: 아이콘 및 타이틀 */}
+              <div className="flex items-center gap-4 shrink-0">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500/20 to-orange-500/10 flex items-center justify-center border border-violet-400/30 shadow-xl shadow-violet-950/20">
+                  <Brain className="w-7 h-7 text-violet-400 animate-pulse" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-black text-orange-400 bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 rounded">업계 최초</span>
+                    <span className="text-[10px] font-black text-violet-400 bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 rounded">구독형 솔루션</span>
+                  </div>
+                  <h3 className="text-lg font-black text-white mt-1.5 leading-tight">
+                    진짜 사람보다 더 똑똑한<br />
+                    <span className="bg-gradient-to-r from-violet-400 to-orange-400 bg-clip-text text-transparent">초인류적 1:1 세일즈 AI 개인 비서</span>
+                  </h3>
+                </div>
+              </div>
+              
+              {/* 가운데: 세부 메리트 및 10점 만점 설명 */}
+              <div className="flex-1 space-y-2 lg:border-l lg:border-slate-800/80 lg:pl-10">
+                <p className="text-xs sm:text-[13px] font-bold text-slate-200 leading-relaxed break-keep">
+                  단순한 챗봇이 아닙니다. 고객과의 실시간 대화 속에서 <span className="text-emerald-400">정서(긍정/부정)</span> 및 <span className="text-violet-400">행동(10단계 진척도)</span>을 감지하여 <span className="text-orange-400">10점 만점의 점수</span>를 실시간 판독합니다.
+                </p>
+                <p className="text-[11px] text-slate-400 leading-relaxed break-keep font-semibold">
+                  고객의 긍정 반응과 설계안 요청(10점) 데이터가 쌓일수록, AI 비서가 우리 대리점만의 성공적인 계약 공식 성공 멘트를 자가 학습(Self-Learning)하여 스스로 더 고도화됩니다. 초보 설계사도 1등 설계사의 영업 실력을 갖추게 되는 마법을 지금 경험해 보세요.
+                </p>
+              </div>
+
+              {/* 오른쪽: 가입을 유도하는 CTA 버튼 */}
+              <div className="shrink-0 w-full lg:w-auto text-center lg:text-right">
+                <button
+                  onClick={() => onNavigate('admin', { tab: 'register' })}
+                  className="w-full lg:w-auto px-6 py-4 bg-gradient-to-r from-violet-600 to-orange-600 hover:from-violet-500 hover:to-orange-500 text-white text-xs font-black rounded-2xl transition-all duration-300 shadow-lg shadow-violet-950/20 hover:scale-[1.03] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <span>프리미엄 AI 인프라 구독하기</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+                <p className="text-[9.5px] text-slate-500 mt-2 font-bold tracking-wide">
+                  GA 대리점 전용 / 소속 설계사 일괄 라이선스 지원
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Feature Highlights Section (Wider max-w-[1600px] for desktop 4-column display) */}
         <div className="max-w-[1600px] mx-auto px-4 w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-10">
