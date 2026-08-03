@@ -1641,6 +1641,54 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide,
                     );
                   })()}
 
+                  {/* 💡 AI 실시간 감정·행동 점수화 가이드 */}
+                  {showHelpGuide && (
+                    <div className="mx-6 mt-3 p-4 bg-gradient-to-br from-violet-950/45 to-slate-900/90 border border-violet-500/35 rounded-2xl shadow-xl relative overflow-hidden animate-in slide-in-from-top duration-300">
+                      <div className="absolute top-0 right-0 p-3">
+                        <button 
+                          type="button"
+                          onClick={onToggleHelpGuide}
+                          className="text-slate-500 hover:text-slate-300 text-xs font-bold font-mono cursor-pointer"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="p-2 bg-violet-500/10 border border-violet-400/20 rounded-xl text-violet-400 shrink-0">
+                          <Info className="w-5 h-5 text-violet-400 animate-pulse" />
+                        </div>
+                        <div className="space-y-1.5 pr-6 text-left">
+                          <h4 className="text-xs font-black text-white flex items-center gap-1.5">
+                            🏆 AI 실시간 감정·행동 점수화 도움말 가이드
+                            <span className="text-[9px] bg-orange-500/20 border border-orange-500/30 text-orange-400 px-1.5 py-0.2 rounded font-black">PRO 영업 도구</span>
+                          </h4>
+                          <p className="text-[11px] text-slate-300 font-semibold leading-relaxed break-keep">
+                            이 화면은 실시간 대화를 추적하여 고객의 <span className="text-emerald-400">정서(긍정/부정)</span> 및 <span className="text-violet-400">행동 달성도</span>를 분석하여 10점 만점의 점수를 실시간으로 부여합니다.
+                            <br />
+                            <span className="text-orange-400 font-black">데이터가 쌓일수록</span> AI 비서가 성공적인 영업 멘트 패턴을 자가 학습(Self-Learning)하여, 고객의 심리를 자극하고 계약 성사율을 극대화시켜 당신을 **최고의 실적을 올리는 1등 보험 설계사**로 만들어 줍니다!
+                          </p>
+                          <div className="grid grid-cols-2 gap-x-4 gap-y-1 mt-2.5 pt-2 border-t border-slate-800/80">
+                            <div className="text-[10px] text-slate-400">
+                              <span className="font-bold text-emerald-400">🟢 긍정 지수 (0~10점):</span> 고객이 AI 설명에 호응하거나 긍정한 누적치
+                            </div>
+                            <div className="text-[10px] text-slate-400">
+                              <span className="font-bold text-rose-400">🔴 부정 지수 (0~10점):</span> 불신, 이탈 위험을 감지하여 설계사 개입을 경고하는 지표
+                            </div>
+                            <div className="text-[10px] text-slate-400">
+                              <span className="font-bold text-violet-400">⚡ 행동 점수 (1~10점):</span> 첫 인사(1pt)부터 설계안 최종 요청(10pt)까지의 진척도
+                            </div>
+                            <div className="text-[10px] text-slate-400">
+                              <span className="font-bold text-orange-400">🧠 자가 진화 RAG:</span> 10점 성공 패턴을 누적 수집하여 더 스마트한 제안 자동화
+                            </div>
+                          </div>
+                          <p className="text-[9.5px] text-violet-300 font-bold mt-1">
+                            💡 최고의 1% 설계사들이 매일 사용하는 감정 타게팅 세일즈 솔루션을 정식 구독하여 이용 중이십니다.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   <div className="flex-1 overflow-y-auto p-6 space-y-4">
                     {messages.map((msg) => {
                       const isMe = msg.sender_id === currentUserId;
@@ -2043,7 +2091,30 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide,
 
               {/* AI 실시간 상담 가이드 (customer mode only) */}
               {mode === 'customer' && (
-                <div className="mt-8 w-full max-w-lg text-left space-y-4">
+                <div className="mt-6 w-full max-w-lg text-left space-y-4">
+                  {showHelpGuide && (
+                    <div className="p-5 bg-gradient-to-br from-violet-950/50 to-slate-900 border border-violet-500/40 rounded-3xl space-y-3.5 shadow-xl shadow-violet-950/15 animate-in fade-in duration-300">
+                      <div className="flex items-center gap-2">
+                        <span className="text-base">🏆</span>
+                        <h4 className="text-xs font-black text-white uppercase tracking-wider">
+                          AI 실시간 감정·행동 점수화 가이드
+                        </h4>
+                      </div>
+                      <p className="text-xs font-semibold text-slate-350 leading-relaxed break-keep">
+                        AI 보험 비서가 고객과의 실시간 대화를 감지하여 <span className="text-emerald-400 font-bold">정서(긍정·부정)</span> 및 <span className="text-violet-400 font-bold">행동(10단계)</span> 상태를 분석하고 10점 만점의 지표로 계량화합니다.
+                      </p>
+                      <div className="p-3.5 bg-slate-950/60 border border-slate-850 rounded-2xl text-[11px] text-slate-350 leading-relaxed space-y-1">
+                        <p className="font-bold text-white">📈 왜 데이터 축적이 중요한가요?</p>
+                        <p className="break-keep">
+                          고객의 긍정 반응과 최종 행동 도달(10점: 설계안 요청) <span className="text-orange-400 font-black">데이터가 쌓일수록</span>, AI 비서가 우리 대리점만의 성공 영업 패턴을 자가 학습(Self-Learning)하여 정교해집니다. 이를 통해 초보 설계사도 베테랑 설계사의 노하우를 그대로 복제하여 <span className="text-white font-bold">최고의 실적을 올리는 1등 설계사</span>로 성장하게 됩니다!
+                        </p>
+                      </div>
+                      <p className="text-[10px] text-violet-300 font-bold text-center pt-1 animate-pulse">
+                        ⭐ 설계사 전용 프리미엄 영업 구독 요금제에서 실시간 점수화 및 자가 학습이 활성화됩니다.
+                      </p>
+                    </div>
+                  )}
+
                   <h4 className="text-xs font-black text-slate-400 uppercase tracking-wider px-1">
                     📖 실시간 AI 보험 비서 가이드 & 작동 방식
                   </h4>
