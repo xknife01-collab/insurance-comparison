@@ -2056,7 +2056,7 @@ export default function App() {
       />
 
       {/* 🤖 실시간 고객 상담 AI 위젯 */}
-      {view !== 'admin' && view !== 'partner' && (isAiEnabled || isAiChatOpen) && branding.plannerId && (
+      {view !== 'admin' && view !== 'partner' && (isAiEnabled || isAiChatOpen) && branding.plannerId && branding.registrationNumber && (
         <AiChatWidget
           plannerId={branding.plannerId}
           plannerName={branding.name || '담당'}

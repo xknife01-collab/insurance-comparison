@@ -122,13 +122,15 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
 
             {/* Kakao consult buttons */}
             <div className="w-full space-y-2">
-              <button
-                onClick={() => handleKakaoClick('anonymous')}
-                className="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white font-black text-xs rounded-2xl flex items-center justify-center gap-2 border border-white/10 shadow-md transform hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer"
-              >
-                <MessageSquare size={14} className="text-orange-400" />
-                실시간 고객 상담 💬
-              </button>
+              {branding.registrationNumber && branding.registrationNumber.trim() !== '' && (
+                <button
+                  onClick={() => handleKakaoClick('anonymous')}
+                  className="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white font-black text-xs rounded-2xl flex items-center justify-center gap-2 border border-white/10 shadow-md transform hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer"
+                >
+                  <MessageSquare size={14} className="text-orange-400" />
+                  실시간 고객 상담 💬
+                </button>
+              )}
               <button
                 onClick={() => handleKakaoClick('regular')}
                 className="w-full py-3.5 bg-[#FEE500] hover:bg-[#FEE500]/90 text-[#191919] font-black text-xs rounded-2xl flex items-center justify-center gap-2 shadow-[0_10px_20px_rgba(254,229,0,0.15)] transform hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer"
