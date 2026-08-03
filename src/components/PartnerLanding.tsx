@@ -284,16 +284,29 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
                 </p>
               </div>
 
-              {/* 오른쪽: 가입을 유도하는 CTA 버튼 */}
-              <div className="shrink-0 w-full lg:w-auto text-center lg:text-right">
+              {/* 오른쪽: 설계사/대리점 데모 체험 버튼 2종 */}
+              <div className="shrink-0 w-full lg:w-auto flex flex-col sm:flex-row lg:flex-col gap-3 text-center lg:text-right">
                 <button
-                  onClick={() => onNavigate('home')}
-                  className="w-full lg:w-auto px-6 py-4 bg-gradient-to-r from-violet-600 to-orange-600 hover:from-violet-500 hover:to-orange-500 text-white text-xs font-black rounded-2xl transition-all duration-300 shadow-lg shadow-violet-950/20 hover:scale-[1.03] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+                  onClick={() => {
+                    window.location.href = '/admin?demo=planner';
+                  }}
+                  className="px-5 py-3.5 bg-gradient-to-r from-violet-600 to-indigo-650 hover:from-violet-500 hover:to-indigo-550 text-white text-xs font-black rounded-2xl transition-all duration-300 shadow-lg shadow-violet-950/20 hover:scale-[1.03] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <span>실시간 AI 비서 데모 체험하기 ⚡</span>
+                  <span>설계사 데모 체험하기 ⚡</span>
                   <ChevronRight className="w-4 h-4" />
                 </button>
-                <p className="text-[9.5px] text-slate-500 mt-2 font-bold tracking-wide break-keep">
+
+                <button
+                  onClick={() => {
+                    window.location.href = '/admin?demo=agency';
+                  }}
+                  className="px-5 py-3.5 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white text-xs font-black rounded-2xl transition-all duration-300 shadow-lg shadow-orange-950/20 hover:scale-[1.03] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <span>대리점 데모 체험하기 ⚡</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+
+                <p className="text-[9.5px] text-slate-500 mt-1 font-bold tracking-wide text-center lg:text-right break-keep">
                   인슈어밸런스 파트너 구독 시 추가 비용 없이 라이선스가 일괄 활성화됩니다.
                 </p>
               </div>
