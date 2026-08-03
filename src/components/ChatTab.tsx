@@ -998,12 +998,15 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide,
         },
         (payload) => {
           const newMsg = payload.new as Message;
-          if (newMsg.sender_id !== currentUserId) {
-            setMessages((prev) => {
-              if (prev.some(m => m.id === newMsg.id)) return prev;
-              return [...prev, newMsg];
-            });
+          
+          // 1. Always append message locally if not duplicate (e.g. AI messages)
+          setMessages((prev) => {
+            if (prev.some(m => m.id === newMsg.id)) return prev;
+            return [...prev, newMsg];
+          });
 
+          // 2. Perform notifications / memory logic only if message is from customer
+          if (newMsg.sender_id !== currentUserId) {
             // Mark as read in DB
             supabase
               .from('chat_messages')
@@ -1583,7 +1586,14 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide,
                     {messages.map((msg) => {
                       const isMe = msg.sender_id === currentUserId;
                       const msgTime = new Date(msg.created_at).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false });
-                      const matchedScore = !isMe ? conversationScores.find(s => s.message_text === msg.message) : null;
+                      const matchedScore = conversationScores.find(s => {
+                        const cleanMsg = msg.message.trim();
+                        const cleanText = (s.message_text || '').trim();
+                        const cleanAi = (s.ai_response || '').trim();
+                        return isMe 
+                          ? (cleanText === cleanMsg || cleanAi === cleanMsg)
+                          : (cleanText === cleanMsg);
+                      });
 
                       return (
                         <div 
@@ -1623,10 +1633,23 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide,
                               )}
                             </div>
                           ) : (
-                            <div 
-                              className="max-w-md px-4 py-2.5 rounded-2xl text-xs font-medium leading-relaxed bg-violet-600 text-white rounded-br-none shadow-md shadow-violet-700/10"
-                            >
-                              {msg.message}
+                            <div className="flex flex-col gap-1.5 items-end max-w-md">
+                              <div 
+                                className="px-4 py-2.5 rounded-2xl text-xs font-medium leading-relaxed bg-violet-600 text-white rounded-br-none shadow-md shadow-violet-700/10 text-left"
+                              >
+                                {msg.message}
+                              </div>
+                              {matchedScore && (
+                                <div className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-slate-900/80 border border-slate-800/80 text-[10px] font-semibold text-slate-400 select-none animate-in fade-in slide-in-from-top-1 duration-200">
+                                  <span className="text-emerald-400 font-bold">🟢 +{matchedScore.pos_score ?? 0}</span>
+                                  <span className="text-slate-700">|</span>
+                                  <span className="text-rose-400 font-bold">🔴 -{matchedScore.neg_score ?? 0}</span>
+                                  <span className="text-slate-700">|</span>
+                                  <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${getActionInfo(matchedScore.action_score || 0).color}`}>
+                                    {getActionInfo(matchedScore.action_score || 0).label} ({matchedScore.action_score ?? 0}pt)
+                                  </span>
+                                </div>
+                              )}
                             </div>
                           )}
 
