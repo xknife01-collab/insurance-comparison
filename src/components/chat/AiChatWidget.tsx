@@ -169,6 +169,7 @@ interface AiChatWidgetProps {
   isUnlocked: boolean;
   externalIsOpen?: boolean;
   onCloseExternal?: () => void;
+  registrationNumber?: string | null;
 }
 
 interface Message {
@@ -190,7 +191,8 @@ export default function AiChatWidget({
   onTriggerAuth,
   isUnlocked,
   externalIsOpen,
-  onCloseExternal
+  onCloseExternal,
+  registrationNumber
 }: AiChatWidgetProps) {
   const [localIsOpen, setLocalIsOpen] = useState(false);
   const isOpen = externalIsOpen !== undefined ? externalIsOpen : localIsOpen;
@@ -939,7 +941,16 @@ export default function AiChatWidget({
     }
 
     // Trigger AI response if bot is active
+    const isDemo = agencyId === '88888888-8888-4888-a888-888888888888';
+    const cleanReg = registrationNumber ? (registrationNumber.includes('|') ? registrationNumber.split('|')[0] : (registrationNumber.startsWith('dist_') ? '' : registrationNumber)) : '';
+    const hasReg = cleanReg && cleanReg.trim() !== '';
+
     if (isBotActive) {
+      if (!isDemo && !hasReg) {
+        setIsTyping(false);
+        console.log('[AI Silenced] AI chatbot response bypassed because review certificate registrationNumber is missing/invalid.');
+        return;
+      }
       setIsTyping(true);
 
       // Fetch message history for AI prompt context

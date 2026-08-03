@@ -122,31 +122,13 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
 
             {/* Kakao consult buttons */}
             <div className="w-full space-y-2">
-              {(() => {
-                const isDemo = branding.agencyId === '88888888-8888-4888-a888-888888888888';
-                const isChatDisabled = !isDemo && (!branding.registrationNumber || branding.registrationNumber.trim() === '');
-                
-                return (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (isChatDisabled) {
-                        alert('광고 심의필(등록번호) 정보가 등록되지 않아 실시간 상담이 비활성화되었습니다. (설계사 설정에서 심의필 번호를 등록해 주세요.)');
-                        return;
-                      }
-                      handleKakaoClick('anonymous');
-                    }}
-                    className={`w-full py-3 text-white font-black text-xs rounded-2xl flex items-center justify-center gap-2 border shadow-md transform active:scale-95 transition-all duration-300 ${
-                      isChatDisabled 
-                        ? 'bg-slate-800/40 border-slate-900 text-slate-500 cursor-not-allowed opacity-50' 
-                        : 'bg-slate-800 hover:bg-slate-700 border-white/10 hover:scale-[1.02] cursor-pointer'
-                    }`}
-                  >
-                    <MessageSquare size={14} className={isChatDisabled ? 'text-slate-500' : 'text-orange-400'} />
-                    <span>실시간 고객 상담 💬 {isChatDisabled && '(비활성화)'}</span>
-                  </button>
-                );
-              })()}
+              <button
+                onClick={() => handleKakaoClick('anonymous')}
+                className="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white font-black text-xs rounded-2xl flex items-center justify-center gap-2 border border-white/10 shadow-md transform hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer"
+              >
+                <MessageSquare size={14} className="text-orange-400" />
+                실시간 고객 상담 💬
+              </button>
               <button
                 onClick={() => handleKakaoClick('regular')}
                 className="w-full py-3.5 bg-[#FEE500] hover:bg-[#FEE500]/90 text-[#191919] font-black text-xs rounded-2xl flex items-center justify-center gap-2 shadow-[0_10px_20px_rgba(254,229,0,0.15)] transform hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer"

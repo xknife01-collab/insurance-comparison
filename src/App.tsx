@@ -2056,7 +2056,7 @@ export default function App() {
       />
 
       {/* 🤖 실시간 고객 상담 AI 위젯 */}
-      {view !== 'admin' && view !== 'partner' && (isAiEnabled || isAiChatOpen) && branding.plannerId && (branding.agencyId === '88888888-8888-4888-a888-888888888888' || branding.registrationNumber) && (
+      {view !== 'admin' && view !== 'partner' && (isAiEnabled || isAiChatOpen) && branding.plannerId && (
         <AiChatWidget
           plannerId={branding.plannerId}
           plannerName={branding.name || '담당'}
@@ -2068,6 +2068,7 @@ export default function App() {
           isUnlocked={isUnlocked}
           externalIsOpen={isAiChatOpen}
           onCloseExternal={() => setIsAiChatOpen(false)}
+          registrationNumber={branding.registrationNumber}
         />
       )}
     </div>
