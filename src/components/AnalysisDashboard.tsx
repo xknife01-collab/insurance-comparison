@@ -2186,22 +2186,12 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
                           );
                         }
                       
-                      const clipboardMsg = `안녕하세요! [ ${simCode} ] 설계안으로 정밀 분석 익명 상담 신청합니다. (보험 종류: ${result.analysis.selectedCategory || '일반'})`;
+                      const clipboardMsg = `안녕하세요! [ ${simCode} ] 설계안으로 정밀 분석 상담 신청합니다. (보험 종류: ${result.analysis.selectedCategory || '일반'})`;
                       copyToClipboard(clipboardMsg);
-
-                      if (branding?.kakaoLink) {
-                        setRedirectingModal({
-                          isOpen: true,
-                          code: simCode,
-                          isAnonymous: true,
-                          targetUrl: branding.kakaoLink,
-                          countdown: 9999
-                        });
-                      }
                     }}
                     className="w-full px-6 py-4.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xs rounded-xl shadow-[0_12px_24px_-4px_rgba(255,107,0,0.4)] transform hover:scale-[1.03] active:scale-95 transition-all duration-300 cursor-pointer text-center"
                   >
-                    💬 익명 카톡 상담 신청 (무료)
+                    💬 실시간 고객 상담 신청
                   </button>
                 </div>
               </div>

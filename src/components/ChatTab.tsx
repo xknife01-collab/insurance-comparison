@@ -2,8 +2,235 @@ import React, { useState, useEffect, useRef } from 'react';
 import { createClient } from '../utils/supabase/client';
 import { 
   MessageSquare, Send, Users, Building, User, Search, 
-  Shield, ArrowLeft, Volume2, Bell, Check, Clock
+  Shield, ArrowLeft, Volume2, Bell, Check, Clock,
+  TrendingUp, TrendingDown, Zap, Info
 } from 'lucide-react';
+import { actionScoreToStep } from '../lib/insurance/aiPersona';
+import type { CustomerMemory } from '../lib/insurance/aiPersona';
+
+// ── [기능8] 고객 대화 분석 후 무비용 룰 기반으로 기억(Memory) 추출 및 Supabase 저장 ──────
+async function extractAndSaveMemory(
+  supabase: any,
+  leadId: number,
+  userMessage: string
+) {
+  try {
+    const text = userMessage.toLowerCase();
+    
+    // 1. 기존 리드 정보 가져오기
+    const { data: lead } = await supabase
+      .from('customer_leads')
+      .select('raw_payload')
+      .eq('id', leadId)
+      .single();
+      
+    const payload = lead?.raw_payload || {};
+    const existingMemory: CustomerMemory = payload.customer_memory || {};
+    
+    const interests = new Set<string>(existingMemory.interests || []);
+    const pain_points = new Set<string>(existingMemory.pain_points || []);
+    let job = existingMemory.job;
+    let family = { ...(existingMemory.family || {}) };
+
+    // 2. 키워드 매칭 분석
+    if (text.includes('암')) interests.add('암보험');
+    if (text.includes('실손') || text.includes('실비')) interests.add('실손보험');
+    if (text.includes('뇌') || text.includes('2대')) interests.add('뇌/심장보험');
+    if (text.includes('태아') || text.includes('어린이')) interests.add('태아/어린이보험');
+    if (text.includes('운전자')) interests.add('운전자보험');
+    if (text.includes('자동차')) interests.add('자동차보험');
+    if (text.includes('치아')) interests.add('치아보험');
+    if (text.includes('종신')) interests.add('종신보험');
+
+    if (text.includes('회사원') || text.includes('직장인') || text.includes('회사 다니')) job = '회사원';
+    if (text.includes('사업') || text.includes('자영업') || text.includes('가게')) job = '자영업자';
+    if (text.includes('프리랜서')) job = '프리랜서';
+    if (text.includes('주부')) job = '주부';
+    if (text.includes('공무원')) job = '공무원';
+
+    if (text.includes('남편') || text.includes('아내') || text.includes('와이프') || text.includes('신랑') || text.includes('결혼')) {
+      family.spouse = true;
+    }
+    const childMatch = text.match(/(아이|자녀|아들|딸|애들|애)\s*(\d+|한|두|세|첫째|둘째|셋째)/);
+    if (childMatch) {
+      const numStr = childMatch[2];
+      let num = family.children || 1;
+      if (numStr === '한' || numStr === '첫째' || numStr === '1') num = 1;
+      else if (numStr === '두' || numStr === '둘째' || numStr === '2') num = 2;
+      else if (numStr === '세' || numStr === '셋째' || numStr === '3') num = 3;
+      family.children = num;
+    } else if (text.includes('아이') || text.includes('자녀') || text.includes('애들')) {
+      if (!family.children) family.children = 1;
+    }
+
+    if (text.includes('비싸') || text.includes('부담') || text.includes('부족') || text.includes('비용')) pain_points.add('보험료 부담');
+    if (text.includes('중복') || text.includes('비슷')) pain_points.add('보장 중복 우려');
+    if (text.includes('어려') || text.includes('모르')) pain_points.add('보험 용어 이해의 어려움');
+
+    const updatedMemory: CustomerMemory = {
+      interests: Array.from(interests),
+      job,
+      family: Object.keys(family).length > 0 ? family : undefined,
+      pain_points: Array.from(pain_points),
+      last_context: userMessage.slice(0, 50),
+      updated_at: new Date().toISOString()
+    };
+
+    if (JSON.stringify(existingMemory) !== JSON.stringify(updatedMemory)) {
+      await supabase.from('customer_leads').update({
+        raw_payload: {
+          ...payload,
+          customer_memory: updatedMemory
+        }
+      }).eq('id', leadId);
+      console.log(`[Memory Sync (Planner Side)] 🧠 고객 기억 업데이트 완료:`, updatedMemory);
+    }
+  } catch (err) {
+    console.warn('[Memory Sync (Planner Side)] 실패:', err);
+  }
+}
+
+
+// ══════════════════════════════════════════════════════════════════════
+// [방법 3] 설계사 직접 대화 점수화 시스템
+// ══════════════════════════════════════════════════════════════════════
+
+// ── 키워드 룰 기반 점수화 (Gemini 호출 없음 → 비용 0원) ──────────────────────
+function ruleBasedScore(text: string): { pos: number; neg: number; actionType: string; actionScore: number } {
+  const t = text.toLowerCase();
+
+  // 긍정 키워드 (고객 호응 신호)
+  const posKeywords = ['좋아요','맞아요','네','알겠어요','감사','도움','궁금','한번','볼게요','해볼게요','신청','부탁드려요','알려주세요','관심','비교해줘','봐줘','어떻게','얼마','가능','ok','오케이'];
+  // 부정 키워드 (거부/이탈 신호)
+  const negKeywords = ['싫어요','아니요','됐어요','괜찮아요','필요없어요','사기','스팸','광고','귀찮','나중에','바빠요','안할게요','하지마세요','차단','신고'];
+  // 행동 키워드 (단계 전환 신호)
+  const actionKeywords: Record<string, { type: string; score: number }> = {
+    '설계안': { type: 'proposal_request', score: 10 },
+    '바꾸고싶': { type: 'proposal_request', score: 10 },
+    '가입하고싶': { type: 'proposal_request', score: 10 },
+    '신청할게': { type: 'proposal_request', score: 10 },
+    '인증': { type: 'verification_done', score: 5 },
+    '본인확인': { type: 'verification_done', score: 5 },
+    '코드': { type: 'code_parsed', score: 2 },
+    '문자': { type: 'sms_guide', score: 3 },
+    'sms': { type: 'sms_guide', score: 3 },
+  };
+
+  const posCount = posKeywords.filter(k => t.includes(k)).length;
+  const negCount = negKeywords.filter(k => t.includes(k)).length;
+  const pos = Math.min(10, posCount * 2);
+  const neg = Math.min(10, negCount * 3);
+
+  let actionType = 'general_response';
+  let actionScore = 0;
+  for (const [keyword, val] of Object.entries(actionKeywords)) {
+    if (t.includes(keyword)) {
+      if (val.score > actionScore) { actionType = val.type; actionScore = val.score; }
+    }
+  }
+  if (actionScore === 0 && pos >= 4) { actionType = 'consultation_active'; actionScore = 1; }
+
+  return { pos, neg, actionType, actionScore };
+}
+
+// ── Gemini 정밀 분석 (proposal_request 달성 시 1회만 호출) ──────────────────
+async function analyzeConversationWithGemini(
+  supabase: ReturnType<typeof createClient>,
+  roomId: string,
+  leadId: number,
+  plannerId: string
+) {
+  try {
+    const { data: msgs } = await supabase
+      .from('chat_messages')
+      .select('sender_id, message, created_at')
+      .eq('room_id', roomId)
+      .order('created_at', { ascending: true })
+      .limit(30);
+
+    if (!msgs || msgs.length === 0) return;
+
+    // 설계사가 직접 보낸 메시지만 추출 (is_manual 또는 planner_id 일치)
+    const plannerMsgs = msgs.filter(m => m.sender_id === plannerId);
+    if (plannerMsgs.length === 0) return;
+
+    // insurance_scripts에 성공 멘트로 저장 (높은 가중치)
+    for (const msg of plannerMsgs.slice(-5)) {
+      const score = ruleBasedScore(msg.message);
+      const step = actionScoreToStep(score.actionScore);
+
+      const { data: existing } = await supabase
+        .from('insurance_scripts')
+        .select('id, success_weight, success_count')
+        .eq('script_text', msg.message)
+        .maybeSingle();
+
+      if (existing) {
+        await supabase.from('insurance_scripts').update({
+          success_weight: (existing.success_weight || 0) + 25,
+          success_count:  (existing.success_count  || 0) + 1,
+          updated_at: new Date().toISOString()
+        }).eq('id', existing.id);
+        console.log(`[Planner Learn] ✅ 기존 멘트 가중치 +25: id=${existing.id}`);
+      } else {
+        await supabase.from('insurance_scripts').insert({
+          consultation_step: step,
+          script_text:       msg.message,
+          script_type:       'planner_manual',
+          description:       `설계사 직접 성공 멘트 (리드 ${leadId})`,
+          success_weight:    25,
+          success_count:     1,
+          used_count:        1,
+          ab_group:          'A',
+        });
+        console.log(`[Planner Learn] 🆕 새 설계사 멘트 저장: "${msg.message.slice(0, 30)}..."`);
+      }
+    }
+    console.log('[Planner Learn] 🎯 설계사 직접 대화 Gemini 정밀 분석 완료');
+  } catch (err) {
+    console.warn('[Planner Learn] 분석 실패:', err);
+  }
+}
+
+function detectCustomerSegment(lead: any): { label: string; bg: string; text: string; border: string } | null {
+  const memory = lead?.raw_payload?.customer_memory;
+  if (!memory) return null;
+
+  const painPoints = memory.pain_points || [];
+  const lastContext = (memory.last_context || '').toLowerCase();
+
+  if (painPoints.includes('보험료 부담') || lastContext.includes('비싸') || lastContext.includes('절약') || lastContext.includes('저렴')) {
+    return { label: '💰 가격민감형', bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/20' };
+  }
+  if (painPoints.includes('보장 중복 우려') || lastContext.includes('보장') || lastContext.includes('한도') || lastContext.includes('진단비')) {
+    return { label: '🛡️ 보장중시형', bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/20' };
+  }
+  if (painPoints.includes('보험 용어 이해의 어려움') || lastContext.includes('사기') || lastContext.includes('의심') || lastContext.includes('믿을')) {
+    return { label: '🤝 신뢰중시형', bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/20' };
+  }
+  if (lastContext.includes('바로') || lastContext.includes('빨리') || lastContext.includes('링크') || (lastContext.length > 0 && lastContext.length < 10)) {
+    return { label: '⚡ 빠른결정형', bg: 'bg-purple-500/10', text: 'text-purple-400', border: 'border-purple-500/20' };
+  }
+  return null;
+}
+
+const ACTION_SCORE_LABELS: Record<number, { label: string; color: string }> = {
+  0:  { label: '대기중',     color: 'bg-slate-800 text-slate-500 border border-slate-750'   },
+  1:  { label: '인사응대',   color: 'bg-slate-800 text-slate-400 border border-slate-750'   },
+  2:  { label: '코드인식',   color: 'bg-blue-950 text-blue-400 border border-blue-900'    },
+  3:  { label: 'SMS안내',    color: 'bg-cyan-950 text-cyan-400 border border-cyan-900'    },
+  5:  { label: '인증완료',   color: 'bg-yellow-950 text-yellow-400 border border-yellow-900'  },
+  7:  { label: '적극상담',   color: 'bg-emerald-950 text-emerald-400 border border-emerald-900' },
+  10: { label: '🔥설계요청', color: 'bg-orange-950 text-orange-400 border border-orange-900 animate-pulse'  },
+};
+
+function getActionInfo(score: number): { label: string; color: string } {
+  const keys = [10, 7, 5, 3, 2, 1, 0];
+  for (const k of keys) {
+    if (score >= k) return ACTION_SCORE_LABELS[k];
+  }
+  return ACTION_SCORE_LABELS[0];
+}
 
 interface ChatTabProps {
   currentUser: {
@@ -14,6 +241,9 @@ interface ChatTabProps {
   };
   showHelpGuide?: boolean;
   onToggleHelpGuide?: () => void;
+  initialRoomId?: string | null;
+  onClearInitialRoomId?: () => void;
+  mode?: 'internal' | 'customer';
 }
 
 interface Contact {
@@ -34,6 +264,7 @@ interface ChatRoom {
   lastMessage?: string;
   lastMessageTime?: string;
   unreadCount: number;
+  isBotActive?: boolean;
 }
 
 interface Message {
@@ -74,7 +305,7 @@ const FAQ_LIST = [
   }
 ];
 
-export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide }: ChatTabProps) {
+export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide, initialRoomId, onClearInitialRoomId, mode = 'internal' }: ChatTabProps) {
   const supabase = createClient();
   const currentUserId = currentUser.plannerId || currentUser.agencyId || ADMIN_ID;
 
@@ -92,6 +323,118 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide 
   const [showFaqDrawer, setShowFaqDrawer] = useState(false);
   
   const chatEndRef = useRef<HTMLDivElement>(null);
+
+  // AI Counselor Real-time Intervention States & Effects
+  const [selectedLead, setSelectedLead] = useState<any | null>(null);
+  const [isBotActive, setIsBotActive] = useState<boolean>(true);
+  const [globalAiActive, setGlobalAiActive] = useState<boolean>(() => {
+    try {
+      const saved = localStorage.getItem(`global_ai_active_${currentUserId}`);
+      return saved !== 'false';
+    } catch {
+      return true;
+    }
+  });
+
+  const updateGlobalAiActive = (active: boolean) => {
+    setGlobalAiActive(active);
+    try {
+      localStorage.setItem(`global_ai_active_${currentUserId}`, active ? 'true' : 'false');
+    } catch (e) {
+      console.error("Failed to save global AI state:", e);
+    }
+  };
+
+  // VIP Pinned Rooms state with localStorage integration
+  const [pinnedRoomIds, setPinnedRoomIds] = useState<string[]>(() => {
+    try {
+      const saved = localStorage.getItem(`pinned_rooms_${currentUserId}`);
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  const togglePinRoom = (roomId: string) => {
+    setPinnedRoomIds(prev => {
+      const isPinned = prev.includes(roomId);
+      const updated = isPinned ? prev.filter(id => id !== roomId) : [...prev, roomId];
+      try {
+        localStorage.setItem(`pinned_rooms_${currentUserId}`, JSON.stringify(updated));
+      } catch (e) {
+        console.error("Failed to save pinned rooms:", e);
+      }
+      return updated;
+    });
+  };
+
+  const syncLeadBotStatus = async (roomId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('customer_leads')
+        .select('*')
+        .eq('raw_payload->>chat_room_id', roomId)
+        .order('created_at', { ascending: false })
+        .limit(1);
+
+      if (!error && data && data.length > 0) {
+        setSelectedLead(data[0]);
+        setIsBotActive(data[0].is_bot_active !== false);
+      } else {
+        setSelectedLead(null);
+        setIsBotActive(false);
+      }
+    } catch (err) {
+      console.warn("Failed to fetch lead bot status:", err);
+    }
+  };
+
+  useEffect(() => {
+    if (!selectedRoom) {
+      setSelectedLead(null);
+      setIsBotActive(false);
+      return;
+    }
+
+    syncLeadBotStatus(selectedRoom.id);
+
+    const channel = supabase
+      .channel(`admin_lead_chat_sync:${selectedRoom.id}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'customer_leads'
+        },
+        (payload) => {
+          const roomCode = payload.new?.raw_payload?.chat_room_id;
+          if (roomCode === selectedRoom.id) {
+            setSelectedLead(payload.new);
+            setIsBotActive(payload.new?.is_bot_active !== false);
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [selectedRoom?.id]);
+
+  // Auto-select room from LeadsTab redirect
+  useEffect(() => {
+    if (initialRoomId && rooms.length > 0) {
+      const roomToSelect = rooms.find(r => r.id === initialRoomId);
+      if (roomToSelect) {
+        setSelectedRoom(roomToSelect);
+        fetchMessages(roomToSelect.id);
+        if (onClearInitialRoomId) {
+          onClearInitialRoomId();
+        }
+      }
+    }
+  }, [initialRoomId, rooms]);
 
   // Play premium synthesized sound using Web Audio API
   const playNotificationSound = () => {
@@ -207,10 +550,17 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide 
 
       if (roomsErr) throw roomsErr;
 
+      let filteredRoomsData = roomsData || [];
+      if (mode === 'customer') {
+        filteredRoomsData = filteredRoomsData.filter(r => r.name?.startsWith('실시간 고객 상담'));
+      } else {
+        filteredRoomsData = filteredRoomsData.filter(r => !r.name?.startsWith('실시간 고객 상담'));
+      }
+
       // For each room, load members to find the other user, and load last message + unread count
       const roomsList: ChatRoom[] = [];
 
-      for (const r of roomsData || []) {
+      for (const r of filteredRoomsData) {
         // Fetch members of this room
         const { data: membersData, error: membersErr } = await supabase
           .from('chat_room_members')
@@ -268,6 +618,20 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide 
           .eq('is_read', false)
           .neq('sender_id', currentUserId);
 
+        // Fetch matching customer lead for this room to associate bot activity status
+        let botActive = true;
+        if (mode === 'customer') {
+          const { data: leadData } = await supabase
+            .from('customer_leads')
+            .select('is_bot_active')
+            .eq('raw_payload->>chat_room_id', r.id)
+            .order('created_at', { ascending: false })
+            .limit(1);
+          if (leadData && leadData.length > 0) {
+            botActive = leadData[0].is_bot_active;
+          }
+        }
+
         roomsList.push({
           id: r.id,
           name: r.name,
@@ -276,7 +640,8 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide 
           otherMember,
           lastMessage: lastMsgData?.[0]?.message || '대화 내역이 없습니다.',
           lastMessageTime: lastMsgData?.[0]?.created_at,
-          unreadCount: count || 0
+          unreadCount: count || 0,
+          isBotActive: botActive
         });
       }
 
@@ -288,6 +653,13 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide 
       });
 
       setRooms(roomsList);
+
+      // Sync global AI state based on active rooms status
+      const activeRoomsForGlobal = roomsList.filter(r => !pinnedRoomIds.includes(r.id));
+      if (activeRoomsForGlobal.length > 0) {
+        const allActive = activeRoomsForGlobal.every(r => r.isBotActive);
+        setGlobalAiActive(allActive);
+      }
     } catch (err) {
       console.error("Failed to fetch rooms:", err);
     }
@@ -332,6 +704,37 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide 
     const msgText = newMessageText.trim();
     setNewMessageText('');
 
+    // Auto-disable AI Bot if active on planner intervention
+    if (isBotActive && selectedLead) {
+      try {
+        const updatedPayload = {
+          ...(selectedLead.raw_payload || {}),
+          timeline: [
+            {
+              id: `planner-intervene-${Date.now()}`,
+              type: 'system_log',
+              author: '설계사',
+              detail: '설계사가 직접 상담에 개입하여 AI 비서가 자동 비활성화되었습니다.',
+              created_at: new Date().toISOString()
+            },
+            ...(selectedLead.raw_payload?.timeline || [])
+          ]
+        };
+
+        await supabase
+          .from('customer_leads')
+          .update({
+            is_bot_active: false,
+            raw_payload: updatedPayload
+          })
+          .eq('id', selectedLead.id);
+        
+        setIsBotActive(false);
+      } catch (err) {
+        console.warn("Failed to auto-disable bot on planner message:", err);
+      }
+    }
+
     try {
       const { data, error } = await supabase
         .from('chat_messages')
@@ -363,6 +766,49 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide 
         const timeB = b.lastMessageTime ? new Date(b.lastMessageTime).getTime() : 0;
         return timeB - timeA;
       }));
+
+      // ── [백그라운드] 설계사 직접 대화 점수화 (설계사 화면에 표시 없음) ────────
+      if (selectedLead?.id && mode === 'customer') {
+        setTimeout(async () => {
+          try {
+            // 1. 룰 기반 즉시 점수화 (Gemini 호출 없음 → 비용 0원)
+            const score = ruleBasedScore(msgText);
+
+            // 2. ai_conversation_scores에 저장 (분석용)
+            await supabase.from('ai_conversation_scores').insert({
+              lead_id:      selectedLead.id,
+              chat_room_id: selectedRoom.id,
+              planner_id:   currentUserId,
+              message_text: msgText,
+              ai_response:  '(설계사 직접 메시지)',
+              action_type:  score.actionType,
+              action_score: score.actionScore,
+              pos_score:    score.pos,
+              neg_score:    score.neg,
+            });
+
+            // 3. customer_leads 점수 업데이트 (누적)
+            if (score.pos > 0 || score.neg > 0 || score.actionScore > 0) {
+              await supabase.rpc('update_lead_ai_scores', {
+                p_lead_id:    selectedLead.id,
+                p_pos_delta:  score.pos,
+                p_neg_delta:  score.neg,
+                p_new_action: score.actionScore > 0 ? score.actionScore : null,
+              });
+            }
+
+            // 4. proposal_request 감지 시 → Gemini 정밀 분석 1회 트리거
+            if (score.actionType === 'proposal_request') {
+              console.log('[Planner Learn] 🔥 proposal_request 감지! Gemini 정밀 분석 시작...');
+              await analyzeConversationWithGemini(supabase, selectedRoom.id, selectedLead.id, currentUserId);
+            }
+
+            console.log(`[Planner Score] 📊 룰 기반 점수화 완료 | pos:${score.pos} neg:${score.neg} action:${score.actionType}(${score.actionScore})`);
+          } catch (err) {
+            console.warn('[Planner Score] 백그라운드 점수화 실패:', err);
+          }
+        }, 500); // 500ms 후 비동기 실행 (UX 영향 없음)
+      }
 
     } catch (err) {
       console.error("Failed to send message:", err);
@@ -514,6 +960,11 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide 
 
             // Play sound locally
             playNotificationSound();
+
+            // [기능8] 고객의 실시간 메시지에서 기억(기호, 직업, 가족 등) 추출
+            if (selectedLead?.id) {
+              extractAndSaveMemory(supabase, selectedLead.id, newMsg.message).catch(() => {});
+            }
           }
         }
       )
@@ -578,7 +1029,9 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide 
       <div className="flex justify-between items-center px-6 py-4 bg-slate-900/50 border-b border-slate-800/80 shrink-0">
         <div className="flex items-center gap-3">
           <MessageSquare className="w-5 h-5 text-violet-400" />
-          <h2 className="text-base font-black text-white tracking-wide mr-2">소통 센터 (0.1초 실시간 알림)</h2>
+          <h2 className="text-base font-black text-white tracking-wide mr-2">
+            {mode === 'customer' ? '실시간 고객 상담 💬' : '소통 센터 (0.1초 실시간 알림)'}
+          </h2>
           {onToggleHelpGuide && (
             <button
               type="button"
@@ -597,20 +1050,22 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide 
             </button>
           )}
         </div>
-        <div className="flex bg-slate-950 border border-slate-800 rounded-lg p-0.5">
-          <button 
-            onClick={() => setSubTab('rooms')}
-            className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all ${subTab === 'rooms' ? 'bg-violet-600 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}
-          >
-            채팅 목록 ({rooms.length})
-          </button>
-          <button 
-            onClick={() => setSubTab('contacts')}
-            className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all ${subTab === 'contacts' ? 'bg-violet-600 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}
-          >
-            연락처 디렉토리
-          </button>
-        </div>
+        {mode !== 'customer' && (
+          <div className="flex bg-slate-950 border border-slate-800 rounded-lg p-0.5">
+            <button 
+              onClick={() => setSubTab('rooms')}
+              className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all ${subTab === 'rooms' ? 'bg-violet-600 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}
+            >
+              채팅 목록 ({rooms.length})
+            </button>
+            <button 
+              onClick={() => setSubTab('contacts')}
+              className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all ${subTab === 'contacts' ? 'bg-violet-600 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}
+            >
+              연락처 디렉토리
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Main content grid */}
@@ -681,8 +1136,17 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide 
           ) : (
             // Active Chat Rooms list
             <div className="p-3 space-y-1">
-              {rooms.map(room => {
+              {[...rooms].sort((a, b) => {
+                const aPinned = pinnedRoomIds.includes(a.id);
+                const bPinned = pinnedRoomIds.includes(b.id);
+                if (aPinned && !bPinned) return -1;
+                if (!aPinned && bPinned) return 1;
+                const timeA = a.lastMessageTime ? new Date(a.lastMessageTime).getTime() : 0;
+                const timeB = b.lastMessageTime ? new Date(b.lastMessageTime).getTime() : 0;
+                return timeB - timeA;
+              }).map(room => {
                 const isSelected = selectedRoom?.id === room.id;
+                const isPinned = pinnedRoomIds.includes(room.id);
                 const member = room.otherMember;
                 
                 return (
@@ -692,7 +1156,13 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide 
                       setSelectedRoom(room);
                       await fetchMessages(room.id);
                     }}
-                    className={`w-full flex items-center justify-between p-3 rounded-xl transition-all border text-left ${isSelected ? 'bg-violet-600/10 border-violet-500/30' : 'bg-transparent border-transparent hover:bg-slate-900/60 hover:border-slate-800'}`}
+                    className={`w-full flex items-center justify-between p-3 rounded-xl transition-all border text-left ${
+                      isSelected 
+                        ? 'bg-violet-600/10 border-violet-500/30' 
+                        : isPinned
+                        ? 'bg-rose-500/5 border-rose-500/25 hover:bg-rose-500/10 hover:border-rose-500/40 shadow-[0_0_15px_rgba(239,68,68,0.03)]'
+                        : 'bg-transparent border-transparent hover:bg-slate-900/60 hover:border-slate-800'
+                    }`}
                   >
                     <div className="flex items-center gap-3 min-w-0">
                       <div className="relative flex-shrink-0">
@@ -713,10 +1183,24 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide 
                       <div className="min-w-0">
                         <h4 className="text-xs font-bold text-white truncate flex items-center gap-1.5">
                           {member?.name || '대화방'}
+                          {isPinned && (
+                            <span className="text-[8px] bg-rose-500 text-white px-1.5 py-0.5 rounded-full font-black animate-pulse shadow-sm shadow-rose-500/20">
+                              📌 집중
+                            </span>
+                          )}
+                          {mode === 'customer' && (
+                            <span className={`text-[7.5px] font-black px-1.5 py-0.5 rounded border leading-none ${
+                              room.isBotActive 
+                                ? 'bg-orange-500/10 border-orange-500/20 text-orange-400' 
+                                : 'bg-slate-800 border-slate-700 text-slate-400'
+                            }`}>
+                              {room.isBotActive ? '🤖 AI' : '👤 수동'}
+                            </span>
+                          )}
                           {member?.role === 'super' && <span className="text-[9px] bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 px-1 rounded">관리자</span>}
                           {member?.role === 'agency' && <span className="text-[9px] bg-blue-500/10 text-blue-400 border border-blue-500/20 px-1 rounded">대리점</span>}
                         </h4>
-                        <p className="text-[10px] text-slate-400 truncate mt-1 max-w-[150px]">{room.lastMessage}</p>
+                        <p className={`text-[10px] truncate mt-1 max-w-[150px] ${isPinned ? 'text-rose-300 font-semibold' : 'text-slate-400'}`}>{room.lastMessage}</p>
                       </div>
                     </div>
                     
@@ -778,19 +1262,237 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide 
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setShowFaqDrawer(!showFaqDrawer)}
-                    className={`text-[10px] font-bold px-3 py-1.5 rounded-lg border transition-all flex items-center gap-1.5 ${showFaqDrawer ? 'bg-violet-600 border-violet-500 text-white shadow-md' : 'bg-slate-900/60 border-slate-800 text-slate-300 hover:text-white hover:border-slate-700'}`}
-                  >
-                    <span>💡 자주 묻는 질문 (FAQ)</span>
-                  </button>
+                  {/* AI Bot Active/Pause Controls */}
+                  {selectedLead && (
+                    <div className="flex items-center gap-2">
+                      {/* Pinned Focus Toggle Button */}
+                      {mode === 'customer' && (
+                        <button
+                          type="button"
+                          onClick={async () => {
+                            const isCurrentlyPinned = pinnedRoomIds.includes(selectedRoom.id);
+                            togglePinRoom(selectedRoom.id);
+                            
+                            // Auto-disable AI Bot on pinning, or keep it on unpinning
+                            const newBotStatus = isCurrentlyPinned; // if currently pinned, unpinning restores AI (true), pinning pauses AI (false)
+                            try {
+                              const updatedPayload = {
+                                ...(selectedLead.raw_payload || {}),
+                                timeline: [
+                                  {
+                                    id: `planner-pin-${Date.now()}`,
+                                    type: 'system_log',
+                                    author: '설계사',
+                                    detail: `설계사가 이 고객을 집중 상담방으로 ${!isCurrentlyPinned ? '지정' : '해제'}했습니다.`,
+                                    created_at: new Date().toISOString()
+                                  },
+                                  ...(selectedLead.raw_payload?.timeline || [])
+                                ]
+                              };
+                              await supabase
+                                .from('customer_leads')
+                                .update({
+                                  is_bot_active: newBotStatus,
+                                  raw_payload: updatedPayload
+                                })
+                                .eq('id', selectedLead.id);
+                              setIsBotActive(newBotStatus);
+                              await fetchRooms();
+                            } catch (e) {
+                              console.error('Failed to update bot status on pin toggle:', e);
+                            }
+                          }}
+                          className={`text-[9.5px] font-black px-2.5 py-1.5 rounded-lg border transition-all cursor-pointer ${
+                            pinnedRoomIds.includes(selectedRoom.id)
+                              ? 'bg-rose-600 border-rose-500 text-white hover:bg-rose-500'
+                              : 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white'
+                          }`}
+                        >
+                          {pinnedRoomIds.includes(selectedRoom.id) ? '📌 집중 상담 해제' : '📌 집중 상담 지정'}
+                        </button>
+                      )}
+
+                      {/* AI Bot Active/Pause Status & Toggle */}
+                      <span className={`text-[10px] font-black px-2.5 py-1 rounded-lg border ${
+                        isBotActive 
+                          ? 'bg-orange-500/10 border-orange-500/20 text-orange-500' 
+                          : 'bg-slate-800 border-slate-750 text-slate-400'
+                      }`}>
+                        {isBotActive ? '🤖 AI 비서 응대중' : '👤 수동 상담 모드'}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          const newStatus = !isBotActive;
+                          try {
+                            const updatedPayload = {
+                              ...(selectedLead.raw_payload || {}),
+                              timeline: [
+                                {
+                                  id: `planner-toggle-${Date.now()}`,
+                                  type: 'system_log',
+                                  author: '설계사',
+                                  detail: `설계사가 AI 비서 응대를 ${newStatus ? '활성화' : '일시 정지'}했습니다.`,
+                                  created_at: new Date().toISOString()
+                                },
+                                ...(selectedLead.raw_payload?.timeline || [])
+                              ]
+                            };
+                            await supabase
+                              .from('customer_leads')
+                              .update({
+                                is_bot_active: newStatus,
+                                raw_payload: updatedPayload
+                              })
+                              .eq('id', selectedLead.id);
+                            setIsBotActive(newStatus);
+                            await fetchRooms();
+                          } catch (e) {
+                            console.error('Failed to toggle bot activity:', e);
+                          }
+                        }}
+                        className={`text-[9.5px] font-black px-2.5 py-1.5 rounded-lg border transition-all cursor-pointer ${
+                          isBotActive 
+                            ? 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white' 
+                            : 'bg-orange-600 border-orange-500 text-white hover:bg-orange-500'
+                        }`}
+                      >
+                        {isBotActive ? 'AI 상담 일시정지' : 'AI 상담 활성화'}
+                      </button>
+                    </div>
+                  )}
+
+                  {mode !== 'customer' && (
+                    <button
+                      type="button"
+                      onClick={() => setShowFaqDrawer(!showFaqDrawer)}
+                      className={`text-[10px] font-bold px-3 py-1.5 rounded-lg border transition-all flex items-center gap-1.5 ${showFaqDrawer ? 'bg-violet-600 border-violet-500 text-white shadow-md' : 'bg-slate-900/60 border-slate-800 text-slate-300 hover:text-white hover:border-slate-700'}`}
+                    >
+                      <span>💡 자주 묻는 질문 (FAQ)</span>
+                    </button>
+                  )}
                   <span className="hidden sm:flex text-[10px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full font-bold items-center gap-1">
                     <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
                     실시간 연결됨
                   </span>
                 </div>
               </div>
+
+              {/* 📊 AI 실시간 상담 점수 모니터링 바 */}
+              {selectedLead && (
+                <>
+                  <div className="px-6 py-2.5 bg-slate-900/60 border-b border-slate-800/60 flex flex-wrap items-center justify-between gap-4 text-xs font-semibold select-none backdrop-blur-sm animate-in fade-in duration-300">
+                  <div className="flex items-center gap-1.5 text-slate-400">
+                    <Zap className="w-3.5 h-3.5 text-orange-400 shrink-0" />
+                    <span>AI 실시간 분석:</span>
+                    <span className="text-[10px] text-slate-600 font-medium">대화 흐름에 따라 실시간 반영됩니다.</span>
+                  </div>
+                  
+                  <div className="flex items-center gap-5 flex-1 justify-end max-w-xl">
+                    {/* 긍정 */}
+                    <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-1">
+                        <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
+                        <span className="text-[10px] text-emerald-400 font-bold">긍정</span>
+                      </div>
+                      <div className="w-16 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                        <div 
+                          className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full transition-all duration-300"
+                          style={{ width: `${Math.min(100, Math.round(((selectedLead.pos_score ?? 0) / 30) * 100))}%` }}
+                        />
+                      </div>
+                      <span className="text-[10px] font-black text-emerald-400 w-5 text-right">{selectedLead.pos_score ?? 0}pt</span>
+                    </div>
+
+                    {/* 부정 */}
+                    <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-1">
+                        <TrendingDown className="w-3.5 h-3.5 text-rose-400" />
+                        <span className="text-[10px] text-rose-400 font-bold">부정</span>
+                      </div>
+                      <div className="w-16 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                        <div 
+                          className="h-full bg-gradient-to-r from-rose-500 to-rose-400 rounded-full transition-all duration-300"
+                          style={{ width: `${Math.min(100, Math.round(((selectedLead.neg_score ?? 0) / 30) * 100))}%` }}
+                        />
+                      </div>
+                      <span className="text-[10px] font-black text-rose-400 w-5 text-right">{selectedLead.neg_score ?? 0}pt</span>
+                    </div>
+
+                    {/* 행동 */}
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] text-slate-400">행동:</span>
+                      <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase border ${getActionInfo(selectedLead.action_score ?? 0).color}`}>
+                        {getActionInfo(selectedLead.action_score ?? 0).label}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* ── [신규] 실시간 감정 흐름 곡선 및 설계 성공 확률 대시보드 ── */}
+                <div className="px-6 py-2 bg-slate-950/40 border-b border-slate-800/60 flex items-center justify-between gap-4 text-xs font-semibold backdrop-blur-sm">
+                  {/* 감정 흐름 곡선 */}
+                  <div className="flex items-center gap-2 select-none">
+                    <span className="text-[10px] text-slate-500 font-bold">감정 흐름 곡선:</span>
+                    <div className="flex items-center gap-1.5 bg-slate-900/60 border border-slate-850 px-2 py-1 rounded-lg">
+                      <span className={`transition-all duration-300 ${selectedLead.neg_score >= 15 ? 'opacity-100 font-bold scale-110 text-rose-400' : 'opacity-30 scale-90'}`}>⚠️ 이탈위험</span>
+                      <span className="text-slate-600 font-normal">&gt;</span>
+                      <span className={`transition-all duration-300 ${(selectedLead.pos_score ?? 0) < 6 && selectedLead.neg_score < 15 ? 'opacity-100 font-bold scale-110 text-slate-400' : 'opacity-30 scale-90'}`}>😐 대기</span>
+                      <span className="text-slate-600 font-normal">&gt;</span>
+                      <span className={`transition-all duration-300 ${(selectedLead.pos_score ?? 0) >= 6 && (selectedLead.pos_score ?? 0) < 12 && selectedLead.neg_score < 15 ? 'opacity-100 font-bold scale-110 text-emerald-400' : 'opacity-30 scale-90'}`}>😊 호감</span>
+                      <span className="text-slate-600 font-normal">&gt;</span>
+                      <span className={`transition-all duration-300 ${(selectedLead.pos_score ?? 0) >= 12 && (selectedLead.action_score ?? 0) < 10 && selectedLead.neg_score < 15 ? 'opacity-100 font-bold scale-110 text-cyan-400' : 'opacity-30 scale-90'}`}>😮 관심</span>
+                      <span className="text-slate-600 font-normal">&gt;</span>
+                      <span className={`transition-all duration-300 ${selectedLead.action_score >= 10 ? 'opacity-100 font-bold scale-120 text-orange-400 drop-shadow-[0_0_8px_rgba(249,115,22,0.4)]' : 'opacity-30 scale-90'}`}>🔥 설계요청</span>
+                    </div>
+                  </div>
+
+                  {/* 설계 성공 예측 확률 및 성향 배지 */}
+                  <div className="flex items-center gap-3">
+                    {/* [기능8] 실시간 성향 분석 배지 */}
+                    {(() => {
+                      const seg = detectCustomerSegment(selectedLead);
+                      if (!seg) return null;
+                      return (
+                        <div className={`px-2 py-0.5 rounded border text-[10px] font-black ${seg.bg} ${seg.text} ${seg.border}`}>
+                          {seg.label}
+                        </div>
+                      );
+                    })()}
+
+                    <span className="text-[10px] text-slate-500 font-bold">설계 요청 확률:</span>
+                    {(() => {
+                      const pos = selectedLead.pos_score ?? 0;
+                      const action = selectedLead.action_score ?? 0;
+                      const prob = action >= 10
+                        ? 100
+                        : Math.max(5, Math.min(99, Math.round((pos * 1.5) + (action * 5.5))));
+                      
+                      let colorClass = 'text-slate-400';
+                      let bgClass = 'bg-slate-900/60 border-slate-800';
+                      if (prob >= 80) {
+                        colorClass = 'text-orange-400 font-black animate-pulse';
+                        bgClass = 'bg-orange-500/10 border-orange-500/30 shadow-md shadow-orange-500/5';
+                      } else if (prob >= 50) {
+                        colorClass = 'text-emerald-400 font-black';
+                        bgClass = 'bg-emerald-500/10 border-emerald-500/20';
+                      } else if (prob >= 25) {
+                        colorClass = 'text-cyan-400 font-bold';
+                        bgClass = 'bg-cyan-500/10 border-cyan-500/20';
+                      }
+
+                      return (
+                        <div className={`px-2.5 py-1 rounded-lg border text-[11px] flex items-center gap-1.5 transition-all duration-300 ${bgClass}`}>
+                          <span className={colorClass}>{prob}%</span>
+                          <span className="text-[9px] text-slate-500 font-medium">
+                            {prob === 100 ? '설계 요청 수락 완료! 🎉' : prob >= 80 ? '클로징 적극 권장! 🔥' : prob >= 50 ? '대화 긍정적 흐름 👍' : '탐색 단계'}
+                          </span>
+                        </div>
+                      );
+                    })()}
+                  </div>
+                </div>
+              </>)}
 
               {/* Chat workspace split panel (Chat + FAQ drawer) */}
               <div className="flex-1 flex overflow-hidden">
@@ -860,6 +1562,126 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide 
                   </form>
                 </div>
 
+                {/* Right Side: AI 상담 실시간 요약 브리핑 카드 (customer mode only) */}
+                {mode === 'customer' && selectedLead && (
+                  <div className="hidden lg:flex w-72 border-l border-slate-800/80 bg-slate-950/40 flex-col p-4 overflow-y-auto shrink-0 select-none backdrop-blur-md">
+                    <div className="flex items-center gap-1.5 mb-4 border-b border-slate-800/80 pb-2">
+                      <Zap className="w-4 h-4 text-orange-400" />
+                      <h4 className="text-xs font-black text-white uppercase tracking-wider">
+                        AI 상담 브리핑
+                      </h4>
+                    </div>
+
+                    {/* 1. 성향 및 정보 */}
+                    <div className="space-y-4 flex-1">
+                      {/* 성향 요약 배지 */}
+                      <div className="bg-slate-900/60 border border-slate-800/80 p-3 rounded-2xl">
+                        <span className="text-[10px] text-slate-500 font-bold block mb-1.5">고객 유형 분석</span>
+                        {(() => {
+                          const seg = detectCustomerSegment(selectedLead);
+                          if (!seg) return <span className="text-[10px] text-slate-600">대화 정보 축적 중... 😐</span>;
+                          return (
+                            <div className="flex items-center gap-2">
+                              <span className={`px-2.5 py-1 rounded-lg border text-[10px] font-black ${seg.bg} ${seg.text} ${seg.border}`}>
+                                {seg.label}
+                              </span>
+                              <span className="text-[9px] text-slate-400 font-bold">맞춤 화법 가동 중</span>
+                            </div>
+                          );
+                        })()}
+                      </div>
+
+                      {/* 관심사 및 기억 프로필 */}
+                      <div className="bg-slate-900/60 border border-slate-800/80 p-3 rounded-2xl space-y-3">
+                        <span className="text-[10px] text-slate-500 font-bold block">🧠 고객 기억 정보</span>
+                        
+                        {/* 관심 보험 */}
+                        <div>
+                          <span className="text-[9px] text-slate-600 block mb-1">관심 상품</span>
+                          <div className="flex flex-wrap gap-1">
+                            {selectedLead.raw_payload?.customer_memory?.interests?.length > 0 ? (
+                              selectedLead.raw_payload.customer_memory.interests.map((it: string, i: number) => (
+                                <span key={i} className="text-[9px] bg-violet-600/15 border border-violet-500/20 text-violet-300 px-1.5 py-0.5 rounded-md font-bold">
+                                  {it}
+                                </span>
+                              ))
+                            ) : (
+                              <span className="text-[9px] text-slate-600">미확인</span>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* 신상 정보 */}
+                        <div className="grid grid-cols-2 gap-2 border-t border-slate-900 pt-2.5">
+                          <div>
+                            <span className="text-[9px] text-slate-600 block">직업</span>
+                            <span className="text-[10px] text-slate-300 font-bold">
+                              {selectedLead.raw_payload?.customer_memory?.job || '미확인'}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="text-[9px] text-slate-600 block">가족 관계</span>
+                            <span className="text-[10px] text-slate-300 font-bold">
+                              {(() => {
+                                const f = selectedLead.raw_payload?.customer_memory?.family;
+                                if (!f) return '미확인';
+                                const parts = [];
+                                if (f.spouse) parts.push('배우자');
+                                if (f.children) parts.push(`자녀 ${f.children}명`);
+                                return parts.join(', ') || '독신';
+                              })()}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* 페인 포인트 */}
+                        <div className="border-t border-slate-900 pt-2.5">
+                          <span className="text-[9px] text-slate-600 block mb-1">핵심 고민거리</span>
+                          <div className="flex flex-wrap gap-1">
+                            {selectedLead.raw_payload?.customer_memory?.pain_points?.length > 0 ? (
+                              selectedLead.raw_payload.customer_memory.pain_points.map((pt: string, i: number) => (
+                                <span key={i} className="text-[9px] bg-rose-600/10 border border-rose-500/20 text-rose-400 px-1.5 py-0.5 rounded-md font-bold">
+                                  {pt}
+                                </span>
+                              ))
+                            ) : (
+                              <span className="text-[9px] text-slate-600">미확인</span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* 💡 설계사 전용 추천 개입 전략 카드 */}
+                      <div className="bg-gradient-to-br from-violet-950/20 to-slate-900 border border-violet-500/20 p-3.5 rounded-2xl">
+                        <div className="flex items-center gap-1 mb-1.5">
+                          <Zap className="w-3.5 h-3.5 text-orange-400" />
+                          <span className="text-[10px] text-orange-400 font-black">설계사 전용 클로징 팁</span>
+                        </div>
+                        <p className="text-[10px] text-slate-300 leading-relaxed font-bold break-keep">
+                          {(() => {
+                            const memory = selectedLead.raw_payload?.customer_memory;
+                            if (!memory) return '고객과의 대화가 조금 더 필요합니다. AI 비서가 성향을 탐색하는 중입니다. 😐';
+                            
+                            const painPoints = memory.pain_points || [];
+                            const lastContext = (memory.last_context || '').toLowerCase();
+
+                            if (painPoints.includes('보험료 부담') || lastContext.includes('비싸') || lastContext.includes('절약')) {
+                              return '💰 현재 기존 보험료 상승에 큰 부담을 느끼고 있습니다. "35개사 비교 분석을 통해 보장은 똑같이 지키면서 거품을 다이어트해 드린다"는 점을 필두로 직접 개입해 클로징을 유도하세요!';
+                            }
+                            if (painPoints.includes('보장 중복 우려') || lastContext.includes('보장') || lastContext.includes('한도')) {
+                              return '🛡️ 가입은 되어있으나 나중에 보장을 못 받을까 우려 중입니다. "뇌/심장/암 핵심 3대 질환 진단금의 누락을 점검해 드린다"고 강조하며 개입해 보세요!';
+                            }
+                            if (painPoints.includes('보험 용어 이해의 어려움') || lastContext.includes('사기') || lastContext.includes('의심')) {
+                              return '🤝 플랫폼 가입 유도나 강요를 우려해 경계하고 있습니다. "설계사가 직접 1:1 전담 마크하여 가입 강요 없이 안심 모니터링만 해드린다"며 신뢰 후기 위주로 설명하세요!';
+                            }
+                            return '⚡ 빠른 결정을 원하거나 단순 관심사 고객입니다. 인사말은 줄이고 즉각 "0.1초 본인인증으로 리밸런싱 보고서 잠금 해제를 도와드릴까요?" 하고 직접 개입하세요!';
+                          })()}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 {/* Right Side: Interactive Sliding FAQ Drawer */}
                 {showFaqDrawer && (
                   <div className="absolute md:relative right-0 top-0 bottom-0 z-30 w-full md:w-80 border-l border-slate-800/80 bg-slate-950/95 md:bg-slate-950/60 flex flex-col p-4 overflow-y-auto animate-in slide-in-from-right duration-350 shrink-0">
@@ -921,54 +1743,251 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide 
               <div className="w-14 h-14 rounded-3xl bg-violet-600/10 border border-violet-500/20 flex items-center justify-center mb-3 text-violet-400 shadow-xl shadow-violet-950/20">
                 <MessageSquare className="w-7 h-7" />
               </div>
-              <h3 className="text-sm font-black text-white tracking-wide">실시간 소통 센터</h3>
-              <p className="text-xs text-slate-400 max-w-sm mt-2 leading-relaxed">
-                총관리자, 대리점 및 소속 설계사 간의 실시간 1:1 대화방을 지원합니다.<br/>
-                왼쪽 연락처에서 대화할 대상을 선택해 보세요.
+              <h3 className="text-sm font-black text-white tracking-wide">
+                {mode === 'customer' ? '실시간 고객 상담 센터' : '실시간 소통 센터'}
+              </h3>
+              <p className="text-xs text-slate-400 max-w-sm mt-2 leading-relaxed break-keep">
+                {mode === 'customer' 
+                  ? '고객과의 1:1 실시간 상담을 지원합니다.\n왼쪽 목록에서 상담을 진행할 고객을 선택해 보세요.'
+                  : '총관리자, 대리점 및 소속 설계사 간의 실시간 1:1 대화방을 지원합니다. 왼쪽 연락처에서 대화할 대상을 선택해 보세요.'}
               </p>
               
-              {/* Collapsible FAQ Accordion panel for Self-Service */}
-              <div className="mt-8 w-full max-w-lg text-left">
-                <h4 className="text-xs font-black text-slate-400 uppercase tracking-wider mb-3 px-1">
-                  자주 묻는 질문 (FAQ)
-                </h4>
-                
-                {/* 공지사항 배너 */}
-                <div className="mb-4 p-3 bg-violet-950/20 border border-violet-500/20 rounded-2xl flex items-start gap-2.5">
-                  <span className="text-sm shrink-0">📢</span>
-                  <p className="text-[10px] text-violet-300 font-bold leading-relaxed">
-                    보험료 비교 데이터는 생명보험협회 및 손해보험협회 공시자료를 토대로 한달에 한번 업데이트 됩니다.
-                  </p>
-                </div>
+              {/* 모든 고객 AI 마스터 제어 스위치 (customer mode only) */}
+              {mode === 'customer' && (
+                <div className="mt-6 w-full max-w-lg bg-slate-900/60 border border-slate-800 rounded-2xl p-4 text-center space-y-3 shadow-lg">
+                  <span className="text-[10px] font-black text-slate-400 block uppercase tracking-wider">
+                    🤖 AI 비서 마스터 스위치 (전체 고객 일괄 통제)
+                  </span>
+                  <div className="flex gap-3 justify-center">
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        updateGlobalAiActive(true);
+                        if (rooms.length === 0) return;
+                        if (!confirm("현재 리스트에 있는 모든 고객의 AI 상담을 활성화하시겠습니까? (📌 집중 상담방 제외)")) return;
+                        try {
+                          const roomIdsToUpdate = rooms.filter(r => !pinnedRoomIds.includes(r.id)).map(r => r.id);
+                          if (roomIdsToUpdate.length > 0) {
+                            const { data: leadsToUpdate, error: queryErr } = await supabase
+                              .from('customer_leads')
+                              .select('id, raw_payload');
+                            
+                            if (queryErr) throw queryErr;
 
-                <div className="space-y-2">
-                  {FAQ_LIST.map((faq, idx) => {
-                    const isOpen = activeFaqIndex === idx;
-                    return (
-                      <div 
-                        key={idx} 
-                        className="bg-slate-900/40 border border-slate-800/80 rounded-2xl overflow-hidden transition-all duration-300"
-                      >
-                        <button
-                          type="button"
-                          onClick={() => setActiveFaqIndex(isOpen ? null : idx)}
-                          className="w-full flex items-center justify-between p-4 text-xs font-bold text-white hover:bg-slate-800/40 transition-all text-left"
-                        >
-                          <span>{faq.question}</span>
-                          <span className={`transform transition-transform duration-300 text-slate-500 ${isOpen ? 'rotate-90' : ''}`}>
-                            &gt;
-                          </span>
-                        </button>
-                        <div 
-                          className={`transition-all duration-300 overflow-hidden ${isOpen ? 'max-h-[160px] border-t border-slate-900/60 p-4' : 'max-h-0'}`}
-                        >
-                          <p className="text-[11px] text-slate-300 leading-relaxed">{faq.answer}</p>
-                        </div>
+                            const targetLeads = (leadsToUpdate || []).filter(lead => {
+                              const roomId = lead.raw_payload?.chat_room_id;
+                              return roomId && roomIdsToUpdate.includes(roomId);
+                            });
+
+                            let updatedCount = 0;
+                            for (const lead of targetLeads) {
+                              const updatedPayload = {
+                                ...(lead.raw_payload || {}),
+                                timeline: [
+                                  {
+                                    id: `planner-global-activate-${Date.now()}`,
+                                    type: 'system_log',
+                                    author: '설계사',
+                                    detail: '설계사가 마스터 스위치를 가동하여 전체 AI 상담을 일괄 활성화했습니다.',
+                                    created_at: new Date().toISOString()
+                                  },
+                                  ...(lead.raw_payload?.timeline || [])
+                                ]
+                              };
+                              await supabase
+                                .from('customer_leads')
+                                .update({
+                                  is_bot_active: true,
+                                  raw_payload: updatedPayload
+                                })
+                                .eq('id', lead.id);
+                              updatedCount++;
+                            }
+                            alert(`🤖 전체 AI 자동 응대가 가동되었습니다!\n\n• 대상 고객 수: 총 ${updatedCount}명\n• 집중 상담(📌) 중인 방은 변경 없이 안전하게 유지되었습니다.\n\n이제 AI 비서가 순차적으로 대화를 응대합니다.`);
+                          } else {
+                            alert("AI를 시작할 활성화된 일반 대화방이 없습니다.");
+                          }
+                          await fetchRooms();
+                          if (selectedRoom && !pinnedRoomIds.includes(selectedRoom.id)) {
+                            setIsBotActive(true);
+                          }
+                        } catch (e) {
+                          console.error("Failed to globally resume AI bot:", e);
+                          alert("상태 업데이트에 실패했습니다. 네트워크를 확인해 주세요.");
+                        }
+                      }}
+                      className={`px-4 py-2.5 text-xs font-black rounded-xl transition-all cursor-pointer border ${
+                        globalAiActive
+                          ? 'bg-orange-600 border-orange-500 text-white shadow-md shadow-orange-600/30 scale-105 ring-2 ring-orange-500/15'
+                          : 'bg-slate-900/40 border-slate-800 text-slate-500 hover:text-slate-300 hover:bg-slate-800 opacity-60'
+                      }`}
+                    >
+                      🤖 전체 AI 상담 시작
+                    </button>
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        updateGlobalAiActive(false);
+                        if (rooms.length === 0) return;
+                        if (!confirm("현재 리스트에 있는 모든 고객의 AI 상담을 정지하고 수동 개입 모드로 전환하시겠습니까?")) return;
+                        try {
+                          const roomIdsToUpdate = rooms.map(r => r.id);
+                          const { data: leadsToUpdate, error: queryErr } = await supabase
+                            .from('customer_leads')
+                            .select('id, raw_payload');
+                          
+                          if (queryErr) throw queryErr;
+
+                          const targetLeads = (leadsToUpdate || []).filter(lead => {
+                            const roomId = lead.raw_payload?.chat_room_id;
+                            return roomId && roomIdsToUpdate.includes(roomId);
+                          });
+
+                          let updatedCount = 0;
+                          for (const lead of targetLeads) {
+                            const updatedPayload = {
+                              ...(lead.raw_payload || {}),
+                              timeline: [
+                                {
+                                  id: `planner-global-pause-${Date.now()}`,
+                                  type: 'system_log',
+                                  author: '설계사',
+                                  detail: '설계사가 마스터 스위치를 정지하여 전체 AI 상담을 일괄 일시정지했습니다.',
+                                  created_at: new Date().toISOString()
+                                },
+                                ...(lead.raw_payload?.timeline || [])
+                              ]
+                            };
+                            await supabase
+                              .from('customer_leads')
+                              .update({
+                                is_bot_active: false,
+                                raw_payload: updatedPayload
+                              })
+                              .eq('id', lead.id);
+                            updatedCount++;
+                          }
+                          alert(`👤 모든 고객의 AI 상담이 정지되었습니다!\n\n• 대상 고객 수: 총 ${updatedCount}명\n\n이제부터 모든 고객과의 대화는 대리점이나 설계사가 직접 입력하여 수동으로 상담을 진행하셔야 합니다.`);
+                          await fetchRooms();
+                          if (selectedRoom) {
+                            setIsBotActive(false);
+                          }
+                        } catch (e) {
+                          console.error("Failed to globally pause AI bot:", e);
+                          alert("상태 업데이트에 실패했습니다. 네트워크를 확인해 주세요.");
+                        }
+                      }}
+                      className={`px-4 py-2.5 text-xs font-black rounded-xl transition-all border cursor-pointer ${
+                        !globalAiActive
+                          ? 'bg-rose-600 border-rose-500 text-white shadow-md shadow-rose-600/30 scale-105 ring-2 ring-rose-500/15'
+                          : 'bg-slate-900/40 border-slate-800 text-slate-500 hover:text-slate-300 hover:bg-slate-800 opacity-60'
+                      }`}
+                    >
+                      👤 전체 AI 상담 일시정지
+                    </button>
+                  </div>
+
+                  {/* 실시간 모드 상태 안내 문구 (Dynamic Status Notice Banner) */}
+                  <div className={`mt-4 p-4 rounded-xl border text-xs text-left leading-relaxed transition-all duration-300 ${
+                    globalAiActive
+                      ? 'bg-orange-500/10 border-orange-500/20 text-orange-200 shadow-md shadow-orange-950/20 animate-in fade-in duration-300'
+                      : 'bg-rose-500/10 border-rose-500/20 text-rose-200 shadow-md shadow-rose-950/20 animate-in fade-in duration-300'
+                  }`}>
+                    <div className="flex items-start gap-2.5">
+                      <span className="text-sm shrink-0">{globalAiActive ? '🤖' : '👤'}</span>
+                      <div className="space-y-1">
+                        <p className="font-bold text-[12px] text-white flex items-center gap-1.5">
+                          {globalAiActive 
+                            ? '현재 AI 비서가 활성화(가동 중) 상태입니다.' 
+                            : '현재 AI 비서가 일시정지(수동 모드) 상태입니다.'}
+                        </p>
+                        <p className="text-[11px] text-slate-300 leading-relaxed break-keep">
+                          {globalAiActive
+                            ? '신규 고객이 상담방에 입장하거나 설계안 코드를 입력하면 AI 비서가 인증 및 안내를 실시간 자동 대행합니다. (중요 고객에게 집중 개입하시려면 개별 채팅창에서 직접 답장하거나 📌 집중 상담 지정을 클릭하세요.)'
+                            : '모든 대화방의 AI 자동 응답이 차단되었습니다. 고객이 대화를 시작하거나 코드를 입력해도 AI가 답장하지 않으므로, 설계사가 모든 실시간 메시지를 직접 모니터링하여 수동으로 답변하셔야 합니다.'}
+                        </p>
                       </div>
-                    );
-                  })}
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )}
+
+              {/* AI 실시간 상담 가이드 (customer mode only) */}
+              {mode === 'customer' && (
+                <div className="mt-8 w-full max-w-lg text-left space-y-4">
+                  <h4 className="text-xs font-black text-slate-400 uppercase tracking-wider px-1">
+                    📖 실시간 AI 보험 비서 가이드 & 작동 방식
+                  </h4>
+                  
+                  <div className="grid grid-cols-1 gap-3">
+                    <div className="p-4 bg-slate-900/40 border border-slate-800/80 rounded-2xl space-y-1.5 hover:border-slate-700 transition-all">
+                      <span className="text-[10px] font-black text-orange-400 uppercase block tracking-wider">Step 1. 고유 코드 자동 파싱</span>
+                      <p className="text-xs font-semibold text-slate-200 leading-relaxed break-keep">
+                        고객이 상세분석지에서 복사해온 고유 설계안 코드 (예: `REX-XXXXXX`)를 메신저 창에 입력하는 즉시 AI 비서가 이를 감지하여 해당 고객 정보를 실시간 연동합니다.
+                      </p>
+                    </div>
+
+                    <div className="p-4 bg-slate-900/40 border border-slate-800/80 rounded-2xl space-y-1.5 hover:border-slate-700 transition-all">
+                      <span className="text-[10px] font-black text-orange-400 uppercase block tracking-wider">Step 2. 0.1초 본인인증 & 마스킹 해제</span>
+                      <p className="text-xs font-semibold text-slate-200 leading-relaxed break-keep">
+                        AI가 마스킹 잠금 해제를 위한 인증 안내 및 전용 버튼 링크를 전송합니다. 고객이 간편인증을 완료하면 0.1초 만에 마스킹이 완전 해제되어 설계사 리드 DB에 실명 및 연락처가 즉시 노출됩니다.
+                      </p>
+                    </div>
+
+                    <div className="p-4 bg-slate-900/40 border border-slate-800/80 rounded-2xl space-y-1.5 hover:border-slate-700 transition-all">
+                      <span className="text-[10px] font-black text-orange-400 uppercase block tracking-wider">Step 3. 집중 상담 지정 (📌 Pin) & 자유로운 개입</span>
+                      <p className="text-xs font-semibold text-slate-200 leading-relaxed break-keep">
+                        중요한 VIP 고객은 **`📌 집중 상담 지정`** 버튼을 눌러 목록 최상단에 고정하고 AI를 정지시킬 수 있습니다. 그동안 나머지 일반 대화는 AI 비서가 백그라운드에서 끊김 없이 논스톱 응대를 계속 전담합니다.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              {/* Collapsible FAQ Accordion panel for Self-Service (Internal mode only) */}
+              {mode !== 'customer' && (
+                <div className="mt-8 w-full max-w-lg text-left">
+                  <h4 className="text-xs font-black text-slate-400 uppercase tracking-wider mb-3 px-1">
+                    자주 묻는 질문 (FAQ)
+                  </h4>
+                  
+                  {/* 공지사항 배너 */}
+                  <div className="mb-4 p-3 bg-violet-950/20 border border-violet-500/20 rounded-2xl flex items-start gap-2.5">
+                    <span className="text-sm shrink-0">📢</span>
+                    <p className="text-[10px] text-violet-300 font-bold leading-relaxed">
+                      보험료 비교 데이터는 생명보험협회 및 손해보험협회 공시자료를 토대로 한달에 한번 업데이트 됩니다.
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    {FAQ_LIST.map((faq, idx) => {
+                      const isOpen = activeFaqIndex === idx;
+                      return (
+                        <div 
+                          key={idx} 
+                          className="bg-slate-900/40 border border-slate-800/80 rounded-2xl overflow-hidden transition-all duration-300"
+                        >
+                          <button
+                            type="button"
+                            onClick={() => setActiveFaqIndex(isOpen ? null : idx)}
+                            className="w-full flex items-center justify-between p-4 text-xs font-bold text-white hover:bg-slate-800/40 transition-all text-left"
+                          >
+                            <span>{faq.question}</span>
+                            <span className={`transform transition-transform duration-300 text-slate-500 ${isOpen ? 'rotate-90' : ''}`}>
+                              &gt;
+                            </span>
+                          </button>
+                          <div 
+                            className={`transition-all duration-300 overflow-hidden ${isOpen ? 'max-h-[160px] border-t border-slate-900/60 p-4' : 'max-h-0'}`}
+                          >
+                            <p className="text-[11px] text-slate-300 leading-relaxed">{faq.answer}</p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
 
             </div>
           )}

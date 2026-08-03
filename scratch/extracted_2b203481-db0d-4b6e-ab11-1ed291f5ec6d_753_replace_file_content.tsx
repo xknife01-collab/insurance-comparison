@@ -1,0 +1,2 @@
+"  const handleAuthSuccess = (coverage: StandardizedCoverage) => {\n    onAnalyze({\n      age: coverage.age,\n      gender: coverage.gender,\n      jobClass: 1,\n      selectedCategory: 'remodeling',\n      cancer: { currentAmount: coverage.cancer_diagnos
+<truncated 583 bytes>

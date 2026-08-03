@@ -1,0 +1,1 @@
+"  // Form states\n  const [gender, setGender] = useState<'M' | 'F'>('M');\n  const [birth, setBirth] = useState('');\n  const [age, setAge] = useState(''); // 2026 - 1977 + 1 = 50\n\n  const userName = '';\n  const mobileNo = '';"

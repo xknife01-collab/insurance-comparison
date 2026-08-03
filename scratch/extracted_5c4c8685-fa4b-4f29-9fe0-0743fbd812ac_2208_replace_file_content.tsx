@@ -1,0 +1,1 @@
+"      <HyphenAuthModal\n        isOpen={isAuthModalOpen}\n        onClose={() => setIsAuthModalOpen(false)}\n        onSuccess={handleAuthSuccess}\n      />\n    </section>"

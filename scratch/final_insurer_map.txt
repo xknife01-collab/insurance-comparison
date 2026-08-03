@@ -1,0 +1,152 @@
+Deep Scan: Final Insurer-to-File Mapping
+============================================================
+[발견된 보험사 총 24개]
+
+▶ AIA생명 (29개 파일에서 발견)
+   - dental_master_processed.csv
+   - all_companies_verified.txt
+   - extracted_data_clean_v2.csv
+   ... 외 26개 파일
+
+▶ AIG (16개 파일에서 발견)
+   - all_raw_products_with_price.txt
+   - dental_master_processed.csv
+   - extracted_data_final.csv
+   ... 외 13개 파일
+
+▶ AXA (16개 파일에서 발견)
+   - all_raw_products_with_price.txt
+   - dental_master_processed.csv
+   - extracted_data_final.csv
+   ... 외 13개 파일
+
+▶ DB생명 (53개 파일에서 발견)
+   - file_55.xls
+   - dental_master_processed.csv
+   - 연금저축보험_상품비교_20260406102644343.xls
+   ... 외 50개 파일
+
+▶ DB손보 (20개 파일에서 발견)
+   - dental_master_processed.csv
+   - final_clean.txt
+   - extracted_data_clean_v2.csv
+   ... 외 17개 파일
+
+▶ KB라이프 (33개 파일에서 발견)
+   - all_companies_verified.txt
+   - 보장성_상품비교_20260406102556321.xls
+   - extracted_data_clean_v2.csv
+   ... 외 30개 파일
+
+▶ KB손보 (17개 파일에서 발견)
+   - all_raw_products_with_price.txt
+   - dental_master_processed.csv
+   - extracted_data_v2.csv
+   ... 외 14개 파일
+
+▶ KDB생명 (32개 파일에서 발견)
+   - file_55.xls
+   - all_companies_verified.txt
+   - 연금저축보험_상품비교_20260406102644343.xls
+   ... 외 29개 파일
+
+▶ 교보생명 (53개 파일에서 발견)
+   - file_55.xls
+   - dental_master_processed.csv
+   - 연금저축보험_상품비교_20260406102644343.xls
+   ... 외 50개 파일
+
+▶ 농협손보 (18개 파일에서 발견)
+   - all_raw_products_with_price.txt
+   - dental_master_processed.csv
+   - extracted_data_v2.csv
+   ... 외 15개 파일
+
+▶ 동양생명 (40개 파일에서 발견)
+   - file_55.xls
+   - dental_master_processed.csv
+   - 보장성_상품비교_20260406102556321.xls
+   ... 외 37개 파일
+
+▶ 라이나생명 (27개 파일에서 발견)
+   - dental_master_processed.csv
+   - all_companies_verified.txt
+   - 보장성_상품비교_20260406102556321.xls
+   ... 외 24개 파일
+
+▶ 롯데손보 (18개 파일에서 발견)
+   - all_raw_products_with_price.txt
+   - dental_master_processed.csv
+   - extracted_data_v2.csv
+   ... 외 15개 파일
+
+▶ 메리츠화재 (21개 파일에서 발견)
+   - dental_master_processed.csv
+   - final_clean.txt
+   - extracted_data_clean_v2.csv
+   ... 외 18개 파일
+
+▶ 미래에셋생명 (50개 파일에서 발견)
+   - dental_master_processed.csv
+   - all_companies_verified.txt
+   - 변액_보장성_2.xls
+   ... 외 47개 파일
+
+▶ 삼성생명 (46개 파일에서 발견)
+   - file_55.xls
+   - dental_master_processed.csv
+   - 연금저축보험_상품비교_20260406102644343.xls
+   ... 외 43개 파일
+
+▶ 삼성화재 (17개 파일에서 발견)
+   - all_raw_products_with_price.txt
+   - dental_master_processed.csv
+   - extracted_data_v2.csv
+   ... 외 14개 파일
+
+▶ 신한라이프 (50개 파일에서 발견)
+   - file_55.xls
+   - dental_master_processed.csv
+   - 연금저축보험_상품비교_20260406102644343.xls
+   ... 외 47개 파일
+
+▶ 에이스손보 (5개 파일에서 발견)
+   - dental_master_processed.csv
+   - extracted_data_clean.csv
+   - extracted_data_clean_v2.csv
+   ... 외 2개 파일
+
+▶ 하나손보 (17개 파일에서 발견)
+   - all_raw_products_with_price.txt
+   - dental_master_processed.csv
+   - extracted_data_final.csv
+   ... 외 14개 파일
+
+▶ 한화생명 (40개 파일에서 발견)
+   - file_55.xls
+   - dental_master_processed.csv
+   - 연금저축보험_상품비교_20260406102644343.xls
+   ... 외 37개 파일
+
+▶ 현대해상 (20개 파일에서 발견)
+   - dental_master_processed.csv
+   - final_clean.txt
+   - extracted_data_clean_v2.csv
+   ... 외 17개 파일
+
+▶ 흥국생명 (40개 파일에서 발견)
+   - file_55.xls
+   - all_companies_verified.txt
+   - 연금저축보험_상품비교_20260406102644343.xls
+   ... 외 37개 파일
+
+▶ 흥국화재 (17개 파일에서 발견)
+   - all_raw_products_with_price.txt
+   - dental_master_processed.csv
+   - extracted_data_v2.csv
+   ... 외 14개 파일
+
+
+[미발견 보험사]
+DB손해보험, KB손해보험, 롯데손해보험, MG손보, MG손해보험, 하나손해보험, 농협손해보험, DGB생명
+============================================================

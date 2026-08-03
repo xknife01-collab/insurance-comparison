@@ -1,0 +1,11 @@
+Header at row 5:
+Col 0: 선택
+Col 1: 회사명 
+Col 2: 상품명 
+Col 3: 보장내용 및 지급기준
+Col 4: nan
+Col 5: nan
+Col 6: 보험료
+Col 7: nan
+Col 8: 보험가격지수  
+Col 9: nan

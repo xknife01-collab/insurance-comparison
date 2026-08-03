@@ -1,0 +1,4889 @@
+<!DOCTYPE html><html lang="ko"><head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>
+	
+		판매상품 | 상품공시 | 공시실 | 흥국생명
+		
+	
+
+	
+</title>
+
+
+
+<link rel="stylesheet" type="text/css" href="/hk_web/css/common.css">
+<link rel="stylesheet" type="text/css" href="/hk_web/css/layout.css">
+<link rel="stylesheet" type="text/css" href="/hk_web/css/bbs.css">
+<link rel="stylesheet" type="text/css" href="/hk_web/css/public.css">
+
+<!--[if IE 7]>
+<link rel="stylesheet" type="text/css" href="../css/ie7.css" />
+<![endif]-->
+<!--[if IE 8]>
+<link rel="stylesheet" type="text/css" href="../css/ie8.css" />
+<![endif]-->
+
+<script type="text/javascript" src="/hk_web/js/jquery-1.11.0.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="/hk_web/js/utilKo.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/ajax.js"></script>
+
+<script type="text/javascript">
+
+$(function() {
+
+	$('#searchText').focus();
+
+	
+
+	if('Y' == "N" && '' == "N"){
+		$('#publicPrtDiv').attr("class", "right after2003");
+
+	}else{
+		$('#publicPrtDiv').attr("class", "right");
+	}
+
+});
+
+// 전역 배열 선언
+var globalAgreeFileName = [];
+var globalPlanFileName = [];
+var globalSummaryFileName = [];
+var globalPrtAgreeBeforeFileName = [];
+
+function doSearch(searchFlgSale, beforeYn, searchCdPublicPrtType1, searchCdPublicPrtType2, searchCdPublicPrtType3){
+
+
+	//if(searchFlgSale == '' && beforeYn == '' && searchCdPublicPrtType1 == '' && searchCdPublicPrtType2 == '' && searchCdPublicPrtType3 == ''){
+	//if(searchFlgSale == '' && beforeYn == '' && searchCdPublicPrtType1 == '' && searchCdPublicPrtType2 == '' && searchCdPublicPrtType3 == ''){
+	//	if($('#searchText').val().length == 0){
+	//
+	//		//alert("상품명을 입력하세요.");
+	//		//alert("현재 상품공시 등록중입니다..");
+	//
+	//		return;
+	//	}
+	//}
+
+	searchCdPublicPrtType3 = searchCdPublicPrtType3.replace(/_/g, ' ');
+	searchCdPublicPrtType3 = searchCdPublicPrtType3.replace(/[+]/g, '%2b');
+
+	if(searchFlgSale != '')	$('#searchFlgSale').val(searchFlgSale);
+	if(beforeYn != '') $('#beforeYn').val(beforeYn);
+	if(searchCdPublicPrtType1 != '') $('#searchCdPublicPrtType1').val(searchCdPublicPrtType1);
+	//if(searchCdPublicPrtType2 != '') $('#searchCdPublicPrtType2').val(searchCdPublicPrtType2);
+	$('#searchCdPublicPrtType2').val(searchCdPublicPrtType2);
+	if(searchCdPublicPrtType3 != '') $('#searchCdPublicPrtType3').val(searchCdPublicPrtType3);
+
+	doSearchAjax();
+
+// 	$('#frmPage').attr("action", '/front/public/saleProduct.do');
+// 	$('#frmPage').submit();
+
+}
+
+
+
+function doSearchAjax(){
+
+	globalAgreeFileName.length = 0;
+	globalPlanFileName.length = 0;
+	globalSummaryFileName.length = 0;
+	globalPrtAgreeBeforeFileName.length = 0;
+
+	var httpRequest = ajax.XmlHttpRequest.create();
+	if (!httpRequest) {
+		alert('Ajax를 사용할 수 없습니다.');
+		return;
+	}
+	var url = '/front/public/saleProductAjax.do';
+	var params = 'searchFlgSale='+ $('#searchFlgSale').val() + '&beforeYn='+ $('#beforeYn').val()  + '&searchCdPublicPrtType1='+ $('#searchCdPublicPrtType1').val() +
+					'&searchCdPublicPrtType2='+ $('#searchCdPublicPrtType2').val() + '&searchCdPublicPrtType3='+ escape(encodeURIComponent($('#searchCdPublicPrtType3').val())) +
+					"&searchText=" + escape(encodeURIComponent($('#searchText').val()));
+
+	var method = 'POST';
+	var responseType = 'TEXT';
+	var callbackFunc = function(req) {
+		if (req.status == 200) {
+
+			var responseText = req.responseText;
+
+			var data = responseText.split('%||%');
+
+			var productList = data[0].split('%|%');
+			var productHtml = "";
+
+			for(var i=0; i<productList.length; i++){
+				var productSubList = productList[i].split('%,%');
+
+				productHtml += "<li ";
+
+				if(productSubList[0] != null && $('#searchCdPublicPrtType3').val().replace(/%2b/g, '+') == productSubList[0]){
+					if(util.Text.trimString($('#searchCdPublicPrtType3').val()) != ""){
+						productHtml += "class=on";
+					}
+				}
+
+				productHtml += " >";
+
+
+				if(productSubList[0] == 'null' || productSubList[0] == null){
+
+					if(productSubList[0] != null && $('#searchCdPublicPrtType3').val().replace(/%2b/g, '+') == productSubList[0]){
+						if(util.Text.trimString($('#searchCdPublicPrtType3').val()) != ""){
+							productHtml += "<a href=javascript:doSearch('','','','',''); title='선택된 링크'>" + productSubList[0] + '</a>';
+						}
+					}	else	{
+						productHtml += "<a href=javascript:doSearch('','','','','');>" + productSubList[0] + '</a>';
+					}
+
+				}else{
+//					productSubList[0].replace(/" "/g, "-");
+					execList = productSubList[0].replace(/\s/g,'_');
+
+					//var str = '<a href=javascript:doSearch("","","","","' + productSubList[0] + '");>' + productSubList[0] + "</a>";
+					//productHtml += str;
+					if(productSubList[0] != null && $('#searchCdPublicPrtType3').val().replace(/%2b/g, '+') == productSubList[0]){
+						if(util.Text.trimString($('#searchCdPublicPrtType3').val()) != ""){
+							productHtml += "<a href=javascript:doSearch('','','','','" + execList + "'); title='선택된 링크'>" + productSubList[0] + '<\/a>';
+						}
+					}	else	{
+						productHtml += "<a href=javascript:doSearch('','','','','" + execList + "');>" + productSubList[0] + '<\/a>';
+					}
+
+
+				}
+
+				productHtml += "</li>";
+			}
+
+			$('#productList').html(productHtml);
+
+			$('#productList a').click(function(){
+				setTimeout(function(){
+					$('.full dd').focus();
+				}, 500);
+			});
+
+			if(util.Text.trimString(data[0]) != '' && util.Text.trimString(data[0]) != 'null' && util.Text.trimString(data[2])){
+				$('#productVoTr').removeAttr('style');
+
+				$('#publicPrtType3Nm').html($('#searchCdPublicPrtType3').val().replace(/%2b/g, '+'));
+
+
+
+				var downList;
+				var downColList;
+				var downColFile;
+				var downHtml = "";
+
+
+
+					downList = data[2].split('%|%');
+
+					for(var j=0; j<downList.length; j++){
+						downColList = downList[j].split('%,%');
+
+						downHtml += '<tr>';
+						downHtml += '<td class="tac">';
+
+						if(downColList[0] == 'null' || downColList[0] == null)	{
+							downColList[0] = "";
+						}
+
+						if(downColList[2] == 'null' || downColList[2] == null)	{
+							downColList[2] = "-";
+						}
+
+						if(util.Text.trimString(downColList[1]) != ''){
+							downHtml += downColList[0] + ' ~ ' + downColList[1];
+						}else{
+							downHtml += downColList[0] + ' ~ 현재';
+						}
+						downHtml += '<\/td>';
+
+						downHtml += '<td class="tac">' + downColList[2] + '<\/td>';
+
+
+						if('' == 'Y'){
+							globalPrtAgreeBeforeFileName.push(downColList[5]);
+
+							///console.log("downColList[6]  = " + downColList[5])
+							if (/([^0-9a-zA-Z./])/.test(downColList[5])) {
+								//console.log("downColList[6] 에 불필요한 문자가 잇어요..  = ")
+							} else {
+								//console.log("downColList[6]은 정상인 문자네요..  = ")
+							}
+
+
+							downHtml += '<td class="tac"><a href="javascript:downloadFileEncrypt(\''
+								+ downColList[4] + '\', \'' + j + '\' , \'0\', \'' + downColList[5] + '\' );" class="btn_download" title="상품약관아크로벳 열기또는 저장">PDF<\/a>';
+							downHtml += '<td class="tac"><\/a>';
+
+						}	else	{
+
+							globalAgreeFileName.push(downColList[5]);  // 4, 5
+							globalPlanFileName.push(downColList[7]);   // 6, 7
+							globalSummaryFileName.push(downColList[9]);// 8, 9
+
+							downHtml += '<td class="tac"><a href="javascript:downloadFileEncrypt(\''
+									+ downColList[4] + '\', \'' + j + '\' , \'1\' , \'' + downColList[5] + '\' );" class="btn_download" title="상품약관아크로벳 열기또는 저장">PDF<\/a>';
+
+							downHtml += '<td class="tac"><a href="javascript:downloadFileEncrypt(\''
+								+ downColList[6] + '\', \'' + j + '\' , \'2\', \'' + downColList[7] + '\' );" class="btn_download" title="사업방법서아크로벳 열기또는 저장">PDF<\/a>';
+
+						}
+
+						if(util.Text.trimString($('#searchCdPublicPrtType1').val()) == "I102"){
+							//단체이면 무조건 상품요약서를 다운  못하개 한다..
+							//2025.11.17 긴급 수정 PKG-202511-000130
+							//상품 개발팀 요청건
+							downHtml += '<td class="tac">-</td>';
+						} else {
+							downHtml += '<td class="tac">';
+
+							if(data[0] == 'I102'){
+								downHtml += '-';
+							} else {
+								if('' == 'Y'){
+									downHtml += '';
+								}	else	{
+									
+								    			// 판매중인 상품에만.
+									    	if(util.Text.trimString(downColList[1]) != ''){
+												// 현재가 아니면
+									    		downHtml += '-';
+											}else{
+												downHtml += '<a href="javascript:downloadFileEncrypt(\''
+													+ downColList[8] + '\', \'' + j + '\' , \'3\', \'' + downColList[9] + '\');" class="btn_download" title="상품요약서아크로벳 열기또는 저장">PDF<\/a>';
+											}
+								    	
+								    	
+					    			
+								}
+							}
+
+							downHtml += '<\/td>';
+
+							if(j != (downList.length - 1)){
+								downHtml += '<\/tr>';
+							}
+						}
+					}
+
+				$('#productVoTr').html(downHtml);
+
+			}else{
+				$('#productVoTr').css('display','none');
+
+				$('#publicPrtType3Nm').html("");
+			}
+		}
+	}
+
+	var statusFunc = function(readyState) { }
+	var sync = true;
+
+	ajax.Communcation.send(url, params, method, responseType, callbackFunc, statusFunc, sync);
+}
+
+function downloadFileEncrypt(fileUrl, idx, serviceId, fileName) {
+	document.getElementById('encValue').value = fileUrl;
+	const frm = document.getElementById('frmPage');
+	var itemValue = fileName;
+	const urlLoad = new FormData(frm);
+	const paramData = {
+		method : "POST",
+		header : {
+			"Content-Type" : "application/x-www-form-urlencoded"
+		},
+		body   : urlLoad
+	};
+	let filename = ''
+	let	decodedFilename = ''
+	fetch('/servlet/DownLoadEnc.do',paramData)
+	.then(response => {
+		if (!response.ok){
+			//alert("Network Error!!");
+			throw Error(response.statusText)
+		}
+		const header = response.headers.get('Content-Disposition')
+		const parts = header.split(';')
+		filename = parts[1].split('=')[1].replaceAll('"', '')
+
+		return response.blob();
+	})
+	.then((blob) => {
+		if(blob != null){
+			var url = window.URL.createObjectURL(blob);
+			const link = document.createElement('a');
+			link.href = url
+			link.target = '_blank'
+			link.download = itemValue
+			link.click()
+			link.remove()
+			window.URL.revokeObjectURL(url);
+
+		}
+	})
+	.catch((err) => {
+		console.log(err)
+		alert('파일을 다운로드하는데 실패했습니다. \n파일이 지정한 경로에 없습니다.');
+	})
+}
+
+
+
+</script>
+
+</head>
+<body style=""><div id="nppfs-loading-modal" style="position: fixed; z-index: 10000; top: 0px; left: 0px; background: url(&quot;data:image/gif;base64,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&quot;) 50% 50% no-repeat rgb(255, 255, 255); opacity: 0.7; display: none; width: 0px; height: 0px;"></div>
+
+<div id="wrap" class="public"><div id="skipNavi"><a href="#section">본문 바로가기</a><a href="#gnb">주메뉴 바로가기</a><a href="#footer">하단 바로가기</a></div>
+
+	
+
+	<div id="header">
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-5S1KER6ZB7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5S1KER6ZB7');
+</script>
+
+<link rel="stylesheet" type="text/css" href="/hk_web/css/layout_2017.css"><!-- 2017 신규 추가 CSS -->
+<script type="text/javascript" src="/hk_web/js/visual.js"></script>
+<script type="text/javascript" src="/js/ajax.js"></script>
+<script type="text/javascript">
+/**
+ * 타임아웃
+ * 상품페이지인지 아닌지 확인
+ * @author hl_lee@wegonet.com
+ * @since 2009-01-20
+ * @version 1.0
+ */
+function goResetTime() {
+	var httpRequest = ajax.XmlHttpRequest.create();
+	if (!httpRequest) {
+		alert('Ajax를 사용할 수 없습니다.');
+		return;
+	}
+
+	var url = '/Reset_Time.do';
+	var method = 'POST';
+	var params = '';
+	var responseType = 'TEXT';
+
+	var callbackFunc = function(req) {
+		if (req.status == 200) {
+			var result = req.responseText;
+		}
+	};
+
+	var statusFunc = function(readyState) {};
+	var sync = true;
+
+	ajax.Communcation.send(url, params, method, responseType, callbackFunc, statusFunc, sync);
+}
+
+/**
+ * 상단 보험검색
+ */
+function insuranceSearch() {
+	document.location.href = "/front/search/searchMain.do";
+// 	var text = document.getElementById('insuranceText').value;
+// 		if (checkSpecialChar(text)) {
+// 		alert("특수문자는 검색하실 수 없습니다.");
+// 		document.getElementById('insuranceText').value = "";
+// 		document.getElementById('insuranceText').focus();
+// 		return;
+// 	}
+	/* if (text == "보험상품검색" || text == "") {
+		alert("검색하실 보험명을 입력해주세요.");
+		document.getElementById('insuranceText').focus();
+		return;
+	} */
+// 	document.location.href = "/front/search/searchMain.do" + escape(encodeURIComponent(text));
+}
+
+// 특수문자 확인
+function checkSpecialChar(text) {
+	return /.*[<>\/~!@#$%^&*'"-].*$/.test(text);
+}
+
+var UserAgentM = navigator.userAgent;
+
+/**
+ * 페이지 이동
+ * 상품페이지인지 아닌지 확인
+ * @author hl_lee@wegonet.com
+ * @since 2009-01-20
+ * @version 1.0
+ */
+function goPageMenu(prt_yn, cd_prt, full_page_path) {
+  if (UserAgent.match(/Android/i) != null) {
+    start_noslink_adv();
+
+    setTimeout(function() {
+  		goPageMenu_org(prt_yn, cd_prt, full_page_path);
+  	}, 200); //0.2초로 설정
+  }else{
+    goPageMenu_org(prt_yn, cd_prt, full_page_path);
+  }
+}
+
+function goPageMenu_org(prt_yn, cd_prt, full_page_path) {
+
+	if(full_page_path.indexOf("http") >= 0){
+		var openNewWindow = window.open("about:blank");
+		openNewWindow.location.href=full_page_path;
+	}else if(prt_yn=="Y"){
+		document.location.href=full_page_path+"?cd_prt="+trim(cd_prt);
+	}else{
+		document.location.href=full_page_path;
+	}
+}
+
+function trim(s){
+	s = s.replace(/^\s*/,'').replace(/\s*$/,'');
+	return s;
+}
+
+function goMyPage(isLogin){
+	if (isLogin) {
+		goPageMenu('N' ,' ' ,'/front/mypage/mypageMain.do');
+	} else {
+		alert('사이버창구 고객님에게 지원되지 않는 메뉴입니다.\n마이페이지 서비스 이용을 위해서는\n웹회원 로그인으로 접속하여 주시기 바랍니다.\n웹회원으로 로그인 하시면 사이버창구는 로그아웃 됩니다.');
+		goPageMenu('N' ,' ' ,'/front/login/webLogin.do');
+	}
+}
+</script>
+	<div class="loading_box" style="display:none" id="exitLogout" tabindex="0">
+		<div class="box logout">
+			<div>
+				<p>자동로그아웃 시간 <strong class="txt_magenta" id="txt_timer"></strong></p>
+				<p class="info">오랫동안 고객님의 PC를 사용하지 않아 자동로그아웃됩니다.</p>
+				<div class="btn_box">
+					<a href="#none" class="btn_page white" onclick="javascript:goPageMenu('N','' ,'/front/login/logOutProc.do');">로그아웃</a>
+					<a href="#none" class="btn_page" onclick="javascript:resetTime();goResetTime()">로그아웃 연장</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="inner">
+		<h1><a href="/index.do"><img src="/hk_web/img/common/logo.gif" alt="흥국생명 로고"></a></h1>
+		
+		<div class="util">
+		 	
+			
+
+				
+					
+					
+					<span class="login_wrap">
+						<a href="javascript:goPageMenu('N', ' ','/front/login/loginCenter.do');"><span class="n_login">로그인</span></a><a href="javascript:goPageMenu('N', ' ','/front/member/certRegForm.do');"><span class="n_cert">인증센터</span></a>
+					</span>
+					
+				
+
+			<div class="btn">
+				<a href="javascript:goPageMenu('N', ' ','/front/help/employeeSearch.do');">방문판매원 신원조회</a>
+				<a href="javascript:goPageMenu('N', ' ','/front/consultant/consultantInfo.do');">컨설턴트</a>
+				<a href="javascript:goPageMenu('N', ' ','/front/public/manageList.do');">공시실</a>
+				<a href="javascript:goPageMenu('N', ' ','/front/public/materialList.do');">English</a>
+				<a href="javascript:goPageMenu('N', ' ','/jsps/front/sitemap/sitemap.jsp');" class="last_btn">사이트맵</a>
+			</div>
+			<div class="search">
+				<a href="javascript:insuranceSearch();">통합검색</a>
+			</div>
+		</div><!-- //util -->
+		<div id="gnb">
+			<dl class="menu5">
+				<dt class="hdd">주메뉴</dt>
+				
+					
+						
+						
+							
+						
+
+						
+							<dd>
+								<h2>
+									<a href="/jsps/cyber/cw_main.jsp">사이버창구</a>
+								</h2>
+								
+								<dl class="depth02 snb0">
+									<dt>사이버창구</dt>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/cyber/common/cyber_info.do' );">
+														사이버창구 이용안내
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/cyber/loan/Loan_Status.do' );">
+														보험계약대출
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/cyber/credit/Credit_Ing_View.do' );">
+														신용대출
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/cyber/indv/mypension/mypension_contInfo.ps' );">
+														퇴직연금
+													</a>
+												
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('Y',	'      ', '/cyber/myinfo/Myinfo_Perusal.do' );">
+														고객정보
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('Y',	'      ', '/cyber/contract/contract_main.do' );">
+														보험계약정보
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/cyber/mycon/PensionPayType_List.do' );">
+														계약내용변경
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/cyber/fee/Fee_List.do' );">
+														보험료 납입
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/cyber/payment/Mangi_List.do' );">
+														일반보험금
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/cyber/accident/Accident_Accept_Info.do' );">
+														사고보험금 청구
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/cyber/dachul/Dachul_List.do' );">
+														대출계약정보
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/cyber/proof/Insurance_List.do' );">
+														증명서 발급
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/cyber/myinfo/SecurityCard_rcvView.do' );">
+														보안센터
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/cyber/myinfo/Care_Service_Info.do' );">
+														혜택서비스
+													</a>
+												
+											
+										</dd>
+									
+								</dl>
+								
+							</dd>
+						
+					
+						
+						
+							
+						
+
+						
+					
+						
+						
+							
+						
+
+						
+					
+						
+						
+							
+						
+
+						
+					
+						
+						
+							
+						
+
+						
+					
+						
+						
+
+						
+							<dd>
+								<h2>
+									<a href="/front/product/productMain.do">보험상품</a>
+								</h2>
+								
+								<dl class="depth02 snb1">
+									<dt>보험상품</dt>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/front/product/productSubMain.do?cd_prts=P003' );">
+														건강/상해보험
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/front/product/productSubMain.do?cd_prts=P001' );">
+														종신/정기보험
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/front/product/productSubMain.do?cd_prts=P006' );">
+														방카슈랑스
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/jsps/front/product/insurance_guide_goods_lifefeature.jsp' );">
+														보험가이드
+													</a>
+												
+											
+										</dd>
+									
+								</dl>
+								
+							</dd>
+						
+					
+						
+						
+
+						
+							<dd>
+								<h2>
+									<a href="/jsps/cyber/online_page.jsp">온라인보험</a>
+								</h2>
+								
+							</dd>
+						
+					
+						
+						
+
+						
+							<dd>
+								<h2>
+									<a href="/front/loan/loanMain.do">대출/신탁</a>
+								</h2>
+								
+								<dl class="depth02 snb2">
+									<dt>대출/신탁</dt>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/front/loan/loanMain.do' );">
+														대출
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/front/trustproduct/trustMain.do' );">
+														신탁
+													</a>
+												
+											
+										</dd>
+									
+								</dl>
+								
+							</dd>
+						
+					
+						
+						
+
+						
+							<dd>
+								<h2>
+									<a href="/hmpg/comm/comm_mainPage.ps">퇴직연금</a>
+								</h2>
+								
+								<dl class="depth02 snb3">
+									<dt>퇴직연금</dt>
+									
+										<dd>
+											
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/jsps/front/pension/pension_guide/PEN01001M.jsp' );">
+														퇴직연금제도안내
+													</a>
+												
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/jsps/front/pension/pension_prod/PEN02001M.jsp' );">
+														퇴직연금상품
+													</a>
+												
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/jsps/front/pension/invst_guide/PEN03201M.jsp' );">
+														투자가이드
+													</a>
+												
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/jsps/front/pension/defaultop_explain.jsp' );">
+														사전지정운용방법(디폴트옵션)
+													</a>
+												
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/hmpg/cust/cust_irp_step1.ps' );">
+														개인형 IRP 온라인청약
+													</a>
+												
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/hmpg/cust/cust_data_list.ps' );">
+														퇴직급여수령 및 서류안내
+													</a>
+												
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/hmpg/cust/cust_ance_list.ps' );">
+														퇴직연금 공지사항
+													</a>
+												
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/cyber/indv/rthgtrct/rthgtrct_othcIrpImportInfo.ps' );">
+														타사 IRP 가져오기
+													</a>
+												
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/cyber/indv/rthgtrct/rthgtrct_rthgTrctPsblYnInqInfo.ps' );">
+														계약이전(실물/현금)
+													</a>
+												
+												
+											
+										</dd>
+									
+								</dl>
+								
+							</dd>
+						
+					
+						
+						
+
+						
+							<dd>
+								<h2>
+									<a href="/front/help/helpMain.do">고객센터</a>
+								</h2>
+								
+								<dl class="depth02 snb4">
+									<dt>고객센터</dt>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/front/help/faqList.do' );">
+														자주찾는 질문
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/front/help/employeeSearch.do' );">
+														방문판매원 신원조회
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/front/help/onlineWriteForm.do' );">
+														고객상담
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/jsps/front/help/customer_app_info.jsp' );">
+														소비자포털
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/front/help/branch_prazaList.do' );">
+														고객센터(금융플라자)
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/jsps/front/help/customer_require_tab.jsp' );">
+														사고보험금 구비서류
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/jsps/front/help/customer_require_document.jsp' );">
+														제지급/계약변경 구비서류
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/jsps/front/help/customer_info_cyber.jsp' );">
+														홈페이지 이용안내
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/jsps/front/help/customer_info_mobile2.jsp' );">
+														모바일창구 이용안내
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/front/help/newsLetterMain.do' );">
+														뉴스레터
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/front/help/eventList.do' );">
+														이벤트
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/front/help/noticeList.do' );">
+														공지사항
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/front/help/crime/customerReportCenter.do' );">
+														신고센터
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/front/help/lifeCareService.do' );">
+														혜택서비스
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/jsps/front/help/customer_info_mobile.jsp' );">
+														e-Life(FC) 이용안내
+													</a>
+												
+											
+										</dd>
+									
+										<dd>
+											
+												
+												
+													<a href="javascript:goPageMenu('N',	'      ', '/front/mypage/AnnuityAccount.do' );">
+														타사연금계좌 이체 신청
+													</a>
+												
+											
+										</dd>
+									
+								</dl>
+								
+							</dd>
+						
+					
+						
+						
+
+						
+							<dd>
+								<h2>
+									<a href="/front/company/companyMain.do">회사소개</a>
+								</h2>
+								
+							</dd>
+						
+					
+				
+			</dl>
+
+			<div class="back" style="width: 1280px; margin-left: -400px; background: url(&quot;/hk_web/img/common/bg_back.gif&quot;) center bottom no-repeat rgb(251, 251, 253);">
+				<a href="#none" class="close" style="right: 150px;"><img src="/hk_web/img/common/gnb_close.gif" alt="전체메뉴 닫기"></a>
+			</div>
+		</div>
+	</div><!-- //inner -->
+
+<!--- 팝업 UI 추가 수정 시작--->
+<style>
+.WinningPopup{z-index:9999999; width:800px;height:1px;margin:0 auto 0;position:relative; }
+.modial{position:fixed; top:0; left:0; background:rgba(0,0,0,0.7); width:100%; height:100%;z-index:9999}
+</style>
+<div id="nosPopup" style="display:none;">
+	<div class="modial"></div>
+	<div class="WinningPopup">
+		<div class="common_page_box" style="width:800px;padding-top:0; padding-bottom:47px; border:0px solid #999; ">
+			<div class="tac" style="display:block; float:center; margin:0 10px;">
+				<a href="javascript:noslink_popup();" class="btn_pink close" style="height:100px;font-size:100px;vertical-align:baseline;" title="새창열림">모바일 백신 실행</a>
+			</div>
+		</div>
+	 </div>
+</div>
+<!--- 팝업 UI 추가 수정 끝--->
+<!-- 로컬에서 만 제거 개발에서 주석 풀기 -->
+<script type="text/javascript" src="/nProtect/js/nppfs-1.9.0.js"></script>
+<script type="text/javascript" src="/nProtect/js/noslink.js"></script>
+<script type="text/javascript">
+//<[!CDATA[
+	<!-- 2017-04-10 노출되는 2depth 메뉴 Class 추가 스크립트 -->
+	/* 노출되는 2depth 총 갯수 addClass */
+	var numDL = $("#gnb dl.depth02").length;
+	$("#gnb>dl").addClass("menu"+numDL);
+
+	/*노출되는 2depth 순번 addClass */
+	$("#gnb dl.depth02").each(function(){
+		var countDl = $("#gnb dl.depth02").index(this);
+		$(this).addClass("snb"+countDl);
+	});
+
+	$("#frame_title", parent.document).text($("title").text());
+
+	//nProtect Start
+	var filter = "win16|win32|win64|mac";
+	var UserAgent = navigator.userAgent;
+
+	if (navigator.platform) {
+		if (filter.indexOf(navigator.platform.toLowerCase()) < 0) {
+			jQuery(document).ready(
+				function() {
+				npPfsStartup(null, false, false, false, true,"npkencrypt", "on");
+
+				if (UserAgent.match(/Android/i) != null) {
+  				if(sessionStorage.getItem("ixRandomUid") == null){
+    				  document.getElementById("nosPopup").style.display = "";
+  				}else{
+  				  	document.getElementById("nosPopup").style.display = "none";
+  				}
+			  }
+
+
+			});
+
+		} else {
+			jQuery(document).ready(
+				function() {
+					if(document.getElementById("nosStart") == null || document.getElementById("nosStart").value != "NO"){
+						npPfsStartup(null, true, true, false, false,"npkencrypt", "on");
+					}
+			});
+		}
+	}
+
+	function noslink_popup() {
+		start_noslink_adv();
+		document.getElementById("nosPopup").style.display = "none";
+	}
+
+	function logoutProcess(){
+		if(confirm('로그아웃 하시겠습니까?')) {
+			goPageMenu('N' ,' ' ,'/front/login/logOutProc.do');
+		}
+	}
+
+	function goOnline(targetUrl) {
+		if (!window._online_frm) {
+			window._online_frm = $('<form>').attr({
+				'action' : 'https://online.heungkuklife.co.kr/OnlineAdAction.do?UTM_SOURCE=HK&UTM_CAMPAIGN=HK&UTM_MEDIUM=GNB_HKBN&UTM_CONTENT=HK0&APP_GB=2&CATEGORY=HK0',
+				'method' : 'post',
+				'target' : '_blank'
+			});
+
+			$('body').append(
+				window._online_frm
+					.append($('<input type="hidden" name="redirect" value="/pcw/main/main.do">'))
+					.append($('<input type="hidden" name="seq" value="">'))
+			);
+		}
+
+		if (targetUrl !== null && targetUrl !== undefined && $.trim(targetUrl) !== '') {
+			window._online_frm.find('input:hidden[name=redirect]').val(targetUrl);
+		} else {
+			window._online_frm.find('input:hidden[name=redirect]').val('/pcw/main/main.do');
+		}
+
+		window._online_frm.submit();
+	}
+	//]]>
+</script>
+	</div><!-- //header -->
+
+	<div id="container">
+
+		<div id="aside">
+			
+
+
+
+
+
+
+
+
+
+
+<!--
+	기존 장애인전용 하단의 상담시간 제거 후
+	고객센터 번호 하단에 굵은 글씨체로 상담시간 추가
+ -->
+
+
+<script type="text/javascript">
+	function getClassID(){
+		var get_cd_menu = "PC06010201";
+
+		var class_id = get_cd_menu.substring(0,4);
+
+		if(class_id == 'PC01' || class_id == 'PC12'){
+			document.getElementById('wrap').className = 'cyber';
+		}else if(class_id == 'PC02'){
+			document.getElementById('wrap').className = 'insurance';
+		}else if(get_cd_menu == 'PC14000000'){
+			document.getElementById('wrap_online').className = 'online_insure';
+		}else if(class_id == 'PC03' || class_id == 'PC14'){
+			document.getElementById('wrap').className = 'trust';
+		}else if(class_id == 'PC04' || class_id == 'PC15'){
+			document.getElementById('wrap').className = 'loan';
+		}else if(class_id == 'PC05'){
+			document.getElementById('wrap').className = 'customer';
+		}else if(class_id == 'PC06'){
+			document.getElementById('wrap').className = 'public';
+		}else if(class_id == 'PC07'){
+			document.getElementById('wrap').className = 'introduce';
+		}else if(class_id == 'PC13') {
+			document.getElementById('wrap').className = 'pension';
+		}else if(class_id == 'PC16') {
+			document.getElementById('wrap').className = 'consultant';
+		}
+		menu_on(get_cd_menu);
+	}
+
+	function menu_on(get_cd_menu)	{
+		var menuBtn = document.getElementById(get_cd_menu);
+
+		if(menuBtn!=null) {
+			menuBtn.setAttribute( "class", "on" );
+
+			// menuBtn
+
+			const parentMenuBtn = menuBtn.parentElement;
+			const parentBtn = parentMenuBtn.parentElement;		// get_cd_menu 현재 메뉴 아이디에 부모의 부모 아이디를 가져온다..
+			const parentId = parentBtn.id;
+			//console.log("parentId===="+parentId)
+
+			if(parentId != 'aside'){
+				var parMenuCloseBtn = document.getElementById(parentId);
+				if(parMenuCloseBtn!=null) {
+					const anchorTag = parMenuCloseBtn.querySelector('a');
+					if(anchorTag){
+						const strTitle = anchorTag.getAttribute('title');
+						var cleanNm =  strTitle.replace(' 열기', '').replace(' 닫기', '');
+						anchorTag.title = cleanNm + ' 닫기';
+					}
+				}
+			}
+
+			// get_cd_menu 상위 태그에  A tag text 수정한다.
+			var pget_cd_menu =  get_cd_menu.substring(0,6) + "0000";
+			var parMenuBtn = document.getElementById(pget_cd_menu);
+
+			if(parMenuBtn!=null) {
+				const anchorTag = parMenuBtn.querySelector('a');
+				if(anchorTag){
+					const strTitle = anchorTag.getAttribute('title');
+					var cleanNm =  strTitle.replace(' 열기', '').replace(' 닫기', '');
+					anchorTag.title = cleanNm + ' 닫기';
+				}
+			}
+		}
+
+		if($('.depth03 > li').hasClass('on')){
+			$('.depth03 > li.on').parent('ul').parent('li').addClass('on');
+		}else if($('.depth04 > li').hasClass('on')){
+			$('.depth04 > li.on').parent('ul').parent('li').addClass('on').parent('ul').parent('li').addClass('on');
+		}
+
+		lnbMove2();
+	}
+
+
+	function lnbMove2(){
+		$('#lnb_scrap').each(function(){
+			var ah = $('#aside').height() + 20,
+				od = 0,
+				ah_all = ah + 48 + $(this).height();
+			$(this).css('top',ah);
+			$(window).scroll(function(){
+				if($(document).scrollTop() >= 0 && od == 0){
+					$('#lnb_scrap').stop(true);
+					$('#lnb_scrap').animate({top:ah+'px'});
+				}
+				if($(document).scrollTop() >= ah && od == 0){
+					var st = $(window).scrollTop()-50;
+					$('#lnb_scrap').stop(true);
+					$('#lnb_scrap').animate({top:st});
+				}
+			});
+			$('#section').css('min-height', ah_all);
+		});
+	}
+
+/**
+ * 페이지 이동
+ * 상품페이지인지 아닌지 확인
+ * @author hl_lee@wegonet.com
+ * @since 2009-01-20
+ * @version 1.0
+ */
+function goPageLNB(prt_yn, cd_prt, full_page_path) {
+	var get_cd_menu = "PC06010201";
+	var class_id = get_cd_menu.substring(0,4);
+	//실물이전 관련 메뉴 추가 PC13
+	if(class_id == 'PC01' || class_id == 'PC08' || class_id == 'PC09' || class_id == 'PC10' || class_id == 'PC13'){
+		loadingBox();
+	}
+
+	if(full_page_path.indexOf("http") >= 0){
+		var openNewWindow = window.open("about:blank");
+		openNewWindow.location.href=full_page_path;
+	}else if(prt_yn=="Y"){
+		document.location.href=full_page_path+"?cd_prt="+trim(cd_prt);
+	}else{
+
+		if(full_page_path.indexOf("http") >= 0){
+			var openNewWindow = window.open("about:blank");
+			openNewWindow.location.href=full_page_path;
+		}else if(prt_yn=="Y"){
+			document.location.href=full_page_path+"?cd_prt="+trim(cd_prt);
+		}else{
+			document.location.href=full_page_path;
+		}
+	}
+}
+function goTempPageLNB(prt_yn, cd_prt, full_page_path) {
+	var get_cd_menu = "PC06010201";
+	var class_id = get_cd_menu.substring(0,4);
+	//실물이전 관련 메뉴 추가 PC13
+	if(class_id == 'PC01' || class_id == 'PC08' || class_id == 'PC09' || class_id == 'PC10' || class_id == 'PC13'){
+		loadingBox();
+	}
+
+	if(('20260327165328' >= '20251114180000' && '20260327165328' < '20251116235959') ) {
+		if(getAccessAddrYnLeft == 'N') {
+			full_page_path = '/hmpg/comm/comm_mainPage.ps';
+		}
+	}
+
+	if(full_page_path.indexOf("http") >= 0){
+		var openNewWindow = window.open("about:blank");
+		openNewWindow.location.href=full_page_path;
+	}else if(prt_yn=="Y"){
+		document.location.href=full_page_path+"?cd_prt="+trim(cd_prt);
+	}else{
+
+		document.location.href=full_page_path;
+	}
+}
+
+// 금강원
+function goFineFss() {
+	window.open('https://www.fss.or.kr/main/prc/is/isintro.jsp?menuNo=900383','_blank');
+}
+
+// 금강원 소비자 유의사항 페이지 이동
+function goNewsFss() {
+	window.open('https://www.fss.or.kr/fss/bbs/B0000188/list.do?menuNo=200218&bbsId=&cl1Cd=&pageIndex=1&sdate=&edate=&searchCnd=1&searchWrd=%EC%86%8C%EB%B9%84%EC%9E%90+%EC%9C%A0%EC%9D%98%EC%82%AC%ED%95%AD','_blank');
+}
+
+// 메뉴 열기/닫기 title 추가(웹접근성)
+function cssChanger(e){
+	var $aTag = $(e);	// 현재 a 태그
+	var aTitle = $aTag.attr('title');	// title(메뉴명 + 열기/닫기)
+	var titleNm = aTitle.replace(' 열기', '').replace(' 닫기', '');	// title에서 열기/닫기 제거
+	var $parentLi = $aTag.parent('li');	// 현재 a 태그의 부모 li
+
+	// 부모 li의 형제(siblings) 안에 있는 a 태그 검색
+	$parentLi.siblings().find('a[href="#none"]').each(function(){
+		var otherNm = $(this).attr('title');
+		var cleanNm =  otherNm.replace(' 열기', '').replace(' 닫기', '');
+
+		$(this).attr('title', cleanNm + ' 열기');
+	});
+
+
+	// 현재 a 태그의 title에 열기/닫기 추가
+	if($parentLi.hasClass('on')){
+		$aTag.attr('title', titleNm + ' 열기');
+	} else {
+		$aTag.attr('title', titleNm + ' 닫기');
+	}
+}
+
+	$(function(){
+		getClassID();
+	});
+</script>
+
+	
+
+	
+		
+			<h2>공시실</h2>
+		
+
+			<ul>
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+				
+			
+		
+			
+
+		
+			
+
+			
+					<li id="PC06010000" class="on">
+						<a href="#none" title="상품공시 닫기" class="togleBtn" onclick="javascript:cssChanger(this);">상품공시</a>
+						<ul class="depth03">
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+				
+					
+					
+					
+							<li id="PC06010100" class="">
+								<a href="javascript:goPageLNB('N', '      ', '/front/public/publicProductInfo.do');" title="공시자료작성 및 관리절차" style="letter-spacing: -2px;">공시자료작성 및 관리절차</a>
+							</li>
+					
+				
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+							<li id="PC06010200" class="on">
+								<a href="#none" title="전체상품 닫기" onclick="javascript:cssChanger(this);">전체상품<img src="/hk_web/img/common/bg_depth2_plus.gif" alt="하위메뉴 있음" class="plus"></a>
+								<ul class="depth04">
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06010201" class="on">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/saleProduct.do?searchFlgSale=Y');" title="판매상품">판매상품</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+			
+				
+				
+					<li id="PC06010202" class="">
+						<a href="javascript:goPageLNB('N', '      ', '/front/public/saleProduct.do?searchFlgSale=N&amp;beforeYn=N');" title="판매중지상품">판매중지상품</a>
+					</li>
+				
+			
+				</ul>
+			</li>
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+							<li id="PC06010300" class="">
+								<a href="#none" title="변액보험공시 열기" onclick="javascript:cssChanger(this);">변액보험공시<img src="/hk_web/img/common/bg_depth2_plus.gif" alt="하위메뉴 있음" class="plus"></a>
+								<ul class="depth04">
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06010301" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/variableView.do');" title="변액보험상품공시">변액보험상품공시</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06010302" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/variableRegularList.do');" title="변액보험정기공시">변액보험정기공시</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+			
+				
+				
+					<li id="PC06010303" class="">
+						<a href="javascript:goPageLNB('N', '      ', '/front/public/variablePubList.do');" title="변액보험수시공시">변액보험수시공시</a>
+					</li>
+				
+			
+				</ul>
+			</li>
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+							<li id="PC06010400" class="">
+								<a href="#none" title="연금저축 열기" onclick="javascript:cssChanger(this);">연금저축<img src="/hk_web/img/common/bg_depth2_plus.gif" alt="하위메뉴 있음" class="plus"></a>
+								<ul class="depth04">
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06010401" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/annuityPropertyDebt.do');" title="자산부채현황">자산부채현황</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06010402" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/annuityPropertyView.do');" title="자산구성현황">자산구성현황</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06010408" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/annuityRate.do');" title="예정이율 및 이자율차 배당기준율 현황" style="letter-spacing: -2px;">예정이율 및 이자율차 배당기준율 현황</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06010403" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/jsps/front/public/product/annuity/annuity-admission.jsp');" title="연금저축 가입시 유의사항" style="letter-spacing: -2px;">연금저축 가입시 유의사항</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+			
+				
+				
+					<li id="PC06010414" class="">
+						<a href="javascript:goPageLNB('N', '      ', '/front/public/annuity_product.do');" title="상품별 수익률 및 수수료율" style="letter-spacing: -2px;">상품별 수익률 및 수수료율</a>
+					</li>
+				
+			
+				</ul>
+			</li>
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+							<li id="PC06011400" class="">
+								<a href="#none" title="연금저축 2025년 4분기 이전 열기" onclick="javascript:cssChanger(this);" style="letter-spacing: -2px;">연금저축 2025년 4분기 이전<img src="/hk_web/img/common/bg_depth2_plus.gif" alt="하위메뉴 있음" class="plus"></a>
+								<ul class="depth04">
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06011401" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/annuityPrincipalPaymentList.do');" title="연금저축 납입원금잔액">연금저축 납입원금잔액</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06011402" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/annuityReserveList.do');" title="연금저축 적립금">연금저축 적립금</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06011403" class="">
+							<a href="javascript:goPageLNB('N', '      ', '');" title="연금저축 비교지수 수익률" style="letter-spacing: -2px;">연금저축 비교지수 수익률</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06011404" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/annuityYieldList.do');" title="연금저축 수익률">연금저축 수익률</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+			
+				
+				
+					<li id="PC06011405" class="">
+						<a href="javascript:goPageLNB('N', '      ', '/front/public/annuityCommissionList.do');" title="연금저축 수수료율">연금저축 수수료율</a>
+					</li>
+				
+			
+				</ul>
+			</li>
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+							<li id="PC06011500" class="">
+								<a href="#none" title="연금저축 2019년 4분기 이전 열기" onclick="javascript:cssChanger(this);" style="letter-spacing: -2px;">연금저축 2019년 4분기 이전<img src="/hk_web/img/common/bg_depth2_plus.gif" alt="하위메뉴 있음" class="plus"></a>
+								<ul class="depth04">
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06011501" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/jsps/front/public/product/annuity/annuity-yield.jsp');" title="(구)연금저축 수익률">(구)연금저축 수익률</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06011502" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/jsps/front/public/product/annuity/annuity-commission.jsp');" title="(구)연금저축 수수료율" style="letter-spacing: -2px;">(구)연금저축 수수료율</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06011503" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/jsps/front/public/product/annuity/annuity-persistency.jsp');" title="(구)연금저축 유지율">(구)연금저축 유지율</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+			
+				
+				
+					<li id="PC06011504" class="">
+						<a href="javascript:goPageLNB('N', '      ', '/jsps/front/public/product/annuity/annuity-transfer.jsp');" title="(구)연금저축 계약이전제도" style="letter-spacing: -2px;">(구)연금저축 계약이전제도</a>
+					</li>
+				
+			
+				</ul>
+			</li>
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+							<li id="PC06010500" class="">
+								<a href="#none" title="자산연계형상품 열기" onclick="javascript:cssChanger(this);">자산연계형상품<img src="/hk_web/img/common/bg_depth2_plus.gif" alt="하위메뉴 있음" class="plus"></a>
+								<ul class="depth04">
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06010501" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/contactPropertyDebt.do');" title="주가지수연계">주가지수연계</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06010502" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/newAnnounceSaving1.do');" title="신공시저축">신공시저축</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+			
+				
+				
+					<li id="PC06010503" class="">
+						<a href="javascript:goPageLNB('N', '      ', '/front/public/dreamLifeSaving1.do');" title="(무)흥국드림Life저축" style="letter-spacing: -2px;">(무)흥국드림Life저축</a>
+					</li>
+				
+			
+				</ul>
+			</li>
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+							<li id="PC06010600" class="">
+								<a href="#none" title="적용이율 열기" onclick="javascript:cssChanger(this);">적용이율<img src="/hk_web/img/common/bg_depth2_plus.gif" alt="하위메뉴 있음" class="plus"></a>
+								<ul class="depth04">
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06010601" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/publicMonth10.do');" title="당월이율">당월이율</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06010602" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/publicRate10.do?rateType=R010');" title="공시이율">공시이율</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06010603" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/depositRate.do');" title="정기예금이율">정기예금이율</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06010604" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/jsps/front/public/product/rate/rate04.jsp');" title="보험계약대출이율">보험계약대출이율</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06010605" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/jsps/front/public/product/rate/rate05.jsp');" title="최저보증/중도해지이율">최저보증/중도해지이율</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+			
+				
+				
+					<li id="PC06010606" class="">
+						<a href="javascript:goPageLNB('N', '      ', '/jsps/front/public/product/rate/rate06.jsp');" title="태양생명">태양생명</a>
+					</li>
+				
+			
+				</ul>
+			</li>
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+				
+					
+					
+					
+							<li id="PC06010700" class="">
+								<a href="javascript:goPageLNB('N', '      ', '/jsps/front/public/contractor_app/contractor_app.jsp');" title="계약자배당관련">계약자배당관련</a>
+							</li>
+					
+				
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+							<li id="PC06010800" class="">
+								<a href="#none" title="보호금융상품등록부 열기" onclick="javascript:cssChanger(this);">보호금융상품등록부<img src="/hk_web/img/common/bg_depth2_plus.gif" alt="하위메뉴 있음" class="plus"></a>
+								<ul class="depth04">
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06010801" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/personProduct.do');" title="개인보험">개인보험</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06010802" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/companyProduct.do');" title="법인보험">법인보험</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06010803" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/retireProduct.do');" title="퇴직">퇴직</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+			
+				
+				
+					<li id="PC06010804" class="">
+						<a href="javascript:goPageLNB('N', '      ', '/front/public/etcProduct.do');" title="기타">기타</a>
+					</li>
+				
+			
+				</ul>
+			</li>
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+				
+					
+					
+					
+							<li id="PC06010900" class="">
+								<a href="javascript:goPageLNB('N', '      ', '/jsps/front/public/product/rateChange.jsp');" title="공시기준이율 변경에 따른 안내" style="letter-spacing: -2px;">공시기준이율 변경에 따른 안내</a>
+							</li>
+					
+				
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+				
+					
+					
+					
+							<li id="PC06011000" class="">
+								<a href="javascript:goPageLNB('N', '      ', '/jsps/front/public/product/healthCare.jsp');" title="(무)흥국생명 헬스케어암보험" style="letter-spacing: -2px;">(무)흥국생명 헬스케어암보험</a>
+							</li>
+					
+				
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+				
+					
+					
+					
+							<li id="PC06011100" class="">
+								<a href="javascript:goPageLNB('N', '      ', '/front/public/insrJobAction.do');" title="직업 및 위험등급 분류표 안내" style="letter-spacing: -2px;">직업 및 위험등급 분류표 안내</a>
+							</li>
+					
+				
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+				
+					
+					
+					
+							<li id="PC06011200" class="">
+								<a href="javascript:goPageLNB('N', '      ', '/jsps/front/public/product/insudementia.jsp');" title="치매보험금 지급조건 안내" style="letter-spacing: -2px;">치매보험금 지급조건 안내</a>
+							</li>
+					
+				
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+				
+					
+					
+					
+							<li id="PC06011300" class="">
+								<a href="javascript:goPageLNB('N', '      ', '/jsps/front/public/product/dementiaCare.jsp');" title="(무)경도치매보장(치매예방프로그램)" style="letter-spacing: -2px;">(무)경도치매보장(치매예방프로그램)</a>
+							</li>
+					
+				
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+							<li id="PC06011600" class="">
+								<a href="javascript:goPageLNB('N', '      ', '/jsps/front/public/product/lifeSettle2026.jsp');" title="사망유동화특약">사망유동화특약</a>
+							</li>
+						</ul>
+					</li>
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+				
+					
+
+					
+					<li id="PC06020000" class="">
+						<a href="javascript:goPageLNB('N', '      ', '/front/public/priceProduct.do');" title="가격공시" style="background: none;">가격공시</a>
+					</li>
+					
+				
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+					<li id="PC06080000" class="">
+						<a href="#none" title="퇴직연금공시 열기" class="togleBtn" onclick="javascript:cssChanger(this);">퇴직연금공시</a>
+						<ul class="depth03">
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+							<li id="PC06081100" class="">
+								<a href="#none" title="퇴직연금사업자 열기" onclick="javascript:cssChanger(this);">퇴직연금사업자<img src="/hk_web/img/common/bg_depth2_plus.gif" alt="하위메뉴 있음" class="plus"></a>
+								<ul class="depth04">
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06081101" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/jsps/front/public/retired-annuity/notice-business.jsp');" title="수행업무">수행업무</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06081102" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/jsps/front/public/retired-annuity/fee-business.jsp');" title="관련수수료">관련수수료</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+			
+				
+				
+					<li id="PC06081103" class="">
+						<a href="javascript:goPageLNB('N', '      ', '/jsps/front/public/retired-annuity/agreement-business.jsp');" title="관련계약서">관련계약서</a>
+					</li>
+				
+			
+				</ul>
+			</li>
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+							<li id="PC06080200" class="">
+								<a href="#none" title="금리연동형 열기" onclick="javascript:cssChanger(this);">금리연동형<img src="/hk_web/img/common/bg_depth2_plus.gif" alt="하위메뉴 있음" class="plus"></a>
+								<ul class="depth04">
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06080201" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/interestLinkageList.do');" title="운용수익률">운용수익률</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06080202" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/interestPropertyDebt.do');" title="자산부채현황">자산부채현황</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+			
+				
+				
+					<li id="PC06080203" class="">
+						<a href="javascript:goPageLNB('N', '      ', '/front/public/interestPropertyView.do');" title="자산구성내역">자산구성내역</a>
+					</li>
+				
+			
+				</ul>
+			</li>
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+							<li id="PC06080300" class="">
+								<a href="#none" title="이율보증형 열기" onclick="javascript:cssChanger(this);">이율보증형<img src="/hk_web/img/common/bg_depth2_plus.gif" alt="하위메뉴 있음" class="plus"></a>
+								<ul class="depth04">
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06080301" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/rateGuaranteeList.do');" title="운용수익률">운용수익률</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06080302" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/guaranteePropertyDebt.do');" title="자산부채현황">자산부채현황</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+			
+				
+				
+					<li id="PC06080303" class="">
+						<a href="javascript:goPageLNB('N', '      ', '/front/public/guaranteePropertyView.do');" title="자산구성내역">자산구성내역</a>
+					</li>
+				
+			
+				</ul>
+			</li>
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+				
+					
+					
+					
+							<li id="PC06080400" class="">
+								<a href="javascript:goPageLNB('N', '      ', '/hmpg/pban/pban_aprinAsrProd.ps');" title="원리금보장상품현황">원리금보장상품현황</a>
+							</li>
+					
+				
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+				
+					
+					
+					
+							<li id="PC06080500" class="">
+								<a href="javascript:goPageLNB('N', '      ', '/hmpg/pban/pban_otcoProdRslt.ps');" title="타사원리금보장상품제공실적" style="letter-spacing: -2px;">타사원리금보장상품제공실적</a>
+							</li>
+					
+				
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+							<li id="PC06080600" class="">
+								<a href="#none" title="실적배당형 열기" onclick="javascript:cssChanger(this);">실적배당형<img src="/hk_web/img/common/bg_depth2_plus.gif" alt="하위메뉴 있음" class="plus"></a>
+								<ul class="depth04">
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06080601" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/actual01.do');" title="채권형">채권형</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06080602" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/actual02.do');" title="안정혼합형">안정혼합형</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06080603" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/actual03.do');" title="인덱스혼합형">인덱스혼합형</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06080604" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/actual04.do');" title="채권혼합형">채권혼합형</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06080605" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/actual05.do');" title="주식형">주식형</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06080607" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/actualDistribution.do');" title="베리굿자산배분형70">베리굿자산배분형70</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06080608" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/actualBF2.do');" title="글로벌자산배분형70">글로벌자산배분형70</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+			
+				
+				
+				
+						<li id="PC06080609" class="">
+							<a href="javascript:goPageLNB('N', '      ', '/front/public/actual08.do');" title="AI글로벌자산배분형70" style="letter-spacing: -2px;">AI글로벌자산배분형70</a>
+						</li>
+				
+			
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+			
+				
+				
+					<li id="PC06080606" class="">
+						<a href="javascript:goPageLNB('N', '      ', '/front/public/actual06.do');" title="상품설명서, 운용설명서" style="letter-spacing: -2px;">상품설명서, 운용설명서</a>
+					</li>
+				
+			
+				</ul>
+			</li>
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+				
+					
+					
+					
+							<li id="PC06080700" class="">
+								<a href="javascript:goPageLNB('N', '      ', '/hmpg/pban/pban_acmlmPrft.ps');" title="적립금운용금액 및 수익률" style="letter-spacing: -2px;">적립금운용금액 및 수익률</a>
+							</li>
+					
+				
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+				
+					
+					
+					
+							<li id="PC06080800" class="">
+								<a href="javascript:goPageLNB('N', '      ', '/hmpg/pban/pban_acmlmWay.ps');" title="적립금운용방법 및 수익률" style="letter-spacing: -2px;">적립금운용방법 및 수익률</a>
+							</li>
+					
+				
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+				
+					
+					
+					
+							<li id="PC06080900" class="">
+								<a href="javascript:goPageLNB('N', '      ', '/front/public/annuityPubList.do');" title="퇴직연금수시공시">퇴직연금수시공시</a>
+							</li>
+					
+				
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+							<li id="PC06081000" class="">
+								<a href="javascript:goPageLNB('N', '      ', '/hmpg/pban/pban_enroll_business.ps');" title="퇴직연금사업자등록내용">퇴직연금사업자등록내용</a>
+							</li>
+						</ul>
+					</li>
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+					<li id="PC06030000" class="">
+						<a href="#none" title="퇴직보험공시 열기" class="togleBtn" onclick="javascript:cssChanger(this);">퇴직보험공시</a>
+						<ul class="depth03">
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+				
+					
+					
+					
+							<li id="PC06030100" class="">
+								<a href="javascript:goPageLNB('N', '      ', '/front/public/retiredPropertyDebt.do');" title="자산부채현황">자산부채현황</a>
+							</li>
+					
+				
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+							<li id="PC06030200" class="">
+								<a href="javascript:goPageLNB('N', '      ', '/front/public/retiredPropertyView.do');" title="자산구성현황">자산구성현황</a>
+							</li>
+						</ul>
+					</li>
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+					<li id="PC06040000" class="">
+						<a href="#none" title="경영공시 열기" class="togleBtn" onclick="javascript:cssChanger(this);">경영공시</a>
+						<ul class="depth03">
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+				
+					
+					
+					
+							<li id="PC06040100" class="">
+								<a href="javascript:goPageLNB('N', '      ', '/front/public/manageList.do');" title="정기경영공시">정기경영공시</a>
+							</li>
+					
+				
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+				
+					
+					
+					
+							<li id="PC06040200" class="">
+								<a href="javascript:goPageLNB('N', '      ', '/front/public/demandList.do');" title="수시경영공시">수시경영공시</a>
+							</li>
+					
+				
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+
+			
+				
+					
+					
+					
+							<li id="PC06040300" class="">
+								<a href="javascript:goPageLNB('N', '      ', '/front/public/outsideList.do');" title="지배구조공시">지배구조공시</a>
+							</li>
+					
+				
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+							<li id="PC06040400" class="">
+								<a href="javascript:goPageLNB('N', '      ', '/front/company/contributionList.do');" title="사회공헌공시">사회공헌공시</a>
+							</li>
+						</ul>
+					</li>
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+					<li id="PC06050000" class="">
+						<a href="#none" title="수수료율공시 열기" class="togleBtn" onclick="javascript:cssChanger(this);">수수료율공시</a>
+						<ul class="depth03">
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+
+			
+
+			
+							<li id="PC06050100" class="">
+								<a href="javascript:goPageLNB('N', '      ', '/jsps/front/public/banca-rate.jsp');" title="방카슈랑스 모집수수료율" style="letter-spacing: -2px;">방카슈랑스 모집수수료율</a>
+							</li>
+						</ul>
+					</li>
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+				
+					
+
+					
+					<li id="PC06060000" class="">
+						<a href="javascript:goPageLNB('N', '      ', '/jsps/front/public/personal/annuity_removal.jsp');" title="연금저축계좌 이체" style="background: none;">연금저축계좌 이체</a>
+					</li>
+					
+				
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+				
+					
+
+					
+					<li id="PC06070000" class="">
+						<a href="javascript:goPageLNB('N', '      ', '/jsps/front/public/standard/standard.jsp');" title="투자권유준칙" style="background: none;">투자권유준칙</a>
+					</li>
+					
+				
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+			
+				
+					
+
+					
+					<li id="PC06090000" class="">
+						<a href="javascript:goPageLNB('N', '      ', '/front/trustproduct/trustNoticeList.do');" title="사채관리공고사항" style="background: none;">사채관리공고사항</a>
+					</li>
+					
+				
+			
+
+			
+
+			
+
+			
+
+			
+
+
+			
+
+		
+
+		
+		
+			
+
+		
+
+					<li><a href="javascript:goPageLNB('N', '', 'http://finlife.fss.or.kr');" title="금융감독원 사이트 새창에서 열림" style="background: none;"><img src="/hk_web/img/public/public_banner.gif" alt="금융상품 통합비교공시 금융상품 한눈에"></a></li>
+
+		</ul>
+	
+
+
+<script type="text/javascript">
+
+// 금융계산기
+function insuranceCalculator(){
+	let popup;
+	if(/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+		//모바일로 접속했을 경우
+		popup = window.open("/front/help/calculator1.do", "","width=600,height=800, resizalbe=no, scrollbars=yes");
+	}else{
+		//데스크탑으로 접속했을 경우
+		popup = window.open("/front/help/calculator1.do", "","width=800,height=770, resizalbe=no, scrollbars=yes");
+	}
+	popup.focus();
+}
+
+//맞춤보험팝업
+function insuranceFindPop(){
+	var popup = window.open("/front/lnb/gurantIsuranceFindPop.do", "","width=530,height=590");
+	popup.focus();
+}
+
+//용어사전팝업
+function termPop(){
+	let popup;
+	if(/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+		//모바일로 접속했을 경우
+		popup = window.open("/front/help/termMainPopup.do", "","width=500,height=720, resizalbe=no, scrollbars=yes");
+	}else{
+		//데스크탑으로 접속했을 경우
+		popup = window.open("/front/help/termMainPopup.do", "","width=790,height=780, resizalbe=no, scrollbars=yes");
+	}
+	popup.focus();
+}
+
+
+function mainPop(url){
+	util.Window.openWindow(url, null, 800, 950, 0, 0, "yes", "no", true);
+}
+</script>
+
+<div id="lnb_scrap" style="top: 1153px;">
+	
+		<div class="favorite">
+			<a href="#none" title="자주찾는메뉴 레이어팝업 열림"><img src="/hk_web/img/common/btn_favorite.gif" alt="자주찾는메뉴 바로가기"></a>
+			<div class="menus">
+				<div class="inner">
+					<ul>
+						
+								<li><a href="/jsps/front/help/customer_info_cyber.jsp">사이버창구 이용안내</a></li>
+						
+					</ul>
+
+					<a href="#none" class="close"><img src="/hk_web/img/common/btn_favorite_close.gif" alt="자주찾는메뉴 닫기"></a>
+				</div>
+			</div>
+		</div>
+	
+	<div class="btn_both">
+		<a href="javascript:insuranceCalculator();"><img src="/hk_web/img/common/btn_calculator.gif" alt="금융계산기 새창열기"></a>
+		<a href="javascript:insuranceFindPop();"><img src="/hk_web/img/common/btn_custom_build.gif" alt="맞춤보험 새창열기"></a>
+		<a href="javascript:termPop();"><img src="/hk_web/img/common/btn_dictionary.gif" alt="용어사전 새창열기"></a>
+	</div>
+		
+			
+			
+		
+		
+	<dl>
+		<dt>고객센터</dt>
+		<dd style="font-size: 32px; font-weight: 800; letter-spacing: -0.07em; color:#E20F8C; line-height: 40px; margin-top: 0;">1588-2288</dd>
+		<span style="font-size: 14px;">( 평일 <i>09:00~18:00 </i>)</span>
+		<dd>
+			<ul>
+				<li>해외<span>|</span><i>82-31-789-9200</i></li>
+				<li>장애인 전용<span>|</span><i>1811-0420</i></li>
+			</ul>
+		</dd>
+		<dt style="margin-top: 20px">신규상품 가입문의</dt>
+		<dd style="font-size: 30px; font-weight: 800; letter-spacing: -0.08em; color:#E20F8C; line-height: 40px; margin-top: 0;">02-779-9447</dd>
+		<dd>
+			<a href="/front/help/onlineWriteForm.do">온라인상담</a>
+			<span>|</span>
+			<a href="/front/help/branch_prazaList.do" class="txt_magenta">금융플라자 안내</a>
+		</dd>
+	</dl>
+</div>
+		</div><!-- //aside -->
+
+ 		<div id="section" style="min-height: 1608px;">
+			<div class="location">
+				<span><a href="#none">HOME</a> &gt; 공시실 &gt; 상품공시 &gt; 전체상품 &gt; 판매상품 </span>
+			</div>
+
+			<div id="article">
+
+				<h3 class="headline">판매상품</h3>
+				<p class="hl_sub">보험상품 선택에 도움이 되는 정보를 제공해드립니다.</p>
+
+				<div class="contents">
+
+					<form name="frmPage" id="frmPage" method="post" onsubmit="return false;" data-nppfs-form-id="d5d9b318faa7d9745"><div class="nppfs-elements" style="display:none;"></div>
+
+						<input type="hidden" name="searchFlgSale" id="searchFlgSale" value="Y">
+						<input type="hidden" name="searchCdPublicPrtType1" id="searchCdPublicPrtType1" value="I101">
+						<input type="hidden" name="searchCdPublicPrtType2" id="searchCdPublicPrtType2" value="">
+						<input type="hidden" name="searchCdPublicPrtType3" id="searchCdPublicPrtType3" value="">
+						<input type="hidden" name="beforeYn" id="beforeYn" value="">
+						<input type="hidden" name="encValue" id="encValue" value="">
+
+						<p class="text_type02">상품공시는 생명보험에 대해 폭넓은 이해와 올바른 보험상품 선택에 도움을 주기 위해 금융감독원 "보험업감독규정 시행세칙"과 생명보험협회에서 정하는 "상품통일공시기준"에 따라 표준화된 양식으로 작성된 것입니다.</p>
+						<div class="cla">
+							<div class="mt7 fr">
+								<label for="searchText" class="hdd">상품검색</label>
+								<input type="text" name="searchText" id="searchText" value="" style="width:253px; padding-left:5px;" class="value" title="검색어">
+								<a href="javascript:doSearch('','','','','');" class="btn_board_gray">검색</a>
+							</div>
+						</div>
+
+						<div class="list_product_check">
+							<div class="left">
+								<dl>
+									
+										<dt>1. 구분선택</dt>
+									
+
+									
+									<script>
+
+									$(function(){
+
+											$('.list_product_check dd a').click(function(){
+												$(this).parent().addClass('on').siblings().removeClass('on');
+												$(this).attr('title', '선택된 링크');
+												$(this).parent().siblings().children().removeAttr('title');
+											});
+											/*
+											$('#productList a').click(function(){
+												setTimeout(function(){
+													$('.full dd').focus();
+												},500);
+											});
+											*/
+										});
+
+									</script>
+									<dd>
+										<ul class="select1">
+											
+												<li class="on">
+													<a href="javascript:doSearch('','','I101','','');" title="선택된 링크">개인</a>
+												</li>
+												<li>
+													<a href="javascript:doSearch('','','I102','','');">단체</a>
+												</li>
+												<li>
+													<a href="javascript:doSearch('','','I103','','');">방카슈랑스</a>
+												</li>
+											
+
+											
+										</ul>
+									</dd>
+
+									
+
+									
+										<dt>2. 보험유형선택</dt>
+									
+
+									
+
+									<dd>
+										<ul>
+												<li class="on">
+													<a href="javascript:doSearch('','','','','');" title="선택된 링크">
+														전체
+													</a>
+												</li>
+											
+												<li>
+													<a href="javascript:doSearch('','','','I201','');">
+														연금
+													</a>
+												</li>
+											
+												<li>
+													<a href="javascript:doSearch('','','','I202','');">
+														보장성
+													</a>
+												</li>
+											
+												<li>
+													<a href="javascript:doSearch('','','','I203','');">
+														생사혼합
+													</a>
+												</li>
+											
+												<li>
+													<a href="javascript:doSearch('','','','I204','');">
+														저축
+													</a>
+												</li>
+											
+												<li>
+													<a href="javascript:doSearch('','','','I205','');">
+														개인연금
+													</a>
+												</li>
+											
+												<li>
+													<a href="javascript:doSearch('','','','I206','');">
+														교육
+													</a>
+												</li>
+											
+												<li>
+													<a href="javascript:doSearch('','','','I207','');">
+														양로
+													</a>
+												</li>
+											
+												<li>
+													<a href="javascript:doSearch('','','','I208','');">
+														변액
+													</a>
+												</li>
+											
+												<li>
+													<a href="javascript:doSearch('','','','I209','');">
+														기타
+													</a>
+												</li>
+											
+										</ul>
+									</dd>
+								</dl>
+							</div>
+
+							<div id="publicPrtDiv" class="right">
+								<dl>
+									
+										<dt>3. 판매상품명 선택</dt>
+									
+
+									
+
+									<dd>
+										<ul id="productList">
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)다시만난흥국생명상해보험');">
+														(무)다시만난흥국생명상해보험
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)처음만난흥국생명상해보험');">
+														(무)처음만난흥국생명상해보험
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)프리미엄 드림하이브리드연금보험');">
+														(무)프리미엄 드림하이브리드연금보험
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 49재하늘소풍제례종신보험');">
+														(무)흥국생명 49재하늘소풍제례종신보험
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 간편한 용종MiniCare보험');">
+														(무)흥국생명 간편한 용종MiniCare보험
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 다(多)사랑암보험(해약환급금미지급형V2)');">
+														(무)흥국생명 다(多)사랑암보험(해약환급금미지급형V2)
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 다(多)사랑통합보험V2');">
+														(무)흥국생명 다(多)사랑통합보험V2
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 다사랑3.1.1간편건강보험(해약환급금미지급형)(갱신형)');">
+														(무)흥국생명 다사랑3.1.1간편건강보험(해약환급금미지급형)(갱신형)
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 다사랑3.10.5.5고당플러스간편건강보험(해약환급금미지급형)(갱신형)');">
+														(무)흥국생명 다사랑3.10.5.5고당플러스간편건강보험(해약환급금미지급형)(갱신형)
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 다사랑3.10.5.5고당플러스간편건강보험(해약환급금미지급형V2)');">
+														(무)흥국생명 다사랑3.10.5.5고당플러스간편건강보험(해약환급금미지급형V2)
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 다사랑3.10.5간편건강보험(해약환급금미지급형)(갱신형)');">
+														(무)흥국생명 다사랑3.10.5간편건강보험(해약환급금미지급형)(갱신형)
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 다사랑3.10.5간편건강보험(해약환급금미지급형V2)');">
+														(무)흥국생명 다사랑3.10.5간편건강보험(해약환급금미지급형V2)
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 다사랑3N5간편건강보험');">
+														(무)흥국생명 다사랑3N5간편건강보험
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 다사랑3N5간편건강보험(갱신형)');">
+														(무)흥국생명 다사랑3N5간편건강보험(갱신형)
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 다사랑통합상해보험(갱신형)');">
+														(무)흥국생명 다사랑통합상해보험(갱신형)
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 다재다능1540보험');">
+														(무)흥국생명 다재다능1540보험
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 다재다능종합보험');">
+														(무)흥국생명 다재다능종합보험
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 미리받는트리플더블업건강종신보험');">
+														(무)흥국생명 미리받는트리플더블업건강종신보험
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 생활비주는종신보험');">
+														(무)흥국생명 생활비주는종신보험
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 실속있는건강보험');">
+														(무)흥국생명 실속있는건강보험
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 실손의료비보험(갱신형)');">
+														(무)흥국생명 실손의료비보험(갱신형)
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 실손의료비보험(갱신형, 계약재개용)');">
+														(무)흥국생명 실손의료비보험(갱신형, 계약재개용)
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 실손의료비보험(갱신형, 계약전환용)');">
+														(무)흥국생명 실손의료비보험(갱신형, 계약전환용)
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 오튼튼 5.10.5건강보험(갱신형) ');">
+														(무)흥국생명 오튼튼 5.10.5건강보험(갱신형) 
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 오튼튼 5.10.5건강보험(해약환급금미지급형V2) ');">
+														(무)흥국생명 오튼튼 5.10.5건강보험(해약환급금미지급형V2) 
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 온라인연금저축보험');">
+														(무)흥국생명 온라인연금저축보험
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 온라인정기보험');">
+														(무)흥국생명 온라인정기보험
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 치매담은시니어보장보험');">
+														(무)흥국생명 치매담은시니어보장보험
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 프리미엄드림저축보험');">
+														(무)흥국생명 프리미엄드림저축보험
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','(무)흥국생명 해탈다비종신보험');">
+														(무)흥국생명 해탈다비종신보험
+													</a>
+												</li>
+											
+												<li>
+
+													<a href="javascript:doSearch('','','','','연금저축 흥국생명 체인지UP연금보험');">
+														연금저축 흥국생명 체인지UP연금보험
+													</a>
+												</li>
+											
+										</ul>
+									</dd>
+								</dl>
+							</div>
+
+							<div class="full">
+								<dl>
+									
+										<dt>4. 상품 공시 다운로드</dt>
+									
+
+									
+
+									<dd tabindex="0">
+										<p class="table_title"><span id="publicPrtType3Nm"></span></p>
+										<div class="table_wrap overflow">
+											<table class="table_type01">
+												<caption>선택한상품공시다운로드 - 판매기간, 상품코드, 상품약관, 사업방법서, 상품요약서 순으로 구성된 표</caption><colgroup><col style="width:25%"><col style="width:19%"><col style="width:17%"><col style="width:17%"><col style="width:17%"></colgroup><thead><tr><th scope="col">판매기간</th><th scope="col">상품코드</th><th scope="col">상품약관</th><th scope="col">사업방법서</th><th scope="col">상품요약서</th></tr></thead><tbody id="productVoTr" style="display:none;"></tbody>
+											</table>
+										</div>
+									</dd>
+								</dl>
+							</div>
+						</div>
+
+						<dl class="notice_box mt50 cla">
+							<dt>TIP</dt>
+							<dd class="overflow"><p class="fl">운용설명서 파일이 안보이거나 열리지 않을 때 Adobe Reader(한글판)을 설치하십시오. </p>
+							<a href="http://www.adobe.com/kr/" target="_blank" title="새창" class="btn_small fr">파일다운로드</a></dd>
+						</dl>
+
+					</form><!-- //form -->
+
+				</div><!-- //contents -->
+
+			</div><!-- //article -->
+
+		</div><!-- //section -->
+
+	</div><!-- //container -->
+
+	<div id="footer">
+		
+
+<div class="inner">
+	<div class="footer_link">
+		<div class="list_link">
+			<h4>사이버 창구</h4>
+			<ul>
+				<li><a href="javascript:goPageMenu('N',	' ',	'/cyber/loan/Loan_Status.do')">보험계약대출</a></li>
+				<li><a href="javascript:goPageMenu('N',	' ',	'/cyber/credit/Credit_Info_Agree.do')">신용대출</a></li>
+				<li><a href="javascript:goPageMenu('N',	' ',	'/cyber/myinfo/Myinfo_Perusal.do')">고객정보</a></li>
+				<li><a href="javascript:goPageMenu('N',	' ',	'/cyber/contract/contract_main.do')">보험계약정보</a></li>
+				<li><a href="javascript:goPageMenu('N',	' ',	'/cyber/fee/Fee_List.do')">보험료 납입</a></li>
+				<li><a href="javascript:goPageMenu('N',	' ',	'/cyber/payment/Mangi_List.do')">보험금 지급</a></li>
+				<li><a href="javascript:goPageMenu('N',	' ',	'/cyber/accident/Accident_Accept_Info.do')">사고보험금 청구</a></li>
+				<li><a href="javascript:goPageMenu('N',	' ',	'/cyber/dachul/Dachul_List.do')">대출계약정보</a></li>
+				<li><a href="javascript:goPageMenu('N',	' ',	'/cyber/proof/Insurance_List.do')">증명서 발급</a></li>
+				<li><a href="javascript:goPageMenu('N',	' ',	'/cyber/myinfo/SecurityCard_rcvView.do')">인증센터</a></li>
+			</ul>
+		</div>
+
+		<div class="list_link">
+			<h4>보험상품</h4>
+			<ul>
+				<li><a href="javascript:goPageMenu('N',	'', '/front/product/productSubMain.do?cd_prts=P001')">종신/정기보험</a></li>
+				<li><a href="javascript:goPageMenu('N',	'', '/front/product/productSubMain.do?cd_prts=P003')">건강/상해보험</a></li>
+				<li><a href="javascript:goPageMenu('N',	'', '/front/product/productSubMain.do?cd_prts=P006')">방카슈랑스</a></li>
+				<li><a href="/jsps/cyber/online_page.jsp">온라인보험</a></li>
+				<li><a href="javascript:goPageMenu('N',	' ', '/jsps/front/product/insurance_guide_goods_lifefeature.jsp')">보험가이드</a></li>
+			</ul>
+		</div>
+
+		<div class="list_link">
+			<h4>대출/신탁</h4>
+			<ul>
+				<li><a href="/front/loan/contractLoan.do">보험계약대출</a></li>
+				<li><a href="/front/loan/loanProductInfo.do?cd_prt=LA4011">신용대출</a></li>
+				<li><a href="/front/loan/loanProductInfo.do?cd_prt=LA2011">부동산대출</a></li>
+				<li><a href="/jsps/front/loan/company-loan.jsp">기업대출</a></li>
+				<li><a href="/front/trustproduct/trustMain.do">신탁</a></li>
+				<li><a href="/hmpg/comm/comm_mainPage.ps">퇴직연금</a></li>
+				<li><a href="/jsps/front/loan/rateReduction2.jsp">금리인하요구권</a></li>
+				<li><a href="/front/help/crime/customerUnfairLoan.do">대출관련 부당/과장 신고센터</a></li>
+			</ul>
+		</div>
+
+		<div class="list_link">
+			<h4>고객센터</h4>
+			<ul>
+				<li><a href="/front/help/faqList.do">자주찾는 질문</a></li>
+				<li><a href="/front/help/onlineWriteForm.do">고객상담</a></li>
+				<li><a href="/jsps/front/help/customer_require_tab.jsp">사고보험금 구비서류</a></li>
+				<li><a href="/jsps/front/help/customer_info_cyber.jsp">홈페이지 이용안내</a></li>
+				<li><a href="/jsps/front/help/customer_info_mobile2.jsp">모바일창구 이용안내</a></li>
+				<li><a href="/front/help/eventList.do">이벤트</a></li>
+				<li><a href="/front/help/noticeList.do">공지사항</a></li>
+				<li><a href="/front/help/crime/customerReportCenter.do">신고센터</a></li>
+				<li><a href="/front/help/visibleTm.do">보이는 TM 표준안</a></li>
+			</ul>
+		</div>
+
+		<div class="list_link">
+			<h4>회사소개</h4>
+			<ul>
+				<li><a href="/jsps/front/company/ceo-greetings.jsp">기업개요</a></li>
+				<li><a href="/jsps/front/company/summary/ci-summary04.jsp">PR</a></li>
+				<li><a href="/jsps/front/company/pr/ci-contribution.jsp">사회공헌</a></li>
+				<li><a href="/front/consultant/consultantInfo.do">컨설턴트</a></li>
+				<li><a href="/front/company/tenderList.do">입찰공고</a></li>
+			</ul>
+		</div>
+	</div><!-- //footer_link -->
+
+	<ul class="foot_menu">
+		<li class="b_color"><a href="/front/service/policy/handlePersonalInf.do">개인정보처리방침</a></li>
+		<li><a href="/front/service/policy/trustInfUsePolicy.do">신용정보활용체제</a></li>
+		<li><a href="/front/service/policy/agreementUsePolicy.do">이용약관</a></li>
+		<li><a href="/jsps/front/company/summary/ci-summaryEthics.jsp">윤리경영</a></li>
+		<li><a href="/jsps/front/addition/manual/전자금융거래기본약관금감원최종승.pdf" target="_blank" title="새창열림">전자금융거래 기본약관</a></li>
+		<li class="nw"><a href="https://cont.insure.or.kr/cont_web/intro.do" target="_blank" title="새창열림">휴면미수령보험금</a></li>
+		<li class="nw"><a href="http://www.fss.or.kr/s1332/" target="_blank" title="새창열림">서민금융 1332</a></li>
+		<li><a href="/front/public/personProduct.do">보호금융상품등록부</a></li>
+		<li class="line2"><a href="/jsps/front/help/customer_info_cyber.jsp">사이버창구</a></li>
+		<li class="line2_1"><a href="/jsps/front/help/customer_info_mobile2.jsp">모바일창구</a></li>
+		<li class="line2_1"><a href="/front/service/policy/avProcessingPolicy.do">영상정보처리기기운영방침</a></li>
+		<li class="line2_1"><a href="/front/service/policy/customerRightPolicy.do">고객권리안내문</a></li>
+	</ul>
+	<div class="selBox">
+		<ul>
+			<li>
+				<a href="https://www.taekwanggroup.co.kr/ko/info" target="_blank" title="태광신문고로 이동 새창열림" class="">태광신문고</a>
+			</li>
+			<li>
+				<a href="#none" title="온라인신고센터 레이어 팝업" class="">온라인신고센터</a>
+				<div class="options report_center" style="display: none;">
+					<ul>
+						<li><a href="/front/service/criminal4.do">보험범죄신고</a></li>
+						<li><a href="/front/service/damage.do">전자금융거래피해신고</a></li>
+						<li><a href="http://www.fss.or.kr/fss/kr/main.html" target="_blank" title="새창열림">방카슈랑스 부조리신고</a></li>
+						<li><a href="/front/help/crime/customerUnfairLoan.do">대출관련 부당/과장광고 신고</a></li>
+					</ul>
+				</div>
+			</li>
+			<li>
+				<a href="#none" title="패밀리사이트 레이어 팝업" class="">패밀리사이트</a>
+				<div class="options family_site" style="display: none;">
+					<dl class="fm1">
+						<dt>흥국금융가족</dt>
+						<dd>
+							<ul>
+								<li><a href="http://www.insurance.co.kr/" target="_blank" title="새창열림">흥국화재</a></li>
+								<li><a href="http://www.heungkuksec.co.kr/" target="_blank" title="새창열림">흥국증권</a></li>
+								<li><a href="http://www.hkfund.co.kr/" target="_blank" title="새창열림">흥국자산운용</a></li>
+								<li><a href="http://www.goryobank.co.kr/" target="_blank" title="새창열림">고려저축은행</a></li>
+								<li><a href="http://www.yegaramsb.co.kr/" target="_blank" title="새창열림">예가람저축은행</a></li>
+							</ul>
+						</dd>
+					</dl>
+					<dl class="fm2">
+						<dt>관련사이트</dt>
+						<dd>
+							<ul>
+								<li><a href="http://www.pinkspiders.co.kr/" target="_blank" title="새창열림">흥국생명배구단</a></li>
+								<li><a href="http://www.hungkukacademy.co.kr/" target="_blank" title="새창열림">흥국생명연수원</a></li>
+								<li><a href="https://www.cinecube.co.kr/" target="_blank" title="새창열림">씨네큐브광화문</a></li>
+								<li><a href="http://www.booknlife.com/" target="_blank" title="새창열림">한국도서보급</a></li>
+							</ul>
+						</dd>
+					</dl>
+					<dl class="fm3">
+						<dt>태광그룹<span class="font11">새로운 미래를 창조하는 태광그룹의 자회사입니다.</span></dt>
+						<dd>
+							<strong>섬유 · 석유화학부문</strong>
+							<ul>
+								<li><a href="http://www.taekwang.co.kr/" target="_blank" title="새창열림">태광산업</a></li>
+								<li><a href="http://www.daehansf.co.kr/" target="_blank" title="새창열림">대한화섬</a></li>
+							</ul>
+						</dd>
+						<dd><strong>미디어 · 정보통신부문</strong>
+
+							<ul>
+								<li><a href="http://www.tbroad.com/" target="_blank" title="새창열림">티브로드</a></li>
+								<li><a href="http://www.tcast.tv/" target="_blank" title="새창열림">티캐스트</a></li>
+								<li><a href="http://www.imtcast.com/echannel/index.jsp" target="_blank" title="새창열림">이채널</a></li>
+								<li><a href="http://www.foxchannel.co.kr/" target="_blank" title="새창열림">티브로드 폭스코리아</a></li>
+								<li><a href="http://www.kcttel.com/" target="_blank" title="새창열림">한국케이블텔레콤</a></li>
+								<li><a href="http://www.tsis.co.kr/" target="_blank" title="새창열림">티시스</a></li>
+							</ul>
+						</dd>
+						<dd><strong>문화지원 · 육성부문</strong>
+							<ul>
+								<li><a href="http://www.sehwa.hs.kr/" target="_blank" title="새창열림">세화고등학고</a></li>
+								<li><a href="http://www.sehwa-gs.hs.kr" target="_blank" title="새창열림">세화여자고등학교</a></li>
+								<li><a href="http://www.sewha.ms.kr" target="_blank" title="새창열림">세화여자중학교</a></li>
+								<li><a href="http://iljufoundation.org" target="_blank" title="새창열림">일주학술문화재단</a></li>
+								<li><a href="https://www.sehwamuseum.org/main.do" target="_blank" title="새창열림">세화예술문화재단</a></li>
+							</ul>
+						</dd>
+					</dl>
+				</div>
+			</li>
+		</ul>
+	</div><!-- //selBox -->
+	<ul class="bn">
+		<li><img src="/hk_web/img/common/f_bn5.gif" border="0" alt="내일을 밝히는 큰 빛 , 태광 ESG"></li>
+		<li><img src="/hk_web/img/common/f_bn3.gif" border="0" alt="대한민국소셜미디어대상" title="[생명보험부문]대상 수상"></li>
+		<li><a href="http://www.webwatch.or.kr/Situation/WA_Situation.html?MenuCD=110" target="_blank" title="새창열림"><img src="/hk_web/img/common/f_bn1.gif" border="0" alt="과학기술정보통신부 WEB ACCESSIBILITY 마크(웹 접근성 품질인증 마크)" title="국가 공인 인증기관 : 웹와치"></a></li>
+		<li><img src="/hk_web/img/common/f_bn4.gif" border="0" alt="소비자중심경영 인증 획득" title="소비자중심경영 인증 획득"></li>
+	</ul>
+
+	<div class="footer_info">
+		<address>
+			<p>우편번호 03184 서울시 종로구 새문안로 68 흥국생명보험주식회사</p>
+			<p>대표이사 : 김형표 / 사업자등록번호 : 104-81-18586</p>
+			<p class="copy">Copyright(C) 2017 By Heungkuk Life Insurance All Rights Reserved.</p>
+		</address>
+		<a href="javascript:goPageMenu('N', '      ', '/jsps/front/company/summary/ci-summary06.jsp');" class="map">찾아오시는길</a>
+	</div>
+
+</div><!-- //inner -->
+<script>
+  	// 사이버창구 로딩페이지
+	$(function(){
+		$('<div class="wait_box" id="wait_box" name="wait_box" style="display:none"><div class="box"><p>처리중입니다. 잠시만 기다려주세요.</p></div></div>').appendTo('#wrap.cyber');
+	});
+
+	function loadingBox(){
+		$('.wait_box').css('display','block');
+	}
+
+	function loadingBoxHide(){
+		$('.wait_box').css('display','none');
+	}
+
+	loadingBoxHide();
+</script>
+	</div><!-- //footer -->
+
+</div>
+
+
+
+
+<script type="text/javascript">
+AdC3QzzvKmDnf();
+</script>
+
+</body></html>

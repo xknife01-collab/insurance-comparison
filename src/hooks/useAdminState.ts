@@ -58,6 +58,9 @@ export interface Lead {
   lead_source: string;
   created_at: string;
   planner_name?: string; // mapped locally
+  pos_score?: number;    // 고객 긍정 누적 점수 (0~N, 대화마다 합산)
+  neg_score?: number;    // 고객 부정 누적 점수 (0~N, 대화마다 합산)
+  action_score?: number; // 상담 행동 달성도 점수 (0~10, 최고 단계 갱신)
 }
 
 export interface CreditTransaction {
@@ -259,12 +262,30 @@ export function useAdminState(initialTab?: 'login' | 'register') {
     expiresAt?: string;
     subscriptionStatus?: string;
     isDemo?: boolean;
-  }>({ role: 'guest' });
+  }>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('insurance_admin_user');
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch (e) {
+          console.error("Failed to parse saved user session:", e);
+        }
+      }
+    }
+    return { role: 'guest' };
+  });
 
-  // Synchronize mock auth context with currentUser for local database RLS simulation
+  // Synchronize mock auth context with currentUser for local database RLS simulation and localStorage persistence
   useEffect(() => {
     try {
       setMockAuthUser(currentUser);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('insurance_admin_user', JSON.stringify(currentUser));
+        if (currentUser.role === 'guest') {
+          localStorage.removeItem('insurance_admin_active_tab');
+        }
+      }
     } catch (err) {
       console.warn('[Mock Auth Sync] Failed to sync auth context:', err);
     }
@@ -331,8 +352,22 @@ export function useAdminState(initialTab?: 'login' | 'register') {
   const [invitedAgencyName, setInvitedAgencyName] = useState<string | null>(null);
 
   // Dashboard Tab state
-  const [activeTab, setActiveTab] = useState<'leads' | 'settings' | 'billing' | 'planners' | 'profile' | 'marketing' | 'playbook' | 'ad_campaign' | 'chat' | 'compliance'>('leads');
+  const [activeTab, setActiveTab] = useState<'leads' | 'settings' | 'billing' | 'planners' | 'profile' | 'marketing' | 'playbook' | 'ad_campaign' | 'chat' | 'compliance' | 'customer_chat'>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('insurance_admin_active_tab');
+      if (saved) return saved as any;
+    }
+    return 'leads';
+  });
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('insurance_admin_active_tab', activeTab);
+    }
+  }, [activeTab]);
+
   const [unreadTotal, setUnreadTotal] = useState(0);
+  const [unreadCustomerTotal, setUnreadCustomerTotal] = useState(0);
 
   // 도움말 가이드 상태 및 로컬 스토리지 연동 (기본값 ON)
   const [showHelpGuide, setShowHelpGuide] = useState<boolean>(() => {
@@ -464,19 +499,37 @@ export function useAdminState(initialTab?: 'login' | 'register') {
 
       if (!memberData || memberData.length === 0) {
         setUnreadTotal(0);
+        setUnreadCustomerTotal(0);
         return;
       }
 
       const roomIds = memberData.map(m => m.room_id);
 
-      const { count } = await supabase
+      // Fetch room details to identify customer rooms
+      const { data: rooms } = await supabase
+        .from('chat_rooms')
+        .select('id, name')
+        .in('id', roomIds);
+
+      const customerRoomIds = (rooms || [])
+        .filter(r => r.name?.startsWith('실시간 고객 상담'))
+        .map(r => r.id);
+
+      const internalRoomIds = roomIds.filter(id => !customerRoomIds.includes(id));
+
+      const { data: unreadMsgs } = await supabase
         .from('chat_messages')
-        .select('*', { count: 'exact', head: true })
+        .select('room_id')
         .in('room_id', roomIds)
         .eq('is_read', false)
         .neq('sender_id', currentUserId);
 
-      setUnreadTotal(count || 0);
+      const unreadList = unreadMsgs || [];
+      const internalCount = unreadList.filter(m => internalRoomIds.includes(m.room_id)).length;
+      const customerCount = unreadList.filter(m => customerRoomIds.includes(m.room_id)).length;
+
+      setUnreadTotal(internalCount);
+      setUnreadCustomerTotal(customerCount);
     } catch (err) {
       console.warn("Failed to fetch unread total:", err);
     }
@@ -3318,6 +3371,7 @@ export function useAdminState(initialTab?: 'login' | 'register') {
     invitedAgencyName, setInvitedAgencyName,
     activeTab, setActiveTab,
     unreadTotal, setUnreadTotal,
+    unreadCustomerTotal, setUnreadCustomerTotal,
     showHelpGuide, handleToggleHelpGuide,
     showFaq, handleToggleFaq,
     visitorLogs, setVisitorLogs,

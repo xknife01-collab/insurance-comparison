@@ -1,0 +1,2 @@
+"  const handleStartAnalysis = (e: React.FormEvent) => {\n    e.preventDefault();\n    \n    // Check if at least one category has premium > 0\n    const activePoliciesCount = (Object.values(customPolicies) as { premium: number }[]).filter(p => p.premium >
+<truncated 188 bytes>

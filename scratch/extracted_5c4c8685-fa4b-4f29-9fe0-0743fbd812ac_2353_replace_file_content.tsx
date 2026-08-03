@@ -1,0 +1,2 @@
+"      <div className=\"max-w-4xl mx-auto w-full\">\n        {/* Left: One-click Fetch */}\n        <div className=\"bg-slate-900 rounded-[4rem] p-12 md:p-20 shadow-[0_60px_120px_-30px_rgba(0,0,0,0.4)] flex flex-col justify-center relative overflow-hidden 
+<truncated 2346 bytes>

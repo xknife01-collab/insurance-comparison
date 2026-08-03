@@ -1,6 +1,7 @@
 import React from 'react';
 import { 
-  Download, FileText, ShieldCheck, ExternalLink, ChevronRight, Copy, Plus, Check, Building 
+  Download, FileText, ShieldCheck, ExternalLink, ChevronRight, Copy, Plus, Check, Building,
+  TrendingUp, TrendingDown, Zap, Info
 } from 'lucide-react';
 import { Lead, Planner, Agency } from '../AdminDashboard';
 import { createClient } from '../../utils/supabase/client';
@@ -13,6 +14,87 @@ import {
   handleDownloadCSV, 
   renderPagination 
 } from './adminUtils';
+
+// ─── AI 점수 표시 컴포넌트 ───────────────────────────────────────────────────
+const ACTION_SCORE_LABELS: Record<number, { label: string; color: string }> = {
+  0:  { label: '대기중',     color: 'text-slate-500'   },
+  1:  { label: '인사응대',   color: 'text-slate-400'   },
+  2:  { label: '코드인식',   color: 'text-blue-400'    },
+  3:  { label: 'SMS안내',    color: 'text-cyan-400'    },
+  5:  { label: '인증완료',   color: 'text-yellow-400'  },
+  7:  { label: '적극상담',   color: 'text-emerald-400' },
+  10: { label: '🔥설계요청', color: 'text-orange-400'  },
+};
+
+function getActionLabel(score: number): { label: string; color: string } {
+  const keys = [10, 8, 7, 5, 3, 1, 0];
+  for (const k of keys) {
+    if (score >= k) return ACTION_SCORE_LABELS[k];
+  }
+  return ACTION_SCORE_LABELS[0];
+}
+
+// ─── [기능3] 고객 세그멘테이션 자동 배지 ────────────────────────────────────
+function getLeadSegment(pos: number, neg: number, action: number): {
+  icon: string; label: string; bg: string; text: string; border: string;
+} {
+  if (action >= 10)
+    return { icon: '🔥', label: '설계요청', bg: 'bg-orange-900/40', text: 'text-orange-300', border: 'border-orange-700/40' };
+  if (neg >= 15)
+    return { icon: '🔴', label: '이탈위험', bg: 'bg-rose-900/40',   text: 'text-rose-300',   border: 'border-rose-700/40'   };
+  if (action >= 7 && pos >= 10 && neg < 8)
+    return { icon: '🟢', label: '계약유망', bg: 'bg-emerald-900/40', text: 'text-emerald-300', border: 'border-emerald-700/40' };
+  if (neg >= 8 && pos < 5)
+    return { icon: '⚠️', label: '개입필요', bg: 'bg-yellow-900/40', text: 'text-yellow-300', border: 'border-yellow-700/40' };
+  return   { icon: '😴', label: '탐색중',   bg: 'bg-slate-800/40',  text: 'text-slate-400',  border: 'border-slate-700/40'  };
+}
+
+function ScoreBadge({ pos, neg, action }: { pos: number; neg: number; action: number }) {
+  const posMax = 30;  // 누적이므로 30점을 최대로 표시
+  const negMax = 30;
+  const posW  = Math.min(100, Math.round((pos  / posMax)  * 100));
+  const negW  = Math.min(100, Math.round((neg  / negMax)  * 100));
+  const actW  = Math.min(100, Math.round((action / 10)    * 100));
+  const actionInfo = getActionLabel(action);
+
+  return (
+    <div className="flex flex-col gap-1.5 min-w-[130px]">
+      {/* 긍정 */}
+      <div className="flex items-center gap-1.5">
+        <TrendingUp className="w-3 h-3 text-emerald-400 shrink-0" />
+        <div className="flex-1 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full transition-all"
+            style={{ width: `${posW}%` }}
+          />
+        </div>
+        <span className="text-[9px] font-black text-emerald-400 w-6 text-right">{pos}</span>
+      </div>
+      {/* 부정 */}
+      <div className="flex items-center gap-1.5">
+        <TrendingDown className="w-3 h-3 text-red-400 shrink-0" />
+        <div className="flex-1 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-gradient-to-r from-red-500 to-red-400 rounded-full transition-all"
+            style={{ width: `${negW}%` }}
+          />
+        </div>
+        <span className="text-[9px] font-black text-red-400 w-6 text-right">{neg}</span>
+      </div>
+      {/* 행동 */}
+      <div className="flex items-center gap-1.5">
+        <Zap className="w-3 h-3 text-orange-400 shrink-0" />
+        <div className="flex-1 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-gradient-to-r from-orange-500 to-orange-400 rounded-full transition-all"
+            style={{ width: `${actW}%` }}
+          />
+        </div>
+        <span className={`text-[9px] font-black ${actionInfo.color} w-12 text-right`}>{actionInfo.label}</span>
+      </div>
+    </div>
+  );
+}
 
 interface LeadsTabProps {
   currentUser: any;
@@ -46,6 +128,7 @@ interface LeadsTabProps {
   setAdminHyphenLead: (lead: Lead | null) => void;
   setShowAdminHyphen: (show: boolean) => void;
   renderHelpGuideToggle: () => React.ReactNode;
+  onOpenChatRoom?: (roomId: string) => void;
 }
 
 export function LeadsTab({
@@ -79,7 +162,8 @@ export function LeadsTab({
   handleUpdateStatus,
   setAdminHyphenLead,
   setShowAdminHyphen,
-  renderHelpGuideToggle
+  renderHelpGuideToggle,
+  onOpenChatRoom
 }: LeadsTabProps) {
 
   const getFilteredAnalysisLeads = () => {
@@ -169,7 +253,7 @@ export function LeadsTab({
       <div className="space-y-4 pr-1">
         {/* PC (Desktop) View: Table Layout */}
         <div className="hidden md:block overflow-x-auto max-h-[450px] overflow-y-auto pr-1">
-          <table className="w-full min-w-[900px] text-left border-collapse">
+          <table className="w-full min-w-[1050px] text-left border-collapse">
             <thead>
               <tr className="border-b border-slate-800 text-[10px] text-slate-400 font-bold uppercase tracking-wider">
                 <th className="py-3 px-4">고객 정보</th>
@@ -177,6 +261,17 @@ export function LeadsTab({
                 <th className="py-3 px-4">월 보험료</th>
                 <th className="py-3 px-4">유입 소스</th>
                 <th className="py-3 px-4">담당 설계사</th>
+                <th className="py-3 px-4">
+                  <div className="flex items-center gap-1">
+                    AI 상담 점수
+                    <span
+                      title="긍정: 고객의 동조·관심 누적 / 부정: 불신·거부 누적 / 행동: 상담 진행 단계"
+                      className="cursor-help"
+                    >
+                      <Info className="w-3 h-3 text-slate-500" />
+                    </span>
+                  </div>
+                </th>
                 <th className="py-3 px-4">처리 현황</th>
                 <th className="py-3 px-4 text-right">상세진단</th>
               </tr>
@@ -357,6 +452,24 @@ export function LeadsTab({
                       )}
                     </div>
                   </td>
+                  {/* ── AI 상담 점수 컬럼 ── */}
+                  <td className="py-4.5 px-4">
+                    <ScoreBadge
+                      pos={lead.pos_score ?? 0}
+                      neg={lead.neg_score ?? 0}
+                      action={lead.action_score ?? 0}
+                    />
+                    {/* [기능3] 세그멘테이션 배지 */}
+                    {(() => {
+                      const seg = getLeadSegment(lead.pos_score ?? 0, lead.neg_score ?? 0, lead.action_score ?? 0);
+                      return (
+                        <div className={`mt-1.5 inline-flex items-center gap-1 px-1.5 py-0.5 rounded border text-[9px] font-black ${seg.bg} ${seg.text} ${seg.border}`}>
+                          <span>{seg.icon}</span>
+                          <span>{seg.label}</span>
+                        </div>
+                      );
+                    })()}
+                  </td>
                   <td className="py-4.5 px-4">
                     <select 
                       value={lead.status}
@@ -479,6 +592,39 @@ export function LeadsTab({
                       </div>
                     </div>
 
+                    {/* ── AI 상담 점수 섹션 (모바일) ── */}
+                    <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-3 space-y-2">
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <Zap className="w-3 h-3 text-orange-400" />
+                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-wider">AI 상담 점수</span>
+                        <span className="text-[8px] text-slate-600 font-bold ml-auto">긍정·부정·행동 분석</span>
+                      </div>
+                      <ScoreBadge
+                        pos={lead.pos_score ?? 0}
+                        neg={lead.neg_score ?? 0}
+                        action={lead.action_score ?? 0}
+                      />
+                      <div className="grid grid-cols-3 gap-1 pt-1 border-t border-slate-800/60">
+                        <div className="text-center">
+                          <div className="text-[8px] text-slate-500 uppercase">긍정</div>
+                          <div className="text-[11px] font-black text-emerald-400">{lead.pos_score ?? 0}pt</div>
+                          <div className="text-[7px] text-slate-600">동조·관심</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-[8px] text-slate-500 uppercase">부정</div>
+                          <div className="text-[11px] font-black text-red-400">{lead.neg_score ?? 0}pt</div>
+                          <div className="text-[7px] text-slate-600">거부·불신</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-[8px] text-slate-500 uppercase">행동</div>
+                          <div className={`text-[11px] font-black ${getActionLabel(lead.action_score ?? 0).color}`}>
+                            {getActionLabel(lead.action_score ?? 0).label}
+                          </div>
+                          <div className="text-[7px] text-slate-600">진행단계</div>
+                        </div>
+                      </div>
+                    </div>
+
                     <div className="flex items-center justify-between gap-3 pt-2">
                       <div className="flex items-center gap-1.5">
                         <span className="text-[9px] text-slate-500 uppercase">진행상태</span>
@@ -496,74 +642,89 @@ export function LeadsTab({
 
                       <div className="flex items-center gap-1.5">
                         {lead.raw_payload?.consult_type === 'anonymous' && (
-                          <button
-                            onClick={async (e) => {
-                              e.stopPropagation();
-                              const simCode = lead.raw_payload?.simulation_code || '';
-                              const origin = window.location.origin;
-                              const isRemodeling = lead.insurance_type?.includes('remodeling');
-                              const link = isRemodeling 
-                                ? `${origin}/remodeling?code=${simCode}`
-                                : `${origin}/verify?code=${simCode}`;
-                              const msg = isRemodeling
-                                ? `안녕하세요! 인카금융서비스 소속 설계사입니다. 고객님의 내보험 정밀분석을 위한 하이픈 연동 링크입니다. 아래 링크를 눌러 한국신용정보원 인증을 완료하시면 0.1초 만에 실제 보험 내역이 자동으로 조회됩니다.\n▶ 하이픈 연동 링크: ${link}`
-                                : `안녕하세요! 인카금융서비스 소속 설계사입니다. 고객님의 설계서 잠금 해제를 위한 본인인증 전용 링크입니다. 아래 링크를 눌러 간편인증을 완료하시면 0.1초 만에 마스킹이 해제됩니다.\n▶ 인증 링크: ${link}`;
-                              navigator.clipboard.writeText(msg);
-                              setToastMessage("✨ 카톡 인증 문구가 복사되었습니다! 카톡창에 붙여넣기(Ctrl+V) 하세요.");
-                              setShowToast(true);
-                              setTimeout(() => setShowToast(false), 3000);
+                          <div className="flex items-center gap-1">
+                            <button
+                              onClick={async (e) => {
+                                e.stopPropagation();
+                                const simCode = lead.raw_payload?.simulation_code || '';
+                                const origin = window.location.origin;
+                                const isRemodeling = lead.insurance_type?.includes('remodeling');
+                                const link = isRemodeling 
+                                  ? `${origin}/remodeling?code=${simCode}`
+                                  : `${origin}/verify?code=${simCode}`;
+                                const msg = isRemodeling
+                                  ? `안녕하세요! 인카금융서비스 소속 설계사입니다. 고객님의 내보험 정밀분석을 위한 하이픈 연동 링크입니다. 아래 링크를 눌러 한국신용정보원 인증을 완료하시면 0.1초 만에 실제 보험 내역이 자동으로 조회됩니다.\n▶ 하이픈 연동 링크: ${link}`
+                                  : `안녕하세요! 인카금융서비스 소속 설계사입니다. 고객님의 설계서 잠금 해제를 위한 본인인증 전용 링크입니다. 아래 링크를 눌러 간편인증을 완료하시면 0.1초 만에 마스킹이 해제됩니다.\n▶ 인증 링크: ${link}`;
+                                navigator.clipboard.writeText(msg);
+                                setToastMessage("✨ 카톡 인증 문구가 복사되었습니다! 카톡창에 붙여넣기(Ctrl+V) 하세요.");
+                                setShowToast(true);
+                                setTimeout(() => setShowToast(false), 3000);
 
-                              // Stop flashing via DB update
-                              try {
-                                const supabase = createClient();
-                                const updatedPayload = {
-                                  ...(lead.raw_payload || {}),
-                                  copied_by_planner: true,
-                                  timeline: [
-                                    {
-                                      id: `copy-${Date.now()}`,
-                                      type: 'system_log',
-                                      author: '설계사',
-                                      detail: '설계사가 카톡 인증 안내 문구를 복사하여 전달했습니다.',
-                                      created_at: new Date().toISOString()
-                                    },
-                                    ...(lead.raw_payload?.timeline || [])
-                                  ]
-                                };
-                                await supabase
-                                  .from('customer_leads')
-                                  .update({ raw_payload: updatedPayload })
-                                  .eq('id', lead.id);
-                              } catch (err) {
-                                console.error(err);
-                              }
-
-                              // Update local state for immediate 0.1s responsiveness
-                              setLeads(prev => prev.map(l => {
-                                if (l.id === lead.id) {
-                                  return {
-                                    ...l,
-                                    raw_payload: {
-                                      ...(l.raw_payload || {}),
-                                      copied_by_planner: true
-                                    }
+                                // Stop flashing via DB update
+                                try {
+                                  const supabase = createClient();
+                                  const updatedPayload = {
+                                    ...(lead.raw_payload || {}),
+                                    copied_by_planner: true,
+                                    timeline: [
+                                      {
+                                        id: `copy-${Date.now()}`,
+                                        type: 'system_log',
+                                        author: '설계사',
+                                        detail: '설계사가 카톡 인증 안내 문구를 복사하여 전달했습니다.',
+                                        created_at: new Date().toISOString()
+                                      },
+                                      ...(lead.raw_payload?.timeline || [])
+                                    ]
                                   };
+                                  await supabase
+                                    .from('customer_leads')
+                                    .update({ raw_payload: updatedPayload })
+                                    .eq('id', lead.id);
+                                } catch (err) {
+                                  console.error(err);
                                 }
-                                return l;
-                              }));
 
-                              setSelectedLead(prev => prev && prev.id === lead.id ? {
-                                ...prev,
-                                raw_payload: {
-                                  ...(prev.raw_payload || {}),
-                                  copied_by_planner: true
-                                }
-                              } : prev);
-                            }}
-                            className="px-2 py-1 bg-yellow-500 text-slate-950 rounded-lg text-[9px] font-black cursor-pointer"
-                          >
-                            문구복사 📋
-                          </button>
+                                // Update local state for immediate 0.1s responsiveness
+                                setLeads(prev => prev.map(l => {
+                                  if (l.id === lead.id) {
+                                    return {
+                                      ...l,
+                                      raw_payload: {
+                                        ...(l.raw_payload || {}),
+                                        copied_by_planner: true
+                                      }
+                                    };
+                                  }
+                                  return l;
+                                }));
+
+                                setSelectedLead(prev => prev && prev.id === lead.id ? {
+                                  ...prev,
+                                  raw_payload: {
+                                    ...(prev.raw_payload || {}),
+                                    copied_by_planner: true
+                                  }
+                                } : prev);
+                              }}
+                              className="px-2 py-1 bg-yellow-500 text-slate-950 rounded-lg text-[9px] font-black cursor-pointer"
+                            >
+                              문구복사 📋
+                            </button>
+                            {lead.raw_payload?.chat_room_id && (
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  if (onOpenChatRoom) {
+                                    onOpenChatRoom(lead.raw_payload.chat_room_id);
+                                  }
+                                }}
+                                className="px-2 py-1 bg-violet-600 hover:bg-violet-500 text-white rounded-lg text-[9px] font-black cursor-pointer"
+                              >
+                                실시간상담 💬
+                              </button>
+                            )}
+                          </div>
                         )}
 
                         <button

@@ -1,0 +1,2 @@
+"  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);\n\n  const handleSubmit = (e: React.FormEvent) => {\n    e.preventDefault();\n    onAnalyze({\n      age: Number(age),\n      gender: gender,\n      jobClass: 1,\n      cancer: { currentAmou
+<truncated 1312 bytes>

@@ -1,0 +1,776 @@
+[
+  {
+    "main_category": "자동차보험",
+    "sub_category": "개인용",
+    "product_name": "Hicar 개인용자동차보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\Hicar_개인용자동차보험.pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "개인용",
+    "product_name": "Hicar 다이렉트 개인용자동차보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\Hicar_다이렉트_개인용자동차보험.pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "개인용",
+    "product_name": "Hicar 다이렉트 개인용자동차보험(CM)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\Hicar_다이렉트_개인용자동차보험(CM).pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "개인용",
+    "product_name": "Hicar 다이렉트 개인용자동차보험(플랫폼)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\Hicar_다이렉트_개인용자동차보험(플랫폼).pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "업무용",
+    "product_name": "Hicar 업무용자동차보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\Hicar_업무용자동차보험.pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "업무용",
+    "product_name": "Hicar 다이렉트 업무용자동차보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\Hicar_다이렉트_업무용자동차보험.pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "업무용",
+    "product_name": "Hicar 다이렉트 업무용자동차보험(CM)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\Hicar_다이렉트_업무용자동차보험(CM).pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "영업용",
+    "product_name": "Hicar 영업용자동차보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\Hicar_영업용자동차보험.pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "영업용",
+    "product_name": "Hicar 다이렉트 영업용자동차보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\Hicar_다이렉트_영업용자동차보험.pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "영업용",
+    "product_name": "Hicar 다이렉트 영업용자동차보험(CM)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\Hicar_다이렉트_영업용자동차보험(CM).pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "기타",
+    "product_name": "이륜자동차보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\이륜자동차보험.pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "기타",
+    "product_name": "다이렉트 이륜자동차보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\다이렉트_이륜자동차보험.pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "기타",
+    "product_name": "다이렉트 이륜자동차보험(CM)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\다이렉트_이륜자동차보험(CM).pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "기타",
+    "product_name": "자동차취급업자 종합보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\자동차취급업자_종합보험.pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "기타",
+    "product_name": "농기계보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\농기계보험.pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "기타",
+    "product_name": "운전자보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\운전자보험.pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "기타",
+    "product_name": "운전면허교습생자동차보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\운전면허교습생자동차보험.pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "기타",
+    "product_name": "Hicar 타임쉐어 자동차보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\Hicar_타임쉐어_자동차보험.pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "기타",
+    "product_name": "Hicar플랫폼배달업자이륜자동차보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\Hicar플랫폼배달업자이륜자동차보험.pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "기타",
+    "product_name": "중고차 매매업자 자동차보험",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\중고차_매매업자_자동차보험.pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "공동물건",
+    "product_name": "개인용자동차보험(공동)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\개인용자동차보험(공동).pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "공동물건",
+    "product_name": "업무용자동차보험(공동)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\업무용자동차보험(공동).pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "공동물건",
+    "product_name": "영업용자동차보험(공동)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\영업용자동차보험(공동).pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "공동물건",
+    "product_name": "이륜자동차보험(공동)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\이륜자동차보험(공동).pdf"
+  },
+  {
+    "main_category": "자동차보험",
+    "sub_category": "공동물건",
+    "product_name": "공동인수(개인용, 업무용, 영업용, 이륜차)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\공동인수(개인용,_업무용,_영업용,_이륜차).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "연금",
+    "product_name": "연금저축손해보험 현대해상노후웰스보험(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\연금저축손해보험_현대해상노후웰스보험(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "연금",
+    "product_name": "연금저축손해보험현대해상다이렉트연금보험(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\연금저축손해보험현대해상다이렉트연금보험(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "연금",
+    "product_name": "연금저축손해보험현대해상하이로연금보험(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\연금저축손해보험현대해상하이로연금보험(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "연금",
+    "product_name": "연금저축보험 계약이전수수료 면제 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\연금저축보험_계약이전수수료_면제_특별약관.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "(무)현대해상내삶엔(3N)맞춤간편건강보험(세만기형)(Hi2601) 1종(표준형)(간편맞춤고지)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상내삶엔(3N)맞춤간편건강보험(세만기형)(Hi2601)_1종(표준형)(간편맞춤고지).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "(무)현대해상내삶엔(3N)맞춤간편건강보험(세만기형)(Hi2601) 3종(표준형)(일반심사)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상내삶엔(3N)맞춤간편건강보험(세만기형)(Hi2601)_3종(표준형)(일반심사).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "(무)현대해상내삶엔(3N)맞춤간편건강보험(세만기형)(Hi2601) 2종(해약환급금미지급형)(간편맞춤고지)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상내삶엔(3N)맞춤간편건강보험(세만기형)(Hi2601)_2종(해약환급금미지급형)(간편맞춤고지).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "(무)현대해상내삶엔(3N)맞춤간편건강보험(세만기형)(Hi2601) 4종(해약환급금미지급형)(일반심사)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상내삶엔(3N)맞춤간편건강보험(세만기형)(Hi2601)_4종(해약환급금미지급형)(일반심사).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "(무)현대해상내삶엔(3N)맞춤간편건강보험(연만기갱신형)(Hi2601) 1종(표준형)(간편맞춤고지)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상내삶엔(3N)맞춤간편건강보험(연만기갱신형)(Hi2601)_1종(표준형)(간편맞춤고지).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "(무)현대해상내삶엔(3N)맞춤간편건강보험(연만기갱신형)(Hi2601) 2종(해약환급금미지급형)(간편맞춤고지)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상내삶엔(3N)맞춤간편건강보험(연만기갱신형)(Hi2601)_2종(해약환급금미지급형)(간편맞춤고지).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "(무)현대해상내삶엔(3N)맞춤간편건강보험(연만기갱신형)(Hi2601) 3종(표준형)(일반심사)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상내삶엔(3N)맞춤간편건강보험(연만기갱신형)(Hi2601)_3종(표준형)(일반심사).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "(무)현대해상내삶엔(3N)맞춤간편건강보험(연만기갱신형)(Hi2601) 4종(해약환급금미지급형)(일반심사)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상내삶엔(3N)맞춤간편건강보험(연만기갱신형)(Hi2601)_4종(해약환급금미지급형)(일반심사).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상간편한3.10.10건강보험(세만기형)(Hi2601) 1종(표준형)(간편건강고지)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상간편한3.10.10건강보험(세만기형)(Hi2601)_1종(표준형)(간편건강고지).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상간편한3.10.10건강보험(세만기형)(Hi2601) 2종(해약환급금미지급형)(간편건강고지)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상간편한3.10.10건강보험(세만기형)(Hi2601)_2종(해약환급금미지급형)(간편건강고지).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상간편한3.10.10건강보험(연만기갱신형)(Hi2504) 1종(표준형)(간편건강고지)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상간편한3.10.10건강보험(연만기갱신형)(Hi2504)_1종(표준형)(간편건강고지).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상간편한3.10.10건강보험(연만기갱신형)(Hi2504) 2종(해약환급금미지급형)(간편건강고지)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상간편한3.10.10건강보험(연만기갱신형)(Hi2504)_2종(해약환급금미지급형)(간편건강고지).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상퍼펙트플러스종합보험(세만기형)(Hi2504) 1종(일반형), 2종(납입면제형)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상퍼펙트플러스종합보험(세만기형)(Hi2504)_1종(일반형),_2종(납입면제형).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상퍼펙트플러스종합보험(세만기형)(Hi2504) 3종(해약환급금미지급형)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상퍼펙트플러스종합보험(세만기형)(Hi2504)_3종(해약환급금미지급형).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상퍼펙트플러스종합보험(연만기갱신형)(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상퍼펙트플러스종합보험(연만기갱신형)(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상하이콜퍼펙트종합보험(세만기형)(Hi2504) 1종(일반형), 2종(납입면제형)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상하이콜퍼펙트종합보험(세만기형)(Hi2504)_1종(일반형),_2종(납입면제형).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상하이콜퍼펙트종합보험(세만기형)(Hi2504) 3종(해약환급금미지급형)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상하이콜퍼펙트종합보험(세만기형)(Hi2504)_3종(해약환급금미지급형).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상하이콜퍼펙트종합보험(연만기갱신형)(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상하이콜퍼펙트종합보험(연만기갱신형)(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상케어더블암치매보험(세만기형)(Hi2601)1종(표준형)(간편맞춤고지)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상케어더블암치매보험(세만기형)(Hi2601)1종(표준형)(간편맞춤고지).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상케어더블암치매보험(세만기형)(Hi2601)2종(해약환급금미지급형)(간편맞춤고지)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상케어더블암치매보험(세만기형)(Hi2601)2종(해약환급금미지급형)(간편맞춤고지).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상케어더블암치매보험(세만기형)(Hi2601)3종(표준형)(일반심사)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상케어더블암치매보험(세만기형)(Hi2601)3종(표준형)(일반심사).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상케어더블암치매보험(세만기형)(Hi2601)4종(해약환급금미지급형)(일반심사)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상케어더블암치매보험(세만기형)(Hi2601)4종(해약환급금미지급형)(일반심사).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "(무)현대해상굿앤굿우리펫보험(Hi2601) 1종",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상굿앤굿우리펫보험(Hi2601)_1종.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "(무)현대해상굿앤굿우리펫보험(Hi2601) 2종",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상굿앤굿우리펫보험(Hi2601)_2종.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "(무)현대해상다이렉트굿앤굿우리펫보험(Hi2601) 1종",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상다이렉트굿앤굿우리펫보험(Hi2601)_1종.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "(무)현대해상다이렉트굿앤굿우리펫보험(Hi2601) 2종",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상다이렉트굿앤굿우리펫보험(Hi2601)_2종.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "(무)현대해상오투(O2)맞춤간편건강보험(세만기형)(Hi2601) 1종(표준형)(간편맞춤고지)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상오투(O2)맞춤간편건강보험(세만기형)(Hi2601)_1종(표준형)(간편맞춤고지).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "(무)현대해상오투(O2)맞춤간편건강보험(세만기형)(Hi2601) 2종(해약환급금미지급형)(간편맞춤고지)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상오투(O2)맞춤간편건강보험(세만기형)(Hi2601)_2종(해약환급금미지급형)(간편맞춤고지).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "(무)현대해상오투(O2)맞춤간편건강보험(연만기갱신형)(Hi2601) 1종(표준형)(간편맞춤고지)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상오투(O2)맞춤간편건강보험(연만기갱신형)(Hi2601)_1종(표준형)(간편맞춤고지).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "(무)현대해상오투(O2)맞춤간편건강보험(연만기갱신형)(Hi2601) 2종(해약환급금미지급형)(간편맞춤고지)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상오투(O2)맞춤간편건강보험(연만기갱신형)(Hi2601)_2종(해약환급금미지급형)(간편맞춤고지).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당 현대해상굿앤굿스타종합보험(연만기갱신형)(Hi2505)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당_현대해상굿앤굿스타종합보험(연만기갱신형)(Hi2505).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당하이퍼스트상해보험(Hi2601) 1종(금리고정형)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당하이퍼스트상해보험(Hi2601)_1종(금리고정형).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당하이퍼스트상해보험(Hi2601) 2종(금리연동형)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당하이퍼스트상해보험(Hi2601)_2종(금리연동형).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상골든타임수술종합보험(연만기갱신형)(Hi2601)1종(간편맞춤고지)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상골든타임수술종합보험(연만기갱신형)(Hi2601)1종(간편맞춤고지).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상골든타임수술종합보험(연만기갱신형)(Hi2601)2종(일반심사)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상골든타임수술종합보험(연만기갱신형)(Hi2601)2종(일반심사).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상굿앤굿스타종합보험(세만기형)(Hi2601) 1종(표준형)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상굿앤굿스타종합보험(세만기형)(Hi2601)_1종(표준형).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상굿앤굿스타종합보험(세만기형)(Hi2601) 2종(해약환급금일부지급형Ⅱ)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상굿앤굿스타종합보험(세만기형)(Hi2601)_2종(해약환급금일부지급형Ⅱ).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상굿앤굿어린이치아보험(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상굿앤굿어린이치아보험(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상뉴하이카운전자상해보험(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상뉴하이카운전자상해보험(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상다이렉트H주택화재상해보험(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상다이렉트H주택화재상해보험(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상다이렉트오토바이운전자보험(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상다이렉트오토바이운전자보험(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상다이렉트운전자보험(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상다이렉트운전자보험(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상다이렉트퍼펙트종합보험(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상다이렉트퍼펙트종합보험(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상마음플러스(+)상해종합보험(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상마음플러스(+)상해종합보험(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상밝게웃는얼굴치아보험(연만기갱신형)(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상밝게웃는얼굴치아보험(연만기갱신형)(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상하이콜운전자상해보험(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상하이콜운전자상해보험(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상하이퍼스트상해보험(Hi2601) 1종(금리고정형)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상하이퍼스트상해보험(Hi2601)_1종(금리고정형).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상하이퍼스트상해보험(Hi2601) 2종(금리연동형)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상하이퍼스트상해보험(Hi2601)_2종(금리연동형).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상행복가득생활보장보험(Hi2601) 1종(연만기)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상행복가득생활보장보험(Hi2601)_1종(연만기).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상행복가득생활보장보험(Hi2601) 2종(세만기)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상행복가득생활보장보험(Hi2601)_2종(세만기).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상마음플러스(+)상해종합보험(Hi2511)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상마음플러스(+)상해종합보험(Hi2511).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "(무)암진단Ⅱ(유사암제외)(가족NGS유전자패널검사)(갱신형)보장 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)암진단Ⅱ(유사암제외)(가족NGS유전자패널검사)(갱신형)보장_특별약관.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당 임신출산질환실손입원의료비(통상분만일수제외)보장 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당_임신출산질환실손입원의료비(통상분만일수제외)보장_특별약관.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상마음플러스(+)상해종합보험(Hi2504)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상마음플러스(+)상해종합보험(Hi2504).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당현대해상사랑드림단체상해보험(Hi2504)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상사랑드림단체상해보험(Hi2504).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "갱신계약 보장내용 변경시 안내 제도성 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\갱신계약_보장내용_변경시_안내_제도성_특별약관.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "굿앤굿 할인 제도 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\굿앤굿_할인_제도_특별약관.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "보험계약 변경 정산액 분할납입 제도성 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\보험계약_변경_정산액_분할납입_제도성_특별약관.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "단체보험 보험수익자 지정 제도 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\단체보험_보험수익자_지정_제도_특별약관.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "무배당갱신형납입면제보장특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당갱신형납입면제보장특별약관.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "상해성",
+    "product_name": "중과실(피해자)교통상해보장 보험금 지급관련 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\중과실(피해자)교통상해보장_보험금_지급관련_특별약관.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "어린이",
+    "product_name": "무배당굿앤굿어린이종합보험Q(Hi2601) 1종(표준형), 3종(보험기간연장형)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당굿앤굿어린이종합보험Q(Hi2601)_1종(표준형),_3종(보험기간연장형).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "어린이",
+    "product_name": "무배당굿앤굿어린이종합보험Q(Hi2601) 2종(해약환급금미지급형)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당굿앤굿어린이종합보험Q(Hi2601)_2종(해약환급금미지급형).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "어린이",
+    "product_name": "무배당현대해상다이렉트굿앤굿어린이종합보험Q(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상다이렉트굿앤굿어린이종합보험Q(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "어린이",
+    "product_name": "다자녀가정할인 제도 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\다자녀가정할인_제도_특별약관.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "의료",
+    "product_name": "(무)현대해상노후실손의료비보장보험(갱신형)(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상노후실손의료비보장보험(갱신형)(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "의료",
+    "product_name": "(무)현대해상다이렉트실손의료비보장보험(갱신형)(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상다이렉트실손의료비보장보험(갱신형)(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "의료",
+    "product_name": "(무)현대해상다이렉트실손의료비보장보험(계약전환용)(갱신형)(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상다이렉트실손의료비보장보험(계약전환용)(갱신형)(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "의료",
+    "product_name": "(무)현대해상실손의료비보장보험(갱신형)(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상실손의료비보장보험(갱신형)(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "의료",
+    "product_name": "(무)현대해상실손의료비보장보험(계약전환용)(갱신형)(Hi2601)1종(계약전환용)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상실손의료비보장보험(계약전환용)(갱신형)(Hi2601)1종(계약전환용).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "의료",
+    "product_name": "(무)현대해상실손의료비보장보험(계약전환용)(갱신형)(Hi2601)2종(재개/전환용)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상실손의료비보장보험(계약전환용)(갱신형)(Hi2601)2종(재개/전환용).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "의료",
+    "product_name": "(무)현대해상유병력자실손의료비보장보험(갱신형)(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상유병력자실손의료비보장보험(갱신형)(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "의료",
+    "product_name": "군장병 실손의료비보장 중지 및 재개 제도 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\군장병_실손의료비보장_중지_및_재개_제도_특별약관.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "의료",
+    "product_name": "실손의료비보장 보험료 안정화 할인 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\실손의료비보장_보험료_안정화_할인_특별약관.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "의료",
+    "product_name": "실손의료비보장 중지 및 재개 제도 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\실손의료비보장_중지_및_재개_제도_특별약관.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "의료",
+    "product_name": "단체실손 중지제도 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\단체실손_중지제도_특별약관.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "의료",
+    "product_name": "장애인전용보험전환제도 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\장애인전용보험전환제도_특별약관.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "의료",
+    "product_name": "보험료예비 특별약관 자동갱신 변경적용 제도 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\보험료예비_특별약관_자동갱신_변경적용_제도_특별약관.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "재물성",
+    "product_name": "(무)일상생활중배상책임Ⅴ(가족)보장 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)일상생활중배상책임Ⅴ(가족)보장_특별약관.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "재물성",
+    "product_name": "무배당현대해상다이렉트H사업장화재보험(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상다이렉트H사업장화재보험(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "재물성",
+    "product_name": "무배당현대해상성공마스터재산종합보험(Hi2601)1종(금리고정형)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상성공마스터재산종합보험(Hi2601)1종(금리고정형).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "재물성",
+    "product_name": "무배당현대해상성공마스터재산종합보험(Hi2601)2종(금리연동형)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상성공마스터재산종합보험(Hi2601)2종(금리연동형).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "재물성",
+    "product_name": "무배당현대해상하이바이크운전자보험(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상하이바이크운전자보험(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "재물성",
+    "product_name": "중과실(피해자)교통상해 보장확대 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\중과실(피해자)교통상해_보장확대_특별약관.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "저축성",
+    "product_name": "무배당하이드림저축보험(Hi2602)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당하이드림저축보험(Hi2602).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "저축성",
+    "product_name": "무배당현대해상하이드림저축보험(Hi2602)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상하이드림저축보험(Hi2602).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "저축성",
+    "product_name": "무배당현대해상다이렉트저축보험(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상다이렉트저축보험(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "저축성",
+    "product_name": "무배당현대해상리치웨이저축보험(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상리치웨이저축보험(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "저축성",
+    "product_name": "(무)금리혼합형저축보험(Hi2509)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)금리혼합형저축보험(Hi2509).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "저축성",
+    "product_name": "(무)현대해상금리혼합형저축보험(Hi2509)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)현대해상금리혼합형저축보험(Hi2509).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "저축성",
+    "product_name": "무배당현대해상하이원저축보험(Hi2505)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상하이원저축보험(Hi2505).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "질병성",
+    "product_name": "무배당현대해상다이렉트굿앤굿어린이치아보험(Hi2601)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상다이렉트굿앤굿어린이치아보험(Hi2601).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "질병성",
+    "product_name": "무배당현대해상두배받는암보험(Hi2601) 1종(세만기(표준형))",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상두배받는암보험(Hi2601)_1종(세만기(표준형)).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "질병성",
+    "product_name": "무배당현대해상두배받는암보험(Hi2601) 2종(세만기(해약환급금미지급형Ⅰ))",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상두배받는암보험(Hi2601)_2종(세만기(해약환급금미지급형Ⅰ)).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "질병성",
+    "product_name": "무배당현대해상두배받는암보험(Hi2601) 3종(연만기자동갱신형)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상두배받는암보험(Hi2601)_3종(연만기자동갱신형).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "질병성",
+    "product_name": "무배당현대해상퍼펙트케어간병보험(Hi2601)(일반형) 1종(일반심사) 및 3종(간편심사Ⅲ)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상퍼펙트케어간병보험(Hi2601)(일반형)_1종(일반심사)_및_3종(간편심사Ⅲ).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "질병성",
+    "product_name": "무배당현대해상퍼펙트케어간병보험(Hi2601)(해약환급금일부지급형) 2종(일반심사) 및 4종(간편심사Ⅲ)",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\무배당현대해상퍼펙트케어간병보험(Hi2601)(해약환급금일부지급형)_2종(일반심사)_및_4종(간편심사Ⅲ).pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "질병성",
+    "product_name": "(무)암주요치료비(연간1회한,진단후5년)보장 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\(무)암주요치료비(연간1회한,진단후5년)보장_특별약관.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "종합성",
+    "product_name": "보험금선지급 제도 특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\보험금선지급_제도_특별약관.pdf"
+  },
+  {
+    "main_category": "장기보험",
+    "sub_category": "종합성",
+    "product_name": "만기고객보험료할인특별약관",
+    "pdf_path": "C:\\Users\\zkfnt\\Desktop\\insurance-comparison-main\\insurance-comparison-main\\downloads\\hyundai_marine\\만기고객보험료할인특별약관.pdf"
+  }
+]

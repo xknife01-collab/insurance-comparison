@@ -1,0 +1,2 @@
+"function detectType(name: string) {\n  if (/의료실비|실손|실비/i.test(name)) return 'silson';\n  if (/치아|치과|덴탈|크라운|임플란트/i.test(name)) return 'dental';\n  if (/유병자|간편고지|3\\.2\\.5|3\\.3\\.5|3\\.5\\.5/i.test(na
+<truncated 67619 bytes>

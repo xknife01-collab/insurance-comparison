@@ -28,13 +28,19 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
   }
 
   const handleKakaoClick = (type: 'anonymous' | 'regular') => {
-    if (branding.kakaoLink) {
-      window.open(branding.kakaoLink, '_blank', 'noopener,noreferrer');
+    if (type === 'anonymous') {
       if (onKakaoClick) {
         onKakaoClick(type);
       }
     } else {
-      alert('카카오톡 링크가 등록되지 않았습니다. 전화번호로 연락해주세요.');
+      if (branding.kakaoLink) {
+        window.open(branding.kakaoLink, '_blank', 'noopener,noreferrer');
+        if (onKakaoClick) {
+          onKakaoClick(type);
+        }
+      } else {
+        alert('카카오톡 링크가 등록되지 않았습니다. 전화번호로 연락해주세요.');
+      }
     }
   };
 
@@ -121,7 +127,7 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
                 className="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white font-black text-xs rounded-2xl flex items-center justify-center gap-2 border border-white/10 shadow-md transform hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer"
               >
                 <MessageSquare size={14} className="text-orange-400" />
-                익명 카톡 상담 💬
+                실시간 고객 상담 💬
               </button>
               <button
                 onClick={() => handleKakaoClick('regular')}
@@ -144,17 +150,7 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
       ) : (
         /* Minimized State Floating Button Stack */
         <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3 pointer-events-none">
-          {!isB2BMode && !isStandalone && (deferredPrompt || isInAppBrowser || isIOS) && (
-            <motion.button
-              initial={{ opacity: 0, scale: 0.8, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              onClick={onInstallClick}
-              className="pointer-events-auto px-5 py-3.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full border border-orange-400/30 shadow-[0_10px_25px_rgba(249,115,22,0.35)] hover:border-orange-400 flex items-center gap-2 transform hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
-            >
-              <span className="text-sm">📱</span>
-              <span className="text-xs font-black tracking-tight">앱 바로 설치</span>
-            </motion.button>
-          )}
+
           <motion.button
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}

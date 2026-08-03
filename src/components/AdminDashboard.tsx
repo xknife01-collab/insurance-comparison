@@ -448,6 +448,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
     invitedAgencyName, setInvitedAgencyName,
     activeTab, setActiveTab,
     unreadTotal, setUnreadTotal,
+    unreadCustomerTotal, setUnreadCustomerTotal,
     showHelpGuide, handleToggleHelpGuide,
     showFaq, handleToggleFaq,
     visitorLogs, setVisitorLogs,
@@ -556,6 +557,8 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
     handleSimulateLogin,
     checkCodeAvailability
   } = useAdminState(initialTab);
+
+  const [chatRoomIdToOpen, setChatRoomIdToOpen] = useState<string | null>(null);
 
   useEffect(() => {
     if (currentUser.role === 'guest') {
@@ -1973,20 +1976,39 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
               )}
 
                {(currentUser.role === 'agency' || currentUser.role === 'planner' || currentUser.role === 'super') && (
-                <button 
-                  onClick={() => setActiveTab('chat')}
-                  className={`w-auto lg:w-full whitespace-nowrap flex-shrink-0 flex items-center justify-between px-4 py-3 rounded-xl text-left font-bold text-xs transition-all cursor-pointer ${activeTab === 'chat' ? 'bg-violet-600 text-white shadow-lg shadow-violet-500/10' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <MessageSquare className="w-4 h-4" />
-                    <span>실시간 소통 센터 💬</span>
-                  </div>
-                  {unreadTotal > 0 && (
-                    <span className="bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-black animate-pulse">
-                      {unreadTotal}
-                    </span>
-                  )}
-                </button>
+                <div className="flex flex-col gap-2 w-full shrink-0">
+                  {/* 고객 상담 (위젯 연동) */}
+                  <button 
+                    onClick={() => setActiveTab('customer_chat')}
+                    className={`w-auto lg:w-full whitespace-nowrap flex-shrink-0 flex items-center justify-between px-4 py-3 rounded-xl text-left font-bold text-xs transition-all cursor-pointer ${activeTab === 'customer_chat' ? 'bg-violet-600 text-white shadow-lg shadow-violet-500/10' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <MessageSquare className="w-4 h-4" />
+                      <span>고객 상담 💬</span>
+                    </div>
+                    {unreadCustomerTotal > 0 && (
+                      <span className="bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-black animate-pulse">
+                        {unreadCustomerTotal}
+                      </span>
+                    )}
+                  </button>
+
+                  {/* 실시간 소통 센터 (사내) */}
+                  <button 
+                    onClick={() => setActiveTab('chat')}
+                    className={`w-auto lg:w-full whitespace-nowrap flex-shrink-0 flex items-center justify-between px-4 py-3 rounded-xl text-left font-bold text-xs transition-all cursor-pointer ${activeTab === 'chat' ? 'bg-violet-600 text-white shadow-lg shadow-violet-500/10' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <MessageSquare className="w-4 h-4 text-slate-500" />
+                      <span>실시간 소통 센터 💬</span>
+                    </div>
+                    {unreadTotal > 0 && (
+                      <span className="bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-black animate-pulse">
+                        {unreadTotal}
+                      </span>
+                    )}
+                  </button>
+                </div>
               )}
 
               {/* PWA Install Guide Card (Sidebar Bottom empty space - Desktop only) */}
@@ -2036,6 +2058,10 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                   setAdminHyphenLead={setAdminHyphenLead}
                   setShowAdminHyphen={setShowAdminHyphen}
                   renderHelpGuideToggle={renderHelpGuideToggle}
+                  onOpenChatRoom={(roomId) => {
+                    setChatRoomIdToOpen(roomId);
+                    setActiveTab('customer_chat');
+                  }}
                 />
               )}
 
@@ -2256,8 +2282,38 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                   }`}>
                     <ChatTab 
                       currentUser={currentUser} 
+                      mode="internal"
                       showHelpGuide={showHelpGuide} 
                       onToggleHelpGuide={handleToggleHelpGuide}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Tab 9-1: Customer Consultation */}
+              {activeTab === 'customer_chat' && (
+                <div key="customer_chat" className="active-tab-fade-slide space-y-6">
+                  {showHelpGuide && (
+                    <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)]">
+                      <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
+                      <div className="pl-2 space-y-1">
+                        <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 실시간 고객 상담</span>
+                        <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
+                          "🤖 홈페이지에 방문한 고객들이 AI 비서와 나눈 대화를 실시간으로 모니터링하고, 언제든지 설계사가 직접 개입하여 1:1 라이브로 상담할 수 있는 창구입니다."
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  <div className={`transition-all duration-300 ${
+                    showHelpGuide ? 'help-guide-glow p-4 rounded-[2rem] bg-slate-900/10' : ''
+                  }`}>
+                    <ChatTab 
+                      currentUser={currentUser} 
+                      mode="customer"
+                      showHelpGuide={showHelpGuide} 
+                      onToggleHelpGuide={handleToggleHelpGuide}
+                      initialRoomId={chatRoomIdToOpen}
+                      onClearInitialRoomId={() => setChatRoomIdToOpen(null)}
                     />
                   </div>
                 </div>

@@ -1,0 +1,2 @@
+"/**\n * @license\n * SPDX-License-Identifier: Apache-2.0\n */\n\nimport React, { useState } from 'react';\nimport { motion } from 'motion/react';\nimport { MessageCircle, Zap } from 'lucide-react';\nimport { InsuranceAnalysis } from '../types/insurance';\
+<truncated 4632 bytes>
