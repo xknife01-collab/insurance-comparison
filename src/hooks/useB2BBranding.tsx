@@ -457,11 +457,25 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
           const agency = agencyData?.[0] || null;
 
           if (!aError && agency && agency.subscription_status === 'active') {
+            let fallbackPlannerId: string | null = null;
+            try {
+              const { data: planners } = await supabase
+                .from('planners')
+                .select('id')
+                .eq('agency_id', agency.id)
+                .limit(1);
+              if (planners && planners.length > 0) {
+                fallbackPlannerId = planners[0].id;
+              }
+            } catch (pe) {
+              console.warn('Failed to fetch fallback planner for agency:', pe);
+            }
+
             const isDemo = agency.id === '88888888-8888-4888-a888-888888888888';
             const demoRoutingOverride = isDemo ? sessionStorage.getItem('demo_lead_routing_type') : null;
             const agencyBranding: B2BBranding = {
               type: 'agency',
-              plannerId: null,
+              plannerId: fallbackPlannerId,
               agencyId: agency.id,
               name: agency.name,
               profileImageUrl: null,
