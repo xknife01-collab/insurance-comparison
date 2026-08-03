@@ -58,9 +58,10 @@ export default function App() {
   const [remodelingResult, setRemodelingResult] = useState<AnalysisResult | null>(null);
   const [currentAnalysis, setCurrentAnalysis] = useState<InsuranceAnalysis | null>(null);
   const [view, setView] = useState<'admin' | 'partner' | 'home' | 'indemnity' | 'preexisting' | 'dental' | 'caregiving' | 'dementia' | 'surgery' | 'cancer' | 'cerebrovascular' | 'heart' | 'nursing' | 'child' | 'child_sick' | 'car' | 'driver' | 'pet' | 'golf' | 'fire_real' | 'property' | 'annuity' | 'whole' | 'variable' | 'legal' | 'credit' | 'health_general' | 'accident' | 'savings_general' | 'support' | 'verify'>(() => {
-    if (window.location.pathname === '/admin') return 'admin';
-    if (window.location.pathname === '/partner') return 'partner';
-    if (window.location.pathname === '/verify') return 'verify';
+    const cleanPath = window.location.pathname.toLowerCase().replace(/\/$/, '');
+    if (cleanPath === '/admin') return 'admin';
+    if (cleanPath === '/partner') return 'partner';
+    if (cleanPath === '/verify') return 'verify';
     return 'home';
   });
   const [adminTab, setAdminTab] = useState<'login' | 'register'>('login');
@@ -754,20 +755,21 @@ export default function App() {
     }
   }, [analysisResult]);
   useEffect(() => {
+    const cleanPath = window.location.pathname.toLowerCase().replace(/\/$/, '');
     if (view === 'admin') {
-      if (window.location.pathname !== '/admin') {
+      if (cleanPath !== '/admin') {
         window.history.pushState({}, '', '/admin');
       }
     } else if (view === 'partner') {
-      if (window.location.pathname !== '/partner') {
+      if (cleanPath !== '/partner') {
         window.history.pushState({}, '', '/partner');
       }
     } else if (view === 'verify') {
-      if (window.location.pathname !== '/verify') {
+      if (cleanPath !== '/verify') {
         window.history.pushState({}, '', '/verify' + window.location.search);
       }
     } else {
-      if (window.location.pathname === '/admin' || window.location.pathname === '/partner' || window.location.pathname === '/verify') {
+      if (cleanPath === '/admin' || cleanPath === '/partner' || cleanPath === '/verify') {
         window.history.pushState({}, '', '/');
       }
     }
@@ -775,11 +777,12 @@ export default function App() {
 
   useEffect(() => {
     const handlePopState = () => {
-      if (window.location.pathname === '/admin') {
+      const cleanPath = window.location.pathname.toLowerCase().replace(/\/$/, '');
+      if (cleanPath === '/admin') {
         setView('admin');
-      } else if (window.location.pathname === '/partner') {
+      } else if (cleanPath === '/partner') {
         setView('partner');
-      } else if (window.location.pathname === '/verify') {
+      } else if (cleanPath === '/verify') {
         setView('verify');
       } else {
         setView('home');

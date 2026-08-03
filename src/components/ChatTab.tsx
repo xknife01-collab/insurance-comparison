@@ -362,6 +362,14 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide,
   const [userRoomIds, setUserRoomIds] = useState<string[]>([]);
   const [activeFaqIndex, setActiveFaqIndex] = useState<number | null>(null);
   const [showFaqDrawer, setShowFaqDrawer] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (toastMessage) {
+      const timer = setTimeout(() => setToastMessage(null), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [toastMessage]);
   
   const chatEndRef = useRef<HTMLDivElement>(null);
 
@@ -1887,57 +1895,53 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide,
                       type="button"
                       onClick={async () => {
                         updateGlobalAiActive(true);
-                        if (rooms.length === 0) return;
-                        if (!confirm("현재 리스트에 있는 모든 고객의 AI 상담을 활성화하시겠습니까? (📌 집중 상담방 제외)")) return;
                         try {
                           const roomIdsToUpdate = rooms.filter(r => !pinnedRoomIds.includes(r.id)).map(r => r.id);
+                          let updatedCount = 0;
                           if (roomIdsToUpdate.length > 0) {
                             const { data: leadsToUpdate, error: queryErr } = await supabase
                               .from('customer_leads')
                               .select('id, raw_payload');
                             
-                            if (queryErr) throw queryErr;
+                            if (!queryErr && leadsToUpdate) {
+                              const targetLeads = leadsToUpdate.filter(lead => {
+                                const roomId = lead.raw_payload?.chat_room_id;
+                                return roomId && roomIdsToUpdate.includes(roomId);
+                              });
 
-                            const targetLeads = (leadsToUpdate || []).filter(lead => {
-                              const roomId = lead.raw_payload?.chat_room_id;
-                              return roomId && roomIdsToUpdate.includes(roomId);
-                            });
-
-                            let updatedCount = 0;
-                            for (const lead of targetLeads) {
-                              const updatedPayload = {
-                                ...(lead.raw_payload || {}),
-                                timeline: [
-                                  {
-                                    id: `planner-global-activate-${Date.now()}`,
-                                    type: 'system_log',
-                                    author: '설계사',
-                                    detail: '설계사가 마스터 스위치를 가동하여 전체 AI 상담을 일괄 활성화했습니다.',
-                                    created_at: new Date().toISOString()
-                                  },
-                                  ...(lead.raw_payload?.timeline || [])
-                                ]
-                              };
-                              await supabase
-                                .from('customer_leads')
-                                .update({
-                                  is_bot_active: true,
-                                  raw_payload: updatedPayload
-                                })
-                                .eq('id', lead.id);
-                              updatedCount++;
+                              for (const lead of targetLeads) {
+                                const updatedPayload = {
+                                  ...(lead.raw_payload || {}),
+                                  timeline: [
+                                    {
+                                      id: `planner-global-activate-${Date.now()}`,
+                                      type: 'system_log',
+                                      author: '설계사',
+                                      detail: '설계사가 마스터 스위치를 가동하여 전체 AI 상담을 일괄 활성화했습니다.',
+                                      created_at: new Date().toISOString()
+                                    },
+                                    ...(lead.raw_payload?.timeline || [])
+                                  ]
+                                };
+                                await supabase
+                                  .from('customer_leads')
+                                  .update({
+                                    is_bot_active: true,
+                                    raw_payload: updatedPayload
+                                  })
+                                  .eq('id', lead.id);
+                                updatedCount++;
+                              }
                             }
-                            alert(`🤖 전체 AI 자동 응대가 가동되었습니다!\n\n• 대상 고객 수: 총 ${updatedCount}명\n• 집중 상담(📌) 중인 방은 변경 없이 안전하게 유지되었습니다.\n\n이제 AI 비서가 순차적으로 대화를 응대합니다.`);
-                          } else {
-                            alert("AI를 시작할 활성화된 일반 대화방이 없습니다.");
                           }
+                          setToastMessage(`🤖 전체 AI 자동 응대가 일괄 활성화되었습니다. (총 ${updatedCount}개 방 가동 시작)`);
                           await fetchRooms();
                           if (selectedRoom && !pinnedRoomIds.includes(selectedRoom.id)) {
                             setIsBotActive(true);
                           }
                         } catch (e) {
                           console.error("Failed to globally resume AI bot:", e);
-                          alert("상태 업데이트에 실패했습니다. 네트워크를 확인해 주세요.");
+                          setToastMessage("상태 업데이트에 실패했습니다.");
                         }
                       }}
                       className={`px-4 py-2.5 text-xs font-black rounded-xl transition-all cursor-pointer border ${
@@ -1952,53 +1956,53 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide,
                       type="button"
                       onClick={async () => {
                         updateGlobalAiActive(false);
-                        if (rooms.length === 0) return;
-                        if (!confirm("현재 리스트에 있는 모든 고객의 AI 상담을 정지하고 수동 개입 모드로 전환하시겠습니까?")) return;
                         try {
                           const roomIdsToUpdate = rooms.map(r => r.id);
-                          const { data: leadsToUpdate, error: queryErr } = await supabase
-                            .from('customer_leads')
-                            .select('id, raw_payload');
-                          
-                          if (queryErr) throw queryErr;
-
-                          const targetLeads = (leadsToUpdate || []).filter(lead => {
-                            const roomId = lead.raw_payload?.chat_room_id;
-                            return roomId && roomIdsToUpdate.includes(roomId);
-                          });
-
                           let updatedCount = 0;
-                          for (const lead of targetLeads) {
-                            const updatedPayload = {
-                              ...(lead.raw_payload || {}),
-                              timeline: [
-                                {
-                                  id: `planner-global-pause-${Date.now()}`,
-                                  type: 'system_log',
-                                  author: '설계사',
-                                  detail: '설계사가 마스터 스위치를 정지하여 전체 AI 상담을 일괄 일시정지했습니다.',
-                                  created_at: new Date().toISOString()
-                                },
-                                ...(lead.raw_payload?.timeline || [])
-                              ]
-                            };
-                            await supabase
+                          if (roomIdsToUpdate.length > 0) {
+                            const { data: leadsToUpdate, error: queryErr } = await supabase
                               .from('customer_leads')
-                              .update({
-                                is_bot_active: false,
-                                raw_payload: updatedPayload
-                              })
-                              .eq('id', lead.id);
-                            updatedCount++;
+                              .select('id, raw_payload');
+                            
+                            if (!queryErr && leadsToUpdate) {
+                              const targetLeads = leadsToUpdate.filter(lead => {
+                                const roomId = lead.raw_payload?.chat_room_id;
+                                return roomId && roomIdsToUpdate.includes(roomId);
+                              });
+
+                              for (const lead of targetLeads) {
+                                const updatedPayload = {
+                                  ...(lead.raw_payload || {}),
+                                  timeline: [
+                                    {
+                                      id: `planner-global-pause-${Date.now()}`,
+                                      type: 'system_log',
+                                      author: '설계사',
+                                      detail: '설계사가 마스터 스위치를 정지하여 전체 AI 상담을 일괄 일시정지했습니다.',
+                                      created_at: new Date().toISOString()
+                                    },
+                                    ...(lead.raw_payload?.timeline || [])
+                                  ]
+                                };
+                                await supabase
+                                  .from('customer_leads')
+                                  .update({
+                                    is_bot_active: false,
+                                    raw_payload: updatedPayload
+                                  })
+                                  .eq('id', lead.id);
+                                updatedCount++;
+                              }
+                            }
                           }
-                          alert(`👤 모든 고객의 AI 상담이 정지되었습니다!\n\n• 대상 고객 수: 총 ${updatedCount}명\n\n이제부터 모든 고객과의 대화는 대리점이나 설계사가 직접 입력하여 수동으로 상담을 진행하셔야 합니다.`);
+                          setToastMessage(`👤 전체 AI 자동 응대가 일시정지(차단)되었습니다. (총 ${updatedCount}개 방 수동 전환)`);
                           await fetchRooms();
                           if (selectedRoom) {
                             setIsBotActive(false);
                           }
                         } catch (e) {
                           console.error("Failed to globally pause AI bot:", e);
-                          alert("상태 업데이트에 실패했습니다. 네트워크를 확인해 주세요.");
+                          setToastMessage("상태 업데이트에 실패했습니다.");
                         }
                       }}
                       className={`px-4 py-2.5 text-xs font-black rounded-xl transition-all border cursor-pointer ${
@@ -2119,6 +2123,17 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide,
 
       </div>
 
+      {toastMessage && (
+        <div className="fixed top-6 right-6 z-[100] max-w-sm p-4 bg-slate-900 border border-orange-500/30 text-white rounded-2xl shadow-2xl flex items-center gap-3 animate-in slide-in-from-top-6 duration-300 select-none">
+          <div className="w-8 h-8 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 flex items-center justify-center font-bold text-xs shrink-0">
+            🤖
+          </div>
+          <div className="text-left">
+            <p className="text-xs font-black text-slate-100">알림</p>
+            <p className="text-[11px] text-slate-350 font-bold mt-0.5 leading-normal">{toastMessage}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
