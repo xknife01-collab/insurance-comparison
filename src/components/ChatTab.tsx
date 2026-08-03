@@ -1582,6 +1582,57 @@ export function ChatTab({ currentUser, showHelpGuide = false, onToggleHelpGuide,
                 
                 {/* Left Side: Message History and Input Form */}
                 <div className="flex-1 flex flex-col overflow-hidden">
+                  {/* [골든타임 개입 알림 배너] */}
+                  {(() => {
+                    if (!selectedLead) return null;
+                    const pos = selectedLead.pos_score || 0;
+                    const action = selectedLead.action_score || 0;
+                    const isGoldenTime = action >= 7 || pos >= 12;
+                    if (!isGoldenTime) return null;
+                    
+                    return (
+                      <div className="mx-6 mt-3 p-3 bg-gradient-to-r from-amber-500/20 via-orange-500/25 to-yellow-500/20 border border-amber-500/30 rounded-xl flex items-center justify-between shadow-lg shadow-orange-950/20 animate-pulse select-none shrink-0">
+                        <div className="flex items-center gap-2">
+                          <span className="text-base">⏰</span>
+                          <div className="text-left">
+                            <p className="text-xs font-black text-amber-300">골든타임 개입 알림 (전환율 최고치 예측)</p>
+                            <p className="text-[10px] text-amber-100 font-semibold mt-0.5">지금 개입하면 전환율 최고입니다! 고객 설득 직전 상태 🔥</p>
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={async () => {
+                            const updatedPayload = {
+                              ...(selectedLead.raw_payload || {}),
+                              timeline: [
+                                {
+                                  id: `planner-gold-intervene-${Date.now()}`,
+                                  type: 'system_log',
+                                  author: '설계사',
+                                  detail: '설계사가 골든타임 개입 알림을 확인하고 수동 상담을 시작했습니다.',
+                                  created_at: new Date().toISOString()
+                                },
+                                ...(selectedLead.raw_payload?.timeline || [])
+                              ]
+                            };
+                            await supabase
+                              .from('customer_leads')
+                              .update({
+                                is_bot_active: false,
+                                raw_payload: updatedPayload
+                              })
+                              .eq('id', selectedLead.id);
+                            setIsBotActive(false);
+                            await fetchRooms();
+                          }}
+                          className="px-2.5 py-1 bg-amber-500 border border-amber-400 text-slate-950 text-[10px] font-black rounded-lg hover:bg-amber-400 active:scale-95 transition-all cursor-pointer shadow-md shadow-amber-600/10 shrink-0"
+                        >
+                          ⚡ 즉시 개입 (수동 전환)
+                        </button>
+                      </div>
+                    );
+                  })()}
+
                   <div className="flex-1 overflow-y-auto p-6 space-y-4">
                     {messages.map((msg) => {
                       const isMe = msg.sender_id === currentUserId;
