@@ -2,7 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { createClient } from '../utils/supabase/client';
 import { MarketingPlaybookTab } from './MarketingPlaybookTab';
 import { AdCampaignTab } from './AdCampaignTab';
-import { ChatTab } from './ChatTab';
+import { CustomerChatTab } from './CustomerChatTab';
+import { InternalChatTab } from './InternalChatTab';
 import { ComplianceGuideTab } from './ComplianceGuideTab';
 import { LeadDistributionSimulator } from './LeadDistributionSimulator';
 import { triggerWelcomeChat } from '../utils/chatHelper';
@@ -2280,9 +2281,8 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                   <div className={`transition-all duration-300 ${
                     showHelpGuide ? 'help-guide-glow p-4 rounded-[2rem] bg-slate-900/10' : ''
                   }`}>
-                    <ChatTab 
+                    <InternalChatTab 
                       currentUser={currentUser} 
-                      mode="internal"
                       showHelpGuide={showHelpGuide} 
                       onToggleHelpGuide={handleToggleHelpGuide}
                     />
@@ -2307,9 +2307,8 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                   <div className={`transition-all duration-300 ${
                     showHelpGuide ? 'help-guide-glow p-4 rounded-[2rem] bg-slate-900/10' : ''
                   }`}>
-                    <ChatTab 
+                    <CustomerChatTab 
                       currentUser={currentUser} 
-                      mode="customer"
                       showHelpGuide={showHelpGuide} 
                       onToggleHelpGuide={handleToggleHelpGuide}
                       initialRoomId={chatRoomIdToOpen}

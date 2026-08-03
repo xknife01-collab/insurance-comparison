@@ -2396,6 +2396,31 @@ export function useAdminState(initialTab?: 'login' | 'register') {
     fetchData();
   }, [currentUser]);
 
+  // 실시간 고객 DB(customer_leads) 업데이트 자동 동기화
+  useEffect(() => {
+    if (currentUser.role === 'guest') return;
+
+    const channel = supabase
+      .channel('realtime_leads_dashboard_sync')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'customer_leads'
+        },
+        () => {
+          fetchData();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser.role]);
+
   const getLeadTimeline = (lead: Lead) => {
     const timeline: any[] = [];
 

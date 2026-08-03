@@ -5,9 +5,12 @@ import { createClient } from '../utils/supabase/client';
 
 interface VerificationPageProps {
   branding: any;
+  initialCode?: string;
+  onSuccess?: () => void;
+  onClose?: () => void;
 }
 
-export default function VerificationPage({ branding }: VerificationPageProps) {
+export default function VerificationPage({ branding, initialCode, onSuccess, onClose }: VerificationPageProps) {
   const [code, setCode] = useState<string>('');
   const [name, setName] = useState('');
   const [mobile, setMobile] = useState('');
@@ -25,14 +28,19 @@ export default function VerificationPage({ branding }: VerificationPageProps) {
   const [mockOtp, setMockOtp] = useState<string | null>(null);
 
   useEffect(() => {
-    // Parse simulation code from URL query string
-    const params = new URLSearchParams(window.location.search);
-    const codeParam = params.get('code');
-    if (codeParam) {
-      setCode(codeParam);
-      fetchLeadByCode(codeParam);
+    if (initialCode) {
+      setCode(initialCode);
+      fetchLeadByCode(initialCode);
+    } else {
+      // Parse simulation code from URL query string
+      const params = new URLSearchParams(window.location.search);
+      const codeParam = params.get('code');
+      if (codeParam) {
+        setCode(codeParam);
+        fetchLeadByCode(codeParam);
+      }
     }
-  }, []);
+  }, [initialCode]);
 
   const fetchLeadByCode = async (simCode: string) => {
     try {
@@ -242,6 +250,9 @@ ${origin}/?code=${code}
       }
 
       setSuccess(true);
+      if (onSuccess) {
+        onSuccess();
+      }
     } catch (err: any) {
       console.error(err);
       setErrorMsg(err.message || '인증 정보 처리 중 서버 오류가 발생했습니다. 다시 시도해 주세요.');
@@ -291,8 +302,19 @@ ${origin}/?code=${code}
             key="success"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-[2.5rem] border border-slate-100 p-8 shadow-2xl text-center space-y-6 max-w-md mx-auto"
+            className="bg-white rounded-[2.5rem] border border-slate-100 p-8 shadow-2xl text-center space-y-6 max-w-md mx-auto relative"
           >
+            {onClose && (
+              <button
+                type="button"
+                onClick={onClose}
+                className="absolute top-6 right-6 p-1.5 hover:bg-slate-100 text-slate-400 hover:text-slate-600 rounded-lg transition-colors cursor-pointer"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
             <div className="flex justify-center">
               <div className="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center border border-emerald-100 relative">
                 <CheckCircle2 className="text-emerald-500 w-10 h-10" />
@@ -307,7 +329,7 @@ ${origin}/?code=${code}
 
             <div className="bg-emerald-50/50 rounded-2xl p-5 border border-emerald-100/50 text-left text-slate-700 text-sm font-semibold leading-relaxed break-keep">
               🎉 본인 인증이 완벽하게 승인되었습니다.<br />
-              기존에 띄워 놓으셨던 <span className="text-orange-600 font-black">보험 비교 시뮬레이션 화면</span>을 확인해 주세요. 0.1초 만에 마스킹이 완전히 해제되어 상세 상품명이 노출되어 있습니다!
+              기존에 띄워 놓으셨던 <span className="text-orange-600 font-black">보험 비교 시뮬레이션 화면</span>을 확인해 주세요. 마스킹이 완전히 해제되어 상세 상품명이 노출되어 있습니다!
             </div>
 
             <div className="space-y-3 pt-4">
@@ -328,8 +350,19 @@ ${origin}/?code=${code}
             key="form"
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-[2.5rem] border border-slate-100 p-8 shadow-2xl space-y-6 max-w-md mx-auto"
+            className="bg-white rounded-[2.5rem] border border-slate-100 p-8 shadow-2xl space-y-6 max-w-md mx-auto relative"
           >
+            {onClose && (
+              <button
+                type="button"
+                onClick={onClose}
+                className="absolute top-6 right-6 p-1.5 hover:bg-slate-100 text-slate-400 hover:text-slate-600 rounded-lg transition-colors cursor-pointer animate-in fade-in duration-300"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
             <div className="flex items-center gap-3.5 mb-2">
               <div className="w-12 h-12 bg-orange-100 rounded-2xl flex items-center justify-center text-orange-600 shrink-0">
                 <ShieldCheck size={26} />

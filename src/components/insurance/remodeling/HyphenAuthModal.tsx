@@ -32,17 +32,19 @@ interface HyphenAuthModalProps {
       isCustom: boolean;
     }[];
   };
+  defaultTab?: 'login' | 'register' | 'demo';
 }
 
 export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
   isOpen,
   onClose,
   onSuccess,
-  initialData
+  initialData,
+  defaultTab = 'login'
 }) => {
   const { branding } = useB2BBranding();
   const [limitExceeded, setLimitExceeded] = useState(false);
-  const [activeTab, setActiveTab] = useState<'login' | 'register' | 'demo'>('login');
+  const [activeTab, setActiveTab] = useState<'login' | 'register' | 'demo'>(defaultTab);
   const [loading, setLoading] = useState(false);
   const [loadingStatus, setLoadingStatus] = useState<string>('');
   const [error, setError] = useState<string>('');
@@ -194,6 +196,7 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
 
   useEffect(() => {
     if (isOpen) {
+      setActiveTab(defaultTab);
       setRegStep('init');
       setError('');
       setCaptchaInput('');
@@ -218,7 +221,7 @@ export const HyphenAuthModal: React.FC<HyphenAuthModalProps> = ({
         setFindMobileNo(cleanPhone);
       }
     }
-  }, [isOpen, initialData]);
+  }, [isOpen, initialData, defaultTab]);
 
   // 3-1. 아이디 찾기 핸들러
   const handleFindIdInit = async (e: React.FormEvent) => {

@@ -27,6 +27,45 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
     return null;
   }
 
+  const handleDownloadVCard = () => {
+    // Helper to encode string to UTF-8 Quoted-Printable format
+    const encodeQP = (str: string) => {
+      const bytes = new TextEncoder().encode(str);
+      return Array.from(bytes)
+        .map(b => '=' + b.toString(16).toUpperCase().padStart(2, '0'))
+        .join('');
+    };
+
+    const agency = branding.agencyName || '인카금융서비스';
+    const role = branding.certificationMessage || '공식 설계사';
+    const nameWithAgency = `${branding.name} (${agency})`;
+    const rawAddr = branding.customAddress || branding.agencyAddress || '';
+
+    const vcard = `BEGIN:VCARD
+VERSION:2.1
+FN;CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:${encodeQP(nameWithAgency)}
+TEL;CELL;VOICE:${branding.customPhone}
+EMAIL;PREF;INTERNET:${branding.customEmail || ''}
+ADR;WORK;CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:;;${encodeQP(rawAddr)}
+ORG;CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:${encodeQP(agency)}
+TITLE;CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:${encodeQP(role)}
+END:VCARD`;
+
+    try {
+      const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `${branding.name}_연락처.vcf`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (e) {
+      console.error('vCard download failed:', e);
+      alert('연락처 다운로드에 실패했습니다.');
+    }
+  };
+
   const handleKakaoClick = (type: 'anonymous' | 'regular') => {
     if (type === 'anonymous') {
       if (onKakaoClick) {
@@ -68,7 +107,7 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
               <X size={16} />
             </button>
           </div>
-
+ 
           <div className="flex flex-col items-center text-center space-y-4">
             {/* Profile Avatar / Photo */}
             <div className="relative">
@@ -93,7 +132,7 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
               </div>
               <span className="absolute bottom-0 right-0 w-4.5 h-4.5 bg-emerald-500 border-2 border-slate-950 rounded-full animate-pulse" />
             </div>
-
+ 
             {/* Planner Info */}
             <div className="space-y-1">
               <span className="inline-block px-2.5 py-0.5 bg-orange-500/10 text-orange-400 text-[9px] font-black rounded-md border border-orange-500/20 uppercase tracking-widest">
@@ -103,12 +142,20 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
                 {branding.type === 'planner' ? `${branding.name} 설계사` : `${branding.name} 공식 설계사`}
               </h4>
               {branding.customPhone && (
-                <a 
-                  href={`tel:${branding.customPhone}`} 
-                  className="text-xs text-slate-400 hover:text-orange-400 transition-colors font-bold flex items-center justify-center gap-1 cursor-pointer"
-                >
-                  <Phone size={12} className="text-orange-500" /> {branding.customPhone}
-                </a>
+                <div className="flex flex-col items-center gap-2 mt-1">
+                  <a 
+                    href={`tel:${branding.customPhone}`} 
+                    className="text-xs text-slate-400 hover:text-orange-400 transition-colors font-bold flex items-center justify-center gap-1 cursor-pointer"
+                  >
+                    <Phone size={12} className="text-orange-500" /> {branding.customPhone}
+                  </a>
+                  <button
+                    onClick={handleDownloadVCard}
+                    className="px-3.5 py-1.5 bg-orange-500/10 hover:bg-orange-500/20 active:scale-95 text-orange-400 text-[10px] font-black rounded-xl border border-orange-500/30 flex items-center gap-1 transition-all cursor-pointer"
+                  >
+                    📱 설계사 연락처 저장
+                  </button>
+                </div>
               )}
             </div>
 

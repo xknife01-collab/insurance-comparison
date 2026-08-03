@@ -69,6 +69,22 @@ export interface AiContext {
   plannerName?: string;
   /** 대리점 실명 */
   agencyName?: string;
+  /** 실시간 고객 시뮬레이션 내역 */
+  simulationData?: {
+    age?: number;
+    gender?: 'M' | 'F';
+    monthlyPremium?: number;
+    simulationCode?: string;
+    category?: string;
+    cancer?: {
+      currentAmount?: number;
+      treatmentCost2025?: boolean;
+      targetedTherapy?: boolean;
+      paymentType?: 'non-renewable' | 'renewable' | 'targeted';
+      recurrentCancer?: boolean;
+      familyHistory?: boolean;
+    };
+  };
 }
 
 // ── AI 응답 결과 타입 ──────────────────────────────────────────────────────────
@@ -365,10 +381,48 @@ ${guideText}
 - 이 화법 매뉴얼의 톤앤매너를 대화에 100% 반영하여 고객이 마음을 열도록 만드십시오.`;
   }
 
+  // ── 고객의 설계 시뮬레이션 내역 주입 ──────────────────────────────────────────
+  let simulationInstruction = '';
+  if (ctx.simulationData) {
+    const sd = ctx.simulationData;
+    const isM = sd.gender === 'M';
+    const hasFamily = sd.cancer?.familyHistory ? '있음' : '없음';
+    const hasRecurrent = sd.cancer?.recurrentCancer ? '반복지급' : '1회지급';
+    const hasTargeted = sd.cancer?.targetedTherapy ? '풀보장' : '진단비만';
+    const has2025 = sd.cancer?.treatmentCost2025 ? '포함(추천)' : '미포함';
+    
+    let renewalLabel = '비갱신형';
+    if (sd.cancer?.paymentType === 'renewable') renewalLabel = '갱신형';
+    if (sd.cancer?.paymentType === 'targeted') renewalLabel = '표적항암형';
+
+    const premiumText = sd.monthlyPremium ? Number(sd.monthlyPremium).toLocaleString() + '원' : '미산출';
+    const amountText = sd.cancer?.currentAmount ? (sd.cancer.currentAmount / 10000).toLocaleString() + '만 원' : '기본설정';
+
+    simulationInstruction = `
+[📊 고객이 대화 직전 시뮬레이션해 본 설계 정보]
+- 가입자 정보: 연령 ${sd.age || '미확인'}세 / 성별 ${isM ? '남성' : '여성'}
+- 설계 코드: ${sd.simulationCode || '미확인'}
+- 설계 월 납입료: ${premiumText}
+- 상세 암보험 설계 설정:
+  * 일반암 진단비: ${amountText}
+  * 2025 암주요치료비: ${has2025}
+  * 표적항암/원인자: ${hasTargeted}
+  * 납입/갱신 유형: ${renewalLabel}
+  * 재발/전이암: ${hasRecurrent}
+  * 암 가족력: ${hasFamily}
+
+[🤫 상담 가이드라인 - AI 챗봇 자아 완전 봉인 및 대시보드 인지 패턴]
+- 당신은 설계사 본인이므로, 고객이 방금 짜서 보낸 위의 시뮬레이션 세부 옵션(예: 월 납입료, 암 진단비 5천만 원 등)을 **대시보드 관리자 화면으로 먼저 모니터링하고 톡방에 들어온 진짜 설계사**처럼 자연스럽게 대화에 녹여야 합니다.
+- 절대 "시스템이 정보를 받아왔다", "데이터베이스에 적혀 있다", "챗봇에 입력되었다" 같이 AI나 프로그램을 암시하는 기계적인 정보 획득 경로는 한 글자도 언급하지 마십시오.
+- 마치 카톡이나 메시지를 보내기 전에 고객의 설계안을 미리 훑어본 인간 플래너로서 대화하십시오.
+- 예시: "안녕하세요 고객님! 담당 플래너입니다. 방금 접수해주신 암보험 설계안 알림이 떠서 대시보드 보고 들어왔어요~ 😊 40대이신데 일반암 5천만 원에 비갱신형으로 진짜 야무지게 잘 짜셨더라고요! 특히 암 가족력은 없으신 상태죠?"`;
+  }
+
   return `${basePrompt}
 ${modeInstruction}
 ${memoryInstruction}
 ${segmentInstruction}
+${simulationInstruction}
 ${kbInstruction}
 ${scriptsInstruction}`;
 }

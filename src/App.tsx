@@ -87,6 +87,7 @@ export default function App() {
     }
   }, [currentSimulationCode]);
   const [showUnlockModal, setShowUnlockModal] = useState<boolean>(false);
+  const [showAligoAuthModal, setShowAligoAuthModal] = useState<boolean>(false);
   const [isInRemodelingZone, setIsInRemodelingZone] = useState<boolean>(false);
   const [showComparisonBar, setShowComparisonBar] = useState<boolean>(false);
   const [isRemodelingHyphenOpen, setIsRemodelingHyphenOpen] = useState<boolean>(false);
@@ -313,12 +314,12 @@ export default function App() {
               // 정밀 분석 플로우: 실제 보험 데이터 → remodelingResult 갱신
               setIsInRemodelingZone(true);
               handleRemodelingHyphenSuccess(hyphenCoverage);
-              alert('🔍 설계사가 하이픈 연동을 완료했습니다! 실제 보험 데이터가 0.1초 만에 로드됩니다.');
+              alert('🔍 설계사가 하이픈 연동을 완료했습니다! 실제 보험 데이터가 로드됩니다.');
             } else {
               // 비교 분석 플로우: 마스킹 해제
               setIsUnlocked(true);
               localStorage.setItem('ins_unlocked', 'true');
-              alert('🎉 본인인증이 확인되어 실명 마스킹이 0.1초 만에 해제되었습니다!');
+              alert('🎉 본인인증이 확인되어 실명 마스킹이 해제되었습니다!');
             }
           }
         }
@@ -1900,7 +1901,7 @@ export default function App() {
                 익명 안심 비교 모드
               </p>
               <h4 className="text-xs font-black text-slate-200">
-                1:1 카톡인증 시 실명 공개
+                실시간 상담 요청 시 실명 공개
               </h4>
             </div>
             <button
@@ -1908,7 +1909,7 @@ export default function App() {
               className="px-5 py-3 bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-700 hover:to-orange-600 text-white font-black text-xs rounded-xl shadow-lg shadow-orange-950/40 transition-all flex items-center gap-2"
             >
               <ShieldCheck className="w-4 h-4" />
-              실명 정보 해제하기
+              실시간 상담 요청하기
             </button>
           </div>
         </div>
@@ -1927,7 +1928,7 @@ export default function App() {
                 🔍 실제 내가 가입한 보험, 지금 바로 확인
               </h4>
               <p className="text-[9px] text-slate-400 font-semibold">
-                한국신용정보원 연동 후 0.1초 자동진단
+                한국신용정보원 연동 후 자동진단
               </p>
             </div>
             <button
@@ -1957,8 +1958,8 @@ export default function App() {
               </div>
               <h3 className="text-base font-black tracking-tight text-white">실명 정보 잠금 해제</h3>
               <p className="text-[10px] text-slate-400 font-bold leading-relaxed break-keep">
-                1:1 카카오톡 비공개 상담방에서 인증을 완료하시면,<br />
-                보고 계신 화면의 마스킹이 0.1초 만에 자동으로 해제됩니다.
+                실시간 상담 요청을 접수하시면,<br />
+                보고 계신 화면의 마스킹이 자동으로 해제됩니다.
               </p>
             </div>
 
@@ -1973,7 +1974,7 @@ export default function App() {
                   onClick={() => {
                     if (currentSimulationCode) {
                       navigator.clipboard.writeText(currentSimulationCode);
-                      alert('설계 코드가 복사되었습니다! 카톡방에 붙여넣어 주세요.');
+                      alert('설계 코드가 복사되었습니다! 대화방에 붙여넣어 주세요.');
                     }
                   }}
                   className="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-[10px] font-black rounded-lg transition-colors"
@@ -2000,26 +2001,20 @@ export default function App() {
               <div className="flex items-start gap-2.5">
                 <span className="w-4 h-4 rounded-full bg-slate-800 text-[9px] font-black flex items-center justify-center shrink-0 mt-0.5 text-slate-300">3</span>
                 <p className="text-[10px] font-semibold text-slate-300 leading-normal">
-                  설계사가 보내 드리는 **비공개 안전 간편인증 링크**를 열어 본인인증을 완료합니다.
+                  실시간 상담 요청을 완료하고, 대화방 링크를 통해 실명 정보 잠금 해제를 완료합니다.
                 </p>
               </div>
             </div>
 
             {/* Redirect Button */}
             <button
-              onClick={async () => {
-                const kLink = branding.kakaoLink || 'https://open.kakao.com/o/sB1B2C3D';
-
-                // Track timeline click for consultant
-                if (lastSubmittedLeadId) {
-                  logKakaoClick(lastSubmittedLeadId, 'anonymous');
-                }
-
-                window.open(kLink, '_blank');
+              onClick={() => {
+                setIsAiChatOpen(true);
+                setShowUnlockModal(false);
               }}
               className="w-full py-3.5 bg-[#FEE500] hover:bg-[#FDD800] text-black font-black text-xs rounded-xl shadow-lg transition-colors cursor-pointer text-center flex items-center justify-center gap-2"
             >
-              💬 1:1 상담 카카오톡방 입장하기
+              💬 1:1 상담 요청하고 대화방 입장하기
             </button>
           </div>
         </div>
@@ -2032,6 +2027,7 @@ export default function App() {
           setIsRemodelingHyphenOpen(false);
           handleRemodelingHyphenSuccess(coverage);
         }}
+        defaultTab="register"
         initialData={{
           userName: '고객',
           gender: (remodelingResult?.analysis?.gender as 'M' | 'F') || 'M',
@@ -2055,6 +2051,25 @@ export default function App() {
         }}
       />
 
+      {/* 🔒 알리고 SMS 본인인증 모달 (마스킹 해제용) */}
+      {showAligoAuthModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+          <div className="w-full max-w-md overflow-y-auto max-h-[95vh] scrollbar-none">
+            <VerificationPage 
+              branding={branding} 
+              initialCode={currentSimulationCode || ''} 
+              onClose={() => setShowAligoAuthModal(false)}
+              onSuccess={() => {
+                setTimeout(() => {
+                  setShowAligoAuthModal(false);
+                  setIsUnlocked(true);
+                }, 2500);
+              }}
+            />
+          </div>
+        </div>
+      )}
+
       {/* 🤖 실시간 고객 상담 AI 위젯 */}
       {view !== 'admin' && view !== 'partner' && (isAiEnabled || isAiChatOpen) && branding.plannerId && (
         <AiChatWidget
@@ -2064,11 +2079,16 @@ export default function App() {
           agencyId={branding.agencyId}
           leadSource={branding.type === 'planner' ? 'direct' : (branding.type === 'agency' ? 'distribute' : 'organic')}
           currentSimulationCode={currentSimulationCode}
-          onTriggerAuth={() => setIsRemodelingHyphenOpen(true)}
+          onTriggerAuth={() => setShowAligoAuthModal(true)}
           isUnlocked={isUnlocked}
           externalIsOpen={isAiChatOpen}
           onCloseExternal={() => setIsAiChatOpen(false)}
           registrationNumber={branding.registrationNumber}
+          customPhone={branding.customPhone}
+          customEmail={branding.customEmail}
+          customAddress={branding.customAddress || branding.agencyAddress}
+          certificationMessage={branding.certificationMessage}
+          logoUrl={branding.logoUrl || null}
         />
       )}
     </div>

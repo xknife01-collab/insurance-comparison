@@ -170,6 +170,11 @@ interface AiChatWidgetProps {
   externalIsOpen?: boolean;
   onCloseExternal?: () => void;
   registrationNumber?: string | null;
+  customPhone?: string | null;
+  customEmail?: string | null;
+  customAddress?: string | null;
+  certificationMessage?: string | null;
+  logoUrl?: string | null;
 }
 
 interface Message {
@@ -192,7 +197,12 @@ export default function AiChatWidget({
   isUnlocked,
   externalIsOpen,
   onCloseExternal,
-  registrationNumber
+  registrationNumber,
+  customPhone,
+  customEmail,
+  customAddress,
+  certificationMessage,
+  logoUrl
 }: AiChatWidgetProps) {
   const [localIsOpen, setLocalIsOpen] = useState(false);
   const isOpen = externalIsOpen !== undefined ? externalIsOpen : localIsOpen;
@@ -219,11 +229,93 @@ export default function AiChatWidget({
   const [isTyping, setIsTyping] = useState(false);
   const [isBotActive, setIsBotActive] = useState(true);
   const [currentLeadId, setCurrentLeadId] = useState<number | null>(null);
+  const [renderedCardUrl, setRenderedCardUrl] = useState<string | null>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const initializedRoomIdRef = useRef<string | null>(null);
   const usedScriptIdsRef = useRef<number[]>([]); // [기능5] 전환율 추적용 스크립트 ID
   const supabase = createClient();
+
+  // 실시간 B2B 대리점/설계사 등록 마이페이지 세팅 정보를 템플릿에 실시간으로 오버레이 합성하는 로직
+  useEffect(() => {
+    const generateCard = () => {
+      const img = new Image();
+      img.src = '/123456.png';
+      img.crossOrigin = 'anonymous';
+      
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 1079;
+        canvas.height = 698;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+        
+        // 1. 공백 템플릿 이미지 드로잉 (1079x698)
+        ctx.drawImage(img, 0, 0, 1079, 698);
+        
+        // 골드 컬러 세팅
+        ctx.fillStyle = '#E5C158';
+        ctx.textAlign = 'left';
+        
+        // 2. 좌측 영역 그리기 (이름, 소속, 직책)
+        // 이름
+        ctx.font = 'bold 55px "Malgun Gothic", "Nanum Gothic", sans-serif';
+        const pName = plannerName || '박효진';
+        ctx.fillText(pName, 110, 275);
+        
+        // 소속 (줄바꿈 처리)
+        ctx.font = 'bold 30px "Malgun Gothic", "Nanum Gothic", sans-serif';
+        const company = agencyName || '인카금융서비스 프로사업단총괄 라이즈지점';
+        if (company.includes('인카금융서비스')) {
+          ctx.fillText('인카금융서비스', 110, 365);
+          ctx.fillText(company.replace('인카금융서비스', '').trim(), 110, 415);
+        } else if (company.length > 12) {
+          ctx.fillText(company.substring(0, 11), 110, 365);
+          ctx.fillText(company.substring(11).trim(), 110, 415);
+        } else {
+          ctx.fillText(company, 110, 365);
+        }
+        
+        // 직책 / 인증문구
+        const pCert = certificationMessage || '총괄 관리자';
+        ctx.fillText(pCert, 110, 475);
+        
+        // 3. 우측 영역 그리기 (전화번호, 이메일, 주소)
+        ctx.font = 'normal 24px "Malgun Gothic", "Nanum Gothic", sans-serif';
+        ctx.fillText(`Phone: ${customPhone || '010-6500-0636'}`, 580, 275);
+        ctx.fillText(`Email: ${customEmail || 'zkfnth01@naver.com'}`, 580, 335);
+        
+        // 주소 (줄바꿈 처리)
+        const rawAddr = customAddress || '경기 남양주시 다산지금로16번길 43 타임프라자 403호';
+        let displayAddr = rawAddr;
+        if (displayAddr.includes('보험대리점 :')) {
+          displayAddr = '경기 남양주시 다산지금로16번길 43 타임프라자 403호';
+        }
+        
+        if (displayAddr.includes('다산지금로16번길')) {
+          ctx.fillText('Address: 경기 남양주시 다산지금로16번길', 580, 395);
+          ctx.fillText('43 타임프라자 403호', 670, 435);
+        } else if (displayAddr.length > 20) {
+          ctx.fillText(`Address: ${displayAddr.substring(0, 18)}`, 580, 395);
+          ctx.fillText(displayAddr.substring(18).trim(), 670, 435);
+        } else {
+          ctx.fillText(`Address: ${displayAddr}`, 580, 395);
+        }
+        
+        try {
+          setRenderedCardUrl(canvas.toDataURL('image/png'));
+        } catch (e) {
+          console.warn('[Card Generate] Canvas export failed:', e);
+        }
+      };
+      
+      img.onerror = () => {
+        console.warn('[Card Generate] Template image failed to load');
+      };
+    };
+    
+    generateCard();
+  }, [plannerName, agencyName, customPhone, customEmail, customAddress, certificationMessage, logoUrl]);
 
   // 1. guest_chat_room_id and guest_user_id from localStorage (Scoped by plannerId to avoid cross-planner message bleed)
   const getOrCreateGuestDetails = () => {
@@ -496,7 +588,18 @@ export default function AiChatWidget({
         }
       }
 
-      console.log(`[AI Context] Lead ${leadId} | pos:${cumulativePos} neg:${cumulativeNeg} action:${currentActionScore} ab:${abVariant} scripts:${topScripts.length} memory:${!!customerMemory} segment:${customerSegment} rag:${kbSnippets.length}`);
+      // Extract simulation inputs
+      const analysisInputs = lead?.raw_payload?.analysisInputs;
+      const simulationData = analysisInputs ? {
+        age: lead.age || analysisInputs.age,
+        gender: lead.gender || analysisInputs.gender,
+        monthlyPremium: lead.monthly_premium || analysisInputs.monthlyPremium,
+        simulationCode: lead?.raw_payload?.simulation_code,
+        category: lead?.insurance_type || lead?.raw_payload?.category,
+        cancer: analysisInputs.cancer || lead?.raw_payload?.cancer
+      } : undefined;
+
+      console.log(`[AI Context] Lead ${leadId} | pos:${cumulativePos} neg:${cumulativeNeg} action:${currentActionScore} ab:${abVariant} scripts:${topScripts.length} memory:${!!customerMemory} segment:${customerSegment} simulationData:${!!simulationData}`);
       return { 
         cumulativePos, 
         cumulativeNeg, 
@@ -508,7 +611,8 @@ export default function AiChatWidget({
         kbSnippets, 
         customerSegment,
         plannerName,
-        agencyName: agencyName || undefined
+        agencyName: agencyName || undefined,
+        simulationData
       };
     } catch (err) {
       console.warn('[AI Context] Failed to fetch context:', err);
@@ -839,6 +943,146 @@ export default function AiChatWidget({
     };
   }, [currentSimulationCode, guestRoomId]);
 
+  // 실시간 상담 요청 + 마스킹 해제 시 10~25초 딜레이 후 선제 톡 발송 (최대 3회)
+  useEffect(() => {
+    if (!isUnlocked || !currentLeadId || !guestRoomId || !isBotActive) return;
+    
+    // 중복 발송 방지를 위해 로컬스토리지 키 설정
+    const storageKey = `ins_proactive_sent_${currentLeadId}`;
+    if (localStorage.getItem(storageKey) === 'true') return;
+
+    let active = true;
+    let step1Timer: any = null;
+    let step2Timer: any = null;
+    let step3Timer: any = null;
+
+    const generateAndSendProactive = async (stepNum: number) => {
+      if (!active) return;
+      
+      // 고객이 그 사이에 대답을 했는지 DB를 직접 조회하여 검증 (가장 확실한 실시간 체크)
+      const { data: currentMsgs } = await supabase
+        .from('chat_messages')
+        .select('sender_id')
+        .eq('room_id', guestRoomId)
+        .order('created_at', { ascending: false });
+
+      if (currentMsgs && currentMsgs.length > 0) {
+        // 마지막 메시지 전송자가 고객(guestUserId)이거나, 중간에 대답한 흔적이 있으면 중단
+        const hasCustomerResponded = currentMsgs.some(m => m.sender_id === guestUserId);
+        if (hasCustomerResponded) {
+          console.log('[Proactive] Customer has already responded, aborting proactive step:', stepNum);
+          localStorage.setItem(storageKey, 'true'); // 중단 표시
+          return;
+        }
+      }
+
+      // 3초간 입력 중 표시로 사람처럼 보임 효과 연출
+      setIsTyping(true);
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      if (!active) {
+        setIsTyping(false);
+        return;
+      }
+
+      // 최근 고객 메시지 조회 (있을 경우에만)
+      const recentCustomerTexts = (messages || [])
+        .filter(m => m.sender_id === guestUserId)
+        .slice(-3)
+        .map(m => m.message);
+
+      // AI 컨텍스트 (대시보드 설계 데이터 포함) 조회
+      const aiContext: AiContext = await fetchAiContext(currentLeadId, recentCustomerTexts);
+      
+      // 이전 대화 20턴 조회
+      const chatContext = (messages || [])
+        .slice(-20)
+        .map((m) => ({
+          role: m.sender_id === guestUserId ? 'user' : 'model',
+          parts: [{ text: m.message }]
+        }));
+
+      // 단계별 프롬프트 가이드라인 주입
+      const promptContext = {
+        ...aiContext,
+        isReEngagement: false
+      };
+
+      if (stepNum === 1) {
+        promptContext.customerMemory = {
+          ...promptContext.customerMemory,
+          last_context: '고객이 마스킹을 풀고 들어와 대기하는 상태에서 첫 설계 안내 및 친근한 1:1 상담을 건네는 첫 인사'
+        };
+      } else if (stepNum === 2) {
+        promptContext.customerMemory = {
+          ...promptContext.customerMemory,
+          last_context: '고객이 대화방에서 응답이 지연되는 상태에서 대시보드 암보험 설계 수치를 구체적으로 언급하며 호기심을 유도하는 질문'
+        };
+      } else if (stepNum === 3) {
+        promptContext.customerMemory = {
+          ...promptContext.customerMemory,
+          last_context: '여전히 대답이 없는 상태에서 부담을 낮추고 설계서는 언제든 볼 수 있게 대화방에 평생 보관되니 필요할 때 답해달라고 친근하게 마무리하는 대기 안내'
+        };
+      }
+
+      const aiResult = await generateAiResponse(chatContext, promptContext);
+      setIsTyping(false);
+
+      if (!active) return;
+
+      const reply = aiResult.answer.split('|')[0].trim();
+      if (reply) {
+        // DB에 메시지 전송
+        await supabase.from('chat_messages').insert({
+          room_id:    guestRoomId,
+          sender_id:  plannerId,
+          message:    reply,
+          is_read:    false,
+          planner_id: plannerId,
+        });
+
+        // 상담 피드백 점수 기록
+        await saveAiScores({
+          leadId:        currentLeadId,
+          posScore:      aiResult.pos_score,
+          negScore:      aiResult.neg_score,
+          actionType:    aiResult.action_type,
+          actionScore:   aiResult.action_score,
+          messageText:   `[Proactive Trigger Step ${stepNum}]`,
+          aiResponse:    reply,
+          koreanSummary: `선제 톡 ${stepNum}단계 발송 완료`,
+        });
+      }
+    };
+
+    // 10초 ~ 25초 사이의 무작위 딜레이 시간 계산
+    const delay1 = Math.floor(Math.random() * (25 - 10 + 1) + 10) * 1000;
+    console.log(`[Proactive] Unlocked! Scheduled step 1 in ${delay1 / 1000}s`);
+
+    step1Timer = setTimeout(() => {
+      generateAndSendProactive(1);
+
+      // 1단계 전송 후 20초 뒤 2단계 전송
+      step2Timer = setTimeout(() => {
+        generateAndSendProactive(2);
+
+        // 2단계 전송 후 25초 뒤 3단계 전송
+        step3Timer = setTimeout(() => {
+          generateAndSendProactive(3);
+          localStorage.setItem(storageKey, 'true'); // 3회 종료 완료 기록
+        }, 25000);
+
+      }, 20000);
+
+    }, delay1);
+
+    return () => {
+      active = false;
+      clearTimeout(step1Timer);
+      clearTimeout(step2Timer);
+      clearTimeout(step3Timer);
+    };
+  }, [isUnlocked, currentLeadId, guestRoomId, isBotActive]);
+
   // Scroll to bottom when messages update or chat is opened
   useEffect(() => {
     if (isOpen) {
@@ -947,7 +1191,8 @@ export default function AiChatWidget({
     const hasReg = cleanReg && cleanReg.trim() !== '';
 
     if (isBotActive) {
-      if (!isDemo && !hasReg) {
+      const isSuperAdmin = plannerId === '00000000-0000-4000-a000-000000000000';
+      if (!isDemo && !isSuperAdmin && !hasReg) {
         setIsTyping(false);
         console.log('[AI Silenced] AI chatbot response bypassed because review certificate registrationNumber is missing/invalid.');
         return;
@@ -1125,12 +1370,22 @@ export default function AiChatWidget({
               {messages.map((msg) => {
                 const isMe = msg.sender_id === guestUserId;
                 const isAuthTag = (msg as any).action_tag === 'trigger_auth';
+                const isFirstPlannerMsg = !isMe && !messages.slice(0, messages.findIndex(m => m.id === msg.id)).some(m => m.sender_id !== guestUserId);
 
                 return (
                   <div
                     key={msg.id}
-                    className={`flex flex-col ${isMe ? 'items-end' : 'items-start'} space-y-1`}
+                    className={`flex flex-col ${isMe ? 'items-end' : 'items-start'} space-y-1 w-full`}
                   >
+                    {isFirstPlannerMsg && renderedCardUrl && (
+                      <div className="mb-3 w-full max-w-[85%] rounded-2xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-950 p-1 flex flex-col items-center">
+                        <img 
+                          src={renderedCardUrl} 
+                          alt="명함" 
+                          className="w-full h-auto object-contain rounded-xl"
+                        />
+                      </div>
+                    )}
                     {!isMe && (
                       <span className="text-[9px] text-slate-500 font-bold ml-1">
                         {plannerName}

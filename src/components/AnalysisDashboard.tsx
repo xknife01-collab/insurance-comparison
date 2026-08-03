@@ -1022,7 +1022,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
               지금 화면을 닫으면 분석 결과가 사라집니다!
             </h3>
             <p className="text-sm text-slate-400 font-bold leading-relaxed">
-              내 전용 비교 설계안 보고서를 카카오톡 비공개 1:1 상담방으로 안전하게 발송하고 스마트폰에 보관하세요.
+              내 전용 비교 설계안 보고서를 실시간 상담 요청을 통해 안전하게 발송하고 스마트폰에 보관하세요.
             </p>
           </div>
 
@@ -1035,7 +1035,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
                 <div className="space-y-1">
                   <h4 className="text-base font-black text-white">고유 보관 코드가 발급되었습니다.</h4>
                   <p className="text-[11px] text-slate-400 font-bold break-keep leading-relaxed">
-                    아래 코드를 복사하여 1:1 카카오톡 상담방에 전송해 주시면 본인인증 완료 즉시 설계안이 평생 보관됩니다.
+                    아래 코드를 복사하여 실시간 상담 요청 시 제출해 주시면 상담 시작과 동시에 설계안이 평생 보관됩니다.
                   </p>
                 </div>
                 
@@ -1048,7 +1048,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
                     type="button"
                     onClick={() => {
                       copyToClipboard((result as any).simulation_code || '');
-                      alert('보관 코드가 복사되었습니다! 카톡방에 붙여넣기(Ctrl+V)하여 전송해 주세요.');
+                      alert('보관 코드가 복사되었습니다! 대화방에 붙여넣기(Ctrl+V)하여 전송해 주세요.');
                     }}
                     className="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-black text-[11px] rounded-xl border border-white/5 transition-all cursor-pointer"
                   >
@@ -1073,14 +1073,14 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
             ) : (
               <form onSubmit={handleSmsSubmit} className="space-y-4">
                 <p className="text-[11.5px] text-slate-400 font-bold leading-relaxed text-center py-2 break-keep">
-                  개인 식별 정보(이름, 휴대폰 번호)를 미리 입력받지 않고, 카카오톡 1:1 비공개 상담방을 통해 완전 익명으로 안전하게 보관해 드립니다.
+                  개인 식별 정보(이름, 휴대폰 번호)를 미리 입력받지 않고, 실시간 상담 요청을 통해 안전하게 설계안을 평생 보관해 드립니다.
                 </p>
                 <button
                   type="submit"
                   disabled={smsSubmitting}
                   className="w-full py-4.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:opacity-50 text-white font-black text-xs rounded-xl shadow-[0_10px_20px_-4px_rgba(255,107,0,0.4)] transition-all cursor-pointer text-center"
                 >
-                  {smsSubmitting ? "보관 코드 발급 중..." : "💬 카카오톡으로 설계안 보관 & 1:1 상담받기"}
+                  {smsSubmitting ? "보관 코드 발급 중..." : "💬 실시간 상담 요청하고 설계안 평생 보관하기"}
                 </button>
               </form>
             )}
@@ -1892,7 +1892,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
                 </div>
                 <div>
                   <h4 className="text-sm font-black text-slate-800 tracking-tight">🔒 금융소비자보호법(이하 금소법) 시행에 따라 실제 회사명/상품명이 마스킹 처리되어 있습니다.</h4>
-                  <p className="text-xs text-slate-500 font-bold mt-0.5">모든 회사명과 상품명은 본인 인증 및 상담 신청완료 즉시 0.1초만에 실명 상품 정보 잠금이 해제됩니다.</p>
+                  <p className="text-xs text-slate-500 font-bold mt-0.5">모든 회사명과 상품명은 실시간 상담 요청 완료 즉시 실명 상품 정보 잠금이 해제됩니다.</p>
                 </div>
               </div>
               <button
@@ -1900,7 +1900,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
                 onClick={handleRequestUnlockAnonymous}
                 className="px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-black text-xs rounded-xl shadow-md transition-all active:scale-95 whitespace-nowrap cursor-pointer font-extrabold"
               >
-                🔒 0.1초 만에 무료로 실제 이름 잠금 해제하기
+                🔒 실시간 상담 요청하고 실제 이름 잠금 해제하기
               </button>
             </div>
           </div>
@@ -2125,7 +2125,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
               <div className="p-8 bg-emerald-500 text-white rounded-[2.5rem] text-center shadow-lg shadow-emerald-500/20 animate-in fade-in duration-300">
                 <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white text-emerald-500 text-xl font-black mb-3">✓</span>
                 <h4 className="text-lg font-black">최저가 설계안 신청이 성공적으로 접수되었습니다!</h4>
-                <p className="text-xs text-emerald-100 font-bold mt-1">배정된 전담 설계사가 카카오톡으로 상세 맞춤 설계서를 0.1초 만에 전송해 드리겠습니다.</p>
+                <p className="text-xs text-emerald-100 font-bold mt-1">배정된 전담 설계사가 카카오톡으로 상세 맞춤 설계서를 즉시 전송해 드리겠습니다.</p>
               </div>
             ) : (
               <div className="bg-gradient-to-br from-indigo-950 via-slate-900 to-purple-950 border-2 border-orange-500/40 rounded-[2.5rem] p-8 md:p-10 shadow-[0_25px_60px_-15px_rgba(124,58,237,0.3)] flex flex-col gap-6 text-left relative overflow-hidden text-white">
@@ -2135,7 +2135,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
                 
                 {/* 법적 고지/안내 상단 배치 (웅장하고 눈에 띄는 스타일) */}
                 <div className="relative z-10 p-5 bg-orange-500/10 border border-orange-500/25 rounded-2xl text-xs font-semibold text-orange-200 leading-relaxed break-keep">
-                  🛡️ <span className="font-extrabold text-orange-400">안내:</span> 금융소비자보호법 및 보험 광고 심의 기준에 따라 미인증 상태에서는 모든 보험사명 및 상품명이 비식별(숨김) 처리됩니다. 카카오톡 상담/리포트 신청진행 시 본인 확인과 동시에 0.1초 만에 모든 실명 정보가 안전하게 잠금해제되어 실제 제안서를 확인하실 수 있습니다.
+                  🛡️ <span className="font-extrabold text-orange-400">안내:</span> 금융소비자보호법 및 보험 광고 심의 기준에 따라 실시간 상담 요청 전에는 모든 보험사명 및 상품명이 비식별(숨김) 처리됩니다. 실시간 상담 요청 완료 시 본인 확인과 동시에 모든 실명 정보가 안전하게 잠금해제되어 실제 제안서를 확인하실 수 있습니다.
                 </div>
 
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
