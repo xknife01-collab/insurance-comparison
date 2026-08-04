@@ -970,6 +970,10 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                       <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>내 보험 정밀 분석 데이터 & 업데이트 📊</span></div>
                       <p className="pl-5 text-[10px] text-slate-500 leading-normal">내보험 정밀 분석 데이터 제공 및 매월 업데이트 되는 보험 분석 비교 엔진 제공.</p>
                     </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>초고도화 AI 세일즈 비서 & 행동 스캔 🤖</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">AI 비서가 24시간 실시간 대화, 자율 RAG 상담, 본인인증 유도 및 긍정/부정 감정·행동 점수를 실시간 자동 판독.</p>
+                    </li>
                   </ul>
                 </div>
                 <button 
@@ -1025,6 +1029,10 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                       <p className="pl-5 text-[10px] text-slate-500 leading-normal">소속 설계사들의 상담 리드 수집 현황 및 상세 보장 데이터를 실시간 통합 조회.</p>
                     </li>
                     <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>소속 설계사 30명 AI 비서 라이선스 제공 🤖</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">소속 설계사 전원에게 개별 AI 세일즈 비서 및 실시간 1:1 대화방 심리 스캔 라이선스 일괄 부여.</p>
+                    </li>
+                    <li className="space-y-0.5">
                       <div className="flex items-start gap-1.5 text-amber-400"><Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" /> <span>설계사 채용 무기화 (Recruiting Advantage) 💎</span></div>
                       <p className="pl-5 text-[10px] text-amber-500/80 leading-normal">소속 설계사 전원에게 "고객 DB 평생 무료 수집 환경"을 지급하여 리크루팅 매력도 극대화.</p>
                     </li>
@@ -1073,6 +1081,10 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                     <li className="space-y-0.5">
                       <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>미계약 리드 자동 회수 및 재분배 ⏱️</span></div>
                       <p className="pl-5 text-[10px] text-slate-500 leading-normal">분배된 고객 리드가 일정 시간 상담 진행이 안 될 경우, 회수 후 타 설계사에게 즉시 재지정.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>AI 골든타임 자동 판독 및 리드 회수 ⏱️</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">AI 비서가 감지한 대화 점수가 7점 진입 시 설계사 전용 알림을 전송하며, 미대응 시 리드를 타 설계사에게 즉시 자동 재배정.</p>
                     </li>
                     <li className="space-y-0.5">
                       <div className="flex items-start gap-1.5 text-amber-400"><Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" /> <span>설계사 채용 무기화 (Recruiting Advantage) 💎</span></div>
@@ -1128,6 +1140,10 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                     <li className="space-y-0.5">
                       <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>1:1 전담 마케팅 기술 컨설팅 🤝</span></div>
                       <p className="pl-5 text-[10px] text-slate-500 leading-normal">대리점 전용 광고 효율화, 서버 관리 및 커스텀 개발을 위한 전문 파트너십 구축.</p>
+                    </li>
+                    <li className="space-y-0.5">
+                      <div className="flex items-start gap-1.5"><Check className="w-3.5 h-3.5 text-orange-500 shrink-0 mt-0.5" /> <span>AI 대화지표 결합형 최상위 라우팅 (Performance AI) 📈</span></div>
+                      <p className="pl-5 text-[10px] text-slate-500 leading-normal">AI가 학습한 대화 성공률과 설계사의 실제 실적을 종합적으로 결합하여 가장 우수한 설계사에게 고가치 리드를 최우선 자동 배정.</p>
                     </li>
                     <li className="space-y-0.5">
                       <div className="flex items-start gap-1.5 text-amber-400"><Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" /> <span>설계사 채용 무기화 (Recruiting Advantage) 💎</span></div>
