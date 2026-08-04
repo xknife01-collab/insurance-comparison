@@ -289,7 +289,7 @@ const getInsuranceTypeName = (type: string) => {
     'support': { label: '고객센터 문의 📞', bgClass: 'bg-indigo-500/10 border-indigo-500/25', textClass: 'text-indigo-400' },
     'support_consult': { label: '고객센터 문의 📞', bgClass: 'bg-indigo-500/10 border-indigo-500/25', textClass: 'text-indigo-400' },
     'remodeling': { label: '내 보험 다이어트 💸', bgClass: 'bg-emerald-500/10 border-emerald-500/25', textClass: 'text-emerald-400' },
-    'remodeling_consult': { label: '내보험 정밀분석 카톡정밀설계요청 💬', bgClass: 'bg-amber-500/10 border-amber-500/25', textClass: 'text-amber-400' },
+    'remodeling_consult': { label: '내보험 정밀분석 실시간 고객 상담요청 💬', bgClass: 'bg-amber-500/10 border-amber-500/25', textClass: 'text-amber-400' },
     'cancer': { label: '암보험 비교분석 🎗️', bgClass: 'bg-red-500/10 border-red-500/25', textClass: 'text-red-400' },
     '암보험': { label: '암보험 비교분석 🎗️', bgClass: 'bg-red-500/10 border-red-500/25', textClass: 'text-red-400' },
     'dementia': { label: '치매간병보험 비교분석 🧠', bgClass: 'bg-indigo-500/10 border-indigo-500/25', textClass: 'text-indigo-400' },
@@ -566,6 +566,35 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
       sessionStorage.removeItem('is_super_admin_authenticated');
     }
   }, [currentUser.role]);
+
+  // 데모 쿼리 스트링 감지 및 자동 로그인/리다이렉션 연동
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const demoParam = params.get('demo');
+    if (demoParam) {
+      const triggerAutoDemo = async () => {
+        setLoading(true);
+        try {
+          if (demoParam === 'agency') {
+            await handleLogin(undefined, 'test', '1234');
+            setActiveTab('leads');
+          } else if (demoParam === 'planner') {
+            await handleLogin(undefined, 'test_planner', '1234');
+            // 설계사 데모 접속 시 고객 실시간 상담 모니터링 탭으로 즉시 이동
+            setActiveTab('customer_chat');
+          }
+        } catch (err) {
+          console.error('[Demo Auto-Login Failed]', err);
+        } finally {
+          setLoading(false);
+          // 주소창에서 demo 파라미터를 제거하여 뒤로가기/새로고침 시 중복 로깅 방지
+          const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+          window.history.replaceState({ path: newUrl }, '', newUrl);
+        }
+      };
+      triggerAutoDemo();
+    }
+  }, []);
 
   // 시뮬레이터 보안 인증 모달 관련 상태 및 로직
   const [simModalOpen, setSimModalOpen] = useState(false);
@@ -1764,18 +1793,29 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                   이 화면은 {currentUser.role === 'agency' ? '대리점 대표용 관리자' : '개인 설계사용'} 가상의 데모 페이지입니다. 대표님/설계사님만의 전용 도메인 및 0.1초 AI 진단 툴을 활성화하여 사용하시려면 정식 회원 가입 및 구독을 진행해 주세요.
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={() => {
-                  setCurrentUser({ role: 'guest' });
-                  setTimeout(() => {
-                    document.getElementById('auth-card-container')?.scrollIntoView({ behavior: 'smooth' });
-                  }, 100);
-                }}
-                className="px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-black text-xs rounded-xl cursor-pointer shrink-0 transition-all shadow-md text-center hover:scale-105 active:scale-95"
-              >
-                👉 체험 종료 및 정식 구독하기
-              </button>
+              <div className="flex items-center gap-2.5 shrink-0 flex-wrap">
+                <button
+                  type="button"
+                  onClick={() => {
+                    window.location.href = '/Partner';
+                  }}
+                  className="px-5 py-2.5 bg-slate-850 hover:bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-300 hover:text-slate-100 font-extrabold text-xs rounded-xl cursor-pointer transition-all text-center hover:scale-105 active:scale-95 shadow-sm"
+                >
+                  🏠 소개 페이지로 돌아가기
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCurrentUser({ role: 'guest' });
+                    setTimeout(() => {
+                      document.getElementById('auth-card-container')?.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                  }}
+                  className="px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-black text-xs rounded-xl cursor-pointer transition-all shadow-md text-center hover:scale-105 active:scale-95"
+                >
+                  👉 체험 종료 및 정식 구독하기
+                </button>
+              </div>
             </div>
           )}
           {invitedAgencyId && (
@@ -2509,7 +2549,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                               ? 'bg-yellow-500/10 border-yellow-500/20 text-yellow-500'
                               : 'bg-yellow-500/20 border-yellow-500/40 text-yellow-400 animate-pulse shadow-[0_0_10px_rgba(234,179,8,0.15)]'
                           }`}>
-                            ⚠️ [카톡채팅요청 안내 가이드] 본 고객은 <span className="text-white bg-yellow-600 px-1 py-0.5 rounded">카톡 익명 상담</span> 조건으로 신청하신 고객입니다. 무단으로 먼저 유선 전화를 거는 행위는 금지되어 있으니, <span className="text-yellow-300 underline font-black">반드시 오픈채팅방에서 코드를 수신한 후 아래 인증 링크를 전달</span>하여 본인인증을 진행하도록 유도해 주세요.
+                            ⚠️ [실시간 고객상담요청 안내 가이드] 본 고객은 <span className="text-white bg-yellow-600 px-1 py-0.5 rounded">카톡 익명 상담</span> 조건으로 신청하신 고객입니다. 무단으로 먼저 유선 전화를 거는 행위는 금지되어 있으니, <span className="text-yellow-300 underline font-black">반드시 오픈채팅방에서 코드를 수신한 후 아래 인증 링크를 전달</span>하여 본인인증을 진행하도록 유도해 주세요.
                           </div>
                         );
                       }

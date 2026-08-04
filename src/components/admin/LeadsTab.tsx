@@ -408,7 +408,7 @@ export function LeadsTab({
                                 ? 'bg-yellow-500/10 text-yellow-500 border-yellow-500/25'
                                 : 'bg-yellow-500 text-slate-900 border-yellow-400 animate-pulse shadow-[0_0_12px_rgba(234,179,8,0.4)]'
                             }`}>
-                              카톡채팅요청 💬
+                              실시간 고객상담요청 💬
                             </span>
                           );
                         }
@@ -920,9 +920,9 @@ export function LeadsTab({
         <div className="space-y-1 relative z-10 text-left">
           <h3 className="text-sm font-black text-white flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-            💬 카톡 상담 신청 및 1:1 고객센터 문의 목록
+            💬 실시간 고객 상담 신청 및 1:1 고객센터 문의 목록
           </h3>
-          <p className="text-[10px] text-slate-400 font-bold">고객이 분석 결과를 확인한 후 카톡 상담을 요청했거나, 고객센터를 통해 1:1 문의를 남긴 초고관여 리드 목록입니다.</p>
+          <p className="text-[10px] text-slate-400 font-bold">고객이 분석 결과를 확인한 후 실시간 상담을 요청했거나, 고객센터를 통해 1:1 문의를 남긴 초고관여 리드 목록입니다.</p>
           <div className="mt-3 overflow-hidden rounded-xl border border-yellow-500/30 bg-yellow-500/5 transition-all">
             {/* Accordion Header */}
             <button
@@ -932,7 +932,7 @@ export function LeadsTab({
             >
               <span className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse" />
-                💡 [필독] 카톡 신청 시 고객 정보 잠금 해제하는 방법 (클릭해서 보기)
+                💡 [필독] 실시간 상담 시 고객 정보 잠금 해제하는 방법 (클릭해서 보기)
               </span>
               <span className="text-yellow-500 text-xs font-bold transition-transform duration-200">
                 {isKakaoGuideOpen ? '▲ 닫기' : '▼ 열기'}
@@ -942,24 +942,27 @@ export function LeadsTab({
             {/* Accordion Content */}
             {isKakaoGuideOpen && (
               <div className="p-4 border-t border-yellow-500/20 bg-slate-950/40 text-[10.5px] text-slate-300 space-y-3 font-bold leading-relaxed break-keep">
-                <p className="text-xs font-black text-yellow-300">🔓 [필독] 0.1초 카카오톡 실시간 상담 연동 가이드</p>
+                <p className="text-xs font-black text-yellow-300">🔓 [필독] 0.1초 실시간 고객 상담 연동 및 AI 비서 가이드</p>
                 
                 <div className="space-y-2.5 pl-1">
                   <div>
                     <span className="text-white font-black block">1단계. 실시간 알림 확인</span>
-                    <span className="text-slate-400">고객이 카톡 상담을 신청하면, 대시보드에 노란색 <span className="text-yellow-400">카톡채팅요청 💬</span> 배지가 번쩍이며 실시간으로 뜹니다.</span>
+                    <span className="text-slate-400">고객이 실시간 상담을 신청하면, 대시보드에 노란색 <span className="text-yellow-400 font-extrabold animate-pulse">실시간 고객상담요청 💬</span> 배지가 번쩍이며 실시간으로 뜹니다.</span>
                   </div>
                   <div>
-                    <span className="text-white font-black block">2단계. 카톡방에서 코드 확인</span>
-                    <span className="text-slate-400">고객이 오픈채팅방에 입장하여 자신의 <span className="text-orange-400 font-extrabold bg-orange-500/10 px-1 py-0.5 rounded border border-orange-500/20 uppercase text-[9px] tracking-wider">고유 코드 (예: REX-DA4JGR)</span>를 보낼 것입니다.</span>
+                    <span className="text-white font-black block">2단계. 대화방 입장 및 AI 비서 상태 확인</span>
+                    <span className="text-slate-400">왼쪽 메뉴의 <span className="text-violet-400 underline">[고객 대화방]</span>에 들어가 해당 고객을 선택하고, 우측 상단의 AI 활성화 여부를 확인합니다.
+                      <br />• <span className="text-orange-400 font-extrabold">🤖 AI 비서 응대중 (기본값)</span>: AI 비서가 실시간으로 알아서 첫 인사부터 코드 인식, 본인인증 링크 발송까지 전부 자동 처리합니다. (설계사 대기)
+                      <br />• <span className="text-slate-400 font-extrabold">👤 수동 상담 모드 (AI 일시정지)</span>: 설계사가 직접 문구를 전송해야 하는 모드입니다. 3단계로 이동해 주세요.
+                    </span>
                   </div>
                   <div>
-                    <span className="text-white font-black block">3단계. 인증 문구 복사 및 전달</span>
-                    <span className="text-slate-400">어드민에서 해당 고객을 찾아 <span className="text-yellow-400 bg-yellow-500/10 px-1 py-0.5 rounded border border-yellow-500/20">[문구복사 📋]</span> 버튼을 누릅니다. 자동으로 복사된 인증 안내 문구를 카카오톡 오픈채팅방에 붙여넣기(Ctrl+V) 하여 고객에게 전송합니다.</span>
+                    <span className="text-white font-black block">3단계. 인증 안내 문구 복사 및 전달 (수동 모드 전용)</span>
+                    <span className="text-slate-400">수동 상담 모드일 때는, 목록에서 해당 고객의 <span className="text-yellow-400 bg-yellow-500/10 px-1 py-0.5 rounded border border-yellow-500/20">[문구복사 📋]</span> 버튼을 누릅니다. 자동으로 복사된 인증 안내 문구를 <span className="text-violet-400 underline">[고객 실시간 대화창]</span>의 메시지 입력란에 붙여넣기(Ctrl+V) 하여 고객에게 직접 전송합니다.</span>
                   </div>
                   <div>
-                    <span className="text-white font-black block">4단계. 마스킹 자동 해제 및 상담</span>
-                    <span className="text-slate-400">고객이 링크를 눌러 본인인증을 마치는 순간, 설계사님 어드민 화면의 숨겨진 실명과 연락처가 <span className="text-yellow-400 font-extrabold underline">0.1초 만에 자동으로 잠금 해제</span>됩니다. 이제 확보된 정보로 상담을 진행하세요!</span>
+                    <span className="text-white font-black block">4단계. 마스킹 자동 해제 및 실시간 상담 개시</span>
+                    <span className="text-slate-400">고객이 수신한 링크를 눌러 본인인증을 마치는 즉시, 설계사님 화면의 숨겨진 실명과 연락처가 <span className="text-yellow-400 font-extrabold underline">0.1초 만에 자동으로 잠금 해제</span>됩니다. 이후 실시간 대화방에서 본격적으로 1:1 밀착 설계를 진행하세요!</span>
                   </div>
                 </div>
               </div>

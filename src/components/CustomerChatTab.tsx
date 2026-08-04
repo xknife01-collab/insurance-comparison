@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createClient } from '../utils/supabase/client';
-import { 
-  MessageSquare, Send, Search, 
+import {
+  MessageSquare, Send, Search,
   Shield, ArrowLeft, Volume2, Check, Clock,
   TrendingUp, TrendingDown, Zap, Info
 } from 'lucide-react';
@@ -16,17 +16,17 @@ async function extractAndSaveMemory(
 ) {
   try {
     const text = userMessage.toLowerCase();
-    
+
     // 1. 기존 리드 정보 가져오기
     const { data: lead } = await supabase
       .from('customer_leads')
       .select('raw_payload')
       .eq('id', leadId)
       .single();
-      
+
     const payload = lead?.raw_payload || {};
     const existingMemory: CustomerMemory = payload.customer_memory || {};
-    
+
     const interests = new Set<string>(existingMemory.interests || []);
     const pain_points = new Set<string>(existingMemory.pain_points || []);
     let job = existingMemory.job;
@@ -95,8 +95,8 @@ async function extractAndSaveMemory(
 function ruleBasedScore(text: string): { pos: number; neg: number; actionType: string; actionScore: number } {
   const t = text.toLowerCase();
 
-  const posKeywords = ['좋아요','맞아요','네','알겠어요','감사','도움','궁금','한번','볼게요','해볼게요','신청','부탁드려요','알려주세요','관심','비교해줘','봐줘','어떻게','얼마','가능','ok','오케이'];
-  const negKeywords = ['싫어요','아니요','됐어요','괜찮아요','필요없어요','사기','스팸','광고','귀찮','나중에','바빠요','안할게요','하지마세요','차단','신고'];
+  const posKeywords = ['좋아요', '맞아요', '네', '알겠어요', '감사', '도움', '궁금', '한번', '볼게요', '해볼게요', '신청', '부탁드려요', '알려주세요', '관심', '비교해줘', '봐줘', '어떻게', '얼마', '가능', 'ok', '오케이'];
+  const negKeywords = ['싫어요', '아니요', '됐어요', '괜찮아요', '필요없어요', '사기', '스팸', '광고', '귀찮', '나중에', '바빠요', '안할게요', '하지마세요', '차단', '신고'];
   const actionKeywords: Record<string, { type: string; score: number }> = {
     '설계안': { type: 'proposal_request', score: 10 },
     '바꾸고싶': { type: 'proposal_request', score: 10 },
@@ -159,20 +159,20 @@ async function analyzeConversationWithGemini(
       if (existing) {
         await supabase.from('insurance_scripts').update({
           success_weight: (existing.success_weight || 0) + 25,
-          success_count:  (existing.success_count  || 0) + 1,
+          success_count: (existing.success_count || 0) + 1,
           updated_at: new Date().toISOString()
         }).eq('id', existing.id);
         console.log(`[Planner Learn] ✅ 기존 멘트 가중치 +25: id=${existing.id}`);
       } else {
         await supabase.from('insurance_scripts').insert({
           consultation_step: step,
-          script_text:       msg.message,
-          script_type:       'planner_manual',
-          description:       `설계사 직접 성공 멘트 (리드 ${leadId})`,
-          success_weight:    25,
-          success_count:     1,
-          used_count:        1,
-          ab_group:          'A',
+          script_text: msg.message,
+          script_type: 'planner_manual',
+          description: `설계사 직접 성공 멘트 (리드 ${leadId})`,
+          success_weight: 25,
+          success_count: 1,
+          used_count: 1,
+          ab_group: 'A',
         });
         console.log(`[Planner Learn] 🆕 새 설계사 멘트 저장: "${msg.message.slice(0, 30)}..."`);
       }
@@ -206,13 +206,13 @@ function detectCustomerSegment(lead: any): { label: string; bg: string; text: st
 }
 
 const ACTION_SCORE_LABELS: Record<number, { label: string; color: string }> = {
-  0:  { label: '대기중',     color: 'bg-slate-800 text-slate-500 border border-slate-750'   },
-  1:  { label: '인사응대',   color: 'bg-slate-800 text-slate-400 border border-slate-750'   },
-  2:  { label: '코드인식',   color: 'bg-blue-950 text-blue-400 border border-blue-900'    },
-  3:  { label: 'SMS안내',    color: 'bg-cyan-950 text-cyan-400 border border-cyan-900'    },
-  5:  { label: '인증완료',   color: 'bg-yellow-950 text-yellow-400 border border-yellow-900'  },
-  7:  { label: '적극상담',   color: 'bg-emerald-950 text-emerald-400 border border-emerald-900' },
-  10: { label: '🔥설계요청', color: 'bg-orange-950 text-orange-400 border border-orange-900 animate-pulse'  },
+  0: { label: '대기중', color: 'bg-slate-800 text-slate-500 border border-slate-750' },
+  1: { label: '인사응대', color: 'bg-slate-800 text-slate-400 border border-slate-750' },
+  2: { label: '코드인식', color: 'bg-blue-950 text-blue-400 border border-blue-900' },
+  3: { label: 'SMS안내', color: 'bg-cyan-950 text-cyan-400 border border-cyan-900' },
+  5: { label: '인증완료', color: 'bg-yellow-950 text-yellow-400 border border-yellow-900' },
+  7: { label: '적극상담', color: 'bg-emerald-950 text-emerald-400 border border-emerald-900' },
+  10: { label: '🔥설계요청', color: 'bg-orange-950 text-orange-400 border border-orange-900 animate-pulse' },
 };
 
 function getActionInfo(score: number): { label: string; color: string } {
@@ -254,7 +254,7 @@ function getLeadStrategyText(lead: any): string {
   if (painPoints.includes('보험 용어 이해의 어려움') || lastContext.includes('사기') || lastContext.includes('의심') || lastContext.includes('믿을')) {
     return '플랫폼에 대한 가벼운 의심이나 경계심이 있습니다. "GA 35개사 통합 전산 실시간 조회 화면을 직접 공유해 드려 투명하게 비교해 드리겠다"며 설계사 본인의 실명과 대리점명을 어필하여 신뢰를 형성하세요!';
   }
-  
+
   if (score >= 5) {
     return '본인인증이 완료된 고객입니다. "비교분석표가 나왔으니 직접 통화나 카톡으로 최종 맞춤 설계를 발송해 드리겠다"며 신속히 통화 상담으로 개입해 계약을 클로징 하세요!';
   }
@@ -338,7 +338,7 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
   const [messages, setMessages] = useState<Message[]>([]);
   const [conversationScores, setConversationScores] = useState<any[]>([]);
   const [newMessageText, setNewMessageText] = useState('');
-  
+
   const [loading, setLoading] = useState(false);
   const [userRoomIds, setUserRoomIds] = useState<string[]>([]);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -349,7 +349,7 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
       return () => clearTimeout(timer);
     }
   }, [toastMessage]);
-  
+
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   const [selectedLead, setSelectedLead] = useState<any | null>(null);
@@ -473,18 +473,45 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
 
   const fetchRooms = async () => {
     try {
-      const { data: memberData, error: memberErr } = await supabase
-        .from('chat_room_members')
-        .select('room_id')
-        .eq('user_id', currentUserId);
+      let roomIds: string[] = [];
 
-      if (memberErr) throw memberErr;
-      if (!memberData || memberData.length === 0) {
+      // 대리점 대표(role === 'agency')인 경우 소속 설계사의 대화방 목록도 함께 조회하여 통합 모니터링 지원
+      if (currentUser.role === 'agency' && currentUser.agencyId) {
+        const { data: plannersData } = await supabase
+          .from('planners')
+          .select('id')
+          .eq('agency_id', currentUser.agencyId);
+
+        const plannerIds = (plannersData || []).map(p => p.id);
+        const targetUserIds = Array.from(new Set([currentUserId, ...plannerIds]));
+
+        const { data: memberData, error: memberErr } = await supabase
+          .from('chat_room_members')
+          .select('room_id')
+          .in('user_id', targetUserIds);
+
+        if (memberErr) throw memberErr;
+        if (memberData) {
+          roomIds = Array.from(new Set(memberData.map(m => m.room_id)));
+        }
+      } else {
+        // 일반 설계사인 경우 본인이 할당된 방만 조회
+        const { data: memberData, error: memberErr } = await supabase
+          .from('chat_room_members')
+          .select('room_id')
+          .eq('user_id', currentUserId);
+
+        if (memberErr) throw memberErr;
+        if (memberData) {
+          roomIds = memberData.map(m => m.room_id);
+        }
+      }
+
+      if (roomIds.length === 0) {
         setRooms([]);
         return;
       }
 
-      const roomIds = memberData.map(m => m.room_id);
       setUserRoomIds(roomIds);
 
       const { data: roomsData, error: roomsErr } = await supabase
@@ -507,8 +534,13 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
 
         if (membersErr) continue;
 
-        const otherMemberId = membersData.find(m => m.user_id !== currentUserId)?.user_id;
-        
+        const otherMemberId = membersData.find(m =>
+          m.user_id !== currentUserId &&
+          m.user_id !== '22222222-2222-4222-a222-222222222222' &&
+          m.user_id !== '11111111-1111-4111-a111-111111111111' &&
+          m.user_id !== '00000000-0000-4000-a000-000000000000'
+        )?.user_id || membersData.find(m => m.user_id !== currentUserId)?.user_id;
+
         let otherMember: any = null;
         if (otherMemberId) {
           const { data: pData } = await supabase
@@ -661,7 +693,7 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
             raw_payload: updatedPayload
           })
           .eq('id', selectedLead.id);
-        
+
         setIsBotActive(false);
       } catch (err) {
         console.warn("Failed to auto-disable bot on planner message:", err);
@@ -683,7 +715,7 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
       if (error) throw error;
 
       setMessages(prev => [...prev, data]);
-      
+
       setRooms(prev => prev.map(room => {
         if (room.id === selectedRoom.id) {
           return {
@@ -705,22 +737,22 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
             const score = ruleBasedScore(msgText);
 
             await supabase.from('ai_conversation_scores').insert({
-              lead_id:      selectedLead.id,
+              lead_id: selectedLead.id,
               chat_room_id: selectedRoom.id,
-              planner_id:   currentUserId,
+              planner_id: currentUserId,
               message_text: msgText,
-              ai_response:  '(설계사 직접 메시지)',
-              action_type:  score.actionType,
+              ai_response: '(설계사 직접 메시지)',
+              action_type: score.actionType,
               action_score: score.actionScore,
-              pos_score:    score.pos,
-              neg_score:    score.neg,
+              pos_score: score.pos,
+              neg_score: score.neg,
             });
 
             if (score.pos > 0 || score.neg > 0 || score.actionScore > 0) {
               await supabase.rpc('update_lead_ai_scores', {
-                p_lead_id:    selectedLead.id,
-                p_pos_delta:  score.pos,
-                p_neg_delta:  score.neg,
+                p_lead_id: selectedLead.id,
+                p_pos_delta: score.pos,
+                p_neg_delta: score.neg,
                 p_new_action: score.actionScore > 0 ? score.actionScore : null,
               });
             }
@@ -773,7 +805,7 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
         },
         (payload) => {
           const newMsg = payload.new as Message;
-          
+
           setMessages((prev) => {
             if (prev.some(m => m.id === newMsg.id)) return prev;
             return [...prev, newMsg];
@@ -795,7 +827,7 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
                     syncLeadBotStatus(selectedRoom.id);
                   }, 600);
                 })
-                .catch(() => {});
+                .catch(() => { });
             }
           }
         }
@@ -841,7 +873,7 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
         },
         (payload) => {
           const newMsg = payload.new as Message;
-          
+
           if (userRoomIds.includes(newMsg.room_id) && newMsg.sender_id !== currentUserId) {
             if (!selectedRoom || selectedRoom.id !== newMsg.room_id) {
               playNotificationSound();
@@ -862,10 +894,9 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
   }, [messages]);
 
   return (
-    <div className={`flex flex-col h-[600px] sm:h-[680px] bg-slate-950/80 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl shadow-violet-950/10 text-left transition-all duration-300 ${
-      showHelpGuide ? 'help-guide-glow bg-slate-900/10' : 'border border-violet-500/20'
-    }`}>
-      
+    <div className={`flex flex-col h-[600px] sm:h-[680px] bg-slate-950/80 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl shadow-violet-950/10 text-left transition-all duration-300 ${showHelpGuide ? 'help-guide-glow bg-slate-900/10' : 'border border-violet-500/20'
+      }`}>
+
       {/* Header */}
       <div className="flex justify-between items-center px-6 py-4 bg-slate-900/50 border-b border-slate-800/80 shrink-0">
         <div className="flex items-center gap-3">
@@ -877,11 +908,10 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
             <button
               type="button"
               onClick={onToggleHelpGuide}
-              className={`flex items-center gap-2 px-3 py-1 rounded-lg border text-[10px] font-black transition-all relative overflow-hidden shadow-sm cursor-pointer ${
-                showHelpGuide 
-                  ? 'bg-orange-500/10 border-orange-500/40 text-orange-400 hover:bg-orange-500/20 shadow-sm shadow-orange-500/5' 
+              className={`flex items-center gap-2 px-3 py-1 rounded-lg border text-[10px] font-black transition-all relative overflow-hidden shadow-sm cursor-pointer ${showHelpGuide
+                  ? 'bg-orange-500/10 border-orange-500/40 text-orange-400 hover:bg-orange-500/20 shadow-sm shadow-orange-500/5'
                   : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200'
-              }`}
+                }`}
             >
               <span className="relative flex h-2 w-2">
                 <span className={`animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75 ${showHelpGuide ? '' : 'hidden'}`}></span>
@@ -895,7 +925,7 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
 
       {/* Main Grid */}
       <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
-        
+
         {/* Left Sidebar: Active Customer Rooms */}
         <div className={`${selectedRoom ? 'hidden md:flex' : 'flex'} w-full md:w-80 border-r border-slate-800/80 flex-col bg-slate-950/40 overflow-y-auto`}>
           <div className="p-3 space-y-1">
@@ -911,26 +941,25 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
               const isSelected = selectedRoom?.id === room.id;
               const isPinned = pinnedRoomIds.includes(room.id);
               const member = room.otherMember;
-              
+
               return (
-                <button 
+                <button
                   key={room.id}
                   onClick={async () => {
                     setSelectedRoom(room);
                     await fetchMessages(room.id);
                   }}
-                  className={`w-full flex items-center justify-between p-3 rounded-xl transition-all border text-left ${
-                    isSelected 
-                      ? 'bg-violet-600/10 border-violet-500/30' 
+                  className={`w-full flex items-center justify-between p-3 rounded-xl transition-all border text-left ${isSelected
+                      ? 'bg-violet-600/10 border-violet-500/30'
                       : isPinned
-                      ? 'bg-rose-500/5 border-rose-500/25 hover:bg-rose-500/10 hover:border-rose-500/40 shadow-[0_0_15px_rgba(239,68,68,0.03)]'
-                      : 'bg-transparent border-transparent hover:bg-slate-900/60 hover:border-slate-800'
-                  }`}
+                        ? 'bg-rose-500/5 border-rose-500/25 hover:bg-rose-500/10 hover:border-rose-500/40 shadow-[0_0_15px_rgba(239,68,68,0.03)]'
+                        : 'bg-transparent border-transparent hover:bg-slate-900/60 hover:border-slate-800'
+                    }`}
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <div className="relative flex-shrink-0">
-                      <img 
-                        src={member?.profile_image_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&q=80'} 
+                      <img
+                        src={member?.profile_image_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&q=80'}
                         alt={member?.name || '고객'}
                         className="w-10 h-10 rounded-full border border-violet-500/10 object-cover"
                       />
@@ -951,18 +980,17 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
                             📌 집중
                           </span>
                         )}
-                        <span className={`text-[7.5px] font-black px-1.5 py-0.5 rounded border leading-none ${
-                          room.isBotActive 
-                            ? 'bg-orange-500/10 border-orange-500/20 text-orange-400' 
+                        <span className={`text-[7.5px] font-black px-1.5 py-0.5 rounded border leading-none ${room.isBotActive
+                            ? 'bg-orange-500/10 border-orange-500/20 text-orange-400'
                             : 'bg-slate-800 border-slate-700 text-slate-400'
-                        }`}>
+                          }`}>
                           {room.isBotActive ? '🤖 AI' : '👤 수동'}
                         </span>
                       </h4>
                       <p className={`text-[10px] truncate mt-1 max-w-[150px] ${isPinned ? 'text-rose-300 font-semibold' : 'text-slate-400'}`}>{room.lastMessage}</p>
                     </div>
                   </div>
-                  
+
                   {room.lastMessageTime && (
                     <div className="text-[9px] text-slate-500 flex-shrink-0">
                       {new Date(room.lastMessageTime).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false })}
@@ -984,8 +1012,8 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
               {/* Message Header */}
               <div className="px-3 sm:px-6 py-4 border-b border-slate-800/80 bg-slate-900/30 flex items-center justify-between shrink-0">
                 <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-                  <button 
-                    type="button" 
+                  <button
+                    type="button"
                     onClick={() => setSelectedRoom(null)}
                     className="block md:hidden text-slate-400 hover:text-white p-1 shrink-0"
                     title="목록으로 돌아가기"
@@ -994,8 +1022,8 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
                   </button>
 
                   <div className="relative shrink-0">
-                    <img 
-                      src={selectedRoom.otherMember?.profile_image_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&q=80'} 
+                    <img
+                      src={selectedRoom.otherMember?.profile_image_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&q=80'}
                       alt={selectedRoom.otherMember?.name}
                       className="w-9 h-9 rounded-full border border-violet-500/20 object-cover"
                     />
@@ -1024,7 +1052,7 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
                         onClick={async () => {
                           const isCurrentlyPinned = pinnedRoomIds.includes(selectedRoom.id);
                           togglePinRoom(selectedRoom.id);
-                          
+
                           const newBotStatus = isCurrentlyPinned;
                           try {
                             const updatedPayload = {
@@ -1053,21 +1081,19 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
                             console.error('Failed to update bot status on pin toggle:', e);
                           }
                         }}
-                        className={`text-[9.5px] font-black px-2.5 py-1.5 rounded-lg border transition-all cursor-pointer ${
-                          pinnedRoomIds.includes(selectedRoom.id)
+                        className={`text-[9.5px] font-black px-2.5 py-1.5 rounded-lg border transition-all cursor-pointer ${pinnedRoomIds.includes(selectedRoom.id)
                             ? 'bg-rose-600 border-rose-500 text-white hover:bg-rose-500'
                             : 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white'
-                        }`}
+                          }`}
                       >
                         {pinnedRoomIds.includes(selectedRoom.id) ? '📌 집중 상담 해제' : '📌 집중 상담 지정'}
                       </button>
 
                       {/* AI Bot Active/Pause Status & Toggle */}
-                      <span className={`text-[10px] font-black px-2.5 py-1 rounded-lg border ${
-                        isBotActive 
-                          ? 'bg-orange-500/10 border-orange-500/20 text-orange-500' 
+                      <span className={`text-[10px] font-black px-2.5 py-1 rounded-lg border ${isBotActive
+                          ? 'bg-orange-500/10 border-orange-500/20 text-orange-500'
                           : 'bg-slate-800 border-slate-750 text-slate-400'
-                      }`}>
+                        }`}>
                         {isBotActive ? '🤖 AI 비서 응대중' : '👤 수동 상담 모드'}
                       </span>
                       <button
@@ -1105,13 +1131,12 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
                             console.error('Failed to toggle bot activity:', e);
                           }
                         }}
-                        className={`text-[9.5px] font-black px-2.5 py-1.5 rounded-lg border transition-all cursor-pointer ${
-                          isBotActive 
-                            ? 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white' 
+                        className={`text-[9.5px] font-black px-2.5 py-1.5 rounded-lg border transition-all cursor-pointer ${isBotActive
+                            ? 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white'
                             : (!isBotActive && isRegMissing && !isDemoMode)
-                            ? 'bg-slate-900/40 border-slate-800 text-slate-500 cursor-not-allowed opacity-50'
-                            : 'bg-orange-600 border-orange-500 text-white hover:bg-orange-500'
-                        }`}
+                              ? 'bg-slate-900/40 border-slate-800 text-slate-500 cursor-not-allowed opacity-50'
+                              : 'bg-orange-600 border-orange-500 text-white hover:bg-orange-500'
+                          }`}
                       >
                         {isBotActive ? 'AI 상담 일시정지' : 'AI 상담 활성화' + ((isRegMissing && !isDemoMode) ? ' (비활성화)' : '')}
                       </button>
@@ -1133,7 +1158,7 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
                       <span>AI 실시간 분석:</span>
                       <span className="text-[10px] text-slate-600 font-medium">대화 흐름에 따라 실시간 반영됩니다.</span>
                     </div>
-                    
+
                     <div className="flex items-center gap-5 flex-1 justify-end max-w-xl">
                       {/* 긍정 */}
                       <div className="flex items-center gap-2">
@@ -1142,7 +1167,7 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
                           <span className="text-[10px] text-emerald-400 font-bold">긍정</span>
                         </div>
                         <div className="w-16 h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                          <div 
+                          <div
                             className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full transition-all duration-300"
                             style={{ width: `${Math.min(100, Math.round(((selectedLead.pos_score ?? 0) / 30) * 100))}%` }}
                           />
@@ -1157,7 +1182,7 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
                           <span className="text-[10px] text-rose-400 font-bold">부정</span>
                         </div>
                         <div className="w-16 h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                          <div 
+                          <div
                             className="h-full bg-gradient-to-r from-rose-500 to-rose-400 rounded-full transition-all duration-300"
                             style={{ width: `${Math.min(100, Math.round(((selectedLead.neg_score ?? 0) / 30) * 100))}%` }}
                           />
@@ -1211,7 +1236,7 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
                         const prob = action >= 10
                           ? 100
                           : Math.max(5, Math.min(99, Math.round((pos * 1.5) + (action * 5.5))));
-                        
+
                         let colorClass = 'text-slate-400';
                         let bgClass = 'bg-slate-900/60 border-slate-800';
                         if (prob >= 80) {
@@ -1241,7 +1266,7 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
 
               {/* Chat workspace split panel */}
               <div className="flex-1 flex overflow-hidden">
-                
+
                 {/* Left Side: Message History and Input Form */}
                 <div className="flex-1 flex flex-col overflow-hidden">
                   {/* Golden time banner */}
@@ -1251,7 +1276,7 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
                     const action = selectedLead.action_score || 0;
                     const isGoldenTime = action >= 7 || pos >= 12;
                     if (!isGoldenTime) return null;
-                    
+
                     return (
                       <div className="mx-6 mt-3 p-3 bg-gradient-to-r from-amber-500/20 via-orange-500/25 to-yellow-500/20 border border-amber-500/30 rounded-xl flex items-center justify-between shadow-lg shadow-orange-950/20 animate-pulse select-none shrink-0">
                         <div className="flex items-center gap-2">
@@ -1299,7 +1324,7 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
                   {showHelpGuide && (
                     <div className="mx-6 mt-3 p-4 bg-gradient-to-br from-violet-950/45 to-slate-900/90 border border-violet-500/35 rounded-2xl shadow-xl relative overflow-hidden animate-in slide-in-from-top duration-300">
                       <div className="absolute top-0 right-0 p-3">
-                        <button 
+                        <button
                           type="button"
                           onClick={onToggleHelpGuide}
                           className="text-slate-500 hover:text-slate-300 text-xs font-bold font-mono cursor-pointer"
@@ -1342,20 +1367,25 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
 
                   <div className="flex-1 overflow-y-auto p-6 space-y-4">
                     {messages.map((msg) => {
-                      const isMe = msg.sender_id === currentUserId;
+                      const otherMemberId = selectedRoom?.otherMember?.id;
+                      const isMe = msg.sender_id === '00000000-0000-4000-a000-000000000000' || 
+                                   msg.sender_id === '22222222-2222-4222-a222-222222222222' || 
+                                   msg.sender_id === '11111111-1111-4111-a111-111111111111' || 
+                                   msg.sender_id === 'c3b2830f-0a53-47df-857b-03a7fc74114e' ||
+                                   msg.sender_id === currentUserId;
                       const msgTime = new Date(msg.created_at).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false });
                       const matchedScore = conversationScores.find(s => {
                         const cleanMsg = msg.message.trim();
                         const cleanText = (s.message_text || '').trim();
                         const cleanAi = (s.ai_response || '').trim();
                         const isShort = cleanMsg.length < 5;
-                        return isMe 
+                        return isMe
                           ? (cleanText === cleanMsg || cleanAi === cleanMsg || (!isShort && cleanAi.includes(cleanMsg)))
                           : (cleanText === cleanMsg || (!isShort && cleanText.includes(cleanMsg)));
                       });
 
                       return (
-                        <div 
+                        <div
                           key={msg.id}
                           className={`flex ${isMe ? 'justify-end' : 'justify-start'} items-end gap-2`}
                         >
@@ -1372,7 +1402,7 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
 
                           {!isMe ? (
                             <div className="flex flex-col gap-1.5 items-start max-w-md">
-                              <div 
+                              <div
                                 className="px-4 py-2.5 rounded-2xl text-xs font-medium leading-relaxed bg-slate-800 text-slate-100 rounded-bl-none"
                               >
                                 {msg.message}
@@ -1391,7 +1421,7 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
                             </div>
                           ) : (
                             <div className="flex flex-col gap-1.5 items-end max-w-md">
-                              <div 
+                              <div
                                 className="px-4 py-2.5 rounded-2xl text-xs font-medium leading-relaxed bg-violet-600 text-white rounded-br-none shadow-md shadow-violet-700/10 text-left"
                               >
                                 {msg.message}
@@ -1422,18 +1452,18 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
                   </div>
 
                   {/* Input Form */}
-                  <form 
+                  <form
                     onSubmit={handleSendMessage}
                     className="p-4 bg-slate-900/30 border-t border-slate-800/80 flex items-center gap-3 shrink-0"
                   >
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       placeholder="메시지를 입력해 주세요..."
                       value={newMessageText}
                       onChange={(e) => setNewMessageText(e.target.value)}
                       className="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-violet-500 transition-all placeholder-slate-600"
                     />
-                    <button 
+                    <button
                       type="submit"
                       disabled={!newMessageText.trim()}
                       className="bg-violet-600 hover:bg-violet-500 disabled:opacity-50 disabled:hover:bg-violet-600 text-white p-3 rounded-xl transition-all shadow-lg shadow-violet-700/20"
@@ -1526,7 +1556,7 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
                 <br />
                 왼쪽 목록에서 상담을 진행할 고객을 선택해 보세요.
               </p>
-              
+
               {/* AI Master control switches */}
               <div className="mt-6 w-full max-w-lg bg-slate-900/60 border border-slate-800 rounded-2xl p-4 text-center space-y-3 shadow-lg">
                 <span className="text-[10px] font-black text-slate-400 block uppercase tracking-wider">
@@ -1548,7 +1578,7 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
                           const { data: leadsToUpdate, error: queryErr } = await supabase
                             .from('customer_leads')
                             .select('id, raw_payload');
-                          
+
                           if (!queryErr && leadsToUpdate) {
                             const targetLeads = leadsToUpdate.filter(lead => {
                               const roomId = lead.raw_payload?.chat_room_id;
@@ -1590,13 +1620,12 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
                         setToastMessage("상태 업데이트에 실패했습니다.");
                       }
                     }}
-                    className={`px-4 py-2.5 text-xs font-black rounded-xl transition-all cursor-pointer border ${
-                      globalAiActive
+                    className={`px-4 py-2.5 text-xs font-black rounded-xl transition-all cursor-pointer border ${globalAiActive
                         ? 'bg-orange-600 border-orange-500 text-white shadow-md shadow-orange-600/30 scale-105 ring-2 ring-orange-500/15'
                         : (isRegMissing && !isDemoMode)
-                        ? 'bg-slate-900/40 border-slate-800 text-slate-500 cursor-not-allowed opacity-50'
-                        : 'bg-slate-900/40 border-slate-800 text-slate-500 hover:text-slate-300 hover:bg-slate-800 opacity-60'
-                    }`}
+                          ? 'bg-slate-900/40 border-slate-800 text-slate-500 cursor-not-allowed opacity-50'
+                          : 'bg-slate-900/40 border-slate-800 text-slate-500 hover:text-slate-300 hover:bg-slate-800 opacity-60'
+                      }`}
                   >
                     🤖 전체 AI 상담 시작 {isRegMissing && !isDemoMode && '(비활성화)'}
                   </button>
@@ -1611,7 +1640,7 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
                           const { data: leadsToUpdate, error: queryErr } = await supabase
                             .from('customer_leads')
                             .select('id, raw_payload');
-                          
+
                           if (!queryErr && leadsToUpdate) {
                             const targetLeads = leadsToUpdate.filter(lead => {
                               const roomId = lead.raw_payload?.chat_room_id;
@@ -1653,11 +1682,10 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
                         setToastMessage("상태 업데이트에 실패했습니다.");
                       }
                     }}
-                    className={`px-4 py-2.5 text-xs font-black rounded-xl transition-all border cursor-pointer ${
-                      !globalAiActive
+                    className={`px-4 py-2.5 text-xs font-black rounded-xl transition-all border cursor-pointer ${!globalAiActive
                         ? 'bg-rose-600 border-rose-500 text-white shadow-md shadow-rose-600/30 scale-105 ring-2 ring-rose-500/15'
                         : 'bg-slate-900/40 border-slate-800 text-slate-500 hover:text-slate-300 hover:bg-slate-800 opacity-60'
-                    }`}
+                      }`}
                   >
                     👤 전체 AI 상담 일시정지
                   </button>
@@ -1665,17 +1693,16 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
               </div>
 
               {/* Status notice */}
-              <div className={`mt-4 p-4 rounded-xl border text-xs text-left leading-relaxed transition-all duration-300 ${
-                globalAiActive
+              <div className={`mt-4 p-4 rounded-xl border text-xs text-left leading-relaxed transition-all duration-300 ${globalAiActive
                   ? 'bg-orange-500/10 border-orange-500/20 text-orange-200 shadow-md shadow-orange-950/20 animate-in fade-in duration-300'
                   : 'bg-rose-500/10 border-rose-500/20 text-rose-200 shadow-md shadow-rose-950/20 animate-in fade-in duration-300'
-              }`}>
+                }`}>
                 <div className="flex items-start gap-2.5">
                   <span className="text-sm shrink-0">{globalAiActive ? '🤖' : '👤'}</span>
                   <div className="space-y-1">
                     <p className="font-bold text-[12px] text-white flex items-center gap-1.5">
-                      {globalAiActive 
-                        ? '현재 AI 비서가 활성화(가동 중) 상태입니다.' 
+                      {globalAiActive
+                        ? '현재 AI 비서가 활성화(가동 중) 상태입니다.'
                         : '현재 AI 비서가 일시정지(수동 모드) 상태입니다.'}
                     </p>
                     <p className="text-[11px] text-slate-300 leading-relaxed break-keep">
