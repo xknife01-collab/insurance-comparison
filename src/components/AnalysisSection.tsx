@@ -1104,7 +1104,7 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
         
         {/* Subtext */}
         <div className="text-xs md:text-sm text-slate-400 font-semibold">
-          (전화는 고객이 원할 때만 1:1 신청 가능)
+          (상담은 고객이 원할 때만 1:1 신청 가능)
         </div>
       </div>
 
@@ -1120,11 +1120,11 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
             <h4 className="text-lg font-black text-slate-800 tracking-tight leading-snug">
               카카오톡 익명채팅 신청시<br />
               한국신용정보원 실시간 연동<br />
-              <span className="text-orange-500">& 0.1초 AI 정밀 진단</span>
+              <span className="text-orange-500">& 스마트 AI 정밀 진단</span>
             </h4>
           </div>
           <p className="text-xs text-slate-500 font-semibold leading-relaxed break-keep">
-            번거로운 서류 제출 없이 간편 인증 한 번으로, 한국신용정보원에 등록된 내가 가입한 전 보험사의 상세 계약 내역을 실시간 API로 안전하게 불러옵니다. 내 실제 보험 상품 정보와 세부 보장 내역을 AI 엔진이 0.1초 만에 완벽하게 진단하여 보장 과부족 점수를 투명하게 제공합니다.
+            번거로운 서류 제출 없이 간편 인증 한 번으로, 한국신용정보원에 등록된 내가 가입한 전 보험사의 상세 계약 내역을 실시간 API로 안전하게 불러옵니다. 내 실제 보험 상품 정보와 세부 보장 내역을 AI 엔진이 실시간으로 완벽하게 진단하여 보장 과부족 점수를 투명하게 제공합니다.
           </p>
         </div>
 
@@ -1136,7 +1136,7 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
           <div>
             <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest block mb-1">Differentiator 02</span>
             <h4 className="text-lg font-black text-slate-800 tracking-tight leading-snug">
-              0.1초 AI 중복 보장 진단<br />
+              실시간 AI 중복 보장 진단<br />
               <span className="text-orange-500">& 또래 평균 통계 리밸런싱</span>
             </h4>
           </div>
@@ -1154,11 +1154,11 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
             <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest block mb-1">Differentiator 03</span>
             <h4 className="text-lg font-black text-slate-800 tracking-tight leading-snug">
               내 보험 정밀 분석<br />
-              <span className="text-orange-500">전사 상품 1:1 매칭 & 0.1초 초정밀 최적화 엔진</span>
+              <span className="text-orange-500">전사 상품 1:1 매칭 & 스마트 초정밀 최적화 엔진</span>
             </h4>
           </div>
           <p className="text-xs text-slate-500 font-semibold leading-relaxed break-keep">
-            고객의 기존 보험을 분석하는 즉시, 국내 모든 생명·손해보험사의 최신 상품 데이터베이스와 1:1로 실시간 대조합니다. 보장은 완벽히 동일하지만 보험료는 더 저렴한 상품, 또는 동일한 보험료 기준 보장 범위와 가입금액이 훨씬 유리한 상품을 단 0.1초 만에 비교 분석하여 제안서 형태로 즉시 제공합니다.
+            고객의 기존 보험을 분석하는 즉시, 국내 모든 생명·손해보험사의 최신 상품 데이터베이스와 1:1로 실시간 대조합니다. 보장은 완벽히 동일하지만 보험료는 더 저렴한 상품, 또는 동일한 보험료 기준 보장 범위와 가입금액이 훨씬 유리한 상품을 실시간으로 비교 분석하여 제안서 형태로 즉시 제공합니다.
           </p>
         </div>
       </div>

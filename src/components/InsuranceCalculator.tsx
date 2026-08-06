@@ -1143,7 +1143,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
         
         {/* Subtext */}
         <div className="text-xs md:text-sm text-slate-400 font-semibold">
-          (전화는 고객이 원할 때만 1:1 신청 가능)
+          (상담은 고객이 원할 때만 1:1 신청 가능)
         </div>
       </div>
 
@@ -1179,7 +1179,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
             </h4>
           </div>
           <p className="text-xs text-slate-500 font-semibold leading-relaxed break-keep">
-            암·뇌·심장 3대 질환부터 치매, 간병, 태아, 펫보험까지 27종의 다양한 보험 카테고리를 지원합니다. 내가 선택한 상품에 맞춰 꼭 필요한 핵심 질문만 알아서 자동으로 나타나는 스마트 입력 방식을 적용하여, 복잡한 서류 준비나 어려운 용어 이해 없이도 단 0.1초 만에 나만의 실시간 보험료 계산 결과를 도출합니다.
+            암·뇌·심장 3대 질환부터 치매, 간병, 태아, 펫보험까지 27종의 다양한 보험 카테고리를 지원합니다. 내가 선택한 상품에 맞춰 꼭 필요한 핵심 질문만 알아서 자동으로 나타나는 스마트 입력 방식을 적용하여, 복잡한 서류 준비나 어려운 용어 이해 없이도 쉽고 빠르게 나만의 실시간 보험료 계산 결과를 도출합니다.
           </p>
         </div>
 
@@ -1191,7 +1191,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
           <div>
             <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest block mb-1">Differentiator 03</span>
             <h4 className="text-lg font-black text-slate-800 tracking-tight leading-snug">
-              0.1초 {isB2BMode ? '내 보험 분석' : 'AI 내 보험 분석'} &<br />
+              실시간 {isB2BMode ? '내 보험 분석' : 'AI 내 보험 분석'} &<br />
               <span className="text-orange-500">또래 평균 보장 비교</span>
             </h4>
           </div>
@@ -2254,7 +2254,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                 <div>
                   <h4 className="font-extrabold text-slate-950 mb-1">4. 동의를 거부할 권리 및 불이익</h4>
                   <p>
-                    고객님은 본 개인정보 수집 및 이용 동의를 거부할 권리가 있습니다. 단, 필수 정보 수집에 동의하지 않으시는 경우 0.1초 실시간 보험 비교 분석 및 맞춤 포트폴리오 분석 결과 제공 서비스의 이용이 제한될 수 있습니다.
+                    고객님은 본 개인정보 수집 및 이용 동의를 거부할 권리가 있습니다. 단, 필수 정보 수집에 동의하지 않으시는 경우 실시간 보험 비교 분석 및 맞춤 포트폴리오 분석 결과 제공 서비스의 이용이 제한될 수 있습니다.
                   </p>
                 </div>
               </div>

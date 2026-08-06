@@ -831,7 +831,7 @@ export default function App() {
       const agencyBrand = branding.agencyName || branding.name || '공식 제휴 보험대리점';
       document.title = `${agencyBrand} - 맞춤형 보장 비교 분석`;
     } else {
-      document.title = '보험리밸런스 - 0.1초 맞춤 보장 분석';
+      document.title = '보험리밸런스 - 실시간 맞춤 보장 분석';
     }
   }, [isB2BMode, branding, view]);
 
@@ -1546,7 +1546,7 @@ export default function App() {
                 </h2>
                 <p className="text-sm text-slate-500 font-semibold leading-relaxed break-keep mt-4 max-w-xl mx-auto">
                   💡 본 분석은 고객님이 입력하신 보험 종류 및 월 보험료를 기반으로 AI가 통계적으로 추정한 결과입니다. 실제 가입 특약·보장 금액과 차이가 있을 수 있으며, 정확한 보장 내역은{' '}
-                  <span className="text-orange-500 font-black">카카오톡 익명 채팅 상담</span>을 통해 실제 가입정보를 기준으로 확인하실 수 있습니다.
+                  <span className="text-orange-500 font-black">실시간 고객상담</span>을 통해 실제 가입정보를 기준으로 확인하실 수 있습니다.
                 </p>
               </div>
 
@@ -1963,10 +1963,10 @@ export default function App() {
               <div className="w-14 h-14 bg-orange-500/10 border border-orange-500/20 text-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-2">
                 <ShieldCheck size={28} />
               </div>
-              <h3 className="text-base font-black tracking-tight text-white">실명 정보 잠금 해제</h3>
+              <h3 className="text-base font-black tracking-tight text-white">상세 상품 정보 안내</h3>
               <p className="text-[10px] text-slate-400 font-bold leading-relaxed break-keep">
-                실시간 상담 요청을 접수하시면,<br />
-                보고 계신 화면의 마스킹이 자동으로 해제됩니다.
+                블라인드 처리된 구체적인 회사명 및 상품명은<br />
+                1:1 실시간 상담 시 투명하고 상세하게 안내해 드립니다.
               </p>
             </div>
 

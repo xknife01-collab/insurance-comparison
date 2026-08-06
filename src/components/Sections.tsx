@@ -1267,7 +1267,7 @@ export const PhilosophySection = () => {
   const isDefaultContent = !branding.greetingContent || 
                            branding.greetingContent.trim() === '' || 
                            branding.greetingContent.trim() === '-' || 
-                           branding.greetingContent === '대한민국 모든 보험사의 상품을 0.1초 만에 비교 분석하여 불필요한 고정 지출을 성공적으로 줄여 드립니다.';
+                           branding.greetingContent === '대한민국 모든 보험사의 상품을 실시간으로 비교 분석하여 불필요한 고정 지출을 성공적으로 줄여 드립니다.';
 
   // 3. Name Dynamic Binding
   const displayName = branding.name && branding.name !== '보험리밸런스'

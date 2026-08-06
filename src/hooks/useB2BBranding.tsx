@@ -29,7 +29,7 @@ const DEFAULT_BRANDING: B2BBranding = {
   profileImageUrl: null,
   logoUrl: "/6397187.png",
   greetingTitle: '나만을 위한 맞춤형 보험 비교 서비스',
-  greetingContent: '대한민국 모든 보험사의 상품을 0.1초 만에 비교 분석하여 불필요한 고정 지출을 성공적으로 줄여 드립니다.',
+  greetingContent: '대한민국 모든 보험사의 상품을 실시간으로 비교 분석하여 불필요한 고정 지출을 성공적으로 줄여 드립니다.',
   customPhone: '080.808.1088',
   customAddress: '보험대리점 : 인카금융서비스 (등록번호 : 제2006038313호) 본 광고는 광고심의기준을 준수하였으며, 유효기간은 심의일로부터 1년입니다.',
   certificationMessage: null,

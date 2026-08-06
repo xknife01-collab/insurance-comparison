@@ -726,9 +726,9 @@ export default function AnalysisShowcase() {
                 </div>
                 <div className="text-left">
                   <h4 className={`text-xs font-black ${activeStep === 'loading' ? 'text-orange-500' : 'text-slate-300'}`}>
-                    0.1초 {isB2BMode ? '정밀 분석 및 매칭' : 'AI 정밀 분석 및 매칭'} (Engine)
+                    스마트 {isB2BMode ? '정밀 분석 및 매칭' : 'AI 정밀 분석 및 매칭'} (Engine)
                   </h4>
-                  <p className="text-[10px] text-slate-500 font-semibold mt-0.5">입력된 최소한의 기본 정보와 표준 설계 요율 테이블을 0.1초 만에 실시간으로 매칭하여 {isB2BMode ? '자율 진단 보장 점수를' : 'AI가 자율 진단 보장 점수를'} 초정밀 연산합니다.</p>
+                  <p className="text-[10px] text-slate-500 font-semibold mt-0.5">입력된 최소한의 기본 정보와 표준 설계 요율 테이블을 실시간으로 매칭하여 {isB2BMode ? '자율 진단 보장 점수를' : 'AI가 자율 진단 보장 점수를'} 초정밀 연산합니다.</p>
                 </div>
               </div>
               <ChevronRight className={`w-4 h-4 ${activeStep === 'loading' ? 'text-orange-500' : 'text-slate-650'}`} />

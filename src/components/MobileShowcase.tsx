@@ -553,7 +553,7 @@ export default function MobileShowcase() {
 
                     {/* Submit CTA */}
                     <button className="w-full bg-rose-500 hover:bg-rose-600 text-white py-2.5 rounded-xl font-black text-[10px] shadow-md shadow-rose-500/10 active:scale-95 transition-all mt-2.5 flex-shrink-0">
-                      0.1초 실시간 비교 분석하기
+                      실시간 맞춤 비교 분석하기
                     </button>
                   </div>
                 )}

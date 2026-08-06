@@ -21,7 +21,7 @@ export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetP
                            branding.greetingContent.trim() === '-';
 
   const displayTitle = isDefaultTitle ? '나만을 위한 맞춤형 보험 비교 서비스' : branding.greetingTitle;
-  const displayContent = isDefaultContent ? '대한민국 모든 보험사의 상품을 0.1초 만에 비교 분석하여 불필요한 고정 지출을 성공적으로 줄여 드립니다.' : branding.greetingContent;
+  const displayContent = isDefaultContent ? '대한민국 모든 보험사의 상품을 실시간으로 비교 분석하여 불필요한 고정 지출을 성공적으로 줄여 드립니다.' : branding.greetingContent;
 
   if (!isOpen) {
     return null;

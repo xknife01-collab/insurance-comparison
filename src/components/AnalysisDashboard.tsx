@@ -1892,7 +1892,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
                 </div>
                 <div>
                   <h4 className="text-sm font-black text-slate-800 tracking-tight">🔒 금융소비자보호법(이하 금소법) 시행에 따라 실제 회사명/상품명이 마스킹 처리되어 있습니다.</h4>
-                  <p className="text-xs text-slate-500 font-bold mt-0.5">모든 회사명과 상품명은 실시간 상담 요청 완료 즉시 실명 상품 정보 잠금이 해제됩니다.</p>
+                  <p className="text-xs text-slate-500 font-bold mt-0.5">블라인드 처리된 구체적인 회사명 및 상품명은 1:1 실시간 상담 시 투명하고 상세하게 안내해 드립니다.</p>
                 </div>
               </div>
               <button
@@ -1900,7 +1900,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
                 onClick={handleRequestUnlockAnonymous}
                 className="px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-black text-xs rounded-xl shadow-md transition-all active:scale-95 whitespace-nowrap cursor-pointer font-extrabold"
               >
-                🔒 실시간 상담 요청하고 실제 이름 잠금 해제하기
+                🔒 1:1 실시간 상담으로 상세 상품 정보 확인하기
               </button>
             </div>
           </div>
@@ -2212,7 +2212,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
               
               <div className="space-y-2">
                 <p className="text-slate-800 text-xs sm:text-sm font-bold leading-relaxed">
-                  * 본 보험료 비교 데이터는 생명보험협회 및 손해보험협회 공시자료(수집 기준: <span className="text-orange-600 font-extrabold underline decoration-orange-500/30 decoration-2 underline-offset-2">{getDisclosureDate()}</span>)를 토대로 <span className="bg-orange-500 text-white px-1.5 py-0.5 rounded-md font-black mx-0.5">0.1초 만에</span> 실시간 최적화 분석되었습니다.
+                  * 본 보험료 비교 데이터는 생명보험협회 및 손해보험협회 공시자료(수집 기준: <span className="text-orange-600 font-extrabold underline decoration-orange-500/30 decoration-2 underline-offset-2">{getDisclosureDate()}</span>)를 토대로 <span className="bg-orange-500 text-white px-1.5 py-0.5 rounded-md font-black mx-0.5">실시간으로</span> 최적화 분석되었습니다.
                 </p>
                 <p className="text-slate-500 text-[11px] sm:text-xs font-semibold leading-relaxed border-t border-orange-100 pt-2">
                   💡 <span className="text-orange-600 font-bold">다만,</span> 가입자의 개별 조건(직업, 건강 상태 등)에 따라 실제 보험료 및 가입 가능 여부는 변동될 수 있으므로, 상세한 내용은 전문 상담사와의 맞춤 설계를 통해 확인하시기 바랍니다.
@@ -2224,7 +2224,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
               <Clock className="w-6 h-6 text-white animate-bounce" />
               <div className="text-left">
                 <p className="text-[9px] font-bold text-orange-100 uppercase tracking-widest leading-none">최적화 처리속도</p>
-                <p className="text-sm sm:text-base font-black text-white mt-1">0.1초 분석 완료</p>
+                <p className="text-sm sm:text-base font-black text-white mt-1">실시간 분석 완료</p>
               </div>
             </div>
           </div>
@@ -2291,7 +2291,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
               
               <div className="space-y-2">
                 <p className="text-slate-800 text-xs sm:text-sm font-bold leading-relaxed">
-                  * 본 보험료 비교 데이터는 생명보험협회 및 손해보험협회 공시자료(수집 기준: <span className="text-orange-600 font-extrabold underline decoration-orange-500/30 decoration-2 underline-offset-2">{getDisclosureDate()}</span>)를 토대로 <span className="bg-orange-500 text-white px-1.5 py-0.5 rounded-md font-black mx-0.5">0.1초 만에</span> 실시간 최적화 분석되었습니다.
+                  * 본 보험료 비교 데이터는 생명보험협회 및 손해보험협회 공시자료(수집 기준: <span className="text-orange-600 font-extrabold underline decoration-orange-500/30 decoration-2 underline-offset-2">{getDisclosureDate()}</span>)를 토대로 <span className="bg-orange-500 text-white px-1.5 py-0.5 rounded-md font-black mx-0.5">실시간으로</span> 최적화 분석되었습니다.
                 </p>
                 <p className="text-slate-500 text-[11px] sm:text-xs font-semibold leading-relaxed border-t border-orange-100 pt-2">
                   💡 <span className="text-orange-600 font-bold">다만,</span> 가입자의 개별 조건(직업, 건강 상태 등)에 따라 실제 보험료 및 가입 가능 여부는 변동될 수 있으므로, 상세한 내용은 전문 상담사와의 맞춤 설계를 통해 확인하시기 바랍니다.
@@ -2303,7 +2303,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
               <Clock className="w-6 h-6 text-white animate-bounce" />
               <div className="text-left">
                 <p className="text-[9px] font-bold text-orange-100 uppercase tracking-widest leading-none">최적화 처리속도</p>
-                <p className="text-sm sm:text-base font-black text-white mt-1">0.1초 분석 완료</p>
+                <p className="text-sm sm:text-base font-black text-white mt-1">실시간 분석 완료</p>
               </div>
             </div>
           </div>
