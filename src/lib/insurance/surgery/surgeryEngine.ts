@@ -7,11 +7,13 @@ import { RecommendationPlan } from '../../../types/insurance/common';
  */
 export const analyzeSurgery = (analysis: any): any => {
   const allOptions = (analysis as any)._allOptions || [];
-  
+
+  // surgeryLoader 에서 옵션 보정이 완료된 _realDbPremium 을 최우선 사용
+  // _allOptions 도 이미 보정값이 적용된 상태로 전달됨
   const defaultOption = { 
-    premium: analysis._realDbPremium || 35000, 
+    premium: analysis._realDbPremium || (allOptions[0]?.premium) || 20000, 
     productName: analysis._productName || '수술비 집중 보험',
-    companyName: analysis._companyName || '추천 보험사'
+    companyName: analysis._companyName || '메리츠화재'
   };
 
   const opt1 = allOptions[0] || defaultOption;

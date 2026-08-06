@@ -628,7 +628,7 @@ export default function App() {
       setRemodelingApplied(false);
       const result = await runAnalysis(analysis);
       result.simulation_code = simulationCode; // attach code
-      setRemodelingResult(result);
+      setRemodelingResult({ ...result, _timestamp: Date.now() });
       // Automatically save lead upon analysis completion
       submitLead(analysis, 'remodeling', result);
     } else {
@@ -637,10 +637,17 @@ export default function App() {
       setCurrentAnalysis(analysis);
       const result = await runAnalysis(analysis);
       result.simulation_code = simulationCode; // attach code
-      setAnalysisResult(result);
+      setAnalysisResult({ ...result, _timestamp: Date.now() });
       setView('home'); // Ensure we are on home to see results
       // Automatically save lead upon analysis completion
       submitLead(analysis, analysis.selectedCategory || 'general', result);
+
+      setTimeout(() => {
+        const el = document.getElementById('results-section');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 150);
     }
   };
 

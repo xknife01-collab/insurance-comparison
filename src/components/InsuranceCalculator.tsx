@@ -807,6 +807,18 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
         healthStatus,
         preExistingType: healthStatus === 'simple' ? preExistingType : undefined,
         monthlyPremium: parseInt(currentPremium) || (
+          selectedId === 'cancer' ? (() => {
+            const diagMult = (cancerDiagnosisAmount || 50000000) / 30000000;
+            const targetAge = calculatedAge || 40;
+            const ageFactor = (gender === 'M' ? 1.05 : 0.95) * (targetAge / 40);
+            let base = 33000 * diagMult * ageFactor;
+            if (cancerTreatmentCost2025) base += 15000 * ageFactor;
+            if (cancerTargetedTherapy) base += 12000 * ageFactor;
+            if (cancerRecurrentCancer) base += 18000 * ageFactor;
+            if (cancerFamilyHistory) base += 5000;
+            const payMult = cancerPaymentType === 'renewable' ? 0.45 : cancerPaymentType === 'targeted' ? 0.65 : 1.0;
+            return Math.max(12000, Math.round((base * payMult) / 100) * 100);
+          })() :
           selectedId === 'silson' ? 25000 : 
           selectedId === 'dental' ? 45000 :
           selectedId === 'nursing' ? 70000 :
