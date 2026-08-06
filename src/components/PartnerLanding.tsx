@@ -268,6 +268,7 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
                     <span className="text-[10px] font-black text-violet-400 bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 rounded">파트너 구독 기본 제공</span>
                   </div>
                   <h3 className="text-lg font-black text-white mt-1.5 leading-tight">
+                    <span className="text-[10px] font-bold text-slate-400 block mb-1">"기계 같은 챗봇은 끝났습니다. 고객의 마음을 읽고 기억하는 진짜 인간 플래너"</span>
                     진짜 사람보다 더 똑똑한<br />
                     <span className="bg-gradient-to-r from-violet-400 to-orange-400 bg-clip-text text-transparent">초인류적 1:1 세일즈 AI 개인 비서</span>
                   </h3>
@@ -275,13 +276,22 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
               </div>
               
               {/* 가운데: 세부 메리트 및 10점 만점 설명 */}
-              <div className="flex-1 space-y-2 lg:border-l lg:border-slate-800/80 lg:pl-10">
-                <p className="text-xs sm:text-[13px] font-bold text-slate-200 leading-relaxed break-keep">
+              <div className="flex-1 lg:border-l lg:border-slate-800/80 lg:pl-10 space-y-3">
+                <p className="text-xs sm:text-[13px] font-bold text-slate-200 leading-relaxed break-keep text-left">
                   단순한 챗봇이 아닙니다. 고객과의 실시간 대화 속에서 <span className="text-emerald-400">정서(긍정/부정)</span> 및 <span className="text-violet-400">행동(10단계 진척도)</span>을 감지하여 <span className="text-orange-400">10점 만점의 점수</span>를 실시간 판독합니다.
                 </p>
-                <p className="text-[11px] text-slate-400 leading-relaxed break-keep font-semibold">
-                  고객의 긍정 반응과 설계안 요청(10점) 데이터가 쌓일수록, AI 비서가 우리 대리점만의 성공적인 계약 공식 성공 멘트를 자가 학습(Self-Learning)하여 스스로 더 고도화됩니다. 초보 설계사도 1등 설계사의 영업 실력을 갖추게 되는 마법을 지금 경험해 보세요.
-                </p>
+                
+                <div className="text-[11px] font-bold text-slate-400 leading-relaxed break-keep space-y-1.5 text-left border-t border-slate-900 pt-2.5">
+                  <p>
+                    ⚡ <span className="text-emerald-400">실시간 성향 맞춤 화법 체인지</span>: 대화 단 3~4턴 만에 4대 고객 성향을 실시간 분석 및 톤앤매너 자동 스위칭
+                  </p>
+                  <p>
+                    🧠 <span className="text-violet-400">소름 돋는 기억 회상 화법</span>: 직업, 자녀 나이, 가족력, 고민 등을 기억해 중복 질문 없이 대화 속에 녹여냄
+                  </p>
+                  <p>
+                    🎯 <span className="text-orange-400">성공 멘트 초정밀 자가 학습(Self-Learning)</span>: 계약 성공 스크립트를 자율 학습해 1등 설계사의 세일즈 화법 이식
+                  </p>
+                </div>
               </div>
 
               {/* 오른쪽: 설계사/대리점 데모 체험 버튼 2종 */}

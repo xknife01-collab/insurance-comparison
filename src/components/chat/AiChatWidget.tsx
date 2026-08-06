@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MessageSquare, Send, X, ShieldCheck, Check } from 'lucide-react';
 import { createClient } from '../../utils/supabase/client';
-import { generateAiResponse, parseCodeFromMessage, ACTION_SCORE_MAP, actionScoreToStep, getEmbedding } from '../../lib/insurance/aiPersona';
+import { generateAiResponse, parseCodeFromMessage, ACTION_SCORE_MAP, actionScoreToStep, getEmbedding, classifyCustomerSegment } from '../../lib/insurance/aiPersona';
 import type { AiContext, CustomerMemory } from '../../lib/insurance/aiPersona';
 
 // ── [기능8] 고객 대화 분석 후 무비용 룰 기반으로 기억(Memory) 추출 및 Supabase 저장 ──────
@@ -943,6 +943,22 @@ export default function AiChatWidget({
     };
   }, [currentSimulationCode, guestRoomId]);
 
+  // 본인인증 성공(마스킹 해제) 시 자가 학습 트리거 및 DB 로그
+  useEffect(() => {
+    if (isUnlocked && currentLeadId) {
+      const chatContext = messages
+        .slice(-10)
+        .map((m) => ({
+          role: m.sender_id === guestUserId ? 'user' : 'model',
+          text: m.message
+        }));
+      triggerSelfLearning(currentLeadId, chatContext).catch(err => {
+        console.warn('[Self-Learning-Auth] Failed to trigger auth success learning:', err);
+      });
+      console.log('[Self-Learning] 🎯 verification_done detected via isUnlocked! Self-learning triggered.');
+    }
+  }, [isUnlocked, currentLeadId]);
+
   // 실시간 상담 요청 + 마스킹 해제 시 10~25초 딜레이 후 선제 톡 발송 (최대 3회)
   useEffect(() => {
     if (!isUnlocked || !currentLeadId || !guestRoomId || !isBotActive) return;
@@ -1093,12 +1109,16 @@ export default function AiChatWidget({
   }, [messages, isOpen, isTyping]);
 
   // 5. Send message and handle AI reply
-  const handleSend = async (e?: React.FormEvent) => {
+  const handleSend = async (e?: React.FormEvent, customText?: string) => {
     if (e) e.preventDefault();
-    if (!inputValue.trim()) return;
+    
+    const textToSubmit = customText || inputValue;
+    if (!textToSubmit.trim()) return;
 
-    const userText = inputValue.trim();
-    setInputValue('');
+    const userText = textToSubmit.trim();
+    if (!customText) {
+      setInputValue('');
+    }
 
     // Insert user message locally and to DB
     const { data: userMsg, error: insertErr } = await supabase
@@ -1125,6 +1145,43 @@ export default function AiChatWidget({
     // [기능8] 고객의 대화 내용 분석하여 기억(interests, job, family 등) 자동 추출
     if (currentLeadId) {
       extractAndSaveMemory(supabase, currentLeadId, userText).catch(() => {});
+
+      // [기능 추가] 실시간 백그라운드 고객 성향 분석 & 업데이트 실행 (비동기)
+      setTimeout(async () => {
+        try {
+          // 최근 6개 대화 기록 추출
+          const chatHistory = [...messages, userMsg as Message]
+            .slice(-6)
+            .map(m => ({
+              role: m.sender_id === guestUserId ? 'user' : 'model',
+              text: m.message
+            }));
+            
+          const segment = await classifyCustomerSegment(chatHistory);
+          if (segment) {
+            console.log(`[AI segment classifier] Segment classified as: ${segment}`);
+            // DB 조회 후 업데이트
+            const { data: leadData } = await supabase
+              .from('customer_leads')
+              .select('raw_payload')
+              .eq('id', currentLeadId)
+              .single();
+              
+            if (leadData) {
+              const updatedPayload = {
+                ...(leadData.raw_payload || {}),
+                customer_segment: segment // 성향 업데이트
+              };
+              await supabase
+                .from('customer_leads')
+                .update({ raw_payload: updatedPayload })
+                .eq('id', currentLeadId);
+            }
+          }
+        } catch (err) {
+          console.error('[AI Segment Update Error]', err);
+        }
+      }, 500);
     }
 
     // Check if message has a simulation code
@@ -1167,7 +1224,7 @@ export default function AiChatWidget({
         });
 
         // Send AI reply with auth action button
-        const botResponse = `설계 코드가 확인되었습니다! 상세 분석 결과(마스킹 해제)를 잠금 해제하시겠습니까? 아래 본인인증 버튼을 누르시면 0.1초 만에 안전하게 마스킹이 해제됩니다.`;
+        const botResponse = `설계 코드가 확인되었습니다! 상세 분석 결과(마스킹 해제)를 확인하시려면 아래 [한국신용정보원 인증하기] 버튼을 눌러 본인인증을 완료해 주세요. 인증이 완료되면 실제 가입하신 보험 내역으로 정밀 분석이 시작됩니다.`;
         
         setTimeout(async () => {
           setIsTyping(false);
@@ -1413,7 +1470,7 @@ export default function AiChatWidget({
                             className="mt-3 w-full py-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-755 text-white font-black text-[10px] rounded-lg shadow-lg flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
                           >
                             <ShieldCheck className="w-3.5 h-3.5" />
-                            🔒 0.1초 본인인증 완료하기
+                            🔒 한국신용정보원 인증 완료하기
                           </button>
                         )}
                         
@@ -1437,6 +1494,30 @@ export default function AiChatWidget({
                     <span className="w-1.5 h-1.5 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
                     <span className="w-1.5 h-1.5 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
                     <span className="w-1.5 h-1.5 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+                  </div>
+                </div>
+              )}
+              {/* Suggestion cards for verified leads discussing plans */}
+              {isUnlocked && messages.length > 0 && messages[messages.length - 1].sender_id === plannerId && (
+                <div className="flex flex-col gap-2 mt-4 p-3 bg-slate-900/60 border border-slate-850/60 rounded-2xl animate-in fade-in slide-in-from-bottom-2 duration-300">
+                  <span className="text-[9px] text-slate-500 font-black ml-1 uppercase tracking-wider">💡 추천 제안 질문</span>
+                  <div className="flex flex-col gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => handleSend(undefined, "📋 40대 추천 플랜 비교표 보여주세요!")}
+                      className="px-3.5 py-2.5 bg-slate-950 hover:bg-slate-850 text-left text-[10px] text-slate-300 rounded-xl transition-all cursor-pointer font-bold border border-slate-850/80 flex items-center justify-between group shadow-sm"
+                    >
+                      <span>📋 40대 추천 플랜 비교표 보기</span>
+                      <span className="text-[8px] text-slate-500 group-hover:text-slate-300 transition-colors">전송 ➔</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleSend(undefined, "💵 월 보험료 가성비 다이어트안 받고 싶어요")}
+                      className="px-3.5 py-2.5 bg-slate-950 hover:bg-slate-850 text-left text-[10px] text-slate-300 rounded-xl transition-all cursor-pointer font-bold border border-slate-850/80 flex items-center justify-between group shadow-sm"
+                    >
+                      <span>💵 월 보험료 가성비 다이어트안 받기</span>
+                      <span className="text-[8px] text-slate-500 group-hover:text-slate-300 transition-colors">전송 ➔</span>
+                    </button>
                   </div>
                 </div>
               )}

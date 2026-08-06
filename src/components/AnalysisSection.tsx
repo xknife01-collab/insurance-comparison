@@ -1225,7 +1225,7 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
             <div className="max-w-xl mx-auto bg-[#FFF8F0] border-2 border-amber-200/80 rounded-3xl p-5 flex items-center gap-3.5 text-left shadow-xl animate-in fade-in duration-500">
               <span className="text-xl text-orange-500 flex-shrink-0 animate-pulse">🛡️</span>
               <p className="text-xs sm:text-sm font-black text-slate-800 leading-relaxed break-keep">
-                저희는 고객님의 연락처를 묻지 않습니다. 안심하시고 비교 분석하시고 필요하실 때에만 카카오톡 요청해 주세요.
+                저희는 고객님의 연락처를 묻지 않습니다. 안심하시고 비교 분석하시고 필요하실 때에만 실시간 고객 상담을 요청해 주세요.
               </p>
             </div>
 

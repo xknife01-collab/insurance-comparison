@@ -1661,7 +1661,7 @@ export default function App() {
                               }}
                               className="px-6 py-4.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black rounded-xl text-xs shrink-0 shadow-[0_10px_20px_-4px_rgba(255,107,0,0.4)] transform transition-all hover:scale-105 active:scale-95 cursor-pointer text-center relative z-10"
                             >
-                              👉 카톡으로 설계안 무료 신청
+                              👉 실시간 고객 상담 무료 신청
                             </button>
                           </div>
                         )}
@@ -1732,7 +1732,7 @@ export default function App() {
                                   </span>
                                 )}
                                 <h4 className="text-base font-bold text-slate-800 group-hover:text-orange-600 transition-colors">
-                                  {policy.isCustom ? policy.product_name : maskProductName(policy.product_name, isUnlocked)}
+                                  {maskProductName(policy.product_name, isUnlocked)}
                                 </h4>
                               </div>
                               <div className="text-right shrink-0">
@@ -1935,7 +1935,7 @@ export default function App() {
               onClick={() => setShowUnlockModal(true)}
               className="shrink-0 px-3.5 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-[10px] rounded-xl shadow-lg shadow-orange-950/40 transition-all flex items-center gap-1 whitespace-nowrap"
             >
-              💬 익명카톡신청 (무료)
+              💬 실시간 고객 상담 (무료)
             </button>
           </div>
         </div>
@@ -2079,7 +2079,7 @@ export default function App() {
           agencyId={branding.agencyId}
           leadSource={branding.type === 'planner' ? 'direct' : (branding.type === 'agency' ? 'distribute' : 'organic')}
           currentSimulationCode={currentSimulationCode}
-          onTriggerAuth={() => setShowAligoAuthModal(true)}
+          onTriggerAuth={() => setIsRemodelingHyphenOpen(true)}
           isUnlocked={isUnlocked}
           externalIsOpen={isAiChatOpen}
           onCloseExternal={() => setIsAiChatOpen(false)}

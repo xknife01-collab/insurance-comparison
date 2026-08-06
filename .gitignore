@@ -22,3 +22,5 @@ samsung_fire_rate.json
 .agents/
 raw_insurance_dump.csv  
 .vercel
+scratch/
+git_push.bat

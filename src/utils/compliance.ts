@@ -23,6 +23,10 @@ export function maskCompany(name: string, isUnlocked: boolean): string {
     'NH농협손보': 'J손보',
     '하나손해보험': 'K손보',
     '하나손보': 'K손보',
+    '카카오페이손해보험': 'L손보',
+    '카카오페이손보': 'L손보',
+    '처브라이프생명': 'T생보',
+    '처브라이프': 'T생보',
     
     '삼성생명': 'A생보',
     '교보생명': 'B생보',
@@ -77,6 +81,8 @@ export function maskCompany(name: string, isUnlocked: boolean): string {
     'NH': 'J사',
     'DGB': 'S사',
     'iM': 'S사',
+    '카카오페이': 'L사',
+    '처브': 'T사',
   };
 
   for (const [key, val] of Object.entries(companyMap)) {
@@ -99,7 +105,7 @@ export function maskProductName(name: string, isUnlocked: boolean): string {
 
   const lower = name.toLowerCase();
   
-  // Strip company names containing "화재" to prevent keyword collision during product categorization.
+  // Strip company names containing "화재", "생명", etc. to prevent keyword collision during product categorization.
   const cleanLower = lower
     .replace(/삼성\s*화재/g, '')
     .replace(/메리츠\s*화재/g, '')
@@ -119,16 +125,22 @@ export function maskProductName(name: string, isUnlocked: boolean): string {
   if (cleanLower.includes('암') || cleanLower.includes('cancer')) {
     if (cleanLower.includes('표적') || cleanLower.includes('치료비')) return '안심 표적항암치료보험' + suffix;
     if (cleanLower.includes('재진단') || cleanLower.includes('또받는')) return '반복보장 재진단암보험' + suffix;
-    return '실속 암진단보험' + suffix;
+    return '실속 암진단보장보험' + suffix;
   }
-  if (cleanLower.includes('뇌') || cleanLower.includes('심장') || cleanLower.includes('혈관') || cleanLower.includes('뇌졸중') || cleanLower.includes('뇌출혈') || cleanLower.includes('급성심근경색')) {
-    return '2대질환 안심보장보험' + suffix;
+  if (cleanLower.includes('뇌') || cleanLower.includes('뇌혈관') || cleanLower.includes('뇌졸중') || cleanLower.includes('뇌출혈')) {
+    return '뇌혈관질환 안심보장보험' + suffix;
+  }
+  if (cleanLower.includes('심장') || cleanLower.includes('허혈성') || cleanLower.includes('급성심근경색')) {
+    return '허혈성 심장질환보장보험' + suffix;
+  }
+  if (cleanLower.includes('수술') || cleanLower.includes('입원') || cleanLower.includes('종수술')) {
+    return '실속 수술입원보장보험' + suffix;
   }
   if (cleanLower.includes('운전자') || cleanLower.includes('driver')) {
-    return '안심 운전자보험' + suffix;
+    return '안심 운전자보장보험' + suffix;
   }
   if (cleanLower.includes('치아') || cleanLower.includes('덴탈') || cleanLower.includes('dental')) {
-    return '실속 치아보장보험' + suffix;
+    return '실속 치아케어보장보험' + suffix;
   }
   if (cleanLower.includes('실손') || cleanLower.includes('실비')) {
     return '표준 실손의료비보험' + suffix;
@@ -136,17 +148,17 @@ export function maskProductName(name: string, isUnlocked: boolean): string {
   if (cleanLower.includes('종신') || cleanLower.includes('whole life') || cleanLower.includes('wholelife')) {
     return '평생 종신보장보험' + suffix;
   }
-  if (cleanLower.includes('펫') || cleanLower.includes('pet') || cleanLower.includes('개') || cleanLower.includes('고양이')) {
+  if (cleanLower.includes('펫') || cleanLower.includes('pet') || cleanLower.includes('개') || cleanLower.includes('고양이') || cleanLower.includes('반려')) {
     return '반려동물 건강케어보험' + suffix;
   }
-  if (cleanLower.includes('어린이') || cleanLower.includes('자녀') || cleanLower.includes('아이') || cleanLower.includes('태아') || cleanLower.includes('child')) {
+  if (cleanLower.includes('어린이') || cleanLower.includes('자녀') || cleanLower.includes('아이') || cleanLower.includes('태아') || cleanLower.includes('child') || cleanLower.includes('신생아')) {
     return '희망 어린이종합보험' + suffix;
   }
   if ((cleanLower.includes('화재') || cleanLower.includes('주택') || cleanLower.includes('fire')) && !cleanLower.includes('상해')) {
     return '가정 주택화재보험' + suffix;
   }
   if (cleanLower.includes('치매') || cleanLower.includes('dementia')) {
-    return '실버 치매보장보험' + suffix;
+    return '실버 치매간병보장보험' + suffix;
   }
   if (cleanLower.includes('재가') || cleanLower.includes('시설')) {
     return '실속 재가시설지원보험' + suffix;
@@ -154,63 +166,45 @@ export function maskProductName(name: string, isUnlocked: boolean): string {
   if (cleanLower.includes('간병') || cleanLower.includes('care')) {
     return '안심 간병비지원보험' + suffix;
   }
-  if (cleanLower.includes('저축') || cleanLower.includes('연금') || cleanLower.includes('pension') || cleanLower.includes('savings')) {
-    return '안심 저축연금보험' + suffix;
+  if (cleanLower.includes('연금') || cleanLower.includes('pension')) {
+    return '안심 연금저축보험' + suffix;
+  }
+  if (cleanLower.includes('저축') || cleanLower.includes('savings')) {
+    return '비과세 일반저축보험' + suffix;
   }
   if (cleanLower.includes('골프') || cleanLower.includes('golf')) {
-    return '안심 골프파트너보험' + suffix;
+    return '안심 골프레저보험' + suffix;
   }
-  if (cleanLower.includes('상해') || cleanLower.includes('레저') || cleanLower.includes('accident')) {
+  if (cleanLower.includes('변액')) {
+    return '수익형 변액유니버설보험' + suffix;
+  }
+  if (cleanLower.includes('정기')) {
+    return '합리적 정기사망보험' + suffix;
+  }
+  if (cleanLower.includes('종합') || cleanLower.includes('건강') || cleanLower.includes('통합') || cleanLower.includes('알파') || cleanLower.includes('플러스') || cleanLower.includes('올인원')) {
+    return '실속 종합건강보장보험' + suffix;
+  }
+  if (cleanLower.includes('자동차') || cleanLower.includes('car') || cleanLower.includes('오토')) {
+    return '전사 자동차다이렉트보험' + suffix;
+  }
+  if (cleanLower.includes('재물') || cleanLower.includes('상가') || cleanLower.includes('사업자') || cleanLower.includes('소상공인')) {
+    return '재물종합 사업자보험' + suffix;
+  }
+  if (cleanLower.includes('민사') || cleanLower.includes('형사') || cleanLower.includes('법률')) {
+    return '민형사 법률비용보험' + suffix;
+  }
+  if (cleanLower.includes('신용') || cleanLower.includes('대출')) {
+    return '대출상환 안심신용보험' + suffix;
+  }
+  if (cleanLower.includes('유병') || cleanLower.includes('간편')) {
+    return '간편고지 맞춤보장보험' + suffix;
+  }
+  if (cleanLower.includes('상해') || cleanLower.includes('레저') || cleanLower.includes('accident') || cleanLower.includes('골절')) {
     return '데일리 상해보장보험' + suffix;
   }
 
-  let masked = name;
-
-  // Replace company names first (longer keys first to prevent partial match issues)
-  const companyKeys = [
-    'BNP파리바 카디프생명', '교보라이프플래닛생명', '교보라이프플래닛', 'NH농협손해보험', '농협손해보험', '신한라이프생명', '미래에셋생명',
-    'KB라이프생명', 'NH농협생명', '메트라이프생명', '하나손해보험', '신한라이프', '동양생명', '라이나생명', '카디프생명', '라이프플래닛',
-    '삼성화재', '현대해상', 'DB손해보험', 'KB손해보험', '메리츠화재', '한화손해보험', '롯데손해보험', 'MG손해보험',
-    '삼성생명', '교보생명', '한화생명', 'KDB생명', '흥국생명', 'DB생명', 'AIA생명', 'ABL생명', '하나생명', '교보라플',
-    'KB라이프', 'NH농협손보', '농협손보', '하나손보', 'DB손보', 'KB손보', '한화손보', '롯데손보', 'MG손보', '메리츠',
-    '미래에셋', '라이나', '메트라이프', 'iM라이프생명', 'DGB생명보험', 'iM라이프', 'DGB생명', '신한', '우리', 'KDB',
-    'ABL', 'AIA', 'MG', 'DB', 'KB', '흥국', '삼성', '현대', '교보', '동양', '한화', '롯데', '농협', '하나',
-    'NH', 'DGB', 'iM', '흥'
-  ];
-
-  companyKeys.forEach(kw => {
-    const maskedCo = maskCompany(kw, false);
-    if (maskedCo !== kw) {
-      masked = masked.split(kw).join(maskedCo);
-    }
-  });
-
-  // Replace common brand names in product names
-  const productBrandMap: { [key: string]: string } = {
-    '하이카': 'A사 대표플랜',
-    '프로미': 'B사 대표플랜',
-    '참좋은': 'C사 대표플랜',
-    '희망플러스': 'D사 대표플랜',
-    '내Mom같은': 'E사 대표플랜',
-    '굿앤굿': '어린이종합 대표플랜',
-    'THE건강한': '치아 대표플랜',
-    '대출안심': '신용안심 대표플랜',
-    '오잘공': '골프 대표플랜',
-    '성공파트너': '화재안심 대표플랜',
-  };
-
-  for (const [key, val] of Object.entries(productBrandMap)) {
-    if (masked.includes(key)) {
-      masked = masked.split(key).join(val);
-    }
-  }
-
-  // Neutralize marketing / sales terms in product names
-  masked = masked.split('다이렉트').join('');
-  masked = masked.split('무배당').join('');
-  masked = masked.replace(/\s+/g, ' '); // Clean double spaces
-
-  return masked.trim();
+  // Fallback: Ensure NO real product name string is ever exposed unmasked!
+  return '실속 맞춤보장보험' + suffix;
 }
 
 export function maskText(text: string, isUnlocked: boolean): string {
@@ -219,12 +213,18 @@ export function maskText(text: string, isUnlocked: boolean): string {
   
   const companyKeys = [
     'BNP파리바 카디프생명', '교보라이프플래닛생명', '교보라이프플래닛', 'NH농협손해보험', '농협손해보험', '신한라이프생명', '미래에셋생명',
+    '카카오페이손해보험',
+    '처브라이프생명',
     'KB라이프생명', 'NH농협생명', '메트라이프생명', '하나손해보험', '신한라이프', '동양생명', '라이나생명', '카디프생명', '라이프플래닛',
     '삼성화재', '현대해상', 'DB손해보험', 'KB손해보험', '메리츠화재', '한화손해보험', '롯데손해보험', 'MG손해보험',
     '삼성생명', '교보생명', '한화생명', 'KDB생명', '흥국생명', 'DB생명', 'AIA생명', 'ABL생명', '하나생명', '교보라플',
+    '카카오페이손보',
+    '처브라이프',
     'KB라이프', 'NH농협손보', '농협손보', '하나손보', 'DB손보', 'KB손보', '한화손보', '롯데손보', 'MG손보', '메리츠',
     '미래에셋', '라이나', '메트라이프', 'iM라이프생명', 'DGB생명보험', 'iM라이프', 'DGB생명', '신한', '우리', 'KDB',
     'ABL', 'AIA', 'MG', 'DB', 'KB', '흥국', '삼성', '현대', '교보', '동양', '한화', '롯데', '농협', '하나',
+    '카카오페이',
+    '처브',
     'NH', 'DGB', 'iM', '흥'
   ];
 

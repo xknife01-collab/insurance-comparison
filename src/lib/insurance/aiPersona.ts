@@ -1,4 +1,5 @@
 import { GoogleGenAI } from '@google/genai';
+import faqData from './insurance_faq_kb.json';
 
 // ── 행동 단계 점수표 ──────────────────────────────────────────────────────────
 export const ACTION_SCORE_MAP: Record<string, number> = {
@@ -154,6 +155,7 @@ export function getBaseSystemPrompt(agencyName = '인카금융서비스', planne
 - 첫 마디부터 보험 판매·가입 권유
 - 완벽한 설명글처럼 쓰기 (보고서 느낌 금지)
 - 코드 감지 시(예: REX-DA4JGR): 본인인증 안내로 자연스럽게 연결
+- **[🚨 중복 질문 절대 금지] 고객이 대화 도중 이미 밝힌 정보(나이, 직업, 자녀 유무, 가족 상황 등)나 주입된 [🧠 고객 기억 정보]에 나열된 사실들은 절대로 다시 되물어보지 마십시오.** 이미 알고 있다면 당연하다는 듯이 이를 인용하여 대화를 이어가야 합니다. (예: 이미 회사원이라 했다면 다시 직업을 묻는 질문 금지)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📈 [우리 서비스 & 정밀 분석 보험료 가이드라인 — 엉뚱한 대답 금지]
@@ -338,10 +340,15 @@ ${scriptList}`;
 
     if (memLines.length > 0) {
       memoryInstruction = `
-[🧠 고객 기억 정보 - 이전 대화에서 파악한 내용, 자연스럽게 활용하세요]
+[🧠 초정밀 기억 회상 화법 가이드라인 - 인간적인 유대감 형성]
 ${memLines.join('\n')}
-- 위 정보를 이미 알고 있는 것처럼 자연스럽게 대화하되, 일부러 티 나게 언급하지 마세요.
-- 예: "자녀분이 계시니까~", "직장 다니시면 실손이 특히 중요하거든요~"`;
+- 당신은 이전에 고객이 말해준 세부 사항(직업, 가족 상황, 관심사, 고민거리 등)을 기억하고 있는 유능한 인간 설계사입니다.
+- 대답 도중 적어도 1회 이상, 고객의 기억 정보를 자연스럽게 소환하여 "기억 회상 멘트"를 녹여서 사용하십시오.
+- 절대 단순 리스트나 프로필 읊기식으로 티 나게 뱉지 말고, 대화의 맥락(흐름)에 맞추어 부드럽게 공감에 엮어야 합니다.
+- 💡 적용 예시:
+  * 직업 관련: "아무래도 하루 종일 컴퓨터 보시는 직장인이시라 도수치료 청구가 잦으시겠어요~"
+  * 자녀 관련: "맞아요, 아까 자녀분도 있으시다고 하셨잖아요. 아이 키우다 보면 진짜 실비 청구할 일이 정말 많거든요~"
+  * 기존 고민: "그때 말씀하셨던 보험료 부담 부분이 맘에 걸려서, 동일 보장 대비 최대한 다이어트하는 쪽으로 봐드리고 있어요."`;
     }
   }
 
@@ -415,7 +422,9 @@ ${guideText}
 - 당신은 설계사 본인이므로, 고객이 방금 짜서 보낸 위의 시뮬레이션 세부 옵션(예: 월 납입료, 암 진단비 5천만 원 등)을 **대시보드 관리자 화면으로 먼저 모니터링하고 톡방에 들어온 진짜 설계사**처럼 자연스럽게 대화에 녹여야 합니다.
 - 절대 "시스템이 정보를 받아왔다", "데이터베이스에 적혀 있다", "챗봇에 입력되었다" 같이 AI나 프로그램을 암시하는 기계적인 정보 획득 경로는 한 글자도 언급하지 마십시오.
 - 마치 카톡이나 메시지를 보내기 전에 고객의 설계안을 미리 훑어본 인간 플래너로서 대화하십시오.
-- 예시: "안녕하세요 고객님! 담당 플래너입니다. 방금 접수해주신 암보험 설계안 알림이 떠서 대시보드 보고 들어왔어요~ 😊 40대이신데 일반암 5천만 원에 비갱신형으로 진짜 야무지게 잘 짜셨더라고요! 특히 암 가족력은 없으신 상태죠?"`;
+- **고객이 보장 금액 한도(예: 5천만 원, 1억 등)의 적절성이나 수술비 등을 질문하거나 걱정할 때, 위의 [📊 고객이 대화 직전 시뮬레이션해 본 설계 정보]의 옵션값들(진단비, 치료비 여부 등)을 직접 끄집어내어 인간 플래너로서 정교하게 비교해 주십시오.**
+- 예시 1 (첫 인사): "안녕하세요 고객님! 담당 플래너입니다. 방금 접수해주신 암보험 설계안 알림이 떠서 대시보드 보고 들어왔어요~ 😊 40대이신데 일반암 5천만 원에 비갱신형으로 진짜 야무지게 잘 짜셨더라고요! 특히 암 가족력은 없으신 상태죠?"
+- 예시 2 (한도 고민 시 인용): "아! 아까 비교분석 하실 때 암 보장 5천만 원으로 설정해 보셨잖아요~ 😊 40대이시고 가족력까지 있으시다면 일반암 5천에 신규 치료비 5천을 섞어두는 게 1억 단독 설계보다 월 보험료가 훨씬 알뜰하고 든든하실 거예요!"`;
   }
 
   return `${basePrompt}
@@ -482,7 +491,7 @@ export async function generateAiResponse(
   context?: AiContext
 ): Promise<AiResponseResult> {
   const fallback: AiResponseResult = {
-    answer: '죄송합니다, 현재 AI 상담 시스템을 사용할 수 없습니다. 잠시 후 다시 시도해 주세요.',
+    answer: '죄송합니다, 현재 상담 시스템을 사용할 수 없습니다. 잠시 후 다시 시도해 주세요.',
     pos_score: 0,
     neg_score: 0,
     action_type: 'general_response',
@@ -494,16 +503,64 @@ export async function generateAiResponse(
   if (!ai) return fallback;
 
   try {
-    const systemInstruction = buildSystemPrompt(context);
+    // RAG Local Semantic Search 실행 (API를 호출하지 않는 100% 안전하고 빠른 로컬 알고리즘)
+    let finalContext = context ? { ...context } : {
+      cumulativePos: 0,
+      cumulativeNeg: 0,
+      currentActionScore: 0,
+      topScripts: [],
+    } as AiContext;
 
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents,
-      config: {
-        systemInstruction,
-        responseMimeType: 'application/json',
-      },
-    });
+    const userMessages = contents.filter(c => c.role === 'user');
+    const lastUserText = userMessages.length > 0 ? userMessages[userMessages.length - 1].parts[0]?.text : '';
+
+    if (lastUserText && (!finalContext.kbSnippets || finalContext.kbSnippets.length === 0)) {
+      try {
+        const retrieved = retrieveRelevantFaq(lastUserText);
+        finalContext.kbSnippets = retrieved;
+      } catch (ragErr) {
+        console.warn('[RAG] Failed during generateAiResponse RAG retrieval:', ragErr);
+      }
+    }
+
+    const systemInstruction = buildSystemPrompt(finalContext);
+
+    // 503(혼잡) 및 429(할당량) 임시 오류 방지를 위한 초강력 지수 백오프 재시도 및 모델 폴백 로직
+    let response: any = null;
+    let lastApiErr: any = null;
+    const retryDelay = 1500; 
+
+    const modelsToTry = ['gemini-2.5-flash', 'gemini-2.0-flash'];
+
+    for (const modelName of modelsToTry) {
+      for (let attempt = 1; attempt <= 2; attempt++) {
+        try {
+          console.log(`[AI Request] Model=${modelName} (Attempt ${attempt}/2)`);
+          response = await ai.models.generateContent({
+            model: modelName,
+            contents,
+            config: {
+              systemInstruction,
+              responseMimeType: 'application/json',
+            },
+          });
+          if (response) break;
+        } catch (apiErr: any) {
+          console.warn(`[AI Request] Failed: ${apiErr.message || apiErr}`);
+          lastApiErr = apiErr;
+          
+          // 429 또는 503일 때 대기 후 재시도
+          if (attempt < 2) {
+            await new Promise(resolve => setTimeout(resolve, retryDelay * attempt));
+          }
+        }
+      }
+      if (response) break;
+    }
+
+    if (!response) {
+      throw lastApiErr || new Error('Gemini API call failed after multiple retry attempts');
+    }
 
     const raw = response.text?.trim() || '';
 
@@ -529,9 +586,12 @@ export async function generateAiResponse(
       action_score:   actionScore,
       korean_summary: parsed.korean_summary || '',
     };
-  } catch (err) {
+  } catch (err: any) {
     console.error('[AI Score] Failed to generate AI response:', err);
-    return fallback;
+    return {
+      ...fallback,
+      answer: `죄송합니다, 현재 상담 시스템을 사용할 수 없습니다. (상세 에러: ${err?.message || JSON.stringify(err)})`
+    };
   }
 }
 
@@ -550,3 +610,108 @@ export function actionScoreToStep(score: number): string {
   if (score >= 2) return 'code_parsed';
   return 'initial';
 }
+
+interface FaqItem {
+  keywords: string[];
+  title: string;
+  content: string;
+}
+
+// ── RAG 로컬 텍스트 자카드 유사도 및 키워드 가중치 기반 검색 알고리즘 ─────────
+function calculateTextSimilarity(query: string, title: string, keywords: string[]): number {
+  const cleanText = (t: string) => t.toLowerCase().replace(/[^a-z0-9가-힣\s]/g, '').split(/\s+/).filter(Boolean);
+  
+  const queryWords = cleanText(query);
+  const titleWords = cleanText(title);
+  
+  if (queryWords.length === 0) return 0;
+  
+  // 1. 키워드 매칭 점수 계산 (가중치 부여)
+  let keywordMatchCount = 0;
+  for (const word of queryWords) {
+    if (keywords.some(k => word.includes(k.toLowerCase()) || k.toLowerCase().includes(word))) {
+      keywordMatchCount += 1.5;
+    }
+  }
+  
+  // 2. 제목 자카드 유사도 계산
+  const querySet = new Set(queryWords);
+  const titleSet = new Set(titleWords);
+  
+  const intersection = new Set([...querySet].filter(x => titleSet.has(x)));
+  const union = new Set([...querySet, ...titleSet]);
+  
+  const jaccard = union.size > 0 ? intersection.size / union.size : 0;
+  
+  // 3. 최종 유사도 합산
+  return jaccard + (keywordMatchCount / queryWords.length);
+}
+
+export function retrieveRelevantFaq(query: string, threshold = 0.25, topN = 2): string[] {
+  try {
+    const faqs = faqData as FaqItem[];
+    const scored = faqs.map(f => {
+      const similarity = calculateTextSimilarity(query, f.title, f.keywords);
+      return { faq: f, similarity };
+    });
+
+    const filtered = scored
+      .filter(s => s.similarity >= threshold)
+      .sort((a, b) => b.similarity - a.similarity)
+      .slice(0, topN);
+
+    console.log(`[Local RAG Retrieve] Query="${query}" match count=${filtered.length}`);
+    filtered.forEach(s => console.log(` - Match FAQ: "${s.faq.title}" Sim=${s.similarity.toFixed(4)}`));
+
+    return filtered.map(s => `[FAQ 지식: ${s.faq.title}]\n${s.faq.content}`);
+  } catch (err) {
+    console.warn('[Local RAG Retrieve] Failed to search FAQ locally:', err);
+    return [];
+  }
+}
+
+export async function classifyCustomerSegment(
+  conversationHistory: { role: string; text: string }[]
+): Promise<'price_sensitive' | 'coverage_focused' | 'trust_focused' | 'fast_decider' | null> {
+  const ai = getAI();
+  if (!ai || conversationHistory.length === 0) return null;
+  
+  try {
+    const formattedHistory = conversationHistory
+      .map(c => `${c.role === 'user' ? '고객' : '설계사'}: ${c.text}`)
+      .join('\n');
+      
+    const systemInstruction = `당신은 대화 로그 분석기입니다. 고객과 설계사의 대화 내용을 바탕으로 고객의 성향을 단 하나의 영문 키워드로 분류해야 합니다.
+반드시 아래 4가지 유형 중 하나로만 답변하십시오. (JSON 형식이나 설명 없이 딱 단어 한 개만 반환해야 합니다.)
+
+유형 리스트:
+- 'price_sensitive': 보험료 절약, 가격, 할인, 저렴함 등에 극도로 민감하고 비용 부담을 자주 언급하는 성향.
+- 'coverage_focused': 진단비, 보장 한도, 특약 유무, 보장 범위가 빵빵한지 등 안전장치의 두께를 중시하는 성향.
+- 'trust_focused': 신뢰할 수 있는지, 실제 가입 후기가 어떠한지, 강요나 전화 독촉이 없는지 등 안정성과 신뢰 관계를 우선하는 성향.
+- 'fast_decider': 군더더기 없는 짧은 답변을 선호하며, 핵심 용건만 빠르게 묻고 즉각적인 링크나 결론을 요구하는 성향.
+
+대화 로그:
+${formattedHistory}
+
+위 유형 중 고객에 해당하는 키워드 단 하나만 출력하십시오:`;
+
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: '고객의 성향은 무엇입니까?',
+      config: {
+        systemInstruction,
+      }
+    });
+
+    const result = response.text?.trim().replace(/['"`\s]/g, '') || '';
+    if (['price_sensitive', 'coverage_focused', 'trust_focused', 'fast_decider'].includes(result)) {
+      return result as any;
+    }
+    return null;
+  } catch (err) {
+    console.warn('[Segment Classification] Failed to classify customer segment:', err);
+    return null;
+  }
+}
+
+

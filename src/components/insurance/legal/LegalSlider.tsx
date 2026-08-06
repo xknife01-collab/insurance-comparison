@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Calculator, Scale, AlertCircle, ArrowRightLeft, Shield, Sparkles } from 'lucide-react';
 import { AnalysisResult } from '../../../types/insurance';
 import { LegalExplanation } from './LegalExplanation';
+import { maskCompany, maskProductName } from '../../../utils/compliance';
 
 export const LegalSlider: React.FC<{ result: AnalysisResult }> = ({ result }) => {
   const opts = result.analysis.legal || {
@@ -166,7 +167,7 @@ export const LegalSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =>
                       {metrics.simulatedPremium.toLocaleString()} <span className="text-lg">원</span>
                     </p>
                     <p className="text-[10px] text-slate-500 font-bold mt-0.5">
-                      기준 상품: {opt1.productName} ({opt1.companyName})
+                      기준 상품: {maskProductName(opt1.productName, false)} ({maskCompany(opt1.companyName, false)})
                     </p>
                   </div>
                   <div className="border-t border-white/10 pt-4 space-y-2">

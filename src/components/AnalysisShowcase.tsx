@@ -517,7 +517,7 @@ export default function AnalysisShowcase() {
                                           onClick={() => setSimRemodelingApplied(true)}
                                           className="px-6 py-4.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black rounded-xl text-xs shrink-0 shadow-[0_10px_20px_-4px_rgba(255,107,0,0.4)] transform transition-all hover:scale-105 active:scale-95 cursor-pointer text-center relative z-10"
                                         >
-                                          👉 카톡으로 설계안 무료 신청
+                                          👉 실시간 고객 상담 무료 신청
                                         </button>
                                       </div>
                                     )}
@@ -579,7 +579,7 @@ export default function AnalysisShowcase() {
                                                 </span>
                                               )}
                                               <h4 className="text-base font-bold text-slate-800 group-hover:text-orange-600 transition-colors">
-                                                {policy.isCustom ? policy.product_name : maskProductName(policy.product_name, false)}
+                                                {maskProductName(policy.product_name, false)}
                                               </h4>
                                             </div>
                                             <div className="text-right shrink-0">
