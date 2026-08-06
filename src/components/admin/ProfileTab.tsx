@@ -348,16 +348,19 @@ export function ProfileTab({
           {/* 광고심의필 번호 */}
           <div className="space-y-2 md:col-span-2">
             <label className="text-xs font-black text-slate-400 uppercase tracking-wider block">
-              보험대리점 광고심의필 번호 (선택 - 등록 시 하단 푸터 및 랜딩페이지에 상시 노출)
+              보험대리점 광고심의필 번호 및 사용기간 (선택 - 등록 시 푸터 상시 노출)
             </label>
             <input 
               type="text"
               value={editRegistrationNumber}
               onChange={(e) => setEditRegistrationNumber(e.target.value)}
-              placeholder="예: 손해보험협회 심의필 제2026-1234호 또는 생명보험협회 심의필 제2026-5678호"
+              placeholder="예: 원금융서비스-20260601-001 | 사용기간: 2026.06.01 ~ 2027.05.31 (1년간)"
               className="w-full bg-slate-950 border border-slate-800 focus:border-orange-500/50 rounded-xl py-2.5 px-4 outline-none text-xs text-white font-bold"
               autoComplete="off"
             />
+            <p className="text-[10px] text-orange-400 font-semibold flex items-center gap-1">
+              💡 <strong>입력 팁:</strong> 심의필 번호와 사용기간을 2줄로 나누려면 <code className="bg-slate-900 px-1 py-0.5 rounded text-white border border-slate-800">|</code> (파이프 기호)로 구분해 입력하세요. (예: 심의번호 | 사용기간)
+            </p>
           </div>
 
           {/* 보험대리점 등록번호 */}

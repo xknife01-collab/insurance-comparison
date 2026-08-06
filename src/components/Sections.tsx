@@ -1443,11 +1443,40 @@ export const Footer = () => {
                     주소: {branding.customAddress}
                   </p>
                 )}
-                <div className="flex flex-wrap items-center gap-2 pt-0.5">
+                <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-2 pt-1">
                   <span className="text-slate-400">• 본 광고는 광고심의기준을 준수하였으며, 유효기간은 심의일로부터 1년입니다.</span>
-                  <span className="text-orange-400 font-extrabold bg-slate-950 border border-slate-800 px-2.5 py-1 rounded-md text-[9.5px]">
-                    광고심의필 번호: {branding?.registrationNumber || '원금융서비스-00000000-00-000'}
-                  </span>
+                  {(() => {
+                    const rawReg = (branding?.registrationNumber && branding.registrationNumber.trim()) 
+                      ? branding.registrationNumber 
+                      : '원금융서비스-00000000-00-000 | 사용기간: 2026.06.01 ~ 2027.05.31 (1년간)';
+
+                    let parts = rawReg.split(/\||\n/).map(s => s.trim()).filter(Boolean);
+
+                    // 파이프가 없더라도 사용기간/유효기간 단어가 섞여 있으면 자동 분리
+                    if (parts.length === 1 && (parts[0].includes('사용기간') || parts[0].includes('유효기간'))) {
+                      const match = parts[0].match(/(.*?)(사용기간.*|유효기간.*)/);
+                      if (match && match[1] && match[2]) {
+                        parts = [match[1].trim(), match[2].trim()];
+                      }
+                    }
+
+                    if (parts.length > 1) {
+                      return (
+                        <div className="inline-flex flex-col gap-0.5 bg-slate-950 border border-slate-850 px-3 py-1.5 rounded-xl text-[9.5px]">
+                          <span className="text-orange-400 font-black">
+                            {parts[0].startsWith('광고심의필') ? parts[0] : `광고심의필 번호: ${parts[0]}`}
+                          </span>
+                          <span className="text-slate-300 font-bold">{parts[1]}</span>
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <span className="text-orange-400 font-extrabold bg-slate-950 border border-slate-800 px-2.5 py-1 rounded-md text-[9.5px]">
+                        {rawReg.startsWith('광고심의필') ? rawReg : `광고심의필 번호: ${rawReg}`}
+                      </span>
+                    );
+                  })()}
                 </div>
               </div>
             </div>
