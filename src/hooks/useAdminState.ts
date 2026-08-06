@@ -444,6 +444,7 @@ export function useAdminState(initialTab?: 'login' | 'register') {
   const [editCompanyName, setEditCompanyName] = useState('');
   const [editAgencyCode, setEditAgencyCode] = useState('');
   const [editRegistrationNumber, setEditRegistrationNumber] = useState('');
+  const [editAgencyRegistrationNumber, setEditAgencyRegistrationNumber] = useState('');
   const [editEmail, setEditEmail] = useState('');
   const [editCertificationMessage, setEditCertificationMessage] = useState('');
   const [editPlannerName, setEditPlannerName] = useState('');
@@ -2943,6 +2944,7 @@ export function useAdminState(initialTab?: 'login' | 'register') {
           password: editPassword,
           company_name: editCompanyName,
           registration_number: editRegistrationNumber,
+          agency_registration_number: editAgencyRegistrationNumber,
           email: editEmail
         } : p));
         if (currentUser.role === 'agency' && currentUser.agencyId) {
@@ -3430,6 +3432,7 @@ export function useAdminState(initialTab?: 'login' | 'register') {
     editCompanyName, setEditCompanyName,
     editAgencyCode, setEditAgencyCode,
     editRegistrationNumber, setEditRegistrationNumber,
+    editAgencyRegistrationNumber, setEditAgencyRegistrationNumber,
     editEmail, setEditEmail,
     editCertificationMessage, setEditCertificationMessage,
     editPlannerName, setEditPlannerName,

@@ -1404,26 +1404,85 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-slate-800 pt-12 text-[10px] text-slate-400 space-y-4 max-w-4xl opacity-80 leading-relaxed font-bold">
-          <p className="text-slate-300">[ 필수안내사항 ]</p>
-          <p>
-            {branding?.type === 'planner'
-              ? `보험대리점 : ${branding.agencyName || '보험리밸런스'} | 지점 주소 : ${branding.customAddress || '등록된 주소가 없습니다.'} | 본 광고는 광고심의기준을 준수하였으며, 유효기간은 심의일로부터 1년입니다.`
-              : (branding?.customAddress || "보험대리점 : 보험리밸런스 | 본 광고는 광고심의기준을 준수하였으며, 유효기간은 심의일로부터 1년입니다.")
-            }
-          </p>
-          {branding?.registrationNumber && (
-            <p className="text-orange-400 font-extrabold bg-slate-900 border border-slate-850 px-3.5 py-2 rounded-xl inline-block">
-              광고심의필: {branding.registrationNumber}
+        <div className="border-t border-slate-800/80 pt-10 text-[10.5px] text-slate-400 space-y-6 w-full opacity-95 leading-relaxed font-bold">
+          <div className="flex items-center justify-between border-b border-slate-800/60 pb-3">
+            <p className="text-slate-200 text-xs font-black tracking-wide flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-orange-500"></span>
+              [ 필수안내사항 ]
             </p>
-          )}
-          <p className="text-slate-400 border border-slate-800 p-3 rounded-xl bg-slate-900/40 leading-relaxed font-bold">
-            ※ 상기 분석 및 추천 설계 내용은 모집종사자의 개인적인 의견이며, 계약체결에 따른 이익 또는 손실은 보험계약자 및 피보험자에게 귀속됩니다.
-          </p>
-          <p>보험계약자가 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서 질병이력, 연령증가 등으로 가입이 거절되거나 보험료가 인상될 수 있습니다. 또한 해약환급금 손실이 발생할 수 있으니 유의하시기 바랍니다.</p>
-          <p className="text-slate-500">
-            © {branding?.agencyName || '보험리밸런스'} 소속 설계사 맞춤 분석. All Rights Reserved.
-          </p>
+            <span className="text-[10px] text-slate-500 font-semibold">금융소비자보호법 및 손·생보협회 광고심의 기준 준수</span>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+            {/* 좌측 6열: 기본 필수 고지 및 대리점/심의필 정보 카드 */}
+            <div className="md:col-span-6 text-slate-400 border border-slate-800/80 p-5 rounded-2xl bg-slate-900/50 space-y-3 flex flex-col justify-between shadow-sm">
+              <div className="space-y-2.5">
+                <p className="text-slate-200 font-extrabold text-[11px] flex items-center gap-1.5 border-b border-slate-800/80 pb-2">
+                  <span className="text-orange-500">📋</span> 모집종사자 고지 및 상품 안내
+                </p>
+                <p className="text-slate-300 leading-normal">
+                  • 상기 내용은 <span className="text-orange-400 font-black">{branding?.name || '담당'}</span> 보험설계사의 의견이며, 계약체결에 따른 이익 또는 손실은 보험계약자 등에게 귀속됩니다.
+                </p>
+                <p className="text-slate-400 leading-normal">
+                  • 보험사 및 상품별로 상이할 수 있으므로, 관련한 세부사항은 반드시 해당 약관을 참조하시기 바랍니다.
+                </p>
+                <p className="text-slate-400 leading-normal">
+                  • 보험회사 상품별, 성별, 연령, 직업에 따라 가입 가능한 담보와 가입금액, 보험료 등은 달라질 수 있습니다.
+                </p>
+              </div>
+
+              <div className="pt-3 border-t border-slate-800/80 space-y-2">
+                <p className="text-slate-300 leading-tight font-extrabold">
+                  • {(branding?.agencyName || '인카금융서비스').replace(/\s*\([^)]*등록번호[^)]*\)/g, '').trim()} 보험대리점 
+                  <span className="text-slate-400 font-bold ml-1.5">
+                    (보험대리점 등록번호: {branding?.agencyRegistrationNumber || '제 2019020052 호'})
+                  </span>
+                </p>
+                {branding?.customAddress && !branding.customAddress.includes('인카금융서비스') && (
+                  <p className="text-slate-400 text-[9.5px]">
+                    주소: {branding.customAddress}
+                  </p>
+                )}
+                <div className="flex flex-wrap items-center gap-2 pt-0.5">
+                  <span className="text-slate-400">• 본 광고는 광고심의기준을 준수하였으며, 유효기간은 심의일로부터 1년입니다.</span>
+                  <span className="text-orange-400 font-extrabold bg-slate-950 border border-slate-800 px-2.5 py-1 rounded-md text-[9.5px]">
+                    광고심의필 번호: {branding?.registrationNumber || '원금융서비스-00000000-00-000'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* 우측 6열: 기존 계약 해지 시 유의사항 특화 강조 카드 */}
+            <div className="md:col-span-6 text-slate-400 border border-slate-800/80 p-5 rounded-2xl bg-slate-900/50 space-y-3 flex flex-col justify-between shadow-sm">
+              <div className="space-y-3">
+                <p className="text-slate-200 font-extrabold text-[11px] flex items-center gap-1.5 border-b border-slate-800/80 pb-2">
+                  <span className="text-orange-500">🛡️</span> 기존 보험계약 해지 시 유의사항
+                </p>
+                <p className="text-slate-200 font-bold leading-relaxed">
+                  보험계약자가 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서:
+                </p>
+                <div className="space-y-2 pl-1">
+                  <p className="text-slate-300 leading-normal flex items-start gap-1.5">
+                    <span className="text-orange-400 font-black shrink-0">①</span>
+                    <span>질병이력, 연령증가 등으로 신규 가입이 거절되거나 보험료가 인상될 수 있습니다.</span>
+                  </p>
+                  <p className="text-slate-300 leading-normal flex items-start gap-1.5">
+                    <span className="text-orange-400 font-black shrink-0">②</span>
+                    <span>가입 상품에 따라 새로운 면책기간 적용 및 보장 제한 등 기타 불이익이 발생할 수 있습니다.</span>
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-850/80 text-[9.5px] text-slate-400 leading-relaxed mt-2">
+                💡 <span className="text-orange-400 font-bold">안내:</span> 기존 계약을 해지하기 전 반드시 담당 설계사와의 1:1 비교 상담을 통해 보장 공백이 없는지 확인하시기 바랍니다.
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 pt-4 border-t border-slate-800/80 text-[9.5px] text-slate-500">
+            <p>© {branding?.agencyName || '인카금융서비스'} 소속 설계사 맞춤 분석 플랫폼. All Rights Reserved.</p>
+            <p className="text-slate-600">Compliance & Regulatory Information Included</p>
+          </div>
         </div>
       </div>
     </footer>

@@ -16,6 +16,8 @@ interface ProfileTabProps {
   setEditEmail: (val: string) => void;
   editRegistrationNumber: string;
   setEditRegistrationNumber: (val: string) => void;
+  editAgencyRegistrationNumber?: string;
+  setEditAgencyRegistrationNumber?: (val: string) => void;
   editPassword: string;
   setEditPassword: (val: string) => void;
   editProfileImg: string;
@@ -63,6 +65,8 @@ export function ProfileTab({
   setEditEmail,
   editRegistrationNumber,
   setEditRegistrationNumber,
+  editAgencyRegistrationNumber = '',
+  setEditAgencyRegistrationNumber = () => {},
   editPassword,
   setEditPassword,
   editProfileImg,
@@ -351,6 +355,21 @@ export function ProfileTab({
               value={editRegistrationNumber}
               onChange={(e) => setEditRegistrationNumber(e.target.value)}
               placeholder="예: 손해보험협회 심의필 제2026-1234호 또는 생명보험협회 심의필 제2026-5678호"
+              className="w-full bg-slate-950 border border-slate-800 focus:border-orange-500/50 rounded-xl py-2.5 px-4 outline-none text-xs text-white font-bold"
+              autoComplete="off"
+            />
+          </div>
+
+          {/* 보험대리점 등록번호 */}
+          <div className="space-y-2 md:col-span-2">
+            <label className="text-xs font-black text-slate-400 uppercase tracking-wider block">
+              보험대리점 등록번호 (선택 - 예: 2019020052호)
+            </label>
+            <input 
+              type="text"
+              value={editAgencyRegistrationNumber}
+              onChange={(e) => setEditAgencyRegistrationNumber(e.target.value)}
+              placeholder="예: 2019020052호 (대리점명과 분리되어 푸터 및 고지문에 깔끔하게 표시됩니다)"
               className="w-full bg-slate-950 border border-slate-800 focus:border-orange-500/50 rounded-xl py-2.5 px-4 outline-none text-xs text-white font-bold"
               autoComplete="off"
             />

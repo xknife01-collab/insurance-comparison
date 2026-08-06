@@ -17,6 +17,7 @@ export interface B2BBranding {
   agencyName?: string | null;
   agencyAddress?: string | null;
   registrationNumber?: string | null;
+  agencyRegistrationNumber?: string | null;
   customEmail?: string | null;
   leadRoutingType?: string | null;
 }
@@ -37,6 +38,7 @@ const DEFAULT_BRANDING: B2BBranding = {
   agencyName: '인카금융서비스',
   agencyAddress: '보험대리점 : 인카금융서비스 (등록번호 : 제2006038313호)',
   registrationNumber: null,
+  agencyRegistrationNumber: null,
   customEmail: 'support@rebalance.com',
 };
 
@@ -402,6 +404,7 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
               agencyName: planner.company_name || planner.agencies?.name || null,
               agencyAddress: planner.custom_address || planner.agencies?.address || null,
               registrationNumber: extractDelibNumber(planner.registration_number),
+              agencyRegistrationNumber: planner.agency_registration_number || planner.agencies?.agency_registration_number || null,
               customEmail: planner.email || planner.agencies?.email || DEFAULT_BRANDING.customEmail,
               leadRoutingType: demoRoutingOverride || planner.agencies?.lead_routing_type || 'direct',
             };
