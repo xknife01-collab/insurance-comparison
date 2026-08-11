@@ -354,12 +354,12 @@ export function PartnerLanding({ onNavigate }: PartnerLandingProps) {
                 </div>
                 <div className="flex gap-1.5">
                   <span className="text-[10px] font-bold text-orange-400 bg-orange-500/5 px-2.5 py-0.5 rounded-lg border border-orange-500/10">전사 비교</span>
-                  <span className="text-[10px] font-bold text-slate-400 bg-slate-900/80 px-2.5 py-0.5 rounded-lg border border-slate-800/80">1초 완성</span>
+                  <span className="text-[10px] font-bold text-slate-400 bg-slate-900/80 px-2.5 py-0.5 rounded-lg border border-slate-800/80">실시간 완성</span>
                 </div>
               </div>
-              <h4 className="font-extrabold text-base text-white group-hover:text-orange-400 transition-colors">국내 전(全) 생명보험·손해보험사 상품 1초만에 비교</h4>
+              <h4 className="font-extrabold text-base text-white group-hover:text-orange-400 transition-colors">국내 전(全) 생명보험·손해보험사 상품 실시간 비교</h4>
               <p className="text-slate-400 text-xs font-semibold leading-relaxed break-keep">
-                삼성생명, 한화생명 등 주요 생명보험사와 현대해상, 메리츠화재 등 전 손해보험사의 모든 핵심 상품을 <span className="text-orange-300">단 1초 만에 비교하고 분석</span>합니다. 특정 보험사에 치우치지 않고 국내 모든 보험 상품의 보험료 및 담보 데이터를 실시간 대조하여 고객에게 최적의 맞춤 설계를 제시합니다.
+                삼성생명, 한화생명 등 주요 생명보험사와 현대해상, 메리츠화재 등 전 손해보험사의 모든 핵심 상품을 <span className="text-orange-300">실시간으로 비교하고 분석</span>합니다. 특정 보험사에 치우치지 않고 국내 모든 보험 상품의 보험료 및 담보 데이터를 실시간 대조하여 고객에게 최적의 맞춤 설계를 제시합니다.
               </p>
             </div>
 

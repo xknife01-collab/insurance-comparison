@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { MessageSquare, Send, X, ShieldCheck, Check } from 'lucide-react';
 import { createClient } from '../../utils/supabase/client';
 import { generateAiResponse, parseCodeFromMessage, ACTION_SCORE_MAP, actionScoreToStep, getEmbedding, classifyCustomerSegment } from '../../lib/insurance/aiPersona';
+import { searchGoogleAndExpandKb } from '../../lib/insurance/aiGoogleSearchService';
 import type { AiContext, CustomerMemory } from '../../lib/insurance/aiPersona';
 
 // ── [기능8] 고객 대화 분석 후 무비용 룰 기반으로 기억(Memory) 추출 및 Supabase 저장 ──────
@@ -564,6 +565,27 @@ export default function AiChatWidget({
             if (kbRows && kbRows.length > 0) {
               kbSnippets = kbRows.map((k: any) => `### ${k.title}\n${k.content}`);
               console.log(`[RAG Vector] 📚 의미 기반 지식 매칭 성공 (${kbRows.length}건) | 쿼리: "${lastUserMsg.slice(0, 20)}..."`);
+            }
+
+            // 🧮 [신규] Supabase 계산 수식 및 공백 판정 로직 매칭 (match_calculation_rules)
+            const { data: calcRows } = await supabase.rpc('match_calculation_rules', {
+              query_embedding: queryEmbedding,
+              match_threshold: 0.3,
+              match_count:     2
+            });
+
+            if (calcRows && calcRows.length > 0) {
+              const calcSnippets = calcRows.map((c: any) => `### 🧮 [Supabase 엔진 수식] ${c.category}\n${c.formula_explanation}`);
+              kbSnippets = [...kbSnippets, ...calcSnippets];
+              console.log(`[RAG Vector] 🧮 Supabase 계산 수식 매칭 성공 (${calcRows.length}건)`);
+            }
+
+            // 🌐 [신규 자가적재] DB 지식이 부족할 때 구글 실시간 웹 검색 ➔ Supabase 자동 insert 및 벡터화
+            if (kbSnippets.length === 0) {
+              const expanded = await searchGoogleAndExpandKb(lastUserMsg, supabase);
+              if (expanded) {
+                kbSnippets.push(`### 🌐 [구글 실시간 탐색 지식] ${expanded.title}\n${expanded.content}`);
+              }
             }
           }
         } catch (kbErr) {

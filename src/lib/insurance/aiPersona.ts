@@ -207,13 +207,19 @@ export function getBaseSystemPrompt(agencyName = '인카금융서비스', planne
 ▶ 대화 원칙
   - 고객 언급 금액이 위 범위 안이면 "맞아요!", "정상이에요!" 로 먼저 확인하세요.
   - 정확한 견적은 나이/직업/병력에 따라 달라질 수 있다고 추가 안내하세요.
-  - **[💡 설계안/견적 요청 시] 고객이 "설계안 보내주세요", "얼마 나오는지 보내주세요"라고 할 때 본인인증을 강요하지 말고 35개사 비교 리포트 링크(/report-v2?category=...&age=...&gender=...&premium=...)를 슥 제시하세요.**
+  - **[💡 개념 설명 시 전환 유도]** 보험 용어나 보장 항목(진단비, 수술비, 간병인 등)을 설명할 때는 개념을 친절히 풀어준 후, 반드시 **"혹시 고객님 나이대를 말씀해 주시면 진단비(3천/5천/1억)나 옵션 세팅별 실시간 최저가 대조 금액을 정리해서 보여드릴까요? 😊"**처럼 부드럽게 다음 질문이나 리포트 확인으로 연결하세요.
+  - **[🎛️ Supabase 정밀 옵션 및 금액 추산 인용]** 주입된 DB 옵션(3,000만/5,000만/1억, 2025 암주요치료비 포함/미포함, 비갱신/갱신 등)과 연산 수식을 인용하여 옵션별 예상 차액을 구체적인 숫자로 짚어주며 대답하세요.
+  - **[💡 설계안/견적 요청 시]** 고객이 "설계안 보내주세요", "얼마 나오는지 보내주세요"라고 할 때 본인인증을 강요하지 말고 35개사 비교 리포트 링크(/report-v2?category=...&age=...&gender=...&premium=...)를 슥 제시하세요.
   - 절대로 가격을 부정하거나 "어렵다", "낮다" 같은 말로 고객을 혼란스럽게 하지 마세요.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📝 [예시 — 이렇게 말하세요]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+고객: "암보험에 진단비가 뭐예요? 진단비에 따라 금액 차이가 나나요?"
+✅ 좋은 답변:
+  "아~ 그러셨군요! 암보험 진단비에 대해 궁금해하시는 분들 진짜 많아요! 😮 | 암보험 진단비는 암 진단을 받으셨을 때 보험사에서 '한 번에' 지급해 드리는 목돈을 말해요. 병원비나 생활비로 자유롭게 쓰실 수 있죠. | 진단비 금액에 따라 보험료가 차이 나는데요~ 예를 들어 40대 기준 일반암 5천만원은 4만원대인데 3천만원으로 조정하시면 훨씬 저렴해지거든요! 혹시 고객님 나이대를 알려주시면 옵션 세팅별 실시간 최저가 금액을 정리해서 보여드릴까요? 😊"
 
 고객: "보험료가 너무 비싼 것 같아요"
 ✅ 좋은 답변:
@@ -309,7 +315,7 @@ export function buildSystemPrompt(ctx?: AiContext): string {
 
   // ── 성공 멘트 주입 (success_weight + 전환율 병렬 표시) ──────────────────────
   let scriptsInstruction = '';
-  if (topScripts.length > 0) {
+  if (topScripts && topScripts.length > 0) {
     const scriptList = topScripts
       .map((s, i) => {
         const convInfo = s.convRate != null ? ` / 전환율: ${s.convRate}%` : '';
@@ -512,8 +518,10 @@ export async function generateAiResponse(
       topScripts: [],
     } as AiContext;
 
-    const userMessages = contents.filter(c => c.role === 'user');
-    const lastUserText = userMessages.length > 0 ? userMessages[userMessages.length - 1].parts[0]?.text : '';
+    const historyList = Array.isArray(contents) ? contents : [];
+    const userMessages = historyList.filter((c: any) => c.role === 'user');
+    const lastUserItem = userMessages.length > 0 ? userMessages[userMessages.length - 1] : null;
+    const lastUserText = lastUserItem ? (lastUserItem.text || lastUserItem.parts?.[0]?.text || String(lastUserItem)) : '';
 
     if (lastUserText && (!finalContext.kbSnippets || finalContext.kbSnippets.length === 0)) {
       try {
@@ -531,7 +539,7 @@ export async function generateAiResponse(
     let lastApiErr: any = null;
     const retryDelay = 1500; 
 
-    const modelsToTry = ['gemini-2.5-flash', 'gemini-2.0-flash'];
+    const modelsToTry = ['gemini-3.6-flash', 'gemini-2.5-flash', 'gemini-2.0-flash'];
 
     for (const modelName of modelsToTry) {
       for (let attempt = 1; attempt <= 2; attempt++) {

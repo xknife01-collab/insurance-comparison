@@ -1158,7 +1158,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
             <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest block mb-1">Differentiator 01</span>
             <h4 className="text-lg font-black text-slate-800 tracking-tight leading-snug">
               국내 전(全) 생명·손해보험사<br />
-              <span className="text-orange-500">상품 1초 만에 비교</span>
+              <span className="text-orange-500">상품 실시간 비교</span>
             </h4>
           </div>
           <p className="text-xs text-slate-500 font-semibold leading-relaxed break-keep">

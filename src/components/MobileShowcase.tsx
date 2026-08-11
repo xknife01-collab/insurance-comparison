@@ -688,7 +688,7 @@ export default function MobileShowcase() {
                   }`}>
                     02
                   </span>
-                  <span className="font-black text-base text-slate-200">0.8초 실시간 AI 정밀 연산 (Engine)</span>
+                  <span className="font-black text-base text-slate-200">실시간 AI 정밀 연산 (Engine)</span>
                 </div>
                 <ChevronRight size={16} className={`text-slate-500 transition-transform ${activeStep === 'loading' ? 'translate-x-1' : ''}`} />
               </div>
