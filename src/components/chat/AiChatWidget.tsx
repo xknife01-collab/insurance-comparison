@@ -4,6 +4,10 @@ import { MessageSquare, Send, X, ShieldCheck, Check } from 'lucide-react';
 import { createClient } from '../../utils/supabase/client';
 import { generateAiResponse, parseCodeFromMessage, ACTION_SCORE_MAP, actionScoreToStep, getEmbedding, classifyCustomerSegment } from '../../lib/insurance/aiPersona';
 import { searchGoogleAndExpandKb } from '../../lib/insurance/aiGoogleSearchService';
+import { formatInputFieldExplanationContext } from '../../lib/insurance/aiInputFieldExplainService';
+import { buildProposalFactContext } from '../../lib/insurance/aiProposalBridgeService';
+import { ReportLinkButton } from './ReportLinkButton';
+import { DigitalBusinessCard } from './DigitalBusinessCard';
 import type { AiContext, CustomerMemory } from '../../lib/insurance/aiPersona';
 
 // ── [기능8] 고객 대화 분석 후 무비용 룰 기반으로 기억(Memory) 추출 및 Supabase 저장 ──────
@@ -575,9 +579,31 @@ export default function AiChatWidget({
             });
 
             if (calcRows && calcRows.length > 0) {
-              const calcSnippets = calcRows.map((c: any) => `### 🧮 [Supabase 엔진 수식] ${c.category}\n${c.formula_explanation}`);
+              const calcSnippets = calcRows.map((c: any) => {
+                let baseExp = `### 🧮 [Supabase 엔진 수식] ${c.category}\n${c.formula_explanation || ''}`;
+                if (c.input_options_schema) {
+                  const fieldExp = formatInputFieldExplanationContext(c.category, c.input_options_schema, c.premium_factor_matrix);
+                  if (fieldExp) {
+                    baseExp += `\n\n${fieldExp}`;
+                  }
+                }
+                return baseExp;
+              });
               kbSnippets = [...kbSnippets, ...calcSnippets];
-              console.log(`[RAG Vector] 🧮 Supabase 계산 수식 매칭 성공 (${calcRows.length}건)`);
+              console.log(`[RAG Vector] 🧮 Supabase 계산 수식 및 UI 정밀 필드 매칭 성공 (${calcRows.length}건)`);
+            }
+
+            // 📊 [신규 브릿지] 기존 설계안 엔진 원본 무수정 보존 기반 실시간 설계안 팩트 연동
+            const priceMatch = lastUserMsg.match(/(\d{2,3})[,\s]?000/);
+            const rawPremium = priceMatch ? parseInt(priceMatch[1], 10) * 1000 : 125000;
+            const isFemale = lastUserMsg.includes('여') || lastUserMsg.includes('여자');
+            const ageMatch = lastUserMsg.match(/(\d{2})대/);
+            const rawAge = ageMatch ? parseInt(ageMatch[1], 10) : 40;
+
+            if (lastUserMsg.includes('다이어트') || lastUserMsg.includes('설계') || lastUserMsg.includes('얼마') || priceMatch) {
+              const proposalSnippet = buildProposalFactContext(rawAge, isFemale ? 'female' : 'male', rawPremium, 'cancer');
+              kbSnippets.push(proposalSnippet.formattedContext);
+              console.log(`[Proposal Bridge] 📊 기존 설계안 엔진 연산 결과 1:1 브릿지 완료: 기존 ${rawPremium}원 ➔ 최저가 ${proposalSnippet.optimizedPremium}원 (월 ${proposalSnippet.monthlySavings}원 절감)`);
             }
 
             // 🌐 [신규 자가적재] DB 지식이 부족할 때 구글 실시간 웹 검색 ➔ Supabase 자동 insert 및 벡터화
@@ -793,9 +819,19 @@ export default function AiChatWidget({
           .limit(1)
           .maybeSingle();
 
+        // ── 🛡️ AI 가동 권한 통제 (총괄 관리자 / 데모 모드 / 심의필 등록 지점만 100% 켜짐) ──
+        const cleanReg = registrationNumber ? (registrationNumber.includes('|') ? registrationNumber.split('|')[0] : (registrationNumber.startsWith('dist_') ? '' : registrationNumber)) : '';
+        const hasReg = Boolean(cleanReg && cleanReg.trim() !== '');
+        const isSuperAdmin = plannerId === '00000000-0000-4000-a000-000000000000' ||
+                             certificationMessage === '총괄 관리자' ||
+                             plannerName?.includes('총괄') ||
+                             plannerName?.includes('마스터');
+        const isDemo = agencyId === '88888888-8888-4888-a888-888888888888';
+        const canBotBeActive = isSuperAdmin || isDemo || hasReg;
+
         if (existingLead) {
           setCurrentLeadId(existingLead.id);
-          setIsBotActive(existingLead.is_bot_active !== false);
+          setIsBotActive(canBotBeActive && existingLead.is_bot_active !== false);
         } else if (!currentSimulationCode) {
           // Create a dynamic guest lead if no simulation code has been run yet
           const { data: newLead } = await supabase
@@ -828,7 +864,7 @@ export default function AiChatWidget({
 
           if (newLead) {
             setCurrentLeadId(newLead.id);
-            setIsBotActive(true);
+            setIsBotActive(canBotBeActive);
           }
         }
       } catch (err) {
@@ -1451,19 +1487,26 @@ export default function AiChatWidget({
                 const isAuthTag = (msg as any).action_tag === 'trigger_auth';
                 const isFirstPlannerMsg = !isMe && !messages.slice(0, messages.findIndex(m => m.id === msg.id)).some(m => m.sender_id !== guestUserId);
 
+                const isDemo = agencyId === '88888888-8888-4888-a888-888888888888';
+                const isSuperAdmin = plannerId === '00000000-0000-4000-a000-000000000000';
+                const cleanReg = registrationNumber ? (registrationNumber.includes('|') ? registrationNumber.split('|')[0] : (registrationNumber.startsWith('dist_') ? '' : registrationNumber)) : '';
+                const hasReg = cleanReg && cleanReg.trim() !== '';
+                const canShowCard = isDemo || isSuperAdmin || hasReg;
+
                 return (
                   <div
                     key={msg.id}
                     className={`flex flex-col ${isMe ? 'items-end' : 'items-start'} space-y-1 w-full`}
                   >
-                    {isFirstPlannerMsg && renderedCardUrl && (
-                      <div className="mb-3 w-full max-w-[85%] rounded-2xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-950 p-1 flex flex-col items-center">
-                        <img 
-                          src={renderedCardUrl} 
-                          alt="명함" 
-                          className="w-full h-auto object-contain rounded-xl"
-                        />
-                      </div>
+                    {isFirstPlannerMsg && canShowCard && (
+                      <DigitalBusinessCard
+                        plannerName={plannerName}
+                        agencyName={agencyName}
+                        customPhone={customPhone}
+                        customEmail={customEmail}
+                        customAddress={customAddress}
+                        certificationMessage={certificationMessage}
+                      />
                     )}
                     {!isMe && (
                       <span className="text-[9px] text-slate-500 font-bold ml-1">
@@ -1484,6 +1527,9 @@ export default function AiChatWidget({
                         }`}
                       >
                         {msg.message}
+
+                        {/* 📄 35개사 정밀 비교 리포트 열람 & PDF 저장 클릭 버튼 */}
+                        <ReportLinkButton messageText={msg.message} />
                         
                         {/* 🔒 0.1초 본인인증 버튼 렌더링 (action_tag가 trigger_auth인 경우) */}
                         {isAuthTag && !isUnlocked && (

@@ -219,7 +219,7 @@ export function getBaseSystemPrompt(agencyName = '인카금융서비스', planne
 
 고객: "암보험에 진단비가 뭐예요? 진단비에 따라 금액 차이가 나나요?"
 ✅ 좋은 답변:
-  "아~ 그러셨군요! 암보험 진단비에 대해 궁금해하시는 분들 진짜 많아요! 😮 | 암보험 진단비는 암 진단을 받으셨을 때 보험사에서 '한 번에' 지급해 드리는 목돈을 말해요. 병원비나 생활비로 자유롭게 쓰실 수 있죠. | 진단비 금액에 따라 보험료가 차이 나는데요~ 예를 들어 40대 기준 일반암 5천만원은 4만원대인데 3천만원으로 조정하시면 훨씬 저렴해지거든요! 혹시 고객님 나이대를 알려주시면 옵션 세팅별 실시간 최저가 금액을 정리해서 보여드릴까요? 😊"
+  "아~ 그러셨군요! 암보험 진단비에 대해 궁금해하시는 분들 진짜 많아요! 😮 | 암보험 진단비는 암 진단을 받으셨을 때 보험사에서 '한 번에' 지급해 드리는 목돈을 말해요. 병원비나 생활비로 자유롭게 쓰실 수 있죠. | 진단비 금액에 따라 보험료가 차이 나는데요~ 예를 들어 40대 기준 일반암 5천만원은 4만원대인데 3천만원으로 조정하시면 3만원대로 훨씬 부담이 적어지거든요! 혹시 고객님 나이대를 알려주시면 옵션 세팅별 실시간 최저가 금액을 정리해서 보여드릴까요? 😊"
 
 고객: "보험료가 너무 비싼 것 같아요"
 ✅ 좋은 답변:
@@ -365,7 +365,7 @@ ${memLines.join('\n')}
     kbInstruction = `
 [📚 전문 보험 지식 사전 - 정확한 답변을 위해 필수 참고]
 ${kbSnippets.join('\n\n')}
-- 위 요율/규정/약관 사실에 기반하여 질문에 정밀하게 답변하십시오. 절대 거짓이나 임의의 수치로 상상하여 답변하지 마십시오.`;
+- 위 요율/규정/약관 및 [📊 실시간 생성된 35개사 정밀 설계안 팩트 명세] 수치가 존재할 경우, 반드시 해당 설계안의 실제 금액 수치(기존 납입액 대비 다이어트 플랜 금액, 월 절감액, 20년 총 절감액)를 명확하고 정확하게 짚어서 대답하십시오. 절대 임의의 어림수나 추측으로 다르게 변형하지 마십시오.`;
   }
 
   // ── [기능8] 고객 성향 맞춤 화법 매뉴얼 주입 ──────────────────────────────────
@@ -521,7 +521,7 @@ export async function generateAiResponse(
     const historyList = Array.isArray(contents) ? contents : [];
     const userMessages = historyList.filter((c: any) => c.role === 'user');
     const lastUserItem = userMessages.length > 0 ? userMessages[userMessages.length - 1] : null;
-    const lastUserText = lastUserItem ? (lastUserItem.text || lastUserItem.parts?.[0]?.text || String(lastUserItem)) : '';
+    const lastUserText = lastUserItem ? ((lastUserItem as any).text || (lastUserItem as any).parts?.[0]?.text || String(lastUserItem)) : '';
 
     if (lastUserText && (!finalContext.kbSnippets || finalContext.kbSnippets.length === 0)) {
       try {

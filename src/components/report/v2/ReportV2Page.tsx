@@ -64,7 +64,17 @@ export const ReportV2Page: React.FC = () => {
       try {
         const supabase = createClient();
         const simulationCode = getParam('code', '');
-        const category = getParam('category', 'cancer') as InsuranceCategory;
+        const rawCategory = getParam('category', 'cancer');
+        const normCategory = (
+          rawCategory === 'silbi' || rawCategory === 'silson' ? 'silson' :
+          rawCategory === 'comprehensive' || rawCategory === 'remodeling' || rawCategory === 'health' || rawCategory === 'health_general' ? 'remodeling' :
+          rawCategory === 'cancer' ? 'cancer' :
+          rawCategory === 'driver' ? 'driver' :
+          rawCategory === 'brain' ? 'brain' :
+          rawCategory === 'heart' ? 'heart' :
+          rawCategory === 'surgery' ? 'surgery' :
+          rawCategory === 'dental' ? 'dental' : 'cancer'
+        ) as InsuranceCategory;
 
         let profile;
 
@@ -88,7 +98,7 @@ export const ReportV2Page: React.FC = () => {
               const leadCategory = (
                 lead.insurance_type?.replace('_consult', '').replace('_underwriting', '') ||
                 analysisResult.analysis.selectedCategory ||
-                category
+                normCategory
               ) as InsuranceCategory;
 
               profile = adaptLeadToProfile(analysisResult, leadCategory);
@@ -98,64 +108,46 @@ export const ReportV2Page: React.FC = () => {
 
         // ────────────────────────────────────────────────────
         // 패턴 2: code 없거나 DB 결과 없으면
-        // 1단계: 역추산 (나이+보험료 ➔ 암 1억 원 역산)
-        // 2단계: 기존 리밸런싱 연산 엔진(analyzeRemodeling) 쏘기!
+        // 고객 입력 패킷(age, gender, premium, category)을
+        // 앱 '내보험 정밀 분석' 엔진(runAnalysis)에 직접 쏘기 ➔ 나온 결과 100% 1:1 렌더링
         // ────────────────────────────────────────────────────
         if (!profile) {
-          const age = parseInt(getParam('age', '45'), 10);
+          const age = parseInt(getParam('age', '40'), 10);
           const rawGender = getParam('gender', '남성');
-          const gender = rawGender === '여성' ? 'F' : 'M';
+          const normGender: '남성' | '여성' = (rawGender === '여성' || rawGender === 'female' || rawGender === 'F') ? '여성' : '남성';
+          const normGenderCode: 'M' | 'F' = normGender === '여성' ? 'F' : 'M';
           const premium = parseInt(getParam('premium', '125000'), 10);
 
-          // 1단계: 제미나이(AI) 역추정 (나이 + 성별 + 입력보험료 ➔ 보장 내역 역산)
-          const estimated = estimateProfile(age, rawGender as '남성' | '여성', premium, category);
-
-          // 2단계: 메인 앱 mockGenerator와 100% 동일한 standardized 패킷 생성
-          const customPolicies = [
-            {
-              categoryId: category,
-              premium: premium,
-              riders: estimated.estimatedCoverages.map(item => ({
-                rider_name: item.name,
-                coverage_amount: item.currentAmount
-              }))
-            }
-          ];
-
-          const standardized = generateCustomMockData(age, gender as 'M' | 'F', customPolicies);
-
           try {
-            // 3단계: 메인 앱 AnalysisSection.tsx와 100% 동일하게 standardized 패킷을 백엔드 엔진(runAnalysis)에 전달
+            // 앱 '내보험 정밀 분석' 엔진(runAnalysis) 호출
             const dbAnalysisResult = await runAnalysis({
               name: '고객님',
               mobile: '010-0000-0000',
-              age: standardized.age,
-              gender: standardized.gender,
+              age: age,
+              gender: normGenderCode,
               jobClass: 1,
-              selectedCategory: 'remodeling',
+              selectedCategory: normCategory,
               cancer: {
-                currentAmount: standardized.cancer_diagnosis || 50000000,
+                currentAmount: 50000000,
                 targetAmount: 50000000,
                 paymentType: 'non-renewable',
                 treatmentCost2025: true,
                 targetedTherapy: true,
               } as any,
-              cerebrovascular: { currentAmount: standardized.brain_vascular || 10000000, targetAmount: 30000000 },
-              cardiovascular: { currentAmount: standardized.ischemic_heart || 10000000, targetAmount: 30000000 },
-              surgery: { currentAmount: standardized.surgery_amount || 300000, targetAmount: 10000000 },
-              postDisability: { currentAmount: standardized.post_disability_amount || 0, targetAmount: 30000000 },
+              cerebrovascular: { currentAmount: 10000000, targetAmount: 30000000 },
+              cardiovascular: { currentAmount: 10000000, targetAmount: 30000000 },
+              surgery: { currentAmount: 300000, targetAmount: 10000000 },
+              postDisability: { currentAmount: 0, targetAmount: 30000000 },
               paymentExemption: 'standard',
               healthStatus: 'standard',
               monthlyPremium: premium,
-              _remodelingCoverage: standardized,
             });
 
             if (dbAnalysisResult) {
-              profile = adaptLeadToProfile(dbAnalysisResult, category);
-              profile.estimatedCoverages = estimated.estimatedCoverages;
+              profile = adaptLeadToProfile(dbAnalysisResult, normCategory);
               profile.monthlyPremium = premium;
-              if (profile.optimizedPremium > 0) {
-                profile.monthlySavings = Math.max(0, premium - profile.optimizedPremium);
+              if (profile.optimizedPremium > 0 && premium > profile.optimizedPremium) {
+                profile.monthlySavings = premium - profile.optimizedPremium;
                 profile.totalSavings20yr = profile.monthlySavings * 12 * 20;
                 const savingsRate = Math.round((profile.monthlySavings / premium) * 100);
                 profile.premiumDonut = [
@@ -165,11 +157,11 @@ export const ReportV2Page: React.FC = () => {
               }
             }
           } catch (e) {
-            console.warn('연산 엔진 쿼리 실패, 역추산 결과 사용:', e);
+            console.warn('연산 엔진 쿼리 실패, 통계 결과 사용:', e);
           }
 
           if (!profile) {
-            profile = estimated;
+            profile = estimateProfile(age, normGender, premium, normCategory);
           }
         }
 

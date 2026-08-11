@@ -211,6 +211,52 @@ function estimateDriverCoverage(
   ];
 }
 
+function estimateSilsonCoverage(
+  age: number,
+  gender: '남성' | '여성',
+  premium: number
+): CoverageItem[] {
+  return [
+    {
+      category: '실손 의료비',
+      name: '질병/상해 입원 의료비 (급여 80%/비급여 70%)',
+      currentAmount: 50000000,
+      recommendedAmount: 50000000,
+      status: '적정',
+      note: '4세대 실비 표준'
+    },
+    {
+      category: '실손 의료비',
+      name: '질병/상해 통원 의료비 (회당 20만원)',
+      currentAmount: 20000000,
+      recommendedAmount: 20000000,
+      status: '적정',
+      note: '외래+처방 종합'
+    },
+    {
+      category: '3대 비급여',
+      name: '도수/체외충격파/증식치료 (연 350만원)',
+      currentAmount: 3500000,
+      recommendedAmount: 3500000,
+      status: '적정',
+    },
+    {
+      category: '3대 비급여',
+      name: '비급여 주사료 (연 250만원)',
+      currentAmount: 2500000,
+      recommendedAmount: 2500000,
+      status: '적정',
+    },
+    {
+      category: '3대 비급여',
+      name: '비급여 MRI/MRA (연 300만원)',
+      currentAmount: 3000000,
+      recommendedAmount: 3000000,
+      status: '적정',
+    }
+  ];
+}
+
 // 원그래프 데이터 생성
 function buildDonutData(
   premium: number,
@@ -258,6 +304,9 @@ export function estimateProfile(
     case 'driver':
       estimatedCoverages = estimateDriverCoverage(age, gender, monthlyPremium);
       break;
+    case 'silson':
+      estimatedCoverages = estimateSilsonCoverage(age, gender, monthlyPremium);
+      break;
     default:
       estimatedCoverages = estimateCancerCoverage(age, gender, monthlyPremium);
   }
@@ -273,6 +322,14 @@ export function estimateProfile(
       optimizedPremium = gender === '남성' ? 58000 : 48000;
     } else {
       optimizedPremium = gender === '남성' ? 78000 : 65000;
+    }
+  } else if (category === 'silson') {
+    if (age < 40) {
+      optimizedPremium = gender === '남성' ? 14000 : 12000;
+    } else if (age < 50) {
+      optimizedPremium = gender === '남성' ? 19000 : 16000;
+    } else {
+      optimizedPremium = gender === '남성' ? 28000 : 24000;
     }
   } else {
     const discountRate = age < 40 ? 0.55 : age < 50 ? 0.60 : 0.50;

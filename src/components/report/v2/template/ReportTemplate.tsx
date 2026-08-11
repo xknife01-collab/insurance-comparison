@@ -76,6 +76,7 @@ const CoverPage: React.FC<{ data: ReportData }> = ({ data }) => {
     dental: '치아보험', dementia: '치매보험', caregiving: '간병보험',
     accident: '상해보험', child: '어린이보험', car: '자동차보험',
     pre: '유병자보험', health_general: '종합건강보험',
+    remodeling: '종합 보장보험', comprehensive: '종합 보장보험',
   };
   const label = catLabel[profile.category] || '보험';
 
@@ -178,7 +179,7 @@ const SummaryPage: React.FC<{ data: ReportData }> = ({ data }) => {
             },
             {
               title: '🛡 보장 충족 점수', data: profile.coverageScoreDonut,
-              center: `${profile.overallScore}점`, sub: '100점 만점',
+              center: `${Math.round(profile.overallScore)}점`, sub: '100점 만점',
               desc: `적정 ${profile.estimatedCoverages.filter(c => c.status === '적정').length}개 / 전체 ${profile.estimatedCoverages.length}개 항목`,
             },
             {

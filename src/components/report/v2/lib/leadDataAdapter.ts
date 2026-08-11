@@ -154,17 +154,18 @@ export function adaptLeadToProfile(
   // 원그래프 데이터
   const savingsRate = monthlyPremium > 0 ? Math.round((monthlySavings / monthlyPremium) * 100) : 0;
   const adequate = estimatedCoverages.filter(c => c.status === '적정').length;
-  const coverageRate = estimatedCoverages.length > 0
-    ? Math.round((adequate / estimatedCoverages.length) * 100)
-    : overallScore;
+  const rawCoverageRate = estimatedCoverages.length > 0
+    ? (adequate / estimatedCoverages.length) * 100
+    : (overallScore || 50);
+  const roundedCoverageScore = Math.round(rawCoverageRate);
 
   const premiumDonut: DonutData[] = [
     { label: '절감 예상액', value: savingsRate, color: '#3B82F6', subLabel: `월 ${monthlySavings.toLocaleString()}원` },
     { label: '최적화 보험료', value: 100 - savingsRate, color: '#E2E8F0', subLabel: `월 ${optimizedPremium.toLocaleString()}원` },
   ];
   const coverageScoreDonut: DonutData[] = [
-    { label: '보장 충족', value: overallScore, color: '#10B981', subLabel: `${overallScore}점` },
-    { label: '보강 필요', value: 100 - overallScore, color: '#FCA5A5', subLabel: `${100 - overallScore}점 부족` },
+    { label: '보장 충족', value: roundedCoverageScore, color: '#10B981', subLabel: `${roundedCoverageScore}점` },
+    { label: '보강 필요', value: 100 - roundedCoverageScore, color: '#FCA5A5', subLabel: `${100 - roundedCoverageScore}점 부족` },
   ];
   const renewalRatioDonut: DonutData[] = [
     { label: '비갱신형', value: 65, color: '#6366F1', subLabel: '65%' },
@@ -183,7 +184,7 @@ export function adaptLeadToProfile(
     premiumDonut,
     coverageScoreDonut,
     renewalRatioDonut,
-    overallScore,
+    overallScore: roundedCoverageScore,
     scoreBreakdown: {
       efficiency: Math.round((optimizedPremium > 0 ? (monthlySavings / monthlyPremium) : 0.8) * 100),
       coverage: (lead as any)?.scores?.coverageScore || 87,

@@ -14,6 +14,7 @@ async function extractAndSaveMemory(
   leadId: number,
   userMessage: string
 ) {
+  if (!leadId || leadId <= 0) return;
   try {
     const text = userMessage.toLowerCase();
 
@@ -89,6 +90,34 @@ async function extractAndSaveMemory(
   } catch (err) {
     console.warn('[Memory Sync (Planner Side)] 실패:', err);
   }
+}
+
+// ── [기능8-보강] 메시지 배열에서 실시간 관심사 및 고민거리 0.1초 즉시 추출 ─────────
+function extractMemoryFromMessages(messages: Message[]): { interests: string[]; pain_points: string[] } {
+  const interests = new Set<string>();
+  const pain_points = new Set<string>();
+
+  for (const m of messages) {
+    const text = (m.message || '').toLowerCase();
+    if (text.includes('암')) interests.add('암보험');
+    if (text.includes('실손') || text.includes('실비')) interests.add('실손보험');
+    if (text.includes('뇌') || text.includes('2대')) interests.add('뇌/심장보험');
+    if (text.includes('태아') || text.includes('어린이')) interests.add('태아/어린이보험');
+    if (text.includes('운전자')) interests.add('운전자보험');
+    if (text.includes('치아')) interests.add('치아보험');
+    if (text.includes('종신')) interests.add('종신보험');
+    if (text.includes('간병')) interests.add('간병인보험');
+
+    if (text.includes('다이어트') || text.includes('비싸') || text.includes('부담') || text.includes('줄이')) pain_points.add('보험료 다이어트');
+    if (text.includes('갱신형') || text.includes('오르')) pain_points.add('갱신형 인상 부담');
+    if (text.includes('중복')) pain_points.add('보장 중복 우려');
+    if (text.includes('어려') || text.includes('모르')) pain_points.add('보험 용어 어려움');
+  }
+
+  return {
+    interests: Array.from(interests),
+    pain_points: Array.from(pain_points)
+  };
 }
 
 // ── 키워드 룰 기반 점수화 (Gemini 호출 없음 → 비용 0원) ──────────────────────
@@ -435,9 +464,11 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
         },
         (payload) => {
           const roomCode = payload.new?.raw_payload?.chat_room_id;
-          if (roomCode === selectedRoom.id) {
+          const isTargetLead = selectedLead?.id && payload.new?.id === selectedLead.id;
+          if (roomCode === selectedRoom.id || isTargetLead) {
             setSelectedLead(payload.new);
             setIsBotActive(payload.new?.is_bot_active !== false);
+            console.log('[Real-time Sync] ⚡ 고객 리드 점수 및 AI 브리핑 실시간 동기화 완료:', payload.new);
           }
         }
       )
@@ -642,6 +673,42 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
         .eq('chat_room_id', roomId);
       if (!scoreErr) {
         setConversationScores(scoreData || []);
+      }
+
+      // 🔄 [과거 대화 전수 소급 계산] 기존 대화 내역의 긍정/부정 점수 및 고객 기억(Memory) 전수 소급 분석
+      if (data && data.length > 0) {
+        const userMsgs = data.filter(m => m.sender_id !== currentUserId);
+        const { data: targetLead } = await supabase
+          .from('customer_leads')
+          .select('id, pos_score, neg_score, action_score, raw_payload')
+          .eq('raw_payload->>chat_room_id', roomId)
+          .maybeSingle();
+
+        if (targetLead && userMsgs.length > 0) {
+          let cumPos = 0;
+          let cumNeg = 0;
+          let maxActionScore = targetLead.action_score || 0;
+
+          for (const uMsg of userMsgs) {
+            const sc = ruleBasedScore(uMsg.message);
+            cumPos += sc.pos;
+            cumNeg += sc.neg;
+            if (sc.actionScore > maxActionScore) maxActionScore = sc.actionScore;
+            await extractAndSaveMemory(supabase, targetLead.id, uMsg.message);
+          }
+
+          const finalPos = Math.max(targetLead.pos_score || 0, Math.min(100, cumPos));
+          const finalNeg = Math.max(targetLead.neg_score || 0, Math.min(100, cumNeg));
+
+          await supabase
+            .from('customer_leads')
+            .update({
+              pos_score: finalPos,
+              neg_score: finalNeg,
+              action_score: maxActionScore
+            })
+            .eq('id', targetLead.id);
+        }
       }
 
       await syncLeadBotStatus(roomId);
@@ -849,6 +916,10 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
             if (prev.some(s => s.id === payload.new.id)) return prev;
             return [...prev, payload.new];
           });
+          // ⚡ [실시간 동기화] 점수 추가 감지 시 고객 리드 상태 및 점수를 즉시 재조회하여 반영
+          if (selectedRoom?.id) {
+            syncLeadBotStatus(selectedRoom.id);
+          }
         }
       )
       .subscribe();
@@ -1161,105 +1232,123 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
 
                     <div className="flex items-center gap-5 flex-1 justify-end max-w-xl">
                       {/* 긍정 */}
-                      <div className="flex items-center gap-2">
-                        <div className="flex items-center gap-1">
-                          <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
-                          <span className="text-[10px] text-emerald-400 font-bold">긍정</span>
-                        </div>
-                        <div className="w-16 h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full transition-all duration-300"
-                            style={{ width: `${Math.min(100, Math.round(((selectedLead.pos_score ?? 0) / 30) * 100))}%` }}
-                          />
-                        </div>
-                        <span className="text-[10px] font-black text-emerald-400 w-5 text-right">{selectedLead.pos_score ?? 0}pt</span>
-                      </div>
+                      {(() => {
+                        const totalPosFromScores = conversationScores.reduce((acc, s) => acc + (s.pos_score || 0), 0);
+                        const displayPos = Math.max(selectedLead.pos_score ?? 0, totalPosFromScores);
+                        const totalNegFromScores = conversationScores.reduce((acc, s) => acc + (s.neg_score || 0), 0);
+                        const displayNeg = Math.max(selectedLead.neg_score ?? 0, totalNegFromScores);
+                        const maxActionFromScores = Math.max(0, ...conversationScores.map(s => s.action_score || 0));
+                        const displayAction = Math.max(selectedLead.action_score ?? 0, maxActionFromScores);
 
-                      {/* 부정 */}
-                      <div className="flex items-center gap-2">
-                        <div className="flex items-center gap-1">
-                          <TrendingDown className="w-3.5 h-3.5 text-rose-400" />
-                          <span className="text-[10px] text-rose-400 font-bold">부정</span>
-                        </div>
-                        <div className="w-16 h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-gradient-to-r from-rose-500 to-rose-400 rounded-full transition-all duration-300"
-                            style={{ width: `${Math.min(100, Math.round(((selectedLead.neg_score ?? 0) / 30) * 100))}%` }}
-                          />
-                        </div>
-                        <span className="text-[10px] font-black text-rose-400 w-5 text-right">{selectedLead.neg_score ?? 0}pt</span>
-                      </div>
+                        return (
+                          <>
+                            <div className="flex items-center gap-2">
+                              <div className="flex items-center gap-1">
+                                <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
+                                <span className="text-[10px] text-emerald-400 font-bold">긍정</span>
+                              </div>
+                              <div className="w-16 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                                <div
+                                  className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full transition-all duration-300"
+                                  style={{ width: `${Math.min(100, Math.round((displayPos / 30) * 100))}%` }}
+                                />
+                              </div>
+                              <span className="text-[10px] font-black text-emerald-400 w-5 text-right">{displayPos}pt</span>
+                            </div>
 
-                      {/* 행동 */}
-                      <div className="flex items-center gap-2">
-                        <span className="text-[10px] text-slate-400">행동:</span>
-                        <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase border ${getActionInfo(selectedLead.action_score ?? 0).color}`}>
-                          {getActionInfo(selectedLead.action_score ?? 0).label}
-                        </span>
-                      </div>
+                            {/* 부정 */}
+                            <div className="flex items-center gap-2">
+                              <div className="flex items-center gap-1">
+                                <TrendingDown className="w-3.5 h-3.5 text-rose-400" />
+                                <span className="text-[10px] text-rose-400 font-bold">부정</span>
+                              </div>
+                              <div className="w-16 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                                <div
+                                  className="h-full bg-gradient-to-r from-rose-500 to-rose-400 rounded-full transition-all duration-300"
+                                  style={{ width: `${Math.min(100, Math.round((displayNeg / 30) * 100))}%` }}
+                                />
+                              </div>
+                              <span className="text-[10px] font-black text-rose-400 w-5 text-right">{displayNeg}pt</span>
+                            </div>
+
+                            {/* 행동 */}
+                            <div className="flex items-center gap-2">
+                              <span className="text-[10px] text-slate-400">행동:</span>
+                              <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase border ${getActionInfo(displayAction).color}`}>
+                                {getActionInfo(displayAction).label}
+                              </span>
+                            </div>
+                          </>
+                        );
+                      })()}
                     </div>
                   </div>
 
                   <div className="px-6 py-2 bg-slate-950/40 border-b border-slate-800/60 flex items-center justify-between gap-4 text-xs font-semibold backdrop-blur-sm">
                     {/* 감정 흐름 */}
-                    <div className="flex items-center gap-2 select-none">
-                      <span className="text-[10px] text-slate-500 font-bold">감정 흐름 곡선:</span>
-                      <div className="flex items-center gap-1.5 bg-slate-900/60 border border-slate-850 px-2 py-1 rounded-lg">
-                        <span className={`transition-all duration-300 ${selectedLead.neg_score >= 15 ? 'opacity-100 font-bold scale-110 text-rose-400' : 'opacity-30 scale-90'}`}>⚠️ 이탈위험</span>
-                        <span className="text-slate-600 font-normal">&gt;</span>
-                        <span className={`transition-all duration-300 ${(selectedLead.pos_score ?? 0) < 6 && selectedLead.neg_score < 15 ? 'opacity-100 font-bold scale-110 text-slate-400' : 'opacity-30 scale-90'}`}>😐 대기</span>
-                        <span className="text-slate-600 font-normal">&gt;</span>
-                        <span className={`transition-all duration-300 ${(selectedLead.pos_score ?? 0) >= 6 && (selectedLead.pos_score ?? 0) < 12 && selectedLead.neg_score < 15 ? 'opacity-100 font-bold scale-110 text-emerald-400' : 'opacity-30 scale-90'}`}>😊 호감</span>
-                        <span className="text-slate-600 font-normal">&gt;</span>
-                        <span className={`transition-all duration-300 ${(selectedLead.pos_score ?? 0) >= 12 && (selectedLead.action_score ?? 0) < 10 && selectedLead.neg_score < 15 ? 'opacity-100 font-bold scale-110 text-cyan-400' : 'opacity-30 scale-90'}`}>😮 관심</span>
-                        <span className="text-slate-600 font-normal">&gt;</span>
-                        <span className={`transition-all duration-300 ${selectedLead.action_score >= 10 ? 'opacity-100 font-bold scale-120 text-orange-400 drop-shadow-[0_0_8px_rgba(249,115,22,0.4)]' : 'opacity-30 scale-90'}`}>🔥 설계요청</span>
-                      </div>
-                    </div>
+                    {/* 감정 흐름 */}
+                    {(() => {
+                      const totalPosFromScores = conversationScores.reduce((acc, s) => acc + (s.pos_score || 0), 0);
+                      const displayPos = Math.max(selectedLead?.pos_score ?? 0, totalPosFromScores);
+                      const totalNegFromScores = conversationScores.reduce((acc, s) => acc + (s.neg_score || 0), 0);
+                      const displayNeg = Math.max(selectedLead?.neg_score ?? 0, totalNegFromScores);
+                      const maxActionFromScores = Math.max(0, ...conversationScores.map(s => s.action_score || 0));
+                      const displayAction = Math.max(selectedLead?.action_score ?? 0, maxActionFromScores);
 
-                    {/* 성공 확률 및 성향 배지 */}
-                    <div className="flex items-center gap-3">
-                      {(() => {
-                        const seg = detectCustomerSegment(selectedLead);
-                        if (!seg) return null;
-                        return (
-                          <div className={`px-2 py-0.5 rounded border text-[10px] font-black ${seg.bg} ${seg.text} ${seg.border}`}>
-                            {seg.label}
+                      const prob = displayAction >= 10
+                        ? 100
+                        : Math.max(5, Math.min(99, Math.round((displayPos * 1.5) + (displayAction * 5.5))));
+
+                      let colorClass = 'text-slate-400';
+                      let bgClass = 'bg-slate-900/60 border-slate-800';
+                      if (prob >= 80) {
+                        colorClass = 'text-orange-400 font-black animate-pulse';
+                        bgClass = 'bg-orange-500/10 border-orange-500/30 shadow-md shadow-orange-500/5';
+                      } else if (prob >= 50) {
+                        colorClass = 'text-emerald-400 font-black';
+                        bgClass = 'bg-emerald-500/10 border-emerald-500/20';
+                      } else if (prob >= 25) {
+                        colorClass = 'text-cyan-400 font-bold';
+                        bgClass = 'bg-cyan-500/10 border-cyan-500/20';
+                      }
+
+                      return (
+                        <>
+                          <div className="flex items-center gap-2 select-none">
+                            <span className="text-[10px] text-slate-500 font-bold">감정 흐름 곡선:</span>
+                            <div className="flex items-center gap-1.5 bg-slate-900/60 border border-slate-850 px-2 py-1 rounded-lg">
+                              <span className={`transition-all duration-300 ${displayNeg >= 15 ? 'opacity-100 font-bold scale-110 text-rose-400' : 'opacity-30 scale-90'}`}>⚠️ 이탈위험</span>
+                              <span className="text-slate-600 font-normal">&gt;</span>
+                              <span className={`transition-all duration-300 ${displayPos < 6 && displayNeg < 15 ? 'opacity-100 font-bold scale-110 text-slate-400' : 'opacity-30 scale-90'}`}>😐 대기</span>
+                              <span className="text-slate-600 font-normal">&gt;</span>
+                              <span className={`transition-all duration-300 ${displayPos >= 6 && displayPos < 12 && displayNeg < 15 ? 'opacity-100 font-bold scale-110 text-emerald-400' : 'opacity-30 scale-90'}`}>😊 호감</span>
+                              <span className="text-slate-600 font-normal">&gt;</span>
+                              <span className={`transition-all duration-300 ${displayPos >= 12 && displayAction < 10 && displayNeg < 15 ? 'opacity-100 font-bold scale-110 text-cyan-400' : 'opacity-30 scale-90'}`}>😮 관심</span>
+                              <span className="text-slate-600 font-normal">&gt;</span>
+                              <span className={`transition-all duration-300 ${displayAction >= 10 ? 'opacity-100 font-bold scale-120 text-orange-400 drop-shadow-[0_0_8px_rgba(249,115,22,0.4)]' : 'opacity-30 scale-90'}`}>🔥 설계요청</span>
+                            </div>
                           </div>
-                        );
-                      })()}
 
-                      <span className="text-[10px] text-slate-500 font-bold">설계 요청 확률:</span>
-                      {(() => {
-                        const pos = selectedLead.pos_score ?? 0;
-                        const action = selectedLead.action_score ?? 0;
-                        const prob = action >= 10
-                          ? 100
-                          : Math.max(5, Math.min(99, Math.round((pos * 1.5) + (action * 5.5))));
+                          {/* 성공 확률 및 성향 배지 */}
+                          <div className="flex items-center gap-3">
+                            {(() => {
+                              const seg = detectCustomerSegment(selectedLead);
+                              if (!seg) return null;
+                              return (
+                                <div className={`px-2 py-0.5 rounded border text-[10px] font-black ${seg.bg} ${seg.text} ${seg.border}`}>
+                                  {seg.label}
+                                </div>
+                              );
+                            })()}
 
-                        let colorClass = 'text-slate-400';
-                        let bgClass = 'bg-slate-900/60 border-slate-800';
-                        if (prob >= 80) {
-                          colorClass = 'text-orange-400 font-black animate-pulse';
-                          bgClass = 'bg-orange-500/10 border-orange-500/30 shadow-md shadow-orange-500/5';
-                        } else if (prob >= 50) {
-                          colorClass = 'text-emerald-400 font-black';
-                          bgClass = 'bg-emerald-500/10 border-emerald-500/20';
-                        } else if (prob >= 25) {
-                          colorClass = 'text-cyan-400 font-bold';
-                          bgClass = 'bg-cyan-500/10 border-cyan-500/20';
-                        }
-
-                        return (
-                          <div className={`px-2.5 py-1 rounded-lg border text-[11px] flex items-center gap-1.5 transition-all duration-300 ${bgClass}`}>
-                            <span className={colorClass}>{prob}%</span>
-                            <span className="text-[9px] text-slate-500 font-medium">
-                              {prob === 100 ? '설계 요청 수락 완료! 🎉' : prob >= 80 ? '클로징 적극 권장! 🔥' : prob >= 50 ? '대화 긍정적 흐름 👍' : '탐색 단계'}
-                            </span>
+                            <span className="text-[10px] text-slate-500 font-bold">설계 요청 확률:</span>
+                            <div className={`px-2.5 py-1 rounded-lg border flex items-center gap-1.5 transition-all ${bgClass}`}>
+                              <span className={`text-[11px] ${colorClass}`}>{prob}%</span>
+                            </div>
                           </div>
-                        );
-                      })()}
-                    </div>
+                        </>
+                      );
+                    })()}
                   </div>
                 </>
               )}
@@ -1485,37 +1574,50 @@ export function CustomerChatTab({ currentUser, showHelpGuide = false, onToggleHe
 
                     <div className="space-y-4 flex-1">
                       <div className="bg-slate-900/60 border border-slate-800/80 p-4 rounded-2xl space-y-3.5">
-                        {/* Interests */}
-                        <div>
-                          <span className="text-[10px] text-slate-500 font-bold block mb-1">📌 관심사</span>
-                          <div className="flex flex-wrap gap-1.5">
-                            {selectedLead.raw_payload?.customer_memory?.interests?.length > 0 ? (
-                              selectedLead.raw_payload.customer_memory.interests.map((it: string, i: number) => (
-                                <span key={i} className="text-[9px] bg-violet-600/15 border border-violet-500/20 text-violet-300 px-2 py-0.5 rounded-md font-bold">
-                                  {it}
-                                </span>
-                              ))
-                            ) : (
-                              <span className="text-[10px] text-slate-500">분석 중... 😐</span>
-                            )}
-                          </div>
-                        </div>
+                        {(() => {
+                          const memFromMsg = extractMemoryFromMessages(messages);
+                          const dbInterests = selectedLead.raw_payload?.customer_memory?.interests || [];
+                          const displayInterests = Array.from(new Set([...dbInterests, ...memFromMsg.interests]));
 
-                        {/* Pain points */}
-                        <div className="border-t border-slate-850 pt-3">
-                          <span className="text-[10px] text-slate-500 font-bold block mb-1">🔥 고민거리</span>
-                          <div className="flex flex-wrap gap-1.5">
-                            {selectedLead.raw_payload?.customer_memory?.pain_points?.length > 0 ? (
-                              selectedLead.raw_payload.customer_memory.pain_points.map((pt: string, i: number) => (
-                                <span key={i} className="text-[9px] bg-rose-600/10 border border-rose-500/20 text-rose-400 px-2 py-0.5 rounded-md font-bold">
-                                  {pt}
-                                </span>
-                              ))
-                            ) : (
-                              <span className="text-[10px] text-slate-500">분석 중... 😐</span>
-                            )}
-                          </div>
-                        </div>
+                          const dbPainPoints = selectedLead.raw_payload?.customer_memory?.pain_points || [];
+                          const displayPainPoints = Array.from(new Set([...dbPainPoints, ...memFromMsg.pain_points]));
+
+                          return (
+                            <>
+                              {/* Interests */}
+                              <div>
+                                <span className="text-[10px] text-slate-500 font-bold block mb-1">📌 관심사</span>
+                                <div className="flex flex-wrap gap-1.5">
+                                  {displayInterests.length > 0 ? (
+                                    displayInterests.map((it: string, i: number) => (
+                                      <span key={i} className="text-[9px] bg-violet-600/15 border border-violet-500/20 text-violet-300 px-2 py-0.5 rounded-md font-bold">
+                                        {it}
+                                      </span>
+                                    ))
+                                  ) : (
+                                    <span className="text-[10px] text-slate-500">분석 중... 😐</span>
+                                  )}
+                                </div>
+                              </div>
+
+                              {/* Pain points */}
+                              <div className="border-t border-slate-850 pt-3">
+                                <span className="text-[10px] text-slate-500 font-bold block mb-1">🔥 고민거리</span>
+                                <div className="flex flex-wrap gap-1.5">
+                                  {displayPainPoints.length > 0 ? (
+                                    displayPainPoints.map((pt: string, i: number) => (
+                                      <span key={i} className="text-[9px] bg-rose-600/10 border border-rose-500/20 text-rose-400 px-2 py-0.5 rounded-md font-bold">
+                                        {pt}
+                                      </span>
+                                    ))
+                                  ) : (
+                                    <span className="text-[10px] text-slate-500">분석 중... 😐</span>
+                                  )}
+                                </div>
+                              </div>
+                            </>
+                          );
+                        })()}
 
                         {/* Progress */}
                         <div className="border-t border-slate-850 pt-3">
