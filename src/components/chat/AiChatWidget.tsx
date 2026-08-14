@@ -171,6 +171,8 @@ interface AiChatWidgetProps {
   leadSource?: string | null;
   currentSimulationCode: string;
   onTriggerAuth: () => void;
+  onTriggerAligoAuth?: () => void;
+  onTriggerHyphenAuth?: () => void;
   isUnlocked: boolean;
   externalIsOpen?: boolean;
   onCloseExternal?: () => void;
@@ -199,6 +201,8 @@ export default function AiChatWidget({
   leadSource,
   currentSimulationCode,
   onTriggerAuth,
+  onTriggerAligoAuth,
+  onTriggerHyphenAuth,
   isUnlocked,
   externalIsOpen,
   onCloseExternal,
@@ -1249,7 +1253,7 @@ export default function AiChatWidget({
       // Look up lead for this code
       const { data: leads } = await supabase
         .from('customer_leads')
-        .select('id, name, is_bot_active, raw_payload')
+        .select('id, name, is_bot_active, raw_payload, insurance_type')
         .eq('raw_payload->>simulation_code', detectedCode)
         .order('created_at', { ascending: false })
         .limit(1);
@@ -1258,6 +1262,12 @@ export default function AiChatWidget({
         const matchingLead = leads[0];
         setCurrentLeadId(matchingLead.id);
         setIsBotActive(matchingLead.is_bot_active !== false);
+
+        // Check if this lead is from remodeling (내보험 정밀 분석)
+        const isRemodeling = 
+          matchingLead.insurance_type?.includes('remodeling') ||
+          matchingLead.raw_payload?.category === 'remodeling' ||
+          matchingLead.raw_payload?.analysisInputs?.selectedCategory === 'remodeling';
 
         // Update lead to link this chat room
         const updatedPayload = {
@@ -1277,13 +1287,17 @@ export default function AiChatWidget({
           actionType:   'code_parsed',
           actionScore:  ACTION_SCORE_MAP['code_parsed'],
           messageText:  userText,
-          aiResponse:   '설계 코드 감지 → 본인인증 유도',
-          koreanSummary: `설계 코드(${detectedCode}) 감지 완료, 본인인증 버튼 제시`,
+          aiResponse:   isRemodeling ? '정밀 분석 설계 코드 감지 → 한국신용정보원 연동 유도' : '비교 분석 설계 코드 감지 → SMS 본인인증 유도',
+          koreanSummary: `설계 코드(${detectedCode}) 감지 완료, ${isRemodeling ? '한국신용정보원' : 'SMS 본인인증'} 버튼 제시`,
         });
 
-        // Send AI reply with auth action button
-        const botResponse = `설계 코드가 확인되었습니다! 상세 분석 결과(마스킹 해제)를 확인하시려면 아래 [한국신용정보원 인증하기] 버튼을 눌러 본인인증을 완료해 주세요. 인증이 완료되면 실제 가입하신 보험 내역으로 정밀 분석이 시작됩니다.`;
+        // Send AI reply with appropriate auth action button
+        const botResponse = isRemodeling
+          ? `설계 코드가 확인되었습니다! 고객님의 실제 가입 보험 내역으로 정밀 분석(마스킹 해제)을 진행하시려면 아래 [한국신용정보원 인증하기] 버튼을 눌러 연동을 완료해 주세요.`
+          : `설계 코드가 확인되었습니다! 상세 비교 분석 결과(마스킹 해제)를 확인하시려면 아래 [SMS 본인인증] 버튼을 눌러 인증을 완료해 주세요.`;
         
+        const actionTag = isRemodeling ? 'trigger_hyphen_auth' : 'trigger_aligo_auth';
+
         setTimeout(async () => {
           setIsTyping(false);
           await supabase.from('chat_messages').insert({
@@ -1293,7 +1307,7 @@ export default function AiChatWidget({
             is_read:    false,
             planner_id: plannerId,
             lead_id:    matchingLead.id,
-            action_tag: 'trigger_auth'
+            action_tag: actionTag
           });
         }, 1000);
         return;
@@ -1484,7 +1498,9 @@ export default function AiChatWidget({
             <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-slate-800">
               {messages.map((msg) => {
                 const isMe = msg.sender_id === guestUserId;
-                const isAuthTag = (msg as any).action_tag === 'trigger_auth';
+                const isHyphenAuthTag = (msg as any).action_tag === 'trigger_hyphen_auth';
+                const isAligoAuthTag = (msg as any).action_tag === 'trigger_aligo_auth' || (msg as any).action_tag === 'trigger_auth';
+                const isAnyAuthTag = isHyphenAuthTag || isAligoAuthTag;
                 const isFirstPlannerMsg = !isMe && !messages.slice(0, messages.findIndex(m => m.id === msg.id)).some(m => m.sender_id !== guestUserId);
 
                 const isDemo = agencyId === '88888888-8888-4888-a888-888888888888';
@@ -1531,18 +1547,29 @@ export default function AiChatWidget({
                         {/* 📄 35개사 정밀 비교 리포트 열람 & PDF 저장 클릭 버튼 */}
                         <ReportLinkButton messageText={msg.message} />
                         
-                        {/* 🔒 0.1초 본인인증 버튼 렌더링 (action_tag가 trigger_auth인 경우) */}
-                        {isAuthTag && !isUnlocked && (
+                        {/* 🔒 한국신용정보원 인증 버튼 (내보험 정밀 분석 설계 코드인 경우: 언제든 연동 가능) */}
+                        {isHyphenAuthTag && (
                           <button
-                            onClick={onTriggerAuth}
+                            onClick={onTriggerHyphenAuth || onTriggerAuth}
                             className="mt-3 w-full py-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-755 text-white font-black text-[10px] rounded-lg shadow-lg flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
                           >
                             <ShieldCheck className="w-3.5 h-3.5" />
                             🔒 한국신용정보원 인증 완료하기
                           </button>
                         )}
+
+                        {/* 🔒 알리고 SMS 본인인증 버튼 (내 보험 비교 분석 설계 코드인 경우) */}
+                        {isAligoAuthTag && !isUnlocked && (
+                          <button
+                            onClick={onTriggerAligoAuth || onTriggerAuth}
+                            className="mt-3 w-full py-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-755 text-white font-black text-[10px] rounded-lg shadow-lg flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
+                          >
+                            <ShieldCheck className="w-3.5 h-3.5" />
+                            🔒 SMS 본인인증 하기
+                          </button>
+                        )}
                         
-                        {isAuthTag && isUnlocked && (
+                        {isAligoAuthTag && isUnlocked && (
                           <div className="mt-3 py-1.5 bg-green-500/10 border border-green-500/20 text-green-400 rounded-lg flex items-center justify-center gap-1.5 text-[9px] font-black">
                             <Check className="w-3.5 h-3.5" />
                             본인인증 완료됨 (잠금 해제 완료)

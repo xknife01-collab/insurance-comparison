@@ -202,18 +202,22 @@ export default function VerificationPage({ branding, initialCode, onSuccess, onC
         ]
       };
 
-      const { error } = await supabase
-        .from('customer_leads')
-        .update({
-          name: name,
-          phone: mobile,
-          status: 'verified',
-          raw_payload: updatedPayload
-        })
-        .eq('id', leadRecord.id);
+      try {
+        const { error } = await supabase
+          .from('customer_leads')
+          .update({
+            name: name,
+            phone: mobile,
+            status: 'verified',
+            raw_payload: updatedPayload
+          })
+          .eq('id', leadRecord.id);
 
-      if (error) {
-        throw new Error(error.message);
+        if (error) {
+          console.warn('[Verification] Supabase lead update warning:', error.message);
+        }
+      } catch (dbErr) {
+        console.warn('[Verification] DB update fallback:', dbErr);
       }
 
       // Save unlocked state to localStorage so the same browser gets unmasked instantly
@@ -224,7 +228,6 @@ export default function VerificationPage({ branding, initialCode, onSuccess, onC
       // 4. Automatically dispatch the permanent storage report link via SMS
       try {
         const origin = window.location.origin;
-        const isB2B = branding?.type && branding.type !== 'organic';
         const brandName = branding?.name || '보장비교';
         const msg = `[${brandName}]
 안녕하세요, ${name} 고객님.

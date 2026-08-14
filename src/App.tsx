@@ -2086,7 +2086,9 @@ export default function App() {
           agencyId={branding.agencyId}
           leadSource={branding.type === 'planner' ? 'direct' : (branding.type === 'agency' ? 'distribute' : 'organic')}
           currentSimulationCode={currentSimulationCode}
-          onTriggerAuth={() => setIsRemodelingHyphenOpen(true)}
+          onTriggerAuth={() => setShowAligoAuthModal(true)}
+          onTriggerAligoAuth={() => setShowAligoAuthModal(true)}
+          onTriggerHyphenAuth={() => setIsRemodelingHyphenOpen(true)}
           isUnlocked={isUnlocked}
           externalIsOpen={isAiChatOpen}
           onCloseExternal={() => setIsAiChatOpen(false)}
