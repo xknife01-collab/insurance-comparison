@@ -180,7 +180,7 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({ onAnalyze }) => {
   const [age, setAge] = useState('');
 
   // Default placeholders for compliance
-  const userName = '고객';
+  const userName = '고객님';
   const mobileNo = '010-0000-0000';
 
   // Multi-select category states

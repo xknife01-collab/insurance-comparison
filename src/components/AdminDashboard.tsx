@@ -76,206 +76,8 @@ const compressImage = (file: File, maxWidth: number = 300, maxHeight: number = 3
   });
 };
 
-const FIELD_LABELS: Record<string, string> = {
-  childBirthDate: '자녀 생년월일',
-  currentAmount: '가입 금액',
-  targetAmount: '목표 금액',
-  paymentType: '납입/갱신 유형',
-  paymentPeriod: '납입 기간',
-  coveragePeriod: '보장 기간',
-  selectedType: '선택 유형',
-  subType: '상세 유형',
-  isRenewable: '갱신 여부',
-  refundType: '환급 유형',
-  isStepUp: '체증형 여부',
-  objective: '가입 목적',
-  monthlyPremium: '월 납입 보험료',
-  annualIncome: '연간 소득',
-  jobClass: '직업 급수',
-  hasLiabilityRider: '일상생활 배상책임 특약',
-  hasWaterLeakRider: '누수 피해 특약',
-  hasTemporaryHousingRider: '임시 거주비 특약',
+import { FIELD_LABELS, formatInsuranceValue } from '../utils/insuranceFieldLabels';
 
-  lastYear: '1년 이내 치료력',
-  last5Years: '5년 이내 잇몸질환',
-  dentures: '틀니 착용 여부',
-  implantLimit: '임플란트 한도',
-  crownAmount: '크라운 금액',
-  focus: '중점 보장',
-  diagnosticType: '진단형 여부',
-
-  preferredService: '선호 서비스',
-  homeAmount: '재가 치료비',
-  facilityAmount: '시설 치료비',
-  hasProxyClaim: '대리 청구인 지정',
-  hasBrainHistory: '뇌질환 이력',
-  hasLtcHistory: '장기요양 이력',
-  hasLtcGrade: '장기요양 등급',
-  type: '지원 방식',
-  isNursingHospital: '요양병원 포함',
-  focusGeriatric: '노인성 질환 집중',
-  focusIntegrated: '통합 보장 집중',
-  dementiaDiagnosis: '치매 진단비',
-  monthlyAllowance: '치매 생활자금',
-  hasDementiaHistory: '치매 이력',
-
-  hasCurrentSilson: '실손 가입 여부',
-  threeMonthTreatment: '3개월 이내 치료력',
-  oneYearExam: '1년 이내 추가 검사',
-  fiveYearTreatment: '5년 이내 치료력',
-  nonReimbursableUsage: '비급여 이용량',
-  pregnancyCover: '임신/출산 보장',
-  frequentNonSevere: '다빈도 경증 질환',
-
-  hospitalAmount: '입원 일당',
-  caregiverOption: '간병인 옵션',
-  tertiaryHospital: '상급종합병원 입원비',
-
-  targetAgeGroup: '대상 연령층',
-  maturity: '만기 설정',
-  focusArea: '집중 보장 영역',
-  hasPrenatalRider: '태아 특약 여부',
-  weeksPregnancy: '임신 주수',
-  isPreFamily: '유병력 가족력',
-  illnessType: '보유 질환 종류',
-  noAccidentYears: '무사고 기간',
-
-  annualMileage: '연간 주행거리',
-  safeDrivingScore: '안전운전 점수',
-  hasConnectedCar: '커넥티드카 할인',
-  hasBlackbox: '블랙박스 할인',
-  hasChildRider: '자녀 할인 특약',
-  currentPropertyLimit: '대물 배상 한도',
-  currentInjuryType: '자손/자상 유형',
-  brand: '차량 브랜드',
-  model: '차량 모델',
-  year: '차량 연식',
-  driverLimit: '운전자 범위',
-  ownDamage: '자기차량손해(자차)',
-  hasLaneSafety: '차선이탈 방지',
-  hasForwardCollision: '전방충돌 방지',
-  engine: '배기량/엔진',
-  trim: '트림 정보',
-
-  drivingPurpose: '운전 목적',
-  planType: '플랜 유형',
-
-  petType: '반려동물 종류',
-  petName: '반려동물 이름',
-  breed: '품종',
-  birthYearMonth: '출생 년월',
-  selfPayRatio: '자기부담 비율',
-  deductible: '공제금액',
-  isRegistered: '등록 여부',
-  patellaRider: '슬개골 탈구 특약',
-  skinRider: '피부 질환 특약',
-  dentalRider: '치과 질환 특약',
-
-  gameType: '경기 방식',
-  durationDays: '보장 일수',
-  isGroup: '단체 가입 여부',
-  companionNames: '동반자 명단',
-  hasHoleInOneRider: '홀인원 비용 특약',
-  hasEquipmentRider: '골프용품 손해 특약',
-
-  residenceType: '주거 형태',
-  occupancyType: '소유 형태',
-  buildingArea: '건물 면적',
-  structureGrade: '건물 구조 등급',
-  householdGoodsLimit: '가재도구 가입금액',
-  buildingLimit: '건물 가입금액',
-  businessType: '업종 구분',
-  buildingGrade: '소방/방화 등급',
-  interiorLimit: '시설/인테리어 가입금액',
-  equipmentLimit: '집기비품 가입금액',
-  inventoryLimit: '재고자산 가입금액',
-  hasWaterLeak: '급배수시설 누출 손해',
-  hasPremisesLiability: '영업배상책임',
-  hasBusinessInterruption: '휴업 손해 지원',
-  hasFoodLiability: '음식물 배상책임',
-  hasMachineryBreakdown: '기계 손해 특약',
-
-  annuityType: '연금 유형',
-  commencementAge: '연금 개시 나이',
-  hasIrp: 'IRP 계좌 보유 여부',
-  receivingPeriod: '연금 수령 기간',
-  savingType: '저축 유형',
-  maintenancePeriod: '거치/유지 기간',
-  savingsObjective: '저축 목적',
-  hasUniversal: '유니버셜 기능',
-
-  deathBenefit: '사망 보험금',
-  refundTypeLabel: '해약환급금 유형',
-  investmentStyle: '투자 성향',
-  equityRatio: '주식형 펀드 편입 비중',
-  isAnnuityConversion: '연금 전환 가능 여부',
-  isHealthyDiscount: '건강체 할인 여부',
-  cancerLimit: '암 진단비 한도',
-  similarCancerLimit: '유사암 진단비 한도',
-  brainLimit: '뇌혈관 진단비 한도',
-  heartLimit: '허혈성심장 진단비 한도',
-  cardioLimit: '심장질환 진단비 한도',
-  has1to5Surgery: '1-5종 수술비 특약',
-  hasTargetedTherapy: '표적항암 약물 치료비',
-  hasThrombolysis: '혈전용해 치료비',
-  hasLiability: '가족일상생활 배상책임',
-
-  accidentDeathLimit: '상해사망 가입금액',
-  accidentDisabilityLimit: '상해후유장해 가입금액',
-  fractureLimit: '골절 진단비 한도',
-  castLimit: '깁스 치료비 한도',
-  surgeryLimit: '상해 수술비 한도',
-  hospitalDailyLimit: '상해 입원일당 한도',
-  drivingType: '운전 여부',
-  hasLeisureRider: '레저활동 특약',
-
-  loanType: '대출 종류',
-  loanAmount: '대출 잔액',
-  loanPeriod: '대출 잔여기간',
-  creditBureau: '신용등급 기관',
-
-  // Cancer options
-  treatmentCost2025: '2025 암주요치료비',
-  targetedTherapy: '표적항암/원인자',
-  recurrentCancer: '재발/전이암 보장',
-  familyHistory: '암 가족력'
-};
-
-const formatValue = (key: string, val: any) => {
-  if (val === true) return '포함';
-  if (val === false) return '미포함';
-  if (Array.isArray(val)) {
-    return val.map(item => {
-      if (typeof item === 'object' && item !== null) {
-        return item.rider_name || item.name || JSON.stringify(item);
-      }
-      return String(item);
-    }).join(', ');
-  }
-  if (typeof val === 'object' && val !== null) {
-    return JSON.stringify(val);
-  }
-  if (typeof val === 'number') {
-    if (val >= 100000000) {
-      return `${(val / 100000000).toLocaleString()}억 원`;
-    }
-    if (val >= 10000) {
-      return `${(val / 10000).toLocaleString()}만 원`;
-    }
-    return val.toLocaleString();
-  }
-  if (typeof val === 'string') {
-    if (val === 'non-renewable') return '비갱신형';
-    if (val === 'renewable') return '갱신형';
-    if (val === 'targeted') return '표적항암형';
-    if (val === 'personal') return '개인용';
-    if (val === 'business') return '업무용';
-    if (val === 'mild') return '경증 치매';
-    if (val === 'severe') return '중증 간병';
-    return val;
-  }
-  return String(val);
-};
 
 const getInsuranceTypeName = (type: string) => {
   const isUnderwriting = type.endsWith('_underwriting');
@@ -2914,171 +2716,83 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
               </div>
             )}
 
-            {/* 암보험 상세 보장 현황 (동적 렌더링 - 고객 선택 단추 스타일) */}
+            {/* 28개 전 보험 상세 설계 설정 (고객 입력 필드 1:1 완벽 매칭 동적 렌더링) */}
             {(() => {
-              const cancerInputs = selectedLead.raw_payload?.analysisInputs?.cancer || selectedLead.raw_payload?.cancer;
-              const isCancer = selectedLead.insurance_type === 'cancer' || 
-                               selectedLead.insurance_type === 'cancer_consult' ||
-                               selectedLead.insurance_type === '암보험' ||
-                               selectedLead.insurance_type === '암보험_consult';
-              if (!isCancer) return null;
-              return (
-                <div className="space-y-3">
-                  <h4 className="font-extrabold text-sm text-white border-l-3 border-orange-500 pl-2">암보험 상세 설계 설정</h4>
-                  <div className="bg-slate-950/80 border border-slate-850 rounded-2xl p-5 text-xs font-semibold text-slate-300 grid md:grid-cols-2 gap-4">
-                    {/* 1. 일반암 진단비 */}
-                    <div className="space-y-2">
-                      <span className="text-slate-500 text-[10px] font-bold block">일반암 진단비</span>
-                      <div className="flex gap-1.5">
-                        {[30000000, 50000000, 100000000].map((val) => {
-                          const isSelected = (cancerInputs?.currentAmount || 50000000) === val;
-                          const label = val === 30000000 ? '3,000만' : val === 50000000 ? '5,000만' : '10,000만';
-                          return (
-                            <span
-                              key={val}
-                              className={isSelected 
-                                ? "px-3 py-1.5 rounded-lg text-[10px] font-black bg-orange-500 text-white border border-orange-500" 
-                                : "px-3 py-1.5 rounded-lg text-[10px] font-black bg-slate-900/40 text-slate-600 border border-slate-850/60"
-                              }
-                            >
-                              {label}
-                            </span>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    {/* 2. 2025 암주요치료비 */}
-                    <div className="space-y-2">
-                      <span className="text-slate-500 text-[10px] font-bold block">2025 암주요치료비</span>
-                      <div className="flex gap-1.5">
-                        {[true, false].map((val) => {
-                          const isSelected = (cancerInputs?.treatmentCost2025 === undefined ? true : cancerInputs.treatmentCost2025) === val;
-                          const label = val ? '포함(추천)' : '미포함';
-                          return (
-                            <span
-                              key={String(val)}
-                              className={isSelected 
-                                ? "px-3 py-1.5 rounded-lg text-[10px] font-black bg-orange-500 text-white border border-orange-500" 
-                                : "px-3 py-1.5 rounded-lg text-[10px] font-black bg-slate-900/40 text-slate-600 border border-slate-850/60"
-                              }
-                            >
-                              {label}
-                            </span>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    {/* 3. 표적항암/원인자 */}
-                    <div className="space-y-2">
-                      <span className="text-slate-500 text-[10px] font-bold block">표적항암/원인자</span>
-                      <div className="flex gap-1.5">
-                        {[true, false].map((val) => {
-                          const isSelected = (cancerInputs?.targetedTherapy === undefined ? true : cancerInputs.targetedTherapy) === val;
-                          const label = val ? '풀보장' : '진단비만';
-                          return (
-                            <span
-                              key={String(val)}
-                              className={isSelected 
-                                ? "px-3 py-1.5 rounded-lg text-[10px] font-black bg-orange-500 text-white border border-orange-500" 
-                                : "px-3 py-1.5 rounded-lg text-[10px] font-black bg-slate-900/40 text-slate-600 border border-slate-850/60"
-                              }
-                            >
-                              {label}
-                            </span>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    {/* 4. 납입/갱신 유형 */}
-                    <div className="space-y-2">
-                      <span className="text-slate-500 text-[10px] font-bold block">납입/갱신 유형</span>
-                      <div className="flex gap-1.5">
-                        {['non-renewable', 'renewable', 'targeted'].map((val) => {
-                          const isSelected = (cancerInputs?.paymentType || 'non-renewable') === val;
-                          const label = val === 'non-renewable' ? '비갱신형' : val === 'renewable' ? '갱신형' : '표적항암형';
-                          return (
-                            <span
-                              key={val}
-                              className={isSelected 
-                                ? "px-3 py-1.5 rounded-lg text-[10px] font-black bg-orange-500 text-white border border-orange-500" 
-                                : "px-3 py-1.5 rounded-lg text-[10px] font-black bg-slate-900/40 text-slate-600 border border-slate-850/60"
-                              }
-                            >
-                              {label}
-                            </span>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    {/* 5. 재발/전이암 */}
-                    <div className="space-y-2">
-                      <span className="text-slate-500 text-[10px] font-bold block">재발/전이암</span>
-                      <div className="flex gap-1.5">
-                        {[true, false].map((val) => {
-                          const isSelected = (cancerInputs?.recurrentCancer === undefined ? false : cancerInputs.recurrentCancer) === val;
-                          const label = val ? '반복지급' : '1회지급';
-                          return (
-                            <span
-                              key={String(val)}
-                              className={isSelected 
-                                ? "px-3 py-1.5 rounded-lg text-[10px] font-black bg-orange-500 text-white border border-orange-500" 
-                                : "px-3 py-1.5 rounded-lg text-[10px] font-black bg-slate-900/40 text-slate-600 border border-slate-850/60"
-                              }
-                            >
-                              {label}
-                            </span>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    {/* 6. 암 가족력 */}
-                    <div className="space-y-2">
-                      <span className="text-slate-500 text-[10px] font-bold block">암 가족력</span>
-                      <div className="flex gap-1.5">
-                        {[true, false].map((val) => {
-                          const isSelected = (cancerInputs?.familyHistory === undefined ? false : cancerInputs.familyHistory) === val;
-                          const label = val ? '있음' : '없음';
-                          return (
-                            <span
-                              key={String(val)}
-                              className={isSelected 
-                                ? "px-3 py-1.5 rounded-lg text-[10px] font-black bg-orange-500 text-white border border-orange-500" 
-                                : "px-3 py-1.5 rounded-lg text-[10px] font-black bg-slate-900/40 text-slate-600 border border-slate-850/60"
-                              }
-                            >
-                              {label}
-                            </span>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })()}
-
-            {/* 타 보험 상세 보장 현황 (동적 버튼식/텍스트 카드 렌더링) */}
-            {(() => {
-              const isCancer = selectedLead.insurance_type === 'cancer' || 
-                               selectedLead.insurance_type === 'cancer_consult' ||
-                               selectedLead.insurance_type === '암보험' ||
-                               selectedLead.insurance_type === '암보험_consult';
-              if (isCancer) return null;
-
               const analysisInputs = selectedLead.raw_payload?.analysisInputs || selectedLead.raw_payload;
               if (!analysisInputs) return null;
 
-              const reservedKeys = ['gender', 'jobClass', 'age', 'name', 'phone', 'birthDate', 'selectedCategory', 'isDirect', 'plannerId', '_remodelingCoverage', 'policies', 'timeline', 'memos', 'underwriting'];
-              const categoryKey = Object.keys(analysisInputs).find(k => !reservedKeys.includes(k) && typeof analysisInputs[k] === 'object' && analysisInputs[k] !== null);
-              if (!categoryKey) return null;
+              const reservedKeys = [
+                'age', 'name', 'phone', 'gender', 'birthDate', 'selectedCategory', 'isDirect', 
+                'plannerId', '_remodelingCoverage', 'policies', 'timeline', 'memos', 'underwriting', 
+                'category', 'consult_type', 'utm_source', 'simulation_code', 'hyphen_coverage', 
+                'verified_name', 'verified_mobile', 'verified_at', 'monthlyPremium', 'monthly_premium',
+                'annualIncome', 'healthStatus', 'paymentExemption', 'isDemo', 'status'
+              ];
 
-              const categoryInputs = analysisInputs[categoryKey];
-              const keys = Object.keys(categoryInputs).filter(k => k !== 'targetAmount');
+              const typeMap: Record<string, string[]> = {
+                'driver': ['driver'],
+                'car': ['car'],
+                'cancer': ['cancer'],
+                'brain': ['cerebrovascular', 'brain'],
+                'cerebrovascular': ['cerebrovascular', 'brain'],
+                'heart': ['cardiovascular', 'heart'],
+                'cardiovascular': ['cardiovascular', 'heart'],
+                'surgery': ['surgery_hospital', 'surgery'],
+                'surgery_hospital': ['surgery_hospital', 'surgery'],
+                'health_general': ['healthGeneral', 'health_general'],
+                'healthGeneral': ['healthGeneral', 'health_general'],
+                'silson': ['silson'],
+                'dental': ['dental'],
+                'care_svc': ['caregiving', 'care_svc'],
+                'care_old': ['caregiving', 'care_old'],
+                'caregiving': ['caregiving'],
+                'nursing': ['nursing'],
+                'child': ['child'],
+                'pre_family': ['child', 'pre_family'],
+                'pre': ['cancer', 'surgery', 'health_general'],
+                'pet': ['pet'],
+                'golf': ['golf'],
+                'fire_real': ['fire', 'fire_real'],
+                'fire': ['fire', 'fire_real'],
+                'property': ['property'],
+                'pension': ['annuity', 'pension'],
+                'annuity': ['annuity', 'pension'],
+                'whole': ['wholeLife', 'whole'],
+                'wholeLife': ['wholeLife', 'whole'],
+                'variable': ['variable'],
+                'accident': ['accident'],
+                'savings_general': ['savingsGeneral', 'savings_general'],
+                'savingsGeneral': ['savingsGeneral', 'savings_general'],
+                'credit': ['credit'],
+                'legal': ['legal']
+              };
+
+              const normalizedType = (selectedLead.insurance_type || '').replace('_consult', '').replace('_underwriting', '');
+              const candidateKeys = typeMap[normalizedType] || [normalizedType];
+
+              let categoryObj: any = null;
+              for (const k of candidateKeys) {
+                if (analysisInputs[k] && typeof analysisInputs[k] === 'object') {
+                  categoryObj = analysisInputs[k];
+                  break;
+                }
+              }
+
+              if (!categoryObj) {
+                const foundKey = Object.keys(analysisInputs).find(k => !reservedKeys.includes(k) && typeof analysisInputs[k] === 'object' && analysisInputs[k] !== null);
+                if (foundKey) categoryObj = analysisInputs[foundKey];
+              }
+
+              const categoryInputs: Record<string, any> = {
+                ...(typeof categoryObj === 'object' && categoryObj !== null ? categoryObj : {})
+              };
+
+              // If jobClass is relevant for this category
+              if (analysisInputs.jobClass !== undefined && (normalizedType === 'driver' || normalizedType === 'accident' || categoryInputs.jobClass !== undefined)) {
+                categoryInputs.jobClass = categoryInputs.jobClass || analysisInputs.jobClass;
+              }
+
+              const keys = Object.keys(categoryInputs).filter(k => k !== 'targetAmount' && k !== 'monthlyPremium' && k !== 'monthly_premium');
 
               if (keys.length === 0) return null;
 
@@ -3091,7 +2805,7 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                     {keys.map((key) => {
                       const rawValue = categoryInputs[key];
                       const label = FIELD_LABELS[key] || key;
-                      const formattedValue = formatValue(key, rawValue);
+                      const formattedValue = formatInsuranceValue(key, rawValue);
                       const isNumericAmount = typeof rawValue === 'number' && rawValue >= 1000000;
                       
                       return (
@@ -3115,21 +2829,10 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                               </div>
                             </div>
                           ) : (
-                            <div className="flex gap-1.5">
-                              {typeof rawValue === 'boolean' ? (
-                                <>
-                                  <span className={`px-3 py-1.5 rounded-lg text-[10px] font-black ${rawValue ? "bg-orange-500 text-white border border-orange-500" : "bg-slate-900/40 text-slate-600 border border-slate-850/60"}`}>
-                                    포함
-                                  </span>
-                                  <span className={`px-3 py-1.5 rounded-lg text-[10px] font-black ${!rawValue ? "bg-orange-500 text-white border border-orange-500" : "bg-slate-900/40 text-slate-600 border border-slate-850/60"}`}>
-                                    미포함
-                                  </span>
-                                </>
-                              ) : (
-                                <span className="px-3 py-1.5 rounded-lg text-[10px] font-black bg-orange-500 text-white border border-orange-500">
-                                  {formattedValue}
-                                </span>
-                              )}
+                            <div className="flex gap-1.5 flex-wrap">
+                              <span className="px-3 py-1.5 rounded-lg text-[10px] font-black bg-orange-500 text-white border border-orange-500 shadow-sm">
+                                {formattedValue}
+                              </span>
                             </div>
                           )}
                         </div>

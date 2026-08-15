@@ -103,8 +103,8 @@ interface LeadsTabProps {
   agencies: Agency[];
   leadsPeriod: 'today' | '7days' | 'all';
   setLeadsPeriod: (period: 'today' | '7days' | 'all') => void;
-  leadsCategoryFilter: 'all' | 'remodeling' | 'compare';
-  setLeadsCategoryFilter: (filter: 'all' | 'remodeling' | 'compare') => void;
+  leadsCategoryFilter: 'all' | 'remodeling' | 'compare' | 'cancer_major' | 'life_care';
+  setLeadsCategoryFilter: (filter: 'all' | 'remodeling' | 'compare' | 'cancer_major' | 'life_care') => void;
   consultCategoryFilter: 'all' | 'remodeling' | 'compare' | 'underwriting' | 'support';
   setConsultCategoryFilter: (filter: 'all' | 'remodeling' | 'compare' | 'underwriting' | 'support') => void;
   leadSearchTerm: string;
@@ -181,9 +181,10 @@ export function LeadsTab({
         if (!nameMatch && !phoneMatch && !codeMatch) return false;
       }
 
-      // 3. Exclude high intent (consult, underwriting)
+      // 3. Exclude precision remodeling & consults (Only comparison analysis)
+      const isRemodeling = lead.insurance_type === 'remodeling' || lead.insurance_type?.includes('remodeling');
       const isHighIntent = isLeadConsult(lead.insurance_type) || lead.insurance_type?.includes('_underwriting');
-      if (isHighIntent) return false;
+      if (isRemodeling || isHighIntent) return false;
 
       // 4. Role based filtering
       if (currentUser.role === 'agency') {
@@ -193,11 +194,13 @@ export function LeadsTab({
       }
 
       // 5. Category tab filter
-      if (leadsCategoryFilter === 'remodeling') {
-        return lead.insurance_type === 'remodeling';
+      if (leadsCategoryFilter === 'cancer_major') {
+        const t = (lead.insurance_type || '').toLowerCase();
+        return t.includes('cancer') || t.includes('brain') || t.includes('heart') || t.includes('surgery') || t.includes('health') || t.includes('pre') || t.includes('암') || t.includes('뇌') || t.includes('심장');
       }
-      if (leadsCategoryFilter === 'compare') {
-        return lead.insurance_type !== 'remodeling';
+      if (leadsCategoryFilter === 'life_care') {
+        const t = (lead.insurance_type || '').toLowerCase();
+        return t.includes('silson') || t.includes('dental') || t.includes('care') || t.includes('dementia') || t.includes('nursing') || t.includes('실손') || t.includes('치아') || t.includes('간병');
       }
 
       return true;
@@ -219,9 +222,10 @@ export function LeadsTab({
         if (!nameMatch && !phoneMatch && !codeMatch) return false;
       }
 
-      // 3. Exclude normal analysis
+      // 3. Include precision remodeling & consults/underwriting
+      const isRemodeling = lead.insurance_type === 'remodeling' || lead.insurance_type?.includes('remodeling');
       const isHighIntent = isLeadConsult(lead.insurance_type) || lead.insurance_type?.includes('_underwriting');
-      if (!isHighIntent) return false;
+      if (!isRemodeling && !isHighIntent) return false;
 
       // 4. Role based filtering
       if (currentUser.role === 'agency') {
@@ -232,10 +236,10 @@ export function LeadsTab({
 
       // 5. Category tab filter
       if (consultCategoryFilter === 'remodeling') {
-        return lead.insurance_type?.includes('remodeling');
+        return lead.insurance_type === 'remodeling' || lead.insurance_type?.includes('remodeling');
       }
       if (consultCategoryFilter === 'compare') {
-        return !lead.insurance_type?.includes('remodeling') && lead.insurance_type !== 'support_consult' && !lead.insurance_type?.includes('_underwriting');
+        return isLeadConsult(lead.insurance_type) && !lead.insurance_type?.includes('remodeling') && lead.insurance_type !== 'support_consult';
       }
       if (consultCategoryFilter === 'underwriting') {
         return lead.insurance_type?.includes('_underwriting');
@@ -818,7 +822,7 @@ export function LeadsTab({
         </div>
       </div>
 
-      {/* ── CARD 1: 실시간 보험 분석 & 다이어트 시도 목록 (잠재고객 DB) ── */}
+      {/* ── CARD 1: 📊 실시간 내보험 비교분석 고객 DB (26개 전 상품 자율 비교) ── */}
       <div className={`p-3 sm:p-6 rounded-2xl sm:rounded-[2rem] space-y-6 relative overflow-hidden transition-all duration-300 ${
         showHelpGuide 
           ? 'help-guide-glow bg-slate-900/20 shadow-[0_20px_50px_-12px_rgba(255,107,0,0.25)]' 
@@ -828,9 +832,9 @@ export function LeadsTab({
           <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)] relative z-10">
             <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
             <div className="pl-2 space-y-1">
-              <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 실시간 자가진단 분석 리드 목록</span>
+              <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 실시간 내보험 비교분석 고객 DB</span>
               <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
-                "📊 홈페이지에 들어와서 자가보장비교 및 보험 다이어트를 완료한 잠재고객 DB입니다. 연락처와 상세 보장 분석 내역이 자동으로 수집되어 즉각 상담이 가능합니다."
+                "📊 홈페이지에 들어와서 26개 보험 상품 자가 비교분석을 완료한 고객 DB입니다. 알리고 SMS 본인인증 완료 시 마스킹이 즉시 해제되며 실명과 연락처가 자동으로 연동됩니다."
               </p>
             </div>
           </div>
@@ -838,9 +842,9 @@ export function LeadsTab({
         <div className="space-y-1 text-left">
           <h3 className="text-sm font-black text-white flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-            실시간 보험 분석 & 다이어트 시도 목록
+            📊 실시간 내보험 비교분석 고객 DB (26개 카테고리 자율 비교)
           </h3>
-          <p className="text-[10px] text-slate-400 font-bold">고객이 홈페이지에서 자가 보장 진단 및 보험 분석을 수행하여 이탈 방지용으로 자동 수집된 DB입니다.</p>
+          <p className="text-[10px] text-slate-400 font-bold">고객이 홈페이지에서 26개 보험 상품 실시간 비교분석을 수행하여 자동 수집된 비교분석 고객 DB입니다.</p>
         </div>
 
         {/* Upper Category Filter Tabs */}
@@ -855,27 +859,35 @@ export function LeadsTab({
                 onClick={() => setLeadsCategoryFilter('all')}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${leadsCategoryFilter === 'all' ? 'bg-orange-500 text-white shadow shadow-orange-500/10' : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-850'}`}
               >
-                전체보기 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && !isLeadConsult(l.insurance_type) && !l.insurance_type?.includes('_underwriting')).length}건)
+                전체보기 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && !l.insurance_type?.includes('remodeling') && !isLeadConsult(l.insurance_type) && !l.insurance_type?.includes('_underwriting')).length}건)
               </button>
               <button
                 type="button"
-                onClick={() => setLeadsCategoryFilter('remodeling')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${leadsCategoryFilter === 'remodeling' ? 'bg-emerald-500 text-white shadow shadow-emerald-500/10' : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-850'}`}
+                onClick={() => setLeadsCategoryFilter('cancer_major' as any)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${leadsCategoryFilter === ('cancer_major' as any) ? 'bg-emerald-500 text-white shadow shadow-emerald-500/10' : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-850'}`}
               >
-                💸 내 보험 다이어트 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && l.insurance_type === 'remodeling').length}건)
+                🛡️ 암/3대 주요보장 ({leads.filter(l => {
+                  if (!isInKstDateRange(l.created_at, leadsPeriod) || l.insurance_type?.includes('remodeling') || isLeadConsult(l.insurance_type) || l.insurance_type?.includes('_underwriting')) return false;
+                  const t = (l.insurance_type || '').toLowerCase();
+                  return t.includes('cancer') || t.includes('brain') || t.includes('heart') || t.includes('surgery') || t.includes('health') || t.includes('pre') || t.includes('암') || t.includes('뇌') || t.includes('심장');
+                }).length}건)
               </button>
               <button
                 type="button"
-                onClick={() => setLeadsCategoryFilter('compare')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${leadsCategoryFilter === 'compare' ? 'bg-sky-500 text-white shadow shadow-sky-500/10' : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-850'}`}
+                onClick={() => setLeadsCategoryFilter('life_care' as any)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${leadsCategoryFilter === ('life_care' as any) ? 'bg-sky-500 text-white shadow shadow-sky-500/10' : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-850'}`}
               >
-                📊 보험 비교분석 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && !isLeadConsult(l.insurance_type) && l.insurance_type !== 'remodeling' && !l.insurance_type?.includes('_underwriting')).length}건)
+                🏥 실손/치아/간병 ({leads.filter(l => {
+                  if (!isInKstDateRange(l.created_at, leadsPeriod) || l.insurance_type?.includes('remodeling') || isLeadConsult(l.insurance_type) || l.insurance_type?.includes('_underwriting')) return false;
+                  const t = (l.insurance_type || '').toLowerCase();
+                  return t.includes('silson') || t.includes('dental') || t.includes('care') || t.includes('dementia') || t.includes('nursing') || t.includes('실손') || t.includes('치아') || t.includes('간병');
+                }).length}건)
               </button>
             </div>
           </div>
           <button
             type="button"
-            onClick={() => handleDownloadCSV(getFilteredAnalysisLeads(), "보험분석_자가리드")}
+            onClick={() => handleDownloadCSV(getFilteredAnalysisLeads(), "실시간_내보험_비교분석_고객DB")}
             className="px-4 py-1.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 hover:text-white rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 self-start sm:self-auto"
           >
             <Download className="w-3.5 h-3.5 text-orange-500" />
@@ -886,7 +898,7 @@ export function LeadsTab({
         {getFilteredAnalysisLeads().length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-slate-500 space-y-2 bg-slate-950/20 rounded-2xl border border-slate-900/60">
             <FileText className="w-10 h-10 text-slate-600" />
-            <p className="text-xs font-bold">수집된 자가 분석 리드가 없습니다.</p>
+            <p className="text-xs font-bold">수집된 실시간 비교분석 리드가 없습니다.</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -896,7 +908,7 @@ export function LeadsTab({
         )}
       </div>
 
-      {/* ── CARD 2: 🔥 카카오톡 정밀설계 신청 목록 (초고관여 상담 DB) ── */}
+      {/* ── CARD 2: 🔬 내보험 정밀 분석 & 실시간 고객 상담 DB ── */}
       <div className={`p-3 sm:p-6 rounded-2xl sm:rounded-[2rem] space-y-6 relative overflow-hidden transition-all duration-300 ${
         showHelpGuide 
           ? 'help-guide-glow bg-slate-950/90 shadow-[0_20px_50px_-12px_rgba(255,107,0,0.25)]' 
@@ -906,9 +918,9 @@ export function LeadsTab({
           <div className="p-4 bg-slate-950 border border-orange-500/30 rounded-2xl text-left relative overflow-hidden shadow-[0_10px_30px_rgba(255,107,0,0.05)] relative z-10">
             <div className="absolute top-0 left-0 w-1.5 h-full bg-orange-500" />
             <div className="pl-2 space-y-1">
-              <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 실시간 고객 상담 신청 현황 (리드 목록)</span>
+              <span className="text-[10px] font-black text-orange-400 block uppercase tracking-wider">💡 도움말 가이드: 내보험 정밀 분석 및 고객 상담 현황 DB</span>
               <p className="text-xs font-extrabold text-white leading-relaxed break-keep">
-                "📋 진단을 마친 고객이 상담 신청 시 실시간으로 DB가 쌓이는 곳입니다. 상세 보기 버튼을 눌러 고객의 성별, 연령, 매칭률 및 상세 설문 결과를 확인하고 상담을 진행하세요."
+                "📋 내보험 정밀 분석(보장 다이어트/리모델링)을 수행했거나 1:1 상담을 요청한 고객 DB입니다. 하이픈(한국신용정보원) 인증 시 실제 가입 증권과 상세 보장이 자동 연동됩니다."
               </p>
             </div>
           </div>
@@ -920,9 +932,9 @@ export function LeadsTab({
         <div className="space-y-1 relative z-10 text-left">
           <h3 className="text-sm font-black text-white flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-            💬 실시간 고객 상담 신청 및 1:1 고객센터 문의 목록
+            🔬 내보험 정밀 분석 & 실시간 고객 상담 DB
           </h3>
-          <p className="text-[10px] text-slate-400 font-bold">고객이 분석 결과를 확인한 후 실시간 상담을 요청했거나, 고객센터를 통해 1:1 문의를 남긴 초고관여 리드 목록입니다.</p>
+          <p className="text-[10px] text-slate-400 font-bold">고객이 내보험 정밀 분석(보장 다이어트)을 수행했거나, 실시간 상담 및 고객센터 문의를 남긴 고객 목록입니다.</p>
           <div className="mt-3 overflow-hidden rounded-xl border border-yellow-500/30 bg-yellow-500/5 transition-all">
             {/* Accordion Header */}
             <button
@@ -982,21 +994,21 @@ export function LeadsTab({
                 onClick={() => setConsultCategoryFilter('all')}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${consultCategoryFilter === 'all' ? 'bg-amber-500 text-white shadow shadow-amber-500/10' : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-850'}`}
               >
-                전체보기 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && (isLeadConsult(l.insurance_type) || l.insurance_type?.includes('_underwriting'))).length}건)
+                전체보기 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && (l.insurance_type?.includes('remodeling') || isLeadConsult(l.insurance_type) || l.insurance_type?.includes('_underwriting'))).length}건)
               </button>
               <button
                 type="button"
                 onClick={() => setConsultCategoryFilter('remodeling')}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${consultCategoryFilter === 'remodeling' ? 'bg-emerald-500 text-white shadow shadow-emerald-500/10' : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-850'}`}
               >
-                💸 내 보험 다이어트 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && (isLeadConsult(l.insurance_type) || l.insurance_type?.includes('_underwriting')) && l.insurance_type?.includes('remodeling')).length}건)
+                💸 내 보험 정밀분석 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && l.insurance_type?.includes('remodeling')).length}건)
               </button>
               <button
                 type="button"
                 onClick={() => setConsultCategoryFilter('compare')}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${consultCategoryFilter === 'compare' ? 'bg-sky-500 text-white shadow shadow-sky-500/10' : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-850'}`}
               >
-                📊 보험 비교분석 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && isLeadConsult(l.insurance_type) && !l.insurance_type?.includes('remodeling') && l.insurance_type !== 'support_consult').length}건)
+                💬 1:1 상담 신청 ({leads.filter(l => isInKstDateRange(l.created_at, leadsPeriod) && isLeadConsult(l.insurance_type) && !l.insurance_type?.includes('remodeling') && l.insurance_type !== 'support_consult').length}건)
               </button>
               <button
                 type="button"
@@ -1016,7 +1028,7 @@ export function LeadsTab({
           </div>
           <button
             type="button"
-            onClick={() => handleDownloadCSV(getFilteredConsultLeads(), "카톡상담_요청리드")}
+            onClick={() => handleDownloadCSV(getFilteredConsultLeads(), "내보험_정밀분석_상담요청_고객DB")}
             className="px-4 py-1.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 hover:text-white rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 self-start sm:self-auto"
           >
             <Download className="w-3.5 h-3.5 text-orange-500" />

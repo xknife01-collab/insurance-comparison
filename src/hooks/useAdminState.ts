@@ -409,7 +409,7 @@ export function useAdminState(initialTab?: 'login' | 'register') {
   const [marketingPeriod, setMarketingPeriod] = useState<'today' | '7days' | 'all'>('all');
   const [statsSubTab, setStatsSubTab] = useState<'marketing' | 'sales'>('marketing');
   const [leadsPeriod, setLeadsPeriod] = useState<'today' | '7days' | 'all'>('all');
-  const [leadsCategoryFilter, setLeadsCategoryFilter] = useState<'all' | 'remodeling' | 'compare' | 'underwriting'>('all');
+  const [leadsCategoryFilter, setLeadsCategoryFilter] = useState<'all' | 'remodeling' | 'compare' | 'cancer_major' | 'life_care' | 'underwriting'>('all');
   const [consultCategoryFilter, setConsultCategoryFilter] = useState<'all' | 'remodeling' | 'compare' | 'support'>('all');
   const [analysisPage, setAnalysisPage] = useState(1);
   const [consultPage, setConsultPage] = useState(1);

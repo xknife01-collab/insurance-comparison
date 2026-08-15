@@ -160,7 +160,13 @@ export default function VerificationPage({ branding, initialCode, onSuccess, onC
       const verifyRes = await fetch('/api/send-sms-verification', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'verify', phone: mobile, code: otpCode })
+        body: JSON.stringify({ 
+          action: 'verify', 
+          phone: mobile, 
+          code: otpCode,
+          customerName: name,
+          simulationCode: code
+        })
       });
       const verifyData = await verifyRes.json();
       
@@ -184,8 +190,24 @@ export default function VerificationPage({ branding, initialCode, onSuccess, onC
 
       // 3. Update lead record in Supabase with real Name, Phone, and mark status as 'verified'
       const supabase = createClient();
+      let targetId = leadRecord?.id;
+      let existingPayload = leadRecord?.raw_payload || {};
+
+      if (!targetId && code) {
+        const { data: found } = await supabase
+          .from('customer_leads')
+          .select('*')
+          .eq('raw_payload->>simulation_code', code)
+          .order('created_at', { ascending: false })
+          .limit(1);
+        if (found && found.length > 0) {
+          targetId = found[0].id;
+          existingPayload = found[0].raw_payload || {};
+        }
+      }
+
       const updatedPayload = {
-        ...(leadRecord.raw_payload || {}),
+        ...existingPayload,
         consult_type: 'regular',
         verified_name: name,
         verified_mobile: mobile,
@@ -195,26 +217,34 @@ export default function VerificationPage({ branding, initialCode, onSuccess, onC
             id: `verify-${Date.now()}`,
             type: 'system_log',
             author: '시스템',
-            detail: `고객이 1:1 상담방 비공개 링크를 통해 알리고 본인인증을 완료하였습니다. (성함: ${name}, 연락처: ${mobile})`,
+            detail: `고객이 알리고(Aligo) SMS 본인인증을 완료하였습니다. (성함: ${name}, 연락처: ${mobile})`,
             created_at: new Date().toISOString()
           },
-          ...(leadRecord.raw_payload?.timeline || [])
+          ...(existingPayload.timeline || [])
         ]
       };
 
       try {
-        const { error } = await supabase
-          .from('customer_leads')
-          .update({
-            name: name,
-            phone: mobile,
-            status: 'verified',
-            raw_payload: updatedPayload
-          })
-          .eq('id', leadRecord.id);
-
-        if (error) {
-          console.warn('[Verification] Supabase lead update warning:', error.message);
+        if (targetId) {
+          await supabase
+            .from('customer_leads')
+            .update({
+              name: name,
+              phone: mobile,
+              status: 'verified',
+              raw_payload: updatedPayload
+            })
+            .eq('id', targetId);
+        } else if (code) {
+          await supabase
+            .from('customer_leads')
+            .update({
+              name: name,
+              phone: mobile,
+              status: 'verified',
+              raw_payload: updatedPayload
+            })
+            .eq('raw_payload->>simulation_code', code);
         }
       } catch (dbErr) {
         console.warn('[Verification] DB update fallback:', dbErr);
@@ -337,13 +367,17 @@ ${origin}/?code=${code}
 
             <div className="space-y-3 pt-4">
               <button
+                type="button"
                 onClick={() => {
-                  window.close();
-                  window.location.href = `/?code=${code}`;
+                  if (onClose) {
+                    onClose();
+                  } else {
+                    window.location.href = `/?code=${code}`;
+                  }
                 }}
-                className="w-full py-4 bg-slate-900 hover:bg-black text-white font-black rounded-2xl shadow-lg transition-all text-sm flex items-center justify-center gap-2"
+                className="w-full py-4 bg-orange-500 hover:bg-orange-600 text-white font-black rounded-2xl shadow-lg transition-all text-sm flex items-center justify-center gap-2 cursor-pointer"
               >
-                결과 보고서 확인하러 가기
+                마스킹 해제된 결과 확인하기
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>

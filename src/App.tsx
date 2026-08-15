@@ -416,13 +416,6 @@ export default function App() {
   };
 
   const submitLead = async (analysis: InsuranceAnalysis, category: string, resultData: any, consultType?: 'anonymous' | 'regular') => {
-    const leadKey = `${analysis.name || '무명고객'}_${analysis.mobile || '010-0000-0000'}_${category}`;
-    if (submittedLeads.includes(leadKey)) {
-      console.log('Lead already submitted in this session:', leadKey);
-      return null;
-    }
-    setSubmittedLeads(prev => [...prev, leadKey]);
-
     const supabase = createClient();
     let leadSource: 'direct' | 'distribute' | 'organic' = 'organic';
     if (branding.type === 'planner') {
@@ -576,7 +569,7 @@ export default function App() {
     const payload = {
       planner_id: chosenPlannerId,
       agency_id: branding.agencyId,
-      name: analysis.name || '무명고객',
+      name: (analysis.name && analysis.name !== '무명고객') ? analysis.name : '고객님',
       phone: analysis.mobile || '010-0000-0000',
       age: analysis.age || 40,
       insurance_type: category,
@@ -652,10 +645,13 @@ export default function App() {
   };
 
   // 정밀 분석용 하이픈 연동 성공 핸들러 — floating bar에서 HyphenAuthModal 완료 시 호출
-  const handleRemodelingHyphenSuccess = async (coverage: StandardizedCoverage) => {
+  const handleRemodelingHyphenSuccess = async (coverage: StandardizedCoverage, customerInfo?: { name: string; phone: string }) => {
+    const custName = (customerInfo?.name && customerInfo.name !== '고객' && customerInfo.name !== '고객님') ? customerInfo.name : '고객님';
+    const custPhone = (customerInfo?.phone && customerInfo.phone !== '010-0000-0000') ? customerInfo.phone : '010-0000-0000';
+
     const analysisInput = {
-      name: '고객',
-      mobile: '010-0000-0000',
+      name: custName,
+      mobile: custPhone,
       age: coverage.age,
       gender: coverage.gender,
       jobClass: 1,
@@ -674,8 +670,67 @@ export default function App() {
     setShowComparisonBar(false);
     setRemodelingApplied(false);
     const result = await runAnalysis(analysisInput);
-    result.simulation_code = currentSimulationCode || hyphenCodeParam || '';
+    const simCode = currentSimulationCode || hyphenCodeParam || '';
+    result.simulation_code = simCode;
     setRemodelingResult(result);
+
+    // Save/Update in Supabase
+    try {
+      const supabase = createClient();
+      let targetLeadId = lastSubmittedLeadId;
+      let existingLead = null;
+
+      if (simCode) {
+        const { data } = await supabase
+          .from('customer_leads')
+          .select('*')
+          .eq('raw_payload->>simulation_code', simCode)
+          .limit(1);
+        if (data && data.length > 0) {
+          existingLead = data[0];
+          targetLeadId = existingLead.id;
+        }
+      }
+
+      if (targetLeadId) {
+        const updatedPayload = {
+          ...(existingLead?.raw_payload || {}),
+          hyphen_coverage: coverage,
+          verified_name: custName,
+          verified_mobile: custPhone,
+          verified_at: new Date().toISOString(),
+          timeline: [
+            {
+              id: `hyphen-${Date.now()}`,
+              type: 'system_log',
+              author: '고객',
+              detail: `고객이 한국신용정보원(내보험다보여) 인증을 완료하여 실제 보험 계약이 자동 조회되었습니다. (성함: ${custName}, 연락처: ${custPhone})`,
+              created_at: new Date().toISOString()
+            },
+            ...(existingLead?.raw_payload?.timeline || [])
+          ]
+        };
+
+        const updateData: any = {
+          status: 'verified',
+          raw_payload: updatedPayload,
+          analysis_result: result,
+          monthly_premium: coverage.current_total_premium || 0
+        };
+        const { error: updErr } = await supabase.from('customer_leads').update(updateData).eq('id', targetLeadId);
+        if (updErr && existingLead) {
+          console.warn('Hyphen lead standard update failed due to trigger, applying safe replace:', updErr.message);
+          const { id, ...leadWithoutId } = existingLead;
+          await supabase.from('customer_leads').delete().eq('id', targetLeadId);
+          await supabase.from('customer_leads').insert({
+            ...leadWithoutId,
+            ...updateData
+          });
+        }
+      }
+    } catch (err) {
+      console.error('Failed to update Hyphen lead in Supabase:', err);
+    }
   };
 
   // 고객이 /remodeling?code= 링크 접속 후 인증 성공 → Supabase 저장 + 로컬 즉시 렌더링
@@ -740,10 +795,16 @@ export default function App() {
         analysis_result: result,
         monthly_premium: coverage.current_total_premium || 0
       };
-      if (customerInfo?.name && customerInfo.name !== '고객') updateData.name = customerInfo.name;
-      if (customerInfo?.phone && customerInfo.phone !== '010-0000-0000') updateData.phone = customerInfo.phone;
-
-      await supabase.from('customer_leads').update(updateData).eq('id', lead.id);
+      const { error: updErr } = await supabase.from('customer_leads').update(updateData).eq('id', lead.id);
+      if (updErr) {
+        console.warn('External Hyphen lead update failed due to trigger, applying safe replace:', updErr.message);
+        const { id, ...leadWithoutId } = lead;
+        await supabase.from('customer_leads').delete().eq('id', lead.id);
+        await supabase.from('customer_leads').insert({
+          ...leadWithoutId,
+          ...updateData
+        });
+      }
     } catch (err) {
       console.error('Supabase 저장 실패 (로컬 렌더링은 완료):', err);
     }
@@ -2030,13 +2091,13 @@ export default function App() {
       <HyphenAuthModal
         isOpen={isRemodelingHyphenOpen}
         onClose={() => setIsRemodelingHyphenOpen(false)}
-        onSuccess={(coverage) => {
+        onSuccess={(coverage, customerInfo) => {
           setIsRemodelingHyphenOpen(false);
-          handleRemodelingHyphenSuccess(coverage);
+          handleRemodelingHyphenSuccess(coverage, customerInfo);
         }}
         defaultTab="register"
         initialData={{
-          userName: '고객',
+          userName: '고객님',
           gender: (remodelingResult?.analysis?.gender as 'M' | 'F') || 'M',
           birth: '',
           mobileNo: '',
@@ -2065,12 +2126,12 @@ export default function App() {
             <VerificationPage 
               branding={branding} 
               initialCode={currentSimulationCode || ''} 
-              onClose={() => setShowAligoAuthModal(false)}
+              onClose={() => {
+                setShowAligoAuthModal(false);
+                setIsUnlocked(true);
+              }}
               onSuccess={() => {
-                setTimeout(() => {
-                  setShowAligoAuthModal(false);
-                  setIsUnlocked(true);
-                }, 2500);
+                setIsUnlocked(true);
               }}
             />
           </div>
