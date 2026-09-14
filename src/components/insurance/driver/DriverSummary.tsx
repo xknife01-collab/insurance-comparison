@@ -183,9 +183,12 @@ export const DriverSummary: React.FC<Props> = ({ result }) => {
                 <CheckCircle2 size={24} />
               </div>
               <div>
-                <p className="text-sm font-black text-slate-800 mb-1">최적화 분석 완료</p>
+                <p className="text-sm font-black text-slate-800 mb-1">최적화 시뮬레이션 안내</p>
                 <p className="text-xs font-bold text-slate-500 leading-relaxed">
-                  매달 <span className="text-purple-600 font-black">{savings.toLocaleString()}원</span>을 절약하면서도, 형사합의금 2억 보장 및 변호사 선임비 경찰동행 특약이 강화된 플랜으로 교체합니다.
+                  월 약 <span className="text-purple-600 font-black">{savings.toLocaleString()}원</span> 수준의 보험료 조정 예시와 함께, 형사합의금 및 경찰조사 변호사선임비 등 핵심 담보 중심의 재설계 검토 예시입니다.
+                </p>
+                <p className="text-[10px] text-slate-400 font-medium mt-2 leading-tight">
+                  * 상기 절감액 및 보장 한도는 고객 입력 조건에 기반한 예시이며 실제 가입 조건 및 다수 계약 보유 여부(비례보상)에 따라 상이합니다.
                 </p>
               </div>
             </div>

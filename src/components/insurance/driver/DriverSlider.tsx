@@ -92,7 +92,10 @@ export const DriverSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =
                 <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-purple-500 shadow-sm shrink-0"><Sparkles size={24} /></div>
                 <div className="space-y-2">
                   <p className="text-[0.85rem] font-bold text-gray-600 leading-relaxed">
-                    설정하신 월 예산에 맞춰 교통사고처리지원금(형사합의금) 한도가 <span className="text-purple-600 font-black underline decoration-2 underline-offset-4">{metrics.accidentLimit >= 10000 ? `${(metrics.accidentLimit / 10000).toFixed(1).replace('.0', '')}억` : `${metrics.accidentLimit.toLocaleString()}만`} 원</span>으로 실시간 맞춤 조율되는 것을 확인하실 수 있습니다.
+                    설정하신 월 예산에 맞춰 교통사고처리지원금(형사합의금) 한도가 <span className="text-purple-600 font-black underline decoration-2 underline-offset-4">{metrics.accidentLimit >= 10000 ? `${(metrics.accidentLimit / 10000).toFixed(1).replace('.0', '')}억` : `${metrics.accidentLimit.toLocaleString()}만`} 원</span>으로 실시간 맞춤 조율되는 예시를 확인하실 수 있습니다.
+                  </p>
+                  <p className="text-[10px] text-gray-400 font-medium leading-relaxed border-t border-purple-100/60 pt-2">
+                    * 상기 한도 및 지수는 이해를 돕기 위한 예시 시뮬레이션이며, 실제 가입 한도와 보험료는 연령, 성별, 운전 형태(자가용/영업용/이륜차), 직업급수 및 각 보험사별 인수 기준에 따라 상이합니다. 벌금·변호사비·형사합의금 등 실손비용 담보는 다수 가입 시 비례보상됩니다.
                   </p>
                 </div>
               </div>

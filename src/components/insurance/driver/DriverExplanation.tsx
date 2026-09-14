@@ -35,12 +35,12 @@ export const DriverExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
       </div>
 
       {/* ── 통계 배너 ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
         {[
-          { num: '경찰조사 변호사비', label: '경찰조사 개시 시점 지원', sub: '불기소/약식기소 포함 선지원 가능' },
-          { num: '교사처 형사합의금', label: '피해자 중상해 시 최대 2억', sub: '형사합의금 실손 한도 대폭 보강' },
-          { num: '스쿨존 대인벌금', label: '민식이법 벌금 최대 3천만', sub: '대물벌금 500만 원 중복 보장' },
-          { num: '자부상 치료비', label: '14급 단순 염좌도 정액 지급', sub: '사고부상치료비 등급별 집중 케어' },
+          { num: '경찰조사 변호사비', label: '경찰조사 개시 시점 지원', sub: '특약 가입 시 실손 보상 (약관 기준)' },
+          { num: '교사처 형사합의금', label: '피해자 중상해 시 최대 2억', sub: '실손 한도 내 보상 (음주·무면허 제외)' },
+          { num: '스쿨존 대인벌금', label: '민식이법 벌금 최대 3천만', sub: '대물 500만 / 실손 비례보상' },
+          { num: '자부상 치료비', label: '14급 단순 염좌 기준 안내', sub: '등급별 가입한도 (약관 참조)' },
         ].map((s, i) => (
           <div key={i} className="bg-white border border-purple-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-purple-200 transition-all group">
             <p className="text-2xl font-black text-purple-600 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
@@ -48,6 +48,14 @@ export const DriverExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
             <p className="text-[11px] text-slate-400 font-bold">{s.sub}</p>
           </div>
         ))}
+      </div>
+
+      {/* ── 산출 기준 및 실손비례보상 사전 고지 ── */}
+      <div className="mb-14 p-5 md:p-6 bg-purple-50/50 rounded-2xl md:rounded-3xl border border-purple-100 text-xs text-slate-600 leading-relaxed space-y-1">
+        <p className="font-bold text-purple-900 text-sm mb-1">[운전자보험 핵심 보장 기준 및 비례보상 고지]</p>
+        <p>• <strong>실손비례보상 안내:</strong> 벌금, 교통사고처리지원금(형사합의금), 변호사선임비용 담보는 실제 발생한 형사적 손해액 범위 내에서만 보상되는 실손형 특약으로, 2개 이상의 보험에 중복 가입하더라도 중복 지급되지 않고 각 보험사별로 비례 분담하여 보상됩니다.</p>
+        <p>• <strong>법정 면책 사유:</strong> 피보험자가 <strong>음주운전, 무면허운전, 약물운전 또는 뺑소니(사고 후 도주)</strong>를 한 경우에는 운전자보험의 형사합의금, 변호사선임비, 벌금 등 제반 비용 담보에서 보상되지 아니합니다.</p>
+        <p>• 상기 담보별 한도는 2026년 각 손해보험사 주요 상품 가입 특약 기준이며, 가입자의 운전 목적(자가용/영업용/이륜차), 직업급수, 연령에 따라 가입 한도 및 인수 조건이 상이합니다.</p>
       </div>
 
       {/* ── 가이드 1 & 가이드 2 ── */}
@@ -66,16 +74,16 @@ export const DriverExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
           </div>
 
           <p className="text-sm font-bold text-slate-400 mb-8 leading-relaxed">
-            운전 중 중과실 사고가 발생했을 때, 구속이나 형사처벌을 예방하기 위해{' '}
-            <span className="text-purple-600 font-black">설계 시 무조건 채워야 할 필수 3대 담보</span>
-             의 설계의 기준입니다.
+            운전 중 12대 중과실 사고나 중상해 사고가 발생했을 때, 법적 형사 절차를 방어하기 위해{' '}
+            <span className="text-purple-600 font-black">우선 검토되는 핵심 3대 비용 담보</span>
+            의 합리적 설계 기준입니다.
           </p>
 
           <div className="space-y-3">
             {[
-              { title: '교통사고처리지원금', label: '형사합의금 최대 2억 원 한도 실손 보장', color: 'bg-purple-50/50 border-purple-100', badge: 'text-purple-700 bg-purple-100', desc: '피해자 사망, 6주 이상 치료 필요 상해, 또는 12대 중과실 사고 시 형사합의비 부담 전담' },
-              { title: '변호사 선임비용', label: '경찰조사 단계부터 선지원 탑재 필수', color: 'bg-indigo-50/50 border-indigo-100', badge: 'text-indigo-700 bg-indigo-100', desc: '과거 약식기소 후에만 나오던 담보에서 개선되어, 경찰 첫 출석(조사) 단계부터 5천만 원 즉각 지원' },
-              { title: '대인/대물 벌금', label: '스쿨존 민식이법 3천만 원 한도 최대 설계', color: 'bg-emerald-50 border-emerald-100', badge: 'text-emerald-700 bg-emerald-100', desc: '어린이보호구역 벌금 인상안 든든하게 대비 및 도로 시설물 훼손 벌금 최대 500만 원 보장' },
+              { title: '교통사고처리지원금', label: '형사합의금 최대 2억 원 한도 실손 보장', color: 'bg-purple-50/50 border-purple-100', badge: 'text-purple-700 bg-purple-100', desc: '피해자 사망, 6주 이상 치료 필요 상해, 또는 12대 중과실 사고 시 형사합의비 지원 (음주·무면허·약물·도주 사고 제외)' },
+              { title: '변호사 선임비용', label: '경찰조사 단계부터 선지원 특약 선택 가능', color: 'bg-indigo-50/50 border-indigo-100', badge: 'text-indigo-700 bg-indigo-100', desc: '과거 구속/기소 시에만 나오던 약관에서 개선되어, 경찰 첫 출석(조사) 단계부터 실제 변호사 보수 실손 보상 (특약 가입 시)' },
+              { title: '대인/대물 벌금', label: '스쿨존 민식이법 3천만 원 한도 설계', color: 'bg-emerald-50 border-emerald-100', badge: 'text-emerald-700 bg-emerald-100', desc: '어린이보호구역 사고 벌금 최대 3천만 원 및 도로 시설물 훼손 벌금 최대 500만 원 실손 보장 (비례보상)' },
             ].map((item, i) => (
               <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-5 rounded-3xl border ${item.color}`}>
                 <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
@@ -88,9 +96,9 @@ export const DriverExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
           </div>
 
           <div className="mt-8 p-5 md:p-6 bg-purple-50 rounded-3xl border border-purple-100">
-            <p className="text-purple-700 font-black text-xs mb-1">⚠️ 구 가입자 리모델링 가이드</p>
+            <p className="text-purple-700 font-black text-xs mb-1">⚠️ 기존 가입자 증권 점검 가이드</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
-              2025년 이전 가입 고객은 최근 대다수 상품에 도입된 **변호사 선임비 자기부담금 50% 페널티**가 없는 경우가 많으므로, 단순히 한도 증액을 위해 함부로 해약하기보다는 기존 증권을 먼저 정밀 진단받는 것이 훨씬 안전합니다.
+              과거에 가입한 운전자보험은 변호사 선임비 자기부담금 조건이나 약관 기준이 상이할 수 있으므로, 단순 한도 증액만을 위해 섣불리 해약하기보다는 기존 증권의 보장 범위와 자기부담 조건을 먼저 정밀 진단받는 것이 안전합니다.
             </p>
           </div>
         </div>
@@ -161,9 +169,9 @@ export const DriverExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
           </div>
           <div className="space-y-4">
             {[
-              { company: '변호사 선임비용', product: '경찰조사 개시 시점 탑재형', limit: '최대 5,000만 원 실손 한도', note: '불기소, 내사종결, 약식기소 시에도 변호사 선임비 전액 지원' },
-              { company: '교통사고처리지원금', product: '피해자 중상해(1~3급) 특별 약정', limit: '최대 2억 원 한도 실손 보장', note: '검찰 기소 전 형사합의금 신속 지급 체계 탑재 여부' },
-              { company: '자동차사고부상치료비', product: '14급 단순 타박/염좌 청구', limit: '등급별 최대 30만 원 정액 보장', note: '경상환자 도덕적 해이 방지를 위한 진료기록부 검증 필터 적용' },
+              { company: '변호사 선임비용', product: '경찰조사 개시 시점 탑재형', limit: '최대 5,000만 원 실손 한도', note: '불기소, 내사종결, 약식명령 청구 시에도 실제 변호사 보수 실손 보상 (특약 가입 시)' },
+              { company: '교통사고처리지원금', product: '피해자 중상해(1~3급) 특별 약정', limit: '최대 2억 원 한도 실손 보장', note: '검찰 기소 전 형사합의금 신속 지급 체계 탑재 여부 (음주·무면허 제외)' },
+              { company: '자동차사고부상치료비', product: '14급 단순 타박/염좌 청구', limit: '등급별 최대 30만 원 한도', note: '금융감독원 행정지도 기준 준수 및 진료기록 확인' },
             ].map((item, i) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
@@ -207,7 +215,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
           <div className="bg-purple-600 text-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-xl">
             <h4 className="text-xl font-black mb-4">보장 리모델링 핵심 TOP 5</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
-              ① 자기부담금 50% 조항 적용 여부 체크<br />
+              ① 자기부담금 조항 적용 여부 체크<br />
               ② 경찰 조사단계 선임비 탑재 유무<br />
               ③ 자부치 염좌(14급) 보장 한도 확인<br />
               ④ 교통사고처리지원금 2억 이상 업그레이드<br />
@@ -219,22 +227,22 @@ export const DriverExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
               <Clock className="text-purple-500 w-5 h-5" /> 기존 보험 유지 검토
             </h4>
             <p className="text-xs font-bold text-slate-500 leading-relaxed">
-              예전에 가입한 운전자보험은 변호사 비용 실손 보장 조건(자기부담금 전무)이 현재보다 훨씬 유리하므로, 전문가 정밀 증단 없이 섣불리 해약해선 절대 안 됩니다.
+              예전에 가입한 운전자보험은 변호사 비용 실손 보장 조건이나 자기부담금 규정이 현재와 다를 수 있으므로, 전문가 정밀 비교 분석 후 신중하게 판단하시는 것이 권장됩니다.
             </p>
           </div>
         </div>
       </div>
 
       {/* ── 주요 상품 종합 비교표 ── */}
-      <div className="mb-20 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-purple-100 shadow-sm">
+      <div className="mb-14 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-purple-100 shadow-sm">
         <h3 className="text-2xl font-black text-slate-900 mb-10 tracking-tight">
-          국내 Top 6 보험사 운전자/법률비용보험 상품 경쟁력 전수 비교
+          주요 손해보험사 운전자보험 대표 상품 특징 안내 (손해보험협회 공시 기준)
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             { company: '현대해상', product: '마음안심 운전자보험', highlight: '경찰조사단계 선임비 탄탄한 기본 한도, 자녀 양육 운전자 우대 할인', badges: ['경찰단계 선두', '가족 가입 우대'] },
             { company: 'KB손해보험', product: '안전운전 파트너 운전자보험', highlight: '대중교통 상해 및 자부상 한도 보강 설계, 경쟁력 있는 특약 요율', badges: ['자부상 우수', '합리적 요율'] },
-            { company: 'DB손해보험', product: '참좋은 운전자보험', highlight: '업계 최초 경찰조사 선임비 보장 특허 출시, 탄탄한 수사 동행 프로토콜', badges: ['최초 특허 탑재', '변호사 한도최대'] },
+            { company: 'DB손해보험', product: '참좋은 운전자보험', highlight: '경찰조사 선임비 보장 출시 이력, 탄탄한 수사 동행 프로토콜', badges: ['배타적사용권 이력', '변호사 지원 특화'] },
             { company: '삼성화재', product: '안심동행 운전자보험', highlight: '형사합의금 접수 시 신속 심사 및 즉각 합의금 선지급 네트워크', badges: ['신속 심사', '네임드 출동망'] },
             { company: '메리츠화재', product: '올바른 운전자보험', highlight: '12대 중과실 한도 보장 극대화 및 단순 타박상 단독 보장 설계 최적화', badges: ['중과실 특화', '경상 케어 최적화'] },
             { company: '한화손해보험', product: '차도리 운전자보험', highlight: '주말 상해사고 집중 보강 특약 및 직장인 출퇴근길 안심 보장 특화', badges: ['주말사고 특약', '직장인 맞춤형'] },
@@ -258,6 +266,16 @@ export const DriverExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
         </div>
       </div>
 
+      {/* ── 법적 고지문 (금소법 제19조 관련) ── */}
+      <div className="mb-20 p-6 md:p-8 bg-slate-50 rounded-3xl border border-slate-200 text-xs text-slate-500 space-y-2 leading-relaxed">
+        <p className="font-bold text-slate-700 text-sm mb-1">[보험 계약 체결 전 유의사항 및 법적 고지]</p>
+        <p>• 보험계약 체결 전 반드시 해당 상품설명서 및 약관을 확인하시기 바랍니다.</p>
+        <p>• 본 안내는 손해보험협회 심의기준 및 각 사 공시 내용을 바탕으로 작성되었으며, 보험계약자가 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 경우 보험인수가 거절되거나 보험료가 인상될 수 있고 보장내용이 달라질 수 있습니다.</p>
+        <p>• <strong>실손비례보상 고지:</strong> 벌금, 교통사고처리지원금(형사합의금), 변호사선임비용 담보는 실손보상 담보로서 2개 이상의 보험에 중복 가입하더라도 실제 발생한 손해액 범위 내에서만 비례보상되며, 중복 지급되지 않습니다.</p>
+        <p>• <strong>중대 법규 위반 면책 안내:</strong> 피보험자가 <strong>음주운전, 무면허운전, 약물운전, 뺑소니(사고 후 도주)</strong> 상태에서 발생한 사고에 대해서는 관련 법률 및 약관에 따라 운전자보험의 형사합의금, 변호사비용, 벌금 등 제반 비용 담보가 일체 보상되지 않습니다.</p>
+        <p>• (주)케어인슈는 다수의 보험사와 계약 체결 및 중개하는 금융상품판매대리·중개업자로서 보험사로부터 보험계약 체결권을 부여받지 아니하며 금융소비자보호법 등 관련 법령을 준수합니다.</p>
+      </div>
+
       {/* ── CTA ── */}
       <div className="border-t border-purple-100 pt-20 flex flex-col md:flex-row justify-between items-center gap-10">
         <div className="flex items-center gap-6">
@@ -274,7 +292,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
             onClick={onAction}
             className="bg-purple-600 text-white px-14 py-7 rounded-full font-black text-xl hover:bg-purple-700 transition-all hover:scale-105 shadow-2xl shadow-purple-400/30 shrink-0"
           >
-            운전자 보험 무료 맞춤 설계하기
+            운전자보험 실시간 비교 상담하기
           </button>
         )}
       </div>
