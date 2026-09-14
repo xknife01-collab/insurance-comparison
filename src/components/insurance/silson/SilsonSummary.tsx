@@ -101,8 +101,8 @@ export const SilsonSummary: React.FC<Props> = ({ result }) => {
               <Shield size={14} /> Comprehensive Report
             </div>
             <h2 className="text-3xl md:text-4xl font-black mb-4 leading-tight">
-              당신의 실손 의료비 <br/>
-              <span className="text-emerald-400">상담 리포트</span>입니다.
+              선택하신 맞춤 플랜의 <br/>
+              <span className="text-emerald-400">실손의료비 분석 리포트</span>입니다.
             </h2>
             <p className="text-slate-400 text-sm font-medium leading-relaxed">
               {getExplanationCopy(subType)}

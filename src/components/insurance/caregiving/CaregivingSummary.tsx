@@ -59,8 +59,8 @@ export const CaregivingSummary: React.FC<Props> = ({ result }) => {
               <Heart size={14} /> Caregiving Analysis
             </div>
             <h2 className="text-3xl md:text-4xl font-black mb-4 leading-tight">
-              당신의 간병 서비스 <br/>
-              <span className="text-purple-400">준비 상태를 분석</span>했습니다.
+              선택하신 맞춤 플랜의 <br/>
+              <span className="text-purple-400">간병 보장 밸런스를 분석</span>했습니다.
             </h2>
             <p className="text-slate-400 text-sm font-medium leading-relaxed">
               "방사형 그래프가 둥근 모양일수록 안전한 보장 상태입니다."

@@ -44,7 +44,7 @@ export const DentalSummary: React.FC<Props> = ({ result }) => {
               </div>
               <div>
                 <h3 className="text-2xl font-black text-slate-800 tracking-tight">치과 전용 보장 분석 현황</h3>
-                <p className="text-sm font-bold text-slate-400">당신의 치아 보험 준비 상태를 정밀 분석했습니다.</p>
+                <p className="text-sm font-bold text-slate-400">선택하신 맞춤 플랜의 치아 보장 밸런스를 정밀 분석했습니다.</p>
               </div>
             </div>
 

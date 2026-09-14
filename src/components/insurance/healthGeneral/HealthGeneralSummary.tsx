@@ -127,7 +127,7 @@ export const HealthGeneralSummary: React.FC<Props> = ({ result, formatAmount }) 
             <span className="text-xs font-black text-orange-200 uppercase tracking-widest bg-orange-950/30 px-3 py-1 rounded-full mb-4 inline-block">
               Comprehensive Health Analysis
             </span>
-            <h4 className="text-2xl font-black mb-2">기존 보험료 대비 월 예상 절감액</h4>
+            <h4 className="text-2xl font-black mb-2">동일 연령·조건 기준 월 예상 절약 보험료</h4>
             <p className="text-orange-100 text-sm font-bold opacity-80">
               선택하신 맞춤 보장 설계 대비 가장 저렴하고 탄탄한 추천 플랜으로 교체 시 세이브되는 고정 비용입니다.
             </p>

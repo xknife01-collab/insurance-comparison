@@ -1119,21 +1119,21 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
         <div className="flex-1 space-y-12 relative z-10">
           <div className="space-y-4">
              <h3 className="text-3xl font-black text-gray-900 tracking-tighter">
-               {isDental ? '당신의 치아 보장 상태를 분석했습니다.' :
-                isSilbi ? '당신의 실손 의료비 상담 리포트입니다.' :
-                isCaregiving ? '당신의 간병 대비 준비 상태를 분석했습니다.' :
-                isNursing ? '당신의 요양(재가/시설) 준비 상태를 분석했습니다.' :
-                isChild ? '당신의 자녀/태아 보장 준비 상태를 분석했습니다.' :
-                isCar ? '당신의 자동차보험 가입 상태를 분석했습니다.' :
-                isDriver ? '운전자보험 상품 및 가격을 분석했습니다.' :
-                isPet ? '당신의 펫보험 보장 상태를 분석했습니다.' :
-                isGolf ? '당신의 골프보험 가입 상태를 분석했습니다.' :
-                isVariable ? '변액 투자 및 정기 사망보장 상태를 분석했습니다.' :
-                isCredit ? '당신의 대출상환 안심 보장 상태를 분석했습니다.' :
-                isLegal ? '당신의 법률비용 보장 준비 상태를 분석했습니다.' :
-                isProperty ? '당신의 재물종합 자산 보장 상태를 분석했습니다.' :
-                isSavingsGeneral ? '당신의 저축보험 자산 준비 상태를 분석했습니다.' :
-                '당신의 보장 상태를 분석했습니다.'}
+               {isDental ? '선택하신 맞춤 플랜의 치아 보장 밸런스를 분석했습니다.' :
+                isSilbi ? '선택하신 맞춤 플랜의 실손 의료비 보장 밸런스를 분석했습니다.' :
+                isCaregiving ? '선택하신 맞춤 플랜의 간병 대비 보장 밸런스를 분석했습니다.' :
+                isNursing ? '선택하신 맞춤 플랜의 요양(재가/시설) 보장 밸런스를 분석했습니다.' :
+                isChild ? '선택하신 맞춤 플랜의 자녀/태아 보장 밸런스를 분석했습니다.' :
+                isCar ? '선택하신 맞춤 플랜의 자동차보험 보장 밸런스를 분석했습니다.' :
+                isDriver ? '선택하신 맞춤 플랜의 운전자보험 보장 밸런스를 분석했습니다.' :
+                isPet ? '선택하신 맞춤 플랜의 펫보험 보장 밸런스를 분석했습니다.' :
+                isGolf ? '선택하신 맞춤 플랜의 골프보험 보장 밸런스를 분석했습니다.' :
+                isVariable ? '선택하신 맞춤 플랜의 변액 투자 및 정기 사망보장 밸런스를 분석했습니다.' :
+                isCredit ? '선택하신 맞춤 플랜의 대출상환 안심 보장 밸런스를 분석했습니다.' :
+                isLegal ? '선택하신 맞춤 플랜의 법률비용 보장 밸런스를 분석했습니다.' :
+                isProperty ? '선택하신 맞춤 플랜의 재물종합 자산 보장 밸런스를 분석했습니다.' :
+                isSavingsGeneral ? '선택하신 맞춤 플랜의 저축보험 자산 밸런스를 분석했습니다.' :
+                '선택하신 맞춤 플랜의 보장 밸런스를 분석했습니다.'}
              </h3>
              <p className="text-gray-500 font-bold italic">
                {isDental 
@@ -1315,99 +1315,105 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
 
         <div className="text-center max-w-3xl mx-auto space-y-6 mb-16 relative z-10">
           <div className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full text-[0.65rem] font-black uppercase tracking-[0.3em] shadow-lg">
-            <Sparkles size={12} className="text-white" /> Remodeling Magic Guide
+            <Sparkles size={12} className="text-white" /> Standard Financial Guide
           </div>
           <h3 className="text-4xl md:text-5xl font-black tracking-tighter leading-none bg-gradient-to-r from-white via-indigo-100 to-purple-200 bg-clip-text text-transparent">
-            가계 금융 건강을 위한 맞춤형 보험료 다이어트
+            가계 금융 안정을 위한 연령대별 표준 설계 지표
           </h3>
           <p className="text-slate-400 font-bold italic text-base">
-            "불필요한 고비용 특약을 정리하여 가계 고정비 지출을 방어하고 합리적인 재정 지표를 제시해 드립니다."
+            "불필요한 특약 거품을 줄이고 핵심 보장 위주로 구성한 합리적인 기준 재정 지표를 제시해 드립니다."
           </p>
         </div>
 
         <div className={`grid ${forceMobile ? 'grid-cols-1' : 'lg:grid-cols-3'} gap-8 relative z-10 items-stretch`}>
-          {/* Card 1: 최적화 결과 */}
+          {/* Card 1: 최적화 결과 -> 표준 권장 월 납입액 */}
           <div className="bg-white/5 backdrop-blur-md p-10 rounded-[3rem] border border-white/10 flex flex-col justify-between hover:bg-white/10 transition-all duration-300">
             <div>
               <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 flex items-center justify-center mb-6">
                 <Calculator className="w-6 h-6 text-indigo-400" />
               </div>
-              <h4 className="text-lg font-black text-slate-300 mb-2">월 보험료 다이어트 결과</h4>
+              <h4 className="text-lg font-black text-slate-300 mb-2">실속형 표준 권장 월 보험료</h4>
               <p className="text-xs text-slate-400 font-bold leading-relaxed mb-6">
-                현재 불필요한 보장을 덜어내고 핵심 위주로 세팅한 실속형 기준 최저 요율입니다.
+                핵심 진단비와 필수 치료 보장 위주로 구성한 동일 연령·성별 기준 실속 설계 요율입니다.
               </p>
             </div>
             <div>
               <div className="border-t border-white/5 pt-6 space-y-2">
-                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block">최적화된 월 보험료</span>
+                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block">기준 월 납입 보험료</span>
                 <div className="flex items-baseline gap-1">
                   <span className="text-5xl font-black text-indigo-400 tracking-tighter">
                     {Math.round(showDiet).toLocaleString()}
                   </span>
                   <span className="text-xl font-bold text-slate-300">원</span>
                 </div>
-                <div className="text-[10px] text-emerald-400 font-bold mt-2">
-                  기회비용 <span className="underline font-black">{Math.round(showSaving).toLocaleString()}원</span> 절감 성공!
+                <div className="text-[10px] text-indigo-300 font-bold mt-2">
+                  동일 연령대 평균 요율 대비 합리적인 실속형 설계 플랜
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Card 2: 연간 고정비 절감 예측 */}
+          {/* Card 2: 연간 고정비 지출 예산 계획 */}
           <div className="bg-white/5 backdrop-blur-md p-10 rounded-[3rem] border border-white/10 flex flex-col justify-between hover:bg-white/10 transition-all duration-300">
             <div>
               <div className="w-12 h-12 rounded-2xl bg-pink-500/20 flex items-center justify-center mb-6">
                 <Plane className="w-6 h-6 text-pink-400" />
               </div>
-              <h4 className="text-lg font-black text-slate-300 mb-2">연간 누적 절감 효과</h4>
+              <h4 className="text-lg font-black text-slate-300 mb-2">연간 총 납입 예상 규모</h4>
               <p className="text-xs text-slate-400 font-bold leading-relaxed mb-6">
-                불필요한 고비용 특약을 조율하여 절감할 수 있는 1년간의 누적 보험료 예측치입니다.
+                실속 플랜을 1년간 유지할 시 소요되는 연간 총 고정 지출 예산 지표입니다.
               </p>
             </div>
             <div>
               <div className="border-t border-white/5 pt-6">
-                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">연간 지출 비용 절감 예측</span>
+                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">연간 지출 예산 계획</span>
                 <p className="text-base font-black text-pink-300 leading-snug">
-                  연간 고정비 지출을 효과적으로 방어하여 가계 재정을 효율화할 수 있습니다.
+                  연간 고정 납입액을 체계적으로 계획하여 가계 재정을 효율화할 수 있습니다.
                 </p>
-                <div className="text-[10px] text-slate-400 mt-2">
-                  (연간 누적 절감액: <span className="font-bold">{Math.round(showSaving * 12).toLocaleString()}원</span>)
+                <div className="text-[10px] text-slate-300 mt-2">
+                  (연간 예상 총 납입액: <span className="font-bold text-pink-200">{Math.round(showDiet * 12).toLocaleString()}원</span>)
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Card 3: 10개년 재정 최적화 예측 */}
+          {/* Card 3: 10개년 총 납입 예산 플랜 */}
           <div className="bg-white/5 backdrop-blur-md p-10 rounded-[3rem] border border-white/10 flex flex-col justify-between hover:bg-white/10 transition-all duration-300">
             <div>
               <div className="w-12 h-12 rounded-2xl bg-amber-500/20 flex items-center justify-center mb-6">
                 <TrendingUp className="w-6 h-6 text-amber-400" />
               </div>
-              <h4 className="text-lg font-black text-slate-300 mb-2">10개년 재정 최적화 예측</h4>
+              <h4 className="text-lg font-black text-slate-300 mb-2">10개년 총 납입 예산 플랜</h4>
               <p className="text-xs text-slate-400 font-bold leading-relaxed mb-6">
-                리밸런싱을 통해 절감한 기회비용을 10년간 유지 시 절약되는 총 고정 지출비의 누적 규모입니다.
+                비갱신형 표준 플랜 기준 10년 납입 기간 동안 계획되는 총 납입 누적 예산 지표입니다.
               </p>
             </div>
             <div>
               <div className="border-t border-white/5 pt-6 space-y-2">
-                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block">10년 총 고정비 절약 예측</span>
+                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block">10년 총 납입 예상 규모</span>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-black text-amber-400 tracking-tighter">
-                    {Math.round(showSaving * 12 * 10).toLocaleString()}
+                    {Math.round(showDiet * 12 * 10).toLocaleString()}
                   </span>
                   <span className="text-xl font-bold text-slate-300">원</span>
                 </div>
-                <div className="text-[10px] text-slate-400">
-                  10년 동안 가계 자산에서 불필요하게 새어 나가던 누적 지출을 성공적으로 방어하는 가치입니다.
+                <div className="text-[10px] text-slate-300">
+                  비갱신형 세만기 설정 시 물가 상승이나 연령 증가에도 보험료 변동 없이 안전하게 유지됩니다.
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="text-[10px] text-slate-500 mt-10 text-center relative z-10 leading-relaxed">
-          * 상기 예상 보험료는 가입자의 실제 연령, 성별, 직업, 과거 병력 등에 따라 실제 청약 시 달라질 수 있습니다.<br />
-          * 본 시뮬레이션은 불필요한 보장 리밸런싱을 통한 고정비 절감 효과의 예시이며, 실제 가입/해지 시 개별 요율 및 보장 내용에 따라 실제 적용 효과는 달라질 수 있습니다.
+        {/* 심의 필수 유의사항 안내 박스 (시인성 대폭 강화) */}
+        <div className="mt-12 bg-white/10 border border-white/20 rounded-3xl p-6 text-left relative z-10 space-y-2 shadow-inner">
+          <div className="flex items-center gap-2 text-yellow-300 font-black text-sm">
+            <AlertCircle className="w-5 h-5 text-yellow-300" /> 가입 시 유의사항 및 기준 안내
+          </div>
+          <p className="text-xs md:text-sm text-slate-200 font-medium leading-relaxed">
+            • 상기 예시 금액은 해당 연령/성별, 상해 1급 기준의 표준 권장 예시 요율이며, 가입자의 실제 연령, 성별, 직업, 과거 병력 고지사항에 따라 실제 청약 시 인수 조건 및 보험료가 달라질 수 있습니다.<br />
+            • 본 지표는 개별 고객의 기존 보유 계약을 직접 대조한 결과가 아니며, 필수 보장 중심의 객관적인 표준 설계 가이드 지표입니다.
+          </p>
         </div>
       </section>
 

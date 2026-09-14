@@ -57,7 +57,7 @@ interface MajorCategory {
 const ALL_CATEGORIES: MajorCategory[] = [
   {
     id: 'medical',
-    label: '인기 보험 전수 조사',
+    label: '많이 찾는 보험 종류',
     icon: Hospital,
     accentColor: '#FF6B00',
     items: [
@@ -1157,12 +1157,12 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
           <div>
             <span className="text-[10px] font-black text-orange-500 uppercase tracking-widest block mb-1">Differentiator 01</span>
             <h4 className="text-lg font-black text-slate-800 tracking-tight leading-snug">
-              국내 전(全) 생명·손해보험사<br />
+              국내 생명·손해보험사<br />
               <span className="text-orange-500">상품 실시간 비교</span>
             </h4>
           </div>
           <p className="text-xs text-slate-500 font-semibold leading-relaxed break-keep">
-            국내 전 생명·손해보험사에서 판매 중인 수만 개의 보험 상품 데이터를 실시간으로 비교 분석합니다. 복잡하게 얽혀 있는 특약 조건과 보장 금액을 1원 단위까지 꼼꼼히 비교하여, 불필요한 지출은 걷어내고 오직 고객님께 꼭 필요한 알짜배기 담보 정보만 한눈에 확인해 드립니다.
+            국내 생명·손해보험사에서 판매 중인 수만 개의 보험 상품 데이터를 실시간으로 비교 분석합니다. 복잡하게 얽혀 있는 특약 조건과 보장 금액을 1원 단위까지 꼼꼼히 비교하여, 불필요한 지출은 걷어내고 오직 고객님께 꼭 필요한 알짜배기 담보 정보만 한눈에 확인해 드립니다.
           </p>
         </div>
 
@@ -1196,7 +1196,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
             </h4>
           </div>
           <p className="text-xs text-slate-500 font-semibold leading-relaxed break-keep">
-            내가 설정한 보험 설계가 안전한지 AI가 즉시 검증합니다. 신뢰할 수 있는 국가 통계 데이터를 바탕으로 동일 조건에서 꼭 필요한 적정 보장 수준을 대조하고, 사용자가 선택한 입력 필드의 내용 중 잘못 설계되었거나 부족한 부분을 꼼꼼하게 짚어주어 빈틈없는 보장 완성을 지원합니다.
+            내가 설정한 보험 설계가 안전한지 AI가 즉시 검증합니다. 생명·손해보험협회의 비교공시 기준 데이터를 바탕으로 동일 조건에서 꼭 필요한 적정 보장 수준을 대조하고, 사용자가 선택한 입력 필드의 내용 중 잘못 설계되었거나 부족한 부분을 꼼꼼하게 짚어주어 빈틈없는 보장 완성을 지원합니다.
           </p>
         </div>
       </div>

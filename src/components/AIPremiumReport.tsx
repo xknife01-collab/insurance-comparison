@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Sparkles, TrendingUp, AlertTriangle, CheckCircle, ShieldAlert, Zap } from 'lucide-react';
 import { InsuranceAnalysis } from '../types/insurance';
+import { getComplianceStatSource } from '../utils/complianceReportSources';
 
 interface AIPremiumReportProps {
   analysis: InsuranceAnalysis;
@@ -259,6 +260,7 @@ export const AIPremiumReport: React.FC<AIPremiumReportProps> = ({ analysis, defi
   };
 
   const { riskTitle, riskPercent, riskStats, goodPoints, badPoints, actionTips } = getReportData();
+  const statSource = getComplianceStatSource(category);
 
   return (
     <motion.section 
@@ -273,14 +275,26 @@ export const AIPremiumReport: React.FC<AIPremiumReportProps> = ({ analysis, defi
 
       {/* 헤더 AI 배지 */}
       <div className={`flex flex-col ${forceMobile ? 'flex-col items-start' : 'md:flex-row md:items-center'} justify-between gap-6 mb-10 pb-8 border-b border-[#2b1767]/60 relative z-10`}>
-        <div className="space-y-3">
+        <div className="space-y-4 max-w-3xl">
           <div className="inline-flex items-center gap-3 px-6 py-2.5 bg-purple-500/20 text-purple-300 rounded-full text-sm md:text-base font-black tracking-wide border border-purple-500/30 shadow-sm">
             <Sparkles className="w-5 h-5 text-orange-400 animate-pulse" />
-            <span className="text-orange-400">당신을 위한 AI 1:1 정밀분석 리포트</span>
+            <span className="text-orange-400">선택 맞춤 플랜 AI 1:1 정밀분석 리포트</span>
           </div>
           <h3 className="text-3xl md:text-4xl font-black tracking-tight text-white leading-tight">
             {riskTitle}
           </h3>
+
+          {/* 심의 필수 요건: 폰트를 키워 제목 밑에 공식 통계 출처(자료명, 발표기관, 발표일) 명시 */}
+          <div className="inline-flex flex-wrap items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-2xl border border-white/15 text-xs md:text-sm text-gray-200 shadow-sm font-medium">
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-purple-500/40 text-purple-200 font-black text-[11px] uppercase tracking-wider border border-purple-400/30">
+              공인 통계 출처
+            </span>
+            <span className="font-bold text-white">{statSource.title}</span>
+            <span className="text-white/30 hidden sm:inline">|</span>
+            <span className="text-gray-300">발표기관: <strong className="text-purple-200 font-bold">{statSource.publisher}</strong></span>
+            <span className="text-white/30 hidden sm:inline">|</span>
+            <span className="text-gray-300">발표일: <strong className="text-purple-200 font-bold">{statSource.publishDate}</strong></span>
+          </div>
         </div>
 
         {/* 실시간 진단 상태 배지 */}
@@ -324,8 +338,8 @@ export const AIPremiumReport: React.FC<AIPremiumReportProps> = ({ analysis, defi
                 className="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full"
               />
             </div>
-            <p className="text-[10px] text-gray-400 font-bold leading-normal">
-              *국가통계포털(KOSIS) 및 국민건강보험공단 건강검진 통계 기준
+            <p className="text-xs text-purple-200/90 font-bold leading-normal">
+              * 출처: {statSource.title} ({statSource.publisher}, {statSource.publishDate} 공표 기준)
             </p>
           </div>
         </div>

@@ -75,7 +75,7 @@ interface AnalysisSectionProps {
 // 26개 보험 카테고리 그룹 정의 (아이콘 및 타이틀 이모지 추가)
 const categoryGroups = [
   {
-    title: "인기 보험 전수 조사",
+    title: "많이 찾는 보험 종류",
     emoji: "✨",
     items: [
       { id: "silson", name: "의료실비", desc: "필수적인 의료비 보장 (자기부담금 제외)" },

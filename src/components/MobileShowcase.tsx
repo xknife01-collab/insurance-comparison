@@ -567,7 +567,7 @@ export default function MobileShowcase() {
                     </div>
                     <span className="text-[9px] font-black text-rose-400 uppercase tracking-widest block mb-2">AI 정밀 비교 연산</span>
                     <h4 className="text-xs font-black text-slate-100 tracking-tight leading-relaxed max-w-[200px] break-keep">
-                      전 보험사 2025 최신 요율 전수 조사 및 매칭 검증 중...
+                      주요 보험사 최신 공시 요율 대조 및 매칭 분석 중...
                     </h4>
                     <div className="w-24 bg-slate-800 h-1.5 rounded-full overflow-hidden mt-4">
                       <div className="h-full bg-rose-500 rounded-full" style={{ width: `${stepProgress}%` }} />
@@ -635,7 +635,7 @@ export default function MobileShowcase() {
             <p className="text-sm text-slate-400 font-bold leading-relaxed max-w-xl break-keep">
               암 주요 치료비 신설, 표적 항암 풀보장 등 실제 플랫폼 설계창의 상세 세부 항목들이 
               시뮬레이터 안에 그대로 이식되어 있습니다. AI 분석을 통한 부족한 핵심 보장 진단 피드백과 
-              오각형 밸런스 차트 비교, 그리고 30개 전체 보험사 실시간 가격 대조까지 생생히 동작합니다.
+              오각형 밸런스 차트 비교, 그리고 30여 개 보험사의 가격 대조까지 생생히 동작합니다.
             </p>
           </div>
 
@@ -693,7 +693,7 @@ export default function MobileShowcase() {
                 <ChevronRight size={16} className={`text-slate-500 transition-transform ${activeStep === 'loading' ? 'translate-x-1' : ''}`} />
               </div>
               <p className="text-xs text-slate-400 font-bold pl-10 mt-1 leading-normal break-keep">
-                입력 데이터에 맞춰 전 보험사 최신 요율 조건 대조 및 AI 분석 엔진이 진단 처리를 완료합니다.
+                입력 데이터에 맞춰 주요 보험사 공시 요율 조건 대조 및 AI 분석 엔진이 진단 처리를 완료합니다.
               </p>
 
               {activeStep === 'loading' && (
@@ -719,12 +719,12 @@ export default function MobileShowcase() {
                   }`}>
                     03
                   </span>
-                  <span className="font-black text-base text-slate-200">정밀 진단 & 30개 전사 대조 결과 (Result)</span>
+                  <span className="font-black text-base text-slate-200">정밀 진단 & 30여 개 보험사 대조 결과 (Result)</span>
                 </div>
                 <ChevronRight size={16} className={`text-slate-500 transition-transform ${activeStep === 'result' ? 'translate-x-1' : ''}`} />
               </div>
               <p className="text-xs text-slate-400 font-bold pl-10 mt-1 leading-normal break-keep">
-                실제 앱 결과 화면(오각형 보장 밸런스 차트, 상세 리밸런싱 대조표, 그리고 30개 보험사 실시간 예상 월 보험료 비교 리스트 피드)이 모바일 크기에 맞춰 실시간 라이브로 렌더링되며 자동 슬롤링다운됩니다.
+                실제 앱 결과 화면(오각형 보장 밸런스 차트, 상세 리밸런싱 대조표, 그리고 30여 개 보험사의 예상 월 보험료 비교 리스트 피드)이 모바일 크기에 맞춰 실시간 라이브로 렌더링되며 자동 슬롤링다운됩니다.
               </p>
 
               {activeStep === 'result' && (

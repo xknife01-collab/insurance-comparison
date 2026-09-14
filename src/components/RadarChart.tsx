@@ -134,7 +134,7 @@ const RadarChart: React.FC<RadarChartProps> = ({ data, size = 300 }) => {
           className={`flex items-center gap-2 text-[10px] font-black transition-all ${focused === 'user' ? 'opacity-100 scale-110 text-orange-600' : 'opacity-30 hover:opacity-100'}`}
         >
           <div className="w-3 h-3 bg-orange-500 rounded-full shadow-lg"></div>
-          내 현재 보장
+          추천 설계 플랜
         </button>
         <div className="w-[1px] h-3 bg-gray-200"></div>
         <button 

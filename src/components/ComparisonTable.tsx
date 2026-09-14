@@ -1122,15 +1122,6 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
             <h3 className="text-3xl font-black text-gray-900 tracking-tighter">1:1 상세 비교 분석</h3>
             <p className="text-gray-500 font-bold italic">"가격은 낮추고, 보장은 더 든든하게!"</p>
           </div>
-          
-          <div className="inline-block bg-blue-50 px-8 py-5 rounded-3xl border border-blue-100 shadow-sm transition-all hover:scale-105 active:scale-95 cursor-default">
-             <div className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1">{isCar ? '연 예상 절감액' : '월 예상 절감액'}</div>
-             <div className="flex items-baseline gap-1">
-               <span className="text-4xl font-black text-blue-600">{Math.round(isCar ? displaySavings * 12 : displaySavings).toLocaleString()}</span>
-               <span className="text-xl font-bold text-gray-900">원</span>
-               <TrendingDown className="w-6 h-6 text-blue-500 ml-2 animate-bounce" />
-             </div>
-          </div>
         </div>
 
         {isGolf && analysis.golf?.gameType === 'professional' && (

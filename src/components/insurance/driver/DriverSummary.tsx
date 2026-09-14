@@ -109,8 +109,8 @@ export const DriverSummary: React.FC<Props> = ({ result }) => {
               <ShieldAlert size={14} /> Driver Safety Analysis
             </div>
             <h2 className="text-3xl md:text-4xl font-black mb-4 leading-tight">
-              당신의 법률/벌금 보장 <br/>
-              <span className="text-purple-400">준비 상태를 분석</span>했습니다.
+              선택하신 맞춤 플랜의 <br/>
+              <span className="text-purple-400">운전자 보장 밸런스를 분석</span>했습니다.
             </h2>
             <p className="text-slate-400 text-sm font-medium leading-relaxed">
               "오각형 그래프가 넓고 균형 잡힌 모양일수록 형사합의 및 법률 분쟁 시 빈틈없이 대비된 상태입니다."

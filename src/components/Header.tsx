@@ -28,7 +28,7 @@ interface NavGroup {
 
 const ALL_GROUPS: NavGroup[] = [
   {
-    groupLabel: '인기 보험 전수 조사',
+    groupLabel: '많이 찾는 보험 종류',
     icon: <HeartPulse className="w-4 h-4" />,
     headerBg: 'bg-rose-50',
     textColor: 'text-rose-600',

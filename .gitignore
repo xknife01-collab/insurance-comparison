@@ -5,6 +5,8 @@ build/
 .env
 .env.local
 .env.production
+.env*.pulled
+*.bak
 .DS_Store
 
 # Python
