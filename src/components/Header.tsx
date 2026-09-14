@@ -37,7 +37,7 @@ const ALL_GROUPS: NavGroup[] = [
       { label: '의료실비', view: 'indemnity', desc: '기본적인 의료비 보장 (자기부담금 제외)' },
       { label: '치아보험', view: 'dental', desc: '임플란트/크라운' },
       { label: '유병자', view: 'preexisting', desc: '간편고지 맞춤 심사' },
-      { label: '수술/입원', view: 'surgery', desc: '수술비 반복 지급' },
+      { label: '수술/입원', view: 'surgery', desc: '1~5종 수술비 및 입원일당' },
       { label: '암보험', view: 'cancer', desc: '진단비 및 신의료 치료비' },
       { label: '종합건강', view: 'health_general', desc: '하나의 보험으로 빈틈없이 조립' },
     ],

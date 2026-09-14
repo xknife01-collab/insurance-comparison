@@ -37,55 +37,72 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
       </div>
 
       {/* ── 2. 핵심 4대 지표 배너 (Summary Cards) ── */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {[
-          {
-            title: '1~5종 종수술비',
-            desc: '백내장/치핵(1종)부터 중대 심장 수술(5종)까지 약관상 명시된 수술 종류에 따라 정액 요금을 반복 지급.',
-            tag: '기본 보장 핵심',
-            tagBg: 'bg-orange-50 text-orange-700 border-orange-200',
-            icon: <Award className="w-5 h-5 text-orange-600" />
-          },
-          {
-            title: '관혈 / 비관혈 보장',
-            desc: '피부를 절개하는 전통 관혈 수술은 물론, 현대인들에게 빈번한 내시경/카테터 등 비관혈 수술도 차별 없이 보장.',
-            tag: '최신 트렌드',
-            tagBg: 'bg-amber-50 text-amber-700 border-amber-200',
-            icon: <Activity className="w-5 h-5 text-amber-600" />
-          },
-          {
-            title: '상급병실 입원일당',
-            desc: '전체 입원의 80%를 차지하는 상급종합병원 1인실 및 2인실 이용 시 하루 최대 10~20만원 집중 지원.',
-            tag: '입원 만족도',
-            tagBg: 'bg-rose-50 text-rose-700 border-rose-200',
-            icon: <RefreshCw className="w-5 h-5 text-rose-600" />
-          },
-          {
-            title: 'N대 특정 질병 특약',
-            desc: '발병률과 치료비 부담이 매우 높은 뇌혈관·심장·여성 특정 질병 수술 시 종수술비에 더해 고액을 특별 지급.',
-            tag: '고액 집중 케어',
-            tagBg: 'bg-yellow-50 text-yellow-700 border-yellow-200',
-            icon: <CheckCircle2 className="w-5 h-5 text-yellow-600" />
-          }
-        ].map((card, idx) => (
-          <div 
-            key={idx} 
-            className="bg-white rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-gray-100 shadow-[0_15px_35px_-5px_rgba(0,0,0,0.03)] hover:shadow-[0_25px_50px_-10px_rgba(249,115,22,0.08)] transition-all hover:-translate-y-1 duration-300 flex flex-col justify-between space-y-6"
-          >
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <div className="w-10 h-10 rounded-2xl bg-orange-50 flex items-center justify-center">
-                  {card.icon}
+      <div className="space-y-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            {
+              title: '1~5종 종수술비',
+              desc: '백내장·치핵(1종)부터 주요 심장·뇌수술(5종)까지 약관상 정한 수술 분류에 따라 정액 보험금 지급.',
+              tag: '기본 보장 핵심',
+              tagBg: 'bg-orange-50 text-orange-700 border-orange-200',
+              icon: <Award className="w-5 h-5 text-orange-600" />
+            },
+            {
+              title: '관혈 / 비관혈 보장',
+              desc: '절개 부위가 큰 관혈 수술은 물론, 내시경·카테터·신주파 등 비관혈 수술도 해당 특약 약관 기준에 따라 보장.',
+              tag: '최신 수술 기법',
+              tagBg: 'bg-amber-50 text-amber-700 border-amber-200',
+              icon: <Activity className="w-5 h-5 text-amber-600" />
+            },
+            {
+              title: '상급병실 입원일당',
+              desc: '상급종합병원 또는 종합병원 1인실 입원 치료 시, 가입 약정에 따른 1일당 입원비 정액 지원 (특약 한도 내).',
+              tag: '입원 환경 케어',
+              tagBg: 'bg-rose-50 text-rose-700 border-rose-200',
+              icon: <RefreshCw className="w-5 h-5 text-rose-600" />
+            },
+            {
+              title: 'N대 특정 질병 특약',
+              desc: '질병 분류표에 명시된 N대(주요 혈관·장기 등) 특정 질환 수술 시, 종수술비에 더해 정액 수술비 추가 지원.',
+              tag: '고액 집중 케어',
+              tagBg: 'bg-yellow-50 text-yellow-700 border-yellow-200',
+              icon: <CheckCircle2 className="w-5 h-5 text-yellow-600" />
+            }
+          ].map((card, idx) => (
+            <div 
+              key={idx} 
+              className="bg-white rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-gray-100 shadow-[0_15px_35px_-5px_rgba(0,0,0,0.03)] hover:shadow-[0_25px_50px_-10px_rgba(249,115,22,0.08)] transition-all hover:-translate-y-1 duration-300 flex flex-col justify-between space-y-6"
+            >
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <div className="w-10 h-10 rounded-2xl bg-orange-50 flex items-center justify-center">
+                    {card.icon}
+                  </div>
+                  <span className={`text-[10px] font-black px-2.5 py-1 rounded-full border ${card.tagBg}`}>
+                    {card.tag}
+                  </span>
                 </div>
-                <span className={`text-[10px] font-black px-2.5 py-1 rounded-full border ${card.tagBg}`}>
-                  {card.tag}
-                </span>
+                <h4 className="text-lg font-black text-gray-900 tracking-tight">{card.title}</h4>
+                <p className="text-xs text-gray-500 font-bold leading-relaxed">{card.desc}</p>
               </div>
-              <h4 className="text-lg font-black text-gray-900 tracking-tight">{card.title}</h4>
-              <p className="text-xs text-gray-500 font-bold leading-relaxed">{card.desc}</p>
             </div>
+          ))}
+        </div>
+
+        {/* ── 심의 규정 준수: 수술/입원비 산출 기준 및 법적 고지 ── */}
+        <div className="bg-orange-50/70 border border-orange-200/80 rounded-2xl md:rounded-3xl p-5 md:p-6 text-center space-y-2">
+          <p className="text-xs font-black text-orange-950 flex items-center justify-center gap-2">
+            <span>📋</span> 예시 보장금액 산출 기준 및 필수 안내
+          </p>
+          <p className="text-xs font-bold text-slate-700 leading-relaxed break-keep">
+            [산출 기준 예시] 주요 손해보험사 표준 수술비 플랜 / 40세 남성, 상해 1급(사무직), 20년납 100세만기, 월 보험료 28,400원 기준<br className="hidden sm:inline" />
+            (질병/상해 1~5종 수술비, N대 질병수술비, 상급종합병원 1인실 입원일당 10만 원 특약 가입 예시)
+          </p>
+          <div className="text-[11px] font-semibold text-slate-500 leading-relaxed pt-1 space-y-0.5">
+            <p>※ 약관상 수술의 정의(절단, 절제 등의 조작)에 부합하지 않는 단순 흡인, 천자, 신경차단술, 미용 성형 등은 보장에서 제외될 수 있습니다.</p>
+            <p>※ 비관혈 수술은 관혈 수술에 비해 지급 금액이 감액(예: 50%)될 수 있으며, 가입자의 연령, 성별, 직업 및 각 보험사 인수 기준에 따라 가입 한도와 보험료는 달라집니다.</p>
           </div>
-        ))}
+        </div>
       </div>
 
       {/* ── 3. GUIDE 01: 1~5종 수술 분류표 상세 가이드 ── */}
@@ -113,14 +130,14 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
               limit: '10 ~ 30만원',
               title: '비교적 흔한 경미한 수술',
               examples: ['백내장 수술', '치핵(치질) 수술', '하지정맥류 시술', '안검하수(눈꺼풀 처짐) 수술'],
-              badge: '최다 수술 빈도'
+              badge: '다빈도 수술군'
             },
             {
               grade: '2종',
               limit: '30 ~ 50만원',
               title: '간단한 절개 및 처치 수술',
               examples: ['대장 용종(폴립) 제거술', '자궁근종 절제술', '충수염(맹장) 수술', '탈장 수술'],
-              badge: '용종 제거 특화'
+              badge: '다빈도 복부/여성'
             },
             {
               grade: '3종',
@@ -169,6 +186,9 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
             </div>
           ))}
         </div>
+        <p className="text-[11px] font-semibold text-slate-400 text-center">
+          ※ 상기 1~5종 수술 분류 및 보장 금액은 소비자의 이해를 돕기 위한 예시이며, 보험사별 상품 및 특약 가입금액 설정에 따라 지급 금액과 세부 인정 기준(동일 부위 재수술, 치질/백내장 보장 여부 등)은 해당 약관에 따릅니다.
+        </p>
       </div>
 
       {/* ── 4. GUIDE 02: 4세대 실손의료비 보완 및 수술비 보험 필요성 ── */}
@@ -197,9 +217,9 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
             
             <div className="space-y-4 pt-4">
               {[
-                { title: '중복 가입 시에도 정액 중복 보장', desc: '실손보험은 실제 청구된 병원비의 70~80%만 비례 보상하지만, 수술비 보험은 가입한 약정 금액을 그대로 중복 지급하므로 보장의 구멍을 완전히 채웁니다.' },
-                { title: '치료비 외의 생활자금/간병비 확보', desc: '고액 수술 시 직장 중단에 따른 생활비 손실, 간병인 사용 요금 등은 실손보험에서 지원하지 않습니다. 정액 수술비는 자유로운 용도로 치료비 외 사용이 가능합니다.' },
-                { title: '할증 없는 든든한 정액 지원', desc: '정액 수술비는 수십 번 수술을 청구하여 수천만 원을 수령하더라도 다음 해 갱신 보험료가 개인적으로 할증되지 않아 안정성이 높습니다.' }
+                { title: '중복 가입 시에도 정액 중복 보장', desc: '실손보험은 실제 청구된 병원비의 본인부담금을 공제 후 비례 보상하지만, 정액 수술비는 가입 약정 금액을 그대로 중복 지급하므로 치료비 부담을 덜어줍니다.' },
+                { title: '치료비 외의 생활자금/간병비 확보', desc: '고액 수술 시 직장 중단에 따른 생활비 손실, 간병인 사용 요금 등은 실손보험에서 지원하지 않습니다. 정액 수술비는 치료비 외 생활자금으로 자유로운 활용이 가능합니다.' },
+                { title: '비갱신형 가입 시 할증 없는 정액 보장', desc: '정액 수술비는 비갱신형으로 가입 시 여러 차례 수술 보험금을 수령하더라도 개인 청구 이력에 따른 차기 갱신 보험료 할증이 없어 장기 유지에 안정적입니다.' }
               ].map((tip, i) => (
                 <div key={i} className="flex gap-4 p-4 rounded-2xl bg-white/5 border border-white/10">
                   <div className="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center shrink-0 text-xs font-black">{i + 1}</div>
@@ -227,7 +247,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
             </div>
 
             <p className="text-xs text-gray-500 font-bold leading-relaxed">
-              많은 보험 가입자들이 놓치는 가장 치명적인 약관 조항은 바로 **'지급 횟수 제한'**입니다. 동일한 질병으로 여러 번 수술을 받게 될 때, 돈을 매번 주는지 한 번만 주는지에 따라 인생의 보장 한도가 완전히 갈립니다.
+              많은 보험 가입자들이 놓치는 가장 중요한 약관 조항은 바로 **'지급 횟수 조건'**입니다. 동일한 질병으로 여러 번 수술을 받게 될 때, 수술할 때마다 주는지 연 1회만 주는지에 따라 실질적인 보장 혜택이 달라집니다.
             </p>
 
             <div className="bg-orange-50/50 p-5 md:p-6 rounded-2xl border border-orange-100 space-y-4">
@@ -235,18 +255,18 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
               <div className="flex items-center justify-center gap-6 text-center py-2">
                 <div className="bg-white p-4 rounded-xl border border-orange-100 shadow-sm w-36">
                   <p className="text-xs font-bold text-gray-500">매회 지급형 상품</p>
-                  <p className="text-lg font-black text-emerald-600 mt-1">수술할 때마다</p>
-                  <p className="text-[9px] text-gray-400 font-bold">연간 횟수 제한 없이 보장</p>
+                  <p className="text-base font-black text-emerald-600 mt-1">수술할 때마다</p>
+                  <p className="text-[9px] text-gray-400 font-bold">약관상 매 수술 시 정액 지급</p>
                 </div>
                 <div className="text-gray-300 font-bold text-xl">VS</div>
                 <div className="bg-white p-4 rounded-xl border border-orange-100 shadow-sm w-36">
                   <p className="text-xs font-bold text-gray-500">연 1회 제한 상품</p>
-                  <p className="text-lg font-black text-red-500 mt-1">최초 1회만</p>
-                  <p className="text-[9px] text-gray-400 font-bold">이후 365일 내 재수술 면책</p>
+                  <p className="text-base font-black text-red-500 mt-1">최초 1회만</p>
+                  <p className="text-[9px] text-gray-400 font-bold">동일 질병 365일 내 재수술 미지급</p>
                 </div>
               </div>
               <p className="text-[10px] text-orange-800 font-bold leading-relaxed">
-                * 대장 용종 제거술, 혈관 카테터 시술 등 재발 위험이 높고 반복 시술이 필요한 치료일수록 '매회 지급'하는 약관을 확보하는 것이 유리합니다.
+                * 대장 용종 제거술, 혈관 카테터 시술 등 재발 위험이 있고 반복 시술이 필요한 치료일수록 '매회 지급' 약관 조건을 확인하는 것이 유리합니다.
               </p>
             </div>
           </div>
@@ -296,16 +316,16 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
               company: '현대해상',
               badge: '로봇 수술 특화',
               badgeColor: 'bg-orange-50 text-orange-700 border-orange-200',
-              highlight: '다빈치 로봇수술 & 신 의료기술 최다 보유',
-              desc: '자궁근종 하이푸 시술, 암 치료를 위한 표적 치료와 다빈치 로봇 수술 등 정밀 신의료기술 관련 보장 담보를 가장 빠르게 도입하고 약관에 폭넓게 보장합니다.',
-              strength: '최신 의학 수술 및 스마트 치료 수술비 최다 매칭'
+              highlight: '다빈치 로봇수술 등 신의료기술 보장 라인업',
+              desc: '자궁근종 하이푸 시술, 암 치료를 위한 표적 치료와 다빈치 로봇 수술 등 정밀 신의료기술 관련 보장 담보를 폭넓게 연계하여 최신 수술 트렌드를 적극 반영합니다.',
+              strength: '최신 의학 수술 및 스마트 치료 수술비 폭넓은 연계'
             },
             {
               company: '메리츠화재',
               badge: '매회 종수술비 강자',
               badgeColor: 'bg-rose-50 text-rose-700 border-rose-200',
               highlight: '반복 지급 종수술비 업계 우수 요율',
-              desc: '연간 제한이 절대 없는 순수 매회 지급형 질병 1~5종 수술비 특약이 매우 튼튼하게 설계됩니다. 심사 절차가 신속하여 간편 고지 유병자 수술비로도 우수합니다.',
+              desc: '연간 횟수 제한 없이 매회 지급하는 질병 1~5종 수술비 특약이 튼튼하게 설계됩니다. 심사 절차가 신속하여 간편 고지 유병자 수술비로도 우수합니다.',
               strength: '질병 종수술비 매회 한도 중심의 튼튼한 설계'
             },
             {
@@ -318,11 +338,11 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
             },
             {
               company: '한화손해보험',
-              badge: '월 보험료 최저가',
+              badge: '실속 가성비',
               badgeColor: 'bg-purple-50 text-purple-700 border-purple-200',
-              highlight: '해약환급금 미지급형 고효율 가성비',
-              desc: '해지 환급금을 줄이거나 없앤 설계를 통해 동일 보장 대비 월 납입 보험료를 가장 가볍게 줄여주어, 수술비 보장만 콤팩트하게 끼워 넣으려는 리모델링 고객에게 유리합니다.',
-              strength: '종수술비 핵심 특약 최저가 가입 설계 추천'
+              highlight: '해약환급금 미지급형 알뜰 가성비',
+              desc: '해약환급금 미지급형 설계를 통해 동일 보장 대비 월 납입 보험료 부담을 줄여주어, 수술비 보장만 콤팩트하게 보완하려는 리모델링 고객에게 유리합니다.',
+              strength: '종수술비 핵심 특약 가성비 중심 설계 추천'
             }
           ].map((item, index) => (
             <div 
@@ -401,10 +421,10 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
         <div className="relative z-10 space-y-6 max-w-2xl mx-auto">
           <h3 className="text-xl md:text-2xl font-black">
             실손보험만으로 수술비가 부족하셨나요?<br />
-            <span className="text-orange-300">지금 실시간 수술/입원 리모델링 지수를 무료 진단하세요!</span>
+            <span className="text-orange-300">지금 수술/입원 리모델링 지수를 무료 진단하세요!</span>
           </h3>
           <p className="text-xs text-orange-200/70 font-semibold leading-relaxed">
-            나이와 건강 상태만 입력해 보세요. 6대 손해사의 종수술비 요율과 상급병실 입원비 혜택을 실시간 대조하여 본인에게 최적화된 가장 저렴하고 든든한 설계안을 추천해 드립니다.
+            나이와 건강 상태만 입력해 보세요. 6대 손해사의 종수술비 요율과 상급병실 입원비 혜택을 분석하여 본인에게 최적화된 합리적이고 든든한 설계안을 추천해 드립니다.
           </p>
           <div className="pt-4 flex justify-center">
             <button
