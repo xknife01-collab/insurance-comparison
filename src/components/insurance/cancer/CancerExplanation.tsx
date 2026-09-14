@@ -37,55 +37,71 @@ export const CancerExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
       </div>
 
       {/* ── 2. 핵심 4대 지표 배너 (Summary Cards) ── */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {[
-          {
-            title: '일반암 진단비',
-            desc: '위, 대장, 폐, 유방암 등 진단 확정 시 최초 1회에 한해 최대 1억 원의 일시금을 즉시 지급.',
-            tag: '생활자금 확보',
-            tagBg: 'bg-rose-50 text-rose-700 border-rose-200',
-            icon: <Award className="w-5 h-5 text-rose-600" />
-          },
-          {
-            title: '유사암 20% 한도',
-            desc: '갑상선암, 제자리암, 경계성 종양 등 발병률은 높고 생존율이 뛰어난 소액암에 대해 일반암의 20% 한도로 차등 보장.',
-            tag: '금감원 기준 준수',
-            tagBg: 'bg-pink-50 text-pink-700 border-pink-200',
-            icon: <Stethoscope className="w-5 h-5 text-pink-600" />
-          },
-          {
-            title: '비급여 암 주요치료비',
-            desc: '연간 본인이 부담한 비급여 암 치료 총액이 일정 한도를 초과할 경우, 매년 최대 1억원씩 10년간 총 10억원을 지급.',
-            tag: '최신 트렌드 특약',
-            tagBg: 'bg-orange-50 text-orange-700 border-orange-200',
-            icon: <RefreshCw className="w-5 h-5 text-orange-600" />
-          },
-          {
-            title: '면책 90일 / 감액 1년',
-            desc: '가입 후 90일 동안은 진단 시 계약 무효 및 미지급, 1~2년 이내에는 가입 금액의 50%만 지급하는 안전 장치.',
-            tag: '사전 준비 필수',
-            tagBg: 'bg-amber-50 text-amber-700 border-amber-200',
-            icon: <CheckCircle2 className="w-5 h-5 text-amber-600" />
-          }
-        ].map((card, idx) => (
-          <div 
-            key={idx} 
-            className="bg-white rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-gray-100 shadow-[0_15px_35px_-5px_rgba(0,0,0,0.03)] hover:shadow-[0_25px_50px_-10px_rgba(244,63,94,0.08)] transition-all hover:-translate-y-1 duration-300 flex flex-col justify-between space-y-6"
-          >
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <div className="w-10 h-10 rounded-2xl bg-rose-50 flex items-center justify-center">
-                  {card.icon}
+      <div className="space-y-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            {
+              title: '일반암 진단비',
+              desc: '위·대장·폐·유방암 등 악성신생물 진단 확정 시 최초 1회에 한해 가입금액 일시금 지급.',
+              tag: '생활자금 대비',
+              tagBg: 'bg-rose-50 text-rose-700 border-rose-200',
+              icon: <Award className="w-5 h-5 text-rose-600" />
+            },
+            {
+              title: '유사암 20% 한도',
+              desc: '갑상선암, 제자리암, 경계성종양, 기타피부암 등 소액암에 대해 일반암 가입금액의 20% 한도로 차등 보장.',
+              tag: '금융당국 기준',
+              tagBg: 'bg-pink-50 text-pink-700 border-pink-200',
+              icon: <Stethoscope className="w-5 h-5 text-pink-600" />
+            },
+            {
+              title: '비급여 암 주요치료비',
+              desc: '연간 본인부담 비급여 암 치료비 총액 기준 충족 시 구간별 정액 지급 (연간 한도 내 최대 10년, 특약 가입 시).',
+              tag: '신의료 특약',
+              tagBg: 'bg-orange-50 text-orange-700 border-orange-200',
+              icon: <RefreshCw className="w-5 h-5 text-orange-600" />
+            },
+            {
+              title: '면책 90일 / 감액기간',
+              desc: '가입 후 90일 이내 진단 시 면책(계약 무효/미지급), 1~2년 이내 진단 시 가입금액의 50% 지급 감액 적용.',
+              tag: '약관 기준 적용',
+              tagBg: 'bg-amber-50 text-amber-700 border-amber-200',
+              icon: <CheckCircle2 className="w-5 h-5 text-amber-600" />
+            }
+          ].map((card, idx) => (
+            <div 
+              key={idx} 
+              className="bg-white rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 border border-gray-100 shadow-[0_15px_35px_-5px_rgba(0,0,0,0.03)] hover:shadow-[0_25px_50px_-10px_rgba(244,63,94,0.08)] transition-all hover:-translate-y-1 duration-300 flex flex-col justify-between space-y-6"
+            >
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <div className="w-10 h-10 rounded-2xl bg-rose-50 flex items-center justify-center">
+                    {card.icon}
+                  </div>
+                  <span className={`text-[10px] font-black px-2.5 py-1 rounded-full border ${card.tagBg}`}>
+                    {card.tag}
+                  </span>
                 </div>
-                <span className={`text-[10px] font-black px-2.5 py-1 rounded-full border ${card.tagBg}`}>
-                  {card.tag}
-                </span>
+                <h4 className="text-lg font-black text-gray-900 tracking-tight">{card.title}</h4>
+                <p className="text-xs text-gray-500 font-bold leading-relaxed">{card.desc}</p>
               </div>
-              <h4 className="text-lg font-black text-gray-900 tracking-tight">{card.title}</h4>
-              <p className="text-xs text-gray-500 font-bold leading-relaxed">{card.desc}</p>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+
+        {/* ── 심의 규정 준수: 정액 보장금액 산출 기준 고지 ── */}
+        <div className="bg-rose-50/70 border border-rose-200/80 rounded-2xl md:rounded-3xl p-5 md:p-6 text-center space-y-2">
+          <p className="text-xs font-black text-rose-950 flex items-center justify-center gap-2">
+            <span>📋</span> 예시 보장금액 산출 기준 안내
+          </p>
+          <p className="text-xs font-bold text-slate-700 leading-relaxed break-keep">
+            [산출 기준 예시] 주요 손해보험사 표준 암플랜 기준 / 40세 남성, 상해 1급(사무직), 20년납 100세만기, 월 보험료 94,700원<br className="hidden sm:inline" />
+            (일반암 진단비 5,000만 원, 유사암 1,000만 원, 비급여 암주요치료비 연간 1억 한도 특약 구성 기준)
+          </p>
+          <p className="text-[11px] font-semibold text-slate-400 leading-relaxed">
+            ※ 상기 예시는 소비자의 이해를 돕기 위한 특정 조건의 가입 예시이며, 가입자의 연령, 성별, 직업급수, 납입기간 및 각 보험사별 인수 조건에 따라 가입 가능한 보장 금액과 실제 납입 보험료는 상이할 수 있습니다. 세부 보장 범위는 해당 상품 약관을 참조하시기 바랍니다.
+          </p>
+        </div>
       </div>
 
       {/* ── 3. GUIDE 01: 일반암 vs 유사암(소액암) 분류 기준 ── */}
