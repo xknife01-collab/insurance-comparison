@@ -94,7 +94,7 @@ export const AccidentSlider: React.FC<{ result: AnalysisResult }> = ({ result })
                 <div className="space-y-2">
                   <p className="text-sm font-black text-gray-900 italic">"슬라이더를 통해 상해 한도를 튜닝해 보세요."</p>
                   <p className="text-[0.85rem] font-bold text-gray-600 leading-relaxed">
-                    월 보험료 예산에 따라 상해사망, 후유장해, 골절, 수술 한도가 <span className="text-red-600 font-black underline decoration-2 underline-offset-4">실시간으로 어떻게 달라지는지 0.1초 만에 확인</span>하실 수 있습니다.
+                    월 보험료 예산에 따라 상해사망, 후유장해, 골절, 수술 한도가 <span className="text-red-600 font-black underline decoration-2 underline-offset-4">예산 구간별로 어떻게 연동 조율되는지 시뮬레이션</span>해 보실 수 있습니다.
                   </p>
                 </div>
               </div>
@@ -145,7 +145,7 @@ export const AccidentSlider: React.FC<{ result: AnalysisResult }> = ({ result })
                   <span className="text-xl font-bold text-red-600">점</span>
                 </div>
                 <p className="text-[11px] text-gray-400 font-bold mt-2">
-                  * 골절, 수술, 사망 및 레저 상해 특약 믹스매치 합산 결과
+                  * 골절, 수술, 사망 및 레저 상해 특약 믹스매치 합산 결과 (본 시뮬레이션 수치는 이해를 돕기 위한 예시이며 실제 가입 조건, 직업급수 등에 따라 보장 한도 및 보험료가 상이합니다.)
                 </p>
               </div>
             </div>
