@@ -510,6 +510,12 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
   } | null>(null);
 
   const [localUnlocked, setLocalUnlocked] = React.useState(false);
+  const [visibleOptionsCount, setVisibleOptionsCount] = React.useState(15);
+
+  React.useEffect(() => {
+    setVisibleOptionsCount(15);
+  }, [analysis?.selectedCategory, (result as any)?.analysis?.selectedCategory]);
+
   const isUnlocked = parentIsUnlocked === false
     ? false
     : (!!parentIsUnlocked || localUnlocked || consultVerified || uwVerified || smsSuccess || localStorage.getItem('ins_unlocked') === 'true');
@@ -1994,10 +2000,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
           </div>
           
           <div className="divide-y divide-gray-50">
-            {(window.location.search.includes('simulation=true')
-              ? ((result.analysis as any)._allOptions || []).slice(0, 30)
-              : ((result.analysis as any)._allOptions || [])
-            ).map((opt: any, idx: number) => (
+            {(((result.analysis as any)._allOptions || []).slice(0, visibleOptionsCount)).map((opt: any, idx: number) => (
               <div key={idx} className={`flex flex-col ${forceMobile ? '' : 'md:grid md:grid-cols-12'} p-6 md:p-8 items-start ${forceMobile ? '' : 'md:items-center'} hover:bg-gray-50 transition-all group gap-3 md:gap-0`}>
                 {/* Mobile Rank, Company & Price Header */}
                 <div className={`flex w-full items-center justify-between ${forceMobile ? '' : 'md:hidden'}`}>
@@ -2127,6 +2130,37 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
               </div>
             )}
           </div>
+
+          {/* 🔽 15개씩 더보기 버튼 영역 */}
+          {((result.analysis as any)._allOptions || []).length > 15 && (
+            <div className="p-6 text-center bg-gray-50/80 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-center gap-3">
+              {((result.analysis as any)._allOptions || []).length > visibleOptionsCount ? (
+                <button
+                  type="button"
+                  onClick={() => setVisibleOptionsCount(prev => prev + 15)}
+                  className="w-full sm:w-auto px-8 py-3.5 bg-white hover:bg-orange-50 border-2 border-orange-400 hover:border-orange-500 text-orange-600 hover:text-orange-700 font-black text-sm rounded-2xl shadow-sm hover:shadow-md transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <span>🔽 더 많은 상품 비교 보기 (+15개 더보기)</span>
+                  <span className="text-xs bg-orange-100 text-orange-700 px-2.5 py-0.5 rounded-full font-bold">
+                    {Math.min(visibleOptionsCount, ((result.analysis as any)._allOptions || []).length)} / {((result.analysis as any)._allOptions || []).length}개
+                  </span>
+                </button>
+              ) : (
+                <div className="text-xs text-slate-500 font-bold py-2">
+                  ✓ 전체 {((result.analysis as any)._allOptions || []).length}개 비교 상품을 모두 불러왔습니다.
+                </div>
+              )}
+              {visibleOptionsCount > 15 && (
+                <button
+                  type="button"
+                  onClick={() => setVisibleOptionsCount(15)}
+                  className="px-4 py-2 text-xs text-slate-400 hover:text-slate-600 font-bold underline cursor-pointer"
+                >
+                  처음 15개만 보기 (접기)
+                </button>
+              )}
+            </div>
+          )}
 
           {/* CTA 버튼 / 신청 완료 상태 (웅장한 프리미엄 배너 스타일 - 비교표 내부 하단) */}
           <div className="p-6 sm:p-8 border-t border-gray-100 bg-gray-50/30">
