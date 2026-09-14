@@ -353,6 +353,15 @@ export const LegalSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =>
           </div>
 
         </div>
+
+        {/* ── 슬라이더 하단 금융소비자 유의사항 안내 ── */}
+        <div className="mt-8 p-6 bg-slate-50 rounded-2xl border border-slate-200 text-xs text-slate-500 leading-relaxed text-left space-y-1">
+          <p className="font-black text-slate-700">※ 법률비용 시뮬레이션 관련 유의사항</p>
+          <p>• 본 시뮬레이션의 자부담 및 보상 금액은 고객의 이해를 돕기 위한 예시이며, 실제 지급되는 변호사 보수는 소송가액(소가)에 따라 대법원 「변호사보수의 소송비용 산입에 관한 규칙」에서 정한 기준 금액 한도 내에서 실손 보상됩니다.</p>
+          <p>• 실제 납입보험료 및 보상 한도는 가입자의 성별, 연령, 직업, 소송 유형(민사/형사/행정) 및 특약 선택에 따라 달라질 수 있습니다.</p>
+          <p>• 보험 가입 전에 이미 발생한 분쟁 원인이나 제기된 소송, 가족 간 소송, 고의·불법행위로 인한 소송은 약관상 보상하지 않으며, 계약일로부터 3개월(90일)간 대기기간이 적용됩니다.</p>
+        </div>
+
         <LegalExplanation onAction={handleScrollToTop} />
       </div>
     </section>

@@ -142,6 +142,14 @@ export const LegalSummary: React.FC<Props> = ({ result }) => {
           </div>
         </div>
       )}
+
+      {/* 3. 진단 결과 법적 유의사항 디스클레이머 */}
+      <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200 text-xs text-slate-500 leading-relaxed text-left space-y-1">
+        <p className="font-black text-slate-700">※ 법률비용 분석 결과 안내 유의사항</p>
+        <p>• 본 분석 리포트 및 점수는 고객님의 입력 데이터와 표준 보장 가이드라인을 바탕으로 산출된 단순 참고용 진단 결과입니다.</p>
+        <p>• 실제 변호사 보수는 소송가액(소가)에 따라 대법원 「변호사보수의 소송비용 산입에 관한 규칙」에서 정한 기준 금액 한도 내에서 실손 보상되며, 약관상 가입금액 한도를 초과할 수 없습니다.</p>
+        <p>• 가입 전 발생 분쟁, 계약일로부터 3개월(90일) 이내 제기 소송, 가족 간 소송, 고의·불법행위 관련 소송은 약관상 보상하지 않으므로 청약 전 반드시 약관 및 상품설명서를 확인하시기 바랍니다.</p>
+      </div>
     </div>
   );
 };
