@@ -313,11 +313,16 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
     }
   };
 
-  // ─── selectedCategory 단일 기반 — !!analysis.xxx 폴백 없음 ────────────────
+  // ─── selectedCategory 단일 기반 — 27개 전 종목 공시일 완전 연동 ────────────────
   const isDental        = cat.includes('치아');
   const isSilbi         = cat.includes('실손')    || cat.includes('실비');
   const isCaregiving    = cat.includes('간병');
+  const isDementia      = (isCaregiving && (analysis.caregiving as any)?.dementiaDiagnosis !== undefined) || cat.includes('치매') || cat === 'dementia';
+  const isGeneralCaregiving = isCaregiving && !isDementia;
   const isNursing       = cat === '재가/시설'     || cat.includes('재가') || cat.includes('시설');
+  const isBrain         = cat.includes('뇌혈관')  || cat.includes('뇌') || cat === 'brain';
+  const isHeart         = cat.includes('심장')    || cat.includes('허혈성') || cat === 'heart';
+  const isCancer        = cat.includes('암')      || cat === 'cancer';
   const isSurgeryHospital = cat.includes('수술')  || cat.includes('입원');
   const isChild         = cat.includes('어린이')  || cat.includes('태아') || cat === 'child' || cat === 'pre_family' || cat === 'child_sick' || cat.includes('유병력자');
   const isAccident      = cat.includes('상해')    || cat === 'accident';
@@ -334,29 +339,42 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
   const isCredit        = cat.includes('신용')    || cat === 'credit';
   const isLegal         = cat.includes('법률')    || cat === 'legal';
   const isSavingsGeneral = cat.includes('일반 저축') || cat === 'savings_general';
+  const isPreExisting   = (cat.includes('유병자') || cat.includes('간편')) && !isChild;
 
   const getDisclosureDate = () => {
-    if (isDental) return disclosureDates.dental;
-    if (isSilbi) return disclosureDates.silson;
-    if (isCaregiving) return disclosureDates.caregiving;
-    if (isNursing) return disclosureDates.nursing;
-    if (isSurgeryHospital) return disclosureDates.surgery_hospital;
-    if (isChild) return disclosureDates.child;
-    if (isAccident) return disclosureDates.accident;
-    if (isCar) return disclosureDates.car;
-    if (isDriver) return disclosureDates.driver;
-    if (isPet) return disclosureDates.pet;
-    if (isGolf) return disclosureDates.golf;
-    if (isProperty) return disclosureDates.property;
-    if (isFire) return disclosureDates.fire;
-    if (isAnnuity) return disclosureDates.annuity;
-    if (isWholeLife) return disclosureDates.whole_life;
-    if (isVariable) return disclosureDates.variable;
-    if (isHealthGeneral) return disclosureDates.health_general;
-    if (isCredit) return disclosureDates.credit;
-    if (isLegal) return disclosureDates.legal;
-    if (isSavingsGeneral) return disclosureDates.savings_general;
-    return "2026년 06월 공시";
+    // 1순위: 슈퍼베이스 로더 또는 분석 결과에 직접 담겨온 최신 공시 기준일이 있는 경우 즉시 반영
+    const directDate = (result as any)?.analysis?.disclosureDate || (result as any)?.analysis?.disclosure_date || (result as any)?.disclosureDate;
+    if (directDate) return directDate;
+
+    // 2순위: 27개 전 종목 카테고리별 공시 데이터 매핑
+    let key: keyof typeof disclosureDates = 'updated_at';
+    if (isCancer) key = 'cancer';
+    else if (isBrain) key = 'brain';
+    else if (isHeart) key = 'heart';
+    else if (isDementia) key = 'dementia';
+    else if (isGeneralCaregiving || isCaregiving) key = 'caregiving';
+    else if (isNursing) key = 'nursing';
+    else if (isDental) key = 'dental';
+    else if (isSilbi) key = 'silson';
+    else if (isSurgeryHospital) key = 'surgery_hospital';
+    else if (isChild) key = 'child';
+    else if (isAccident) key = 'accident';
+    else if (isCar) key = 'car';
+    else if (isDriver) key = 'driver';
+    else if (isPet) key = 'pet';
+    else if (isGolf) key = 'golf';
+    else if (isProperty) key = 'property';
+    else if (isFire) key = 'fire';
+    else if (isAnnuity) key = 'annuity';
+    else if (isWholeLife) key = 'whole_life';
+    else if (isVariable) key = 'variable';
+    else if (isHealthGeneral) key = 'health_general';
+    else if (isCredit) key = 'credit';
+    else if (isLegal) key = 'legal';
+    else if (isSavingsGeneral) key = 'savings_general';
+    else if (isPreExisting) key = 'preexisting';
+
+    return (disclosureDates as any)[key] || '2026년 07월 공시';
   };
 
   const [selectedPlan, setSelectedPlan] = React.useState<any>(null);
