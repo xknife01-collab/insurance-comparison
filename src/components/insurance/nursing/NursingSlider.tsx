@@ -114,6 +114,9 @@ export const NursingSlider: React.FC<{ result: AnalysisResult }> = ({ result }) 
               <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
                 <motion.div initial={{ width: 0 }} animate={{ width: `${metrics.index}%` }} className="h-full bg-pink-500" />
               </div>
+              <p className="text-[10px] text-gray-400 font-bold mt-2">
+                * 본 시뮬레이션 수치는 이해를 돕기 위한 예시이며, 실제 지급 한도는 장기요양 등급(1~5등급), 재가급여 실이용 여부, 연령 및 가입 조건에 따라 상이합니다.
+              </p>
             </div>
           </div>
         </div>
