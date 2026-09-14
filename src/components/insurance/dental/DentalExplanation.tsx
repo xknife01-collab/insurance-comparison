@@ -35,12 +35,12 @@ export const DentalExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
       </div>
 
       {/* ── 통계 배너 ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
         {[
-          { num: '무제한 보존치료', label: '크라운/레진 연간 무제한 보장', sub: '자연치아 보존 치료 한도 최적화' },
-          { num: '임플란트 150만', label: '상해/질병 보철비 고액 지원', sub: '브릿지, 틀니 등 보철 전격 커버' },
-          { num: '진단형 프리패스', label: '즉시 면책/감액기간 0일 면제', sub: '사전 검진 통과 시 당일 즉시 보장' },
-          { num: '고지 간소 무진단', label: '치과 검진 없는 5분 초간편 가입', sub: '3가지 고지만으로 즉각 체결 가능' },
+          { num: '치아보존치료', label: '충치 치료별 보존치료 집중 보장', sub: '충전치료(레진·인레이) 및 크라운 케어' },
+          { num: '치아보철치료', label: '영구치 발치 후 고액 보철치료 지원', sub: '임플란트·브릿지·틀니 단계별 보상' },
+          { num: '심사 유형별 플랜', label: '치아 건강상태별 맞춤형 가입 심사', sub: '사전 구강검진형 및 간편심사형 비교' },
+          { num: '간편 고지 방식', label: '치과 치료력 기반 간편 체결 플랜', sub: '계약 전 알릴의무 충실 고지 필수' },
         ].map((s, i) => (
           <div key={i} className="bg-white border border-teal-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-teal-200 transition-all group">
             <p className="text-2xl font-black text-teal-600 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
@@ -49,6 +49,9 @@ export const DentalExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
           </div>
         ))}
       </div>
+      <p className="text-[11px] text-slate-400 font-bold text-center mb-16">
+        ※ 치아보험은 상품 및 특약별로 면책기간(가입 후 90일 등) 및 감액기간(1~2년 50% 지급)이 상이하며, 기발치 치아나 미용 목적 치료 등은 보장에서 제외될 수 있습니다. 세부 조건은 해당 약관에 따릅니다.
+      </p>
 
       {/* ── 가이드 1 & 가이드 2 ── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
@@ -60,8 +63,8 @@ export const DentalExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
               <Compass className="w-8 h-8" />
             </div>
             <div>
-              <p className="text-sm text-teal-600 font-black">GUIDE 01</p>
-              <h3 className="text-3xl font-black text-slate-900 tracking-tight">치아보험 필수 체크 3대 보장</h3>
+              <p className="text-sm text-teal-600 font-black">GUIDE 01 | 필수 확인 담보</p>
+              <h3 className="text-3xl font-black text-slate-900 tracking-tight">치아보험 필수 체크 핵심 담보</h3>
             </div>
           </div>
 
@@ -73,12 +76,30 @@ export const DentalExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
 
           <div className="space-y-3">
             {[
-              { title: '보존치료 (자연치)', label: '치아를 유지하며 때우고 씌우는 보장', color: 'bg-teal-50/50 border-teal-100', badge: 'text-teal-700 bg-teal-100', desc: '레진(아말감/GI 대체), 인레이, 온레이 및 치수를 살리는 크라운 치료(연간 개수 한도 및 단가 체크 필수)' },
-              { title: '보철치료 (인공치)', label: '치아 상실 시 다리 역할을 하는 대체 이식 보장', color: 'bg-emerald-50/50 border-emerald-100', badge: 'text-emerald-700 bg-emerald-100', desc: '잇몸뼈에 심는 임플란트(영구치 발치 기준), 양옆 치아에 거는 브릿지, 전체/부분 틀니 보장' },
-              { title: '진단형 사전 가입', label: '가입 즉시 감액 없이 전액 보장 혜택', color: 'bg-amber-50/50 border-amber-100', badge: 'text-amber-700 bg-amber-100', desc: '치과 사전 정밀 검진 통과 시 90일 면책기간 및 1~2년 이내 50% 지급 감액 조항 완전 삭제 특권' },
+              {
+                title: '치아보존치료특약',
+                label: '충치·치주질환으로 인한 충전 및 크라운치료 보장 (선택특약)',
+                color: 'bg-teal-50/50 border-teal-100',
+                badge: 'text-teal-700 bg-teal-100',
+                desc: '아말감, GI, 레진, 인레이·온레이 및 치아를 씌우는 크라운치료비 보상 (치아 1개당 또는 연간 한도 등 약관 기준 적용)'
+              },
+              {
+                title: '치아보철치료특약',
+                label: '영구치 발치 후 기능 대체를 위한 고액 보철치료 보장 (선택특약)',
+                color: 'bg-emerald-50/50 border-emerald-100',
+                badge: 'text-emerald-700 bg-emerald-100',
+                desc: '잇몸뼈에 인공치아를 식립하는 임플란트, 브릿지, 틀니(전체/부분) 보철 시술비 보상 (영구치 발치 기준, 연간 개수 한도 확인 필수)'
+              },
+              {
+                title: '주요치과치료특약',
+                label: '신경치료·발치·치석제거 등 일상 치과 치료 보장 (선택특약)',
+                color: 'bg-amber-50/50 border-amber-100',
+                badge: 'text-amber-700 bg-amber-100',
+                desc: '치수치료(신경치료), 영구치 발치 치료, 치주질환 치료를 위한 치석제거(스케일링) 등 자주 발생하는 치과 외래 치료비 지원 (약관상 지급 조건 적용)'
+              },
             ].map((item, i) => (
               <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-5 rounded-3xl border ${item.color}`}>
-                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
+                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-36 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
                   <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
                   <p className="text-[11px] text-slate-400 font-bold break-keep">{maskText(item.desc, isUnlocked)}</p>
@@ -160,8 +181,8 @@ export const DentalExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
           <div className="space-y-4">
             {[
               { title: '무진단형 (간편 심사형)', desc: '검진 없이 3가지 질문 고지만으로 간편 체결', info: '90일 면책 & 1~2년 50% 감액' },
-              { title: '진단형 (건강 심사형)', desc: '치과 방문 사전 구강 검진 통과 후 무제한 승인', info: '당일 즉시 전액 보장' },
-              { title: '연령대별 보장 비중 최적화', desc: '2030 크라운 무제한 ➔ 4050 고액 임플란트 결합형', info: '나이별 맞춤 특약 배분 설계' },
+              { title: '진단형 (건강 심사형)', desc: '치과 방문 사전 구강 검진 통과 시 심사 승인', info: '가입 즉시 보장 개시' },
+              { title: '연령대별 보장 비중 최적화', desc: '2030 보존치료 집중 ➔ 4050 보철치료 결합형', info: '나이별 맞춤 특약 배분 설계' },
             ].map((item, i) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
@@ -207,7 +228,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
               ① 치아가 완전히 깨끗하다면 면책 없는 진단형 공략<br />
               ② 가입 전 이미 뽑은 기발치 치아 임플란트는 보장 면책<br />
               ③ 상해 사고 타구 임플란트는 가입 첫날부터 전액 보장<br />
-              ④ 2030 세대는 크라운 무제한 특약 꼼꼼히 구성<br />
+              ④ 2030 세대는 보존(크라운)치료 특약 꼼꼼히 구성<br />
               ⑤ 잇몸 건강 5년 무사고 시 대다수 무진단형 패스
             </p>
           </div>
@@ -230,7 +251,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             { company: '라이나생명', product: 'THE건강한치아보험', highlight: '국내 최초 치아보험 출시 브랜드로, 업계 우수의 지급 실적과 가장 방대한 임플란트 고액 지원 및 신속 정산 프로세스 제공', badges: ['대표 브랜드', '보철 지원 독보적'] },
-            { company: '삼성화재', product: '다이렉트 치아보험', highlight: '간편한 모바일 사진 촬영 접수 및 개수 제한 없는 크라운/보존치료 개수 무제한 연계 혜택을 통한 가성비 최적화 상품', badges: ['대형사 신뢰', '크라운 무제한'] },
+            { company: '삼성화재', product: '다이렉트 치아보험', highlight: '간편한 모바일 사진 촬영 접수 및 크라운/보존치료 든든한 보장 연계 혜택을 통한 가성비 최적화 상품', badges: ['대형사 신뢰', '보존치료 집중'] },
             { company: 'DB손해보험', product: '다이렉트 참좋은치아보험', highlight: '설계사 대면 수수료가 전액 절감된 초저가 다이렉트 전용 기본 보험료 책정으로 가벼운 월 부담금 제시', badges: ['최저 보험료', '실속 지향'] },
             { company: '메리츠화재', product: '다이렉트 이목구비보험', highlight: '치과 충치 치료뿐만 아니라 백내장 등 안과 질환, 이비인후과 질환 수술 비용까지 특약으로 폭넓게 동시 구성 가능', badges: ['이목구비 종합', '신속 심사'] },
             { company: 'KB손해보험', product: '다이렉트 치아보장보험', highlight: 'KB스타클럽 금융 혜택 및 간편 고지 승인 시스템이 모바일에 완벽 장착되어 3가지 간편 질문만으로 간편한 가입 제공', badges: ['금융 우대 연계', '간편 가입'] },
