@@ -130,6 +130,20 @@ export const PropertySlider: React.FC<{ result: AnalysisResult }> = ({ result })
             </div>
           </div>
         </div>
+
+        {/* ── 시뮬레이션 산출 기준 및 유의사항 고지 ── */}
+        <div className="mt-12 p-6 bg-slate-50 rounded-2xl border border-slate-200 text-left text-slate-500 text-xs font-bold leading-relaxed">
+          <p className="text-slate-700 font-black mb-1 flex items-center gap-1.5">
+            ℹ️ 시뮬레이션 산출 기준 및 소비자 안내사항
+          </p>
+          <p>
+            * 상기 시뮬레이션 결과는 일반음식점(100㎡, 1급 철근콘크리트 구조)을 기준으로 산출된 단순 이해를 돕기 위한 예시이며, 실제 가입 시에는 사업장 건물구조(1~4급), 업종별 화재위험 요율, 인테리어 및 시설의 실제 감가상각 가액에 따라 적용 한도와 보험료가 달라질 수 있습니다.
+          </p>
+          <p className="mt-1 text-[11px] text-slate-400">
+            * 건물 및 집기비품의 가입금액이 실제 가액의 80% 미만일 경우 약관상 비례보상이 적용될 수 있으므로, 정확한 실사 및 가액 산정 후 가입하시기 바랍니다.
+          </p>
+        </div>
+
         <PropertyExplanation onAction={handleScrollToTop} />
       </div>
     </section>

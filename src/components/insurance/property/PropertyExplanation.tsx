@@ -17,7 +17,7 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
     <div className="max-w-7xl mx-auto">
 
       {/* ── 헤더 ── */}
-      <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+      <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-8">
         <div>
           <div className="inline-flex items-center gap-2 bg-orange-100 text-orange-800 px-4 py-2 rounded-full text-xs font-black mb-6 border border-orange-200 shadow-sm animate-pulse">
             <div className="w-1.5 h-1.5 bg-orange-500 rounded-full" />
@@ -36,13 +36,43 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
         </div>
       </div>
 
+      {/* ── 표준 산출 기준 및 의무보험 / 비례보상 사전 고지 ── */}
+      <div className="bg-white border-2 border-orange-200 rounded-3xl p-6 md:p-8 mb-12 shadow-sm">
+        <div className="flex items-start gap-4">
+          <div className="w-10 h-10 rounded-2xl bg-orange-500 text-white flex items-center justify-center shrink-0 mt-0.5 shadow-md">
+            <ShieldAlert className="w-5 h-5" />
+          </div>
+          <div className="space-y-3 flex-1 text-xs text-slate-600 font-bold leading-relaxed">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="bg-orange-100 text-orange-800 text-[11px] font-black px-2.5 py-1 rounded-md">
+                필수 안내사항
+              </span>
+              <span className="text-slate-800 font-black text-sm">
+                사업장 재물종합보험 가입 시 핵심 법적 유의사항
+              </span>
+            </div>
+            <p className="text-slate-700">
+              * 본 비교 안내 화면의 보험료 및 보장 예시는 <strong>[업종: 일반음식점 / 건물급수: 1급(철근콘크리트) / 사업장 면적: 100㎡ / 건물가액: 2억 원, 시설/집기: 5천만 원]</strong>을 기준으로 산출된 단순 참고용 예시이며, 실제 보험료와 인수 조건은 사업장의 건축물대장상 실제 구조(1~4급), 인접 화기 사용 여부, 영위 업종 및 실측 면적 등에 따라 상이할 수 있습니다.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1 text-[11px]">
+              <div className="bg-orange-50/70 p-3 rounded-xl border border-orange-100">
+                <span className="text-orange-700 font-black">⚖️ 법정 의무보험 미가입 과태료 고지:</span> 「다중이용업소의 안전관리에 관한 특별법」 및 「재난 및 안전관리 기본법」에 따른 의무 가입 대상 업소(1층 100㎡ 이상 일반음식점, 유흥/단란주점, PC방 등)는 화재/재난배상책임 미가입 시 가입 불이행 일수에 따라 <strong>최대 300만 원 이하의 과태료</strong>가 부과됩니다.
+              </div>
+              <div className="bg-orange-50/70 p-3 rounded-xl border border-orange-100">
+                <span className="text-orange-700 font-black">⚠️ 일부보험 비례보상 유의:</span> 실제 건물 및 재고자산 가액보다 적은 금액으로 가입하는 일부보험의 경우, 사고 발생 시 <strong>손해액 전액이 아닌 가입 비율에 따라 비례 보상</strong>(80% 부보비율 미충족 시 비례삭감)되므로 정기적인 자산 가액 재산정이 필수적입니다.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* ── 통계 배너 ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
         {[
-          { num: '1급 건물 할인', label: '콘크리트 구조 최대 할인', sub: '목조/판넬 대비 40% 이상 보험료 감면' },
-          { num: '실손보상 특약', label: '비례보상 없는 안심 보장', sub: '설정한 가입 한도 내 실제 손해액 전액 지급' },
-          { num: '의무 배상책임', label: '다중이용업소 화재/재난 의무', sub: '미가입 시 과태료 발생 대상 항목 완벽 매칭' },
-          { num: '점포 휴업손해', label: '화재 복구 기간 임대료 지원', sub: '영업중단 손실액 매일 정액 보상' },
+          { num: '1급 건물 할인', label: '콘크리트 구조 요율 우대', sub: '목조/판넬 취약구조 대비 보험료 절감 효과' },
+          { num: '실손/비례 설계', label: '가입 한도 내 손해액 보상', sub: '일부보험 방지를 위한 실질 자산 가액 산정' },
+          { num: '의무 배상책임', label: '다중이용업소 화재/재난 의무', sub: '미가입 시 최대 300만원 과태료 방지 항목 매칭' },
+          { num: '점포 휴업손해', label: '화재 복구 기간 임대료 지원', sub: '약관상 정한 영업중단 손실액 약정 일당 지급' },
         ].map((s, i) => (
           <div key={i} className="bg-white border border-orange-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-orange-200 transition-all group">
             <p className="text-2xl font-black text-orange-500 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
@@ -120,7 +150,7 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
                   🔥 급배수 누수 및 아래층 침수 보상
                 </p>
                 <p className="text-xs opacity-75 font-bold leading-relaxed">
-                  매장 내부 하수관 누수로 영업이 중단되고 아래 점포 인테리어를 훼손했을 경우, 급배수 누출손해 특약과 시설소유자 배상책임으로 복구 비용 일체를 전액 보완받을 수 있습니다.
+                  매장 내부 급배수관 누수로 영업이 중단되고 아래 점포 인테리어를 훼손했을 경우, 급배수 누출손해 특약과 시설소유자 배상책임으로 가입 한도 내에서 복구 비용을 실손 보상받을 수 있습니다. (단, 노후 배관 자체의 수리/교체 공사비는 약관상 원칙적 면책 대상입니다.)
                 </p>
               </div>
 
@@ -227,17 +257,27 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
 
       {/* ── 주요 상품 종합 비교표 ── */}
       <div className="mb-20 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-orange-100 shadow-sm">
-        <h3 className="text-2xl font-black text-slate-900 mb-10 tracking-tight">
-          국내 대표 6개사 소상공인 재물종합자산보험 경쟁력 비교
-        </h3>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+          <div>
+            <h3 className="text-2xl font-black text-slate-900 tracking-tight">
+              주요 손해보험사 재물종합보험 대표 상품 특징 안내 (손해보험협회 공시 기준)
+            </h3>
+            <p className="text-xs text-slate-500 font-bold mt-1">
+              * 각 보험사별 대표 상품의 공시 특징이며, 사업장 업종·건물급수·특약 구성에 따라 실제 가입 가능 조건 및 보험료는 달라질 수 있습니다.
+            </p>
+          </div>
+          <span className="text-[11px] font-black text-orange-600 bg-orange-50 border border-orange-200 px-3 py-1.5 rounded-full shrink-0">
+            손해보험협회 심의 기준 준수
+          </span>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { company: '메리츠화재', product: '성공파트너재물보험', highlight: '다양한 업종 인수 능력 우수, 화재 및 누수 복구 일당 패키지 요율 강점 보유', badges: ['넓은 인수 한도', '음식점 요율 우대'] },
-            { company: '삼성화재', product: '비즈앤안심파트너', highlight: '종합 배상책임 범위 우수, 건물 급수 감면 및 화재 벌금 등 법률비용 포함 강점', badges: ['브랜드 경쟁력', '법률 비용 포함'] },
-            { company: '현대해상', product: '성공마스터재물종합', highlight: '소상공인 맞춤 플랜 지원, 휴업 손해 일당 신속 지급 프로세스 및 누수 특약 강점', badges: ['휴업 정액 지급', '누수 보장 강화'] },
-            { company: 'KB손해보험', product: 'KB자산안심재물종합', highlight: '프랜차이즈 가맹점 단체 할인 연동 및 다중이용업소 화재 의무보험 최적화', badges: ['단체 할인 혜택', '의무보험 즉시발행'] },
-            { company: 'DB손해보험', product: '참좋은소상공인재물', highlight: '대형 창고 및 복합 소매점 자산 평가 경쟁력, 물류 자산 손실 보장 업계 최대', badges: ['물류창고 우대', '재고자산 실손'] },
-            { company: '한화손해보험', product: '세이프투게더재물종합', highlight: '사무실 및 학원 전용 최저 요율 플랜 지원, 초경량 실속 가입 희망 매장에 유리', badges: ['초경량 요율', '학원/사무실 추천'] },
+            { company: '메리츠화재', product: '성공파트너재물보험', highlight: '다양한 업종 인수 능력 우수, 화재 및 누수 복구 일당 패키지 요율 구성 강점', badges: ['넓은 인수 범위', '음식점 요율 설계'] },
+            { company: '삼성화재', product: '비즈앤안심파트너', highlight: '종합 배상책임 범위 우수, 건물 급수 감면 및 화재 벌금 등 법률비용 특약 연동', badges: ['브랜드 경쟁력', '법률 비용 특약'] },
+            { company: '현대해상', product: '성공마스터재물종합', highlight: '소상공인 맞춤 플랜 지원, 휴업 손해 일당 약정 심사 프로세스 및 누수 특약', badges: ['휴업 일당 설계', '누수 특약 연계'] },
+            { company: 'KB손해보험', product: 'KB자산안심재물종합', highlight: '프랜차이즈 가맹점 단체 플랜 연동 및 다중이용업소 화재 의무보험 간편 발행 지원', badges: ['단체 요율 검토', '의무보험 연계발행'] },
+            { company: 'DB손해보험', product: '참좋은소상공인재물', highlight: '대형 창고 및 복합 소매점 자산 평가 경쟁력, 물류 자산 손실 보장 특약 우대', badges: ['물류/창고 플랜', '재고자산 실손설계'] },
+            { company: '한화손해보험', product: '세이프투게더재물종합', highlight: '사무실 및 학원 전용 실속 요율 플랜 지원, 필수 담보 중심 합리적 가입 매장에 유리', badges: ['실속 요율형', '학원/사무실 추천'] },
           ].map((item, i) => (
             <div key={i} className="p-5 md:p-8 bg-orange-50/20 rounded-2xl md:rounded-[2.5rem] border border-orange-100 hover:border-orange-300 hover:shadow-lg transition-all">
               <p className="text-xs font-black text-orange-600 mb-1">{maskCompany(item.company, isUnlocked)}</p>
@@ -255,6 +295,22 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
               </div>
             </div>
           ))}
+        </div>
+
+        {/* ── 법적 고지 및 소비자 유의사항 (금소법 제19조 준수) ── */}
+        <div className="mt-10 p-6 bg-slate-50 rounded-2xl border border-slate-200 text-slate-600 text-xs leading-relaxed space-y-2">
+          <p className="font-bold text-slate-800 flex items-center gap-1.5">
+            <CheckCircle className="w-4 h-4 text-orange-500 shrink-0" />
+            금융소비자보호법 제19조에 따른 법적 고지 및 유의사항
+          </p>
+          <ul className="list-disc list-inside space-y-1 pl-1 text-[11px] text-slate-600 font-medium">
+            <li>본 안내는 특정 금융상품의 청약을 권유하거나 확정하는 것이 아니며, 손해보험협회 공시자료를 기초로 한 단순 비교 정보입니다.</li>
+            <li>보험계약 체결 전 반드시 해당 상품의 약관 및 상품설명서를 면밀히 확인하시기 바랍니다.</li>
+            <li>보험계약자가 기존 보험계약을 해지하고 새로운 보험계약을 체결할 경우, 인수가 거절되거나 보험료가 인상될 수 있으며, 보장 내용이 달라질 수 있습니다.</li>
+            <li>지급한도, 면책사항(고의 사고, 노후 배관 자체 수리비, 지진/전쟁 등 불가항력적 손해 등), 감액지급 기준 등에 따라 보험금 지급이 제한될 수 있습니다.</li>
+            <li>일부보험의 경우 약관상 비례보상 방식이 적용되어 실손해액 전액이 지급되지 않고 자산 가액 대비 가입 비율로 삭감 지급될 수 있습니다.</li>
+            <li>본 금융상품은 예금자보호법에 따라 예금보험공사가 보호하되, 보호한도는 본 보험회사에 있는 귀하의 모든 예금보호 대상 금융상품의 해약환급금(또는 만기 시 보험금이나 사고보험금)에 기타지급금을 합하여 1인당 "최고 5천만 원"이며, 5천만 원을 초과하는 나머지 금액은 보호하지 않습니다. (단, 법인보험계약 등 일부 예외 존재)</li>
+          </ul>
         </div>
       </div>
 
@@ -276,7 +332,7 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
             onClick={onAction}
             className="bg-orange-500 text-white px-14 py-7 rounded-full font-black text-xl hover:bg-orange-600 transition-all hover:scale-105 shadow-2xl shadow-orange-400/30 shrink-0"
           >
-            우리 매장 맞춤 보험 무료 진단하기
+            사업장 재물보험 실시간 비교 상담하기
           </button>
         )}
       </div>

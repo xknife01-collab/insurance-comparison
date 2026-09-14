@@ -179,6 +179,20 @@ export const PropertySummary: React.FC<Props> = ({ result }) => {
           </div>
         </div>
       )}
+
+      {/* 3. 진단 결과 법적 고지 안내 */}
+      <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200 text-slate-500 text-xs font-medium leading-relaxed">
+        <p className="font-bold text-slate-700 mb-1 flex items-center gap-1.5">
+          <CheckCircle2 className="w-4 h-4 text-orange-500" />
+          재물종합보험 진단 결과 안내 유의사항
+        </p>
+        <p>
+          * 본 분석 결과는 고객님께서 입력하신 사업장 정보(업종, 건물급수, 자산평가액 등)를 바탕으로 한 알고리즘 기반 단순 비교·분석 결과이며, 실제 보험 가입 가능 여부 및 최종 보험료는 보험사의 현장 실사 및 언더라이팅(인수 심사) 결과에 따라 달라질 수 있습니다.
+        </p>
+        <p className="mt-1 text-[11px] text-slate-400">
+          * 법정 의무보험 대상 여부 확인 및 비례보상 방지를 위한 자산 재평가는 전문 상담사를 통해 상세 안내를 받으시기 바랍니다.
+        </p>
+      </div>
     </div>
   );
 };
