@@ -90,6 +90,9 @@ export const CaregivingSlider: React.FC<{ result: AnalysisResult }> = ({ result 
                 <p className="text-4xl font-black text-purple-500 tracking-tighter">{metrics.index} <span className="text-xl text-gray-900">점</span></p>
               </div>
               <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden"><motion.div initial={{ width: 0 }} animate={{ width: `${metrics.index}%` }} className="h-full bg-purple-500" /></div>
+              <p className="text-[10px] text-gray-400 font-bold mt-2">
+                * 본 시뮬레이션 수치는 이해를 돕기 위한 예시이며, 실제 간병 지원/사용 한도는 일반병원·요양병원·통합서비스 구분, 연령, 성별 및 가입 조건에 따라 상이합니다.
+              </p>
             </div>
           </div>
         </div>

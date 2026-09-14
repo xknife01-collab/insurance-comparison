@@ -3,7 +3,7 @@ import { maskCompany, maskProductName, maskText } from '../../../utils/complianc
 import { 
   Activity, Search, ShieldCheck, HeartPulse, ChevronRight, 
   HelpCircle, AlertCircle, RefreshCw, Award, CheckCircle2, Heart, Sparkles,
-  Hotel, HeartHandshake, UserCheck, Calendar
+  Hotel, HeartHandshake, UserCheck, Calendar, AlertTriangle, FileText, ShieldAlert
 } from 'lucide-react';
 
 interface Props {
@@ -32,8 +32,33 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction, isUnlocked })
             </span>
           </h2>
           <p className="text-purple-200/80 font-semibold text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            하늘의 별 따기보다 힘든 간병인 구인 대란 속에서, 보험사가 직접 파견하는 **'지원형(서비스)'**과 가입자가 구한 뒤 일당을 받는 **'사용형(현금)'**의 정교한 비교 및 고물가 극복을 위한 **'체증형 특약'**을 상세 분석해 드립니다.
+            환자 상태와 입원 환경에 적합한 간병 서비스 선택을 돕기 위해, 보험사가 직접 파견하는 **'지원형(서비스)'**과 가입자가 구한 뒤 일당을 받는 **'사용형(현금)'**의 정교한 비교 및 장기 물가 변동을 고려한 **'체증형 특약'**을 상세 분석해 드립니다.
           </p>
+        </div>
+      </div>
+
+      {/* ── 1-1. [예시 기준 및 법적 필수 고지] 산출 기준 및 간병보험 4대 핵심 유의사항 ── */}
+      <div className="bg-purple-50/70 border border-purple-200 rounded-3xl md:rounded-[2.5rem] p-6 md:p-8 shadow-sm">
+        <div className="flex items-start gap-4">
+          <div className="w-10 h-10 rounded-2xl bg-purple-100 flex items-center justify-center shrink-0 text-purple-700 mt-1">
+            <AlertTriangle className="w-5 h-5" />
+          </div>
+          <div className="flex-1 text-xs text-slate-700 space-y-3 leading-relaxed">
+            <div className="flex flex-wrap items-center gap-2 mb-1">
+              <span className="font-black text-slate-900 text-sm">💡 [예시 기준 안내] 본 페이지에 안내된 보장 예시 금액 및 보험료 산출 기준</span>
+              <span className="bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded text-[10px]">손해보험협회 공시 기준</span>
+            </div>
+            <p className="font-bold text-slate-800">
+              • **표준 예시 산출 기준**: 간병인사용일당 건강보험 / 50세 남성 및 여성 (상해 1급 사무직) / 20년납 100세만기 / 무해지환급형(해약환급금 미지급형) / 월 보험료 50세 남성 약 36,500원, 50세 여성 약 41,200원 기준 (피보험자의 성별, 연령, 직업급수, 가입금액 및 회사별 심사 기준에 따라 실제 보험료는 상이할 수 있습니다).
+            </p>
+            <div className="pt-2.5 border-t border-purple-200 text-[11px] text-slate-600 space-y-1.5">
+              <p>• **요양병원 감액 규정**: 요양병원 입원 시 일반병원/종합병원과 달리 간병인사용일당이 가입금액의 20%~50% 수준(통상 1일 2~3만 원 선)으로 감액 지급되거나 한도가 축소 적용됩니다.</p>
+              <p>• **간호·간병통합서비스 분리 적용**: 보호자 및 개인 간병인이 상주하지 않는 간호·간병통합서비스 병동 이용 시 일반 간병인사용일당이 아닌 통합서비스 전용 입원일당(통상 1일 2~5만 원 선)이 적용됩니다.</p>
+              <p>• **180일 보장 한도 및 면책기간**: 동일 질병 또는 상해로 인한 간병인 사용일당은 1회 입원당 최대 180일 한도로 보장되며, 한도 소진 후 180일간의 면책기간(미지급 기간)이 경과해야 새로운 입원으로 보장이 개시됩니다.</p>
+              <p>• **적격 영수증 증빙 및 가족 간병 제한**: 간병인사용일당 청구 시 사업자등록된 유료직업소개소 또는 간병인 파견업체의 사업자등록번호가 기재된 유효 영수증 및 간병사실확인서 제출이 필수입니다. (개인 가족 간병은 사업자등록 업체 소속 등록 등 약관상 명시된 엄격한 조건 충족 시에 한하여 제한적으로 인정됩니다.)</p>
+              <p>• **무해지환급형 상품 안내**: 보험료 납입기간 중 계약 해지 시 해약환급금이 전혀 없거나 일반 표준형보다 적을 수 있습니다.</p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -42,29 +67,29 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction, isUnlocked })
         {[
           {
             title: '간병인 지원일당 (파견형)',
-            desc: '인건비 폭등 리스크 제로! 보험사 제휴 협력사에서 48시간 내에 전문 간병인을 입원실로 직접 파견 지원.',
-            tag: '인플레이션 완전 방어',
+            desc: '인건비 상승 부담 경감! 보험사 제휴 협력사를 통해 48시간 내에 전문 간병인을 입원실로 직접 파견 지원 (단, 갱신 시 보험료 변동 가능).',
+            tag: '파견 서비스 편의',
             tagBg: 'bg-purple-50 text-purple-700 border-purple-200',
             icon: <Hotel className="w-5 h-5 text-purple-600" />
           },
           {
             title: '간병인 사용일당 (현금형)',
-            desc: '원하는 간병인을 마음대로 선택 고용하거나 가족이 직접 간병하더라도 일당 정액 현금(최대 15만원) 지급.',
-            tag: '높은 자유도와 비갱신',
+            desc: '원하는 전문 간병인을 직접 고용 후 적격 영수증 제출 시 약정 일당 정액(최대 15만 원) 지급 (가족 간병은 조건부 제한).',
+            tag: '선택 자유도 및 비갱신',
             tagBg: 'bg-violet-50 text-violet-700 border-violet-200',
             icon: <HeartHandshake className="w-5 h-5 text-violet-600" />
           },
           {
             title: '간병비 체증형 설계',
-            desc: '고령기 간병비 부담 가치를 방어하기 위해, 가입 금액이 5년 또는 10년마다 10%씩 평생 우상향하는 특약.',
-            tag: '2026년 필수 추천 선택',
+            desc: '장기 간병 리스크에 대비하여 가입 후 일정 기간(5년/10년 등) 경과 시마다 가입금액이 단계적으로 증액되는 선택형 특약.',
+            tag: '가치 보전형 특약',
             tagBg: 'bg-amber-50 text-amber-700 border-amber-200',
             icon: <RefreshCw className="w-5 h-5 text-amber-600" />
           },
           {
             title: '간호·간병 통합 서비스',
-            desc: '병동 간호 인력이 공동 간병을 책임져 보호자 상주가 없는 통합 병동 입원 시에도 하루 일당 정액 지급.',
-            tag: '현대 병원 필수 특약',
+            desc: '병동 간호 인력이 공동 간병을 책임져 보호자 상주가 없는 통합 병동 입원 시 전용 일당 정액 지급.',
+            tag: '통합병동 전용 특약',
             tagBg: 'bg-slate-50 text-slate-700 border-slate-200',
             icon: <UserCheck className="w-5 h-5 text-slate-600" />
           }
@@ -124,11 +149,11 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction, isUnlocked })
               <div className="space-y-3 bg-white p-5 md:p-6 rounded-2xl border border-slate-100">
                 <div className="flex justify-between text-xs font-bold text-gray-600">
                   <span>📌 인건비 변동 리스크</span>
-                  <span className="text-purple-600 font-black">완전 없음 (보험사 전액 부담)</span>
+                  <span className="text-purple-600 font-black">파견 기간 중 자부담 없음 (단, 갱신 시 보험료 변동 가능)</span>
                 </div>
                 <div className="flex justify-between text-xs font-bold text-gray-600">
                   <span>📌 구인 편의성</span>
-                  <span className="text-purple-600 font-black">매우 우수 (신청만 하면 즉시 파견)</span>
+                  <span className="text-purple-600 font-black">우수 (사전 신청 시 제휴업체 전문 간병인 파견)</span>
                 </div>
                 <div className="flex justify-between text-xs font-bold text-gray-600">
                   <span>📌 상품 구조</span>
@@ -160,7 +185,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction, isUnlocked })
                 </div>
                 <div className="flex justify-between text-xs font-bold text-slate-300">
                   <span>📌 가족 간병 여부</span>
-                  <span className="text-violet-400 font-black">일부 가능 (가족이 돌보아도 일당 청구 승인)</span>
+                  <span className="text-violet-400 font-black">조건부 제한 (사업자등록 업체 소속 등록 등 약관 기준 충족 시)</span>
                 </div>
                 <div className="flex justify-between text-xs font-bold text-slate-300">
                   <span>📌 상품 구조</span>
@@ -179,15 +204,15 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction, isUnlocked })
         <div className="bg-gradient-to-br from-purple-50 to-violet-100/50 rounded-3xl md:rounded-[3rem] p-5 md:p-8 md:p-12 border border-purple-100 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="space-y-2">
             <h4 className="text-lg font-black text-purple-900 flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-purple-600 animate-pulse" /> 화폐 가치 하락과 물가 폭등을 이기는 '체증형 간병 사용일당'
+              <Sparkles className="w-5 h-5 text-purple-600 animate-pulse" /> 장기 간병비 가치 보전을 위한 '체증형 간병 사용일당'
             </h4>
             <p className="text-xs text-gray-500 font-bold leading-relaxed max-w-2xl">
-              현재 간병인 하루 인건비는 13~15만 원 선입니다. 만약 20년 뒤 간병인을 쓰게 된다면 물가 상승으로 하루 인건비가 20만 원을 훌쩍 넘을 확률이 지배적입니다. 이때 고정형 사용일당(15만 원) 상품은 차액을 고스란히 자비로 채워야 합니다. **체증형 특약은 가입 후 5년 또는 10년이 경과할 때마다 가입금액이 10%씩 복리/단리로 늘어나 미래 보장 결손 문제를 원천 해결해 줍니다.**
+              현재 간병인 하루 인건비는 13~15만 원 선입니다. 장기적인 관점에서 미래 인건비 상승이 발생할 경우 고정형 사용일당(15만 원) 상품은 본인 부담금이 추가로 발생할 수 있습니다. **체증형 특약은 가입 후 5년 또는 10년이 경과할 때마다 가입금액이 단계적으로 증액되어 장기 간병비의 실질 가치 보전을 돕습니다 (단, 일반 고정형 대비 보험료가 높을 수 있습니다).**
             </p>
           </div>
           <div className="bg-white px-6 py-4 rounded-2xl border border-purple-100 text-center shrink-0">
-            <span className="text-[10px] text-gray-400 font-bold block">5년마다 보장 금액</span>
-            <span className="text-sm font-black text-purple-600 block mt-1">📈 10%씩 누적 체증 (복리식)</span>
+            <span className="text-[10px] text-gray-400 font-bold block">5년/10년 주기 보장 증액</span>
+            <span className="text-sm font-black text-purple-600 block mt-1">📈 10%씩 단계적 체증 설계</span>
           </div>
         </div>
       </div>
@@ -296,50 +321,50 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction, isUnlocked })
           {[
             {
               company: '삼성화재',
-              badge: '요양병원 한도 우대',
+              badge: '요양병원 한도 세분화',
               badgeColor: 'bg-blue-50 text-blue-700 border-blue-200',
-              highlight: '노인 요양병원 간병인 사용일당 최대한도 적용',
-              desc: '타사가 요양병원 사용일당을 하루 2~3만 원으로 묶어두는 데 반해, 삼성은 요양병원 입원 시에도 하루 간병인 사용 비용 지원 한도를 상대적으로 넉넉하게 세팅할 수 있게 지원합니다.',
+              highlight: '노인 요양병원 간병인 사용일당 맞춤형 한도 설계',
+              desc: '요양병원 입원 시 발생하는 간병 비용 특성에 맞춰 사용일당 보장 금액을 플랜별로 유연하게 설정할 수 있도록 지원합니다.',
               strength: '장기 요양병원 입소 목적의 간병 리모델링 특화'
             },
             {
               company: 'DB손해보험',
               badge: '간호간병 통합 우수',
               badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-              highlight: '간호·간병통합서비스 입원 일당 업계 우수액 보강',
-              desc: '보호자 없는 간호통합병동 입원 빈도가 높은 현대 트렌드에 발맞춰, 공동 병동 이용 시 지급되는 하루 정액 일당 한도를 가장 강력한 단가로 보장해 줍니다.',
+              highlight: '간호·간병통합서비스 입원 일당 중점 보강',
+              desc: '보호자 없는 간호통합병동 입원 빈도가 높은 현대 트렌드에 발맞춰, 공동 병동 이용 시 지급되는 하루 정액 일당 한도를 체계적으로 보장해 줍니다.',
               strength: '실용적인 대학병원 공동간병 이용 플랜 최적'
             },
             {
               company: '현대해상',
               badge: '지원형 파견 인프라 우수',
               badgeColor: 'bg-orange-50 text-orange-700 border-orange-200',
-              highlight: '업계 최다 제휴 네트워크 보유로 간병인 신속 파견',
-              desc: '간병인 지원형(파견) 운영 시, 전국구 규모의 조율 협력망을 확보하여 명절 연휴나 대도시 외곽 지역 입원 시에도 간병인 매칭 대기 지연 시간을 대폭 줄였습니다.',
+              highlight: '전국 제휴 네트워크 기반 간병인 신속 파견 지원',
+              desc: '간병인 지원형(파견) 운영 시, 전국 규모의 전문 제휴망을 통해 명절 연휴나 지방 입원 시에도 안정적인 간병인 매칭을 지원합니다.',
               strength: '지방 거주 부모님을 위한 파견 지원형 설계 추천'
             },
             {
               company: '메리츠화재',
               badge: '사용일당 체증형 특화',
               badgeColor: 'bg-rose-50 text-rose-700 border-rose-200',
-              highlight: '5년마다 10% 증액되는 체증 비율 가성비 우수',
-              desc: '미래 인건비 인상분을 온전히 방어하기 위한 체증형 간병인 사용일당 설계 시, 세대별 요율 가중치 단가를 가장 안정적으로 책정하여 비갱신 세팅 부담을 덜어줍니다.',
-              strength: '4050 세대용 미래 물가 방어 체증형 상품 추천'
+              highlight: '5년마다 10% 증액되는 체증형 옵션 다양화',
+              desc: '장기 인건비 인상 추세를 고려한 체증형 간병인 사용일당 설계 시, 연령대별 합리적인 요율 구간을 제공하여 장기 유지 부담을 완화합니다.',
+              strength: '4050 세대용 미래 물가 고려 체증형 상품 추천'
             },
             {
               company: 'KB손해보험',
               badge: '첫날 즉시 보장',
               badgeColor: 'bg-amber-50 text-amber-700 border-amber-200',
-              highlight: '뇌혈관/심혈관 등 주요 급성 질환 시 첫날 일당 지급',
-              desc: '일부 사가 3일 초과 입원 시부터 간병 일당을 적용하는 장벽을 낮춰, 뇌와 심장 질환 등으로 단기 입원 시 첫날부터 간병 사용 혜택을 감액 없이 정산합니다.',
+              highlight: '뇌/심장 주요 질환 단기 입원 간병 지원',
+              desc: '주요 급성 중대 질환으로 인한 단기 집중 치료 시 첫날부터 간병 사용 혜택을 받을 수 있도록 담보 선택 폭을 넓혔습니다.',
               strength: '주요 뇌/심장 3대 질병 단기 입원 간병비 보강'
             },
             {
               company: '한화손해보험',
-              badge: '초가성비 비갱신',
+              badge: '가성비 비갱신 플랜',
               badgeColor: 'bg-purple-50 text-purple-700 border-purple-200',
-              highlight: '무해지 환급 플랜 결합 시 고정 보험료 최저 요율',
-              desc: '해약환급금이 없는 무해지형 비갱신 플랜으로 설계 시, 매달 나가는 고정 보험료 단가를 6대사 평균 대비 약 10~15% 저렴하게 맞춤 매칭하여 가성비가 훌륭합니다.',
+              highlight: '무해지 환급 플랜 결합 시 경제적 보험료 설계',
+              desc: '해약환급금이 없는 무해지형 비갱신 플랜으로 설계 시, 일반 표준형 대비 상대적으로 저렴한 보험료로 가입할 수 있어 경제적입니다.',
               strength: '젊은 직장인들의 노후대비 비갱신 다이어트 플랜'
             }
           ].map((item, index) => (
@@ -362,7 +387,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction, isUnlocked })
                 </div>
               </div>
               <div className="pt-4 border-t border-gray-50">
-                <p className="text-[9px] text-gray-400 font-bold uppercase tracking-wider">강력 추천 매칭</p>
+                <p className="text-[9px] text-gray-400 font-bold uppercase tracking-wider">추천 매칭</p>
                 <p className="text-xs text-gray-700 font-black mt-1 flex items-center gap-1.5">
                   🛡️ {maskText(item.strength, isUnlocked)}
                 </p>
@@ -391,13 +416,13 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction, isUnlocked })
             },
             {
               step: '03',
-              title: '4050 세대 가입 시 체증형 옵션 필수 탑재',
-              desc: '젊은 시절에 가입하는 간병보험은 노후 시점까지의 기간(20~30년)이 매우 깁니다. 인플레이션으로 인한 화폐 가치 하락과 구인 단가 상승을 온전히 메우려면 보장 금액이 늘어나는 체증형 특약이 무조건 권장됩니다.'
+              title: '4050 세대 가입 시 체증형 옵션 검토',
+              desc: '젊은 시절에 가입하는 간병보험은 노후 시점까지의 기간(20~30년)이 매우 깁니다. 미래 인건비 상승에 따른 보장 공백을 완화하려면 가입금액이 단계적으로 늘어나는 체증형 특약을 예산 범위 내에서 신중히 검토하세요.'
             },
             {
               step: '04',
               title: '치매 CDR 1점 및 재가/시설 이용 특약 보강',
-              desc: '중증 치매(CDR 3점)만 보장하는 레거시 보험은 혜택을 받기 극도로 어렵습니다. 경도 치매(CDR 1점)부터 진단비가 분할 지급되고, 국가 장기요양 1~5등급 판정 시 재가방문 요양 혜택이 탑재되었는지 확인하세요.'
+              desc: '중증 치매(CDR 3점)만 보장하는 레거시 보험은 혜택을 받기 어렵습니다. 경도 치매(CDR 1점)부터 진단비가 분할 지급되고, 국가 장기요양 1~5등급 판정 시 재가방문 요양 혜택이 탑재되었는지 확인하세요.'
             }
           ].map((item, idx) => (
             <div key={idx} className="bg-white p-5 md:p-8 rounded-3xl border border-slate-100 flex gap-6">
@@ -411,6 +436,25 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction, isUnlocked })
         </div>
       </div>
 
+      {/* ── 6-1. 금융소비자보호법 필수 법적 고지문 ── */}
+      <div className="bg-slate-100 rounded-3xl p-6 md:p-10 border border-slate-200 text-slate-600 text-xs space-y-3 leading-relaxed">
+        <div className="flex items-center gap-2 font-black text-slate-800 text-sm">
+          <ShieldAlert className="w-5 h-5 text-purple-700" /> 금융소비자보호법에 따른 소비자 권익 및 가입 유의사항
+        </div>
+        <p>
+          • **계약 전 설명의무**: 보험계약 체결 전 반드시 해당 상품설명서 및 약관을 상세히 확인하시기 바랍니다. 본 안내는 소비자의 이해를 돕기 위한 요약 자료이며 실제 보상 및 계약 내용은 해당 약관에 따릅니다.
+        </p>
+        <p>
+          • **예금자보호법 안내**: 본 보험상품은 예금자보호법에 따라 해약환급금(또는 만기 시 보험금)에 기타지급금을 합하여 1인당 "5천만 원까지"(본 금융회사 등의 모든 예금보호 대상 금융상품 합산) 보호됩니다. 5천만 원을 초과하는 나머지 금액은 보호되지 않습니다.
+        </p>
+        <p>
+          • **기존 계약 해지 후 신계약 체결 시 불이익**: 기존 보험계약을 해지하고 신규 보험계약을 체결하는 경우, 피보험자의 질병 이력이나 연령 증가 등으로 인하여 인수가 거절되거나 보험료가 인상될 수 있으며, 새로운 면책기간 및 감액기간이 적용될 수 있습니다.
+        </p>
+        <p>
+          • **대리점 지위 고지**: 본 플랫폼(보험대리점)은 다수의 보험사와 계약을 체결하고 중개하는 금융상품판매대리·중개업자로서, 보험사로부터 계약체결권을 부여받지 아니하며 직접 보험계약을 체결할 수 없습니다.
+        </p>
+      </div>
+
       {/* ── 7. 하단 CALL TO ACTION (CTA) 연동 블록 ── */}
       <div className="bg-gradient-to-br from-purple-900 to-purple-950 rounded-3xl md:rounded-[3rem] p-5 md:p-8 md:p-12 text-center text-white relative overflow-hidden shadow-xl border border-purple-500/20">
         <div className="absolute top-0 right-0 p-5 md:p-12 opacity-5 pointer-events-none">
@@ -418,18 +462,18 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction, isUnlocked })
         </div>
         <div className="relative z-10 space-y-6 max-w-2xl mx-auto">
           <h3 className="text-xl md:text-2xl font-black">
-            간병인 수급 대란과 물가 상승이 두려우신가요?<br />
-            <span className="text-purple-300">지금 노후 실버 간병 remolding 지수를 무료로 진단해 보세요!</span>
+            간병인 수급과 노후 돌봄 비용이 고민되시나요?<br />
+            <span className="text-purple-300">지금 노후 실버 간병 보장 분석을 객관적으로 진단해 보세요!</span>
           </h3>
           <p className="text-xs text-purple-200/70 font-semibold leading-relaxed">
-            성별, 나이, 가입 희망 유형(지원형/사용형)만 선택해 보세요. 국내 대표 6대사 상품의 체증형 보험료 단가와 요양병원/간호간병통합서비스 지급 비율을 정밀 분석하여 자녀들에게 짐이 되지 않는 고품질의 노후 간병 안심 설계를 매칭해 드립니다.
+            성별, 나이, 가입 희망 유형(지원형/사용형)을 선택해 보세요. 국내 대표 손해보험사의 체증형 보험료 단가와 요양병원/간호간병통합서비스 지급 비율을 정밀 분석하여 자녀들에게 짐이 되지 않는 노후 간병 안심 설계를 매칭해 드립니다.
           </p>
           <div className="pt-4 flex justify-center">
             <button
               onClick={onAction}
               className="inline-flex items-center gap-3 px-8 py-4 bg-white text-purple-900 rounded-full font-black text-sm transition-all hover:bg-violet-50 active:scale-95 shadow-2xl hover:shadow-purple-500/20 group"
             >
-              간병 보험 맞춤 비교 무료 진단하기
+              간병 보험 맞춤 비교 상담하기
               <ChevronRight className="group-hover:translate-x-1.5 transition-transform text-purple-900" size={18} />
             </button>
           </div>
