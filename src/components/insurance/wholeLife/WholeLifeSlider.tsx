@@ -101,7 +101,7 @@ export const WholeLifeSlider: React.FC<{ result: AnalysisResult }> = ({ result }
                 <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-indigo-500 shadow-sm shrink-0"><Sparkles size={24} /></div>
                 <div className="space-y-2 text-left">
                   <p className="text-[0.85rem] font-bold text-gray-600 leading-relaxed">
-                    설정하신 월 예산에 맞춰 완납 후 10년 시점 예상 해약환급금이 <span className="text-indigo-600 font-black underline decoration-2 underline-offset-4">{Math.round(metrics.surrenderValue / 10000).toLocaleString()}만 원</span>으로 실시간 맞춤 조율되는 것을 확인하실 수 있습니다.
+                    설정하신 월 예산에 맞춰 총 납입액과 평생 사망보장금, 그리고 완납 후 10년 시점 예상 해약환급금(<span className="text-indigo-600 font-black underline decoration-2 underline-offset-4">{Math.round(metrics.surrenderValue / 10000).toLocaleString()}만 원</span>)이 실시간 조율되는 것을 확인하실 수 있습니다.
                   </p>
                 </div>
               </div>
@@ -116,13 +116,13 @@ export const WholeLifeSlider: React.FC<{ result: AnalysisResult }> = ({ result }
               <div className="space-y-4 text-left">
                 <div>
                   <p className="text-[0.65rem] font-black text-slate-400 tracking-widest mb-1">
-                    완납 후 10년 해약환급금 (예상)
+                    완납 후 10년 해약환급금 (참고용 예시)
                   </p>
                   <p className="text-3xl font-black text-white tracking-tighter">
                     {Math.round(metrics.surrenderValue / 10000).toLocaleString()} <span className="text-lg">만원</span>
                   </p>
                   <p className="text-[10px] text-slate-500 font-bold mt-0.5">
-                    예상 환급률: <span className="text-emerald-400 font-black">{metrics.ratePercentage}%</span> (비과세 요건 충족 시)
+                    예시 기준 환급률: <span className="text-emerald-400 font-black">{metrics.ratePercentage}%</span> (공시이율 변동 시 달라질 수 있음)
                   </p>
                 </div>
                 <div>
@@ -137,7 +137,7 @@ export const WholeLifeSlider: React.FC<{ result: AnalysisResult }> = ({ result }
                     {Math.round(opts.deathBenefit / 100000000).toFixed(0)}억 원 {isStepUp && <span className="text-xs text-indigo-400">(체증형)</span>}
                   </p>
                   <p className="text-[10px] text-slate-500 font-bold mt-0.5">
-                    평생 사망 시 즉시 가족에게 정액 현금 지급
+                    피보험자 평생 사망 시 유가족에게 정액 현금 지급
                   </p>
                 </div>
               </div>
@@ -154,12 +154,21 @@ export const WholeLifeSlider: React.FC<{ result: AnalysisResult }> = ({ result }
                   <span className="text-xl font-bold text-indigo-600">점</span>
                 </div>
                 <p className="text-[11px] text-gray-400 font-bold mt-2 leading-relaxed">
-                  * 사망 보장 금액 적정성, 월 납입 보험료 대비 소득 비중, 완납 후 비과세 환급 효율성의 가중 평균 점수입니다.
+                  * 사망 보장 금액 적정성, 월 납입 보험료 대비 소득 비중, 계약 완납 유지 가능성의 종합 가중 지수입니다.
                 </p>
               </div>
             </div>
           </div>
         </div>
+
+        {/* ── 슬라이더 하단 법적 소비자 유의사항 안내 ── */}
+        <div className="mt-8 p-6 bg-slate-50 rounded-2xl border border-slate-200 text-xs text-slate-500 leading-relaxed text-left space-y-1">
+          <p className="font-black text-slate-700">※ 종신보험 시뮬레이션 관련 소비자 유의사항</p>
+          <p>• 종신보험은 피보험자의 사망을 보장하는 보장성 보험이며 은행의 예·적금 등 저축성 상품이 아닙니다.</p>
+          <p>• 상기 시뮬레이션 결과는 고객의 이해를 돕기 위한 예시이며, 실제 납입보험료 및 해약환급금은 피보험자의 성별, 연령, 건강상태, 직업, 가입조건 및 공시이율 변동에 따라 상이할 수 있습니다.</p>
+          <p>• 무·저해지환급형 상품은 납입기간 중 해약 시 해약환급금이 전혀 없거나 일반형 대비 현저히 적어 원금 손실이 발생할 수 있으므로 반드시 만기 유지를 고려하여 가입하시기 바랍니다.</p>
+        </div>
+
         <WholeLifeExplanation onAction={handleScrollToTop} />
       </div>
     </section>

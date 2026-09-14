@@ -166,6 +166,14 @@ export const WholeLifeSummary: React.FC<Props> = ({ result }) => {
           </div>
         </div>
       )}
+
+      {/* 3. 진단 결과 법적 유의사항 디스클레이머 */}
+      <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200 text-xs text-slate-500 leading-relaxed space-y-1">
+        <p className="font-black text-slate-700">※ 종신보험 분석 결과 안내 유의사항</p>
+        <p>• 종신보험은 피보험자의 평생 사망을 보장하는 순수 보장성 보험이며, 은행의 저축이나 연금 등 재테크 목적의 금융상품이 아닙니다.</p>
+        <p>• 상기 분석 리포트 및 점수는 고객님의 입력 데이터와 표준 보장 가이드라인을 바탕으로 산출된 단순 참고용 진단 결과이며, 실제 보험 가입 및 보장 가능 여부는 각 보험사의 인수 기준(언더라이팅), 건강검진 결과, 직업 및 가입 연령에 따라 달라질 수 있습니다.</p>
+        <p>• 저해지/무해지 환급형 상품을 선택하신 경우 납입기간 중 해약 시 해약환급금이 전혀 없거나 적어 큰 원금 손실이 발생하므로 완납 유지를 최우선으로 고려하시기 바랍니다.</p>
+      </div>
     </div>
   );
 };
