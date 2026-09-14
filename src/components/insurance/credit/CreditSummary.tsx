@@ -115,11 +115,11 @@ export const CreditSummary: React.FC<Props> = ({ result }) => {
             <div className="p-6 rounded-[2rem] bg-white/5 border border-white/10 space-y-3">
               <div className="flex items-center gap-2 text-emerald-400">
                 <Sparkles size={18} />
-                <span className="text-xs font-black uppercase tracking-wider">채무 전액 면제 & 주거 환경 보존</span>
+                <span className="text-xs font-black uppercase tracking-wider">채무 상환 지원 & 주거 환경 보존</span>
               </div>
               <p className="text-xs text-slate-300 font-bold leading-relaxed">
-                차주 본인에게 유고 발생 시, 남겨진 유가족에게 빚이 상속되거나 담보 주택이 경매 처리되는 것을 막고, 
-                <strong> 보험회사가 즉시 남은 대출금 {formatAmount(loanAmount)}을 대신 전액 상환</strong>하여 주거 안정성을 든든하게 수호합니다.
+                차주 본인에게 유고 발생 시, 남겨진 유가족에게 빚이 상속되거나 담보 주택이 경매 처리되는 위험을 완화하고, 
+                <strong> 약관상 보험사고 발생 시 가입금액 한도 내에서 대출금({formatAmount(loanAmount)}) 상환을 지원</strong>하여 가계 안정을 수호합니다.
               </p>
             </div>
 
@@ -193,7 +193,7 @@ export const CreditSummary: React.FC<Props> = ({ result }) => {
           <div className="space-y-2">
             <div className="flex justify-between text-xs font-bold text-slate-500">
               <span>채무 대위변제 안심 커버리지</span>
-              <span className="text-emerald-600 font-black">최대 {formatAmount(loanAmount)} (전액 매칭)</span>
+              <span className="text-emerald-600 font-black">가입한도 {formatAmount(loanAmount)} (설정 기준)</span>
             </div>
             <div className="h-4 w-full bg-slate-100 rounded-full relative overflow-hidden">
               <div className="h-full bg-emerald-500 rounded-full w-full" />
@@ -218,7 +218,7 @@ export const CreditSummary: React.FC<Props> = ({ result }) => {
 
         <p className="text-[11px] text-slate-400 font-bold leading-relaxed bg-slate-50 p-4 rounded-2xl">
           * 사망 보장만 가입한 경우 차주가 중증 질병 투병으로 소득을 상실해도 남은 원금에 대해 대출금 완납이 불가합니다. 
-          따라서 <strong>종합안심 특약(암, 뇌출혈, 심근경색증 진단 및 50% 후유장해 완납)</strong> 가입을 적극 권장합니다.
+          따라서 <strong>종합안심 특약(암, 뇌출혈, 심근경색증 진단 및 80% 후유장해 완납 지원)</strong> 가입을 적극 권장합니다.
         </p>
       </div>
 
@@ -239,6 +239,14 @@ export const CreditSummary: React.FC<Props> = ({ result }) => {
           </div>
         </div>
       )}
+
+      {/* ── 진단 결과 법적 유의사항 디스클레이머 ── */}
+      <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200 text-xs text-slate-500 leading-relaxed space-y-1">
+        <p className="font-black text-slate-700">※ 신용생명보험 분석 결과 안내 유의사항</p>
+        <p>• 신용생명보험은 차주의 사망, 장해, 질병 등 보험사고 발생 시 가입금액 한도 내에서 대출금을 대신 상환하는 순수 보장성 보험이며, 은행의 예·적금이나 대출 원리금 감면 상품이 아닙니다.</p>
+        <p>• 상기 분석 리포트 및 점수는 고객님의 입력 데이터와 표준 보장 가이드라인을 바탕으로 산출된 단순 참고용 진단 결과이며, 실제 보험 가입 및 보장 가능 여부는 각 보험사의 인수 심사 기준(언더라이팅), 신용평가 점수, 대출 종류 및 건강 상태에 따라 달라질 수 있습니다.</p>
+        <p>• 단순 대출 연체나 채무불이행 자체는 보험금 지급 사유가 되지 않으며, 대출 조기 완납 또는 대환 시 별도로 보험 계약을 해지하셔야 합니다.</p>
+      </div>
 
     </div>
   );

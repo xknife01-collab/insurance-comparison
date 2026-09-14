@@ -15,32 +15,62 @@ export const CreditExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
     <div className="max-w-7xl mx-auto">
 
       {/* ── 헤더 ── */}
-      <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+      <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-8">
         <div>
           <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-xs font-black mb-6 border border-blue-200 shadow-sm animate-pulse">
             <div className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
             유고 시 대출금이 가족에게 빚 대물림되지 않도록 지키는 신용 자산 안전장치
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[1.1]">
-            소득 상실 및 투병 중 대출 연체 걱정 끝,<br />
-            <span className="text-blue-600">안심 대출상환 보장보험의 정석</span>을 제시합니다.
+            예기치 못한 유고 시 대출 상환 부담 완화,<br />
+            <span className="text-blue-600">신용생명보험의 올바른 설계 기준</span>을 제시합니다.
           </h2>
         </div>
         <div className="max-w-md text-right hidden lg:block opacity-60">
           <p className="text-sm font-bold text-slate-500 leading-relaxed">
-            사망, 3대 중대 질병 진단 시 대출금 전액 대위변제!<br />
-            NICE/KCB 우량 신용 점수에 따라 최대 10% 주계약 보험료 추가 할인 혜택 매칭.
+            사망 및 약관상 정해진 중대 질병 진단 시 가입금액 한도 내 대출금 상환 지원.<br />
+            NICE/KCB 우량 신용 점수에 따라 최대 10% 주계약 보험료 할인 혜택 매칭.
           </p>
+        </div>
+      </div>
+
+      {/* ── 신용생명보험 핵심 법적 유의사항 및 표준 산출 기준 사전 고지 ── */}
+      <div className="bg-white border-2 border-blue-200 rounded-3xl p-6 md:p-8 mb-12 shadow-sm">
+        <div className="flex items-start gap-4">
+          <div className="w-10 h-10 rounded-2xl bg-blue-600 text-white flex items-center justify-center shrink-0 mt-0.5 shadow-md">
+            <ShieldCheck className="w-5 h-5" />
+          </div>
+          <div className="space-y-3 flex-1 text-xs text-slate-600 font-bold leading-relaxed">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="bg-blue-100 text-blue-800 text-[11px] font-black px-2.5 py-1 rounded-md">
+                금융소비자 안내사항
+              </span>
+              <span className="text-slate-800 font-black text-sm">
+                신용생명보험 가입 전 필수 확인 사항 (보장 범위 및 면책 사유)
+              </span>
+            </div>
+            <p className="text-slate-700">
+              * <strong>신용생명보험은 피보험자가 사망하거나 80% 이상 고도후유장해, 중대 질병 진단 등 약관상 규정된 보험사고 발생 시 가입금액 한도 내에서 대출금을 대신 상환해 주는 순수 보장성 보험입니다.</strong> 본 화면의 보장 및 예시 보험료는 <strong>[가입기준: 40세 남성 / 주택담보대출 1억 원 잔액 연동 / 10년 만기 / 표준체 / NICE 신용 1~2등급 가정]</strong>을 기준으로 산출된 단순 참고용 예시입니다.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1 text-[11px]">
+              <div className="bg-amber-50/70 p-3 rounded-xl border border-amber-100">
+                <span className="text-amber-700 font-black">⚠️ 단순 연체/채무불이행 면책:</span> 대출 이자 연체나 개인회생/파산 등 채무불이행 자체가 보험금 지급 사유가 되는 것이 아니며, 반드시 <strong>피보험자의 사망, 약관상 규정된 질병·상해 등 보험사고가 발생해야만 지급</strong>됩니다.
+              </div>
+              <div className="bg-blue-50/70 p-3 rounded-xl border border-blue-100">
+                <span className="text-blue-700 font-black">⚖️ 2년 내 자살 면책 및 대환대출 주의:</span> 보험계약일(부활일)로부터 <strong>2년 이내 고의로 자신을 해친 경우(자살 등)는 사망보험금이 지급되지 않으며</strong>, 대출을 중도 상환하거나 타 금융기관으로 대환대출 시 본 보험이 자동 해지되지 않으므로 별도 해지 신청이 필요합니다.
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* ── 통계 배너 ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
         {[
-          { num: '신용점수 연계 할인', label: 'NICE/KCB 등급별 자동 감면', sub: '3% ~ 최대 10% 보험료 영구 할인' },
-          { num: '대출금 한도 일치', label: '실제 잔액 한도 매칭 가입', sub: '부정 수급 목적의 초과 가입 원천 차단' },
-          { num: '대위변제 프로세스', label: '지급처가 가입자 아닌 은행', sub: '중도 횡령 불가, 빚 전액 소거 집중' },
-          { num: '연체 리스크 방어', label: '신용도 폭락 예방 안전판', sub: '사망/장해/3대 질병 시 채무 완납' },
+          { num: '신용점수 연계 할인', label: 'NICE/KCB 등급별 감면', sub: '3% ~ 최대 10% 주계약 보험료 할인' },
+          { num: '대출금 한도 연동', label: '실제 대출 잔액 한도 매칭', sub: '초과 가입 방지 및 합리적 보험료 설계' },
+          { num: '채권기관 직접 상환', label: '대출 실행 은행으로 상환금 지급', sub: '유가족 빚 상속 방지 및 채무 소거' },
+          { num: '가계 안정 안전판', label: '사망/장해/3대 질병 시 지원', sub: '소득 중단 시 주거환경 및 가족 보호' },
         ].map((s, i) => (
           <div key={i} className="bg-white border border-blue-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-blue-200 transition-all group">
             <p className="text-2xl font-black text-blue-600 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
@@ -123,10 +153,10 @@ export const CreditExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
 
               <div className="p-5 md:p-6 bg-blue-600/20 rounded-2xl md:rounded-[2.5rem] border border-blue-400/30 hover:bg-blue-600/30 transition-colors">
                 <p className="font-black text-blue-300 mb-2 flex items-center gap-2">
-                  🏥 중대 질병 및 고도후유장해 시 채무 상환 대행
+                  🏥 중대 질병 및 고도후유장해 시 채무 상환 지원
                 </p>
                 <p className="text-xs opacity-75 font-bold leading-relaxed">
-                  가장에게 암, 뇌출혈, 급성심근경색증 등 3대 질병이 발생하거나 50% 이상의 고도후유장해 상태가 될 경우, 소득 단절로 인한 대출 연체를 예방하기 위해 보험회사가 남은 채무액을 완납 대행합니다.
+                  가장에게 암, 뇌출혈, 급성심근경색증 등 약관상 규정된 3대 질병이 발생하거나 80% 이상의 고도후유장해 상태가 될 경우, 소득 단절로 인한 대출 연체를 예방하기 위해 보험회사가 가입금액 한도 내 채무액을 상환 지원합니다.
                 </p>
               </div>
 
@@ -135,7 +165,7 @@ export const CreditExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
                   📉 신용생명지수 우량 시 최대 10% 보험료 할인
                 </p>
                 <p className="text-xs opacity-75 font-bold leading-relaxed">
-                  NICE평가정보 및 KCB 등의 데이터를 연동하여 우량 등급인 고객들에게 주계약 보험료를 매년 지속적으로 할인해 주며, 신용 관리를 통해 등급이 상승하면 추가 할인율이 매칭 적용됩니다. (신용 하락 시 보험료 할증 없음)
+                  NICE평가정보 및 KCB 등의 데이터를 연동하여 우량 등급인 고객들에게 주계약 보험료를 할인해 주며, 신용 관리를 통해 등급이 상승하면 추가 할인율이 매칭 적용될 수 있습니다. (신용 하락 시 보험료 할증 없음)
                 </p>
               </div>
             </div>
@@ -150,7 +180,7 @@ export const CreditExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
         </div>
       </div>
 
-      {/* ── 트렌드: 핀테크 플랫폼 제어 및 갱신 ── */}
+      {/* ── 트렌드: 핀테크 플랫폼 연계 ── */}
       <div className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl md:rounded-[4rem] p-5 md:p-12 text-white relative overflow-hidden group">
         <div className="absolute top-0 right-0 p-5 md:p-12 opacity-10 group-hover:scale-110 transition-transform duration-700">
           <Sparkles className="w-40 h-40" />
@@ -162,14 +192,14 @@ export const CreditExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
             </div>
             <h3 className="text-3xl font-black mb-4 tracking-tight">대출 비교 플랫폼과 실시간 보험가입 연계 트렌드</h3>
             <p className="text-sm opacity-70 font-bold leading-relaxed">
-              정부의 서민금융 안정화 기조에 맞춰, 최근 토스·핀다·카카오페이 등 대출 비교 앱에서 대출을 승인받은 즉시 해당 대출 정보가 보험사에 자동 송신되어 복잡한 확인 서류 입력 없이 **0.1초 만에 개인 맞춤 신용보험 가입**이 가능해졌습니다.
+              정부의 서민금융 안정화 기조에 맞춰, 최근 핀테크 대출 비교 플랫폼에서 대출을 실행한 차주를 대상으로 대출 정보와 연동하여 복잡한 서류 제출 없이 **간편한 다이렉트 신용보험 가입**을 지원하는 서비스가 확대되고 있습니다.
             </p>
           </div>
           <div className="space-y-4">
             {[
-              { company: '실시간 신용 점수 조회', product: 'NICE / KCB 등급 연동', limit: '3% ~ 10% 보험료 추가 할인', note: '가입 시 인증 한 번으로 실시간 개인 신용 구간을 판정하여 자동 혜택 연동' },
-              { company: '무이자 분할 청약제도', product: '대출 분납 주기 매칭 청구', limit: '보험료 대출금에 일시 가산/분납', note: '가입 시 월납 방식 외에 대출 이자와 함께 납부하도록 설정 가능' },
-              { company: '비대면 다이렉트 가입', product: '복잡한 건강 진단 전면 생략', limit: '대출 계약번호 확인 시 즉시 승인', note: '대출이 이미 승인된 고객의 경우 가입 문턱을 대폭 완화하여 신속 보장' },
+              { company: '실시간 신용 점수 조회', product: 'NICE / KCB 등급 연동', limit: '3% ~ 10% 보험료 추가 할인', note: '가입 시 간편 인증으로 실시간 개인 신용 구간을 판정하여 자동 우대 혜택 연동' },
+              { company: '분할 납부 청약제도', product: '대출 분납 주기 매칭 청구', limit: '보험료 대출금과 분납 연계', note: '가입 시 월납 방식 외에 대출 이자와 함께 납부할 수 있는 편의 옵션 제공' },
+              { company: '비대면 다이렉트 가입', product: '간편 심사형 청약 절차', limit: '대출 계약 확인 시 신속 심사', note: '대출 실행 고객의 경우 심사 절차를 간소화하여 모바일로 신속 가입 지원' },
             ].map((item, i) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
@@ -197,7 +227,7 @@ export const CreditExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
               { step: '01. 대출 원리금 일치', desc: '현재 본인의 잔여 대출 원금과 상환 기간을 정확히 대조하여 중복/초과 보험료 방지' },
               { step: '02. 자살 면책 조항 인지', desc: '생명보험 특성상 계약 후 2년 이내의 고의 자해 및 극단 선택은 전액 면책됨을 확인' },
               { step: '03. 중대질병 보장 추가', desc: '단순 사망 외에 암/뇌/심장 투병으로 발생할 수 있는 대출 상환 마비 사태 방지 특약 검토' },
-              { step: '04. 신용생명지수 재확인', desc: '매년 신용 점수를 갱신하여 점수가 상승했을 때 보험사에 할인율 재지정 신청' },
+              { step: '04. 신용생명지수 재확인', desc: '매년 신용 점수를 갱신하여 점수가 상승했을 때 보험사에 할인율 재지정 신청 가능 여부 확인' },
             ].map((item, i) => (
               <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-blue-50/30 rounded-3xl border border-blue-100/50 hover:border-blue-200 transition-colors">
                 <div className="shrink-0 font-black text-blue-700 text-sm w-full sm:w-32">{item.step}</div>
@@ -213,11 +243,11 @@ export const CreditExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
           <div className="bg-blue-600 text-white rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-xl">
             <h4 className="text-xl font-black mb-4">신용보험 가입 핵심 가이드</h4>
             <p className="text-xs font-bold opacity-90 leading-relaxed">
-              ① 대출 승인 즉시 가입 시 요율 우대<br />
-              ② 주계약 보험금은 항상 은행으로 자동 배정<br />
+              ① 대출 실행 시점 잔액과 만기 기간 매칭<br />
+              ② 주계약 보험금은 채권 은행으로 직접 상환<br />
               ③ NICE/KCB 등급에 맞추어 연계 할인 획득<br />
-              ④ 사망에 고도장해 상환 특약 세트로 조립<br />
-              ⑤ 중도 대출 전액 상환 시 해약 및 즉시 환급
+              ④ 사망에 고도장해 및 질병 상환 특약 연계<br />
+              ⑤ 중도 대출 전액 상환 시 해약 신청 필수
             </p>
           </div>
           <div className="bg-white border border-blue-100 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-sm hover:shadow-xl transition-all">
@@ -225,7 +255,7 @@ export const CreditExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
               <Clock className="text-blue-500 w-5 h-5" /> 가입 최적 시점
             </h4>
             <p className="text-xs font-bold text-slate-500 leading-relaxed">
-              주택담보대출 또는 고액 신용대출을 새로 실행하는 즉시가 가입 최적기입니다. 시간이 흐른 뒤 건강 악화나 신용 불량 연체가 발생한 상태에서는 가입 승인이 심사 거절되므로 대출금 수령 당일 함께 가입하는 것이 원칙입니다.
+              주택담보대출 또는 신용대출을 새로 실행하는 시점이 가장 적기입니다. 대출 실행 후 건강 상태가 악화되거나 신용등급에 변동이 생기면 가입 심사에서 승인이 제한될 수 있으므로 대출 개시 시점에 맞추어 설계하는 것이 안전합니다.
             </p>
           </div>
         </div>
@@ -234,13 +264,13 @@ export const CreditExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
       {/* ── 주요 상품 종합 비교표 ── */}
       <div className="mb-20 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-blue-100 shadow-sm">
         <h3 className="text-2xl font-black text-slate-900 mb-10 tracking-tight">
-          국내 주요 대출안심 신용보험(대출상환보장) 상품 핵심 비교
+          국내 주요 대출안심 신용생명보험 대표 상품 특징 안내 (생명보험협회 공시 기준)
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { company: 'BNP파리바 카디프생명', product: '대출안심 신용생명보험', highlight: '국내 대표 신용보험 상품, 신용생명지수 할인 특약 탑재로 최저 3%~최대 10% 보험료 감면 제공', badges: ['시장 선두 대표상품', '신용지수 할인'] },
-            { company: '메트라이프생명', product: '신용대출 상환 정기보험', highlight: '사망 보장에 고도후유장해 상환 특약 집중 결합 가능, 연령층 대비 실속 있는 주계약 사망 설계 지원', badges: ['정기 보장 강점', '고도장해 보장'] },
-            { company: 'BNP파리바 카디프생명', product: '대출안심 보장보험 (다이렉트)', highlight: '핀테크 채널(토스 등) 전용 간편 다이렉트 가입 플랜, 0.1초 신용 데이터 연동 및 초간편 즉시 청약 승인', badges: ['모바일 특화', '0.1초 즉시 승인'] },
+            { company: 'BNP파리바 카디프생명', product: '대출안심 신용생명보험', highlight: '국내 대표 신용생명보험 상품, 신용생명지수 할인 특약 탑재로 최저 3%~최대 10% 보험료 감면 제공', badges: ['시장 선두 대표상품', '신용지수 할인'] },
+            { company: '메트라이프생명', product: '신용대출 상환 정기보험', highlight: '사망 보장에 고도후유장해 상환 특약 결합 가능, 연령층 대비 실속 있는 주계약 사망 설계 지원', badges: ['정기 보장 강점', '고도장해 보장'] },
+            { company: 'BNP파리바 카디프생명', product: '대출안심 보장보험 (다이렉트)', highlight: '핀테크 채널 전용 간편 다이렉트 가입 플랜, 신용 데이터 연동 및 모바일 간편 청약 지원', badges: ['모바일 특화', '모바일 간편 승인'] },
           ].map((item, i) => (
             <div key={i} className="p-5 md:p-8 bg-blue-50/20 rounded-2xl md:rounded-[2.5rem] border border-blue-100 hover:border-blue-300 hover:shadow-lg transition-all">
               <p className="text-xs font-black text-blue-600 mb-1">{maskCompany(item.company, isUnlocked)}</p>
@@ -258,6 +288,23 @@ export const CreditExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
               </div>
             </div>
           ))}
+        </div>
+
+        {/* ── 금소법 제19조 및 표준 소비자 보호 법적 안내 ── */}
+        <div className="mt-10 p-6 md:p-8 bg-slate-50 rounded-2xl md:rounded-3xl border border-slate-200 text-xs text-slate-600 space-y-2 leading-relaxed">
+          <p className="font-black text-slate-800 flex items-center gap-2 text-sm">
+            <AlertTriangle className="w-4 h-4 text-amber-600" /> 신용보험 계약 체결 전 금융소비자 필수 안내사항 (금융소비자보호법 제19조 준수)
+          </p>
+          <ul className="list-disc pl-5 space-y-1 font-medium text-[11px] text-slate-500">
+            <li><strong>본 상품은 차주의 사망, 장해, 질병 등 보험사고 발생 시 가입금액 한도 내에서 대출금을 대신 상환하는 순수 보장성 보험이며 은행의 예·적금 상품이 아닙니다.</strong></li>
+            <li>대출 연체나 채무불이행 자체가 보험금 지급 사유가 되는 것이 아니며, 약관상 규정된 보험사고가 발생해야만 지급됩니다.</li>
+            <li>보험계약 체결 전 반드시 해당 상품의 약관 및 상품설명서를 확인하시기 바랍니다.</li>
+            <li>보험계약자가 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 경우, 질병 이력이나 연령 증가 등으로 인하여 가입이 거절되거나 보험료가 인상될 수 있으며, 보장 내용이 달라질 수 있습니다.</li>
+            <li>피보험자가 계약일(부활일)로부터 2년 이내에 고의로 자신을 해친 경우(자살 등) 약관상 사망보험금 지급이 제한됩니다.</li>
+            <li>기존 대출을 중도 완납하거나 다른 금융기관으로 대환대출하는 경우 본 보험계약이 자동으로 해지되지 않으므로, 계약자가 별도로 보험사에 해약환급금 청구 및 계약 해지 신청을 해야 합니다.</li>
+            <li>보험계약자는 보험증권을 받은 날로부터 15일(단, 청약일로부터 30일 한도, 만 65세 이상 고령자는 45일) 이내에 청약 철회가 가능합니다.</li>
+            <li>본 보험계약은 예금자보호법에 따라 해약환급금(또는 만기 시 보험금이나 사고보험금)에 기타지급금을 합하여 1인당 최고 5천만 원까지 보호되며, 5천만 원을 초과하는 나머지 금액은 보호하지 않습니다. (단, 보험계약자 및 보험료 납부자가 법인인 경우 보호 대상에서 제외됩니다.)</li>
+          </ul>
         </div>
       </div>
 
@@ -277,7 +324,7 @@ export const CreditExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
             onClick={onAction}
             className="bg-blue-600 text-white px-14 py-7 rounded-full font-black text-xl hover:bg-blue-700 transition-all hover:scale-105 shadow-2xl shadow-blue-400/30 shrink-0"
           >
-            내 대출 맞춤 신용보험 무료 진단하기
+            신용보험 실시간 비교 상담하기
           </button>
         )}
       </div>

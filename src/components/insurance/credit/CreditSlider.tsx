@@ -83,7 +83,7 @@ export const CreditSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =
                 <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-blue-600 shadow-sm shrink-0"><Sparkles size={24} /></div>
                 <div className="space-y-2 text-left">
                   <p className="text-[0.85rem] font-bold text-gray-600 leading-relaxed">
-                    설정하신 월 예산에 맞춰 대출금 상환 보상 한도 비율 및 인수 특약 조립 범위가 <span className="text-blue-600 font-black underline decoration-2 underline-offset-4">실시간 맞춤 조율</span>되는 것을 확인하실 수 있습니다.
+                    설정하신 월 예산에 맞춰 대출금 상환 보상 한도 비율 및 인수 특약 조립 범위가 <span className="text-blue-600 font-black underline decoration-2 underline-offset-4">실시간 맞춤 조율(참고용 예시)</span>되는 것을 확인하실 수 있습니다.
                   </p>
                 </div>
               </div>
@@ -97,7 +97,7 @@ export const CreditSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =
               </div>
               <div className="space-y-4">
                 <div>
-                  <p className="text-[0.65rem] font-black text-slate-400 tracking-widest mb-1">대출금 보장비율</p>
+                  <p className="text-[0.65rem] font-black text-slate-400 tracking-widest mb-1">대출금 보장비율 (예시)</p>
                   <p className="text-3xl font-black text-white tracking-tighter">
                     {metrics.coverageRatio} <span className="text-lg">%</span>
                   </p>
@@ -122,11 +122,19 @@ export const CreditSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =
                   <span className="text-xl font-bold text-blue-600">점</span>
                 </div>
                 <p className="text-[11px] text-gray-400 font-bold mt-2">
-                  * 대출 연체 리스크 대비 및 신용 할인 연동 점수 결과
+                  * 대출 상환 공백 대비도 및 신용 할인 연동 종합 분석 지수
                 </p>
               </div>
             </div>
           </div>
+        </div>
+
+        {/* ── 슬라이더 하단 금융소비자 유의사항 안내 ── */}
+        <div className="mt-8 p-6 bg-slate-50 rounded-2xl border border-slate-200 text-xs text-slate-500 leading-relaxed text-left space-y-1">
+          <p className="font-black text-slate-700">※ 신용생명보험 시뮬레이션 관련 유의사항</p>
+          <p>• 신용생명보험은 차주의 사망, 장해, 중대질병 등 약관상 규정된 보험사고 발생 시 가입금액 한도 내에서 채권 금융기관에 대출금을 상환하는 순수 보장성 보험입니다.</p>
+          <p>• 상기 시뮬레이션 결과는 고객의 이해를 돕기 위한 예시이며, 실제 월 납입보험료 및 보장한도는 피보험자의 성별, 연령, 건강상태, 대출 종류, 대출 잔액 및 신용평가 점수에 따라 상이할 수 있습니다.</p>
+          <p>• 단순 대출 연체나 채무불이행 자체는 보험금 지급 사유에 해당하지 않으며, 기존 대출 조기 완납 또는 대환대출 시 계약자가 별도로 보험계약을 해지하셔야 합니다.</p>
         </div>
 
         <CreditExplanation onAction={handleScrollToTop} />
