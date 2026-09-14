@@ -1308,7 +1308,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
       )}
 
       {/* 3. Magic Remodeling Savings Calculator (신규 추가) */}
-      <section className="bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-950 text-white rounded-[4rem] p-10 md:p-16 shadow-[0_50px_100px_rgba(0,0,0,0.3)] relative overflow-hidden border border-slate-800">
+      <section className="bg-gradient-to-br from-[#0a051d] via-[#10072b] to-[#070217] text-white rounded-[4rem] p-10 md:p-16 shadow-[0_50px_120px_rgba(5,2,18,0.7)] relative overflow-hidden border border-[#2b1654]/80">
         <div className="absolute top-0 right-0 p-12 opacity-5 scale-125">
           <Sparkles className="w-80 h-80 text-purple-400" />
         </div>
@@ -1320,33 +1320,33 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
           <h3 className="text-4xl md:text-5xl font-black tracking-tighter leading-none bg-gradient-to-r from-white via-indigo-100 to-purple-200 bg-clip-text text-transparent">
             가계 금융 안정을 위한 연령대별 표준 설계 지표
           </h3>
-          <p className="text-slate-400 font-bold italic text-base">
+          <p className="text-slate-300 font-bold italic text-base">
             "불필요한 특약 거품을 줄이고 핵심 보장 위주로 구성한 합리적인 기준 재정 지표를 제시해 드립니다."
           </p>
         </div>
 
         <div className={`grid ${forceMobile ? 'grid-cols-1' : 'lg:grid-cols-3'} gap-8 relative z-10 items-stretch`}>
           {/* Card 1: 최적화 결과 -> 표준 권장 월 납입액 */}
-          <div className="bg-white/5 backdrop-blur-md p-10 rounded-[3rem] border border-white/10 flex flex-col justify-between hover:bg-white/10 transition-all duration-300">
+          <div className="bg-white/[0.08] backdrop-blur-md p-10 rounded-[3rem] border border-white/20 shadow-2xl flex flex-col justify-between hover:bg-white/[0.12] hover:border-purple-400/40 transition-all duration-300">
             <div>
-              <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 flex items-center justify-center mb-6">
+              <div className="w-12 h-12 rounded-2xl bg-indigo-500/25 flex items-center justify-center mb-6 border border-indigo-400/20">
                 <Calculator className="w-6 h-6 text-indigo-400" />
               </div>
-              <h4 className="text-lg font-black text-slate-300 mb-2">실속형 표준 권장 월 보험료</h4>
-              <p className="text-xs text-slate-400 font-bold leading-relaxed mb-6">
+              <h4 className="text-lg font-black text-white mb-2">실속형 표준 권장 월 보험료</h4>
+              <p className="text-xs text-slate-300 font-medium leading-relaxed mb-6">
                 핵심 진단비와 필수 치료 보장 위주로 구성한 동일 연령·성별 기준 실속 설계 요율입니다.
               </p>
             </div>
             <div>
-              <div className="border-t border-white/5 pt-6 space-y-2">
-                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block">기준 월 납입 보험료</span>
+              <div className="border-t border-white/10 pt-6 space-y-2">
+                <span className="text-[11px] font-black text-purple-200/90 uppercase tracking-widest block">기준 월 납입 보험료</span>
                 <div className="flex items-baseline gap-1">
                   <span className="text-5xl font-black text-indigo-400 tracking-tighter">
                     {Math.round(showDiet).toLocaleString()}
                   </span>
-                  <span className="text-xl font-bold text-slate-300">원</span>
+                  <span className="text-xl font-bold text-slate-200">원</span>
                 </div>
-                <div className="text-[10px] text-indigo-300 font-bold mt-2">
+                <div className="text-xs text-indigo-200 font-bold mt-2">
                   동일 연령대 평균 요율 대비 합리적인 실속형 설계 플랜
                 </div>
               </div>
@@ -1354,50 +1354,50 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
           </div>
 
           {/* Card 2: 연간 고정비 지출 예산 계획 */}
-          <div className="bg-white/5 backdrop-blur-md p-10 rounded-[3rem] border border-white/10 flex flex-col justify-between hover:bg-white/10 transition-all duration-300">
+          <div className="bg-white/[0.08] backdrop-blur-md p-10 rounded-[3rem] border border-white/20 shadow-2xl flex flex-col justify-between hover:bg-white/[0.12] hover:border-pink-400/40 transition-all duration-300">
             <div>
-              <div className="w-12 h-12 rounded-2xl bg-pink-500/20 flex items-center justify-center mb-6">
+              <div className="w-12 h-12 rounded-2xl bg-pink-500/25 flex items-center justify-center mb-6 border border-pink-400/20">
                 <Plane className="w-6 h-6 text-pink-400" />
               </div>
-              <h4 className="text-lg font-black text-slate-300 mb-2">연간 총 납입 예상 규모</h4>
-              <p className="text-xs text-slate-400 font-bold leading-relaxed mb-6">
+              <h4 className="text-lg font-black text-white mb-2">연간 총 납입 예상 규모</h4>
+              <p className="text-xs text-slate-300 font-medium leading-relaxed mb-6">
                 실속 플랜을 1년간 유지할 시 소요되는 연간 총 고정 지출 예산 지표입니다.
               </p>
             </div>
             <div>
-              <div className="border-t border-white/5 pt-6">
-                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">연간 지출 예산 계획</span>
+              <div className="border-t border-white/10 pt-6">
+                <span className="text-[11px] font-black text-pink-200/90 uppercase tracking-widest block mb-2">연간 지출 예산 계획</span>
                 <p className="text-base font-black text-pink-300 leading-snug">
                   연간 고정 납입액을 체계적으로 계획하여 가계 재정을 효율화할 수 있습니다.
                 </p>
-                <div className="text-[10px] text-slate-300 mt-2">
-                  (연간 예상 총 납입액: <span className="font-bold text-pink-200">{Math.round(showDiet * 12).toLocaleString()}원</span>)
+                <div className="text-xs text-slate-300 mt-2 font-medium">
+                  (연간 예상 총 납입액: <strong className="font-bold text-pink-300">{Math.round(showDiet * 12).toLocaleString()}원</strong>)
                 </div>
               </div>
             </div>
           </div>
 
           {/* Card 3: 10개년 총 납입 예산 플랜 */}
-          <div className="bg-white/5 backdrop-blur-md p-10 rounded-[3rem] border border-white/10 flex flex-col justify-between hover:bg-white/10 transition-all duration-300">
+          <div className="bg-white/[0.08] backdrop-blur-md p-10 rounded-[3rem] border border-white/20 shadow-2xl flex flex-col justify-between hover:bg-white/[0.12] hover:border-amber-400/40 transition-all duration-300">
             <div>
-              <div className="w-12 h-12 rounded-2xl bg-amber-500/20 flex items-center justify-center mb-6">
+              <div className="w-12 h-12 rounded-2xl bg-amber-500/25 flex items-center justify-center mb-6 border border-amber-400/20">
                 <TrendingUp className="w-6 h-6 text-amber-400" />
               </div>
-              <h4 className="text-lg font-black text-slate-300 mb-2">10개년 총 납입 예산 플랜</h4>
-              <p className="text-xs text-slate-400 font-bold leading-relaxed mb-6">
+              <h4 className="text-lg font-black text-white mb-2">10개년 총 납입 예산 플랜</h4>
+              <p className="text-xs text-slate-300 font-medium leading-relaxed mb-6">
                 비갱신형 표준 플랜 기준 10년 납입 기간 동안 계획되는 총 납입 누적 예산 지표입니다.
               </p>
             </div>
             <div>
-              <div className="border-t border-white/5 pt-6 space-y-2">
-                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest block">10년 총 납입 예상 규모</span>
+              <div className="border-t border-white/10 pt-6 space-y-2">
+                <span className="text-[11px] font-black text-amber-200/90 uppercase tracking-widest block">10년 총 납입 예상 규모</span>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-black text-amber-400 tracking-tighter">
                     {Math.round(showDiet * 12 * 10).toLocaleString()}
                   </span>
-                  <span className="text-xl font-bold text-slate-300">원</span>
+                  <span className="text-xl font-bold text-slate-200">원</span>
                 </div>
-                <div className="text-[10px] text-slate-300">
+                <div className="text-xs text-slate-300 font-medium">
                   비갱신형 세만기 설정 시 물가 상승이나 연령 증가에도 보험료 변동 없이 안전하게 유지됩니다.
                 </div>
               </div>
@@ -1406,7 +1406,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
         </div>
 
         {/* 심의 필수 유의사항 안내 박스 (시인성 대폭 강화) */}
-        <div className="mt-12 bg-white/10 border border-white/20 rounded-3xl p-6 text-left relative z-10 space-y-2 shadow-inner">
+        <div className="mt-12 bg-white/[0.09] border border-yellow-400/25 rounded-3xl p-6 text-left relative z-10 space-y-2 shadow-inner">
           <div className="flex items-center gap-2 text-yellow-300 font-black text-sm">
             <AlertCircle className="w-5 h-5 text-yellow-300" /> 가입 시 유의사항 및 기준 안내
           </div>
