@@ -101,6 +101,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
           <div className="text-[11px] font-semibold text-slate-500 leading-relaxed pt-1 space-y-0.5">
             <p>※ 약관상 수술의 정의(절단, 절제 등의 조작)에 부합하지 않는 단순 흡인, 천자, 신경차단술, 미용 성형 등은 보장에서 제외될 수 있습니다.</p>
             <p>※ 비관혈 수술은 관혈 수술에 비해 지급 금액이 감액(예: 50%)될 수 있으며, 가입자의 연령, 성별, 직업 및 각 보험사 인수 기준에 따라 가입 한도와 보험료는 달라집니다.</p>
+            <p>※ 동일한 질병으로 2회 이상 수술을 받거나 365일 이내 재수술 시 1회의 수술로 보아 1회만 지급되는 특약이 있으므로 상품별 약관의 '동일질병 수술 정의 및 지급 제한'을 확인하시기 바랍니다.</p>
           </div>
         </div>
       </div>
@@ -364,7 +365,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
                 </div>
               </div>
               <div className="pt-4 border-t border-gray-50">
-                <p className="text-[9px] text-gray-400 font-bold uppercase tracking-wider">강력 추천 매칭</p>
+                <p className="text-[9px] text-gray-400 font-bold uppercase tracking-wider">주요 매칭 포인트</p>
                 <p className="text-xs text-gray-700 font-black mt-1 flex items-center gap-1.5">
                   🛡️ {maskText(item.strength, isUnlocked)}
                 </p>
@@ -384,7 +385,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
             {
               step: '01',
               title: '보장 횟수 조항 확인 ("매 수술 시마다" 여부)',
-              desc: '약관 상에 "수술 1회당", "매 수술 시마다 지급"하는 규정이 명확한지 확인하세요. 1년에 1회만 주거나, 재수술 시 면책 기간(예: 365일)이 걸려 있는 상품은 배제하는 것이 좋습니다.'
+              desc: '약관 상에 "수술 1회당", "매 수술 시마다 지급"하는 규정이 명확한지 확인하세요. 동일 질병 재수술 시 면책 기간(예: 365일 또는 60일 이내) 여부를 각 상품 약관에서 반드시 비교 확인하셔야 합니다.'
             },
             {
               step: '02',
