@@ -22,7 +22,7 @@ export const PetExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
             소중한 반려가족의 일생을 지키는 든든한 의료 안심막
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[1.1]">
-            나날이 비싸지는 반려동물 병원비 걱정 끝,<br />
+            부담스러운 반려동물 의료비의 체계적 준비,<br />
             <span className="text-orange-500">합리적인 펫보험 선택 기준</span>을 제시합니다.
           </h2>
         </div>
@@ -35,12 +35,12 @@ export const PetExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
       </div>
 
       {/* ── 통계 배너 ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
         {[
           { num: '동물등록 할인', label: '등록번호 확인 시 즉시 적용', sub: '2% ~ 5% 보험료 추가 할인 혜택' },
-          { num: '슬개골 기본/특약', label: '소형견 다발 질환 보장', sub: '대기기간 1년 여부 반드시 확인 필요' },
+          { num: '슬개골 기본/특약', label: '소형견 다발 질환 보장', sub: '대기기간 6개월~1년 여부 확인 필요' },
           { num: '보장 비율 선택', label: '50%부터 최대 90% 보상', sub: '자기부담금 1만~10만 원 설계 매칭' },
-          { num: '실손 의료비 청구', label: '통원/입원 일당 15~30만', sub: '수술 회당 최대 200~250만 원 보장' },
+          { num: '실손 의료비 청구', label: '통원/입원 일당 15~30만', sub: '수술 회당 최대 200~250만 원 한도' },
         ].map((s, i) => (
           <div key={i} className="bg-white border border-orange-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-orange-200 transition-all group">
             <p className="text-2xl font-black text-orange-500 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
@@ -48,6 +48,14 @@ export const PetExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
             <p className="text-[11px] text-slate-400 font-bold">{s.sub}</p>
           </div>
         ))}
+      </div>
+
+      {/* ── 산출 기준 및 주요 면책사항 사전 고지 ── */}
+      <div className="mb-14 p-5 md:p-6 bg-orange-50/50 rounded-2xl md:rounded-3xl border border-orange-100 text-xs text-slate-600 leading-relaxed space-y-1">
+        <p className="font-bold text-orange-900 text-sm mb-1">[반려동물보험 표준 가입 기준 및 주요 면책사항 안내]</p>
+        <p>• <strong>대표 면책(보상 제외) 항목:</strong> 예방접종, 정기 건강검진, 스케일링(단순 치석 제거), 불임·중성화 수술, 임신·출산 관련 비용, 미용 및 성형 목적 치료는 보험금 지급 대상에서 제외됩니다.</p>
+        <p>• <strong>면책 대기기간 안내:</strong> 상해 사고는 가입 즉시 보장되나, 일반 질병은 가입일로부터 30일, 슬개골 탈구 및 고관절 등 특정 관절 질환은 가입일로부터 1년(또는 회사별 6개월)의 면책 대기기간이 적용됩니다.</p>
+        <p>• <strong>실손보상 및 갱신 안내:</strong> 실제 지출한 병원비에서 자기부담금을 차감한 후 가입한 보상 비율(50%~90%) 한도 내에서 실손 보상(다수 가입 시 비례보상)되며, 갱신 시 반려동물 연령 증가 및 손해율 변동에 따라 보험료가 인상될 수 있습니다.</p>
       </div>
 
       {/* ── 가이드 1 & 가이드 2 ── */}
@@ -67,15 +75,15 @@ export const PetExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
 
           <p className="text-sm font-bold text-slate-400 mb-8 leading-relaxed">
             소중한 아이의 병원비 중 가장 빈번하게 발생하며,{' '}
-            <span className="text-orange-500 font-black">펫보험 설계 시 필수로 챙겨야 할 3대 주요 영역</span>
+            <span className="text-orange-500 font-black">주요 다빈도 질환 3대 핵심 보장 영역</span>
             입니다.
           </p>
 
           <div className="space-y-3">
             {[
-              { title: '슬개골/고관절', label: '소형견 90% 이상 겪는 유전적 관절 질환', color: 'bg-orange-50/50 border-orange-100', badge: 'text-orange-700 bg-orange-100', desc: '슬개골 탈구 및 고관절 형성 부전 등 대부분 특약으로 제공되며, 가입 후 1년 대기기간 미적용 조건 확인 필수' },
-              { title: '피부/귓병 보장', label: '만성으로 발전하기 쉬운 잦은 염증 질환', color: 'bg-amber-50/50 border-amber-100', badge: 'text-amber-700 bg-amber-100', desc: '아토피, 귓병, 지루성 피부염 등 한 번 발생 시 치료가 장기화되므로 통원 일수 한도가 넉넉한 상품 선택 우대' },
-              { title: '구강/치과 보장', label: '노령견 진입 시 가장 수술 비용이 큰 치아', color: 'bg-yellow-50 border-yellow-100', badge: 'text-yellow-700 bg-yellow-100', desc: '스케일링 및 단순 치과 보장은 제외되는 경우가 대다수이나, 최근 일부 사에서 발치 및 치주질환 수술 특약 확대 추세' },
+              { title: '슬개골/고관절', label: '소형견 90% 이상 겪는 유전적 관절 질환', color: 'bg-orange-50/50 border-orange-100', badge: 'text-orange-700 bg-orange-100', desc: '슬개골 탈구 및 고관절 형성 부전 등 주요 관절 질환의 특약 탑재 유무 및 가입 후 면책 대기기간(6개월~1년) 확인 필수' },
+              { title: '피부/귓병 보장', label: '만성으로 발전하기 쉬운 잦은 염증 질환', color: 'bg-amber-50/50 border-amber-100', badge: 'text-amber-700 bg-amber-100', desc: '아토피, 귓병, 지루성 피부염 등 만성 질환 대비를 위한 통원 일수 및 1일 보상 한도 확인' },
+              { title: '구강/치과 보장', label: '노령견 진입 시 가장 수술 비용이 큰 치아', color: 'bg-yellow-50 border-yellow-100', badge: 'text-yellow-700 bg-yellow-100', desc: '단순 스케일링 등 예방 치료는 제외되며, 약관상 보장 대상이 되는 구강 질환 및 발치 수술 담보 여부 확인' },
             ].map((item, i) => (
               <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-5 rounded-3xl border ${item.color}`}>
                 <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
@@ -88,9 +96,9 @@ export const PetExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
           </div>
 
           <div className="mt-8 p-5 md:p-6 bg-orange-50 rounded-3xl border border-orange-100">
-            <p className="text-orange-700 font-black text-xs mb-1">⚠️ 가입 전 주의사항 (대기기간)</p>
+            <p className="text-orange-700 font-black text-xs mb-1">⚠️ 가입 전 주의사항 (대기기간 및 면책)</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
-              펫보험은 가입 즉시 효력이 발생하는 상해 치료와 달리, **질병 보장은 30일**, **슬개골 등 특정 관절 질환은 1년(또는 6개월)**의 면책 대기기간이 적용되므로 건강할 때 미리 가입해두는 것이 가장 유리합니다.
+              펫보험은 가입 즉시 효력이 발생하는 상해 치료와 달리, 질병 보장은 30일, 슬개골 등 특정 관절 질환은 1년(또는 6개월)의 면책 대기기간이 적용됩니다. 과거 병력 발생 시 해당 부위 부담보 또는 가입 제한이 발생할 수 있으므로 건강할 때 가입 조건을 꼼꼼히 비교하는 것이 권장됩니다.
             </p>
           </div>
         </div>
@@ -224,18 +232,18 @@ export const PetExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
       </div>
 
       {/* ── 주요 상품 종합 비교표 ── */}
-      <div className="mb-20 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-orange-100 shadow-sm">
+      <div className="mb-14 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-orange-100 shadow-sm">
         <h3 className="text-2xl font-black text-slate-900 mb-10 tracking-tight">
-          국내 Top 6 보험사 펫실손의료비보험 상품 경쟁력 전수 비교
+          주요 손해보험사 펫보험 대표 상품 특징 안내 (손해보험협회 공시 기준)
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { company: '메리츠화재', product: '펫퍼민트 Puppy&Cat', highlight: '국내 대표 펫보험, 수술 횟수 무제한 및 보장 한도 넉넉, 자동 간편 청구 병원 최다', badges: ['시장 선두 상품', '통원 한도 우수'] },
-            { company: '삼성화재', product: '다이렉트 위풍댕댕', highlight: '다양한 견종 요율 세분화, 대인 배상책임 및 반려인 동반 보장 옵션 경쟁력 보유', badges: ['다이렉트 요율', '대인배상 포함'] },
+            { company: '메리츠화재', product: '펫퍼민트 Puppy&Cat', highlight: '수술 및 입통원 의료비 보장 특화, 제휴 동물병원 간편 청구 연동 지원', badges: ['대표 플랜', '통원 한도 우수'] },
+            { company: '삼성화재', product: '다이렉트 위풍댕댕', highlight: '다양한 견종 요율 세분화, 반려견 배상책임 및 반려인 동반 보장 옵션 경쟁력 보유', badges: ['다이렉트 요율', '반려견배상 포함'] },
             { company: '현대해상', product: '굿앤굿 우리펫보험', highlight: '유연한 갱신 주기 설계 가능, 내장칩 할인과 더불어 잦은 잔병치레 치료 특약 최적화', badges: ['갱신 유연성', '잔병치레 케어'] },
             { company: 'KB손해보험', product: 'KB금쪽같은 펫보험', highlight: '만성 피부염/알레르기 치료비 특약 한도 우수, 유기견 입양 시 2년간 추가 할인', badges: ['피부염 강점', '유기견 가치 우대'] },
-            { company: 'DB손해보험', product: '아이러브펫블리', highlight: '높은 수술비 및 MRI/CT 정밀 진단비 특약 보장, 대형견 요율 테이블 경쟁력', badges: ['MRI 특약', '대형견 요율 강점'] },
-            { company: '한화손해보험', product: '펫투게더 플러스', highlight: '실속형 50% 보장 플랜 지원으로 보험료 다이어트 최적화, 슬개골 탈구 보장 완비', badges: ['실속 플랜 지원', '최저 요율 매칭'] },
+            { company: 'DB손해보험', product: '아이러브펫블리', highlight: '수술비 및 MRI/CT 정밀 진단비 특약 보장, 대형견 요율 테이블 경쟁력', badges: ['MRI 특약', '대형견 요율 강점'] },
+            { company: '한화손해보험', product: '펫투게더 플러스', highlight: '실속형 50% 보장 플랜 지원으로 보험료 다이어트 최적화, 슬개골 탈구 보장 완비', badges: ['실속 플랜 지원', '실속형 요율 플랜'] },
           ].map((item, i) => (
             <div key={i} className="p-5 md:p-8 bg-orange-50/20 rounded-2xl md:rounded-[2.5rem] border border-orange-100 hover:border-orange-300 hover:shadow-lg transition-all">
               <p className="text-xs font-black text-orange-600 mb-1">{maskCompany(item.company, isUnlocked)}</p>
@@ -256,6 +264,16 @@ export const PetExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
         </div>
       </div>
 
+      {/* ── 법적 고지문 (금소법 제19조 관련) ── */}
+      <div className="mb-20 p-6 md:p-8 bg-slate-50 rounded-3xl border border-slate-200 text-xs text-slate-500 space-y-2 leading-relaxed">
+        <p className="font-bold text-slate-700 text-sm mb-1">[보험 계약 체결 전 유의사항 및 법적 고지]</p>
+        <p>• 보험계약 체결 전 반드시 해당 상품설명서 및 약관을 확인하시기 바랍니다.</p>
+        <p>• 본 안내는 손해보험협회 심의기준 및 각 사 공시 내용을 바탕으로 작성되었으며, 보험계약자가 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 경우 보험인수가 거절되거나 보험료가 인상될 수 있고 보장내용이 달라질 수 있습니다.</p>
+        <p>• <strong>대표 면책 사항 안내:</strong> 예방접종, 정기 건강검진, 스케일링, 중성화/불임수술, 임신·출산, 미용/성형 및 선천적/유전적 기형 관련 비용은 약관상 보상 대상에서 제외됩니다. 또한 질병(30일) 및 특정 관절 질환(6개월~1년)에 대한 면책 대기기간이 적용됩니다.</p>
+        <p>• <strong>실손비례보상 및 갱신 고지:</strong> 펫보험은 가입 시 선택한 자기부담금과 보상 비율(50~90%) 한도 내에서 실제 손해액을 보상하는 실손형 담보로 다수 보험 가입 시 비례보상되며, 갱신 시 반려동물 연령 증가 및 손해율 변동에 따라 갱신 보험료가 인상될 수 있습니다.</p>
+        <p>• (주)케어인슈는 다수의 보험사와 계약 체결 및 중개하는 금융상품판매대리·중개업자로서 보험사로부터 보험계약 체결권을 부여받지 아니하며 금융소비자보호법 등 관련 법령을 준수합니다.</p>
+      </div>
+
       {/* ── CTA ── */}
       <div className="border-t border-orange-100 pt-20 flex flex-col md:flex-row justify-between items-center gap-10">
         <div className="flex items-center gap-6">
@@ -272,7 +290,7 @@ export const PetExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
             onClick={onAction}
             className="bg-orange-500 text-white px-14 py-7 rounded-full font-black text-xl hover:bg-orange-600 transition-all hover:scale-105 shadow-2xl shadow-orange-400/30 shrink-0"
           >
-            우리 아이 맞춤 보험 무료 진단하기
+            반려동물 펫보험 실시간 비교 상담하기
           </button>
         )}
       </div>

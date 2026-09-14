@@ -80,7 +80,10 @@ export const PetSlider: React.FC<{ result: AnalysisResult }> = ({ result }) => {
                 <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-orange-500 shadow-sm shrink-0"><Sparkles size={24} /></div>
                 <div className="space-y-2">
                   <p className="text-[0.85rem] font-bold text-gray-600 leading-relaxed">
-                    설정하신 월 예산에 맞춰 반려동물 실손 보장 비율이 <span className="text-orange-600 font-black underline decoration-2 underline-offset-4">최대 {metrics.copayRatio}%</span>로 실시간 맞춤 조율되는 것을 확인하실 수 있습니다.
+                    설정하신 월 예산에 맞춰 반려동물 실손 보장 비율이 <span className="text-orange-600 font-black underline decoration-2 underline-offset-4">최대 {metrics.copayRatio}%</span>로 실시간 맞춤 조율되는 예시를 확인하실 수 있습니다.
+                  </p>
+                  <p className="text-[10px] text-gray-400 font-medium leading-relaxed border-t border-orange-100/60 pt-2">
+                    * 상기 보장 비율, 자기부담금 및 수술비 한도는 이해를 돕기 위한 예시 시뮬레이션이며, 실제 가입 조건과 보험료는 반려동물의 종류(견종/묘종), 연령, 병력 및 각 보험사별 인수 기준에 따라 달라집니다. (갱신 시 보험료 변동 가능)
                   </p>
                 </div>
               </div>

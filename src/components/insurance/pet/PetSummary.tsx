@@ -155,6 +155,11 @@ export const PetSummary: React.FC<Props> = ({ result }) => {
           </div>
         </div>
       )}
+
+      {/* 3. 진단 참고 안내 */}
+      <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 text-[11px] text-slate-400 font-medium leading-relaxed">
+        * 상기 보장 분석 점수 및 취약 질환 정보는 품종별 일반 통계 데이터에 기반한 참고 자료이며, 실제 보상 여부 및 세부 보상 기준은 가입하신 보험 상품의 약관에 따릅니다.
+      </div>
     </div>
   );
 };
