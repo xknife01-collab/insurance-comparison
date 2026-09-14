@@ -341,7 +341,7 @@ export const VariableSummary: React.FC<Props> = ({ result }) => {
                     <tr>
                       <td className="px-6 py-4 font-black text-white">월 보험료 규모</td>
                       <td className="px-6 py-4 text-slate-400">{stayPremium.toLocaleString()}원대 (고비용 납입 구조)</td>
-                      <td className="px-6 py-4 text-[#FF6B00] font-black">{switchPremium.toLocaleString()}원 (최저가 매핑 적용)</td>
+                      <td className="px-6 py-4 text-[#FF6B00] font-black">{switchPremium.toLocaleString()}원 (실속형 다이렉트 요율 적용)</td>
                     </tr>
                     <tr>
                       <td className="px-6 py-4 font-black text-white">건강체 특별 우대</td>
@@ -360,6 +360,20 @@ export const VariableSummary: React.FC<Props> = ({ result }) => {
           </div>
         );
       })()}
+
+      {/* 3. 진단 결과 법적 고지 안내 */}
+      <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200 text-slate-500 text-xs font-medium leading-relaxed">
+        <p className="font-bold text-slate-700 mb-1 flex items-center gap-1.5">
+          <CheckCircle2 className="w-4 h-4 text-indigo-600" />
+          변액/정기보험 진단 결과 안내 유의사항
+        </p>
+        <p>
+          * 본 분석 결과는 고객님의 입력 정보(연령, 희망 보장금액, 투자성향 등)를 바탕으로 한 알고리즘 기반 단순 비교·분석 결과입니다. 변액보험의 특별계정은 실적배당형 상품으로 운용 실적에 따라 투자원금의 손실이 발생할 수 있으며(계약자 귀속), 예금자보호법이 적용되지 않습니다. (단, 최저보증 및 선택특약은 5천만 원 한도 보호)
+        </p>
+        <p className="mt-1 text-[11px] text-slate-400">
+          * 정기보험의 우량체 할인은 보험사별 건강검진 결과(혈압, 체질량지수, 흡연 여부 등) 충족 여부에 따라 실제 적용 여부가 결정됩니다.
+        </p>
+      </div>
 
     </div>
   );

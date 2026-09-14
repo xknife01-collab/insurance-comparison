@@ -588,6 +588,20 @@ export const VariableSlider: React.FC<{ result: AnalysisResult }> = ({ result })
             </div>
           ) : null}
         </div>
+
+        {/* ── 시뮬레이션 산출 기준 및 투자 위험성 고지 ── */}
+        <div className="mt-12 p-6 bg-slate-50 rounded-2xl border border-slate-200 text-left text-slate-500 text-xs font-bold leading-relaxed">
+          <p className="text-slate-700 font-black mb-1 flex items-center gap-1.5">
+            ℹ️ 변액/정기보험 시뮬레이션 산출 기준 및 투자 위험성 안내
+          </p>
+          <p>
+            * 상기 시뮬레이션은 선택하신 투자성향별 가정 수익률(연 3%~7%) 및 계약체결비용/펀드운용보수 차감을 가정한 단순 시뮬레이션 예시이며, 실제 수익률이나 해약환급금을 보장하지 않습니다.
+          </p>
+          <p className="mt-1 text-[11px] text-slate-400">
+            * 변액보험의 특별계정은 실적배당형 상품으로 운용실적에 따라 투자원금의 손실이 발생할 수 있으며 예금자보호법이 적용되지 않습니다. (단, 최저보증 및 선택특약에 한해 5천만 원 한도 보호)
+          </p>
+        </div>
+
         <VariableExplanation onAction={handleScrollToTop} />
       </div>
     </section>
