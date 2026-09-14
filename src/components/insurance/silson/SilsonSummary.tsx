@@ -51,9 +51,9 @@ export const SilsonSummary: React.FC<Props> = ({ result }) => {
   };
 
   const getExplanationCopy = (type: string) => {
-    if (type === '5세대 실손') return `"${type} 전환 시 보험료를 최대 75%까지 절감할 수 있는지 분석했습니다."`;
-    if (type === '노후 실손') return `"${type} 전환 시 보험료 지출을 합리적으로 절감할 수 있는지 분석했습니다."`;
-    return `"${type} 전환 시 보험료를 최대 70%까지 절감할 수 있는지 분석했습니다."`;
+    if (type === '5세대 실손') return `"${type} 전환 시 세대별 가입 조건 및 본인부담 구조에 따른 보험료 절감 효과를 분석했습니다."`;
+    if (type === '노후 실손') return `"${type} 전환 시 연령 및 보장 조건에 따른 보험료 지출을 합리적으로 분석했습니다."`;
+    return `"${type} 전환 시 세대별 가입 조건 및 본인부담 구조에 따른 보험료 절감 효과를 분석했습니다."`;
   };
 
   const analysisItems = [
