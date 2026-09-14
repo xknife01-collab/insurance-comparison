@@ -101,7 +101,7 @@ const HeartFields: React.FC<HeartFieldsProps> = ({
                   고혈압, 당뇨 등 병력이 있으신 경우 <span className="text-orange-600 font-black">심장 전용 보험보다 [유병자 전용 카테고리]</span>에서 분석하시는 것이 훨씬 더 저렴하고 가입이 용이합니다.
                 </p>
                 <div className="text-[0.65rem] font-black text-orange-500 underline decoration-2 underline-offset-4 cursor-pointer hover:text-orange-700 transition-colors">
-                  유병자 전수 조사 카테고리로 이동하기 →
+                  유병자 맞춤 비교 카테고리로 이동하기 →
                 </div>
               </motion.div>
             )}

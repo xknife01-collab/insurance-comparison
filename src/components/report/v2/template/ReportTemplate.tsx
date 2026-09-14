@@ -254,7 +254,7 @@ const SummaryPage: React.FC<{ data: ReportData }> = ({ data }) => {
           </div>
         </div>
 
-        {/* 🏆 전 보험사 실시간 비교 순위표 (마스킹) */}
+        {/* 🏆 주요 보험사 공시 비교 순위표 (마스킹) */}
         {(() => {
           const rawList = profile.allOptions && profile.allOptions.length > 0
             ? profile.allOptions
@@ -284,7 +284,7 @@ const SummaryPage: React.FC<{ data: ReportData }> = ({ data }) => {
           return (
             <div style={{ background: '#FAFAFA', borderRadius: 12, padding: '12px 16px', border: '1px solid #E5E7EB', marginTop: 10 }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-                <div style={{ fontSize: 11, fontWeight: 800, color: '#1E293B' }}>🏆 전 보험사 실시간 비교</div>
+                <div style={{ fontSize: 11, fontWeight: 800, color: '#1E293B' }}>🏆 주요 보험사 공시 비교</div>
                 <div style={{ fontSize: 8, color: '#64748B', fontWeight: 600 }}>* 금소법 준수 마스킹 표기</div>
               </div>
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 9.5 }}>

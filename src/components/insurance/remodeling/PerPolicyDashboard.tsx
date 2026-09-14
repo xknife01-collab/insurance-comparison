@@ -1206,7 +1206,7 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen,liveDiet
  
               {/* Market Comparison */}
               <div>
-                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">🏆 전 보험사 실시간 비교</p>
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">🏆 주요 보험사 공시 요율 비교</p>
                 <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden">
                   <div className="grid grid-cols-12 bg-slate-50 px-5 py-3 text-[9px] font-black text-slate-500 uppercase tracking-widest border-b border-slate-100">
                     <div className="col-span-1">순위</div>

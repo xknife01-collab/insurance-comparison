@@ -1882,10 +1882,13 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
 <section className="space-y-16 pb-32">
         <div className="text-center space-y-6">
           <div className="inline-flex items-center gap-2 px-6 py-2 bg-emerald-900 text-white rounded-full text-[0.65rem] font-black uppercase tracking-[0.3em] shadow-xl">
-            <Heart size={14} className="fill-current text-emerald-400" /> Whole Market Comparison
+            <Heart size={14} className="fill-current text-emerald-400" /> Market Rate Comparison
           </div>
-          <h3 className="text-4xl font-black text-gray-900 tracking-tighter">전 보험사 실시간 보험료 비교</h3>
-          <p className="text-gray-500 font-bold italic">"대한민국 모든 보험사의 DB를 전수 조사한 결과입니다."</p>
+          <h3 className="text-4xl font-black text-gray-900 tracking-tighter">국내 주요 보험사 보험료 비교</h3>
+          <p className="text-gray-500 font-bold italic">"주요 보험사의 공시 요율을 정밀 비교·분석한 결과입니다."</p>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-slate-100 rounded-full text-xs text-slate-600 font-semibold border border-slate-200 shadow-sm">
+            <span>※ 본 보험료 비교는 생명보험협회 및 손해보험협회 공시 기준 보험료율표를 기반으로 작성되었습니다.</span>
+          </div>
         </div>
 
         {!isUnlocked && (

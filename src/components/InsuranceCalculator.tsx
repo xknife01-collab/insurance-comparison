@@ -2182,8 +2182,8 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
                   0.1초 만에 {socialLoading === 'naver' ? '네이버' : '카카오'} 연동 완료!
                 </h4>
                 <p className="text-sm font-bold text-slate-500 leading-relaxed">
-                  대한민국 35개 전 보험사의 방대한 DB를<br/>
-                  <span className="text-orange-500 font-extrabold">웅장하게 전수 조사</span>하는 중입니다...
+                  국내 주요 30여 개 보험사 공시 요율을<br/>
+                  <span className="text-orange-500 font-extrabold">정밀 비교 대조</span>하는 중입니다...
                 </p>
               </div>
 

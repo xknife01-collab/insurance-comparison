@@ -39,7 +39,7 @@ export const InsuranceSelector: React.FC = () => {
     <section className="w-full max-w-4xl mx-auto py-12 px-6 bg-white font-sans">
       <div className="flex flex-col items-center gap-4 mb-8">
         <div className="text-[0.6rem] font-bold text-gray-400 uppercase tracking-widest">
-          국내 35개 전 보험사 실시간 비교
+          국내 주요 보험사 공시 비교
         </div>
         <div className="flex flex-col gap-4 w-full opacity-90 transition-opacity hover:opacity-100">
           <img src="/insurance_logos_1.png" alt="Insurers" className="w-full h-auto object-contain" />

@@ -97,7 +97,7 @@ const InputForm: React.FC<InputFormProps> = ({ onAnalyze }) => {
           <div>
             <div className="flex flex-col items-center gap-4 mb-8 bg-gray-50/50 rounded-3xl p-6 border border-gray-100">
                <div className="text-[0.6rem] font-black text-gray-400 uppercase tracking-[0.2em]">
-                 대한민국 35개 전 보험사 실시간 비교 중
+                 국내 주요 보험사 공시 요율 비교 대조 중
                </div>
                <div className="flex flex-col gap-4 w-full opacity-100 transition-all">
                  <img src="/insurance_logos_1.png" alt="Insurance Partners Group 1" className="w-full h-auto object-contain scale-105" />
