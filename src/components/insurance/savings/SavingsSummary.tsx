@@ -183,6 +183,20 @@ export const SavingsSummary: React.FC<Props> = ({ result }) => {
           </div>
         </div>
       )}
+
+      {/* 3. 진단 결과 법적 고지 안내 */}
+      <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200 text-slate-500 text-xs font-medium leading-relaxed">
+        <p className="font-bold text-slate-700 mb-1 flex items-center gap-1.5">
+          <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+          저축보험 진단 결과 안내 유의사항
+        </p>
+        <p>
+          * 본 분석 결과는 고객님께서 입력하신 저축 형태, 납입액, 유지 기간을 바탕으로 한 알고리즘 기반 단순 비교·분석 결과입니다. 저축보험은 은행의 예·적금과 달리 계약체결비용(사업비)이 차감된 후 복리로 적립되므로 초기 중도 해약 시 원금 손실이 발생할 수 있습니다.
+        </p>
+        <p className="mt-1 text-[11px] text-slate-400">
+          * 비과세 혜택은 소득세법 시행령 제25조 요건(적립식: 5년 이상 납입, 10년 이상 유지, 월 150만 원 이하 등) 충족 시 적용되며, 세법 개정에 따라 기준이 변동될 수 있습니다.
+        </p>
+      </div>
     </div>
   );
 };

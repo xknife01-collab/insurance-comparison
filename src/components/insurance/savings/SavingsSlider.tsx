@@ -242,6 +242,19 @@ export const SavingsSlider: React.FC<{ result: AnalysisResult }> = ({ result }) 
           </div>
         </div>
 
+        {/* ── 시뮬레이션 산출 기준 및 유의사항 고지 ── */}
+        <div className="mt-12 p-6 bg-slate-50 rounded-2xl border border-slate-200 text-left text-slate-500 text-xs font-bold leading-relaxed">
+          <p className="text-slate-700 font-black mb-1 flex items-center gap-1.5">
+            ℹ️ 저축보험 시뮬레이션 산출 기준 및 소비자 유의사항
+          </p>
+          <p>
+            * 상기 시뮬레이션은 다이렉트(CM) 평균 공시이율(연 2.9%~3.15% 가정) 및 사업비(3.0%~3.5% 차감 가정)를 기준으로 산출된 단순 이해를 돕기 위한 예시이며, 실제 적립액 및 해약환급금은 매월 변동되는 공시이율에 따라 달라집니다.
+          </p>
+          <p className="mt-1 text-[11px] text-slate-400">
+            * 저축보험은 은행의 예·적금과 달리 납입보험료에서 사업비가 차감된 후 적립되므로 초기 중도 해약 시 원금 손실이 발생할 수 있으며, 비과세 혜택은 소득세법 시행령 요건 충족 시에만 적용됩니다.
+          </p>
+        </div>
+
         <SavingsExplanation onAction={handleScrollToTop} />
       </div>
     </section>

@@ -15,32 +15,62 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
     <div className="max-w-7xl mx-auto">
 
       {/* ── 헤더 ── */}
-      <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+      <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-8">
         <div>
           <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 px-4 py-2 rounded-full text-xs font-black mb-6 border border-emerald-200 shadow-sm">
             <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-            현명한 자산가를 위한 합법적 10년 비과세 복리 무기
+            10년 유지 시 비과세 혜택과 중장기 목돈 마련 플랜
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[1.1]">
-            소득세 15.4% 전액 면제받고,<br />
-            <span className="text-emerald-600">월 복리로 굴러가는 복리 자산</span>을 축적하세요.
+            세법상 비과세 요건 충족 시 소득세 면제,<br />
+            <span className="text-emerald-600">공시이율 연동 복리 자산</span>을 형성하세요.
           </h2>
         </div>
         <div className="max-w-md text-right hidden lg:block opacity-60">
           <p className="text-sm font-bold text-slate-500 leading-relaxed">
-            비과세를 활용한 매년 합법적 절세와<br />
-            원리금 보장 공시이율 및 유니버셜 기능을 통한 안정적 목돈 마련 가이드.
+            비과세를 활용한 합법적 절세와<br />
+            공시이율 복리 부리 및 유니버셜 기능을 통한 안정적 목돈 마련 가이드.
           </p>
+        </div>
+      </div>
+
+      {/* ── 표준 산출 기준 및 은행 예·적금과의 차이점 사전 고지 ── */}
+      <div className="bg-white border-2 border-emerald-200 rounded-3xl p-6 md:p-8 mb-12 shadow-sm">
+        <div className="flex items-start gap-4">
+          <div className="w-10 h-10 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shrink-0 mt-0.5 shadow-md">
+            <ShieldCheck className="w-5 h-5" />
+          </div>
+          <div className="space-y-3 flex-1 text-xs text-slate-600 font-bold leading-relaxed">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="bg-emerald-100 text-emerald-800 text-[11px] font-black px-2.5 py-1 rounded-md">
+                필수 안내사항
+              </span>
+              <span className="text-slate-800 font-black text-sm">
+                저축보험 가입 시 핵심 법적 유의사항 (은행 예·적금과의 차이)
+              </span>
+            </div>
+            <p className="text-slate-700">
+              * 본 비교 안내 화면의 보험료 및 예상 해약환급금 예시는 <strong>[가입기준: 40세 남성 / 월 납입액 30만 원 / 5년 납입 10년 만기 / 공시이율(매월 변동 가능) 가정]</strong>을 기준으로 산출된 단순 참고용 예시이며, 실제 적립액은 보험사별 공시이율 변동 및 계약체결비용(사업비) 차감 수준에 따라 달라집니다.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1 text-[11px]">
+              <div className="bg-rose-50/70 p-3 rounded-xl border border-rose-100">
+                <span className="text-rose-700 font-black">⚠️ 은행 예·적금과의 차이 및 원금 손실 위험:</span> 저축보험은 은행의 예금·적금과 다른 보험 상품입니다. 납입 보험료에서 <strong>계약체결비용(사업비) 및 위험보험료가 차감된 후 적립</strong>되므로, 가입 초기 중도 해약 시 <strong>해약환급금이 납입원금에 미달하여 원금 손실</strong>이 발생할 수 있습니다.
+              </div>
+              <div className="bg-emerald-50/70 p-3 rounded-xl border border-emerald-100">
+                <span className="text-emerald-700 font-black">⚖️ 10년 비과세 요건 (소득세법 시행령 제25조):</span> 적립식 저축보험의 경우 <strong>5년 이상 납입하고 10년 이상 유지하며, 1인당 월 납입액 합계 150만 원 이하</strong>(일시납은 1억 원 이하) 요건을 충족해야만 이자소득세(15.4%)가 전액 비과세 처리됩니다.
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* ── 통계 배너 ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
         {[
-          { num: '이자소득세 0%', label: '10년 유지 시 소득세 면제', sub: '일반 은행 이자소득세 15.4% 전액 비과세' },
-          { num: '월 복리 부리', label: '단리 예적금 대비 자산 가속화', sub: '원금과 이자 전체에 다시 복리 이자 누적' },
-          { num: '추가납입 200%', label: '수수료 없는 유니버셜 혜택', sub: '기본 납입액 외 추가 금액은 수수료 면제 적산' },
-          { num: '예금자보호 5천만', label: '안전한 제도권 금융 자산', sub: '보험사별 1인당 최대 5,000만 원 원리금 보호' },
+          { num: '이자소득세 0%', label: '10년 유지 시 비과세 혜택', sub: '소득세법 요건 충족 시 이자소득세 15.4% 면제' },
+          { num: '공시이율 복리', label: '공시이율 연동 복리 적립', sub: '사업비 공제 후 적립금에 월 복리 부리 운용' },
+          { num: '추가납입 기능', label: '약관에 따른 유니버셜 기능', sub: '기본 납입액 외 추가납입으로 사업비 절감 효과' },
+          { num: '예금자보호 5천만', label: '예금자보호법 적용 상품', sub: '보험사별 1인당 최고 5,000만 원 원리금 보호' },
         ].map((s, i) => (
           <div key={i} className="bg-white border border-emerald-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-emerald-200 transition-all group">
             <p className="text-2xl font-black text-emerald-600 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
@@ -67,7 +97,7 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
 
           <p className="text-sm font-bold text-slate-400 mb-8 leading-relaxed">
             세금을 아끼는 것이 재테크의 출발입니다.{' '}
-            <span className="text-emerald-600 font-black">이자소득세를 단 1원도 내지 않는 비과세 요건</span>을 정리해 드립니다.
+            <span className="text-emerald-600 font-black">세법상 정해진 10년 이상 비과세 핵심 요건</span>을 정리해 드립니다.
           </p>
 
           <div className="space-y-3">
@@ -107,7 +137,7 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
               </div>
               <div>
                 <p className="text-sm text-emerald-400 font-black">GUIDE 02</p>
-                <h3 className="text-3xl font-black tracking-tight">추가납입 기능으로 사업비 절반 줄이기</h3>
+                <h3 className="text-3xl font-black tracking-tight">추가납입 기능으로 사업비 절감 효과</h3>
               </div>
             </div>
 
@@ -117,8 +147,8 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
                   💡 기본납입 1 : 추가납입 2 규칙
                 </p>
                 <p className="text-xs opacity-75 font-bold leading-relaxed">
-                  저축보험의 추가 납입은 기본 보험료의 최대 200%까지 수수료(사업비) 차감 없이 월 복리로 즉시 굴러갑니다. 
-                  예를 들어, **기본보험료를 10만 원만 가입하고 매월 20만 원을 추가납입**하면, 총 30만 원을 저축하면서 사업비는 10만 원 기준만 떼이므로 실질 수수료가 1/3로 극적으로 감소합니다.
+                  저축보험의 추가 납입은 기본 보험료의 최대 200%까지 활용 가능하며, 기본 보험료 대비 수수료(사업비) 부과율이 낮아 전체적인 실질 사업비 절감에 도움이 됩니다.
+                  예를 들어, 기본 계약을 적정선으로 가입하고 추가납입을 병행하면 동일한 총 저축액 대비 환급률 도달 시점을 단축하는 데 유리합니다.
                 </p>
               </div>
 
@@ -127,16 +157,16 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
                   📲 대면 창구 대신 다이렉트 CM 채널
                 </p>
                 <p className="text-xs opacity-75 font-bold leading-relaxed mb-2">
-                  설계사 채널을 통해 가입하는 오프라인 저축보험은 사업비 비율이 5.5%~6.5%에 육박합니다. 반면, 인터넷으로 가입하는 **다이렉트(CM) 저축보험은 3.0%~3.9%대로 사업비 수수료가 최소화**되어 원금 복구 시점이 2배 이상 빨라집니다.
+                  인터넷으로 직접 가입하는 다이렉트(CM) 저축보험은 오프라인 채널 대비 사업비 차감율이 낮아 초기 해약환급금의 원금 도달 시점을 앞당기는 데 유리합니다.
                 </p>
               </div>
             </div>
           </div>
 
           <div className="relative z-10 mt-8 p-5 md:p-6 bg-white/5 rounded-3xl border border-white/10">
-            <p className="text-emerald-400 font-black text-xs mb-1 uppercase tracking-widest">💡 플랫폼 자산운용 수석 연구원의 팁</p>
+            <p className="text-emerald-400 font-black text-xs mb-1 uppercase tracking-widest">💡 플랫폼 자산운용 팁</p>
             <p className="text-white font-bold text-xs leading-relaxed opacity-80">
-              "기준금리가 동결되거나 하락하더라도, 저축보험은 **'최저보증이율'**이라는 안전망이 있어 시중금리가 아무리 하락하더라도 평생 최소 0.75%~1.25% 이상의 이율을 보장하므로 장기 목돈 예치용으로도 훌륭한 대안입니다."
+              "저축보험은 시중금리가 하락하더라도 경과기간별 약관에 명시된 최저보증이율(예: 5년 이하 1.25%, 10년 이하 1.0% 등) 안전망이 적용되므로, 장기 목돈 마련 플랜 시 안정적인 최저 한도를 점검하시는 것이 좋습니다."
             </p>
           </div>
         </div>
@@ -151,9 +181,9 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
           <div className="space-y-3">
             {[
               { step: '01. 납입과 유지 기간 조율', desc: '10년 비과세를 채우기 위해 무리하게 납입 기간을 잡기보다는 납입은 5년으로 짧게 하고 거치를 5년 하여 10년을 채우는 방식 권장' },
-              { step: '02. 추가납입 여유 자금 확보', desc: '수수료를 아끼기 위해 기본 계약은 예산의 1/3로 축소 설정하고 매달 추가납입 2배수를 자동이체 세팅' },
+              { step: '02. 추가납입 여유 자금 확보', desc: '수수료를 아끼기 위해 기본 계약은 예산에 맞춰 설정하고 매달 추가납입 제도를 적극 활용 세팅' },
               { step: '03. 중도인출 및 납입 유예 확인', desc: '유동성 위기가 올 때 해지 대신 중도인출이나 일시 납입 유예(Universal) 기능이 포함된 상품인지 점검' },
-              { step: '04. 최저보증이율 구간 확인', desc: '장기 유지 상품이므로 금리가 0%대로 폭락했을 때 보험사가 보증해 주는 최저이율이 얼마인지 비교 검토' },
+              { step: '04. 최저보증이율 구간 확인', desc: '장기 유지 상품이므로 금리가 하락했을 때 보험사가 보증해 주는 기간별 최저이율이 얼마인지 비교 검토' },
             ].map((item, i) => (
               <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-5 bg-emerald-50/30 rounded-3xl border border-emerald-100/50 hover:border-emerald-200 transition-colors">
                 <div className="shrink-0 font-black text-emerald-700 text-sm w-32 text-left">{item.step}</div>
@@ -181,10 +211,27 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
               <Clock className="text-emerald-500 w-5 h-5" /> 장기 자산의 마법
             </h4>
             <p className="text-xs font-bold text-slate-500 leading-relaxed">
-              이자에 이자가 붙는 복리는 시간이 무기입니다. 복리의 마법은 5년차 이후부터 기하급수적인 성장을 보이며, 10년 시점에 비과세 혜택까지 맞물릴 경우 은행 단리 대비 15%~20% 이상의 실수령 자산 차이를 만듭니다.
+              이자에 이자가 붙는 복리는 장기 유지가 핵심입니다. 복리 부리 효과는 5년차 이후부터 점진적으로 확대되며, 10년 이상 유지 시 비과세 혜택까지 적용되어 실질 수령액 측면에서 장기 자산 형성에 유리합니다.
             </p>
           </div>
         </div>
+      </div>
+
+      {/* ── 법적 고지 및 소비자 유의사항 (금소법 제19조 준수) ── */}
+      <div className="mb-20 p-6 bg-slate-50 rounded-2xl border border-slate-200 text-slate-600 text-xs leading-relaxed space-y-2">
+        <p className="font-bold text-slate-800 flex items-center gap-1.5">
+          <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
+          금융소비자보호법 제19조에 따른 법적 고지 및 유의사항
+        </p>
+        <ul className="list-disc list-inside space-y-1 pl-1 text-[11px] text-slate-600 font-medium">
+          <li>본 안내는 특정 금융상품의 청약을 권유하거나 확정하는 것이 아니며, 생명보험협회 공시자료를 기초로 한 단순 비교 정보입니다.</li>
+          <li>보험계약 체결 전 반드시 해당 상품의 약관 및 상품설명서를 면밀히 확인하시기 바랍니다.</li>
+          <li>보험계약자가 기존 보험계약을 해지하고 새로운 보험계약을 체결할 경우, 인수가 거절되거나 보험료가 인상될 수 있으며 보장 내용이 달라질 수 있습니다.</li>
+          <li>저축보험은 은행의 예·적금과 달리 납입보험료에서 계약체결비용(사업비) 및 위험보험료를 차감한 잔액이 적립되므로, <strong>중도 해지 시 지급되는 해약환급금은 납입원금에 미달</strong>할 수 있습니다.</li>
+          <li>적용 공시이율은 매월 변동될 수 있으며, 시중금리가 하락하더라도 약관상 규정된 경과기간별 최저보증이율이 적용됩니다.</li>
+          <li>비과세 혜택은 소득세법 시행령 제25조에 규정된 요건(10년 이상 유지, 월납 150만 원 이하 등) 충족 시 적용되며, 세법 개정에 따라 기준이 변동될 수 있습니다.</li>
+          <li>본 금융상품은 예금자보호법에 따라 예금보험공사가 보호하되, 보호한도는 본 보험회사에 있는 귀하의 모든 예금보호 대상 금융상품의 해약환급금(또는 만기 시 보험금이나 사고보험금)에 기타지급금을 합하여 1인당 "최고 5천만 원"이며, 5천만 원을 초과하는 나머지 금액은 보호하지 않습니다.</li>
+        </ul>
       </div>
 
       {/* ── CTA ── */}
@@ -203,7 +250,7 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
             onClick={onAction}
             className="bg-emerald-600 text-white px-14 py-7 rounded-full font-black text-xl hover:bg-emerald-700 transition-all hover:scale-105 shadow-2xl shadow-emerald-400/30 shrink-0"
           >
-            내 비과세 저축 맞춤형 최적 절세 진단하기
+            저축보험 실시간 비교 상담하기
           </button>
         )}
       </div>
