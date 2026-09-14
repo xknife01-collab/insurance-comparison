@@ -136,7 +136,7 @@ export const CarSlider: React.FC<Props> = ({ result }) => {
             <div className="bg-white/5 border border-white/10 rounded-2xl p-5 flex items-center gap-3">
               <Sparkles size={20} className="text-blue-400 flex-shrink-0" />
               <p className="text-[10px] text-slate-300 font-bold leading-relaxed">
-                연간 주행거리 조절 시, 마일리지에 따른 최대 {metrics.percentage}% 추가 환급금액이 실시간 적용되어 실질 보험료를 획기적으로 낮춥니다!
+                설정하신 연간 주행거리에 맞춰 특약 마일리지 환급 혜택이 실시간 적용되어 실질 납입 보험료를 알뜰하게 낮춥니다!
               </p>
             </div>
           </div>

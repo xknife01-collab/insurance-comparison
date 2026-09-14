@@ -66,9 +66,8 @@ export const CaregivingOldSlider: React.FC<{ result: AnalysisResult }> = ({ resu
               <div className="flex gap-4">
                 <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-amber-500 shadow-sm shrink-0"><Sparkles size={24} /></div>
                 <div className="space-y-2">
-                  <p className="text-sm font-black text-gray-900 italic">"슬라이더를 조작해 보세요."</p>
                   <p className="text-[0.85rem] font-bold text-gray-600 leading-relaxed">
-                    치매 보험료를 효율적으로 재구성하면 진단비와 매월 지급되는 생활비 혜택이 <span className="text-amber-600 font-black underline decoration-2 underline-offset-4">{metrics.percentage}% 달라지는 것</span>을 확인하실 수 있습니다.
+                    설정하신 월 예산에 맞춰 중증 치매 생활자금이 월 <span className="text-amber-600 font-black underline decoration-2 underline-offset-4">{metrics.livingCost.toLocaleString()}만 원</span>으로 실시간 맞춤 조율되는 것을 확인하실 수 있습니다.
                   </p>
                 </div>
               </div>

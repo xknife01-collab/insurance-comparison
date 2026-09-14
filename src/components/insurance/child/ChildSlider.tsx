@@ -47,7 +47,7 @@ export const ChildSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =>
     prenatal: {
       title: '예산에 따른 태아 보장 한도 변화',
       tag: 'Prenatal Care Simulation',
-      description: `태아특약과 선천보장 가입 구조를 최적화하면, 동일 예산 범위에서 신생아 선천이상 및 인큐베이터 입원 보장 크기가 <span class="text-yellow-600 font-black underline decoration-2 underline-offset-4">${metrics.percentage}% 이상 극대화</span>됩니다.`,
+      description: `태아특약과 선천보장 가입 구조를 최적화하면, 설정하신 예산 범위에 맞춰 신생아 선천이상 및 인큐베이터 입원 보장 크기가 <span class="text-yellow-600 font-black underline decoration-2 underline-offset-4">실시간 유연하게 맞춤 설계</span>됩니다.`,
       label1: '선천이상 수술비 (최대)', value1: `${metrics.prenatalSurgeryLimit.toLocaleString()} 만원`,
       label2: '저체중아 입원일당', value2: `${metrics.incubatorLimit} 만원`,
       label3: '일반암 진단비', value3: `${metrics.cancerLimit >= 10000 ? (metrics.cancerLimit/10000).toFixed(0)+'억' : metrics.cancerLimit.toLocaleString()} 만원`,
@@ -56,7 +56,7 @@ export const ChildSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =>
     child: {
       title: '예산에 따른 자녀 보장 한도 변화',
       tag: 'Child Care Simulation',
-      description: `자녀 어린이보험의 만기와 가입 구조를 최적화하면, 동일 예산 범위에서 자녀 성장기 3대 중대질환 및 치료비 보장 크기가 <span class="text-yellow-600 font-black underline decoration-2 underline-offset-4">${metrics.percentage}% 이상 극대화</span>됩니다.`,
+      description: `자녀 어린이보험의 만기와 가입 구조를 최적화하면, 설정하신 예산 범위에 맞춰 자녀 성장기 3대 중대질환 및 치료비 보장 크기가 <span class="text-yellow-600 font-black underline decoration-2 underline-offset-4">실시간 유연하게 맞춤 설계</span>됩니다.`,
       label1: '일반암 진단비 (최대)', value1: `${metrics.cancerLimit >= 10000 ? (metrics.cancerLimit/10000).toFixed(0)+'억' : metrics.cancerLimit.toLocaleString()} 만원`,
       label2: '뇌/심혈관 진단비 (최대)', value2: `${metrics.brainHeartLimit.toLocaleString()} 만원`,
       label3: '질병/상해 입원일당', value3: `${metrics.hospitalLimit} 만원`,
@@ -65,7 +65,7 @@ export const ChildSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =>
     youth: {
       title: '예산에 따른 어른이 보장 한도 변화',
       tag: 'Youth Care Simulation',
-      description: `2030 어른이보험의 납입면제와 3대질환 구조를 최적화하면, 동일 예산 범위에서 평생 가져갈 핵심 진단비 및 수술비 크기가 <span class="text-yellow-600 font-black underline decoration-2 underline-offset-4">${metrics.percentage}% 이상 극대화</span>됩니다.`,
+      description: `2030 어른이보험의 납입면제와 3대질환 구조를 최적화하면, 설정하신 예산 범위에 맞춰 평생 가져갈 핵심 진단비 및 수술비 크기가 <span class="text-yellow-600 font-black underline decoration-2 underline-offset-4">실시간 유연하게 맞춤 설계</span>됩니다.`,
       label1: '일반암 진단비 (최대)', value1: `${metrics.cancerLimit >= 10000 ? (metrics.cancerLimit/10000).toFixed(0)+'억' : metrics.cancerLimit.toLocaleString()} 만원`,
       label2: '1~5종 수술비 (최대)', value2: `${metrics.adultSurgeryLimit.toLocaleString()} 만원`,
       label3: '뇌/심혈관 진단비', value3: `${metrics.brainHeartLimit.toLocaleString()} 만원`,
@@ -74,7 +74,7 @@ export const ChildSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =>
     pre_family: {
       title: '예산에 따른 유병력자 보장 한도 변화',
       tag: 'Pre-Family Care Simulation',
-      description: `우리아이의 유병력 상태(발달지연, ADHD 등)에 맞춰 최적의 간편고지 상품을 매칭하면, 불필요한 할증을 줄여 보장 크기가 <span class="text-blue-600 font-black underline decoration-2 underline-offset-4">${metrics.percentage}% 이상 극대화</span>됩니다.`,
+      description: `우리아이의 유병력 상태(발달지연, ADHD 등)에 맞춰 최적의 간편고지 상품을 매칭하면, 불필요한 할증을 줄여 보장 크기가 <span class="text-blue-600 font-black underline decoration-2 underline-offset-4">실시간 유연하게 맞춤 설계</span>됩니다.`,
       label1: '일반암 진단비 (최대)', value1: `${metrics.cancerLimit >= 10000 ? (metrics.cancerLimit/10000).toFixed(0)+'억' : metrics.cancerLimit.toLocaleString()} 만원`,
       label2: '뇌/심혈관 진단비 (최대)', value2: `${metrics.brainHeartLimit.toLocaleString()} 만원`,
       label3: '질병/상해 종수술비', value3: `${metrics.adultSurgeryLimit.toLocaleString()} 만원`,

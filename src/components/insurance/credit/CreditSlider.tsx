@@ -82,9 +82,8 @@ export const CreditSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =
               <div className="flex gap-4">
                 <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-blue-600 shadow-sm shrink-0"><Sparkles size={24} /></div>
                 <div className="space-y-2 text-left">
-                  <p className="text-sm font-black text-gray-900 italic">"슬라이더를 조작해 보세요."</p>
                   <p className="text-[0.85rem] font-bold text-gray-600 leading-relaxed">
-                    신용보장보험 예산을 조정하면 대출금 상환 보상 한도 비율 및 인수 특약 조립 범위가 <span className="text-blue-600 font-black underline decoration-2 underline-offset-4">{metrics.percentage}% 최적화되는 것</span>을 확인하실 수 있습니다.
+                    설정하신 월 예산에 맞춰 대출금 상환 보상 한도 비율 및 인수 특약 조립 범위가 <span className="text-blue-600 font-black underline decoration-2 underline-offset-4">실시간 맞춤 조율</span>되는 것을 확인하실 수 있습니다.
                   </p>
                 </div>
               </div>

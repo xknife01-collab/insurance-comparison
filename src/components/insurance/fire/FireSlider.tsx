@@ -78,9 +78,8 @@ export const FireSlider: React.FC<{ result: AnalysisResult }> = ({ result }) => 
               <div className="flex gap-4">
                 <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-red-500 shadow-sm shrink-0"><Sparkles size={24} /></div>
                 <div className="space-y-2 text-left">
-                  <p className="text-sm font-black text-gray-900 italic">"슬라이더를 조작해 보세요."</p>
                   <p className="text-[0.85rem] font-bold text-gray-600 leading-relaxed">
-                    주택화재보험 예산을 조절하면 건물 한도, 가재도구 한도 및 배상책임 보장 비율이 <span className="text-red-600 font-black underline decoration-2 underline-offset-4">{metrics.percentage}% 최적화되는 것</span>을 확인하실 수 있습니다.
+                    설정하신 월 예산에 맞춰 건물 및 가재도구 복구 예상 한도가 <span className="text-red-600 font-black underline decoration-2 underline-offset-4">{metrics.buildingLimit >= 10000 ? `${(metrics.buildingLimit / 10000).toFixed(1)}억` : `${metrics.buildingLimit}만`} 원</span>으로 실시간 맞춤 조율되는 것을 확인하실 수 있습니다.
                   </p>
                 </div>
               </div>

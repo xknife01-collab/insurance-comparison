@@ -193,9 +193,8 @@ export const VariableSlider: React.FC<{ result: AnalysisResult }> = ({ result })
                 <div className="flex gap-4">
                   <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-indigo-500 shadow-sm shrink-0"><Sparkles size={24} /></div>
                   <div className="space-y-2 text-left">
-                    <p className="text-sm font-black text-gray-900 italic">"복리의 마법을 확인해 보세요."</p>
                     <p className="text-[0.85rem] font-bold text-gray-600 leading-relaxed">
-                      장기 거치 시 비과세 연금 혜택 요건을 충족하면, 일반 과세 상품 대비 비과세 절세 효과가 약 <span className="text-indigo-600 font-black underline decoration-2 underline-offset-4">{investmentMetrics.percentage}% 추가 상승</span>하는 효과를 거둘 수 있습니다.
+                      설정하신 월 납입액과 운용 기간에 맞춰 비과세 절세 혜택과 예상 복리 적립 규모가 <span className="text-indigo-600 font-black underline decoration-2 underline-offset-4">실시간 맞춤 조율</span>되는 것을 확인하실 수 있습니다.
                     </p>
                   </div>
                 </div>

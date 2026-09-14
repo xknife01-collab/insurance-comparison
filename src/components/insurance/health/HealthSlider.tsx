@@ -50,9 +50,8 @@ export const HealthSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =
               <div className="flex gap-4">
                 <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-orange-500 shadow-sm shrink-0"><Sparkles size={24} /></div>
                 <div className="space-y-2">
-                  <p className="text-sm font-black text-gray-900 italic">"슬라이더를 조작해 보세요."</p>
                   <p className="text-[0.85rem] font-bold text-gray-600 leading-relaxed">
-                    보험료를 세이브하여 설계하면 전체적인 보장의 질과 사고 시 받게 될 혜택의 크기가 <span className="text-orange-600 font-black underline decoration-2 underline-offset-4">{metrics.percentage}% 달라지는 것</span>을 확인하실 수 있습니다.
+                    설정하신 월 예산에 맞춰 통합 질환 예상 보장 한도가 <span className="text-orange-600 font-black underline decoration-2 underline-offset-4">{metrics.benefit.toLocaleString()}만 원</span>으로 실시간 맞춤 조율되는 것을 확인하실 수 있습니다.
                   </p>
                 </div>
               </div>

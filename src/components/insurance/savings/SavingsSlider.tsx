@@ -160,9 +160,8 @@ export const SavingsSlider: React.FC<{ result: AnalysisResult }> = ({ result }) 
                   <Sparkles size={24} />
                 </div>
                 <div className="space-y-2 text-left">
-                  <p className="text-sm font-black text-gray-900 italic">"슬라이더를 통해 원금을 늘려보세요."</p>
                   <p className="text-[0.85rem] font-bold text-gray-600 leading-relaxed">
-                    저축 규모를 조절하여 비과세 한도 충족 여부와 은행 일반 과세 적금 대비 복리 저산이 <span className="text-emerald-600 font-black underline decoration-2 underline-offset-4">{metrics.percentage}% 더 최적화되는 규모</span>를 확인하실 수 있습니다.
+                    설정하신 저축 규모에 맞춰 만기 예상 복리 자산이 <span className="text-emerald-600 font-black underline decoration-2 underline-offset-4">{Math.round(metrics.accumulatedAmount / 10000).toLocaleString()}만 원</span>으로 실시간 맞춤 조율되는 것을 확인하실 수 있습니다.
                   </p>
                 </div>
               </div>

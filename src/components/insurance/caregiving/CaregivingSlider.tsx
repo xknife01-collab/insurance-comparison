@@ -61,9 +61,8 @@ export const CaregivingSlider: React.FC<{ result: AnalysisResult }> = ({ result 
               <div className="flex gap-4">
                 <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-purple-500 shadow-sm shrink-0"><Sparkles size={24} /></div>
                 <div className="space-y-2">
-                  <p className="text-sm font-black text-gray-900 italic">"슬라이더를 조작해 보세요."</p>
                   <p className="text-[0.85rem] font-bold text-gray-600 leading-relaxed">
-                    간병 보험료를 세이브하여 설계하면 체증형 보장 및 간병인 지원금 혜택이 <span className="text-purple-600 font-black underline decoration-2 underline-offset-4">{metrics.percentage}% 달라지는 것</span>을 확인하실 수 있습니다.
+                    설정하신 월 예산에 맞춰 1일 간병비 지원 예상 한도가 <span className="text-purple-600 font-black underline decoration-2 underline-offset-4">{metrics.benefit.toLocaleString()}만 원</span>으로 실시간 맞춤 조율되는 것을 확인하실 수 있습니다.
                   </p>
                 </div>
               </div>
