@@ -1892,8 +1892,20 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
           </div>
           <h3 className="text-4xl font-black text-gray-900 tracking-tighter">국내 주요 보험사 보험료 비교</h3>
           <p className="text-gray-500 font-bold italic">"주요 보험사의 공시 요율을 정밀 비교·분석한 결과입니다."</p>
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-slate-100 rounded-full text-xs text-slate-600 font-semibold border border-slate-200 shadow-sm">
-            <span>※ 본 보험료 비교는 생명보험협회 및 손해보험협회 공시 기준 보험료율표를 기반으로 작성되었습니다.</span>
+          {/* 공시 기준 팩트체크 카드 (협회 심의 준수) */}
+          <div className="bg-slate-50 border border-slate-200/90 rounded-2xl p-4 sm:p-5 max-w-2xl mx-auto shadow-sm text-left space-y-2">
+            <div className="flex items-center gap-2 border-b border-slate-200/60 pb-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-[11px] font-black text-slate-700 tracking-tight">공시자료 명시 및 산출 기준 안내</span>
+            </div>
+            <div className="text-[11px] sm:text-xs text-slate-600 space-y-1.5 font-medium leading-relaxed">
+              <p><strong className="text-slate-900 font-black">정식 자료명:</strong> 생명보험협회 및 손해보험협회 상품공시실 [상품비교공시 및 보험가격지수 공시자료]</p>
+              <p><strong className="text-slate-900 font-black">수집 기준:</strong> <span className="text-emerald-700 font-bold">{getDisclosureDate()}</span></p>
+              <p><strong className="text-slate-900 font-black">산출 방식:</strong> 협회 공시 기준 보험료율표를 토대로 객관적으로 비교·분석되었습니다.</p>
+              <p className="text-[10.5px] text-slate-500 pt-1 border-t border-slate-200/50">
+                ※ <strong className="text-slate-700 font-bold">유의사항:</strong> 가입자의 직업, 성별, 건강 상태 등에 따라 실제 보험료 및 가입 가능 여부는 변동될 수 있습니다.
+              </p>
+            </div>
           </div>
         </div>
 
@@ -2250,12 +2262,12 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
             <div className="space-y-3 max-w-2xl text-left">
               <div className="flex items-center gap-2.5">
                 <span className="flex h-2.5 w-2.5 rounded-full bg-orange-500 animate-pulse" />
-                <span className="text-[10px] font-black text-orange-600 uppercase tracking-[0.2em]">Real-Time Optimized Analysis</span>
+                <span className="text-[10px] font-black text-orange-600 uppercase tracking-[0.2em]">Official Disclosure Analysis</span>
               </div>
               
               <div className="space-y-2">
                 <p className="text-slate-800 text-xs sm:text-sm font-bold leading-relaxed">
-                  * 본 보험료 비교 데이터는 생명보험협회 및 손해보험협회 공시자료(수집 기준: <span className="text-orange-600 font-extrabold underline decoration-orange-500/30 decoration-2 underline-offset-2">{getDisclosureDate()}</span>)를 토대로 <span className="bg-orange-500 text-white px-1.5 py-0.5 rounded-md font-black mx-0.5">실시간으로</span> 최적화 분석되었습니다.
+                  * 본 보험료 비교 데이터는 생명보험협회 및 손해보험협회 상품공시실 [상품비교공시 및 보험가격지수 공시자료](수집 기준: <span className="text-orange-600 font-extrabold underline decoration-orange-500/30 decoration-2 underline-offset-2">{getDisclosureDate()}</span>)를 토대로 객관적인 협회 공시 기준 보험료율에 따라 비교·산출되었습니다.
                 </p>
                 <p className="text-slate-500 text-[11px] sm:text-xs font-semibold leading-relaxed border-t border-orange-100 pt-2">
                   💡 <span className="text-orange-600 font-bold">다만,</span> 가입자의 개별 조건(직업, 건강 상태 등)에 따라 실제 보험료 및 가입 가능 여부는 변동될 수 있으므로, 상세한 내용은 전문 상담사와의 맞춤 설계를 통해 확인하시기 바랍니다.
@@ -2264,10 +2276,10 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
             </div>
             
             <div className="flex items-center gap-4 shrink-0 bg-gradient-to-br from-orange-500 to-amber-600 px-6 py-4 rounded-2xl shadow-md border border-orange-400/20">
-              <Clock className="w-6 h-6 text-white animate-bounce" />
+              <ShieldCheck className="w-6 h-6 text-white" />
               <div className="text-left">
-                <p className="text-[9px] font-bold text-orange-100 uppercase tracking-widest leading-none">최적화 처리속도</p>
-                <p className="text-sm sm:text-base font-black text-white mt-1">실시간 분석 완료</p>
+                <p className="text-[9px] font-bold text-orange-100 uppercase tracking-widest leading-none">공시 기준 검증</p>
+                <p className="text-sm sm:text-base font-black text-white mt-1">공시 데이터 대조 완료</p>
               </div>
             </div>
           </div>
@@ -2329,12 +2341,12 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
             <div className="space-y-3 max-w-2xl text-left">
               <div className="flex items-center gap-2.5">
                 <span className="flex h-2.5 w-2.5 rounded-full bg-orange-500 animate-pulse" />
-                <span className="text-[10px] font-black text-orange-600 uppercase tracking-[0.2em]">Real-Time Optimized Analysis</span>
+                <span className="text-[10px] font-black text-orange-600 uppercase tracking-[0.2em]">Official Disclosure Analysis</span>
               </div>
               
               <div className="space-y-2">
                 <p className="text-slate-800 text-xs sm:text-sm font-bold leading-relaxed">
-                  * 본 보험료 비교 데이터는 생명보험협회 및 손해보험협회 공시자료(수집 기준: <span className="text-orange-600 font-extrabold underline decoration-orange-500/30 decoration-2 underline-offset-2">{getDisclosureDate()}</span>)를 토대로 <span className="bg-orange-500 text-white px-1.5 py-0.5 rounded-md font-black mx-0.5">실시간으로</span> 최적화 분석되었습니다.
+                  * 본 보험료 비교 데이터는 생명보험협회 및 손해보험협회 상품공시실 [상품비교공시 및 보험가격지수 공시자료](수집 기준: <span className="text-orange-600 font-extrabold underline decoration-orange-500/30 decoration-2 underline-offset-2">{getDisclosureDate()}</span>)를 토대로 객관적인 협회 공시 기준 보험료율에 따라 비교·산출되었습니다.
                 </p>
                 <p className="text-slate-500 text-[11px] sm:text-xs font-semibold leading-relaxed border-t border-orange-100 pt-2">
                   💡 <span className="text-orange-600 font-bold">다만,</span> 가입자의 개별 조건(직업, 건강 상태 등)에 따라 실제 보험료 및 가입 가능 여부는 변동될 수 있으므로, 상세한 내용은 전문 상담사와의 맞춤 설계를 통해 확인하시기 바랍니다.
@@ -2343,10 +2355,10 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
             </div>
             
             <div className="flex items-center gap-4 shrink-0 bg-gradient-to-br from-orange-500 to-amber-600 px-6 py-4 rounded-2xl shadow-md border border-orange-400/20">
-              <Clock className="w-6 h-6 text-white animate-bounce" />
+              <ShieldCheck className="w-6 h-6 text-white" />
               <div className="text-left">
-                <p className="text-[9px] font-bold text-orange-100 uppercase tracking-widest leading-none">최적화 처리속도</p>
-                <p className="text-sm sm:text-base font-black text-white mt-1">실시간 분석 완료</p>
+                <p className="text-[9px] font-bold text-orange-100 uppercase tracking-widest leading-none">공시 기준 검증</p>
+                <p className="text-sm sm:text-base font-black text-white mt-1">공시 데이터 대조 완료</p>
               </div>
             </div>
           </div>
