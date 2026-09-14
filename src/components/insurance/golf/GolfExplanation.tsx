@@ -23,7 +23,7 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType, isUnlocke
             초보 아마추어부터 싱글 플레이어까지 든든한 동반자
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[1.1]">
-            일생에 단 한 번뿐인 홀인원의 기쁨,<br />
+            필드 위 안전과 홀인원의 기쁨을 위한,<br />
             <span className="text-emerald-500">합리적인 골프보험 선택 기준</span>을 제시합니다.
           </h2>
         </div>
@@ -36,12 +36,12 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType, isUnlocke
       </div>
 
       {/* ── 통계 배너 ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
         {[
           { num: '4인 동반 할인', label: '1팀 패키지 가입 시 즉시 적용', sub: '5% 보험료 추가 할인 혜택' },
-          { num: '홀인원 축하금', label: '최대 200만 원 실손 보장', sub: '증빙 영수증 1~3개월 내 청구 필수' },
-          { num: '골프 배상책임', label: '스윙 오발 사고 실손 배상', sub: '사고당 2,000만~3,000만 원 한도' },
-          { num: '골프용품 손해', label: '클럽 파손/도난 보장', sub: '세트당 최대 100만~200만 원 보상' },
+          { num: '홀인원 축하금', label: '실손 한도 내 증빙 보장', sub: '카드 영수증 1~3개월 내 청구 (비례보상)' },
+          { num: '골프 배상책임', label: '스윙 타구 사고 실손 배상', sub: '사고당 2,000만~3,000만 원 한도' },
+          { num: '골프용품 손해', label: '클럽 파손/도난 보장', sub: '세트당 최대 100만~200만 (분실 제외)' },
         ].map((s, i) => (
           <div key={i} className="bg-white border border-emerald-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-emerald-200 transition-all group">
             <p className="text-2xl font-black text-emerald-500 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
@@ -49,6 +49,14 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType, isUnlocke
             <p className="text-[11px] text-slate-400 font-bold">{s.sub}</p>
           </div>
         ))}
+      </div>
+
+      {/* ── 산출 기준 및 주요 면책사항 사전 고지 ── */}
+      <div className="mb-14 p-5 md:p-6 bg-emerald-50/50 rounded-2xl md:rounded-3xl border border-emerald-100 text-xs text-slate-600 leading-relaxed space-y-1">
+        <p className="font-bold text-emerald-900 text-sm mb-1">[골프보험 표준 보장 기준 및 주요 면책사항 안내]</p>
+        <p>• <strong>홀인원비용 실손비례보상:</strong> 홀인원 축하비용은 정액 지급이 아니며, 국내 정규 18홀 이상 골프장에서 캐디를 동반한 라운딩 중 홀인원 달성 시 1개월(또는 3개월) 이내에 실제 지출한 축하만찬비, 기념품비, 기념식수 비용 등을 카드 영수증 증빙 한도 내에서 실손 보상합니다. 다수 가입 시 비례보상되며, 스크린골프나 9홀 미만 파3 골프장은 제외됩니다.</p>
+        <p>• <strong>골프용품손해 보상 범위:</strong> 골프채 부러짐/파손 시 자기부담금 및 감가상각이 적용되며, 도난 사고는 경찰서 신고 접수 확인원이 필요합니다. <strong>어디에 두었는지 모르는 단순 분실은 약관상 절대 면책(보상 제외)</strong>됩니다.</p>
+        <p>• <strong>배상책임 및 프로 자격 제한:</strong> 타구 사고로 인한 타인 상해/재물 손해는 실손비례보상되며, 전문 체육인(프로/세미프로/지도자 등)은 홀인원 및 용품 특약 가입이 제한될 수 있습니다.</p>
       </div>
 
       {/* ── 가이드 1 & 가이드 2 ── */}
@@ -68,15 +76,15 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType, isUnlocke
 
           <p className="text-sm font-bold text-slate-400 mb-8 leading-relaxed">
             골프 라운딩 중 발생할 수 있는 가장 대표적인 재정적 위험과{' '}
-            <span className="text-emerald-500 font-black">반드시 선택해야 할 3가지 핵심 담보</span>
+            <span className="text-emerald-500 font-black">골프 라운딩 시 우선 검토되는 3가지 주요 담보</span>
             입니다.
           </p>
 
           <div className="space-y-3">
             {[
-              { title: '홀인원 축하비', label: '기쁜 홀인원 순간의 실지출 비용 환급', color: 'bg-emerald-50/50 border-emerald-100', badge: 'text-emerald-700 bg-emerald-100', desc: '동반자 라운딩 비용, 캐디피 피팁, 축하 만찬 및 증정품(기념떡/우산 등) 실비 청구 가능' },
-              { title: '스윙 배상책임', label: '필드 안에서 든든한 법적 안심 보장', color: 'bg-amber-50/50 border-amber-100', badge: 'text-amber-700 bg-amber-100', desc: '슬라이스/훅 타구 사고로 동반자나 캐디에게 가한 신해상해 및 재물 손해 보장(벌금 미포함)' },
-              { title: '골프용품 파손', label: '값비싼 드라이버/아이언 파손 실비 보상', color: 'bg-yellow-50 border-yellow-100', badge: 'text-yellow-700 bg-yellow-100', desc: '스윙 중 클럽 샤프트 부러짐, 드라이버 헤드 깨짐, 골프 가방 도난 등 실손 의료비와 유사하게 실제 수리비 지급' },
+              { title: '홀인원 축하비', label: '기쁜 홀인원 순간의 실지출 비용 환급', color: 'bg-emerald-50/50 border-emerald-100', badge: 'text-emerald-700 bg-emerald-100', desc: '동반자 라운딩 비용, 캐디피, 축하 만찬 및 증정품(기념떡/우산 등) 카드 결제 실비 청구 (정규 18홀, 캐디 동반 필수)' },
+              { title: '스윙 배상책임', label: '필드 안에서 든든한 법적 안심 보장', color: 'bg-amber-50/50 border-amber-100', badge: 'text-amber-700 bg-amber-100', desc: '슬라이스/훅 타구 사고로 동반자나 캐디에게 가한 신체상해 및 재물 손해 실손 보상 (비례보상)' },
+              { title: '골프용품 파손', label: '클럽 파손 및 도난 실비 보상', color: 'bg-yellow-50 border-yellow-100', badge: 'text-yellow-700 bg-yellow-100', desc: '스윙 중 클럽 샤프트 부러짐, 헤드 파손 등 수리비 실손 지급 (단, 단순 분실은 면책)' },
             ].map((item, i) => (
               <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-5 rounded-3xl border ${item.color}`}>
                 <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
@@ -222,24 +230,24 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType, isUnlocke
               <Clock className="text-emerald-500 w-5 h-5" /> 가입 최적 시점
             </h4>
             <p className="text-xs font-bold text-slate-500 leading-relaxed">
-              연간 10회 이상 필드로 정기 라운딩을 가시는 분은 1년형 연간 골프보험이 유리하고, 연 2~3회 번개 라운딩을 즐기시는 비정기 골퍼에게는 티오프 당일에만 가입하는 원데이(1일형) 골프보험이 절대적으로 가성비 높은 대안입니다.
+              연간 10회 이상 필드로 정기 라운딩을 가시는 분은 1년형 연간 골프보험이 유리하고, 연 2~3회 라운딩을 즐기시는 비정기 골퍼에게는 티오프 당일에만 가입하는 원데이(1일형) 골프보험이 합리적인 선택이 될 수 있습니다.
             </p>
           </div>
         </div>
       </div>
 
       {/* ── 주요 상품 종합 비교표 ── */}
-      <div className="mb-20 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-emerald-100 shadow-sm">
+      <div className="mb-14 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-emerald-100 shadow-sm">
         <h3 className="text-2xl font-black text-slate-900 mb-10 tracking-tight">
-          국내 주요 손해보험사 골프·레저보험 상품 경쟁력 비교
+          주요 손해보험사 골프보험 대표 상품 특징 안내 (손해보험협회 공시 기준)
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { company: 'DB손해보험', product: '다이렉트 오잘공 골프보험', highlight: '다이렉트 베스트셀러 상품, 업계 우수한 수준의 홀인원 실비 지원 및 가성비 위주 요율 설계', badges: ['시장 대표 상품', '가성비 최우수'] },
+            { company: 'DB손해보험', product: '다이렉트 오잘공 골프보험', highlight: '다이렉트 대표 상품, 홀인원 실비 지원 및 가성비 위주 요율 설계', badges: ['시장 대표 상품', '가성비 우수'] },
             { company: '삼성화재', product: '다이렉트 착한골프보험', highlight: '간편 모바일 청구 연동, 골프웨어 등 보장 품목 다양화 및 대인 배상책임 보장 옵션 최적화', badges: ['착한 다이렉트', '웨어 파손 보장'] },
-            { company: '한화손해보험', product: '다이렉트 굿샷 골프보험', highlight: '원데이 플랜 지원에 특화되어 저렴한 하루 보험료 제공, 신속한 파손 영수증 승인 속도', badges: ['원데이 전문', '빠른 실손 보상'] },
-            { company: 'KB손해보험', product: 'KB 다이렉트 골프안심보험', highlight: '단체(4인) 가입 시스템이 직관적으로 모바일에 빌딩되어 동반 가입자 입력 및 결제가 매우 간편', badges: ['4인 동반 편의', '단체 할인 연계'] },
-            { company: '메리츠화재', product: '든든한 골프파트너보험', highlight: '골프 중 발생할 수 있는 주요 중상해사망 및 장해율 보장 한도가 튼튼하게 설계된 정통 플랜', badges: ['상해보장 특화', '정통 골프플랜'] },
+            { company: '한화손해보험', product: '다이렉트 굿샷 골프보험', highlight: '원데이 플랜 지원에 특화되어 저렴한 하루 보험료 제공, 신속한 파손 영수증 승인 연계', badges: ['원데이 전문', '빠른 실손 보상'] },
+            { company: 'KB손해보험', product: 'KB 다이렉트 골프안심보험', highlight: '단체(4인) 가입 시스템이 직관적으로 모바일에 빌딩되어 동반 가입자 입력 및 결제가 간편', badges: ['4인 동반 편의', '단체 할인 연계'] },
+            { company: '메리츠화재', product: '든든한 골프파트너보험', highlight: '골프 중 발생할 수 있는 주요 중상해사망 및 장해율 보장 한도가 설계된 정통 플랜', badges: ['상해보장 특화', '정통 골프플랜'] },
             { company: '현대해상', product: '현대해상 다이렉트 골프보험', highlight: '골프 카트 탑승 중 상해 사고 및 골프 경기장 외의 일반 스포츠 상해 손해까지 확장 설계 가능', badges: ['카트 상해 지원', '레저 상해 연계'] },
           ].map((item, i) => (
             <div key={i} className="p-5 md:p-8 bg-emerald-50/20 rounded-2xl md:rounded-[2.5rem] border border-emerald-100 hover:border-emerald-300 hover:shadow-lg transition-all">
@@ -261,6 +269,16 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType, isUnlocke
         </div>
       </div>
 
+      {/* ── 법적 고지문 (금소법 제19조 관련) ── */}
+      <div className="mb-20 p-6 md:p-8 bg-slate-50 rounded-3xl border border-slate-200 text-xs text-slate-500 space-y-2 leading-relaxed">
+        <p className="font-bold text-slate-700 text-sm mb-1">[보험 계약 체결 전 유의사항 및 법적 고지]</p>
+        <p>• 보험계약 체결 전 반드시 해당 상품설명서 및 약관을 확인하시기 바랍니다.</p>
+        <p>• 본 안내는 손해보험협회 심의기준 및 각 사 공시 내용을 바탕으로 작성되었으며, 보험계약자가 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 경우 보험인수가 거절되거나 보험료가 인상될 수 있고 보장내용이 달라질 수 있습니다.</p>
+        <p>• <strong>홀인원비용 및 배상책임 실손비례보상 고지:</strong> 홀인원 축하비용, 골프 배상책임, 골프용품손해 담보는 실제 발생한 손해액 범위 내에서만 보상되는 실손형 담보로 2개 이상의 보험에 중복 가입하더라도 비례보상되며, 중복 지급되지 않습니다.</p>
+        <p>• <strong>주요 면책사항:</strong> 정규 18홀 미만 골프장(파3, 연습장, 스크린골프 등)이나 캐디 미동반 라운딩 중 발생한 홀인원은 보상되지 아니하며, 골프용품의 경우 단순 분실(도난 및 파손 제외)은 약관상 보상 대상에서 제외됩니다.</p>
+        <p>• (주)케어인슈는 다수의 보험사와 계약 체결 및 중개하는 금융상품판매대리·중개업자로서 보험사로부터 보험계약 체결권을 부여받지 아니하며 금융소비자보호법 등 관련 법령을 준수합니다.</p>
+      </div>
+
       {/* ── CTA ── */}
       <div className="border-t border-emerald-100 pt-20 flex flex-col md:flex-row justify-between items-center gap-10">
         <div className="flex items-center gap-6">
@@ -277,7 +295,7 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType, isUnlocke
             onClick={onAction}
             className="bg-emerald-500 text-white px-14 py-7 rounded-full font-black text-xl hover:bg-emerald-600 transition-all hover:scale-105 shadow-2xl shadow-emerald-400/30 shrink-0"
           >
-            골프·레저 맞춤 보험 무료 진단하기
+            골프보험 실시간 비교 상담하기
           </button>
         )}
       </div>

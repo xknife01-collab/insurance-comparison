@@ -79,7 +79,10 @@ export const GolfSlider: React.FC<{ result: AnalysisResult }> = ({ result }) => 
                 <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-emerald-500 shadow-sm shrink-0"><Sparkles size={24} /></div>
                 <div className="space-y-2">
                   <p className="text-[0.85rem] font-bold text-gray-600 leading-relaxed">
-                    설정하신 월 예산에 맞춰 홀인원 축하비용 및 골프 배상책임 보장 한도가 <span className="text-emerald-600 font-black underline decoration-2 underline-offset-4">{result.analysis.golf?.gameType === 'professional' ? '전문 플랜 규정' : `최대 ${metrics.holeInOneLimit}만 원`}</span>으로 실시간 맞춤 조율되는 것을 확인하실 수 있습니다.
+                    설정하신 월 예산에 맞춰 홀인원 축하비용 및 골프 배상책임 보장 한도가 <span className="text-emerald-600 font-black underline decoration-2 underline-offset-4">{result.analysis.golf?.gameType === 'professional' ? '전문 플랜 규정' : `최대 ${metrics.holeInOneLimit}만 원`}</span>으로 실시간 맞춤 조율되는 예시를 확인하실 수 있습니다.
+                  </p>
+                  <p className="text-[10px] text-gray-400 font-medium leading-relaxed border-t border-emerald-100/60 pt-2">
+                    * 상기 홀인원 축하비용, 골프 배상책임 및 용품 손해 한도는 이해를 돕기 위한 예시 시뮬레이션이며, 실제 가입 한도와 보험료는 경기 형태(아마추어/프로), 가입 플랜 및 각 보험사별 인수 기준에 따라 상이합니다. 홀인원비용, 배상책임, 용품손해는 다수 가입 시 비례보상됩니다.
                   </p>
                 </div>
               </div>

@@ -144,6 +144,11 @@ export const GolfSummary: React.FC<Props> = ({ result }) => {
           </div>
         </div>
       )}
+
+      {/* 3. 진단 참고 안내 */}
+      <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 text-[11px] text-slate-400 font-medium leading-relaxed">
+        * 상기 점수 및 보장 분석 결과는 입력하신 경기 유형과 선택 담보에 따른 예시이며, 실제 보상 여부 및 세부 보상 기준은 해당 상품의 약관에 따릅니다.
+      </div>
     </div>
   );
 };
