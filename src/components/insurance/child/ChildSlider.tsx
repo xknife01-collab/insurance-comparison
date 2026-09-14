@@ -63,9 +63,9 @@ export const ChildSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =>
       footer: '* 3대 진단비 대비 보험료 최적 매칭 분석 결과'
     },
     youth: {
-      title: '예산에 따른 어른이 보장 한도 변화',
+      title: '예산에 따른 청년(2030) 보장 한도 변화',
       tag: 'Youth Care Simulation',
-      description: `2030 어른이보험의 납입면제와 3대질환 구조를 최적화하면, 설정하신 예산 범위에 맞춰 평생 가져갈 핵심 진단비 및 수술비 크기가 <span class="text-yellow-600 font-black underline decoration-2 underline-offset-4">실시간 유연하게 맞춤 설계</span>됩니다.`,
+      description: `2030 청년 전용 건강플랜의 납입면제와 3대질환 구조를 최적화하면, 설정하신 예산 범위에 맞춰 평생 가져갈 핵심 진단비 및 수술비 크기가 <span class="text-yellow-600 font-black underline decoration-2 underline-offset-4">실시간 유연하게 맞춤 설계</span>됩니다.`,
       label1: '일반암 진단비 (최대)', value1: `${metrics.cancerLimit >= 10000 ? (metrics.cancerLimit/10000).toFixed(0)+'억' : metrics.cancerLimit.toLocaleString()} 만원`,
       label2: '1~5종 수술비 (최대)', value2: `${metrics.adultSurgeryLimit.toLocaleString()} 만원`,
       label3: '뇌/심혈관 진단비', value3: `${metrics.brainHeartLimit.toLocaleString()} 만원`,
@@ -184,7 +184,7 @@ export const ChildSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =>
                   <span className={`text-xl font-bold ${isPreFamily ? 'text-blue-600' : 'text-yellow-600'}`}>점</span>
                 </div>
                 <p className="text-[11px] text-gray-400 font-bold mt-2">
-                  {currentContent.footer}
+                  {currentContent.footer} (본 시뮬레이션 수치는 이해를 돕기 위한 예시이며 실제 가입 조건, 성별, 만기 및 심사 결과에 따라 보장 한도와 보험료가 상이합니다.)
                 </p>
               </div>
             </div>
