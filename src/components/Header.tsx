@@ -49,7 +49,7 @@ const ALL_GROUPS: NavGroup[] = [
     textColor: 'text-blue-600',
     itemHover: 'hover:text-blue-600',
     items: [
-      { label: '뇌혈관', view: 'cerebrovascular', desc: '뇌질환 무제한 보장' },
+      { label: '뇌혈관', view: 'cerebrovascular', desc: '뇌경색·뇌동맥류 포함 넓은 보장' },
       { label: '심장질환', view: 'heart', desc: '허혈성 심장 집중' },
       { label: '상해보험', view: 'accident', desc: '사고 장해 및 골절 치료 자산' },
     ],
