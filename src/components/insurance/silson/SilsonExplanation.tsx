@@ -35,11 +35,11 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
       </div>
 
       {/* ── 통계 배너 ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
         {[
-          { num: '4/5세대 실손', label: '보험료 최대 70~75% 다이어트', sub: '기존 1~3세대 대비 월등히 저렴' },
-          { num: '급여 통원/입원', label: '의료비 본인부담 80% 보장', sub: '건강보험 적용 항목 실손 환급' },
-          { num: '비급여 주사/도수', label: '비급여 치료비 50~70% 보장', sub: '도수치료, 주사제, MRI 집중 케어' },
+          { num: '4/5세대 실손', label: '상대적으로 저렴한 4/5세대 실손', sub: '세대별 가입 조건 및 본인부담 차등' },
+          { num: '급여 통원/입원', label: '담보에 따른 의료비 본인부담금 보장', sub: '건강보험 적용 급여 치료비 보상' },
+          { num: '비급여 주사/도수', label: '비급여의료비 일부 보장', sub: '특약 가입 시 비급여 치료비 보상' },
           { num: '보험료 차등제', label: '비급여 미청구 시 추가 할인', sub: '합리적인 이용량 기반 할인/할증' },
         ].map((s, i) => (
           <div key={i} className="bg-white border border-blue-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-blue-200 transition-all group">
@@ -49,6 +49,9 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
           </div>
         ))}
       </div>
+      <p className="text-[11px] text-slate-400 font-bold text-center mb-16">
+        ※ 1~4세대 및 5세대 실손의료비는 가입 시기 및 담보(특약) 구성에 따라 자기부담금, 공제금액, 갱신 주기 등이 상이하며, 보장 내용은 해당 약관에 따릅니다.
+      </p>
 
       {/* ── 가이드 1 & 가이드 2 ── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
@@ -73,12 +76,12 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
 
           <div className="space-y-3">
             {[
-              { title: '급여 치료 보장', label: '건강보험 적용 급여 항목의 80% 지원', color: 'bg-blue-50/50 border-blue-100', badge: 'text-blue-700 bg-blue-100', desc: '입원실료, 수술비, 약제비, 통원 외래 비용 등 병원에서 행해지는 대다수 정규 치료 항목 포함' },
-              { title: '비급여 특약 보장', label: '건강보험 비적용 고액 비급여 치료의 70% 지원', color: 'bg-indigo-50/50 border-indigo-100', badge: 'text-indigo-700 bg-indigo-100', desc: '비급여 도수치료·체외충격파·증식치료(연간 350만 한도), 비급여 주사제, 비급여 MRI/MRA 든든하게 대비' },
-              { title: '비급여 차등 할인', label: '안 쓰면 깎아주고, 많이 쓰면 할증되는 구조', color: 'bg-amber-50/50 border-amber-100', badge: 'text-amber-700 bg-amber-100', desc: '직전 1년간 비급여 보험금 수령액이 없는 경우 차기년도 비급여 보험료 최대 10% 추가 할인 혜택 제공' },
+              { title: '질병/상해 급여형', label: '건강보험 적용 급여 본인부담 의료비 보장 (기본계약)', color: 'bg-blue-50/50 border-blue-100', badge: 'text-blue-700 bg-blue-100', desc: '입원실료, 수술비, 약제비, 통원 외래 비용 등 국민건강보험 적용 본인부담금 보상 (공제금액 차감 후 지급)' },
+              { title: '질병/상해 비급여형', label: '3대 비급여 및 비급여 치료비 일부 보장 (특약)', color: 'bg-indigo-50/50 border-indigo-100', badge: 'text-indigo-700 bg-indigo-100', desc: '도수치료·체외충격파·증식치료, 비급여 주사제, 비급여 MRI/MRA 등 해당 특약 가입 시 비급여 의료비 보상 (약관상 연간 한도 및 횟수 제한 적용)' },
+              { title: '비급여 차등 할인', label: '직전 1년 비급여 이용량에 따른 보험료 할인·할증 (제도특약)', color: 'bg-amber-50/50 border-amber-100', badge: 'text-amber-700 bg-amber-100', desc: '직전 1년간 비급여 지급 보험금에 따라 1~5단계로 차등 적용 (비급여 미이용 시 차기년도 비급여 보험료 할인 혜택 제공)' },
             ].map((item, i) => (
               <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-5 rounded-3xl border ${item.color}`}>
-                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
+                <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-28 text-center ${item.badge}`}>{item.title}</div>
                 <div className="flex-1 min-w-0">
                   <p className="font-black text-slate-800 text-sm break-keep">{item.label}</p>
                   <p className="text-[11px] text-slate-400 font-bold break-keep">{maskText(item.desc, isUnlocked)}</p>
