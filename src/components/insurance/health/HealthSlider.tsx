@@ -82,6 +82,13 @@ export const HealthSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =
             </div>
           </div>
         </div>
+
+        {/* ── 슬라이더 하단 금융소비자 유의사항 안내 ── */}
+        <div className="mt-8 p-6 bg-slate-50 rounded-2xl border border-slate-200 text-xs text-slate-500 leading-relaxed text-left space-y-1">
+          <p className="font-black text-slate-700">※ 통합 건강보장 시뮬레이션 관련 유의사항</p>
+          <p>• 상기 시뮬레이션 결과는 고객님의 이해를 돕기 위한 예시이며, 실제 월 납입보험료 및 보장 한도는 가입자의 성별, 연령, 건강상태, 직업 및 특약 선택에 따라 달라질 수 있습니다.</p>
+          <p>• 보험계약 체결 전 반드시 해당 상품의 약관 및 상품설명서를 확인하시기 바라며, 암·뇌·심장 질환 등 주요 진단비는 가입 후 90일간 면책 또는 1년 내 감액 기간이 적용될 수 있습니다.</p>
+        </div>
       </div>
     </section>
   );
