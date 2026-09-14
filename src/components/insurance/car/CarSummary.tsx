@@ -214,17 +214,17 @@ export const CarSummary: React.FC<Props> = ({ result }) => {
         </div>
       </div>
 
-      {/* 자손 경고 문구 안내 */}
+      {/* 자손 vs 자상 보장 비교 안내 */}
       {car.currentInjuryType === 'jason' && (
-        <div className="p-6 bg-red-50 border border-red-100 rounded-[2rem] flex flex-col md:flex-row items-start gap-4">
-          <AlertCircle className="text-red-500 w-8 h-8 flex-shrink-0 mt-0.5" />
+        <div className="p-6 bg-amber-50 border border-amber-200 rounded-[2rem] flex flex-col md:flex-row items-start gap-4">
+          <AlertCircle className="text-amber-600 w-8 h-8 flex-shrink-0 mt-0.5" />
           <div className="space-y-1">
-            <h5 className="text-sm font-black text-red-800">
-              [심각] 사망/장해 발생 시 가족의 치료 부담이 커지는 '자기신체사고(자손)'로 가입되어 있습니다.
+            <h5 className="text-sm font-black text-amber-900">
+              [보장 점검 권장] 상해급수 한도가 적용되는 '자기신체사고(자손)' 가입 상태입니다.
             </h5>
-            <p className="text-xs text-red-600 leading-relaxed">
-              자기신체사고는 사고 과실 여부에 따라 등급별 치료비 한도(상해 12등급 시 단 120만 원 한도 등) 제한이 걸려 실제 병원비마저 자비로 메꿔야 합니다. 
-              **자동차상해(자상)**로 전환하면 치료비 전액은 물론 위자료와 일 못한 날에 대한 휴업손해금까지 과실 유무 관계없이 전액 지급받으실 수 있습니다.
+            <p className="text-xs text-amber-800 leading-relaxed">
+              자기신체사고는 사고 과실 비율을 상계하고 상해 등급별 한도 내에서만 치료비가 보상될 수 있습니다. 
+              <strong>자동차상해(자상)</strong> 특약으로 전환하시면 과실 상계 없이 가입 한도 내에서 실제 치료비와 약관상 인정되는 위자료·휴업손해 등을 보상받으실 수 있어 보장 공백을 줄일 수 있습니다. (세부 보상 기준은 해당 특약 약관 참조)
             </p>
           </div>
         </div>

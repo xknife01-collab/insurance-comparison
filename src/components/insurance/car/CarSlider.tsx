@@ -133,10 +133,15 @@ export const CarSlider: React.FC<Props> = ({ result }) => {
               </div>
             </div>
 
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-5 flex items-center gap-3">
-              <Sparkles size={20} className="text-blue-400 flex-shrink-0" />
-              <p className="text-[10px] text-slate-300 font-bold leading-relaxed">
-                설정하신 연간 주행거리에 맞춰 특약 마일리지 환급 혜택이 실시간 적용되어 실질 납입 보험료를 알뜰하게 낮춥니다!
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-5 space-y-2">
+              <div className="flex items-center gap-3">
+                <Sparkles size={20} className="text-blue-400 flex-shrink-0" />
+                <p className="text-[10px] text-slate-300 font-bold leading-relaxed">
+                  설정하신 연간 주행거리에 맞춰 특약 마일리지 환급 혜택 예시가 시뮬레이션되어 실질 체감 보험료를 비교해 드립니다.
+                </p>
+              </div>
+              <p className="text-[9px] text-slate-400 font-medium leading-normal border-t border-white/10 pt-2">
+                * 상기 환급액 및 실질 보험료는 이해를 돕기 위한 예시 시뮬레이션이며, 실제 환급률과 최종 정산액은 보험사별 약관, 할인 요율표 및 만기 시점의 실측 주행거리에 따라 상이할 수 있습니다.
               </p>
             </div>
           </div>
