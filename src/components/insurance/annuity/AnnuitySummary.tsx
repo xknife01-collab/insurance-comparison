@@ -153,6 +153,20 @@ export const AnnuitySummary: React.FC<Props> = ({ result }) => {
           </div>
         </div>
       )}
+
+      {/* 3. 진단 결과 법적 고지 안내 */}
+      <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200 text-slate-500 text-xs font-medium leading-relaxed">
+        <p className="font-bold text-slate-700 mb-1 flex items-center gap-1.5">
+          <CheckCircle2 className="w-4 h-4 text-blue-600" />
+          연금 진단 결과 안내 유의사항
+        </p>
+        <p>
+          * 본 분석 결과는 고객님께서 입력하신 연령, 소득, 희망 납입액 등을 바탕으로 한 알고리즘 기반 단순 비교·분석 결과입니다. 실제 세액공제 금액은 고객님의 연말정산 시점 최종 결정세액에 따라 달라질 수 있으며, 향후 세법 개정에 따라 공제율 및 과세 기준이 변경될 수 있습니다.
+        </p>
+        <p className="mt-1 text-[11px] text-slate-400">
+          * 저축성 보험은 중도 해지 시 사업비 차감 및 세액공제 반환(기타소득세 16.5%)으로 인해 원금 손실이 발생할 수 있으므로, 유지 가능한 범위 내에서 가입하시기 바랍니다.
+        </p>
+      </div>
     </div>
   );
 };

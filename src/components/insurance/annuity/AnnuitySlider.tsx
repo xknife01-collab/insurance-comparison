@@ -188,6 +188,20 @@ export const AnnuitySlider: React.FC<{ result: AnalysisResult }> = ({ result }) 
             </div>
           </div>
         </div>
+
+        {/* ── 시뮬레이션 산출 기준 및 유의사항 고지 ── */}
+        <div className="mt-12 p-6 bg-slate-50 rounded-2xl border border-slate-200 text-left text-slate-500 text-xs font-bold leading-relaxed">
+          <p className="text-slate-700 font-black mb-1 flex items-center gap-1.5">
+            ℹ️ 연금 시뮬레이션 산출 기준 및 소비자 유의사항
+          </p>
+          <p>
+            * 상기 시뮬레이션은 평균 공시이율(연 2.9% 가정) 및 계약체결비용/관리비용(사업비 약 5% 수준 차감 가정)을 기준으로 산출된 단순 이해를 돕기 위한 예시입니다. 실제 적립액 및 연금 수령액은 보험사별 실제 공시이율(매월 변동) 및 상품별 사업비 차감율에 따라 달라질 수 있습니다.
+          </p>
+          <p className="mt-1 text-[11px] text-slate-400">
+            * 연금저축의 세액공제는 연말정산 시 결정세액 범위 내에서만 환급되며, 중도 해지 시 세액공제 받은 원금과 운용수익에 대해 16.5%의 기타소득세가 부과되어 원금 손실이 발생할 수 있습니다.
+          </p>
+        </div>
+
         <AnnuityExplanation onAction={handleScrollToTop} />
       </div>
     </section>
