@@ -153,6 +153,11 @@ export const FireSummary: React.FC<Props> = ({ result }) => {
           </div>
         </div>
       )}
+
+      {/* 3. 진단 참고 안내 */}
+      <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 text-[11px] text-slate-400 font-medium leading-relaxed text-left">
+        * 상기 점수 및 보장 분석 결과는 주택 유형 및 입력 조건에 따른 참고 예시이며, 실제 보상 여부 및 세부 보상 기준은 해당 보험 상품의 약관에 따릅니다.
+      </div>
     </div>
   );
 };

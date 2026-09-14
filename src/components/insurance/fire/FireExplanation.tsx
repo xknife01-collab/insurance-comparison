@@ -32,12 +32,12 @@ export const FireExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
       </div>
 
       {/* ── 핵심 지표 ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
         {[
-          { num: '실손 보상 설계', label: '가입 한도 내 실제 손해 전액', sub: '비례 보상이 아닌 실손 비례 여부 대조' },
-          { num: '급배수 시설 누수', label: '누수로 젖은 마루/벽지 교체', sub: '누수 배관 자체 수리비는 제외됨에 유의' },
+          { num: '실손 보상 설계', label: '가입 한도 내 실손 비례 대조', sub: '목적물 평가 가액 기준 실손 지급' },
+          { num: '급배수 시설 누수', label: '누수로 젖은 마루/벽지 복구', sub: '누수 배관 자체 수리비는 제외됨에 유의' },
           { num: '임시 거주비 지원', label: '화재로 입주 불가 시 일당 지급', sub: '최대 90일 동안 1일 10만 원 한도 숙식 지원' },
-          { num: '이웃집 화재 전파', label: '화재배상책임 대물 최대 20억', sub: '벌금 특약 최대 2천만 원 함께 보완' },
+          { num: '이웃집 화재 전파', label: '화재배상책임 대물 최대 20억', sub: '벌금 특약 최대 2천만 원 함께 보완 (비례보상)' },
         ].map((s, i) => (
           <div key={i} className="bg-white border border-red-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-red-200 transition-all group">
             <p className="text-2xl font-black text-red-500 mb-2 group-hover:scale-105 transition-transform inline-block">{s.num}</p>
@@ -45,6 +45,14 @@ export const FireExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
             <p className="text-[11px] text-slate-400 font-bold">{s.sub}</p>
           </div>
         ))}
+      </div>
+
+      {/* ── 산출 기준 및 주요 면책사항 사전 고지 ── */}
+      <div className="mb-14 p-5 md:p-6 bg-red-50/50 rounded-2xl md:rounded-3xl border border-red-100 text-xs text-slate-600 leading-relaxed space-y-1">
+        <p className="font-bold text-red-900 text-sm mb-1">[주택화재보험 표준 보장 기준 및 주요 유의사항 안내]</p>
+        <p>• <strong>실화책임 및 배상책임 비례보상:</strong> 실화책임에 관한 법률에 따라 본인의 과실로 발생한 화재가 이웃집으로 번진 경우 민법상 손해배상 책임이 발생합니다. 화재배상책임 및 화재벌금(형법 제170조)은 실제 발생한 손해액 범위 내에서 실손 비례보상됩니다.</p>
+        <p>• <strong>급배수시설 누수 면책 주의:</strong> 수조나 급배수설비 파열 등으로 발생한 직접 손해(우리집 도배·장판 교체 등)는 실손 보상되나, <strong>누수의 원인이 된 배관 자체의 노후화 수리 및 교체 공사비는 약관상 원칙적 면책(보상 제외)</strong>입니다. 아랫집 누수 피해는 일상생활배상책임 특약으로 접수됩니다.</p>
+        <p>• <strong>명기 가재 및 주소 변경 의무:</strong> 귀금속, 보석, 골동품, 예술품 등 고가 물품은 보험증권에 기재(명기)되지 않은 경우 보상 한도가 제한되거나 제외될 수 있으며, 이사 시 보험사에 주소지 변경을 통지하지 않으면 사고 발생 시 보장이 제한될 수 있습니다.</p>
       </div>
 
       {/* ── 가이드 1 & 가이드 2 ── */}
@@ -64,7 +72,7 @@ export const FireExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
 
           <p className="text-sm font-bold text-slate-400 mb-8 leading-relaxed">
             화재 보험은{' '}
-            <span className="text-red-500 font-black">피보험자의 법적 신분과 목적물 책임 구조</span>에 따라 완전히 다른 성격의 특약을 추가해야 합니다.
+            <span className="text-red-500 font-black">피보험자의 법적 신분과 목적물 책임 구조</span>에 따라 알맞은 특약 구성이 필요합니다.
           </p>
 
           <div className="space-y-3">
@@ -220,9 +228,9 @@ export const FireExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
       </div>
 
       {/* ── 주요 상품 종합 비교표 ── */}
-      <div className="mb-20 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-red-100 shadow-sm">
+      <div className="mb-14 bg-white rounded-3xl md:rounded-[4rem] p-5 md:p-12 border border-red-100 shadow-sm">
         <h3 className="text-2xl font-black text-slate-900 mb-10 tracking-tight">
-          국내 Top 6 손해보험사 주택화재보험 상품 전수 비교
+          주요 손해보험사 주택화재보험 대표 상품 특징 안내 (손해보험협회 공시 기준)
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
@@ -230,8 +238,8 @@ export const FireExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
             { company: '삼성화재', product: '다이렉트 주택화재보험', highlight: '다이렉트 요율로 가성비 극대화, 모바일 즉시 청구 연동 및 대형 가전 AS 특약 지원', badges: ['다이렉트 요율', '가전 수리 강점'] },
             { company: '현대해상', product: 'H주택화재보험', highlight: '세입자 전용 임차자배상 및 이웃집 전파 피해 배상 한도 우수, 빌라/연립 최적화', badges: ['세입자 안심 설계', '대물배상 우수'] },
             { company: 'DB손해보험', product: '다이렉트 주택화재보험', highlight: '단독주택 및 상가주택 복구비용 요율 테이블 경쟁력, 노후 빌라 특별 심사 지원', badges: ['단독주택 특화', '노후주택 특별심사'] },
-            { company: 'KB손해보험', product: 'KB 주택화재보험', highlight: '일상생활배상책임 한도 우수, 누수로 인한 아랫집 배상 처리 및 화재 벌금 일괄 보장', badges: ['배상책임 최대한도', '벌금 특약 완비'] },
-            { company: '한화손해보험', product: '한화 다이렉트 주택화재보험', highlight: '실속형 최저 보험료 플랜 지원, 필수 특약만 골라 설계하여 월 5~7천원대 가입 지원', badges: ['최저가 플랜 지원', '실속 맞춤 설계'] },
+            { company: 'KB손해보험', product: 'KB 주택화재보험', highlight: '일상생활배상책임 한도 우수, 누수로 인한 아랫집 배상 처리 및 화재 벌금 일괄 보장', badges: ['배상책임 한도 우수', '벌금 특약 완비'] },
+            { company: '한화손해보험', product: '한화 다이렉트 주택화재보험', highlight: '실속형 최저 보험료 플랜 지원, 필수 특약만 골라 설계하여 월 5~7천원대 가입 지원', badges: ['실속형 플랜 지원', '실속 맞춤 설계'] },
           ].map((item, i) => (
             <div key={i} className="p-5 md:p-8 bg-red-50/20 rounded-2xl md:rounded-[2.5rem] border border-red-100 hover:border-red-300 hover:shadow-lg transition-all">
               <p className="text-xs font-black text-red-600 mb-1">{maskCompany(item.company, isUnlocked)}</p>
@@ -252,6 +260,16 @@ export const FireExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
         </div>
       </div>
 
+      {/* ── 법적 고지문 (금소법 제19조 관련) ── */}
+      <div className="mb-20 p-6 md:p-8 bg-slate-50 rounded-3xl border border-slate-200 text-xs text-slate-500 space-y-2 leading-relaxed">
+        <p className="font-bold text-slate-700 text-sm mb-1">[보험 계약 체결 전 유의사항 및 법적 고지]</p>
+        <p>• 보험계약 체결 전 반드시 해당 상품설명서 및 약관을 확인하시기 바랍니다.</p>
+        <p>• 본 안내는 손해보험협회 심의기준 및 각 사 공시 내용을 바탕으로 작성되었으며, 보험계약자가 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 경우 보험인수가 거절되거나 보험료가 인상될 수 있고 보장내용이 달라질 수 있습니다.</p>
+        <p>• <strong>배상책임 및 실손비례보상 고지:</strong> 화재배상책임, 일상생활배상책임, 급배수시설누출손해, 가전제품 수리비용 담보는 실제 발생한 손해액 범위 내에서만 보상되는 실손형 담보로 2개 이상의 보험에 중복 가입하더라도 비례보상되며, 중복 지급되지 않습니다.</p>
+        <p>• <strong>누수 배관 면책 및 고지의무 안내:</strong> 급배수시설 누출손해는 누수로 인한 도배·마루 등의 직접 손해를 보상하며, 누수의 원인이 된 배관 자체의 노후화 수리 및 교체 공사비는 약관상 보상 대상에서 제외됩니다. 또한 주택 이사 시 보험사에 주소지 변경을 통지하지 않으면 보장이 제한될 수 있습니다.</p>
+        <p>• (주)케어인슈는 다수의 보험사와 계약 체결 및 중개하는 금융상품판매대리·중개업자로서 보험사로부터 보험계약 체결권을 부여받지 아니하며 금융소비자보호법 등 관련 법령을 준수합니다.</p>
+      </div>
+
       {/* ── CTA ── */}
       <div className="border-t border-red-100 pt-20 flex flex-col md:flex-row justify-between items-center gap-10">
         <div className="flex items-center gap-6">
@@ -268,7 +286,7 @@ export const FireExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
             onClick={onAction}
             className="bg-red-500 text-white px-14 py-7 rounded-full font-black text-xl hover:bg-red-600 transition-all hover:scale-105 shadow-2xl shadow-red-400/30 shrink-0"
           >
-            내 집 주거 화재보험 무료 진단하기
+            주택화재보험 실시간 비교 상담하기
           </button>
         )}
       </div>

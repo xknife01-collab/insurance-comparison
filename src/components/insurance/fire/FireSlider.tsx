@@ -79,7 +79,10 @@ export const FireSlider: React.FC<{ result: AnalysisResult }> = ({ result }) => 
                 <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-red-500 shadow-sm shrink-0"><Sparkles size={24} /></div>
                 <div className="space-y-2 text-left">
                   <p className="text-[0.85rem] font-bold text-gray-600 leading-relaxed">
-                    설정하신 월 예산에 맞춰 건물 및 가재도구 복구 예상 한도가 <span className="text-red-600 font-black underline decoration-2 underline-offset-4">{metrics.buildingLimit >= 10000 ? `${(metrics.buildingLimit / 10000).toFixed(1)}억` : `${metrics.buildingLimit}만`} 원</span>으로 실시간 맞춤 조율되는 것을 확인하실 수 있습니다.
+                    설정하신 월 예산에 맞춰 건물 및 가재도구 복구 예상 한도가 <span className="text-red-600 font-black underline decoration-2 underline-offset-4">{metrics.buildingLimit >= 10000 ? `${(metrics.buildingLimit / 10000).toFixed(1)}억` : `${metrics.buildingLimit}만`} 원</span>으로 실시간 맞춤 조율되는 예시를 확인하실 수 있습니다.
+                  </p>
+                  <p className="text-[10px] text-gray-400 font-medium leading-relaxed border-t border-red-100/60 pt-2">
+                    * 상기 건물 및 가재도구 복구 한도, 배상책임 한도는 이해를 돕기 위한 예시 시뮬레이션이며, 실제 가입 한도와 보험료는 주택 구조(아파트/연립/단독 등), 건물 급수, 전용 면적, 입주 형태(자가/임차) 및 각 보험사별 인수 기준에 따라 상이합니다. 화재배상 및 누수 관련 담보는 다수 가입 시 비례보상됩니다.
                   </p>
                 </div>
               </div>
