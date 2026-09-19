@@ -27,6 +27,15 @@ export function maskCompany(name: string, isUnlocked: boolean): string {
     '카카오페이손보': 'L손보',
     '처브라이프생명': 'T생보',
     '처브라이프': 'T생보',
+    'AXA손해보험': 'M손보',
+    'AXA손보': 'M손보',
+    'AXA': 'M손보',
+    '악사손해보험': 'M손보',
+    '악사손보': 'M손보',
+    '악사': 'M손보',
+    '캐롯손해보험': 'N손보',
+    '캐롯손보': 'N손보',
+    '캐롯': 'N손보',
     
     '삼성생명': 'A생보',
     '교보생명': 'B생보',
@@ -148,10 +157,13 @@ export function maskProductName(name: string, isUnlocked: boolean): string {
   if (cleanLower.includes('종신') || cleanLower.includes('whole life') || cleanLower.includes('wholelife')) {
     return '평생 종신보장보험' + suffix;
   }
-  if (cleanLower.includes('펫') || cleanLower.includes('pet') || cleanLower.includes('개') || cleanLower.includes('고양이') || cleanLower.includes('반려')) {
+  if (cleanLower.includes('자동차') || cleanLower.includes('car') || cleanLower.includes('오토') || cleanLower.includes('애니카') || cleanLower.includes('프로미카') || cleanLower.includes('hicar') || cleanLower.includes('하이카') || cleanLower.includes('캐롯')) {
+    return '전사 자동차다이렉트보험' + suffix;
+  }
+  if (cleanLower.includes('펫') || cleanLower.includes('pet') || cleanLower.includes('반려동물') || cleanLower.includes('반려견') || cleanLower.includes('반려묘') || cleanLower.includes('강아지') || cleanLower.includes('애견') || cleanLower.includes('애완') || cleanLower.includes('도그') || cleanLower.includes('dog') || cleanLower.includes('cat') || cleanLower.includes('고양이') || cleanLower.includes('반려')) {
     return '반려동물 건강케어보험' + suffix;
   }
-  if (cleanLower.includes('어린이') || cleanLower.includes('자녀') || cleanLower.includes('아이') || cleanLower.includes('태아') || cleanLower.includes('child') || cleanLower.includes('신생아')) {
+  if (cleanLower.includes('어린이') || cleanLower.includes('자녀') || cleanLower.includes('아이') || cleanLower.includes('태아') || cleanLower.includes('child') || cleanLower.includes('신생아') || cleanLower.includes('키즈') || cleanLower.includes('주니어')) {
     return '희망 어린이종합보험' + suffix;
   }
   if ((cleanLower.includes('화재') || cleanLower.includes('주택') || cleanLower.includes('fire')) && !cleanLower.includes('상해')) {
@@ -184,9 +196,6 @@ export function maskProductName(name: string, isUnlocked: boolean): string {
   if (cleanLower.includes('종합') || cleanLower.includes('건강') || cleanLower.includes('통합') || cleanLower.includes('알파') || cleanLower.includes('플러스') || cleanLower.includes('올인원')) {
     return '실속 종합건강보장보험' + suffix;
   }
-  if (cleanLower.includes('자동차') || cleanLower.includes('car') || cleanLower.includes('오토')) {
-    return '전사 자동차다이렉트보험' + suffix;
-  }
   if (cleanLower.includes('재물') || cleanLower.includes('상가') || cleanLower.includes('사업자') || cleanLower.includes('소상공인')) {
     return '재물종합 사업자보험' + suffix;
   }
@@ -213,17 +222,17 @@ export function maskText(text: string, isUnlocked: boolean): string {
   
   const companyKeys = [
     'BNP파리바 카디프생명', '교보라이프플래닛생명', '교보라이프플래닛', 'NH농협손해보험', '농협손해보험', '신한라이프생명', '미래에셋생명',
-    '카카오페이손해보험',
+    '카카오페이손해보험', 'AXA손해보험', '악사손해보험', '캐롯손해보험',
     '처브라이프생명',
     'KB라이프생명', 'NH농협생명', '메트라이프생명', '하나손해보험', '신한라이프', '동양생명', '라이나생명', '카디프생명', '라이프플래닛',
     '삼성화재', '현대해상', 'DB손해보험', 'KB손해보험', '메리츠화재', '한화손해보험', '롯데손해보험', 'MG손해보험',
     '삼성생명', '교보생명', '한화생명', 'KDB생명', '흥국생명', 'DB생명', 'AIA생명', 'ABL생명', '하나생명', '교보라플',
-    '카카오페이손보',
+    '카카오페이손보', 'AXA손보', '악사손보', '캐롯손보',
     '처브라이프',
     'KB라이프', 'NH농협손보', '농협손보', '하나손보', 'DB손보', 'KB손보', '한화손보', '롯데손보', 'MG손보', '메리츠',
     '미래에셋', '라이나', '메트라이프', 'iM라이프생명', 'DGB생명보험', 'iM라이프', 'DGB생명', '신한', '우리', 'KDB',
     'ABL', 'AIA', 'MG', 'DB', 'KB', '흥국', '삼성', '현대', '교보', '동양', '한화', '롯데', '농협', '하나',
-    '카카오페이',
+    '카카오페이', 'AXA', '악사', '캐롯',
     '처브',
     'NH', 'DGB', 'iM', '흥'
   ];
