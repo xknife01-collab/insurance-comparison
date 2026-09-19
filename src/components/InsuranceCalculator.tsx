@@ -819,9 +819,23 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
             const payMult = cancerPaymentType === 'renewable' ? 0.45 : cancerPaymentType === 'targeted' ? 0.65 : 1.0;
             return Math.max(12000, Math.round((base * payMult) / 100) * 100);
           })() :
-          selectedId === 'silson' ? 25000 : 
+          selectedId === 'silson' ? 48000 : 
           selectedId === 'dental' ? 45000 :
-          selectedId === 'nursing' ? 70000 :
+          selectedId === 'nursing' ? 65000 :
+          (selectedId === 'care_svc' || selectedId === 'care_old') ? 62000 :
+          selectedId === 'brain' ? (() => {
+            const targetAge = calculatedAge || 40;
+            const ageFactor = (gender === 'M' ? 1.05 : 0.95) * (targetAge / 40);
+            return Math.round((58000 * ageFactor) / 100) * 100;
+          })() :
+          selectedId === 'heart' ? (() => {
+            const targetAge = calculatedAge || 40;
+            const ageFactor = (gender === 'M' ? 1.05 : 0.95) * (targetAge / 40);
+            return Math.round((52000 * ageFactor) / 100) * 100;
+          })() :
+          selectedId === 'health_general' ? 85000 :
+          selectedId === 'driver' ? 25000 :
+          selectedId === 'car' ? 80000 :
           selectedId === 'pet' ? 35000 : 
           selectedId === 'fire_real' ? 12000 :
           selectedId === 'property' ? 45000 :
@@ -834,11 +848,14 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
             variableSubType === 'term_ceo' ? 450000 :
             (variableIsHealthyDiscount ? 12000 : 16000)
           ) :
-
           selectedId === 'golf' ? (golfPlanType === 'one_day' ? 2500 : 9900) :
           selectedId === 'child' ? (childMaturity === 30 ? 32000 : 78000) :
-          (selectedId === 'pre' || selectedId === 'pre_family' || healthStatus === 'simple') ? 150000 : 
-          120000
+          (selectedId === 'pre' || selectedId === 'pre_family' || healthStatus === 'simple') ? (() => {
+            const targetAge = calculatedAge || 40;
+            const ageFactor = (gender === 'M' ? 1.05 : 0.95) * (targetAge / 40);
+            return Math.round((60000 * ageFactor) / 100) * 100;
+          })() : 
+          65000
         ),
         selectedCategory: activeItem.label,
         // Treat selected options as "Current Coverage" being analyzed
