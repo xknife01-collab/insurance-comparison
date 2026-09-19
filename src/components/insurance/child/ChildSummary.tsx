@@ -5,9 +5,11 @@ import { Baby, Calendar, ShieldCheck, Heart, Sparkles } from 'lucide-react';
 
 interface Props {
   result: AnalysisResult;
+  formatAmount?: (amt: number) => string;
+  forceMobile?: boolean;
 }
 
-export const ChildSummary: React.FC<Props> = ({ result }) => {
+export const ChildSummary: React.FC<Props> = ({ result, forceMobile }) => {
   const { analysis } = result as any;
   if (!analysis) return null;
 
@@ -121,38 +123,38 @@ export const ChildSummary: React.FC<Props> = ({ result }) => {
         </div>
       </div>
 
-      {/* 월 예상 절감액 섹션 */}
+      {/* 동일 연령·조건 기준 월 예상 절약 보험료 섹션 */}
       <div className={`rounded-[2.5rem] p-10 text-white shadow-xl relative overflow-hidden ${child.isPreFamily ? 'bg-gradient-to-r from-blue-600 to-indigo-600' : 'bg-gradient-to-r from-yellow-500 to-amber-600'}`}>
         <div className="absolute top-0 right-0 p-8 opacity-10 scale-150 transform translate-x-4 -translate-y-4">
           <Baby className="w-48 h-48 text-white" />
         </div>
-        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className={`relative z-10 flex ${forceMobile ? 'flex-col items-start' : 'flex-col md:flex-row md:items-center md:justify-between'} gap-8`}>
           <div>
             <span className="text-xs font-black text-yellow-100 uppercase tracking-widest bg-yellow-900/30 px-3 py-1 rounded-full mb-4 inline-block">
               Child & Prenatal Care Analysis
             </span>
-            <h4 className="text-2xl font-black mb-2">어린이 보험료 포트폴리오 최적화 결과</h4>
+            <h4 className="text-2xl font-black mb-2">동일 연령·조건 기준 월 예상 절약 보험료</h4>
             <p className="text-yellow-50 text-sm font-bold opacity-80">
-              불필요한 중복 보장을 덜어내고 자녀 성장 시기별 핵심 보장만 채워 실속 있는 보험료로 전환할 수 있습니다.
+              자녀의 성장 주기와 연령에 맞춘 최적의 어린이·태아 플랜으로 전환 시 절감되는 금액입니다.
             </p>
           </div>
-          <div className="text-right">
+          <div className={forceMobile ? 'text-left' : 'text-right'}>
             {savings > 0 ? (
               <div className="flex items-baseline gap-2">
                 <span className="text-6xl font-black tracking-tighter text-white">
                   {savings.toLocaleString()}
                 </span>
-                <span className="text-xl font-bold text-yellow-100">원 절감 가능</span>
+                <span className="text-xl font-bold text-yellow-100">원 절감</span>
               </div>
             ) : (
               <div className="flex items-baseline gap-2">
                 <span className="text-4xl font-black tracking-tighter text-white">
-                  최적의 맞춤형 신규 추천 플랜
+                  현재 납입금액 유지/추가 보강 필요
                 </span>
               </div>
             )}
             <p className="text-[10px] text-yellow-200 font-bold mt-2 opacity-60 uppercase tracking-widest">
-              * 국내 Top 6 보험사 종합 실시간 비교 기준
+              * 추천 상품 기준 예상 수치
             </p>
           </div>
         </div>

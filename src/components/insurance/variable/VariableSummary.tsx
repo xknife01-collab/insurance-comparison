@@ -249,7 +249,7 @@ export const VariableSummary: React.FC<Props> = ({ result }) => {
               
               <div className="grid grid-cols-2 gap-4 shrink-0 w-full lg:w-auto">
                 <div className="bg-white/5 border border-white/10 p-5 rounded-3xl backdrop-blur-md text-left">
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">월 예상 절감액</p>
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">동일 연령·조건 기준 월 예상 절약 보험료</p>
                   <p className="text-3xl font-black text-[#FF6B00] tracking-tighter mt-1">
                     {monthlySaving.toLocaleString()} <span className="text-sm font-bold text-slate-300">원</span>
                   </p>
@@ -267,11 +267,11 @@ export const VariableSummary: React.FC<Props> = ({ result }) => {
             <div className="grid md:grid-cols-2 gap-8">
               {/* Stay Card */}
               <div className="bg-slate-800/40 border border-slate-800 rounded-3xl p-8 relative overflow-hidden group hover:border-slate-700 transition-all duration-300 text-left">
-                <div className="absolute top-4 right-4 text-xs font-black text-slate-500 tracking-wider">STAY</div>
-                <h5 className="text-lg font-black text-slate-300 mb-6">기존 종신보험 유지 시</h5>
+                <div className="absolute top-4 right-4 text-xs font-black text-slate-500 tracking-wider">STANDARD</div>
+                <h5 className="text-lg font-black text-slate-300 mb-6">동일 조건 일반 종신보험 기준</h5>
                 <div className="space-y-6">
                   <div>
-                    <span className="text-xs font-bold text-slate-400">예상 월 납입 보험료</span>
+                    <span className="text-xs font-bold text-slate-400">동일 연령 기준 종신보험료</span>
                     <p className="text-2xl font-black text-slate-200 mt-1">{stayPremium.toLocaleString()}원</p>
                   </div>
                   <ul className="space-y-3 text-xs font-bold text-slate-400">
@@ -328,8 +328,8 @@ export const VariableSummary: React.FC<Props> = ({ result }) => {
                   <thead className="bg-slate-900 text-slate-400 text-[10px] font-black uppercase tracking-widest border-b border-slate-800">
                     <tr>
                       <th className="px-6 py-4">보장 구분</th>
-                      <th className="px-6 py-4">기존 종신보험 유지 시 (Stay)</th>
-                      <th className="px-6 py-4 text-[#FF6B00]">정기보험 교체 시 (Switch)</th>
+                      <th className="px-6 py-4">동일 조건 일반 종신보험 (기준안)</th>
+                      <th className="px-6 py-4 text-[#FF6B00]">실속 정기보험 전환 시 (추천안)</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-800/60 font-bold text-slate-300 text-xs">

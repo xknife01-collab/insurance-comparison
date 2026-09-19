@@ -5,9 +5,11 @@ import { Car, ShieldCheck, Compass, AlertCircle, Sparkles, HelpCircle } from 'lu
 
 interface Props {
   result: AnalysisResult;
+  formatAmount?: (amt: number) => string;
+  forceMobile?: boolean;
 }
 
-export const CarSummary: React.FC<Props> = ({ result }) => {
+export const CarSummary: React.FC<Props> = ({ result, forceMobile }) => {
   const { analysis } = result as any;
   if (!analysis) return null;
 
@@ -170,26 +172,26 @@ export const CarSummary: React.FC<Props> = ({ result }) => {
         </div>
       </div>
 
-      {/* 월 예상 절감액 및 연간 캐시백 */}
+      {/* 동일 연령·조건 기준 예상 절약 보험료 섹션 */}
       <div className="bg-gradient-to-r from-blue-700 to-indigo-800 rounded-[2.5rem] p-10 text-white shadow-xl relative overflow-hidden">
         <div className="absolute top-0 right-0 p-8 opacity-10 scale-150 transform translate-x-4 -translate-y-4">
           <Car className="w-48 h-48 text-white" />
         </div>
-        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className={`relative z-10 flex ${forceMobile ? 'flex-col items-start' : 'flex-col md:flex-row md:items-center md:justify-between'} gap-8`}>
           <div className="space-y-2 text-center md:text-left">
             <div className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-blue-900/50 rounded-full text-[0.65rem] font-bold tracking-wider uppercase mb-2">
               <Sparkles size={12} className="text-blue-400" />
               Dynamic Auto Insurance Optimizer
             </div>
-            <h4 className="text-2xl font-black mb-2">자동차보험 포트폴리오 최적화 결과</h4>
+            <h4 className="text-2xl font-black mb-2">동일 연령·차종 기준 예상 절약 보험료</h4>
             <p className="text-sm font-bold text-blue-200/90 leading-relaxed max-w-xl">
-              불필요한 대리점 수수료가 빠진 다이렉트 설계와 핵심 할인 특약을 연동하여, 대물 한도와 상해 수준을 대폭 끌어올리고도 보험료 부담은 획기적으로 낮췄습니다.
+              운전자 연령과 차량 차종에 맞춘 최적의 다이렉트 할인 플랜으로 전환 시 절감되는 금액입니다.
             </p>
           </div>
 
           <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/10 text-right min-w-[280px]">
             <span className="text-[10px] font-black text-blue-300 uppercase tracking-widest block mb-1">
-              연간 기대 절감액 (환급금 포함)
+              연간 예상 절약 보험료
             </span>
             {recommendedPremium > 0 ? (
               <>
@@ -197,7 +199,10 @@ export const CarSummary: React.FC<Props> = ({ result }) => {
                   ₩{Math.round(annualSavings).toLocaleString()}원
                 </div>
                 <span className="text-[10px] text-blue-200 block">
-                  연간 예상 보험료: ₩{Math.round(recommendedPremium * 12).toLocaleString()}원 (기존 대비 -{Math.round((1 - recommendedPremium / currentPremium) * 100)}%)
+                  연간 예상 보험료: ₩{Math.round(recommendedPremium * 12).toLocaleString()}원 (다이렉트 추천 플랜 기준)
+                </span>
+                <span className="text-[10px] text-blue-300/70 block mt-1">
+                  * 추천 상품 기준 예상 수치
                 </span>
               </>
             ) : (

@@ -6,9 +6,11 @@ import { CaregivingAnalysisResult } from '../../../types/insurance/caregiving';
 
 interface Props {
   result: CaregivingAnalysisResult;
+  formatAmount?: (amt: number) => string;
+  forceMobile?: boolean;
 }
 
-export const CaregivingSummary: React.FC<Props> = ({ result }) => {
+export const CaregivingSummary: React.FC<Props> = ({ result, forceMobile }) => {
   const { analysis, premium } = result as any;
   const currentPremium = analysis.monthlyPremium || 0;
   const recommendedPremium = premium || 0;
@@ -99,39 +101,39 @@ export const CaregivingSummary: React.FC<Props> = ({ result }) => {
         </div>
       </div>
 
-      {/* 3. 월 예상 절감액 */}
-      <div className="bg-purple-50 rounded-[3rem] p-10 border border-purple-100 shadow-sm relative overflow-hidden group">
-        <div className="absolute -right-4 -top-4 w-32 h-32 bg-purple-200/30 rounded-full blur-3xl group-hover:bg-purple-300/50 transition-all" />
-        <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8">
+      {/* 동일 연령·조건 기준 월 예상 절약 보험료 섹션 */}
+      <div className="bg-gradient-to-r from-purple-600 to-indigo-600 rounded-[2.5rem] p-10 text-white shadow-xl relative overflow-hidden">
+        <div className="absolute top-0 right-0 p-8 opacity-10 scale-150 transform translate-x-4 -translate-y-4">
+          <div className="w-48 h-48 rounded-full border-8 border-white"></div>
+        </div>
+        <div className={`relative z-10 flex ${forceMobile ? 'flex-col items-start' : 'flex-col md:flex-row md:items-center md:justify-between'} gap-8`}>
           <div>
-            <div className="flex items-center gap-2 text-purple-600 mb-2">
-              <PiggyBank size={20} />
-              <h4 className="text-xl font-black">월 예상 절감액</h4>
-            </div>
-            <p className="text-[0.65rem] text-slate-400 font-bold mb-6 uppercase tracking-widest pl-7">Premium Optimization Analysis</p>
-            <div className="flex flex-col gap-1 pl-7">
-              <p className="text-5xl font-black text-purple-600">
-                {savings > 0 ? `-${savings.toLocaleString()}` : '0'} <span className="text-2xl">원</span>
-              </p>
-              <p className="text-sm font-bold text-purple-600/60">불필요한 지출을 줄여 가성비를 높였습니다.</p>
-            </div>
+            <span className="text-xs font-black text-purple-200 uppercase tracking-widest bg-purple-900/30 px-3 py-1 rounded-full mb-4 inline-block">
+              Caregiving Specialization Analysis
+            </span>
+            <h4 className="text-2xl font-black mb-2">동일 연령·조건 기준 월 예상 절약 보험료</h4>
+            <p className="text-purple-100 text-sm font-bold opacity-80">
+              사용자님의 연령과 상황에 맞춘 최적의 간병인 지원/사용일당 플랜으로 전환 시 절감되는 금액입니다.
+            </p>
           </div>
-          
-          <div className="bg-white p-8 rounded-[2.5rem] border border-purple-100 shadow-xl max-w-md w-full relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-4 opacity-5">
-               <TrendingUp size={80} className="text-purple-500" />
-            </div>
-            <div className="relative z-10 flex items-start gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-purple-600 text-white flex items-center justify-center shadow-lg shadow-purple-200">
-                <CheckCircle2 size={24} />
+          <div className={forceMobile ? 'text-left' : 'text-right'}>
+            {savings > 0 ? (
+              <div className="flex items-baseline gap-2">
+                <span className="text-6xl font-black tracking-tighter text-yellow-300">
+                  {savings.toLocaleString()}
+                </span>
+                <span className="text-xl font-bold text-purple-100">원 절감</span>
               </div>
-              <div>
-                <p className="text-sm font-black text-slate-800 mb-1">최적화 분석 완료</p>
-                <p className="text-xs font-bold text-slate-500 leading-relaxed">
-                  매달 <span className="text-purple-600 font-black">{savings.toLocaleString()}원</span>을 절약하면서도, 간병인 지원과 체증형 보장은 더 강화된 플랜입니다.
-                </p>
+            ) : (
+              <div className="flex items-baseline gap-2">
+                <span className="text-4xl font-black tracking-tighter text-white">
+                  현재 납입금액 유지/추가 보강 필요
+                </span>
               </div>
-            </div>
+            )}
+            <p className="text-[10px] text-purple-200 font-bold mt-2 opacity-60 uppercase tracking-widest">
+              * 추천 상품 기준 예상 수치
+            </p>
           </div>
         </div>
       </div>

@@ -5,9 +5,11 @@ import { Shield, TrendingUp, CheckCircle2, AlertCircle, Scale, PiggyBank, Activi
 
 interface Props {
   result: any;
+  formatAmount?: (amt: number) => string;
+  forceMobile?: boolean;
 }
 
-export const DriverSummary: React.FC<Props> = ({ result }) => {
+export const DriverSummary: React.FC<Props> = ({ result, forceMobile }) => {
   const { analysis, recommendations } = result || {};
   const driverOpts = analysis?.driver || {
     drivingPurpose: 'private',
@@ -156,42 +158,39 @@ export const DriverSummary: React.FC<Props> = ({ result }) => {
         </div>
       </div>
 
-      {/* 3. 월 예상 절감액 */}
-      <div className="bg-purple-50 rounded-[3rem] p-10 border border-purple-100 shadow-sm relative overflow-hidden group">
-        <div className="absolute -right-4 -top-4 w-32 h-32 bg-purple-200/30 rounded-full blur-3xl group-hover:bg-purple-300/50 transition-all" />
-        <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8">
+      {/* 동일 연령·조건 기준 월 예상 절약 보험료 섹션 */}
+      <div className="bg-gradient-to-r from-indigo-700 to-purple-800 rounded-[2.5rem] p-10 text-white shadow-xl relative overflow-hidden">
+        <div className="absolute top-0 right-0 p-8 opacity-10 scale-150 transform translate-x-4 -translate-y-4">
+          <div className="w-48 h-48 rounded-full border-8 border-white"></div>
+        </div>
+        <div className={`relative z-10 flex ${forceMobile ? 'flex-col items-start' : 'flex-col md:flex-row md:items-center md:justify-between'} gap-8`}>
           <div>
-            <div className="flex items-center gap-2 text-purple-600 mb-2">
-              <PiggyBank size={20} />
-              <h4 className="text-xl font-black">월 예상 절감액</h4>
-            </div>
-            <p className="text-[0.65rem] text-slate-400 font-bold mb-6 uppercase tracking-widest pl-7">Premium Optimization Analysis</p>
-            <div className="flex flex-col gap-1 pl-7">
-              <p className="text-5xl font-black text-purple-600">
-                {savings > 0 ? `-${savings.toLocaleString()}` : '0'} <span className="text-2xl">원</span>
-              </p>
-              <p className="text-sm font-bold text-purple-600/60">불필요한 지출 및 패키지 최적화로 부담을 덜어드립니다.</p>
-            </div>
+            <span className="text-xs font-black text-indigo-200 uppercase tracking-widest bg-indigo-900/30 px-3 py-1 rounded-full mb-4 inline-block">
+              Driver Protection Specialization Analysis
+            </span>
+            <h4 className="text-2xl font-black mb-2">동일 연령·운전조건 기준 월 예상 절약 보험료</h4>
+            <p className="text-indigo-100 text-sm font-bold opacity-80">
+              사용자님의 연령과 운전 환경에 맞춘 최적의 운전자 필수 담보 플랜으로 전환 시 절감되는 금액입니다.
+            </p>
           </div>
-          
-          <div className="bg-white p-8 rounded-[2.5rem] border border-purple-100 shadow-xl max-w-md w-full relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-4 opacity-5">
-              <TrendingUp size={80} className="text-purple-500" />
-            </div>
-            <div className="relative z-10 flex items-start gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-purple-600 text-white flex items-center justify-center shadow-lg shadow-purple-200">
-                <CheckCircle2 size={24} />
+          <div className={forceMobile ? 'text-left' : 'text-right'}>
+            {savings > 0 ? (
+              <div className="flex items-baseline gap-2">
+                <span className="text-6xl font-black tracking-tighter text-yellow-300">
+                  {savings.toLocaleString()}
+                </span>
+                <span className="text-xl font-bold text-indigo-100">원 절감</span>
               </div>
-              <div>
-                <p className="text-sm font-black text-slate-800 mb-1">최적화 시뮬레이션 안내</p>
-                <p className="text-xs font-bold text-slate-500 leading-relaxed">
-                  월 약 <span className="text-purple-600 font-black">{savings.toLocaleString()}원</span> 수준의 보험료 조정 예시와 함께, 형사합의금 및 경찰조사 변호사선임비 등 핵심 담보 중심의 재설계 검토 예시입니다.
-                </p>
-                <p className="text-[10px] text-slate-400 font-medium mt-2 leading-tight">
-                  * 상기 절감액 및 보장 한도는 고객 입력 조건에 기반한 예시이며 실제 가입 조건 및 다수 계약 보유 여부(비례보상)에 따라 상이합니다.
-                </p>
+            ) : (
+              <div className="flex items-baseline gap-2">
+                <span className="text-4xl font-black tracking-tighter text-white">
+                  현재 납입금액 유지/추가 보강 필요
+                </span>
               </div>
-            </div>
+            )}
+            <p className="text-[10px] text-indigo-200 font-bold mt-2 opacity-60 uppercase tracking-widest">
+              * 추천 상품 기준 예상 수치 (비례보상 담보 포함 여부에 따라 상이)
+            </p>
           </div>
         </div>
       </div>
