@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://insure-rebalance.vercel.app/sitemap_insurance.xml
+Sitemap: https://insure-rebalance.vercel.app/sitemap.xml
