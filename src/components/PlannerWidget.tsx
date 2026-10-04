@@ -6,9 +6,10 @@ import { B2BBranding, useB2BBranding } from '../hooks/useB2BBranding';
 interface PlannerWidgetProps {
   branding: B2BBranding;
   onKakaoClick?: (type: 'anonymous' | 'regular') => void;
+  hasBottomBanner?: boolean;
 }
 
-export default function PlannerWidget({ branding, onKakaoClick }: PlannerWidgetProps) {
+export default function PlannerWidget({ branding, onKakaoClick, hasBottomBanner = false }: PlannerWidgetProps) {
   const { deferredPrompt, onInstallClick, isInAppBrowser, setShowInAppGuide, isIOS, isStandalone, isB2BMode } = useB2BBranding();
   const [isOpen, setIsOpen] = useState(true);
   const [isMinimized, setIsMinimized] = useState(true);
@@ -90,7 +91,7 @@ END:VCARD`;
           initial={{ opacity: 0, y: 50, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 50, scale: 0.9 }}
-          className="fixed bottom-6 right-6 z-40 max-w-sm w-80 bg-slate-950/95 text-white p-6 rounded-[2.5rem] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-md"
+          className={`fixed ${hasBottomBanner ? 'bottom-[72px] md:bottom-6' : 'bottom-6'} right-3 md:right-6 z-40 max-w-sm w-[calc(100vw-24px)] md:w-80 bg-slate-950/95 text-white p-5 md:p-6 rounded-[2rem] md:rounded-[2.5rem] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-md transition-all duration-300`}
         >
           {/* Close/Minimize actions */}
           <div className="absolute top-4 right-4 flex items-center gap-2">
@@ -107,7 +108,7 @@ END:VCARD`;
               <X size={16} />
             </button>
           </div>
- 
+
           <div className="flex flex-col items-center text-center space-y-4">
             {/* Profile Avatar / Photo */}
             <div className="relative">
@@ -132,7 +133,7 @@ END:VCARD`;
               </div>
               <span className="absolute bottom-0 right-0 w-4.5 h-4.5 bg-emerald-500 border-2 border-slate-950 rounded-full animate-pulse" />
             </div>
- 
+
             {/* Planner Info */}
             <div className="space-y-1">
               <span className="inline-block px-2.5 py-0.5 bg-orange-500/10 text-orange-400 text-[9px] font-black rounded-md border border-orange-500/20 uppercase tracking-widest">
@@ -196,20 +197,20 @@ END:VCARD`;
         </motion.div>
       ) : (
         /* Minimized State Floating Button Stack */
-        <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3 pointer-events-none">
+        <div className={`fixed ${hasBottomBanner ? 'bottom-[62px] md:bottom-6' : 'bottom-4 md:bottom-6'} right-3 md:right-6 z-40 flex flex-col items-end gap-3 pointer-events-none transition-all duration-300`}>
 
           <motion.button
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             onClick={() => setIsMinimized(false)}
-            className="pointer-events-auto px-6 py-4 bg-slate-950 text-white rounded-full border border-white/10 shadow-[0_15px_30px_rgba(0,0,0,0.3)] hover:border-orange-500/50 flex items-center gap-3 transform hover:scale-105 transition-all duration-300 cursor-pointer"
+            className="pointer-events-auto px-3.5 py-2 md:px-6 md:py-4 bg-slate-950/95 text-white rounded-full border border-white/10 shadow-[0_10px_25px_rgba(0,0,0,0.4)] hover:border-orange-500/50 flex items-center gap-2 md:gap-3 transform hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer backdrop-blur-md"
           >
-            <div className="w-8 h-8 rounded-xl overflow-hidden border border-orange-500/30 flex items-center justify-center bg-slate-950 shrink-0 p-0.5">
+            <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg md:rounded-xl overflow-hidden border border-orange-500/30 flex items-center justify-center bg-slate-950 shrink-0 p-0.5">
               {branding.profileImageUrl ? (
                 <img
                   src={branding.profileImageUrl}
                   alt={branding.name}
-                  className="w-full h-full object-cover rounded-lg"
+                  className="w-full h-full object-cover rounded-md md:rounded-lg"
                   referrerPolicy="no-referrer"
                 />
               ) : branding.logoUrl ? (
@@ -220,14 +221,14 @@ END:VCARD`;
                   referrerPolicy="no-referrer"
                 />
               ) : (
-                <User size={16} className="text-slate-400" />
+                <User size={14} className="text-slate-400" />
               )}
             </div>
             <div className="text-left">
-              <p className="text-[8px] font-black text-orange-400 leading-none">
+              <p className="text-[7px] md:text-[8px] font-black text-orange-400 leading-none">
                 {branding.type === 'planner' ? 'Planner Contact' : 'Official Planner'}
               </p>
-              <p className="text-xs font-black mt-0.5">
+              <p className="text-[11px] md:text-xs font-black mt-0.5">
                 {branding.type === 'planner' ? `${branding.name} 설계사 상담` : `${branding.name} 공식 설계사 상담`}
               </p>
             </div>

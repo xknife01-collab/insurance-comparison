@@ -1865,7 +1865,11 @@ export default function App() {
       </main>
 
       <Footer />
-      <PlannerWidget branding={branding} onKakaoClick={handlePlannerWidgetKakaoClick} />
+      <PlannerWidget 
+        branding={branding} 
+        onKakaoClick={handlePlannerWidgetKakaoClick} 
+        hasBottomBanner={!!(((analysisResult || showComparisonBar) && !isUnlocked && !isInRemodelingZone) || isInRemodelingZone)}
+      />
 
       {/* PWA In-App Browser & iOS Safari Guidance Modal */}
       {showInAppGuide && !isB2BMode && (
@@ -1961,22 +1965,22 @@ export default function App() {
       )}
       {/* 🔒 PII-Free Pivot: Sticky Floating Bottom Bar for Unmasking (비교 분석 구간) */}
       {(analysisResult || showComparisonBar) && !isUnlocked && !isInRemodelingZone && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-full max-w-md px-4">
-          <div className="bg-slate-950/90 text-white rounded-[2rem] p-4.5 border border-slate-800 backdrop-blur-md shadow-2xl flex items-center justify-between gap-4">
-            <div className="text-left space-y-0.5 pl-1">
-              <p className="text-[11px] font-black text-slate-400 flex items-center gap-1.5">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+        <div className="fixed bottom-2.5 md:bottom-6 left-1/2 -translate-x-1/2 z-40 w-full max-w-md px-3 md:px-4">
+          <div className="bg-slate-950/95 text-white rounded-2xl md:rounded-[2rem] px-3.5 py-2.5 md:p-4.5 border border-slate-800 backdrop-blur-md shadow-2xl flex items-center justify-between gap-2.5 md:gap-4">
+            <div className="text-left space-y-0.5 pl-0.5 md:pl-1 min-w-0 flex-1">
+              <p className="text-[9px] md:text-[11px] font-black text-slate-400 flex items-center gap-1.5 truncate">
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse shrink-0" />
                 익명 안심 비교 모드
               </p>
-              <h4 className="text-xs font-black text-slate-200">
+              <h4 className="text-[11px] md:text-xs font-black text-slate-200 truncate">
                 실시간 상담 요청 시 실명 공개
               </h4>
             </div>
             <button
               onClick={() => setShowUnlockModal(true)}
-              className="px-5 py-3 bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-700 hover:to-orange-600 text-white font-black text-xs rounded-xl shadow-lg shadow-orange-950/40 transition-all flex items-center gap-2"
+              className="shrink-0 px-3 py-2 md:px-5 md:py-3 bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-700 hover:to-orange-600 text-white font-black text-[11px] md:text-xs rounded-xl shadow-lg shadow-orange-950/40 transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer"
             >
-              <ShieldCheck className="w-4 h-4" />
+              <ShieldCheck className="w-3.5 h-3.5 md:w-4 md:h-4" />
               실시간 상담 요청하기
             </button>
           </div>
@@ -1985,25 +1989,25 @@ export default function App() {
 
       {/* 🔬 정밀 분석 구간 Floating Bar */}
       {isInRemodelingZone && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-full max-w-md px-4 animate-in slide-in-from-bottom-4 duration-300">
-          <div className="bg-slate-950/95 text-white rounded-[2rem] p-4 border border-orange-500/30 backdrop-blur-md shadow-[0_20px_40px_rgba(255,107,0,0.15)] flex items-center justify-between gap-3">
-            <div className="text-left space-y-0.5 pl-1 flex-1 min-w-0">
-              <p className="text-[10px] font-black text-orange-400 flex items-center gap-1.5">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse" />
+        <div className="fixed bottom-2.5 md:bottom-6 left-1/2 -translate-x-1/2 z-40 w-full max-w-md px-3 md:px-4 animate-in slide-in-from-bottom-4 duration-300">
+          <div className="bg-slate-950/95 text-white rounded-2xl md:rounded-[2rem] px-3.5 py-2.5 md:p-4 border border-orange-500/30 backdrop-blur-md shadow-[0_20px_40px_rgba(255,107,0,0.15)] flex items-center justify-between gap-2 md:gap-3">
+            <div className="text-left space-y-0.5 pl-0.5 md:pl-1 flex-1 min-w-0">
+              <p className="text-[9px] md:text-[10px] font-black text-orange-400 flex items-center gap-1.5 truncate">
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse shrink-0" />
                 내보험 정밀 분석모드
               </p>
-              <h4 className="text-[11px] font-black text-white leading-tight">
-                🔍 실제 내가 가입한 보험, 지금 바로 확인
+              <h4 className="text-[10px] md:text-[11px] font-black text-white leading-tight truncate">
+                🔍 실제 내가 가입한 보험 확인
               </h4>
-              <p className="text-[9px] text-slate-400 font-semibold">
+              <p className="text-[8px] md:text-[9px] text-slate-400 font-semibold truncate hidden xs:block">
                 한국신용정보원 연동 후 자동진단
               </p>
             </div>
             <button
               onClick={() => setShowUnlockModal(true)}
-              className="shrink-0 px-3.5 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-[10px] rounded-xl shadow-lg shadow-orange-950/40 transition-all flex items-center gap-1 whitespace-nowrap"
+              className="shrink-0 px-3 py-2 md:px-3.5 md:py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-[10px] md:text-[11px] rounded-xl shadow-lg shadow-orange-950/40 transition-all flex items-center gap-1 whitespace-nowrap cursor-pointer"
             >
-              💬 실시간 고객 상담 (무료)
+              💬 실시간 상담 (무료)
             </button>
           </div>
         </div>
@@ -2159,6 +2163,7 @@ export default function App() {
           customAddress={branding.customAddress || branding.agencyAddress}
           certificationMessage={branding.certificationMessage}
           logoUrl={branding.logoUrl || null}
+          hasBottomBanner={!!(((analysisResult || showComparisonBar) && !isUnlocked && !isInRemodelingZone) || isInRemodelingZone)}
         />
       )}
     </div>

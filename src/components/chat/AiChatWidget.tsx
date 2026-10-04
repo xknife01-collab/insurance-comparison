@@ -182,6 +182,7 @@ interface AiChatWidgetProps {
   customAddress?: string | null;
   certificationMessage?: string | null;
   logoUrl?: string | null;
+  hasBottomBanner?: boolean;
 }
 
 interface Message {
@@ -211,7 +212,8 @@ export default function AiChatWidget({
   customEmail,
   customAddress,
   certificationMessage,
-  logoUrl
+  logoUrl,
+  hasBottomBanner = false
 }: AiChatWidgetProps) {
   const [localIsOpen, setLocalIsOpen] = useState(false);
   const isOpen = externalIsOpen !== undefined ? externalIsOpen : localIsOpen;
@@ -1438,7 +1440,7 @@ export default function AiChatWidget({
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+    <div className={`fixed ${hasBottomBanner ? 'bottom-[62px] md:bottom-6' : 'bottom-4 md:bottom-6'} right-3 md:right-6 z-50 flex flex-col items-end transition-all duration-300`}>
       {/* 💬 Floating 상담 위젯 버튼 */}
       <AnimatePresence>
         {!isOpen && (
@@ -1447,10 +1449,10 @@ export default function AiChatWidget({
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
             onClick={() => setIsOpen(true)}
-            className="px-5 py-3.5 bg-gradient-to-r from-orange-600 to-orange-500 text-white font-black text-xs rounded-full shadow-[0_10px_30px_rgba(249,115,22,0.3)] transition-all cursor-pointer flex items-center gap-2 hover:scale-105 active:scale-95"
+            className="px-3.5 py-2 md:px-5 md:py-3.5 bg-gradient-to-r from-orange-600 to-orange-500 text-white font-black text-[11px] md:text-xs rounded-full shadow-[0_10px_30px_rgba(249,115,22,0.3)] transition-all cursor-pointer flex items-center gap-1.5 md:gap-2 hover:scale-105 active:scale-95"
           >
             <div className="relative">
-              <MessageSquare className="w-4 h-4" />
+              <MessageSquare className="w-3.5 h-3.5 md:w-4 md:h-4" />
               <span className="absolute -top-1 -right-1 flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
