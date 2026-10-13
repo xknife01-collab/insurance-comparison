@@ -1027,7 +1027,7 @@ export default function App() {
           </div>
           <PreExistingExplanation isUnlocked={isUnlocked} onAction={() => { setCalcTarget('pre'); setView('home'); }} />
         </main>
-        <Footer />
+        <Footer isPreExisting={true} />
       </div>
     );
   }

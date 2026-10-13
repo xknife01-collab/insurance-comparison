@@ -19,7 +19,7 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
         <div>
           <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-xs font-black mb-6 border border-blue-200 shadow-sm animate-pulse">
             <div className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
-            대한민국 4,000만 명의 선택, 의료 안전망의 핵심
+            일상 속 든든한 의료 안전망의 핵심
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[1.1]">
             가장 든든한 제 2의 건강보험,<br />
@@ -139,7 +139,10 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
           <div className="relative z-10 mt-8 p-5 md:p-6 bg-white/5 rounded-3xl border border-white/10">
             <p className="text-blue-400 font-black text-xs mb-1 uppercase tracking-widest">💡 유병자/만성질환 가입 특례</p>
             <p className="text-white font-bold text-xs leading-relaxed opacity-80">
-              당뇨, 고혈압 등의 만성 질환으로 정기 처방을 받고 계시거나, 과거 치료 이력이 있는 유병력자분들도 **3가지 간편 고지 질문**만 통과하면 간편 유병자 실손의료보험을 통해 핵심 수술/입원 실손 의료비를 확보할 수 있습니다.
+              당뇨, 고혈압 등의 만성 질환으로 정기 처방을 받고 계시거나, 과거 치료 이력이 있는 유병력자분들도 3가지 간편 고지 질문만 통과하면 간편 유병자 실손의료보험을 통해 핵심 수술/입원 실손 의료비를 확보할 수 있습니다.
+            </p>
+            <p className="text-slate-300 font-bold text-xs leading-relaxed mt-2">
+              ※ 개인의 병력 및 회사의 인수기준에 따라 가입이 거절될 수 있습니다.
             </p>
           </div>
         </div>
@@ -162,8 +165,8 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
           </div>
           <div className="space-y-4">
             {[
-              { title: '기본 보험료 50%~75% 절약', desc: '1~3세대 대비 대폭 저렴한 초저가 기본 요율 설계', info: '기존 월 6~8만원 대 실비 ➔ 월 1~2만원 대로 다이어트' },
-              { title: '비급여 미청구 시 10% 자동 할인', desc: '직전년도 보험금 미수령자 대상 매년 추가 보험료 인하', info: '의료 쇼핑 없는 실속 가입자 우대 제도 작동' },
+              { title: '기본 보험료 절약', desc: '1~3세대 대비 합리적인 기본 요율 설계', info: '기존 구세대 실비 대비 ➔ 합리적인 보험료 부담 완화' },
+              { title: '비급여 미청구 시 보험료 할인 혜택', desc: '직전년도 보험금 미수령자 대상 매년 추가 보험료 인하', info: '의료 쇼핑 없는 실속 가입자 우대 제도 작동' },
               { title: '무심사 4/5세대 간편 계약 전환권', desc: '기존 가입 보험사 내에서는 복잡한 신규 인수심사 없이 다이렉트 전환', info: '병력이 생긴 고연령층도 무심사 전환 가능' },
             ].map((item, i) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
@@ -219,7 +222,7 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
               <Clock className="text-blue-500 w-5 h-5" /> 가입 최적 시점
             </h4>
             <p className="text-xs font-bold text-slate-500 leading-relaxed">
-              실손의료비는 질병이 생기거나 나이가 많아지면 인수 심사가 가장 까다로워지는 진입장벽이 높은 상품입니다. 한 살이라도 젊고 전혀 아픈 곳이 없는 건강한 상태일 때 다이렉트 단독 실손으로 즉각적인 안심 장치를 장착해두시는 것이 평생의 병원비 리스크를 제로로 만드는 골든 타임입니다.
+              실손의료비는 질병이 생기거나 나이가 많아지면 인수 심사가 까다로워지는 진입장벽이 높은 상품입니다. 한 살이라도 젊고 병력 이력이 없는 건강한 상태일 때 다이렉트 단독 실손으로 즉각적인 안심 장치를 마련해 두시는 것이 좋습니다.
             </p>
           </div>
         </div>
@@ -232,12 +235,12 @@ export const SilsonExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { company: '삼성화재', product: '다이렉트 실손의료비보험', highlight: '압도적인 자금력을 기반으로 한 가장 빠르고 투명한 보험금 지급 심사 프로세스 및 모바일 앱 편의성 제공', badges: ['지급 심사 우수', '대표 브랜드'] },
-            { company: '현대해상', product: '다이렉트 실손의료비보장보험', highlight: '태아/어린이 실손 선두를 달성한 신뢰도 높은 설계 요율, 폭넓은 연령대별 상해 급여 보상 네트워크 보유', badges: ['어린이 실손 최우수', '상해 치료 특화'] },
-            { company: 'DB손해보험', product: '다이렉트 실손의료비보험', highlight: '다이렉트 전용 수수료가 전면 배제된 매우 합리적인 월 기본 가격대 형성, 기존 가입자 계약 전환 케어 우수', badges: ['실속 보험료', '계약전환 간편화'] },
-            { company: '메리츠화재', product: '다이렉트 실손의료비보험', highlight: '소액 외래 진단비 및 약제 처방 청구 서류 간소화, 통원 도수치료 및 비급여 특약 보상 청구 절차 원스톱 승인', badges: ['신속 심사', '소액청구 특화'] },
-            { company: 'KB손해보험', product: '다이렉트 실손의료비보장보험', highlight: 'KB금융 계열사 통합 금융 혜택 연동 및 주택화재/자동차보험과의 간편 패키지 결합 우대 혜택 보유', badges: ['그룹 결합 우대', '쉽고 빠른 UI'] },
-            { company: '한화손해보험', product: '다이렉트 실손의료비보험', highlight: '월 납입 비용 다이어트에 초점을 맞춘 합리적이고 매력적인 하루 실비 요율 책정으로 실속 지향 고객에게 우수', badges: ['가성비 집중', '실속 다이어트'] },
+            { company: '삼성화재', product: '다이렉트 실손의료비보험', highlight: '모바일 앱을 통한 편리한 보험금 청구 접수 및 비대면 서류 등록 프로세스 제공', badges: ['모바일 청구 편의', '비대면 접수'] },
+            { company: '현대해상', product: '다이렉트 실손의료비보장보험', highlight: '전 연령층을 아우르는 표준 상해·질병 급여 보장 네트워크 및 체계적인 보상 안내', badges: ['표준 보장 네트워크', '체계적 안내'] },
+            { company: 'DB손해보험', product: '다이렉트 실손의료비보험', highlight: '온라인 다이렉트 채널을 통한 표준 플랜 제공 및 기존 가입자 계약 전환 절차 지원', badges: ['온라인 다이렉트', '계약전환 지원'] },
+            { company: '메리츠화재', product: '다이렉트 실손의료비보험', highlight: '소액 외래 진료비 및 처방 조제비 모바일 접수 안내 및 항목별 청구 가이드 제공', badges: ['소액 청구 안내', '서류 접수 간소화'] },
+            { company: 'KB손해보험', product: '다이렉트 실손의료비보장보험', highlight: '손해보험 기본 표준 약관 준수 및 간편한 온라인 본인 인증 청약 절차 제공', badges: ['간편 본인인증', '표준 약관 준수'] },
+            { company: '한화손해보험', product: '다이렉트 실손의료비보험', highlight: '필수 실손의료비 보장 구성에 충실한 표준 설계 및 투명한 갱신 기준 안내', badges: ['표준 설계 충실', '갱신 기준 안내'] },
           ].map((item, i) => (
             <div key={i} className="p-5 md:p-8 bg-blue-50/20 rounded-2xl md:rounded-[2.5rem] border border-blue-100 hover:border-blue-300 hover:shadow-lg transition-all">
               <p className="text-xs font-black text-blue-600 mb-1">{maskCompany(item.company, isUnlocked)}</p>

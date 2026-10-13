@@ -1345,7 +1345,7 @@ export const PhilosophySection = () => {
   );
 };
 
-export const Footer = () => {
+export const Footer = ({ isPreExisting }: { isPreExisting?: boolean } = {}) => {
   const { branding, isB2BMode } = useB2BBranding();
   return (
     <footer className="bg-[#111827] text-white pt-24 pb-12 px-6 overflow-hidden">
@@ -1377,6 +1377,18 @@ export const Footer = () => {
               />
             )}
           </div>
+
+          {/* Middle: Pre-existing Notice if isPreExisting */}
+          {isPreExisting && (
+            <div className="bg-slate-900/90 border border-amber-500/30 rounded-2xl p-4 px-6 text-center shadow-lg max-w-md mx-auto my-2 md:my-0">
+              <p className="text-amber-400 font-black text-xs mb-1">
+                유병자보험(플랜) 필수안내문구
+              </p>
+              <p className="text-slate-200 text-xs font-bold leading-relaxed break-keep">
+                "개인의 병력 및 회사의 인수기준에 따라 가입이 거절될 수 있습니다"
+              </p>
+            </div>
+          )}
 
           {/* Right Side: Customer Support Info (Right-aligned) */}
           <div className="max-w-md md:text-right flex flex-col md:items-end gap-1">
@@ -1429,6 +1441,11 @@ export const Footer = () => {
                 <p className="text-slate-400 leading-normal">
                   • 보험회사 상품별, 성별, 연령, 직업에 따라 가입 가능한 담보와 가입금액, 보험료 등은 달라질 수 있습니다.
                 </p>
+                {isPreExisting && (
+                  <p className="text-amber-300 leading-normal font-bold">
+                    • 간편심사(유병자) 상품의 경우 개인의 병력 및 회사의 인수기준에 따라 가입이 거절될 수 있습니다.
+                  </p>
+                )}
               </div>
 
               <div className="pt-3 border-t border-slate-800/80 space-y-2">

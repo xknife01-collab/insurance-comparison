@@ -19,7 +19,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
         <div>
           <div className="inline-flex items-center gap-2 bg-teal-100 text-teal-800 px-4 py-2 rounded-full text-xs font-black mb-6 border border-teal-200 shadow-sm animate-pulse">
             <div className="w-1.5 h-1.5 bg-teal-500 rounded-full" />
-            건강할 때 준비하는 평생 치아 안전망
+            건강할 때 준비하는 치아 안전망
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[1.1]">
             오르면 부담되는 비싼 치과 치료비,<br />
@@ -148,7 +148,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
                   ⏱️ 질병 원인 면책 90일 및 1~2년 감액제
                 </p>
                 <p className="text-xs opacity-75 font-bold leading-relaxed mb-2">
-                  질병으로 인한 보존/보철 치료는 가입 후 90일간 면책(미지급)되며, 무진단형의 경우 보통 1~2년 이내 치료 시 가입 금액의 50%만 지급(감액)됩니다. 단, **재해/상해 사고로 인한 치과 수술은 대기기간 없이 즉시 전액** 보장됩니다.
+                  질병으로 인한 보존/보철 치료는 가입 후 90일간 면책(미지급)되며, 무진단형의 경우 보통 1~2년 이내 치료 시 가입 금액의 50%만 지급(감액)됩니다. 단, 재해 및 상해 사고로 인한 치료는 면책·감액 기간 없이 약관상 정해진 가입금액 기준으로 보장됩니다.
                 </p>
               </div>
             </div>
@@ -175,7 +175,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
             </div>
             <h3 className="text-3xl font-black mb-4 tracking-tight">내 치아 건강에 맞는 진단형 vs 무진단형 선택 기준</h3>
             <p className="text-sm opacity-70 font-bold leading-relaxed">
-              시중에 공급되는 대다수 상품은 간편하게 심사 없이 가입되는 **무진단형**이지만, 현재 치주 상태가 매우 양호하고 치과 방문 이력이 깨끗하신 분들이라면 면책/감액 대기기간이 아예 없고 한도가 훨씬 큰 **진단형** 가입이 경제적이며 절대적으로 우월합니다. 본인의 최근 치과 진료 소견을 바탕으로 최적의 가입 트랙을 설계하십시오.
+              시중에 공급되는 대다수 상품은 간편하게 심사 없이 가입되는 무진단형이지만, 현재 치아 상태가 건강하신 분들이라면 면책 및 감액 기간이 없는 진단형 가입이 더 유리할 수 있습니다. 본인의 치아 건강 상태에 맞는 적합한 플랜을 비교해 보세요.
             </p>
           </div>
           <div className="space-y-4">
@@ -227,7 +227,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
             <p className="text-xs font-bold opacity-90 leading-relaxed">
               ① 치아가 완전히 깨끗하다면 면책 없는 진단형 공략<br />
               ② 가입 전 이미 뽑은 기발치 치아 임플란트는 보장 면책<br />
-              ③ 상해 사고 타구 임플란트는 가입 첫날부터 전액 보장<br />
+              ③ 상해 사고 임플란트는 대기기간 없이 가입금액 한도 내 지급<br />
               ④ 2030 세대는 보존(크라운)치료 특약 꼼꼼히 구성<br />
               ⑤ 잇몸 건강 5년 무사고 시 대다수 무진단형 패스
             </p>
@@ -237,7 +237,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
               <Clock className="text-teal-500 w-5 h-5" /> 가입 최적 시점
             </h4>
             <p className="text-xs font-bold text-slate-500 leading-relaxed">
-              치아는 한 번 손상되거나 잇몸 뼈가 녹기 시작하면 재생이 불가능하며 고액의 치료비가 발생합니다. 특히 충치로 통증이 발생한 뒤에는 무진단형 치아보험도 고지의무 위반에 해당해 가입이 전면 불가능해집니다. 따라서 자잘한 충치 통증이나 불편함을 느끼기 전, 가장 깨끗하고 건강한 치아 상태일 때 미리 월 2~3만원 대로 든든한 방어막을 구축하시는 것이 최선의 타이밍입니다.
+              치아는 한 번 손상되거나 잇몸 뼈가 녹기 시작하면 재생이 불가능하며 고액의 치료비가 발생합니다. 특히 충치로 통증이 발생한 뒤에는 무진단형 치아보험도 고지의무 위반에 해당해 가입이 어려워집니다. 따라서 자잘한 충치 통증이나 불편함을 느끼기 전, 가장 깨끗하고 건강한 치아 상태일 때 미리 든든한 방어막을 구축하시는 것이 최선의 타이밍입니다.
             </p>
           </div>
         </div>

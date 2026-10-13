@@ -31,7 +31,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction, isUnlocked }
             </span>
           </h2>
           <p className="text-indigo-200/80 font-semibold text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            고혈압·당뇨 약 복용부터 최근 수술 이력까지. 복잡한 3.X.5 숫자의 원리를 파악하면, 일반 표준체 보험 대비 불필요하게 비싼 보험료 부담을 든든하게 덜어내실 수 있습니다.
+            고혈압·당뇨 약 복용부터 최근 수술 이력까지. 복잡한 3.X.5 숫자의 원리를 파악하면, 일반 표준체 보험 대비 비싼 보험료 부담을 덜어내실 수 있습니다.
           </p>
         </div>
       </div>
@@ -98,6 +98,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction, isUnlocked }
             <p>• <b>보험료 할증 안내:</b> 간편심사보험은 일반 표준체 보험에 비해 가입 심사가 간소화된 반면, 위험률이 반영되어 보험료가 다소 높을 수 있습니다.</p>
             <p>• <b>건강체 가입 권장:</b> 건강 상태가 양호한 고객의 경우 일반 심사 보험에 가입하는 것이 보험료 측면에서 훨씬 유리하므로, 일반 보험 가입 가능 여부를 먼저 확인하시기 바랍니다.</p>
             <p>• <b>보장 범위 제한:</b> 일반 보험에 비해 선택 가능한 특약의 종류나 가입 한도가 일부 제한될 수 있습니다.</p>
+            <p>• <b>가입 제한 안내:</b> 개인의 병력 및 회사의 인수기준에 따라 가입이 거절될 수 있습니다.</p>
           </div>
           <p className="text-[10.5px] font-semibold text-slate-400 pt-1">
             ※ 상기 내용은 상품별 약관 및 인수 기준에 따라 상이할 수 있으므로, 청약 전 반드시 상품설명서와 해당 약관을 확인하시기 바랍니다.
@@ -174,10 +175,10 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction, isUnlocked }
           </h4>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { name: '3.5.5 플랜', label: '상대적 경제성', desc: '5년간 입원/수술 無', rate: '일반 대비 약 1.1배*' },
-              { name: '3.3.5 플랜', label: '실속 가성비', desc: '3년간 입원/수술 無', rate: '일반 대비 약 1.25배*' },
-              { name: '3.2.5 플랜', label: '표준 유병자', desc: '2년간 입원/수술 無', rate: '일반 대비 약 1.35배*' },
-              { name: '3.0.5 플랜', label: '초간편 가입', desc: '최근 입원/수술력 有', rate: '일반 대비 약 1.5배 이상*' }
+              { name: '3.5.5 플랜', label: '상대적 경제성', desc: '5년간 입원/수술 無', rate: '표준플랜 대비 약 1.1배*' },
+              { name: '3.3.5 플랜', label: '실속 가성비', desc: '3년간 입원/수술 無', rate: '표준플랜 대비 약 1.25배*' },
+              { name: '3.2.5 플랜', label: '표준 유병자', desc: '2년간 입원/수술 無', rate: '표준플랜 대비 약 1.35배*' },
+              { name: '3.0.5 플랜', label: '초간편 가입', desc: '최근 입원/수술력 有', rate: '표준플랜 대비 약 1.5배 이상*' }
             ].map((plan, i) => (
               <div key={i} className="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-indigo-100 flex flex-col justify-between space-y-4">
                 <div>
@@ -193,7 +194,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction, isUnlocked }
             ))}
           </div>
           <p className="text-[11px] font-semibold text-slate-500 mt-5 text-center leading-relaxed">
-            * 상기 배율은 40세 남성, 상해 1급, 표준 플랜 기준의 예시적 비교치이며, 가입자의 연령, 성별, 직업, 선택 담보 및 각 보험사 인수 기준에 따라 실제 보험료와 배율은 상이할 수 있습니다.
+            * 상기 배율은 40세 남성, 상해 1급, 20년납 100세만기, 표준 플랜 기준의 예시적 비교치이며, 가입자의 연령, 성별, 직업, 선택 담보 및 각 보험사 인수 기준에 따라 실제 보험료와 배율은 상이할 수 있습니다.
           </p>
         </div>
       </div>
@@ -219,7 +220,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction, isUnlocked }
             </div>
             
             <p className="text-sm text-slate-300 font-semibold leading-relaxed">
-              고혈압, 당뇨, 고지혈증 약을 매일 복용 중이신가요? 많은 분들이 약 복용 사실만으로 보험에 가입할 수 없다고 오해하지만, 간편 고지에서는 아무런 문제가 되지 않습니다.
+              고혈압, 당뇨, 고지혈증 약을 매일 복용 중이신가요? 많은 분들이 약 복용 사실만으로 보험에 가입할 수 없다고 오해하지만, 간편 고지에서는 가입이 가능할 수도 있습니다.
             </p>
             
             <div className="space-y-4 pt-4">
@@ -254,7 +255,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction, isUnlocked }
             </div>
 
             <p className="text-xs text-gray-500 font-bold leading-relaxed">
-              유병자 보험은 한 번 가입하면 비싼 보험료를 평생 내야 할까요? 절대 아닙니다. 최근 출시되는 프리미엄 유병자 보험은 **'무사고 계약 전환권'**을 탑재하여 가입자의 사후 건강 상태 회복을 보상합니다.
+              유병자 보험은 한 번 가입하면 비싼 보험료를 평생 내야 할까요? 그렇지 않습니다. 최근 출시되는 프리미엄 유병자 보험은 '무사고 계약 전환권'을 탑재하여 가입자의 사후 건강 상태 회복을 보상합니다.
             </p>
 
             <div className="bg-sky-50/50 p-5 md:p-6 rounded-2xl border border-sky-100 space-y-4">
@@ -401,7 +402,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction, isUnlocked }
             {
               step: '02',
               title: '가장 까다로운 3.5.5부터 우선 심사 넣기',
-              desc: '지레 겁먹고 비싼 3.2.5 요금제에 덜컥 가입하지 마세요. 가장 저렴한 3.5.5부터 심사를 넣고, 거절될 경우 한 단계씩 낮춰 심사를 넣는 역순 공략이 보험료를 30% 절감할 수 있는 합리적인 방법이 될 수 있습니다.'
+              desc: '지레 겁먹고 비싼 3.2.5 요금제에 덜컥 가입하지 마세요. 가장 저렴한 3.5.5부터 심사를 넣고, 거절될 경우 한 단계씩 낮춰 심사를 넣는 역순 공략이 보험료를 절감할 수 있는 합리적인 방법이 될 수 있습니다.'
             },
             {
               step: '03',
@@ -411,7 +412,7 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction, isUnlocked }
             {
               step: '04',
               title: '가입 후 반드시 "무사고 계약 전환" 권리 챙기기',
-              desc: '가입 이후 병력이 생기지 않고 일정 기간이 경과하면 더 저렴한 건강 요금제로 변경해 주는 권리를 직접 행사해야 합니다. 보험사가 알아서 내려주지 않는 권리이니 반드시 달력에 표기하세요.'
+              desc: '가입 이후 병력이 생기지 않고 일정 기간이 경과하면 더 저렴한 건강 요금제로 변경해 주는 권리를 직접 행사해야 합니다. 계약자의 권리이니 반드시 달력에 표시하세요.'
             }
           ].map((item, idx) => (
             <div key={idx} className="bg-white p-5 md:p-8 rounded-3xl border border-slate-100 flex gap-6">
