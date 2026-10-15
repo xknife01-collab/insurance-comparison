@@ -327,6 +327,9 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
       const referrer = typeof document !== 'undefined' ? document.referrer : '';
 
       let detectedSource = 'organic';
+      const refLower = (referrer || '').toLowerCase();
+      const ua = typeof navigator !== 'undefined' ? (navigator.userAgent || '').toLowerCase() : '';
+
       if (gclid) {
         detectedSource = 'google_ads';
       } else if (fbclid) {
@@ -335,18 +338,72 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
         detectedSource = 'naver_gfa';
       } else if (utmSource) {
         detectedSource = utmSource;
-      } else if (/instagram/i.test(referrer) || isInstagram) {
+      } else if (refLower.includes('youtube.com') || refLower.includes('youtu.be')) {
+        detectedSource = 'youtube';
+      } else if (refLower.includes('tiktok.com')) {
+        detectedSource = 'tiktok';
+      } else if (refLower.includes('instagram.com') || isInstagram || ua.includes('instagram')) {
         detectedSource = 'instagram';
-      } else if (/facebook/i.test(referrer) || isFacebook || /fb/i.test(referrer)) {
+      } else if (refLower.includes('threads.net') || ua.includes('barcelona')) {
+        detectedSource = 'threads';
+      } else if (refLower.includes('facebook.com') || refLower.includes('fb.com') || isFacebook || ua.includes('fban') || ua.includes('fbav')) {
         detectedSource = 'facebook';
+      } else if (refLower.includes('blog.naver.com') || (refLower.includes('naver.com') && refLower.includes('blog'))) {
+        detectedSource = 'naver_blog';
+      } else if (refLower.includes('kin.naver.com')) {
+        detectedSource = 'naver_kin';
+      } else if (refLower.includes('cafe.naver.com')) {
+        detectedSource = 'naver_cafe';
+      } else if (refLower.includes('cafe.daum.net')) {
+        detectedSource = 'daum_cafe';
+      } else if (refLower.includes('search.naver.com') || refLower.includes('m.naver.com')) {
+        detectedSource = 'naver_search';
+      } else if (refLower.includes('google.com') || refLower.includes('google.co.kr')) {
+        detectedSource = 'google_search';
+      } else if (refLower.includes('tistory.com')) {
+        detectedSource = 'tistory';
+      } else if (refLower.includes('brunch.co.kr')) {
+        detectedSource = 'brunch';
+      } else if (refLower.includes('ppomppu.co.kr')) {
+        detectedSource = 'ppomppu';
+      } else if (refLower.includes('dcinside.com')) {
+        detectedSource = 'dcinside';
+      } else if (refLower.includes('bobaedream.co.kr')) {
+        detectedSource = 'bobaedream';
+      } else if (refLower.includes('pann.nate.com')) {
+        detectedSource = 'nate_pann';
+      } else if (refLower.includes('fmkorea.com')) {
+        detectedSource = 'fmkorea';
+      } else if (refLower.includes('kakaotalk') || ua.includes('kakaotalk') || refLower.includes('kakao.com')) {
+        detectedSource = 'kakaotalk';
+      } else if (refLower.includes('twitter.com') || refLower.includes('x.com') || refLower.includes('t.co')) {
+        detectedSource = 'twitter';
       }
 
-      if (detectedSource !== 'organic') {
-        sessionStorage.setItem('ins_utm_source', detectedSource);
-        localStorage.setItem('ins_utm_source', detectedSource);
-      }
+      // [유입 채널 영구/세션 저장] 감지된 SNS 채널 저장 (직접 접속/organic인 경우도 fallback 보존)
+      const currentStored = sessionStorage.getItem('ins_utm_source') || localStorage.getItem('ins_utm_source');
+      const finalSource = (detectedSource !== 'organic') ? detectedSource : (currentStored || 'organic');
+      sessionStorage.setItem('ins_utm_source', finalSource);
+      localStorage.setItem('ins_utm_source', finalSource);
 
       const supabase = createClient();
+
+      // [전체 방문자 100% 실시간 SNS 유입 집계]
+      // 설계사 코드 유무와 관계없이 15대 SNS(유튜브, 인스타, 틱톡, 블로그, 카페 등) 방문을 세션당 1회 무조건 Supabase visitor_logs에 기록
+      if (!sessionStorage.getItem('ins_visit_logged')) {
+        const sessionId = Math.random().toString(36).substring(2, 15);
+        supabase.from('visitor_logs')
+          .insert({
+            planner_code: plannerCode || 'direct',
+            utm_source: finalSource,
+            session_id: sessionId
+          })
+          .then(({ error }) => {
+            if (!error) {
+              sessionStorage.setItem('ins_visit_logged', 'true');
+            }
+          });
+      }
 
       try {
         const isStandaloneApp = typeof window !== 'undefined' && (
@@ -420,21 +477,7 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
               sessionStorage.removeItem('pwa_saved_agency');
             }
 
-            // Log visit in visitor_logs table in Supabase
-            if (!sessionStorage.getItem('ins_visit_logged')) {
-              const sessionId = Math.random().toString(36).substring(2, 15);
-              supabase.from('visitor_logs')
-                .insert({
-                  planner_code: plannerCode,
-                  utm_source: sessionStorage.getItem('ins_utm_source') || localStorage.getItem('ins_utm_source') || detectedSource,
-                  session_id: sessionId
-                })
-                .then(({ error }) => {
-                  if (!error) {
-                    sessionStorage.setItem('ins_visit_logged', 'true');
-                  }
-                });
-            }
+            // (Global visitor_logs recording is handled at the top of fetchBranding)
 
             setLoading(false);
             return;
