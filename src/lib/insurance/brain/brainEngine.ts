@@ -19,12 +19,13 @@ export const analyzeBrain = (analysis: any): any => {
   const opt3 = allOptions[2] || opt2;
 
   const diet: RecommendationPlan = {
-    title: `[${opt1.companyName}] 실속 뇌혈관 플랜`,
-    description: `핵심적인 뇌혈관/허혈성 진단비만 골라 담은 가성비 플랜입니다.`,
+    title: '실속 뇌혈관 플랜',
+    description: `핵심적인 뇌혈관/허혈성 진단비만 골라 담은 20년납 비갱신형 가성비 플랜입니다.`,
     productName: opt1.productName,
     companyName: opt1.companyName,
     estimatedPremium: opt1.premium,
-    coverageChanges: ['뇌혈관 진단비 1천만', '허혈성 진단비 1천만', '불필요한 연계담보 삭제'],
+    periodBadge: '20년납 · 90세만기 (비갱신형)',
+    coverageChanges: ['뇌혈관 진단비 1천만', '허혈성 진단비 1천만', '필수 담보 집중 구성'],
     switchingLossNotice: '해지 시 이미 발생한 뇌혈관 질환은 보장이 제외될 수 있습니다.',
   };
 
@@ -41,20 +42,22 @@ export const analyzeBrain = (analysis: any): any => {
     recommendations: {
       diet,
       upgrade: {
-        title: `[${opt2.companyName}] 뇌/심 수술비 강화 플랜`,
-        description: `진단비는 물론 수술 시마다 반복 지급되는 수술비까지 포함된 든든한 플랜입니다.`,
+        title: '뇌/심 수술비 강화 플랜',
+        description: `진단비는 물론 수술 시마다 반복 지급되는 수술비까지 20년납으로 포함된 안심 플랜입니다.`,
         productName: opt2.productName,
         companyName: opt2.companyName,
         estimatedPremium: opt2.premium,
+        periodBadge: '20년납 · 90세만기 (비갱신형)',
         coverageChanges: ['뇌/심장 수술비 1천만 추가', '혈전용해치료비 포함', '비갱신형 구성'],
-        switchingLossNotice: '전환 시 기존 보험의 수술비 갱신 보험료를 조심하세요.',
+        switchingLossNotice: '전환 시 기존 보험의 수술비 보장 조건 및 갱신 주기 여부를 확인하세요.',
       },
       hybrid: {
-        title: `[${opt3.companyName}] 뇌심 종합 집중 플랜`,
-        description: `뇌혈관 및 허혈성 심장질환 진단비를 폭넓고 든든하게 보장하는 종합 플랜입니다.`,
+        title: '뇌심 종합 집중 플랜',
+        description: `뇌혈관 및 허혈성 심장질환 진단비를 20년납 비갱신형으로 폭넓게 보장하는 종합 플랜입니다.`,
         productName: opt3.productName,
         companyName: opt3.companyName,
         estimatedPremium: opt3.premium,
+        periodBadge: '20년납 · 90세만기 (비갱신형)',
         coverageChanges: ['뇌혈관 진단비 1천만', '허혈성 진단비 1천만', '급성심근경색증 추가'],
         switchingLossNotice: '뇌혈관질환 보험은 가입 후 1년 이내 발생 시 보장이 제한될 수 있습니다.',
       }

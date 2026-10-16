@@ -39,9 +39,10 @@ export const analyzeSilson = (analysis: any): any => {
   const is5th = subType === '5세대 실손';
 
   const diet: RecommendationPlan = {
-    title: `[${opt1.companyName}] 실속 전환 플랜`,
-    description: `${opt1.productName}을 활용한 실속형 실손 전환 안내입니다.`,
+    title: '실속 실손 전환 플랜',
+    description: '1년 갱신형 구조를 활용한 필수 의료비 보장 중심의 실속형 플랜입니다.',
     estimatedPremium: Math.round(p1 / 10) * 10,
+    periodBadge: '1년 갱신 · 5년 재가입 (전기납)',
     coverageChanges: [
       '실속형 요율 설계',
       is5th ? '비중증 비급여 자기부담 50%' : '자기부담금 상향(20~30%)', 
@@ -58,17 +59,19 @@ export const analyzeSilson = (analysis: any): any => {
     recommendations: {
       diet,
       upgrade: {
-        title: `[${opt2.companyName}] 표준 밸런스 플랜`,
-        description: `표준 실손 결합형 밸런스 플랜입니다.`,
+        title: '표준 밸런스 실손 플랜',
+        description: '1년 갱신형으로 표준 실손과 연계 보장을 균형 있게 맞춘 플랜입니다.',
         estimatedPremium: Math.round(p2 / 10) * 10,
+        periodBadge: '1년 갱신 · 5년 재가입 (전기납)',
         coverageChanges: ['균형 잡힌 보장 설계', `${is5th ? '5세대' : '4세대'} 전환으로 비용 절약`, is5th ? '6개월 내 무실적 전환 철회 가능' : '3대 진단비 보완'],
         switchingLossNotice: '기존 실손의 가입 시기에 따라 혜택이 다릅니다.'
       },
       hybrid: {
-        title: `[${opt3.companyName}] 보장 강화형 플랜`,
-        description: `탄탄한 보장과 서비스 신뢰도를 중시하는 선택지입니다.`,
+        title: '안심 실손 강화 플랜',
+        description: '탄탄한 보장과 서비스 신뢰도를 중시하는 1년 갱신형 선택지입니다.',
         estimatedPremium: Math.round(p3 / 10) * 10,
-        coverageChanges: ['인지도 높은 보험사', '부수 특약 선택 가용성', '신속한 보상 프로세스'],
+        periodBadge: '1년 갱신 · 5년 재가입 (전기납)',
+        coverageChanges: ['안정적인 보상 체계', '부수 특약 선택 가용성', '신속한 보상 프로세스'],
         switchingLossNotice: '단독 가입이 어려운 회사가 있을 수 있습니다.'
       }
     }

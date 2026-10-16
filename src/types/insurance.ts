@@ -246,4 +246,5 @@ export interface RecommendationPlan {
   switchingLossNotice: string;
   companyName?: string;
   productName?: string;
+  periodBadge?: string;
 }

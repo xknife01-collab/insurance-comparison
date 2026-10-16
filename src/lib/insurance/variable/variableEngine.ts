@@ -109,9 +109,10 @@ export const analyzeVariable = (analysis: any): any => {
     // Diet: 다이렉트 변액 적립 (사업비 최소화 플랜 - 월 15만원 세팅)
     const dietPremium = 150000;
     const diet: RecommendationPlan = {
-      title: `[${opt1.companyName}] 온라인 다이렉트 변액적립 플랜`,
-      description: `다이렉트 채널 특성상 사업비 부담을 낮추어 실속 있게 투자 가능한 적립식 플랜입니다.`,
+      title: '온라인 다이렉트 변액적립 플랜',
+      description: `다이렉트 채널 특성상 사업비 부담을 낮추어 10년납으로 실속 있게 투자 가능한 적립식 플랜입니다.`,
       estimatedPremium: dietPremium,
+      periodBadge: '10년납 · 10년 비과세 만기',
       companyName: opt1.companyName,
       productName: opt1.productName,
       coverageChanges: [
@@ -126,9 +127,10 @@ export const analyzeVariable = (analysis: any): any => {
     // Upgrade: 글로벌 자산배분 플랜 (월 50만원 세팅, ETF/글로벌 펀드 결합)
     const upgradePremium = 500000;
     const upgrade: RecommendationPlan = {
-      title: `[${opt2.companyName}] 글로벌 자산배분 인공지능 매칭 플랜`,
-      description: `미국 주식 및 글로벌 우량 자산 투입 비중을 70%로 높여 인플레이션을 안정적으로 상회하는 수익형 연금 자산 마련 플랜입니다.`,
+      title: '글로벌 자산배분 인공지능 매칭 플랜',
+      description: `미국 주식 및 글로벌 우량 자산 투입 비중을 높여 10년납으로 인플레이션을 상회하는 수익형 연금 자산 마련 플랜입니다.`,
       estimatedPremium: upgradePremium,
+      periodBadge: '10년납 · 10년 비과세 만기',
       companyName: opt2.companyName,
       productName: opt2.productName,
       coverageChanges: [
@@ -143,9 +145,10 @@ export const analyzeVariable = (analysis: any): any => {
     // Hybrid: 최저보증형 변액 연금 (월 30만원 세팅, 원금 115%~130% 최저 보증)
     const hybridPremium = 300000;
     const hybrid: RecommendationPlan = {
-      title: `[${opt3.companyName}] 최저보증형 수익 안심 플랜`,
-      description: `투자 성과가 나빠도 연금 개시 시점에 기납입보험료 전액 수준을 최저 보증(GMAB)하여, 투자 수익과 안전판을 동시에 챙기는 대표적인 연금 플랜입니다.`,
+      title: '최저보증형 수익 안심 플랜',
+      description: `투자 성과가 나빠도 연금 개시 시점에 기납입보험료 전액 수준을 최저 보증(GMAB)하여, 10년납으로 투자 수익과 안전판을 동시에 챙기는 플랜입니다.`,
       estimatedPremium: hybridPremium,
+      periodBadge: '10년납 · 10년 비과세 만기',
       companyName: opt3.companyName,
       productName: opt3.productName,
       coverageChanges: [
@@ -313,9 +316,10 @@ export const analyzeVariable = (analysis: any): any => {
     } else {
       // term_pure or term
       diet = {
-        title: `[${opt1.companyName}] 초가성비 실속 정기 플랜`,
-        description: `종신보험 대비 보험료 부담을 낮추어 자녀 독립 시점인 60세까지 핵심 사망 보장을 준비하는 실속 플랜입니다.`,
+        title: '초가성비 실속 정기 플랜',
+        description: `종신보험 대비 보험료 부담을 낮추어 자녀 독립 시점인 60세까지 핵심 사망 보장을 준비하는 실속 정기 플랜입니다.`,
         estimatedPremium: dietPremium,
+        periodBadge: '60세만기 · 전기납 (정기보험)',
         companyName: opt1.companyName,
         productName: opt1.productName,
         coverageChanges: [
@@ -328,9 +332,10 @@ export const analyzeVariable = (analysis: any): any => {
       } as any;
 
       upgrade = {
-        title: `[${opt2.companyName}] 든든 유가족 자산 보존 플랜`,
-        description: `사망 보장 한도를 증액하여 가장 부재 시 상속 재원 확보 및 유가족의 생활 안정을 도모하는 설계입니다.`,
+        title: '든든 유가족 자산 보존 플랜',
+        description: `사망 보장 한도를 증액하여 70세 만기까지 가장 부재 시 상속 재원 확보 및 유가족의 생활 안정을 도모하는 설계입니다.`,
         estimatedPremium: upgradePremium,
+        periodBadge: '70세만기 · 전기납 (정기보험)',
         companyName: opt2.companyName,
         productName: opt2.productName,
         coverageChanges: [
@@ -343,9 +348,10 @@ export const analyzeVariable = (analysis: any): any => {
       } as any;
 
       hybrid = {
-        title: `[${opt3.companyName}] 정기 + 종신 믹스 매치 결합 플랜`,
+        title: '정기 + 종신 믹스 매치 결합 플랜',
         description: `평생 상속 자산(종신보험 5천만 원)과 경제활동기 집중 사망 자산(정기보험 2억 원)을 결합하여, 보장 공백은 차단하고 전체 지출 포트폴리오를 슬림하게 완성한 결합안입니다.`,
         estimatedPremium: hybridPremium,
+        periodBadge: '정기(60세)+종신(평생) 복합설계',
         companyName: opt3.companyName,
         productName: opt3.productName,
         coverageChanges: [

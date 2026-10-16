@@ -34,10 +34,9 @@ export const ChildSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =>
       prenatalSurgeryLimit: Math.round(100 + (ratio * 150)),
       incubatorLimit: Math.round(3 + (ratio * 2)),
       adultSurgeryLimit: Math.round(1000 + (ratio * 1000)),
-      index: Math.round(75 + (ratio * 23)),
-      percentage: Math.round(30 + ratio * 60)
+      balance: value - currentPremium
     };
-  }, [value, dietPremium, luxuryPremium]);
+  }, [value, dietPremium, luxuryPremium, currentPremium]);
 
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -119,9 +118,9 @@ export const ChildSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =>
                     ${isPreFamily ? 'accent-blue-500' : 'accent-yellow-500'}`} 
                 />
                 <div className="flex justify-between mt-6 text-[0.65rem] font-black text-gray-400 uppercase tracking-widest">
-                  <span>Diet ({dietPremium.toLocaleString()}원)</span>
-                  <span className={isPreFamily ? 'text-blue-600' : 'text-yellow-600'}>현재 ({currentPremium.toLocaleString()}원)</span>
-                  <span>Luxury ({luxuryPremium.toLocaleString()}원)</span>
+                  <span>최소 보장 ({dietPremium.toLocaleString()}원)</span>
+                  <span className={isPreFamily ? 'text-blue-600' : 'text-yellow-600'}>현재 예산 ({currentPremium.toLocaleString()}원)</span>
+                  <span>집중 보장 ({luxuryPremium.toLocaleString()}원)</span>
                 </div>
               </div>
             </div>
@@ -175,16 +174,21 @@ export const ChildSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =>
               <div className="flex justify-between items-start">
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-white
                   ${isPreFamily ? 'bg-blue-500' : 'bg-yellow-500'}`}><TrendingUp size={20} /></div>
-                <span className="text-[0.6rem] font-black text-gray-400 uppercase tracking-widest">Efficiency Index</span>
+                <span className="text-[0.6rem] font-black text-gray-400 uppercase tracking-widest">Monthly Balance</span>
               </div>
               <div>
-                <p className="text-[0.65rem] font-black text-gray-400 uppercase tracking-widest mb-1">보장 최적화 지수</p>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-6xl font-black text-gray-900 tracking-tighter group-hover:scale-105 transition-transform inline-block">{metrics.index}</span>
-                  <span className={`text-xl font-bold ${isPreFamily ? 'text-blue-600' : 'text-yellow-600'}`}>점</span>
+                <p className="text-[0.65rem] font-black text-gray-400 uppercase tracking-widest mb-1">현재 대비 월 예산 변동</p>
+                <div className="flex items-baseline gap-1">
+                  <span className={`text-4xl md:text-5xl font-black tracking-tighter ${metrics.balance < 0 ? (isPreFamily ? 'text-blue-600' : 'text-emerald-600') : metrics.balance > 0 ? 'text-gray-900' : 'text-gray-500'}`}>
+                    {metrics.balance < 0 ? `-${Math.abs(metrics.balance).toLocaleString()}` : metrics.balance > 0 ? `+${metrics.balance.toLocaleString()}` : '0'}
+                  </span>
+                  <span className="text-xl font-bold text-gray-500">원</span>
                 </div>
-                <p className="text-[11px] text-gray-400 font-bold mt-2">
-                  {currentContent.footer} (본 시뮬레이션 수치는 이해를 돕기 위한 예시이며 실제 가입 조건, 성별, 만기 및 심사 결과에 따라 보장 한도와 보험료가 상이합니다.)
+                <p className="text-[12px] text-gray-500 font-bold mt-2">
+                  {metrics.balance < 0 ? `매월 ${Math.abs(metrics.balance).toLocaleString()}원 절감 효과` : metrics.balance > 0 ? `보장 확대를 위한 추가 예산` : `현재 납입 보험료와 동일`}
+                </p>
+                <p className="text-[10px] text-gray-400 font-medium mt-2">
+                  * 본 시뮬레이션 수치는 이해를 돕기 위한 예시이며 실제 가입 조건, 성별, 만기 및 심사 결과에 따라 보장 한도와 보험료가 상이합니다.
                 </p>
               </div>
             </div>

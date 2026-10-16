@@ -47,17 +47,17 @@ export function buildProposalFactContext(
     recommendations: {
       diet: {
         estimatedPremium: analysisRaw.recommendations?.diet?.estimatedPremium || 45000,
-        title: analysisRaw.recommendations?.diet?.title || '[추천 보험사] 실속 암진단 집중 플랜',
+        title: analysisRaw.recommendations?.diet?.title || '실속 암진단 집중 플랜',
         description: analysisRaw.recommendations?.diet?.description || '가성비 핵심 암 진단비 플랜'
       },
       upgrade: {
         estimatedPremium: analysisRaw.recommendations?.upgrade?.estimatedPremium || 45000,
-        title: analysisRaw.recommendations?.upgrade?.title || '[추천 보험사] 2025 암주요치료비 결합 플랜',
+        title: analysisRaw.recommendations?.upgrade?.title || '2025 암주요치료비 결합 플랜',
         description: analysisRaw.recommendations?.upgrade?.description || '암 주요치료비 특약 결합 플랜'
       },
       hybrid: {
         estimatedPremium: analysisRaw.recommendations?.hybrid?.estimatedPremium || 45000,
-        title: analysisRaw.recommendations?.hybrid?.title || '[추천 보험사] 평생 보장 비갱신 프리미엄',
+        title: analysisRaw.recommendations?.hybrid?.title || '비갱신 든든 만기보장 프리미엄 플랜',
         description: analysisRaw.recommendations?.hybrid?.description || '비갱신 고정 보험료 플랜'
       }
     }

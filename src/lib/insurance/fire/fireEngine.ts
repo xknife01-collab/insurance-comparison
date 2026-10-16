@@ -115,9 +115,10 @@ export const analyzeFire = (analysis: any): any => {
   const dietPremium = Math.max(10000, baseDietPremium);
   
   const diet: any = {
-    title: `[${opt1.companyName}] 실속 세입자 가성비 플랜`,
-    description: `세입자(임차인) 필수인 임차자배상책임과 내 가재도구 유실만 집중하여 월 납입금을 아끼는 실속형 플랜입니다.`,
+    title: '실속 세입자 가성비 플랜',
+    description: `세입자(임차인) 필수인 임차자배상책임과 가재도구 유실만 집중하여 10년 만기로 납입금을 아끼는 실속형 플랜입니다.`,
     estimatedPremium: dietPremium,
+    periodBadge: '10년 만기 · 10년납 (장기화재)',
     riskPremium: dietRisk,
     savingsPremium: dietSavings,
     companyName: opt1.companyName,
@@ -139,9 +140,10 @@ export const analyzeFire = (analysis: any): any => {
   const upgradePremium = Math.max(10000, baseUpgradePremium);
   
   const upgrade: any = {
-    title: `[${opt2.companyName}] 올인원 안심 밸런스 플랜`,
-    description: `소유주와 임차인 모두 만족하는 균형 있는 설계로, 급배수 누수 보장과 화재배상 한도를 탑재한 대표 추천 플랜입니다.`,
+    title: '올인원 안심 밸런스 플랜',
+    description: `소유주와 임차인 모두 만족하는 균형 있는 설계로, 급배수 누수 보장과 화재배상 한도를 10년 만기로 탑재한 대표 추천 플랜입니다.`,
     estimatedPremium: upgradePremium,
+    periodBadge: '10년 만기 · 10년납 (장기화재)',
     riskPremium: upgradeRisk,
     savingsPremium: upgradeSavings,
     companyName: opt2.companyName,
@@ -163,9 +165,10 @@ export const analyzeFire = (analysis: any): any => {
   const hybridPremium = Math.max(10000, baseHybridPremium);
   
   const hybrid: any = {
-    title: `[${opt3.companyName}] 프리미엄 토탈 마스터 플랜`,
-    description: `건물 및 가재도구 복구 한도를 확대하고, 임시 거주비 일당 상향 및 6대 가전제품 고장 수리비 특약까지 고루 갖춘 프리미엄 설계입니다.`,
+    title: '프리미엄 토탈 마스터 플랜',
+    description: `건물 및 가재도구 복구 한도를 확대하고, 임시 거주비 일당 상향 및 6대 가전제품 고장 수리비 특약까지 10년 만기로 갖춘 프리미엄 설계입니다.`,
     estimatedPremium: hybridPremium,
+    periodBadge: '10년 만기 · 10년납 (장기화재)',
     riskPremium: hybridRisk,
     savingsPremium: hybridSavings,
     companyName: opt3.companyName,

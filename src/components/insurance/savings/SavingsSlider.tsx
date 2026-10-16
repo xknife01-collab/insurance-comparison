@@ -104,10 +104,9 @@ export const SavingsSlider: React.FC<{ result: AnalysisResult }> = ({ result }) 
       savedTax: Math.round(savedTax),
       gain: Math.round(accumulated - bankAccumulated),
       isTaxExempt,
-      scoreIndex,
-      percentage
+      balance: value - currentPremium
     };
-  }, [value, savingType, payYears, keepYears]);
+  }, [value, savingType, payYears, keepYears, currentPremium]);
 
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -147,9 +146,9 @@ export const SavingsSlider: React.FC<{ result: AnalysisResult }> = ({ result }) 
                   className="w-full h-3 bg-gray-100 rounded-full appearance-none cursor-pointer accent-emerald-500" 
                 />
                 <div className="flex justify-between mt-6 text-[0.65rem] font-black text-gray-400 uppercase tracking-widest">
-                  <span>{minVal >= 100000000 ? `${minVal / 100000000}억원` : `${(minVal / 10000).toLocaleString()}만원`}</span>
-                  <span className="text-emerald-600 font-bold">현재 설정 ({value >= 100000000 ? `${(value/100000000).toFixed(1)}억원` : `${(value/10000).toLocaleString()}만원`})</span>
-                  <span>{maxVal >= 100000000 ? `${maxVal / 100000000}억원` : `${(maxVal / 10000).toLocaleString()}만원`}</span>
+                  <span>최소 한도 ({minVal >= 100000000 ? `${minVal / 100000000}억원` : `${(minVal / 10000).toLocaleString()}만원`})</span>
+                  <span className="text-emerald-600 font-bold">현재 설정 ({currentPremium >= 100000000 ? `${(currentPremium/100000000).toFixed(1)}억원` : `${(currentPremium/10000).toLocaleString()}만원`})</span>
+                  <span>최대 한도 ({maxVal >= 100000000 ? `${maxVal / 100000000}억원` : `${(maxVal / 10000).toLocaleString()}만원`})</span>
                 </div>
               </div>
             </div>
@@ -224,18 +223,18 @@ export const SavingsSlider: React.FC<{ result: AnalysisResult }> = ({ result }) 
                 <div className="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-500">
                   <TrendingUp size={20} />
                 </div>
-                <span className="text-[0.6rem] font-black text-gray-300 uppercase tracking-widest">Optimization Index</span>
+                <span className="text-[0.6rem] font-black text-gray-300 uppercase tracking-widest">Monthly Balance</span>
               </div>
               <div>
-                <p className="text-[0.65rem] font-black text-gray-400 uppercase tracking-widest mb-1">저축 자산 최적화 지수</p>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-6xl font-black text-gray-900 tracking-tighter group-hover:scale-105 transition-transform inline-block">
-                    {metrics.scoreIndex}
+                <p className="text-[0.65rem] font-black text-gray-400 uppercase tracking-widest mb-1">현재 대비 예산 변동</p>
+                <div className="flex items-baseline gap-1">
+                  <span className={`text-4xl md:text-5xl font-black tracking-tighter ${metrics.balance < 0 ? 'text-emerald-600' : metrics.balance > 0 ? 'text-gray-900' : 'text-gray-500'}`}>
+                    {metrics.balance < 0 ? `-${Math.abs(metrics.balance).toLocaleString()}` : metrics.balance > 0 ? `+${metrics.balance.toLocaleString()}` : '0'}
                   </span>
-                  <span className="text-xl font-bold text-emerald-500">점</span>
+                  <span className="text-xl font-bold text-gray-500">원</span>
                 </div>
-                <p className="text-[11px] text-gray-400 font-bold mt-2 leading-relaxed">
-                  * 10년 비과세 세법 기준 매칭률, CM 저비용 사업비 요율 매칭 및 금리 복리 부리 효율성을 종합 계산한 자산 지수입니다.
+                <p className="text-[12px] text-gray-500 font-bold mt-2">
+                  {metrics.balance < 0 ? `기존 대비 ${Math.abs(metrics.balance).toLocaleString()}원 예산 절감` : metrics.balance > 0 ? `자산 증식을 위한 추가 예치/납입` : `현재 설정 금액과 동일`}
                 </p>
               </div>
             </div>

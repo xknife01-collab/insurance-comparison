@@ -11,6 +11,7 @@ export interface RecommendationPlan {
   switchingLossNotice: string;
   productName?: string;
   companyName?: string;
+  periodBadge?: string;
 }
 
 export type Gender = 'M' | 'F';

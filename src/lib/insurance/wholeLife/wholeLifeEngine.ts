@@ -122,9 +122,10 @@ export const analyzeWholeLife = (analysis: any): any => {
   // Diet: 실속형 사망보장 (사망 5천만 원 고정, 20년납, 저해지형으로 월 납입 부담 최소화)
   const dietPremium = opt1.premium;
   const diet: RecommendationPlan = {
-    title: `[${opt1.companyName}] 실속형 사망보장 다이어트 플랜`,
-    description: `불필요한 지출 요소를 점검하고 핵심 사망보험금 중심으로 월 납입 부담을 낮추는 실속형 플랜입니다.`,
+    title: '실속형 사망보장 다이어트 플랜',
+    description: `불필요한 지출 요소를 점검하고 20년 납입 완료 후 평생 사망 보장을 유지하는 실속형 종신 플랜입니다.`,
     estimatedPremium: dietPremium,
+    periodBadge: '20년납 · 종신보장 (저해약환급형)',
     companyName: opt1.companyName,
     productName: opt1.productName,
     coverageChanges: [
@@ -139,9 +140,10 @@ export const analyzeWholeLife = (analysis: any): any => {
   // Upgrade: 7년 단기납 체증형 플랜 (사망 1억 원, 60세부터 매년 5% 체증, 7년납, 저해지형)
   const upgradePremium = opt2.premium;
   const upgrade: RecommendationPlan = {
-    title: `[${opt2.companyName}] 7년완납 체증형 자산보존 플랜`,
-    description: `7년 단기완납으로 은퇴 전 보험료 납입을 종료하고, 사망보험금이 점진적으로 증액되는 체증형 설계입니다.`,
+    title: '7년완납 체증형 자산보존 플랜',
+    description: `7년 단기완납으로 은퇴 전 보험료 납입을 종료하고, 사망보험금이 점진적으로 증액되는 종신 설계입니다.`,
     estimatedPremium: upgradePremium,
+    periodBadge: '7년완납 · 종신보장 (체증형)',
     companyName: opt2.companyName,
     productName: opt2.productName,
     coverageChanges: [
@@ -157,9 +159,10 @@ export const analyzeWholeLife = (analysis: any): any => {
   // Hybrid: 10년납 목적자금 하이브리드 플랜 (사망 7천만 원, 10년납, 저해지형, 완납 후 비과세 저축 연계)
   const hybridPremium = opt3.premium;
   const hybrid: RecommendationPlan = {
-    title: `[${opt3.companyName}] 10년납 목돈마련 하이브리드 플랜`,
-    description: `사망 보장과 목돈 저축 기능을 최적으로 배분하여, 10년 완납 후 해약하여 연금으로 전환하거나 목적자금으로 쓸 수 있는 실용형 모델입니다.`,
+    title: '10년납 목돈마련 하이브리드 플랜',
+    description: `사망 보장과 목돈 저축 기능을 최적으로 배분하여, 10년 완납 후 해약하여 연금으로 전환하거나 목적자금으로 쓸 수 있는 실용형 종신 모델입니다.`,
     estimatedPremium: hybridPremium,
+    periodBadge: '10년납 · 종신보장 (환급연계형)',
     companyName: opt3.companyName,
     productName: opt3.productName,
     coverageChanges: [

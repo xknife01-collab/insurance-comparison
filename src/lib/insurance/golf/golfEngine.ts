@@ -97,10 +97,15 @@ export const analyzeGolf = (analysis: any): any => {
   const opt1Base = opt1.basePremium || 10000;
   const dietPremium = Math.round((opt1Base * combinedMultiplier + dietRiderCost) / 100) * 100;
   
+  const golfBadge = golfOpts.periodType === 'daily' ? '원데이 (1일 소멸성)' : '1년 만기 · 연납';
+
   const diet: RecommendationPlan = {
-    title: `[${opt1.companyName}] 실속 원데이/연간 플랜`,
+    title: '실속 라운딩 플랜',
     description: `골프 라운딩 중 타인에게 입힌 상해 배상책임과 기본 상해 사망 위주로 설계하여 보험료 부담을 낮춘 알뜰형 실속 플랜입니다.`,
     estimatedPremium: dietPremium,
+    periodBadge: golfBadge,
+    companyName: opt1.companyName,
+    productName: opt1.productName,
     coverageChanges: [
       '골프 배상책임 1,000만 원 보장',
       '홀인원 및 골프용품 특약 제외',
@@ -115,9 +120,12 @@ export const analyzeGolf = (analysis: any): any => {
   const upgradePremium = Math.round((opt2Base * combinedMultiplier + upgradeRiderCost) / 100) * 100;
 
   const upgrade: RecommendationPlan = {
-    title: `[${opt2.companyName}] 골퍼 안심 밸런스 플랜`,
+    title: '골퍼 안심 밸런스 플랜',
     description: `아마추어 골퍼들의 필수 특약인 홀인원 축하금(100만)과 골프용품 분실, 경기 중 배상책임(2,000만)을 고르게 갖춘 표준 추천 플랜입니다.`,
     estimatedPremium: upgradePremium,
+    periodBadge: golfBadge,
+    companyName: opt2.companyName,
+    productName: opt2.productName,
     coverageChanges: [
       '홀인원 비용 100만 원 실손 보장',
       '골프 배상책임 2,000만 원 한도',
@@ -132,9 +140,12 @@ export const analyzeGolf = (analysis: any): any => {
   const hybridPremium = Math.round((opt3Base * combinedMultiplier + hybridRiderCost) / 100) * 100;
 
   const hybrid: RecommendationPlan = {
-    title: `[${opt3.companyName}] VIP 프리미엄 플랜`,
+    title: 'VIP 프리미엄 골프 플랜',
     description: `홀인원 축하비용 한도를 증액하고 골프용품 손해 및 골프 카트 탑승 중 상해까지 폭넓게 케어하는 프리미엄 안심 보장 패키지입니다.`,
     estimatedPremium: hybridPremium,
+    periodBadge: golfBadge,
+    companyName: opt3.companyName,
+    productName: opt3.productName,
     coverageChanges: [
       '홀인원 비용 200만 원 보장',
       '골프 배상책임 3,000만 원 확장',

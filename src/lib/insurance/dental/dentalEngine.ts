@@ -46,11 +46,12 @@ export const analyzeDental = (analysis: any): any => {
         title: '다이어트 실속 플랜',
         companyName: bestPlan.companyName,
         productName: cleanName(bestPlan.productName),
-        description: '필수 치료 항목을 중심으로 구성하여 월 보험료 부담을 낮춥니다.',
+        description: '10년 갱신형 구조로 필수 치료 항목을 중심으로 구성하여 월 보험료 부담을 낮춥니다.',
         estimatedPremium: bestPlan.premium,
+        periodBadge: '10년 만기 · 10년납 (갱신형)',
         coverageChanges: [
           '치아보험 주요 보장 중심의 실속 설계',
-          '불필요한 소액 특약 다이어트'
+          '필수 치료 중심의 알뜰 구성'
         ],
         switchingLossNotice: '감액 기간(1~2년)이 초기화되므로 치료 계획을 확인하세요.'
       },
@@ -58,8 +59,9 @@ export const analyzeDental = (analysis: any): any => {
         title: '임플란트 집중 보장 플랜',
         companyName: upgradePlan.companyName,
         productName: cleanName(upgradePlan.productName),
-        description: '치아 상태에 맞춘 폭넓은 임플란트 보장과 든든한 크라운 한도를 확보합니다.',
+        description: '치아 상태에 맞춘 폭넓은 임플란트 보장과 든든한 크라운 한도를 10년 갱신형으로 확보합니다.',
         estimatedPremium: upgradePlan.premium,
+        periodBadge: '10년 만기 · 10년납 (갱신형)',
         coverageChanges: [
           '임플란트 보장 한도 집중 상향',
           '크라운 치료비 50만 원으로 증액'
@@ -68,12 +70,13 @@ export const analyzeDental = (analysis: any): any => {
       },
       hybrid: {
         title: '보존치료 강화형',
-        companyName: 'DB손해보험',
-        productName: '참좋은치아보험',
-        description: '레진, 인레이 등 잦은 보존 치료에 특화된 가성비 플랜입니다.',
+        companyName: '추천 보험사',
+        productName: '보존치료 강화 치아 플랜',
+        description: '레진, 인레이 등 잦은 보존 치료에 특화된 10년 갱신형 가성비 플랜입니다.',
         estimatedPremium: Math.round(bestPlan.premium * 1.1),
+        periodBadge: '10년 만기 · 10년납 (갱신형)',
         coverageChanges: [
-          '보존 치료 한도 업계 우수한 수준 증액',
+          '보존 치료 한도 우수 수준 증액',
           '치석 제거 등 정기 관리 혜택 포함'
         ],
         switchingLossNotice: '보철 치료 한도가 소폭 조정될 수 있습니다.'

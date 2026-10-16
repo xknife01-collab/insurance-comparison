@@ -71,21 +71,21 @@ export const analyzeCredit = (analysis: any): any => {
   // Determine Diet Plan
   const dietPlanDb = deathOnlyPlans[0] || options.find((o: any) => o.coverageType === '사망단독형') || options[0];
   const dietPremium = dietPlanDb ? dietPlanDb.premium : Math.round(baseMonthlyPremium * (1 - discountRate));
-  const dietProdName = dietPlanDb ? dietPlanDb.productName : '대출안심 신용생명보험(무) (실속형)';
-  const dietCompName = dietPlanDb ? dietPlanDb.company : 'BNP파리바 카디프생명';
+  const dietProdName = dietPlanDb ? dietPlanDb.productName : '대출안심 신용생명 플랜 (실속형)';
+  const dietCompName = dietPlanDb ? dietPlanDb.company : '추천 보험사';
 
   // Determine Upgrade Plan
   const upgradePlanDb = comprehensivePlans[0] || options.find((o: any) => o.coverageType === '종합안심형') || options[1] || options[0];
   const upgradePremium = upgradePlanDb ? upgradePlanDb.premium : Math.round(baseMonthlyPremium * 1.45 * (1 - discountRate));
-  const upgradeProdName = upgradePlanDb ? upgradePlanDb.productName : '대출안심 신용생명보험(무) (3대질병 보장형)';
-  const upgradeCompName = upgradePlanDb ? upgradePlanDb.company : 'BNP파리바 카디프생명';
+  const upgradeProdName = upgradePlanDb ? upgradePlanDb.productName : '대출안심 신용생명 플랜 (3대질병형)';
+  const upgradeCompName = upgradePlanDb ? upgradePlanDb.company : '추천 보험사';
 
   // Determine Hybrid Plan
   // Highest premium plan in comprehensive, or the last option
   const hybridPlanDb = comprehensivePlans[comprehensivePlans.length - 1] || options[options.length - 1] || options[0];
   const hybridPremium = hybridPlanDb ? hybridPlanDb.premium : Math.round(baseMonthlyPremium * 1.60 * (1 - discountRate));
-  const hybridProdName = hybridPlanDb ? hybridPlanDb.productName : '대출안심 신용생명보험(무) (신용 헬스케어 통합형)';
-  const hybridCompName = hybridPlanDb ? hybridPlanDb.company : 'BNP파리바 카디프생명';
+  const hybridProdName = hybridPlanDb ? hybridPlanDb.productName : '대출안심 신용생명 플랜 (통합형)';
+  const hybridCompName = hybridPlanDb ? hybridPlanDb.company : '추천 보험사';
 
   // 3. 점수 평가지표 산출 (NICE/KCB 매핑 구조 활용)
   let coverageScore = 80;
@@ -120,12 +120,14 @@ export const analyzeCredit = (analysis: any): any => {
 
   // 5. 맞춤형 추천 3대 플랜 타이틀/설명 생성
   const loanLabel = loanType === 'mortgage' ? '주택담보' : loanType === 'jeonse' ? '전세자금' : loanType === 'business' ? '사업자' : '개인신용';
+  const creditBadge = `${loanPeriod}년 만기 · 대출기간 연동 (전기납)`;
 
   const recommendations = {
     diet: {
-      title: `[${dietCompName}] 실속 ${loanLabel} 대출안심 플랜`,
+      title: `실속 ${loanLabel} 대출안심 플랜`,
       description: `특약을 최소화하여 오직 사망에 따른 대출금 상환에 집중한 실속형 플랜입니다. 현재 ${creditBureau.toUpperCase()} ${creditScore}점 기준으로 적용 가능한 우대 요율이 선반영되어 월 ${dietPremium.toLocaleString()}원 수준으로 채무 변제 위험에 대비합니다.`,
       estimatedPremium: dietPremium,
+      periodBadge: creditBadge,
       coverageChanges: [
         `사망 시 대출 잔액 최대 ${Math.round(loanAmount / 10000).toLocaleString()}만 원 전액 상환`,
         '순수 사망 보장 단독 세팅',
@@ -136,9 +138,10 @@ export const analyzeCredit = (analysis: any): any => {
       productName: dietProdName
     },
     upgrade: {
-      title: `[${upgradeCompName}] 3대 질병 연계 ${loanLabel} 대출안심 든든 플랜`,
+      title: `3대 질병 연계 ${loanLabel} 대출안심 든든 플랜`,
       description: `사망 보장은 물론, 차주가 암/뇌출혈/급성심근경색 등 3대 중대질병으로 진단받았을 때도 보험사가 남은 대출금을 상환 지원하여 가계 부담을 덜어주는 안심 플랜입니다.`,
       estimatedPremium: upgradePremium,
+      periodBadge: creditBadge,
       coverageChanges: [
         `사망 시 대출 잔액 최대 ${Math.round(loanAmount / 10000).toLocaleString()}만 원 전액 상환`,
         '암 / 뇌출혈 / 급성심근경색 최초 1회 진단 시 대출금 전액 상환',
@@ -149,9 +152,10 @@ export const analyzeCredit = (analysis: any): any => {
       productName: upgradeProdName
     },
     hybrid: {
-      title: `[${hybridCompName}] 신용 헬스케어 ${loanLabel} 대출안심 마스터 플랜`,
+      title: `신용 헬스케어 ${loanLabel} 대출안심 마스터 플랜`,
       description: `사망 + 3대 질병 + 50% 이상 고도후유장해까지 신용 위험 요소를 안정적으로 커버하고, 개인 신용등급 변동 추이에 맞춘 '신용 관리 서비스'를 지원하는 통합 보장 안심 플랜입니다.`,
       estimatedPremium: hybridPremium,
+      periodBadge: creditBadge,
       coverageChanges: [
         `사망 및 50% 이상 장해 시 대출 잔액 최대 ${Math.round(loanAmount / 10000).toLocaleString()}만 원 완납`,
         '3대 질병(암/뇌/심장) 진단 확정 즉시 대출 대위변제',

@@ -1406,7 +1406,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
             <Target size={14} className="fill-current text-orange-500" /> Optimized Protection Strategies
           </div>
           <h3 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tighter leading-tight">나에게 맞는 추천 시나리오</h3>
-          <p className="text-gray-500 font-bold italic">"현재 상황에서 가장 합리적인 2가지 탈출 경로를 제시합니다."</p>
+          <p className="text-gray-500 font-bold italic">"고객님의 보장 공백과 예산에 맞춘 3가지 최적 추천 경로를 제시합니다."</p>
         </div>
 
         <div className={`grid grid-cols-1 gap-10 items-stretch mx-auto ${
@@ -1477,13 +1477,12 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
                 <>
                   <div className="absolute top-0 right-0 p-8 opacity-10 rotate-45 transform"><Zap className="w-32 h-32 text-blue-500" /></div>
                   <div className="w-16 h-16 bg-blue-600 text-white rounded-3xl flex items-center justify-center mb-10 shadow-lg shadow-blue-200 group-hover:rotate-[360deg] transition-transform duration-1000 relative z-10"><Zap className="w-8 h-8 fill-current" /></div>
-                  <h4 className="text-2xl font-black mb-1 tracking-tighter text-blue-900 group-hover:text-blue-600 transition-colors uppercase">{maskText(result.recommendations.diet.title, isUnlocked)}</h4>
-                  {result.recommendations.diet.companyName && (
-                    <div className="flex flex-wrap items-center gap-y-1.5 mb-4">
-                      <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-lg text-[0.6rem] font-black mr-2 uppercase tracking-widest">{maskCompany(result.recommendations.diet.companyName, isUnlocked)}</span>
-                      <span className="text-xs font-bold text-slate-500 italic break-keep">{maskProductName(result.recommendations.diet.productName, isUnlocked)}</span>
-                    </div>
-                  )}
+                  <h4 className="text-2xl font-black mb-2 tracking-tighter text-blue-900 group-hover:text-blue-600 transition-colors uppercase">{(result.recommendations.diet.title || '').replace(/^\[.*?\]\s*/, '')}</h4>
+                  <div className="mb-3">
+                    <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-lg text-xs font-black tracking-tight">
+                      설계 기준: {result.recommendations.diet.periodBadge || (isCar ? '1년 만기 · 연납' : '20년납 · 90세만기')}
+                    </span>
+                  </div>
                   <p className="text-sm text-gray-400 font-bold leading-relaxed mb-10 min-h-[4rem]">{maskText(result.recommendations.diet.description, isUnlocked)}</p>
                   <div className="mb-10 border-b border-gray-50 pb-10">
                     <span className="text-[0.65rem] font-black text-gray-300 uppercase tracking-widest block mb-3">{isCar ? '연 예상 보험료' : '월 예상 보험료'}</span>
@@ -1609,7 +1608,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
              className="bg-slate-900 text-white p-12 rounded-[4rem] shadow-[0_60px_120px_-30px_rgba(0,0,0,0.4)] flex flex-col relative z-10 border-2 border-slate-800 cursor-pointer"
            >
              <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-orange-500 text-white px-10 py-3 rounded-full font-black text-[0.7rem] shadow-2xl uppercase tracking-[0.2em] whitespace-nowrap">
-                가장 많이 추천하는 플랜
+                균형 잡힌 밸런스 추천 플랜
              </div>
              {/* Upgrade 카드 헤더 — 리모델링 vs 일반 */}
              {isRemodeling ? (() => {
@@ -1749,13 +1748,12 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
              })() : (
                <>
                  <div className="w-16 h-16 bg-orange-500 text-white rounded-3xl flex items-center justify-center mb-10 shadow-[0_15px_30px_-5px_rgba(255,107,0,0.5)] animate-pulse"><Zap className="w-8 h-8 fill-current" /></div>
-                 <h4 className="text-2xl font-black mb-1 tracking-tighter text-orange-400 uppercase">{maskText(result.recommendations.upgrade.title, isUnlocked)}</h4>
-                 {result.recommendations.upgrade.companyName && (
-                   <div className="flex flex-wrap items-center gap-y-1.5 mb-4 animate-in fade-in slide-in-from-left-2 transition-all">
-                     <span className="inline-block px-3 py-1 bg-orange-500 text-white rounded-lg text-[0.6rem] font-black mr-2 uppercase tracking-widest">{maskCompany(result.recommendations.upgrade.companyName, isUnlocked)}</span>
-                     <span className="text-xs font-bold text-slate-400 italic break-keep">{maskProductName(result.recommendations.upgrade.productName, isUnlocked)}</span>
-                   </div>
-                 )}
+                 <h4 className="text-2xl font-black mb-2 tracking-tighter text-orange-400 uppercase">{(result.recommendations.upgrade.title || '').replace(/^\[.*?\]\s*/, '')}</h4>
+                 <div className="mb-3">
+                   <span className="inline-block px-3 py-1 bg-orange-500/20 text-orange-400 border border-orange-500/30 rounded-lg text-xs font-black tracking-tight">
+                     설계 기준: {result.recommendations.upgrade.periodBadge || (isCar ? '1년 만기 · 연납' : '20년납 · 90세/100세만기')}
+                   </span>
+                 </div>
                  <p className="text-sm text-slate-400 font-bold leading-relaxed mb-10 min-h-[4rem]">{maskText(result.recommendations.upgrade.description, isUnlocked)}</p>
                  <div className="mb-10 border-b border-white/5 pb-10">
                    <span className="text-[0.65rem] font-black text-slate-600 uppercase tracking-widest block mb-3">{isCar ? '연 예상 보험료' : '월 예상 보험료'}</span>
@@ -1807,13 +1805,12 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
              <div className="w-16 h-16 bg-violet-600 text-white rounded-3xl flex items-center justify-center mb-10 shadow-lg shadow-purple-200 group-hover:rotate-[-360deg] transition-transform duration-1000 relative z-10">
                <Zap className="w-8 h-8 fill-current" />
              </div>
-              <h4 className="text-2xl font-black mb-1 tracking-tighter text-purple-900 relative z-10 uppercase">{maskText(result.recommendations.hybrid.title, isUnlocked)}</h4>
-              {result.recommendations.hybrid.companyName && (
-                <div className="flex flex-wrap items-center gap-y-1.5 mb-4 animate-in fade-in slide-in-from-left-2 transition-all relative z-10">
-                  <span className="inline-block px-3 py-1 bg-purple-200 text-purple-800 rounded-lg text-[0.6rem] font-black mr-2 uppercase tracking-widest">{maskCompany(result.recommendations.hybrid.companyName, isUnlocked)}</span>
-                  <span className="text-xs font-bold text-purple-400 italic break-keep">{maskProductName(result.recommendations.hybrid.productName, isUnlocked)}</span>
-                </div>
-              )}
+              <h4 className="text-2xl font-black mb-2 tracking-tighter text-purple-900 relative z-10 uppercase">{(result.recommendations.hybrid.title || '').replace(/^\[.*?\]\s*/, '')}</h4>
+              <div className="mb-3 relative z-10">
+                <span className="inline-block px-3 py-1 bg-purple-100 text-purple-700 rounded-lg text-xs font-black tracking-tight">
+                  설계 기준: {result.recommendations.hybrid.periodBadge || (isCar ? '1년 만기 · 연납' : '20년납 · 90세/100세만기')}
+                </span>
+              </div>
               <p className="text-sm text-gray-400 font-bold leading-relaxed mb-10 min-h-[4rem] relative z-10">
                 {maskText(result.recommendations.hybrid.description, isUnlocked)}
               </p>
@@ -1878,7 +1875,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
             <div className="text-[11px] sm:text-xs text-slate-600 space-y-1.5 font-medium leading-relaxed">
               <p><strong className="text-slate-900 font-black">정식 자료명:</strong> 생명보험협회 및 손해보험협회 상품공시실 [상품비교공시 및 보험가격지수 공시자료]</p>
               <p><strong className="text-slate-900 font-black">수집 기준:</strong> <span className="text-emerald-700 font-bold">{getDisclosureDate()}</span></p>
-              <p><strong className="text-slate-900 font-black">산출 방식:</strong> 협회 공시 기준 보험료율표를 토대로 객관적으로 비교·분석되었습니다.</p>
+              <p><strong className="text-slate-900 font-black">산출 방식:</strong> 입력하신 정보를 바탕으로 협회 공시 기준 보험료율표를 토대로 객관적으로 비교·분석되었습니다.</p>
               <p className="text-[10.5px] text-slate-500 pt-1 border-t border-slate-200/50">
                 ※ <strong className="text-slate-700 font-bold">유의사항:</strong> 가입자의 직업, 성별, 건강 상태 등에 따라 실제 보험료 및 가입 가능 여부는 변동될 수 있습니다.
               </p>

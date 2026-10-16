@@ -122,13 +122,13 @@ export const CarSlider: React.FC<Props> = ({ result }) => {
                 </div>
               </div>
 
-              {/* 효율 지수 */}
+              {/* 예상 할인율 */}
               <div className="flex flex-col gap-1">
-                <span className="text-[10px] font-black text-orange-400 tracking-widest uppercase">Efficiency Index</span>
-                <span className="text-xs text-slate-400">보장 가성비 지수</span>
+                <span className="text-[10px] font-black text-orange-400 tracking-widest uppercase">Expected Discount Rate</span>
+                <span className="text-xs text-slate-400">연간 마일리지 예상 할인율</span>
                 <div className="flex items-baseline gap-2 mt-1">
-                  <span className="text-4xl font-black text-orange-400">{upgradePremium === 0 ? '-' : metrics.efficiencyIndex}</span>
-                  <span className="text-sm font-bold text-slate-400">{upgradePremium === 0 ? '' : '점 / 100점'}</span>
+                  <span className="text-4xl font-black text-orange-400">{upgradePremium === 0 ? '-' : `${metrics.percentage}%`}</span>
+                  <span className="text-xs font-bold text-slate-400">{upgradePremium === 0 ? '' : '(만기 주행거리 실측 시)'}</span>
                 </div>
               </div>
             </div>

@@ -97,28 +97,30 @@ export const analyzeLegal = (analysis: any): any => {
   const isLawyerFocus = legalOpts.subType === 'lawyer';
 
   const diet: RecommendationPlan = {
-    title: opt1.productName,
+    title: '실속 법률비용 플랜',
     companyName: opt1.companyName,
     productName: opt1.productName,
+    periodBadge: '3년/5년 만기 · 전기납',
     description: isLawyerFocus
-      ? `변호사 선임비용을 중점적으로 보장하며 불필요한 소송 행정 비용을 축소한 ${opt1.companyName}의 알뜰 실속형 변호사 플랜입니다.`
-      : `인지대와 송달료 등 법원 행정 소송 실비를 가성비 있게 설계한 ${opt1.companyName}의 소송비용 집중 다이어트 플랜입니다.`,
+      ? `변호사 선임비용을 중점적으로 보장하며 필수 법률 비용 중심으로 맞춘 알뜰 실속형 변호사 플랜입니다.`
+      : `인지대와 송달료 등 법원 행정 소송 실비를 가성비 있게 설계한 소송비용 집중 다이어트 플랜입니다.`,
     estimatedPremium: opt1.premium,
     coverageChanges: [
       isLawyerFocus ? '변호사 선임 비용 집중 확보' : '소송 실비(인지대/송달료) 최적화 세팅',
-      '불필요한 고액 소송비용 한도 축소',
+      '필수 소송비용 한도 집중 구성',
       '전자소송 할인 요건 즉시 반영 가능'
     ],
     switchingLossNotice: '보장 상세 내역 및 가입 금액은 가입 시 선택한 소송 형태에 따라 상이할 수 있습니다.'
   };
 
   const upgrade: RecommendationPlan = {
-    title: opt2.productName,
+    title: '안심 법률대응 밸런스 플랜',
     companyName: opt2.companyName,
     productName: opt2.productName,
+    periodBadge: '3년/5년 만기 · 전기납',
     description: isLawyerFocus
-      ? `충분한 변호사 선임비용 한도(2,000만 원)와 전문 상담 조력을 균형 있게 배치한 ${opt2.companyName}의 대표 안심 변호사 플랜입니다.`
-      : `소송 행정 비용 보장을 강화하여 장기 송사전 발생 시 자부담 공백을 해결하는 ${opt2.companyName}의 안심 소송비용 밸런스 플랜입니다.`,
+      ? `충분한 변호사 선임비용 한도(2,000만 원)와 전문 상담 조력을 균형 있게 배치한 대표 안심 변호사 플랜입니다.`
+      : `소송 행정 비용 보장을 강화하여 장기 송사전 발생 시 자부담 공백을 해결하는 안심 소송비용 밸런스 플랜입니다.`,
     estimatedPremium: opt2.premium,
     coverageChanges: [
       isLawyerFocus ? '변호사 선임 한도 2,000만 원 확보' : '소송 행정 실비 한도 500만 원 이상 증액',
@@ -129,12 +131,13 @@ export const analyzeLegal = (analysis: any): any => {
   };
 
   const hybrid: RecommendationPlan = {
-    title: opt3.productName,
+    title: '프리미엄 법률소송 마스터 플랜',
     companyName: opt3.companyName,
     productName: opt3.productName,
+    periodBadge: '3년/5년 만기 · 전기납',
     description: isLawyerFocus
-      ? `변호사 선임비용 집중 한도를 설정하고 민/형사 방어력을 강화한 ${opt3.companyName}의 프리미엄 마스터 변호사 플랜입니다.`
-      : `심급별 인지대/송달료 지원과 급발진 EDR 소송 대응력까지 완비한 ${opt3.companyName}의 하이엔드 소송비용 마스터플랜입니다.`,
+      ? `변호사 선임비용 집중 한도를 설정하고 민/형사 방어력을 강화한 프리미엄 마스터 변호사 플랜입니다.`
+      : `심급별 인지대/송달료 지원과 급발진 EDR 소송 대응력까지 완비한 하이엔드 소송비용 마스터플랜입니다.`,
     estimatedPremium: opt3.premium,
     coverageChanges: [
       isLawyerFocus ? '변호사 선임 한도 심급별 든든 보장' : '인지대/송달료 충실 보장',

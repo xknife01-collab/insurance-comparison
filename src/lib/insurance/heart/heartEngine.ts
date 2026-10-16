@@ -52,8 +52,9 @@ export const analyzeHeart = (analysis: any) => {
     recommendations: {
       diet: {
         title: '보험료 절감형 실속 플랜',
-        description: '보장 범위는 협심증 등 핵심 위주로 구성하고, 보험료 부담을 낮춘 알뜰형 플랜입니다.',
+        description: '20년 납입 완료 후 90세까지 보장받는 협심증 등 핵심 허혈성 진단비 중심의 실속 플랜입니다.',
         estimatedPremium: dietOption.premium,
+        periodBadge: '20년납 · 90세만기 (비갱신형)',
         productName: dietOption.productName,
         companyName: dietOption.companyName,
         coverageChanges: ['허혈성심장질환 진단비 중심', '무해지환급형 적용'],
@@ -61,8 +62,9 @@ export const analyzeHeart = (analysis: any) => {
       },
       upgrade: {
         title: '심혈관 풀커버 고급 플랜',
-        description: '부정맥, 심부전은 물론 스텐트 삽입술까지 심장의 모든 위험을 안정적으로 방어하는 프리미엄 플랜입니다.',
+        description: '부정맥, 심부전은 물론 스텐트 삽입술까지 심장 위험을 20년납 비갱신형으로 방어하는 프리미엄 플랜입니다.',
         estimatedPremium: upgradeOption.premium,
+        periodBadge: '20년납 · 90세만기 (비갱신형)',
         productName: upgradeOption.productName,
         companyName: upgradeOption.companyName,
         coverageChanges: ['부정맥(I47-I49) 진단비 추가', '심장판막/조율기 수술비 포함'],
@@ -70,8 +72,9 @@ export const analyzeHeart = (analysis: any) => {
       },
       hybrid: {
         title: '밸런스형 표준 포트폴리오',
-        description: '가장 발병률이 높은 질환들을 합리적인 가격대에 맞춘 표준형 추천 플랜입니다.',
+        description: '가장 발병률이 높은 질환들을 20년납 비갱신형으로 합리적인 가격대에 맞춘 표준 추천 플랜입니다.',
         estimatedPremium: hybridOption.premium,
+        periodBadge: '20년납 · 90세만기 (비갱신형)',
         productName: hybridOption.productName,
         companyName: hybridOption.companyName,
         coverageChanges: ['진단비 2천 + 수술비 1천 구성', '비갱신형 안정적 복합형'],

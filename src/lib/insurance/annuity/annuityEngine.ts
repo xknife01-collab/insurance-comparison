@@ -107,9 +107,10 @@ export const analyzeAnnuity = (analysis: any): any => {
   const dietRefund = dietPremium * 12 * (taxCreditRate / 100);
 
   const diet: RecommendationPlan = {
-    title: `[${opt1.companyName}] 실속 세액공제 플랜`,
-    description: `연말정산 환급 혜택을 챙기면서 월 납입 부담을 10~15만 원 수준으로 낮춘 실속 플랜입니다.`,
+    title: '실속 세액공제 플랜',
+    description: `연말정산 환급 혜택을 챙기면서 10년납 월 납입 부담을 10~15만 원 수준으로 낮춘 실속 플랜입니다.`,
     estimatedPremium: dietPremium,
+    periodBadge: '10년납 · 55세/65세 연금개시',
     companyName: opt1.companyName,
     productName: opt1.productName,
     coverageChanges: [
@@ -128,9 +129,10 @@ export const analyzeAnnuity = (analysis: any): any => {
   const upgradeRefund = upgradePremium * 12 * (taxCreditRate / 100);
 
   const upgrade: RecommendationPlan = {
-    title: `[${opt2.companyName}] 세액공제 최적화 플랜`,
-    description: `연금저축 단독 한도인 연 600만 원(월 50만 원)에 맞추어 세액공제 혜택을 챙기고 노후 자금을 준비하는 플랜입니다.`,
+    title: '세액공제 최적화 플랜',
+    description: `연금저축 단독 한도인 연 600만 원(월 50만 원)에 맞추어 10년납 세액공제 혜택을 챙기고 노후 자금을 준비하는 플랜입니다.`,
     estimatedPremium: upgradePremium,
+    periodBadge: '10년납 · 55세/65세 연금개시',
     companyName: opt2.companyName,
     productName: opt2.productName,
     coverageChanges: [
@@ -149,9 +151,10 @@ export const analyzeAnnuity = (analysis: any): any => {
   const hybridRefund = hybridPremium * 12 * (taxCreditRate / 100);
 
   const hybrid: RecommendationPlan = {
-    title: `[${opt3.companyName}] 1:1 하이브리드 연금 자산 플랜`,
-    description: `연금저축(월 50만)과 IRP 퇴직연금(월 25만)을 매칭하여 세액공제 통합 한도 연 900만 원을 채우는 하이브리드 은퇴 세팅입니다.`,
+    title: '1:1 하이브리드 연금 자산 플랜',
+    description: `연금저축(월 50만)과 IRP 퇴직연금(월 25만)을 매칭하여 세액공제 통합 한도 연 900만 원을 채우는 10년납 은퇴 세팅입니다.`,
     estimatedPremium: hybridPremium,
+    periodBadge: '10년납 · 55세/65세 연금개시',
     companyName: opt3.companyName,
     productName: opt3.productName,
     coverageChanges: [

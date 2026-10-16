@@ -195,12 +195,13 @@ export const analyzeProperty = (analysis: any): any => {
 
   const diet: any = {
     title: subType === '화재배상책임형' 
-      ? `[${dietPlan.companyName}] 실속 배상책임 방어 플랜`
-      : `[${dietPlan.companyName}] 실속 화재재산 안심 플랜`,
+      ? '실속 배상책임 방어 플랜'
+      : '실속 화재재산 안심 플랜',
     description: subType === '화재배상책임형'
-      ? `타인에 대한 화재 배상 및 대인/대물 시설소유자 책임을 핵심 보장으로 구성한 소상공인 실속 플랜입니다.`
-      : `자산 한도를 필수 수준으로 맞추고 화재 재산 손해를 집중 보장하는 실속 재물 플랜입니다.`,
+      ? `타인에 대한 화재 배상 및 대인/대물 시설소유자 책임을 핵심 보장으로 구성한 3~5년 만기 소상공인 실속 플랜입니다.`
+      : `자산 한도를 필수 수준으로 맞추고 화재 재산 손해를 집중 보장하는 3~5년 만기 실속 재물 플랜입니다.`,
     estimatedPremium: dietPlan.premium,
+    periodBadge: '3년/5년 만기 · 전기납 (소상공인)',
     riskPremium: dietPlan.riskPremium,
     savingsPremium: dietPlan.savingsPremium,
     companyName: dietPlan.companyName,
@@ -227,12 +228,13 @@ export const analyzeProperty = (analysis: any): any => {
 
   const upgrade: any = {
     title: subType === '화재배상책임형'
-      ? `[${upgradePlan.companyName}] 배상 든든 밸런스 플랜`
-      : `[${upgradePlan.companyName}] 자산 실손 밸런스 플랜`,
+      ? '배상 든든 밸런스 플랜'
+      : '자산 실손 밸런스 플랜',
     description: subType === '화재배상책임형'
-      ? `대인/대물 시설배상 한도를 강화하고 음식물 배상까지 탑재하여 소상공인의 법적 리스크를 안정적으로 대비하는 맞춤형 플랜입니다.`
-      : `설정한 매장 자산 가치 범위 내에서 실제 손해를 보상하며, 누수로 인한 건물 침수 피해까지 안정적으로 커버하는 권장해 드리는 설계안입니다.`,
+      ? `대인/대물 시설배상 한도를 강화하고 음식물 배상까지 탑재하여 소상공인의 법적 리스크를 3~5년 만기로 대비하는 맞춤형 플랜입니다.`
+      : `설정한 매장 자산 가치 범위 내에서 실제 손해를 보상하며, 누수로 인한 건물 침수 피해까지 3~5년 만기로 커버하는 권장 설계안입니다.`,
     estimatedPremium: upgradePlan.premium,
+    periodBadge: '3년/5년 만기 · 전기납 (소상공인)',
     riskPremium: upgradePlan.riskPremium,
     savingsPremium: upgradePlan.savingsPremium,
     companyName: upgradePlan.companyName,
@@ -259,9 +261,10 @@ export const analyzeProperty = (analysis: any): any => {
   const hybridSavings = hybridPlan.savingsPremium;
 
   const hybrid: any = {
-    title: `[${hybridPlan.companyName}] 프리미엄 사업장 마스터 플랜`,
+    title: '프리미엄 사업장 마스터 플랜',
     description: `화재 재산 손해 가액 한도 내 보장은 물론 주변 상가 피해 배상 한도 확대(10억) 설정, 영업 중단 시 임차료/인건비를 지원하는 프리미엄 소상공인 올케어 플랜입니다.`,
     estimatedPremium: hybridPlan.premium,
+    periodBadge: '3년/5년 만기 · 전기납 (소상공인)',
     riskPremium: hybridPlan.riskPremium,
     savingsPremium: hybridPlan.savingsPremium,
     companyName: hybridPlan.companyName,

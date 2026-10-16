@@ -78,9 +78,10 @@ export const analyzePet = (analysis: any): any => {
   // Diet: 데이터베이스의 가장 저렴한 상품의 실가격 노출
   const dietPremium = opt1.premium;
   const diet: RecommendationPlan = {
-    title: `[${opt1.companyName}] 실속 가성비 플랜`,
-    description: `${petOpts.petName}의 필수 일상 의료비(통원/입원)를 부담 없이 지켜주는 알뜰형 플랜입니다.`,
+    title: '실속 가성비 플랜',
+    description: `${petOpts.petName}의 필수 일상 의료비(통원/입원)를 갱신 주기에 맞춰 부담 없이 지켜주는 알뜰형 플랜입니다.`,
     estimatedPremium: dietPremium,
+    periodBadge: '3년/5년 갱신형 (전기납)',
     coverageChanges: [
       '자기부담금 3만 원 기본 설정',
       '보장비율 70% 알뜰 세팅',
@@ -92,9 +93,10 @@ export const analyzePet = (analysis: any): any => {
   // Upgrade: 데이터베이스의 두 번째 상품의 실가격 노출
   const upgradePremium = opt2.premium;
   const upgrade: RecommendationPlan = {
-    title: `[${opt2.companyName}] 안심 밸런스 플랜`,
-    description: `보장 비율을 확대하고, ${petOpts.breed} 취약 질환인 '${vulnerability.split(',')[0]}' 보장을 추가한 추천 밸런스 상품입니다.`,
+    title: '안심 밸런스 플랜',
+    description: `보장 비율을 확대하고, ${petOpts.breed} 취약 질환인 '${vulnerability.split(',')[0]}' 보장을 추가한 추천 밸런스 플랜입니다.`,
     estimatedPremium: upgradePremium,
+    periodBadge: '3년/5년 갱신형 (전기납)',
     coverageChanges: [
       '보장 비율 70% ~ 80% 구성',
       '슬개골/피부질환 주요 특약 탑재',
@@ -106,9 +108,10 @@ export const analyzePet = (analysis: any): any => {
   // Hybrid: 데이터베이스의 세 번째 상품의 실가격 노출
   const hybridPremium = opt3.premium;
   const hybrid: RecommendationPlan = {
-    title: `[${opt3.companyName}] 프리미엄 마스터 플랜`,
+    title: '프리미엄 마스터 플랜',
     description: `수술비 한도 증액 및 구강/스케일링 특약까지 모두 포함하여 든든하게 보장받는 프리미엄 케어 플랜입니다.`,
     estimatedPremium: hybridPremium,
+    periodBadge: '3년/5년 갱신형 (전기납)',
     coverageChanges: [
       '보장 비율 최대 80% ~ 90% 세팅',
       '수술 회당 한도 업계 우수한 수준',

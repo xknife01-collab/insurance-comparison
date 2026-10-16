@@ -31,15 +31,18 @@ export const HealthGeneralSlider: React.FC<{ result: AnalysisResult }> = ({ resu
     // 심혈관질환 진단비 한도 (1000만 원 ~ 4000만 원)
     const heartLimit = Math.round(10000000 + ratio * 30000000);
 
+    const balance = value - currentPremium;
+
     return {
       cancerLimit,
       similarCancerLimit,
       brainLimit,
       heartLimit,
-      index: Math.round(78 + (ratio * 21)),
+      balance,
+      ratio,
       percentage: Math.round(40 + ratio * 60)
     };
-  }, [value, dietPremium, luxuryPremium]);
+  }, [value, currentPremium, dietPremium, luxuryPremium]);
 
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -78,10 +81,10 @@ export const HealthGeneralSlider: React.FC<{ result: AnalysisResult }> = ({ resu
                   onChange={(e) => setValue(Number(e.target.value))} 
                   className="w-full h-3 bg-gray-100 rounded-full appearance-none cursor-pointer accent-orange-500" 
                 />
-                <div className="flex justify-between mt-6 text-[0.65rem] font-black text-gray-400 uppercase tracking-widest">
-                  <span>다이어트 ({dietPremium.toLocaleString()}원)</span>
-                  <span className="text-orange-600">현재 ({currentPremium.toLocaleString()}원)</span>
-                  <span>럭셔리 ({luxuryPremium.toLocaleString()}원)</span>
+                <div className="flex justify-between mt-6 text-[0.65rem] font-black text-gray-400 tracking-tight">
+                  <span>최소 보장 ({dietPremium.toLocaleString()}원)</span>
+                  <span className="text-orange-600 font-bold">현재 예산 ({currentPremium.toLocaleString()}원)</span>
+                  <span>집중 보장 ({luxuryPremium.toLocaleString()}원)</span>
                 </div>
               </div>
             </div>
@@ -127,17 +130,21 @@ export const HealthGeneralSlider: React.FC<{ result: AnalysisResult }> = ({ resu
             </div>
             <div className="bg-white rounded-[3rem] p-10 border border-gray-100 flex flex-col justify-between shadow-xl group hover:border-orange-200 transition-all">
               <div className="flex justify-between items-start">
-                <div className="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center text-orange-500"><TrendingUp size={20} /></div>
-                <span className="text-[0.6rem] font-black text-gray-300 uppercase tracking-widest">Remodeling Score</span>
+                <div className={`w-10 h-10 ${metrics.balance <= 0 ? 'bg-emerald-50 text-emerald-600' : 'bg-orange-50 text-orange-500'} rounded-xl flex items-center justify-center`}>
+                  <TrendingUp size={20} />
+                </div>
+                <span className="text-[0.6rem] font-black text-gray-300 uppercase tracking-widest">Monthly Balance</span>
               </div>
               <div>
-                <p className="text-[0.65rem] font-black text-gray-400 uppercase tracking-widest mb-1">종합건강 리모델링 최적화 지수</p>
+                <p className="text-[0.65rem] font-black text-gray-400 uppercase tracking-widest mb-1">현재 대비 월 예산 변동</p>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-6xl font-black text-gray-900 tracking-tighter group-hover:scale-105 transition-transform inline-block">{metrics.index}</span>
-                  <span className="text-xl font-bold text-orange-600">점</span>
+                  <span className={`text-5xl font-black ${metrics.balance <= 0 ? 'text-emerald-600' : 'text-orange-600'} tracking-tighter inline-block`}>
+                    {metrics.balance === 0 ? '0' : (metrics.balance > 0 ? `+${metrics.balance.toLocaleString()}` : metrics.balance.toLocaleString())}
+                  </span>
+                  <span className="text-xl font-bold text-gray-900">원</span>
                 </div>
                 <p className="text-[11px] text-gray-400 font-bold mt-2">
-                  * 진단비 포괄 범위 및 수술 특약 믹스매치 합산 결과
+                  {metrics.balance < 0 ? `매월 ${Math.abs(metrics.balance).toLocaleString()}원 절감 효과` : (metrics.balance > 0 ? `보장 확대를 위한 추가 예산` : '현재 납입 보험료와 동일')}
                 </p>
               </div>
             </div>

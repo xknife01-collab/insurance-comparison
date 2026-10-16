@@ -182,10 +182,13 @@ export const analyzeSavings = (analysis: any): any => {
 
   // Diet Plan: 실속형 다이렉트 소액 플랜
   const dietPremium = savingType === 'lumpSum' ? Math.min(premium, 10000000) : 100000;
+  const savingsBadge = savingType === 'lumpSum' ? '일시납 · 10년 비과세 만기' : '5년/10년납 · 10년 비과세 만기';
+
   const diet: RecommendationPlan = {
-    title: `[${opt1.companyName}] 실속 CM ${objectiveTitle} 플랜`,
+    title: `실속 CM ${objectiveTitle} 플랜`,
     description: dietDesc,
     estimatedPremium: dietPremium,
+    periodBadge: savingsBadge,
     companyName: opt1.companyName,
     productName: opt1.productName,
     coverageChanges: [
@@ -202,9 +205,10 @@ export const analyzeSavings = (analysis: any): any => {
   // Upgrade Plan: 비과세 올인 밸런스형 플랜
   const upgradePremium = savingType === 'lumpSum' ? Math.min(premium, 50000000) : 500000;
   const upgrade: RecommendationPlan = {
-    title: `[${opt2.companyName}] 비과세 복리 ${objectiveTitle} 플랜`,
+    title: `비과세 복리 ${objectiveTitle} 플랜`,
     description: upgradeDesc,
     estimatedPremium: upgradePremium,
+    periodBadge: savingsBadge,
     companyName: opt2.companyName,
     productName: opt2.productName,
     coverageChanges: [
@@ -234,9 +238,10 @@ export const analyzeSavings = (analysis: any): any => {
       ];
 
   const hybrid: RecommendationPlan = {
-    title: `[${opt3.companyName}] 유니버셜 ${objectiveTitle} 프리미엄 플랜`,
+    title: `유니버셜 ${objectiveTitle} 프리미엄 플랜`,
     description: hybridDesc,
     estimatedPremium: hybridPremium,
+    periodBadge: savingsBadge,
     companyName: opt3.companyName,
     productName: opt3.productName,
     coverageChanges: hybridCustomChanges,

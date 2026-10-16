@@ -119,8 +119,9 @@ export const analyzeDriver = (analysis: InsuranceAnalysis): AnalysisResult => {
         title: '실속 알뜰 플랜 (가성비 최우선)',
         companyName: dietOption.companyName,
         productName: cleanName(dietOption.productName),
-        description: '사고 처리 벌금 3천만 원 및 필수 합의금 보장 위주로 가볍게 리모델링하여 납입 부담을 낮추는 실속형 플랜',
+        description: '20년 만기 순수보장형으로 벌금 및 필수 형사합의금 위주로 구성하여 납입 부담을 낮춘 실속 플랜',
         estimatedPremium: dietOption.premium,
+        periodBadge: '20년 만기 · 20년납 (순수보장형)',
         coverageChanges: [
           '교통사고처리지원금(형사합의금) 1억 원 실속 세팅',
           '변호사 선임비용 3,000만 원 보장 유지',
@@ -132,8 +133,9 @@ export const analyzeDriver = (analysis: InsuranceAnalysis): AnalysisResult => {
         title: 'VIP 안심 든든 플랜 (보장 강화)',
         companyName: upgradeOption.companyName,
         productName: cleanName(upgradeOption.productName),
-        description: '경찰조사 단계 변호사 동행 지원과 부상치료 지원을 고르게 강화한 프리미엄 안심 플랜',
+        description: '경찰조사 단계 변호사 동행 지원과 부상치료 지원을 20년 만기로 강화한 프리미엄 안심 플랜',
         estimatedPremium: upgradeOption.premium,
+        periodBadge: '20년 만기 · 20년납 (순수보장형)',
         coverageChanges: [
           '교통사고처리지원금(형사합의금) 2억 원 상향',
           '경찰조사단계 변호사선임비용 5,000만 원 선지원 탑재',
@@ -145,8 +147,9 @@ export const analyzeDriver = (analysis: InsuranceAnalysis): AnalysisResult => {
         title: '가족안심 스마트 하이브리드 플랜',
         companyName: hybridOption.companyName,
         productName: cleanName(hybridOption.productName),
-        description: '안전 운행 법률 비용은 물론 가족들의 일상 배상책임 및 누수 사고까지 결합하여 구성한 스마트 통합 플랜',
+        description: '안전 운행 법률 비용은 물론 가족 일상 배상책임까지 20년 만기로 결합한 스마트 통합 플랜',
         estimatedPremium: hybridOption.premium,
+        periodBadge: '20년 만기 · 20년납 (순수보장형)',
         coverageChanges: [
           '교사처 1.5억 + 변호사비 5천 + 대인벌금 3천 기본 보장',
           '가족 일상생활배상책임(누수 및 생활 대인/대물 과실) 1억 원 특별 특약 탑재',

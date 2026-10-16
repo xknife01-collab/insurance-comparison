@@ -130,9 +130,9 @@ export const LegalSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =>
                   className="w-full h-3 bg-gray-100 rounded-full appearance-none cursor-pointer accent-indigo-600" 
                 />
                 <div className="flex justify-between mt-6 text-[0.65rem] font-black text-gray-400 uppercase tracking-widest">
-                  <span>최소 (500만 원)</span>
-                  <span className="text-indigo-600">설정치 ({(lawyerLimitVal / 10000).toLocaleString()}만원)</span>
-                  <span>최대 (3,000만 원)</span>
+                  <span>최소 한도 (500만 원)</span>
+                  <span className="text-indigo-600 font-bold">현재 설정 ({(lawyerLimitVal / 10000).toLocaleString()}만원)</span>
+                  <span>집중 한도 (3,000만 원)</span>
                 </div>
               </div>
             </div>
@@ -186,12 +186,18 @@ export const LegalSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =>
               <div className="bg-white rounded-[3rem] p-10 border border-slate-100 flex flex-col justify-between shadow-xl group hover:border-indigo-600 transition-all text-left">
                 <div className="flex justify-between items-start">
                   <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600"><Shield size={20} /></div>
-                  <span className="text-[0.6rem] font-black text-slate-350 uppercase tracking-widest">Efficiency Index</span>
+                  <span className="text-[0.6rem] font-black text-slate-350 uppercase tracking-widest">Monthly Balance</span>
                 </div>
                 <div className="my-auto space-y-2">
-                  <div className="text-6xl font-black text-gray-900 tracking-tighter">{metrics.totalScore} <span className="text-xl text-gray-400">점</span></div>
-                  <p className="text-[0.7rem] font-bold text-gray-500 leading-relaxed">
-                    변호사 선임 한도, 인지대 한도 및 상담 특약 가입 상태를 가중 종합 계산한 최적화 평가 지수입니다.
+                  <p className="text-[0.65rem] font-black text-gray-400 uppercase tracking-widest">현재 대비 월 예산 변동</p>
+                  <div className="flex items-baseline gap-1">
+                    <span className={`text-4xl md:text-5xl font-black tracking-tighter ${metrics.simulatedPremium - opt1.premium < 0 ? 'text-indigo-600' : metrics.simulatedPremium - opt1.premium > 0 ? 'text-gray-900' : 'text-gray-500'}`}>
+                      {metrics.simulatedPremium - opt1.premium < 0 ? `-${Math.abs(metrics.simulatedPremium - opt1.premium).toLocaleString()}` : metrics.simulatedPremium - opt1.premium > 0 ? `+${(metrics.simulatedPremium - opt1.premium).toLocaleString()}` : '0'}
+                    </span>
+                    <span className="text-xl font-bold text-gray-500">원</span>
+                  </div>
+                  <p className="text-[12px] text-gray-500 font-bold mt-1">
+                    {metrics.simulatedPremium - opt1.premium < 0 ? `매월 ${Math.abs(metrics.simulatedPremium - opt1.premium).toLocaleString()}원 절감 효과` : metrics.simulatedPremium - opt1.premium > 0 ? `한도 확대를 위한 추가 보험료` : `현재 기준 보험료와 동일`}
                   </p>
                 </div>
                 <button 

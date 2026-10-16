@@ -120,9 +120,10 @@ export const analyzeHealthGeneral = (analysis: any): any => {
 
   // Diet: 선택한 보장(진단비 및 특약)을 그대로 유지하면서 업계 최저 요율 매칭
   const diet: RecommendationPlan = {
-    title: `[${dietPlan.companyName}] 실속 다이어트 플랜`,
-    description: '선택하신 보장 조건(진단비 및 특약)을 유지하면서, 합리적인 요율을 매칭한 실속형 플랜입니다.',
+    title: '실속 다이어트 플랜',
+    description: '선택하신 보장 조건(진단비 및 특약)을 유지하면서, 20년납 비갱신형으로 합리적인 요율을 매칭한 실속형 플랜입니다.',
     estimatedPremium: dietPlan.premium,
+    periodBadge: '20년납 · 90세만기 (비갱신형)',
     companyName: dietPlan.companyName,
     productName: dietPlan.productName,
     coverageChanges: [
@@ -140,9 +141,10 @@ export const analyzeHealthGeneral = (analysis: any): any => {
 
   // Upgrade: 3대 진단비 강화, 1-5종 수술비 및 표적항암 탑재, 비갱신 무해지형
   const upgrade: RecommendationPlan = {
-    title: `[${upgradePlan.companyName}] 안심 밸런스 플랜`,
-    description: '3대 진단비를 충실히 보강하고, 수술비와 최신 표적항암 특약까지 골고루 갖춘 안심 밸런스 플랜입니다.',
+    title: '안심 밸런스 플랜',
+    description: '3대 진단비를 충실히 보강하고, 수술비와 최신 표적항암 특약까지 20년납으로 골고루 갖춘 안심 밸런스 플랜입니다.',
     estimatedPremium: upgradePlan.premium,
+    periodBadge: '20년납 · 90세만기 (비갱신형)',
     companyName: upgradePlan.companyName,
     productName: upgradePlan.productName,
     coverageChanges: [
@@ -161,9 +163,10 @@ export const analyzeHealthGeneral = (analysis: any): any => {
 
   // Hybrid: 최대 진단비 한도, 전체 특약 풀패키지 탑재
   const hybrid: RecommendationPlan = {
-    title: `[${hybridPlan.companyName}] 프리미엄 마스터 플랜`,
-    description: '암·뇌·심장 보장 한도를 높이고 부정맥 진단비, 혈전용해, 가족일상배상책임까지 폭넓게 채운 종합 보장형 플랜입니다.',
+    title: '프리미엄 마스터 플랜',
+    description: '암·뇌·심장 보장 한도를 높이고 부정맥 진단비, 혈전용해, 가족일상배상책임까지 20년납으로 폭넓게 채운 종합 보장형 플랜입니다.',
     estimatedPremium: hybridPlan.premium,
+    periodBadge: '20년납 · 90세만기 (비갱신형)',
     companyName: hybridPlan.companyName,
     productName: hybridPlan.productName,
     coverageChanges: [

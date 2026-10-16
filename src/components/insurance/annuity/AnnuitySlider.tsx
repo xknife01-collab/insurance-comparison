@@ -61,7 +61,7 @@ export const AnnuitySlider: React.FC<{ result: AnalysisResult }> = ({ result }) 
     const monthlyPension = (accumulated * payoutMonthlyRate) / (1 - Math.pow(1 + payoutMonthlyRate, -payoutMonths));
     const totalPrincipal = value * 12 * payYears;
 
-    // 리모델링 최적성 평가 지수 (Remodeling Index)
+    // 월 예산 변동 기준
     // 연금저축 한도(600만 원 / 월 50만 원)에 맞출수록 96점에 가깝게 평가
     let scoreIndex = 70;
     if (opts.annuityType === 'savings') {
@@ -79,10 +79,9 @@ export const AnnuitySlider: React.FC<{ result: AnalysisResult }> = ({ result }) 
       accumulatedAmount: Math.round(accumulated),
       monthlyPension: Math.round(monthlyPension),
       totalPrincipal: Math.round(totalPrincipal),
-      scoreIndex,
-      percentage
+      balance: value - currentPremium
     };
-  }, [value, opts.annuityType, opts.hasIrp, payYears, deferYears, taxCreditRate]);
+  }, [value, opts.annuityType, opts.hasIrp, payYears, deferYears, taxCreditRate, currentPremium]);
 
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -118,9 +117,9 @@ export const AnnuitySlider: React.FC<{ result: AnalysisResult }> = ({ result }) 
                   className="w-full h-3 bg-gray-100 rounded-full appearance-none cursor-pointer accent-blue-600" 
                 />
                 <div className="flex justify-between mt-6 text-[0.65rem] font-black text-gray-400 uppercase tracking-widest">
-                  <span>실속형 (10만 원)</span>
-                  <span className="text-blue-600">현재 설정 ({value.toLocaleString()}원)</span>
-                  <span>럭셔리 (100만 원)</span>
+                  <span>최소 납입 (10만 원)</span>
+                  <span className="text-blue-600">현재 예산 ({currentPremium.toLocaleString()}원)</span>
+                  <span>최대 납입 (100만 원)</span>
                 </div>
               </div>
             </div>
@@ -173,16 +172,18 @@ export const AnnuitySlider: React.FC<{ result: AnalysisResult }> = ({ result }) 
             <div className="bg-white rounded-[3rem] p-10 border border-gray-100 flex flex-col justify-between shadow-xl group hover:border-blue-200 transition-all text-left">
               <div className="flex justify-between items-start">
                 <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-blue-500"><TrendingUp size={20} /></div>
-                <span className="text-[0.6rem] font-black text-gray-300 uppercase tracking-widest">Remodeling Index</span>
+                <span className="text-[0.6rem] font-black text-gray-300 uppercase tracking-widest">Monthly Balance</span>
               </div>
               <div>
-                <p className="text-[0.65rem] font-black text-gray-400 uppercase tracking-widest mb-1">연금 자산 최적화 지수</p>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-6xl font-black text-gray-900 tracking-tighter group-hover:scale-105 transition-transform inline-block">{metrics.scoreIndex}</span>
-                  <span className="text-xl font-bold text-blue-600">점</span>
+                <p className="text-[0.65rem] font-black text-gray-400 uppercase tracking-widest mb-1">현재 대비 월 예산 변동</p>
+                <div className="flex items-baseline gap-1">
+                  <span className={`text-4xl md:text-5xl font-black tracking-tighter ${metrics.balance < 0 ? 'text-blue-600' : metrics.balance > 0 ? 'text-gray-900' : 'text-gray-500'}`}>
+                    {metrics.balance < 0 ? `-${Math.abs(metrics.balance).toLocaleString()}` : metrics.balance > 0 ? `+${metrics.balance.toLocaleString()}` : '0'}
+                  </span>
+                  <span className="text-xl font-bold text-gray-500">원</span>
                 </div>
-                <p className="text-[11px] text-gray-400 font-bold mt-2 leading-relaxed">
-                  * 세액공제 납입한도 최적화, 총 연소득 대비 연금 비중, 은퇴 예상 수령액의 노후생활비 대체비율 가중 평균 점수
+                <p className="text-[12px] text-gray-500 font-bold mt-2">
+                  {metrics.balance < 0 ? `매월 ${Math.abs(metrics.balance).toLocaleString()}원 절감 효과` : metrics.balance > 0 ? `노후 자산 확대를 위한 추가 납입` : `현재 납입 예산과 동일`}
                 </p>
               </div>
             </div>

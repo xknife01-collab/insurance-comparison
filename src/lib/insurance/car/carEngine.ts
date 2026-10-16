@@ -293,8 +293,9 @@ export const analyzeCar = async (analysis: InsuranceAnalysis): Promise<AnalysisR
     recommendations: {
       diet: {
         title: '실속 다이어트 플랜',
-        description: `마일리지·다이렉트 특약 집중 적용으로 월 보험료 부담을 낮춘 실속형입니다.`,
+        description: `마일리지·다이렉트 특약 집중 적용으로 연간 보험료 부담을 낮춘 실속형입니다.`,
         estimatedPremium: Math.round(dietPremium * 0.97),
+        periodBadge: '1년 만기 · 연납 (다이렉트)',
         coverageChanges: [
           `${brandLabel} ${modelLabel} (${engineLabel} ${trimLabel}, ${carYear}년식) 차량가액 ${Math.round(calculatedCarValue / 10000).toLocaleString()}만 원 반영`,
           `운전자 범위: ${driverLabel}`,
@@ -302,13 +303,14 @@ export const analyzeCar = async (analysis: InsuranceAnalysis): Promise<AnalysisR
           '블랙박스·차선이탈·전방충돌 안전운전 특약 조합',
         ],
         switchingLossNotice: '다이렉트 채널 및 특약 할인을 통해 연간 보험료 부담을 낮춥니다.',
-        companyName: '메리츠화재',
-        productName: '다이렉트 메리츠 자동차보험 (실속)',
+        companyName: '추천 보험사',
+        productName: '다이렉트 자동차보험 (실속형)',
       },
       upgrade: {
         title: '대물 10억 + 자상 프리미엄 플랜',
-        description: `사고 시 탑승자 및 보행 중 가족까지 폭넓게 보장하는 프리미엄형 안심 포트폴리오입니다.`,
+        description: `사고 시 탑승자 및 보행 중 가족까지 폭넓게 보장하는 1년 만기 프리미엄형 안심 포트폴리오입니다.`,
         estimatedPremium: Math.round(upgradePremium * 1.02),
+        periodBadge: '1년 만기 · 연납 (다이렉트)',
         coverageChanges: [
           `${brandLabel} ${modelLabel} (${engineLabel} ${trimLabel}, ${carYear}년식) 자차손해 보장`,
           `운전자 범위: ${driverLabel} → 맞춤 커버리지 업그레이드`,
@@ -317,13 +319,14 @@ export const analyzeCar = async (analysis: InsuranceAnalysis): Promise<AnalysisR
           '무보험차상해 5억 확장 + 긴급출동 확대',
         ],
         switchingLossNotice: '합리적인 보험료 차이로 사고 리스크를 든든하게 대비합니다.',
-        companyName: '삼성화재',
-        productName: '다이렉트 애니카 자동차보험 (프리미엄)',
+        companyName: '추천 보험사',
+        productName: '다이렉트 자동차보험 (프리미엄)',
       },
       hybrid: {
         title: '가성비 밸런스 추천 플랜',
-        description: `대물 5억 + 자상 가성비형으로 가격과 보장의 균형을 안정적으로 잡은 추천 플랜입니다.`,
+        description: `대물 5억 + 자상 가성비형으로 가격과 보장의 균형을 안정적으로 잡은 1년 만기 추천 플랜입니다.`,
         estimatedPremium: Math.round(hybridPremium * 1.00),
+        periodBadge: '1년 만기 · 연납 (다이렉트)',
         coverageChanges: [
           `${brandLabel} ${modelLabel} (${engineLabel} ${trimLabel}) — 단독사고 제외 자차 절약형`,
           `운전자 범위: ${driverLabel}`,
@@ -332,8 +335,8 @@ export const analyzeCar = async (analysis: InsuranceAnalysis): Promise<AnalysisR
           'Tmap 연계 및 차선/전방 안전 특약 연동',
         ],
         switchingLossNotice: '가격과 보장의 균형을 고려한 추천 밸런스 플랜입니다.',
-        companyName: 'DB손해보험',
-        productName: '다이렉트 프로미 자동차보험 (가성비)',
+        companyName: '추천 보험사',
+        productName: '다이렉트 자동차보험 (가성비형)',
       },
     },
   };

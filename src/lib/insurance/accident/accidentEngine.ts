@@ -95,12 +95,13 @@ export const analyzeAccident = (analysis: any): any => {
 
   const diet: RecommendationPlan = {
     title: isDisability 
-      ? `[${dietPlan.companyName}] 장해 실속 가성비 플랜` 
-      : `[${dietPlan.companyName}] 치료 실속 가성비 플랜`,
+      ? '장해 실속 가성비 플랜' 
+      : '치료 실속 가성비 플랜',
     description: isDisability
-      ? '사망/장해 보장금액 중심의 미니멀 설계로 불필요한 일상 특약을 걷어내고 큰 재해에 대비한 고효율 가성비 플랜입니다.'
-      : '일상적인 골절 및 수술비 중심으로 최소 세팅하여 다치기 쉬운 생활 상해의 본인부담 치료비를 덜어주는 가성비 플랜입니다.',
+      ? '사망/장해 보장금액 중심의 20년납 비갱신형 설계로 불필요한 일상 특약을 걷어내고 큰 재해에 대비한 가성비 플랜입니다.'
+      : '일상적인 골절 및 수술비 중심으로 20년납 비갱신 최소 세팅하여 다치기 쉬운 생활 상해의 본인부담 치료비를 덜어주는 가성비 플랜입니다.',
     estimatedPremium: dietPlan.premium,
+    periodBadge: '20년납 · 80세/100세만기 (비갱신형)',
     companyName: dietPlan.companyName,
     productName: dietPlan.productName,
     coverageChanges: isDisability
@@ -119,12 +120,13 @@ export const analyzeAccident = (analysis: any): any => {
 
   const upgrade: RecommendationPlan = {
     title: isDisability
-      ? `[${upgradePlan.companyName}] 장해 안심 밸런스 플랜`
-      : `[${upgradePlan.companyName}] 골절/치료 안심 밸런스 플랜`,
+      ? '장해 안심 밸런스 플랜'
+      : '골절/치료 안심 밸런스 플랜',
     description: isDisability
-      ? '상해사망 1억, 상해후유장해 1억 원을 균형 있게 확보하여 불의의 중대 재해 발생 시 가족의 생활 자산을 보호하는 추천 플랜입니다.'
-      : '일상 속 빈번한 골절(치아파절 포함)과 깁스치료, 상해수술비 및 입원일당을 가장 빈틈없이 조화롭게 구성한 치료 강화 추천 플랜입니다.',
+      ? '상해사망 1억, 상해후유장해 1억 원을 20년납 비갱신형으로 균형 있게 확보하여 불의의 재해 발생 시 자산을 보호하는 추천 플랜입니다.'
+      : '일상 속 빈번한 골절(치아파절 포함)과 깁스치료, 상해수술비 및 입원일당을 20년납 비갱신형으로 구성한 추천 플랜입니다.',
     estimatedPremium: upgradePlan.premium,
+    periodBadge: '20년납 · 80세/100세만기 (비갱신형)',
     companyName: upgradePlan.companyName,
     productName: upgradePlan.productName,
     coverageChanges: isDisability
@@ -143,12 +145,13 @@ export const analyzeAccident = (analysis: any): any => {
 
   const hybrid: RecommendationPlan = {
     title: isDisability
-      ? `[${hybridPlan.companyName}] 장해 프리미엄 마스터 플랜`
-      : `[${hybridPlan.companyName}] 치료 프리미엄 마스터 플랜`,
+      ? '장해 프리미엄 마스터 플랜'
+      : '치료 프리미엄 마스터 플랜',
     description: isDisability
-      ? '상해사망 2억, 후유장해 1.5억의 높은 한도를 구성하고 주말/레저 재해 장해까지 커버하는 프리미엄 보장 플랜입니다.'
-      : '치아파절 포함 골절 진단 100만 원, 상해수술 200만 원, 깁스 50만 원 등 일상 치료비 한도를 강화한 치료 집중 프리미엄 플랜입니다.',
+      ? '상해사망 2억, 후유장해 1.5억의 높은 한도를 20년납 비갱신형으로 구성하고 주말/레저 재해 장해까지 커버하는 프리미엄 보장 플랜입니다.'
+      : '치아파절 포함 골절 진단 100만 원, 상해수술 200만 원, 깁스 50만 원 등 일상 치료비 한도를 20년납 비갱신형으로 강화한 프리미엄 플랜입니다.',
     estimatedPremium: hybridPlan.premium,
+    periodBadge: '20년납 · 80세/100세만기 (비갱신형)',
     companyName: hybridPlan.companyName,
     productName: hybridPlan.productName,
     coverageChanges: isDisability

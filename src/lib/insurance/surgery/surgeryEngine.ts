@@ -12,8 +12,8 @@ export const analyzeSurgery = (analysis: any): any => {
   // _allOptions 도 이미 보정값이 적용된 상태로 전달됨
   const defaultOption = { 
     premium: analysis._realDbPremium || (allOptions[0]?.premium) || 20000, 
-    productName: analysis._productName || '수술비 집중 보험',
-    companyName: analysis._companyName || '메리츠화재'
+    productName: analysis._productName || '수술비 집중 플랜',
+    companyName: analysis._companyName || '추천 보험사'
   };
 
   const opt1 = allOptions[0] || defaultOption;
@@ -27,8 +27,9 @@ export const analyzeSurgery = (analysis: any): any => {
     recommendations: {
       diet: {
         title: '수술비 실속 플랜',
-        description: '자주 발생하는 생활 질환 수술비를 실속형으로 구성한 플랜입니다.',
+        description: '20년 납입 비갱신형으로 생활 질환 수술비를 실속형으로 구성한 플랜입니다.',
         estimatedPremium: opt1.premium,
+        periodBadge: '20년납 · 90세만기 (비갱신형)',
         companyName: opt1.companyName,
         productName: opt1.productName,
         coverageChanges: ['1-5종 수술비 기본 보장', '상해 수술비 포함'],
@@ -36,8 +37,9 @@ export const analyzeSurgery = (analysis: any): any => {
       },
       upgrade: {
         title: '입원/수술 복합 플랜',
-        description: '수술비는 물론 첫날부터 지급되는 입원 일당까지 보완한 플랜입니다.',
+        description: '20년 납입 비갱신형으로 수술비는 물론 입원 일당까지 고루 보완한 플랜입니다.',
         estimatedPremium: opt2.premium,
+        periodBadge: '20년납 · 90세만기 (비갱신형)',
         companyName: opt2.companyName,
         productName: opt2.productName,
         coverageChanges: ['질병 수술비 한도 상향', '상급종합병원 입원비 추가'],
@@ -45,10 +47,11 @@ export const analyzeSurgery = (analysis: any): any => {
       },
       hybrid: {
         title: '재해/상해 특화 플랜',
-        description: '교통사고 및 재해 수술에 특화된 보장을 제공합니다.',
+        description: '20년 납입 비갱신형으로 교통사고 및 재해 수술에 특화된 보장을 제공합니다.',
         estimatedPremium: Math.round(opt1.premium * 1.15),
-        companyName: '현대해상',
-        productName: '상해수술비 집중보험',
+        periodBadge: '20년납 · 90세만기 (비갱신형)',
+        companyName: '추천 보험사',
+        productName: '상해수술비 집중 플랜',
         coverageChanges: ['골절 수술비 가산', '깁스 치료비 포함'],
         switchingLossNotice: '상해 특화 플랜은 일반 질병 수술 보장 범위가 상이할 수 있으므로 가입 전 확인이 필요합니다.',
       }

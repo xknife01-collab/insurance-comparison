@@ -69,18 +69,20 @@ export const analyzeDementia = (analysis: any): any => {
     title: '동일 보장 실속형 (알뜰 플랜)',
     description: '현재 설정을 유지하면서 불필요한 연계 특약만 제외한 실속형 플랜입니다.',
     estimatedPremium: dietOption ? dietOption.premium : Math.floor((analysis.monthlyPremium || 65000) * 0.4),
-    companyName: dietOption?.companyName || '교보생명',
-    productName: dietOption?.productName || '교보더안심치매간병보험',
+    periodBadge: '20년납 · 90세만기',
+    companyName: dietOption?.companyName || '추천 보험사',
+    productName: dietOption?.productName || '실속 치매간병 플랜',
     coverageChanges: ['연계 담보 최소화', '실속 요율 적용'],
     switchingLossNotice: '가입 기간에 따라 해약 환급금이 적을 수 있습니다.'
   };
 
   const upgrade: RecommendationPlan = {
-    title: '가장 많이 추천하는 플랜',
-    description: '진단비와 매월 간병생활자금 보장 기간을 평생 100세까지 확대 보장하는 프리미엄 안심 설계입니다.',
+    title: '균형 잡힌 밸런스 안심 플랜',
+    description: '진단비와 매월 간병생활자금 보장 기간을 약정 만기(90/100세)까지 확대 보장하는 프리미엄 안심 설계입니다.',
     estimatedPremium: upgradeOption ? (upgradeOption === dietOption ? Math.round(upgradeOption.premium * 1.5) : upgradeOption.premium) : Math.floor((analysis.monthlyPremium || 65000) * 1.5),
-    companyName: upgradeOption?.companyName || '라이나생명',
-    productName: upgradeOption?.productName || '라이나전에없던실속치매보험',
+    periodBadge: '20년납 · 90세/100세만기',
+    companyName: upgradeOption?.companyName || '추천 보험사',
+    productName: upgradeOption?.productName || '치매간병 집중케어 플랜',
     coverageChanges: ['중증치매 보장 기간 연장', '재가/시설 동시 보장'],
     switchingLossNotice: '변경 시 보험료가 상승할 수 있습니다.'
   };
@@ -89,8 +91,9 @@ export const analyzeDementia = (analysis: any): any => {
     title: '가성비 실속형 복합 플랜',
     description: '기본적인 치매 진단비와 재가케어를 결합하여 보험료 부담은 줄이고 실속은 높였습니다.',
     estimatedPremium: hybridOption ? (hybridOption === dietOption || hybridOption === upgradeOption ? Math.round(hybridOption.premium * 1.1) : hybridOption.premium) : Math.floor((analysis.monthlyPremium || 65000) * 0.8),
-    companyName: hybridOption?.companyName || 'DB생명',
-    productName: hybridOption?.productName || 'DB생명당신곁에치매간병보험',
+    periodBadge: '20년납 · 90세만기',
+    companyName: hybridOption?.companyName || '추천 보험사',
+    productName: hybridOption?.productName || '치매 재가간병 복합 플랜',
     coverageChanges: ['재가 중심 케어 설계', '가성비 위주 구성'],
     switchingLossNotice: '상세 설계에 따라 보장 내용이 달라질 수 있습니다.'
   };

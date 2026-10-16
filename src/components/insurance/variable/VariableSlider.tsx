@@ -183,7 +183,7 @@ export const VariableSlider: React.FC<{ result: AnalysisResult }> = ({ result })
                   />
                   <div className="flex justify-between mt-6 text-[0.65rem] font-black text-gray-400 uppercase tracking-widest">
                     <span>최소 (10만 원)</span>
-                    <span className="text-indigo-600">현재 납입액 ({premiumVal.toLocaleString()}원)</span>
+                    <span className="text-indigo-600">현재 예산 ({recommendedPremium.toLocaleString()}원)</span>
                     <span>최대 (200만 원)</span>
                   </div>
                 </div>
@@ -283,24 +283,30 @@ export const VariableSlider: React.FC<{ result: AnalysisResult }> = ({ result })
                     </div>
                   </div>
                 </div>
-                <div className="bg-white rounded-[3rem] p-10 border border-gray-100 flex flex-col justify-between shadow-xl group hover:border-indigo-200 transition-all text-left">
-                  <div className="flex justify-between items-start">
-                    <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-500"><TrendingUp size={20} /></div>
-                    <span className="text-[0.6rem] font-black text-gray-300 uppercase tracking-widest">Asset Efficiency Index</span>
+                  <div className="bg-white rounded-[3rem] p-10 border border-gray-100 flex flex-col justify-between shadow-xl group hover:border-indigo-200 transition-all text-left">
+                    <div className="flex justify-between items-start">
+                      <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-500"><TrendingUp size={20} /></div>
+                      <span className="text-[0.6rem] font-black text-gray-300 uppercase tracking-widest">Monthly Balance</span>
+                    </div>
+                    <div className="my-auto space-y-2">
+                      <p className="text-[0.65rem] font-black text-gray-400 uppercase tracking-widest">현재 대비 월 예산 변동</p>
+                      <div className="flex items-baseline gap-1">
+                        <span className={`text-4xl md:text-5xl font-black tracking-tighter ${premiumVal - recommendedPremium < 0 ? 'text-indigo-600' : premiumVal - recommendedPremium > 0 ? 'text-gray-900' : 'text-gray-500'}`}>
+                          {premiumVal - recommendedPremium < 0 ? `-${Math.abs(premiumVal - recommendedPremium).toLocaleString()}` : premiumVal - recommendedPremium > 0 ? `+${(premiumVal - recommendedPremium).toLocaleString()}` : '0'}
+                        </span>
+                        <span className="text-xl font-bold text-gray-500">원</span>
+                      </div>
+                      <p className="text-[12px] text-gray-500 font-bold mt-1">
+                        {premiumVal - recommendedPremium < 0 ? `매월 ${Math.abs(premiumVal - recommendedPremium).toLocaleString()}원 절감 효과` : premiumVal - recommendedPremium > 0 ? `투자 자산 확대를 위한 추가 납입` : `현재 추천 예산과 동일`}
+                      </p>
+                    </div>
+                    <button 
+                      onClick={handleScrollToTop}
+                      className="w-full py-4 bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white rounded-2xl text-xs font-black transition-all flex items-center justify-center gap-2"
+                    >
+                      기반 조건 다시 재수정
+                    </button>
                   </div>
-                  <div className="my-auto space-y-2">
-                    <div className="text-6xl font-black text-gray-900 tracking-tighter">{investmentMetrics.scoreIndex} <span className="text-xl text-gray-400">점</span></div>
-                    <p className="text-[0.7rem] font-bold text-gray-500 leading-relaxed">
-                      투자 성향에 최적화된 주식 비율과 복리 환급 효율을 가중 평균한 변액 자산 종합 관리 지수입니다.
-                    </p>
-                  </div>
-                  <button 
-                    onClick={handleScrollToTop}
-                    className="w-full py-4 bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white rounded-2xl text-xs font-black transition-all flex items-center justify-center gap-2"
-                  >
-                    기반 조건 다시 재수정
-                  </button>
-                </div>
               </div>
 
               {/* Interactive SVG-styled Bar Chart */}
@@ -484,12 +490,18 @@ export const VariableSlider: React.FC<{ result: AnalysisResult }> = ({ result })
                 <div className="bg-white rounded-[3rem] p-10 border border-gray-100 flex flex-col justify-between shadow-xl group hover:border-orange-200 transition-all text-left">
                   <div className="flex justify-between items-start">
                     <div className="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center text-orange-500"><Shield size={20} /></div>
-                    <span className="text-[0.6rem] font-black text-gray-300 uppercase tracking-widest">Protection Efficiency Index</span>
+                    <span className="text-[0.6rem] font-black text-gray-300 uppercase tracking-widest">Monthly Savings</span>
                   </div>
                   <div className="my-auto space-y-2">
-                    <div className="text-6xl font-black text-gray-900 tracking-tighter">{termMetrics.scoreIndex} <span className="text-xl text-gray-400">점</span></div>
-                    <p className="text-[0.7rem] font-bold text-gray-500 leading-relaxed">
-                      적정 사망 보장 금액, 자녀 독립 연령 맞춤 만기 설정, 우량체 할인 적용에 가중 평균을 둔 정기보험 보장 효율성 점수입니다.
+                    <p className="text-[0.65rem] font-black text-gray-400 uppercase tracking-widest">정기 전환 월 절감액</p>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-4xl md:text-5xl font-black text-emerald-600 tracking-tighter">
+                        -{termMetrics.monthlySavings.toLocaleString()}
+                      </span>
+                      <span className="text-xl font-bold text-gray-500">원</span>
+                    </div>
+                    <p className="text-[12px] text-gray-500 font-bold mt-1">
+                      종신보험 대비 매월 절감되는 고정 보험료 (기회비용 재투자 가능)
                     </p>
                   </div>
                   <button 

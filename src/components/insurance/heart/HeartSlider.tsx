@@ -25,12 +25,15 @@ export const HeartSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =>
     // 안전장치: 비율이 0~1 (0%~100%) 범위를 벗어나지 않도록 강제 (무한대 폭주 방지)
     ratio = Math.max(0, Math.min(1, ratio));
     
+    const balance = value - currentPremium;
+    
     return {
       benefit: Math.round(3000 + (ratio * 7000)),
-      index: Math.round(72 + (ratio * 23)),
+      balance,
+      ratio,
       percentage: Math.round(15 + ratio * 40)
     };
-  }, [value, dietPremium, luxuryPremium]);
+  }, [value, currentPremium, dietPremium, luxuryPremium]);
 
   return (
     <section className="space-y-16">
@@ -53,10 +56,10 @@ export const HeartSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =>
               </div>
               <div className="relative pt-10 pb-6">
                 <input type="range" min={dietPremium} max={luxuryPremium} step={500} value={value} onChange={(e) => setValue(Number(e.target.value))} className="w-full h-3 bg-gray-100 rounded-full appearance-none cursor-pointer accent-red-500" />
-                <div className="flex justify-between mt-6 text-[0.65rem] font-black text-gray-400 uppercase tracking-widest">
-                  <span>Diet ({dietPremium.toLocaleString()}원)</span>
-                  <span className="text-red-500">현재 ({currentPremium.toLocaleString()}원)</span>
-                  <span>Luxury ({luxuryPremium.toLocaleString()}원)</span>
+                <div className="flex justify-between mt-6 text-[0.65rem] font-black text-gray-400 tracking-tight">
+                  <span>최소 보장 ({dietPremium.toLocaleString()}원)</span>
+                  <span className="text-red-500 font-bold">현재 예산 ({currentPremium.toLocaleString()}원)</span>
+                  <span>집중 보장 ({luxuryPremium.toLocaleString()}원)</span>
                 </div>
               </div>
             </div>
@@ -85,14 +88,23 @@ export const HeartSlider: React.FC<{ result: AnalysisResult }> = ({ result }) =>
             </div>
             <div className="bg-white rounded-[3rem] p-10 border border-gray-100 space-y-6 shadow-xl">
               <div className="flex justify-between items-start">
-                <div className="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center text-red-500"><TrendingUp size={20} /></div>
-                <span className="text-[0.6rem] font-black text-gray-300 uppercase tracking-widest">Remodeling Index</span>
+                <div className={`w-10 h-10 ${metrics.balance <= 0 ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-500'} rounded-xl flex items-center justify-center`}>
+                  <TrendingUp size={20} />
+                </div>
+                <span className="text-[0.6rem] font-black text-gray-300 uppercase tracking-widest">Monthly Balance</span>
               </div>
               <div>
-                <p className="text-[0.65rem] font-black text-gray-400 uppercase tracking-widest mb-1">보장 최적화 리모델링 지수</p>
-                <p className="text-4xl font-black text-red-500 tracking-tighter">{metrics.index} <span className="text-xl text-gray-900">점</span></p>
+                <p className="text-[0.65rem] font-black text-gray-400 uppercase tracking-widest mb-1">현재 대비 월 예산 변동</p>
+                <p className={`text-4xl font-black ${metrics.balance <= 0 ? 'text-emerald-600' : 'text-red-500'} tracking-tighter`}>
+                  {metrics.balance === 0 ? '0' : (metrics.balance > 0 ? `+${metrics.balance.toLocaleString()}` : metrics.balance.toLocaleString())} <span className="text-xl text-gray-900">원</span>
+                </p>
+                <p className="text-[0.7rem] font-bold text-gray-400 mt-1">
+                  {metrics.balance < 0 ? `매월 ${Math.abs(metrics.balance).toLocaleString()}원 절감 효과` : (metrics.balance > 0 ? `보장 확대를 위한 추가 예산` : '현재 납입 보험료와 동일')}
+                </p>
               </div>
-              <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden"><motion.div initial={{ width: 0 }} animate={{ width: `${metrics.index}%` }} className="h-full bg-red-500" /></div>
+              <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                <motion.div initial={{ width: 0 }} animate={{ width: `${Math.round(metrics.ratio * 100)}%` }} className={`h-full ${metrics.balance <= 0 ? 'bg-emerald-500' : 'bg-red-500'}`} />
+              </div>
             </div>
           </div>
         </div>

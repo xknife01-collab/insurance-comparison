@@ -34,7 +34,7 @@ export const WholeLifeSlider: React.FC<{ result: AnalysisResult }> = ({ result }
     const surrenderValue = totalPrincipal * refundRate;
     const ratePercentage = Math.round(refundRate * 100);
 
-    // 3. 사망보험금 설계 평가 지수 (Remodeling Index)
+    // 3. 사망보험금 설계 변동 기준
     // 연령 및 사망보험금, 납입액 구조에 기반하여 65~98점 사이 책정
     let scoreIndex = 75;
     const ratio = Math.min(1, value / 400000);
@@ -51,10 +51,9 @@ export const WholeLifeSlider: React.FC<{ result: AnalysisResult }> = ({ result }
       totalPrincipal,
       surrenderValue: Math.round(surrenderValue),
       ratePercentage,
-      scoreIndex,
-      percentage
+      balance: value - recommendedPremium
     };
-  }, [value, payYears, isLowRefund]);
+  }, [value, payYears, isLowRefund, recommendedPremium]);
 
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -90,9 +89,9 @@ export const WholeLifeSlider: React.FC<{ result: AnalysisResult }> = ({ result }
                   className="w-full h-3 bg-gray-100 rounded-full appearance-none cursor-pointer accent-indigo-600" 
                 />
                 <div className="flex justify-between mt-6 text-[0.65rem] font-black text-gray-400 uppercase tracking-widest">
-                  <span>가성비 (10만 원)</span>
-                  <span className="text-indigo-600">현재 설정 ({value.toLocaleString()}원)</span>
-                  <span>상속 세원 (150만 원)</span>
+                  <span>최소 납입 (10만 원)</span>
+                  <span className="text-indigo-600">현재 예산 ({recommendedPremium.toLocaleString()}원)</span>
+                  <span>집중 보장 (150만 원)</span>
                 </div>
               </div>
             </div>
@@ -145,16 +144,18 @@ export const WholeLifeSlider: React.FC<{ result: AnalysisResult }> = ({ result }
             <div className="bg-white rounded-[3rem] p-10 border border-gray-100 flex flex-col justify-between shadow-xl group hover:border-indigo-200 transition-all text-left">
               <div className="flex justify-between items-start">
                 <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-500"><TrendingUp size={20} /></div>
-                <span className="text-[0.6rem] font-black text-gray-300 uppercase tracking-widest">Remodeling Index</span>
+                <span className="text-[0.6rem] font-black text-gray-300 uppercase tracking-widest">Monthly Balance</span>
               </div>
               <div>
-                <p className="text-[0.65rem] font-black text-gray-400 uppercase tracking-widest mb-1">보장 자산 최적화 지수</p>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-6xl font-black text-gray-900 tracking-tighter group-hover:scale-105 transition-transform inline-block">{metrics.scoreIndex}</span>
-                  <span className="text-xl font-bold text-indigo-600">점</span>
+                <p className="text-[0.65rem] font-black text-gray-400 uppercase tracking-widest mb-1">현재 대비 월 예산 변동</p>
+                <div className="flex items-baseline gap-1">
+                  <span className={`text-4xl md:text-5xl font-black tracking-tighter ${metrics.balance < 0 ? 'text-indigo-600' : metrics.balance > 0 ? 'text-gray-900' : 'text-gray-500'}`}>
+                    {metrics.balance < 0 ? `-${Math.abs(metrics.balance).toLocaleString()}` : metrics.balance > 0 ? `+${metrics.balance.toLocaleString()}` : '0'}
+                  </span>
+                  <span className="text-xl font-bold text-gray-500">원</span>
                 </div>
-                <p className="text-[11px] text-gray-400 font-bold mt-2 leading-relaxed">
-                  * 사망 보장 금액 적정성, 월 납입 보험료 대비 소득 비중, 계약 완납 유지 가능성의 종합 가중 지수입니다.
+                <p className="text-[12px] text-gray-500 font-bold mt-2">
+                  {metrics.balance < 0 ? `매월 ${Math.abs(metrics.balance).toLocaleString()}원 절감 효과` : metrics.balance > 0 ? `보장 확대를 위한 추가 납입` : `현재 추천 예산과 동일`}
                 </p>
               </div>
             </div>
