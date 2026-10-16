@@ -146,7 +146,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
           <div className="relative z-10 mt-8 p-5 md:p-6 bg-white/5 rounded-3xl border border-white/10">
             <p className="text-purple-400 font-black text-xs mb-1 uppercase tracking-widest">💡 설계 핵심 팁</p>
             <p className="text-white font-bold text-xs leading-relaxed opacity-80">
-              "자동차보험에서 모든 것이 해결될 것이라 믿다가, 중과실 인명 사고 시 형사합의비 수천만 원을 개인 자산으로 감당해 가정이 흔들리는 운전자가 많습니다. 단 월 1~2만 원의 운전자 설계가 인생의 최후 보루가 됩니다."
+              "자동차보험에서 모든 것이 해결될 것이라 믿다가, 중과실 인명 사고 시 발생하는 형사합의금 등 막대한 비용 부담을 개인 자산으로 감당하기 어렵습니다. 사법 리스크는 운전자보험으로 미리 대비하세요."
             </p>
           </div>
         </div>
@@ -164,20 +164,20 @@ export const DriverExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
             </div>
             <h3 className="text-3xl font-black mb-4 tracking-tight">수사 초기 단계 방어를 위한 경찰 조사 특약의 진화</h3>
             <p className="text-sm opacity-70 font-bold leading-relaxed">
-              최근 대법원 판례 및 검경 수사권 조정에 따라 초기 수사기관 진술의 중요성이 극대화되었습니다. 이에 발맞추어 기소 이전 경찰서 출석 단계부터 변호사가 동행해 법적 불이익을 완전히 차단하는 특약 가입이 균형 잡힌 정석으로 자리 잡았습니다.
+              검경 수사권 조정에 따라 초기 수사기관 진술의 중요성이 극대화되었습니다. 이에 발맞추어 기소 이전 경찰서 출석 단계부터 변호사가 동행해 법적 불이익을 완전히 차단하는 특약 가입이 균형 잡힌 정석으로 자리 잡았습니다.
             </p>
           </div>
           <div className="space-y-4">
             {[
-              { company: '변호사 선임비용', product: '경찰조사 개시 시점 탑재형', limit: '최대 5,000만 원 실손 한도', note: '불기소, 내사종결, 약식명령 청구 시에도 실제 변호사 보수 실손 보상 (특약 가입 시)' },
-              { company: '교통사고처리지원금', product: '피해자 중상해(1~3급) 특별 약정', limit: '최대 2억 원 한도 실손 보장', note: '검찰 기소 전 형사합의금 신속 지급 체계 탑재 여부 (음주·무면허 제외)' },
-              { company: '자동차사고부상치료비', product: '14급 단순 타박/염좌 청구', limit: '등급별 최대 30만 원 한도', note: '금융감독원 행정지도 기준 준수 및 진료기록 확인' },
+              { title: '변호사 선임비용', feature: '경찰 조사 단계 선지원 특약', limit: '가입 한도 내 실손 비례보상', note: '불기소, 내사종결, 약식명령 청구 시에도 실제 변호사 보수 실손 보상 (특약 가입 시)' },
+              { title: '교통사고처리지원금', feature: '피해자 중상해(1~3급) 특별 약정', limit: '형사합의금 실손 비례보상', note: '검찰 기소 전 형사합의금 신속 지급 체계 탑재 여부 (음주·무면허 제외)' },
+              { title: '자동차사고부상치료비', feature: '14급 단순 타박/염좌 보장 특약', limit: '부상 등급별 차등 정액보장', note: '금융감독원 행정지도 기준 준수 및 진료기록 확인' },
             ].map((item, i) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
-                    {maskCompany(item.company, isUnlocked)}{' '}
-                    <span className="text-purple-300 text-xs font-bold ml-1">{maskProductName(item.product, isUnlocked)}</span>
+                    {item.title}{' '}
+                    <span className="text-purple-300 text-xs font-bold ml-1">{item.feature}</span>
                   </p>
                   <p className="text-[11px] text-slate-400 font-bold mt-0.5">{maskText(item.note, isUnlocked)}</p>
                 </div>
@@ -273,7 +273,7 @@ export const DriverExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
         <p>• 본 안내는 손해보험협회 심의기준 및 각 사 공시 내용을 바탕으로 작성되었으며, 보험계약자가 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 경우 보험인수가 거절되거나 보험료가 인상될 수 있고 보장내용이 달라질 수 있습니다.</p>
         <p>• <strong>실손비례보상 고지:</strong> 벌금, 교통사고처리지원금(형사합의금), 변호사선임비용 담보는 실손보상 담보로서 2개 이상의 보험에 중복 가입하더라도 실제 발생한 손해액 범위 내에서만 비례보상되며, 중복 지급되지 않습니다.</p>
         <p>• <strong>중대 법규 위반 면책 안내:</strong> 피보험자가 <strong>음주운전, 무면허운전, 약물운전, 뺑소니(사고 후 도주)</strong> 상태에서 발생한 사고에 대해서는 관련 법률 및 약관에 따라 운전자보험의 형사합의금, 변호사비용, 벌금 등 제반 비용 담보가 일체 보상되지 않습니다.</p>
-        <p>• (주)케어인슈는 다수의 보험사와 계약 체결 및 중개하는 금융상품판매대리·중개업자로서 보험사로부터 보험계약 체결권을 부여받지 아니하며 금융소비자보호법 등 관련 법령을 준수합니다.</p>
+        <p>• 본 플랫폼(보험대리점)은 다수의 보험사와 계약을 체결하고 중개하는 금융상품판매대리·중개업자로서, 보험사로부터 계약체결권을 부여받지 아니하며 직접 보험계약을 체결할 수 없습니다.</p>
       </div>
 
       {/* ── CTA ── */}
@@ -283,8 +283,8 @@ export const DriverExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
             <Quote className="w-8 h-8 opacity-60 rotate-180" />
           </div>
           <p className="text-2xl font-black text-slate-900 tracking-tight leading-tight">
-            "가장 완전한 형태의 운전 권리 보호 장벽,<br />
-            <span className="text-purple-600">가정과 나의 인생을 안정적으로 지키는 현명한 설계사와 운전자의 파트너십입니다.</span>"
+            "운전 중 발생하는 형사적·행정적 부담을 덜어주는 안심 설계,<br />
+            <span className="text-purple-600">나와 소중한 가족의 일상을 안정적으로 지키는 확실한 대비책입니다.</span>"
           </p>
         </div>
         {onAction && (

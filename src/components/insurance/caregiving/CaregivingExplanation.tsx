@@ -49,7 +49,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction, isUnlocked })
               <span className="bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded text-[10px]">손해보험협회 공시 기준</span>
             </div>
             <p className="font-bold text-slate-800">
-              • **표준 예시 산출 기준**: 간병인사용일당 건강보험 / 50세 남성 및 여성 (상해 1급 사무직) / 20년납 100세만기 / 무해지환급형(해약환급금 미지급형) / 월 보험료 50세 남성 약 36,500원, 50세 여성 약 41,200원 기준 (피보험자의 성별, 연령, 직업급수, 가입금액 및 회사별 심사 기준에 따라 실제 보험료는 상이할 수 있습니다).
+              • **표준 예시 산출 기준**: 주요 손해보험사 간병인사용일당 공시 요율 기준이며, 최종 월 납입 보험료는 고객님이 상단에서 직접 설정하신 연령, 성별, 직업급수, 보장금액 및 보험사별 인수 심사 기준에 따라 실시간 반영됩니다.
             </p>
             <div className="pt-2.5 border-t border-purple-200 text-[11px] text-slate-600 space-y-1.5">
               <p>• **요양병원 감액 규정**: 요양병원 입원 시 일반병원/종합병원과 달리 간병인사용일당이 가입금액의 20%~50% 수준(통상 1일 2~3만 원 선)으로 감액 지급되거나 한도가 축소 적용됩니다.</p>
@@ -297,7 +297,7 @@ export const CaregivingExplanation: React.FC<Props> = ({ onAction, isUnlocked })
           <div className="p-5 md:p-6 bg-slate-50 rounded-2xl border border-slate-100">
             <p className="text-xs text-purple-600 font-black mb-1">📢 전문가 분석 조언</p>
             <p className="text-[11px] text-gray-600 font-bold leading-relaxed">
-              "치매는 가족의 영혼을 갉아먹는 질병이라 불릴 만큼 긴 간병 기간(평균 5~7년)을 보입니다. 진단비 1회 수령 후 끝나는 담보 대신, 재가 요양이나 사설 요양병원 입원 시 매월 평생(또는 10년간) 반복하여 통장에 찍히는 생활자금형 연금식 설계가 가입자 만족도가 높습니다."
+              "치매는 가족의 영혼을 갉아먹는 질병이라 불릴 만큼 긴 간병 기간을 보입니다. 진단비 1회 수령 후 끝나는 담보 대신, 재가 요양이나 사설 요양병원 입원 시 매월 평생(또는 10년간) 반복하여 통장에 찍히는 생활자금형 연금식 설계가 가입자 만족도가 높습니다."
             </p>
           </div>
         </div>

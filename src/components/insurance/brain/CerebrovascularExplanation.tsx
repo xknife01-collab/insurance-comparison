@@ -48,7 +48,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction, isUnlock
               <span className="bg-indigo-100 text-indigo-700 font-bold px-2 py-0.5 rounded text-[10px]">손해보험협회 공시 기준</span>
             </div>
             <p className="font-bold text-slate-700">
-              • **예시 산출 기준**: 주요 손해보험사 뇌혈관질환 표준 플랜 / 40세 남성 / 상해 1급(사무직) / 20년납 90세만기 / 해약환급금 미지급형(무해지형) / 월 보험료 28,400원 기준 (가입자의 연령, 성별, 직업, 특약 선택 및 회사별 심사 기준에 따라 실제 보험료와 보장금액은 상이할 수 있습니다).
+              • **예시 산출 기준**: 주요 손해보험사 뇌혈관질환 전용 플랜 공시 요율 기준이며, 최종 월 납입 보험료는 고객님이 상단에서 직접 설정하신 연령, 성별, 직업급수, 보장금액 및 보험사별 인수 심사 기준에 따라 실시간 반영됩니다.
             </p>
             <div className="pt-2 border-t border-indigo-100 text-[11px] text-slate-500 space-y-1">
               <p>• **진단비 지급 조건**: 뇌혈관질환 진단비 특약은 보험기간 중 최초 1회에 한하여 지급된 후 해당 특약은 소멸됩니다 (통합형/산정특례 특약 등 별도 가입 시 제외).</p>
@@ -88,8 +88,8 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction, isUnlock
           },
           {
             title: '뇌경색(I63) 집중 설계',
-            desc: '건강보험심사평가원 통계 기준 뇌혈관 질환 중 다빈도 발생하는 뇌경색 진단 시 보장 공백 방지 필수.',
-            tag: '다빈도 질환 대비',
+            desc: '뇌혈관 질환 중 발생 비중이 높은 뇌경색(I63) 진단 시 발생할 수 있는 보장 공백을 사전에 점검하고 대비.',
+            tag: '주요 질환 대비',
             tagBg: 'bg-slate-50 text-slate-700 border-slate-200',
             icon: <CheckCircle2 className="w-5 h-5 text-slate-600" />
           }
@@ -127,7 +127,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction, isUnlock
             </div>
           </div>
           <p className="text-xs text-gray-400 font-bold max-w-md">
-            과거 가입한 보험의 대부분은 뇌출혈이나 뇌졸중만 보장하여 정작 가장 빈번한 뇌경색이나 뇌동맥류 진단 시 보험금을 한 푼도 받지 못하는 공백이 존재합니다.
+            과거 가입한 보험의 상당수는 뇌출혈이나 뇌졸중만 보장하여 뇌경색이나 뇌동맥류 진단 시 보험금 지급 대상에서 제외될 수 있는 공백이 존재합니다.
           </p>
         </div>
 
@@ -141,7 +141,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction, isUnlock
                 <h4 className="text-lg font-black text-gray-500 flex items-center gap-2">
                   <span className="w-2.5 h-2.5 bg-gray-400 rounded-full"></span> 뇌출혈 진단비
                 </h4>
-                <span className="text-[10px] font-black text-gray-500 bg-gray-100 px-2 py-0.5 rounded border border-gray-200">심평원 통계 기준 약 9%</span>
+                <span className="text-[10px] font-black text-gray-500 bg-gray-100 px-2 py-0.5 rounded border border-gray-200">KCD I60~I62 한정 보장</span>
               </div>
               <p className="text-xs text-gray-400 font-bold leading-relaxed">
                 혈관이 압력을 이기지 못해 뇌 속에서 직접 터지는 경우(지주막하출혈 등)만 보장하며, 막히거나 기형으로 생긴 혈관은 제외됩니다.
@@ -163,7 +163,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction, isUnlock
                 <h4 className="text-lg font-black text-slate-800 flex items-center gap-2">
                   <span className="w-2.5 h-2.5 bg-sky-500 rounded-full"></span> 뇌졸중 진단비
                 </h4>
-                <span className="text-[10px] font-black text-sky-600 bg-sky-50 px-2 py-0.5 rounded border border-sky-100">심평원 통계 기준 약 60%</span>
+                <span className="text-[10px] font-black text-sky-600 bg-sky-50 px-2 py-0.5 rounded border border-sky-100">KCD I60~I66 보장</span>
               </div>
               <p className="text-xs text-gray-500 font-bold leading-relaxed">
                 뇌출혈에 더해 혈관이 막혀 뇌 손상을 일으키는 뇌경색증(I63)까지 포괄적으로 지원하지만, 기타 뇌혈관 질환이나 협착증 일부는 약관에 따라 제외될 수 있습니다.
@@ -240,7 +240,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction, isUnlock
             </div>
             
             <p className="text-sm text-slate-300 font-semibold leading-relaxed">
-              의학의 발전으로 최근에는 두개골을 직접 열어 수술하는 위험한 개두술 대신, 사타구니 혈관을 통해 뇌혈관까지 튜브를 넣어 병변을 시술하는 '비관혈식 미세 시술'이 주류를 이룹니다. 이에 발맞춰 최신 수술비 특약 설계가 필요합니다.
+              의학의 발전으로 개두술과 같은 관혈 수술뿐만 아니라, 카테터 등을 활용하여 신체 부담을 줄이는 비관혈 미세 시술(코일색전술 등)의 활용이 크게 늘고 있습니다. 이에 따라 관혈 및 비관혈 수술을 폭넓게 보장하는 특약 구성이 권장됩니다.
             </p>
             
             <div className="space-y-4 pt-4">
@@ -291,7 +291,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction, isUnlock
                 </div>
               </div>
               <p className="text-[10px] text-indigo-800 font-bold leading-relaxed">
-                * 국립중앙의료원 및 임상 통계 기준 뇌혈관 질환은 재발 위험이 존재하므로, 약관 기준 충족 시 추가 지급이 가능한 산정특례 및 수술비 특약 구성을 검토할 수 있습니다 (회사별 약관 기준 상이).
+                * 뇌혈관 질환은 치료 후에도 지속적인 관리 및 재발 방지가 중요하므로, 약관 기준 충족 시 추가 지급이 가능한 산정특례 및 수술비 특약 구성을 검토할 수 있습니다 (회사별 약관 기준 상이).
               </p>
             </div>
           </div>
@@ -409,7 +409,7 @@ export const CerebrovascularExplanation: React.FC<Props> = ({ onAction, isUnlock
             {
               step: '01',
               title: '가입된 기존 보험 증권의 "진단명" 확인',
-              desc: '보장 특약명이 "뇌출혈"이나 "뇌졸중"에 국한되어 있는 경우, 다빈도 뇌경색이나 뇌동맥류 진단 시 보장 대상에서 제외될 수 있으므로 폭넓은 "뇌혈관질환 진단비"로 전환/추가 설계하는 것이 권장됩니다.'
+              desc: '보장 특약명이 "뇌출혈"이나 "뇌졸중"에 국한되어 있는 경우, 뇌경색이나 뇌동맥류 진단 시 보장 대상에서 제외될 수 있으므로 폭넓은 "뇌혈관질환 진단비"로 전환/추가 설계하는 것이 권장됩니다.'
             },
             {
               step: '02',

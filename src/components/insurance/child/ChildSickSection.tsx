@@ -118,7 +118,7 @@ export const ChildSickSection = ({ onAction, isUnlocked }: { onAction: () => voi
                 <div key={i} className={`p-5 rounded-3xl border ${item.color}`}>
                   <div className="flex justify-between items-center">
                     <p className={`font-black text-sm ${item.badge}`}>{item.grade}</p>
-                    <p className="text-white font-black text-sm">보험료 {item.premium}</p>
+                    <p className="text-white font-black text-sm">표준플랜 대비 {item.premium}</p>
                   </div>
                   <p className="text-slate-400 text-xs font-bold mt-1">조건: {item.nDesc}</p>
                 </div>
@@ -150,7 +150,7 @@ export const ChildSickSection = ({ onAction, isUnlocked }: { onAction: () => voi
               • **예시 산출 기준**: 주요 손해보험사 간편고지(유병자) 어린이보험 표준 플랜 / 10세 남아 및 여아 / 상해 1급 / 20년납 100세만기 / 해약환급금 미지급형(무해지형) / 3.5.5 간편 플랜 가입 예시 (피보험자의 연령, 성별, 치료 이력, 특약 선택 및 회사별 심사 기준에 따라 실제 보험료와 가입 가능 한도는 상이할 수 있습니다).
             </p>
             <div className="pt-2 border-t border-blue-100 text-[11px] text-slate-500 space-y-1">
-              <p>• **일반 표준체 우선 확인 권고**: 유병자(간편고지) 보험은 일반 심사 보험에 비해 보험료가 약 10~35% 할증되거나 보장 범위가 제한될 수 있으므로, 과거 질병 완치 여부나 서류 심사를 통해 일반 어린이보험에 가입할 수 있는지 먼저 확인하는 것이 유리합니다.</p>
+              <p>• **일반 표준체 우선 확인 권고**: 유병자(간편고지) 보험은 일반 심사 보험에 비해 보험료가 10~35% 수준 할증되거나 보장 범위가 제한될 수 있으므로, 과거 질병 완치 여부나 서류 심사를 통해 일반 어린이보험에 가입할 수 있는지 먼저 확인하는 것이 유리합니다.</p>
               <p>• **인수 심사 결과 차등**: 3-N-5 간편 질문을 통과하더라도 정신건강의학과 약물 투약 기간, 발달 치료 빈도, 호르몬 치료 등에 대한 각 사 언더라이팅 지침에 따라 가입이 제한되거나 특정 신체부위 부담보가 설정될 수 있습니다.</p>
               <p>• **금융감독원 연령 규제 준수**: 금융감독원 지침에 따라 어린이보험 가입 연령은 최대 15세로 제한되며, 16세 이상 35세까지는 청년 전용 간편건강 플랜으로 분리 적용됩니다.</p>
             </div>
@@ -163,7 +163,7 @@ export const ChildSickSection = ({ onAction, isUnlocked }: { onAction: () => voi
         <h3 className="text-2xl font-black text-slate-900 mb-2 tracking-tight flex items-center gap-3">
           <Zap className="w-6 h-6 text-blue-500" /> 유병 질환별 맞춤 가입 전략
         </h3>
-        <p className="text-sm text-slate-400 font-bold mb-10">가장 많이 거절당하는 5대 소아 질환, 간편고지로 이렇게 해결합니다.</p>
+        <p className="text-sm text-slate-400 font-bold mb-10">심사가 어려운 5대 소아 질환, 간편고지로 이렇게 대비할 수 있습니다.</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[

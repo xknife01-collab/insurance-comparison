@@ -95,8 +95,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
             <span>📋</span> 예시 보장금액 산출 기준 및 필수 안내
           </p>
           <p className="text-xs font-bold text-slate-700 leading-relaxed break-keep">
-            [산출 기준 예시] 주요 손해보험사 표준 수술비 플랜 / 40세 남성, 상해 1급(사무직), 20년납 100세만기, 월 보험료 28,400원 기준<br className="hidden sm:inline" />
-            (질병/상해 1~5종 수술비, N대 질병수술비, 상급종합병원 1인실 입원일당 10만 원 특약 가입 예시)
+            [산출 기준 예시] 주요 손해보험사 표준 수술비 플랜 공시 요율 기준이며, 1~5종 및 N대 질병 수술비, 입원일당 등 주요 특약의 최종 월 납입 보험료는 고객님이 상단에서 직접 설정하신 연령, 성별, 직업급수, 보장금액 및 각 보험사 인수 기준에 따라 실시간 반영됩니다.
           </p>
           <div className="text-[11px] font-semibold text-slate-500 leading-relaxed pt-1 space-y-0.5">
             <p>※ 약관상 수술의 정의(절단, 절제 등의 조작)에 부합하지 않는 단순 흡인, 천자, 신경차단술, 미용 성형 등은 보장에서 제외될 수 있습니다.</p>
@@ -395,7 +394,7 @@ export const SurgeryExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
             {
               step: '03',
               title: '상급병실 1인실 입원일당 추가 여부 검토',
-              desc: '일반 병실 입원일당은 보험료 대비 하루 지급액(1~3만원)이 낮아 효율이 떨어집니다. 반면, 최근 각광받는 상급병원 1인실 특약은 상대적으로 낮은 보험료로 고액(10~20만원)을 주기 때문에 추가를 적극 검토하세요.'
+              desc: '일반 병실 입원일당은 보험료 대비 하루 지급액이 낮습니다. 반면, 최근 각광받는 상급병원 1인실 특약은 상대적으로 낮은 보험료로 보장이 가능하므로, 적극 검토가 필요합니다.'
             },
             {
               step: '04',

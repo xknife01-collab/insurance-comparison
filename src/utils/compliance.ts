@@ -148,7 +148,7 @@ export function maskProductName(name: string, isUnlocked: boolean): string {
   if (cleanLower.includes('운전자') || cleanLower.includes('driver')) {
     return '안심 운전자보장보험' + suffix;
   }
-  if (cleanLower.includes('치아') || cleanLower.includes('덴탈') || cleanLower.includes('dental')) {
+  if (cleanLower.includes('치아') || cleanLower.includes('덴탈') || cleanLower.includes('dental') || cleanLower.includes('이목구비') || cleanLower.includes('하얀이')) {
     return '실속 치아케어보장보험' + suffix;
   }
   if (cleanLower.includes('실손') || cleanLower.includes('실비')) {
@@ -157,10 +157,10 @@ export function maskProductName(name: string, isUnlocked: boolean): string {
   if (cleanLower.includes('종신') || cleanLower.includes('whole life') || cleanLower.includes('wholelife')) {
     return '평생 종신보장보험' + suffix;
   }
-  if (cleanLower.includes('자동차') || cleanLower.includes('car') || cleanLower.includes('오토') || cleanLower.includes('애니카') || cleanLower.includes('프로미카') || cleanLower.includes('hicar') || cleanLower.includes('하이카') || cleanLower.includes('캐롯')) {
+  if (cleanLower.includes('자동차') || cleanLower.includes('car') || cleanLower.includes('오토') || cleanLower.includes('애니카') || cleanLower.includes('프로미카') || cleanLower.includes('hicar') || cleanLower.includes('하이카') || cleanLower.includes('캐롯') || cleanLower.includes('아이오닉') || cleanLower.includes('ionic') || cleanLower.includes('테슬라') || cleanLower.includes('tesla') || cleanLower.includes('전기차')) {
     return '전사 자동차다이렉트보험' + suffix;
   }
-  if (cleanLower.includes('펫') || cleanLower.includes('pet') || cleanLower.includes('반려동물') || cleanLower.includes('반려견') || cleanLower.includes('반려묘') || cleanLower.includes('강아지') || cleanLower.includes('애견') || cleanLower.includes('애완') || cleanLower.includes('도그') || cleanLower.includes('dog') || cleanLower.includes('cat') || cleanLower.includes('고양이') || cleanLower.includes('반려')) {
+  if (cleanLower.includes('펫') || cleanLower.includes('pet') || cleanLower.includes('반려동물') || cleanLower.includes('반려견') || cleanLower.includes('반려묘') || cleanLower.includes('강아지') || cleanLower.includes('애견') || cleanLower.includes('애완') || cleanLower.includes('도그') || cleanLower.includes('dog') || cleanLower.includes('cat') || cleanLower.includes('고양이') || cleanLower.includes('반려') || cleanLower.includes('위풍댕댕') || cleanLower.includes('댕댕') || cleanLower.includes('댕댕이') || cleanLower.includes('펫퍼민트') || cleanLower.includes('펫블리')) {
     return '반려동물 건강케어보험' + suffix;
   }
   if (cleanLower.includes('어린이') || cleanLower.includes('자녀') || cleanLower.includes('아이') || cleanLower.includes('태아') || cleanLower.includes('child') || cleanLower.includes('신생아') || cleanLower.includes('키즈') || cleanLower.includes('주니어')) {
@@ -169,13 +169,13 @@ export function maskProductName(name: string, isUnlocked: boolean): string {
   if ((cleanLower.includes('화재') || cleanLower.includes('주택') || cleanLower.includes('fire')) && !cleanLower.includes('상해')) {
     return '가정 주택화재보험' + suffix;
   }
-  if (cleanLower.includes('치매') || cleanLower.includes('dementia')) {
+  if (cleanLower.includes('치매') || cleanLower.includes('dementia') || cleanLower.includes('골든라이프') || cleanLower.includes('ltc') || cleanLower.includes('더보장간병') || cleanLower.includes('퍼펙트케어')) {
     return '실버 치매간병보장보험' + suffix;
   }
   if (cleanLower.includes('재가') || cleanLower.includes('시설')) {
     return '실속 재가시설지원보험' + suffix;
   }
-  if (cleanLower.includes('간병') || cleanLower.includes('care')) {
+  if (cleanLower.includes('간병') || cleanLower.includes('care') || cleanLower.includes('요양')) {
     return '안심 간병비지원보험' + suffix;
   }
   if (cleanLower.includes('연금') || cleanLower.includes('pension')) {
@@ -184,7 +184,7 @@ export function maskProductName(name: string, isUnlocked: boolean): string {
   if (cleanLower.includes('저축') || cleanLower.includes('savings')) {
     return '비과세 일반저축보험' + suffix;
   }
-  if (cleanLower.includes('골프') || cleanLower.includes('golf')) {
+  if (cleanLower.includes('골프') || cleanLower.includes('golf') || cleanLower.includes('오잘공') || cleanLower.includes('굿샷')) {
     return '안심 골프레저보험' + suffix;
   }
   if (cleanLower.includes('변액')) {
@@ -193,11 +193,11 @@ export function maskProductName(name: string, isUnlocked: boolean): string {
   if (cleanLower.includes('정기')) {
     return '합리적 정기사망보험' + suffix;
   }
-  if (cleanLower.includes('종합') || cleanLower.includes('건강') || cleanLower.includes('통합') || cleanLower.includes('알파') || cleanLower.includes('플러스') || cleanLower.includes('올인원')) {
-    return '실속 종합건강보장보험' + suffix;
-  }
-  if (cleanLower.includes('재물') || cleanLower.includes('상가') || cleanLower.includes('사업자') || cleanLower.includes('소상공인')) {
+  if (cleanLower.includes('재물') || cleanLower.includes('상가') || cleanLower.includes('사업자') || cleanLower.includes('소상공인') || cleanLower.includes('비즈') || cleanLower.includes('비즈니스')) {
     return '재물종합 사업자보험' + suffix;
+  }
+  if (cleanLower.includes('종합') || cleanLower.includes('건강') || cleanLower.includes('통합') || cleanLower.includes('알파') || cleanLower.includes('플러스') || cleanLower.includes('올인원') || cleanLower.includes('마이헬스') || cleanLower.includes('훼밀리') || cleanLower.includes('시그니처')) {
+    return '실속 종합건강보장보험' + suffix;
   }
   if (cleanLower.includes('민사') || cleanLower.includes('형사') || cleanLower.includes('법률')) {
     return '민형사 법률비용보험' + suffix;

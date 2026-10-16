@@ -1213,7 +1213,7 @@ export default function App() {
           </div>
           <ChildSickSection isUnlocked={isUnlocked} onAction={() => { setCalcTarget('pre_family'); setView('home'); }} />
         </main>
-        <Footer />
+        <Footer isPreExisting={true} />
       </div>
     );
   }

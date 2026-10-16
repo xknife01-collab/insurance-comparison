@@ -94,7 +94,7 @@ export const FireExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
           <div className="mt-8 p-5 md:p-6 bg-red-50 rounded-3xl border border-red-100">
             <p className="text-red-700 font-black text-xs mb-1">⚠️ 아파트 단체보험의 맹점</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
-              관리비에 포함된 단체 화재보험은 보장 금액이 시세보다 매우 낮게 설정(건물 평당 100~200만 원 선)되어 있어 전소 시 원상복구가 불가능합니다. 또한 가재도구와 이웃집 배상 한도가 턱없이 적으므로, 개인 화재보험을 1만 원 내외로 보완 가입해 두는 것이 일반적입니다.
+              관리비에 포함된 단체 화재보험은 보장 금액이 시세보다 낮게 설정되어 있어 전소 시 원상복구 비용에 미치지 못할 수 있습니다. 또한 가재도구와 이웃집 배상 한도가 제한적이므로, 개인 화재보험으로 보완 가입해 두는 것이 일반적입니다.
             </p>
           </div>
         </div>
@@ -122,7 +122,7 @@ export const FireExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
                   💧 급배수누출 특약 (우리집 도배/장판 피해 복구)
                 </p>
                 <p className="text-xs opacity-75 font-bold leading-relaxed">
-                  배관 동파나 파열로 물이 흘러넘쳐 우리집 바닥 마루가 썩거나 도배지가 손상된 비용을 가입 한도(대개 300~500만 원) 내에서 실비 지급합니다.
+                  배관 동파나 파열로 물이 흘러넘쳐 우리집 바닥 마루가 썩거나 도배지가 손상된 비용을 가입 한도 내에서 실비 지급합니다.
                 </p>
               </div>
 
@@ -131,7 +131,7 @@ export const FireExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
                   🤝 일상생활배상책임 (이웃집 피해 배상 복구)
                 </p>
                 <p className="text-xs opacity-75 font-bold leading-relaxed mb-2">
-                  누수로 인해 아랫집 도배가 젖고 천장에서 물이 샐 때, 아랫집 손해를 물어주는 비용은 화재보험 내 '가족일상생활배상책임' 특약(한도 1억)을 통해 해결합니다.
+                  누수로 인해 아랫집 도배가 젖고 천장에서 물이 샐 때, 아랫집 손해를 물어주는 비용은 화재보험 내 '가족일상생활배상책임' 특약을 통해 해결합니다.
                 </p>
               </div>
             </div>
@@ -163,15 +163,15 @@ export const FireExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
           </div>
           <div className="space-y-4">
             {[
-              { company: '6대/12대 가전 수리', product: '제조사 공식 수리비 보전', limit: '연간 100만 원 한도 실손 보장', note: '구입 후 10년 미만 가전 대상, 자부담 2만 원 차감 후 지급' },
-              { company: '임시 거주비 신속 지급', product: '화재 직후 숙식 거주 정산', limit: '1일 최대 10만 원 (90일 한도)', note: '숙박업소 이용 영수증 및 식대 비용 실비 청구 프로세스 지원' },
-              { company: '붕괴 및 침강 손해', product: '주변 공사로 인한 균열 대책', limit: '건물 가입금액 한도 실손 보장', note: '단독주택 등 주변 토목공사 영향으로 건물 균열/붕괴 시 보장' },
+              { title: '6대/12대 가전 수리', feature: '제조사 공식 수리비 보전', limit: '연간 100만 원 한도 실손 보장', note: '구입 후 10년 미만 가전 대상, 자부담 2만 원 차감 후 지급' },
+              { title: '임시 거주비 신속 지급', feature: '화재 직후 숙식 거주 정산', limit: '1일 최대 10만 원 (90일 한도)', note: '숙박업소 이용 영수증 및 식대 비용 실비 청구 프로세스 지원' },
+              { title: '붕괴 및 침강 손해', feature: '주변 공사로 인한 균열 대책', limit: '건물 가입금액 한도 실손 보장', note: '단독주택 등 주변 토목공사 영향으로 건물 균열/붕괴 시 보장' },
             ].map((item, i) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
-                    {maskCompany(item.company, isUnlocked)}{' '}
-                    <span className="text-red-300 text-xs font-bold ml-1">{maskProductName(item.product, isUnlocked)}</span>
+                    {item.title}{' '}
+                    <span className="text-red-300 text-xs font-bold ml-1">{item.feature}</span>
                   </p>
                   <p className="text-[11px] text-slate-400 font-bold mt-0.5">{maskText(item.note, isUnlocked)}</p>
                 </div>
@@ -221,7 +221,7 @@ export const FireExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
               <Clock className="text-red-500 w-5 h-5" /> 리모델링 시점
             </h4>
             <p className="text-xs font-bold text-slate-500 leading-relaxed">
-              기존 장기 보장성 보험 가입 시 끼워넣은 화재 특약은 비례보상이거나 한도가 작아 비효율적인 경우가 많습니다. 단독 화재보험을 월 1만 원대로 깔끔하게 분리 설계하는 것이 훨씬 실속있습니다.
+              기존 종합보험에 부가된 화재 특약은 보장 한도가 제한적일 수 있으므로, 목적에 맞게 단독 화재보험으로 분리 설계하여 충분한 보장을 확보하는 것이 효과적입니다.
             </p>
           </div>
         </div>
@@ -267,7 +267,7 @@ export const FireExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
         <p>• 본 안내는 손해보험협회 심의기준 및 각 사 공시 내용을 바탕으로 작성되었으며, 보험계약자가 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 경우 보험인수가 거절되거나 보험료가 인상될 수 있고 보장내용이 달라질 수 있습니다.</p>
         <p>• <strong>배상책임 및 실손비례보상 고지:</strong> 화재배상책임, 일상생활배상책임, 급배수시설누출손해, 가전제품 수리비용 담보는 실제 발생한 손해액 범위 내에서만 보상되는 실손형 담보로 2개 이상의 보험에 중복 가입하더라도 비례보상되며, 중복 지급되지 않습니다.</p>
         <p>• <strong>누수 배관 면책 및 고지의무 안내:</strong> 급배수시설 누출손해는 누수로 인한 도배·마루 등의 직접 손해를 보상하며, 누수의 원인이 된 배관 자체의 노후화 수리 및 교체 공사비는 약관상 보상 대상에서 제외됩니다. 또한 주택 이사 시 보험사에 주소지 변경을 통지하지 않으면 보장이 제한될 수 있습니다.</p>
-        <p>• (주)케어인슈는 다수의 보험사와 계약 체결 및 중개하는 금융상품판매대리·중개업자로서 보험사로부터 보험계약 체결권을 부여받지 아니하며 금융소비자보호법 등 관련 법령을 준수합니다.</p>
+        <p>• 본 플랫폼(보험대리점)은 다수의 보험사와 계약을 체결하고 중개하는 금융상품판매대리·중개업자로서, 보험사로부터 계약체결권을 부여받지 아니하며 직접 보험계약을 체결할 수 없습니다.</p>
       </div>
 
       {/* ── CTA ── */}

@@ -46,7 +46,7 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
               <span className="bg-red-100 text-red-700 font-bold px-2 py-0.5 rounded text-[10px]">손해보험협회 공시 기준</span>
             </div>
             <p className="font-bold text-slate-700">
-              • **예시 산출 기준**: 주요 손해보험사 상해보험 표준 플랜 / 40세 남성 / 상해 1급(사무직) / 20년납 100세만기 / 월 보험료 18,500원 기준 (피보험자의 연령, 성별, 직업 위험도, 특약 선택 및 회사별 심사 기준에 따라 실제 보험료와 보장금액은 상이할 수 있습니다).
+              • **예시 산출 기준**: 주요 손해보험사 상해보험 표준 플랜 공시 요율 기준이며, 최종 월 납입 보험료는 고객님이 상단에서 직접 설정하신 연령, 성별, 직업 위험도(급수), 특약 선택 및 회사별 심사 기준에 따라 실시간 반영됩니다.
             </p>
             <div className="pt-2 border-t border-red-100 text-[11px] text-slate-500 space-y-1">
               <p>• **직업 위험도(급수) 주의사항**: 상해보험은 직업·직무 위험군(1급: 사무직, 2급: 외근/영업직, 3급: 현장/생산/배달직)에 따라 보험료 및 가입 한도가 크게 달라집니다.</p>

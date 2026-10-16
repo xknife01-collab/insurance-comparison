@@ -175,10 +175,10 @@ export const PreExistingExplanation: React.FC<Props> = ({ onAction, isUnlocked }
           </h4>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { name: '3.5.5 플랜', label: '상대적 경제성', desc: '5년간 입원/수술 無', rate: '표준플랜 대비 약 1.1배*' },
-              { name: '3.3.5 플랜', label: '실속 가성비', desc: '3년간 입원/수술 無', rate: '표준플랜 대비 약 1.25배*' },
-              { name: '3.2.5 플랜', label: '표준 유병자', desc: '2년간 입원/수술 無', rate: '표준플랜 대비 약 1.35배*' },
-              { name: '3.0.5 플랜', label: '초간편 가입', desc: '최근 입원/수술력 有', rate: '표준플랜 대비 약 1.5배 이상*' }
+              { name: '3.5.5 플랜', label: '상대적 경제성', desc: '5년간 입원/수술 無', rate: '표준플랜 대비 1.1배 수준*' },
+              { name: '3.3.5 플랜', label: '실속 가성비', desc: '3년간 입원/수술 無', rate: '표준플랜 대비 1.25배 수준*' },
+              { name: '3.2.5 플랜', label: '표준 유병자', desc: '2년간 입원/수술 無', rate: '표준플랜 대비 1.35배 수준*' },
+              { name: '3.0.5 플랜', label: '초간편 가입', desc: '최근 입원/수술력 有', rate: '표준플랜 대비 1.5배 이상 수준*' }
             ].map((plan, i) => (
               <div key={i} className="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-indigo-100 flex flex-col justify-between space-y-4">
                 <div>

@@ -98,8 +98,8 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
           </div>
 
           <p className="text-sm font-bold text-slate-400 mb-8 leading-relaxed">
-            사업장에서 화재나 누수 발생 시 가징 고액의 복구비가 요구되며,{' '}
-            <span className="text-orange-500 font-black">소상공인 설계 시 반드시 챙겨야 하는 3대 리스크</span>
+            사업장에서 화재나 누수 발생 시 고액의 복구비가 요구되며,{' '}
+            <span className="text-orange-500 font-black">소상공인 설계 시 챙겨야 하는 3대 리스크</span>
             입니다.
           </p>
 
@@ -122,7 +122,7 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
           <div className="mt-8 p-5 md:p-6 bg-orange-50 rounded-3xl border border-orange-100">
             <p className="text-orange-700 font-black text-xs mb-1">⚠️ 비례보상의 함정 주의</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
-              만약 5억 원 가치의 상가를 2억 원만 가입(일부보험)했을 경우, 화재 사고 시 실제 발생한 피해의 **40%만 비례 보상**되어 복구 자금이 모자라 파산하는 비극이 발생합니다. 자산 가치에 걸맞는 평가 매칭이 핵심입니다.
+              만약 5억 원 가치의 상가를 2억 원만 가입(일부보험)했을 경우, 화재 사고 시 실제 발생한 피해의 **40%만 비례 보상**되어 복구자금이 모자랄 수 있습니다. 자산 가치에 걸맞는 평가 매칭이 핵심입니다.
             </p>
           </div>
         </div>
@@ -249,7 +249,7 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
               <Clock className="text-orange-500 w-5 h-5" /> 가입 주기 권장
             </h4>
             <p className="text-xs font-bold text-slate-500 leading-relaxed">
-              상가 임대차 계약 갱신이나 매장 대규모 인테리어 리모델링 완료 시점에는 반드시 보험 자산 가액을 증액 조율해야 화재 발생 시 실질 복구가 보장됩니다.
+              상가 임대차 계약 갱신이나 매장 대규모 인테리어 리모델링 완료 시점에는 보험 자산 가액을 알맞게 조율해야 화재 발생 시 원활한 복구 지원을 받으실 수 있습니다.
             </p>
           </div>
         </div>

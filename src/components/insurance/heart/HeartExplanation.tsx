@@ -31,7 +31,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => {
             </span>
           </h2>
           <p className="text-red-200/80 font-semibold text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            건강보험심사평가원 통계에 따르면 심장 질환의 대다수는 협심증(I20)과 허혈성 질환이 차지합니다. 급성심근경색증(I21~I23)에 국한되지 않고 다빈도 협심증과 부정맥(I49), 심부전(I50)까지 폭넓게 구성하는 가이드입니다.
+            심장 질환은 급성심근경색증(I21~I23)뿐만 아니라 협심증(I20), 부정맥(I49), 심부전(I50) 등 다양한 질환군을 포함합니다. 보장 공백을 줄이고 폭넓은 심혈관 특약을 비교 점검할 수 있는 가이드입니다.
           </p>
         </div>
       </div>
@@ -48,7 +48,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => {
               <span className="bg-red-100 text-red-700 font-bold px-2 py-0.5 rounded text-[10px]">손해보험협회 공시 기준</span>
             </div>
             <p className="font-bold text-slate-700">
-              • **예시 산출 기준**: 주요 손해보험사 심장질환 표준 플랜 / 40세 남성 / 상해 1급(사무직) / 20년납 90세만기 / 해약환급금 미지급형(무해지형) / 월 보험료 26,800원 기준 (가입자의 연령, 성별, 직업, 특약 선택 및 회사별 심사 기준에 따라 실제 보험료와 보장금액은 상이할 수 있습니다).
+              • **예시 산출 기준**: 주요 손해보험사 심장질환(허혈성·심혈관) 표준 플랜 공시 요율 기준이며, 최종 월 납입 보험료는 고객님이 상단에서 직접 설정하신 연령, 성별, 직업급수, 보장금액 및 보험사별 인수 심사 기준에 따라 실시간 반영됩니다.
             </p>
             <div className="pt-2 border-t border-red-100 text-[11px] text-slate-500 space-y-1">
               <p>• **진단비 지급 조건**: 허혈성 심장질환 및 특정 심혈관 진단비 특약은 보험기간 중 최초 1회에 한하여 지급된 후 해당 특약은 소멸됩니다 (통합형/산정특례 특약 등 별도 가입 시 제외).</p>
@@ -87,8 +87,8 @@ export const HeartExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => {
           },
           {
             title: '부정맥 & 협심증 대비',
-            desc: '건강보험심사평가원 통계 기준 다빈도 협심증(I20)과 심장 부정맥(I49) 진단 코드 집중 보완 설계.',
-            tag: '다빈도 질환 대비',
+            desc: '급성심근경색 외에도 협심증(I20)과 부정맥(I49) 등 주요 심장질환 진단 코드를 포괄적으로 보완 설계.',
+            tag: '주요 질환 대비',
             tagBg: 'bg-slate-50 text-slate-700 border-slate-200',
             icon: <CheckCircle2 className="w-5 h-5 text-slate-600" />
           }
@@ -126,7 +126,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => {
             </div>
           </div>
           <p className="text-xs text-gray-400 font-bold max-w-md">
-            과거 가입한 대부분의 심장 보험은 '급성심근경색증'에 국한되어 정작 가장 빈번하게 발생하는 협심증이나 부정맥 소견 시 혜택이 단 1원도 지급되지 않는 심각한 사각지대가 있습니다.
+            과거 가입한 대부분의 심장 보험은 '급성심근경색증'에 국한되어 정작 가장 빈번하게 발생하는 협심증이나 부정맥 소견 시 보장을 받지 못하는 심각한 사각지대가 있습니다.
           </p>
         </div>
 
@@ -140,7 +140,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => {
                 <h4 className="text-lg font-black text-gray-500 flex items-center gap-2">
                   <span className="w-2.5 h-2.5 bg-gray-400 rounded-full"></span> 급성심근경색증
                 </h4>
-                <span className="text-[10px] font-black text-gray-500 bg-gray-100 px-2 py-0.5 rounded border border-gray-200">심평원 통계 기준 약 9%</span>
+                <span className="text-[10px] font-black text-gray-500 bg-gray-100 px-2 py-0.5 rounded border border-gray-200">KCD I21~I23 한정 보장</span>
               </div>
               <p className="text-xs text-gray-400 font-bold leading-relaxed">
                 심장에 피를 공급하는 관상동맥이 갑작스럽게 완전히 막혀 심장 근육 세포가 영구 괴사하는 매우 위급하고 제한적인 상황만 보장합니다.
@@ -162,10 +162,10 @@ export const HeartExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => {
                 <h4 className="text-lg font-black text-slate-800 flex items-center gap-2">
                   <span className="w-2.5 h-2.5 bg-rose-500 rounded-full"></span> 허혈성 심장질환
                 </h4>
-                <span className="text-[10px] font-black text-rose-600 bg-rose-50 px-2 py-0.5 rounded border border-rose-100">심평원 통계 기준 약 60%</span>
+                <span className="text-[10px] font-black text-rose-600 bg-rose-50 px-2 py-0.5 rounded border border-rose-100">KCD I20~I25 보장</span>
               </div>
               <p className="text-xs text-gray-500 font-bold leading-relaxed">
-                급성심근경색증에 더해 심장 혈관이 좁아져 통증을 일으키는 가장 대중적인 질환인 **협심증(I20)** 및 만성 허혈 질환까지 포함하여 보장합니다.
+                급성심근경색증에 더해 심장 혈관이 좁아져 통증을 일으키는 대표적 질환인 **협심증(I20)** 및 만성 허혈 질환까지 포함하여 보장합니다.
               </p>
               <div className="p-4 bg-white rounded-2xl border border-slate-100 space-y-2">
                 <p className="text-[10px] font-black text-slate-500">보장 코드</p>
@@ -239,7 +239,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => {
             </div>
             
             <p className="text-sm text-slate-300 font-semibold leading-relaxed">
-              최근 심장 혈관 및 판막 수술은 가슴뼈를 절개하고 인공심폐기를 연결하는 위험하고 무거운 대수술 대신, 혈관 내로 카테터를 삽입하여 정밀 시술하는 비관혈 방식이 80% 이상을 차지합니다.
+              최근 심장 혈관 및 판막 수술은 가슴뼈를 절개하고 인공심폐기를 연결하는 위험하고 무거운 대수술 대신, 혈관 내로 카테터를 삽입하여 정밀 시술하는 비관혈 방식이 증가하고 있습니다.
             </p>
             
             <div className="space-y-4 pt-4">
@@ -290,7 +290,7 @@ export const HeartExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => {
                 </div>
               </div>
               <p className="text-[10px] text-red-800 font-bold leading-relaxed">
-                * 대한심장학회 및 임상 통계 기준 심혈관 질환은 재발 및 재시술 가능성이 존재하므로, 약관 기준 충족 시 추가 지원되는 산정특례 및 수술비 특약 구성을 검토할 수 있습니다 (회사별 약관 기준 상이).
+                * 심혈관 질환은 치료 후에도 지속적인 약제 복용 및 재시술 가능성이 존재하므로, 약관 기준 충족 시 추가 지원되는 산정특례 및 수술비 특약 구성을 검토할 수 있습니다 (회사별 약관 기준 상이).
               </p>
             </div>
           </div>

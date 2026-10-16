@@ -75,7 +75,7 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType, isUnlocke
           </div>
 
           <p className="text-sm font-bold text-slate-400 mb-8 leading-relaxed">
-            골프 라운딩 중 발생할 수 있는 가장 대표적인 재정적 위험과{' '}
+            골프 라운딩 중 발생할 수 있는 대표적인 재정적 위험과{' '}
             <span className="text-emerald-500 font-black">골프 라운딩 시 우선 검토되는 3가지 주요 담보</span>
             입니다.
           </p>
@@ -167,20 +167,20 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType, isUnlocke
             </div>
             <h3 className="text-3xl font-black mb-4 tracking-tight">가볍게 즐기는 라운딩 당일형 원데이 보험 인기</h3>
             <p className="text-sm opacity-70 font-bold leading-relaxed">
-              연간 정기 멤버십이 부담스러운 라이트 골퍼들을 위한 원데이(1일형) 골프보험 가입이 빠르게 늘고 있습니다. 모바일로 라운딩 당일 아침 첫 티오프 직전에도 간편하게 가입(최소 2,000원 대)하여 24시간 동안 필드 위 위험을 완벽 차단할 수 있습니다.
+              연간 정기 멤버십이 부담스러운 라이트 골퍼들을 위한 원데이(1일형) 골프보험 가입이 빠르게 늘고 있습니다. 모바일로 라운딩 당일 아침 첫 티오프 직전에도 간편하게 가입하여 24시간 동안 필드 위 위험을 든든하게 대비할 수 있습니다.
             </p>
           </div>
           <div className="space-y-4">
             {[
-              { company: '4인 동반 일괄가입', product: '1팀 전체 스마트 패키지 가입', limit: '단체 가입 5% 즉시 추가할인', note: '티오프 전 동반자 3인의 이름 입력만으로 동시 체결 완료' },
-              { company: '원스톱 모바일 증빙', product: '종이 서류 없는 모바일 청구 확대', limit: '인증서 및 카드 결제 캡처 청구', note: '동반 라운딩 비용 결제 카드사의 승인 명세 캡처만으로 증빙 대체' },
-              { company: '용품 보장 범위 확대', product: '클럽 파손 전용 즉각 수리 지원', limit: '제조사 공식 수리비 영수증 지원', note: '피팅샵 수리뿐만 아니라 정식 AS 센터 견적서 접수 즉시 실손 보상' },
+              { title: '4인 동반 일괄가입', feature: '1팀 전체 스마트 패키지 가입', limit: '단체 가입 5% 즉시 추가할인', note: '티오프 전 동반자 3인의 이름 입력만으로 동시 체결 완료' },
+              { title: '원스톱 모바일 증빙', feature: '종이 서류 없는 모바일 청구 확대', limit: '인증서 및 카드 결제 캡처 청구', note: '동반 라운딩 비용 결제 카드사의 승인 명세 캡처만으로 증빙 대체' },
+              { title: '용품 보장 범위 확대', feature: '클럽 파손 전용 즉각 수리 지원', limit: '제조사 공식 수리비 영수증 지원', note: '피팅샵 수리뿐만 아니라 정식 AS 센터 견적서 접수 즉시 실손 보상' },
             ].map((item, i) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
-                    {maskCompany(item.company, isUnlocked)}{' '}
-                    <span className="text-emerald-300 text-xs font-bold ml-1">{maskProductName(item.product, isUnlocked)}</span>
+                    {item.title}{' '}
+                    <span className="text-emerald-300 text-xs font-bold ml-1">{item.feature}</span>
                   </p>
                   <p className="text-[11px] text-slate-400 font-bold mt-0.5">{maskText(item.note, isUnlocked)}</p>
                 </div>
@@ -276,7 +276,7 @@ export const GolfExplanation: React.FC<Props> = ({ onAction, gameType, isUnlocke
         <p>• 본 안내는 손해보험협회 심의기준 및 각 사 공시 내용을 바탕으로 작성되었으며, 보험계약자가 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 경우 보험인수가 거절되거나 보험료가 인상될 수 있고 보장내용이 달라질 수 있습니다.</p>
         <p>• <strong>홀인원비용 및 배상책임 실손비례보상 고지:</strong> 홀인원 축하비용, 골프 배상책임, 골프용품손해 담보는 실제 발생한 손해액 범위 내에서만 보상되는 실손형 담보로 2개 이상의 보험에 중복 가입하더라도 비례보상되며, 중복 지급되지 않습니다.</p>
         <p>• <strong>주요 면책사항:</strong> 정규 18홀 미만 골프장(파3, 연습장, 스크린골프 등)이나 캐디 미동반 라운딩 중 발생한 홀인원은 보상되지 아니하며, 골프용품의 경우 단순 분실(도난 및 파손 제외)은 약관상 보상 대상에서 제외됩니다.</p>
-        <p>• (주)케어인슈는 다수의 보험사와 계약 체결 및 중개하는 금융상품판매대리·중개업자로서 보험사로부터 보험계약 체결권을 부여받지 아니하며 금융소비자보호법 등 관련 법령을 준수합니다.</p>
+        <p>• 본 플랫폼(보험대리점)은 다수의 보험사와 계약을 체결하고 중개하는 금융상품판매대리·중개업자로서, 보험사로부터 계약체결권을 부여받지 아니하며 직접 보험계약을 체결할 수 없습니다.</p>
       </div>
 
       {/* ── CTA ── */}

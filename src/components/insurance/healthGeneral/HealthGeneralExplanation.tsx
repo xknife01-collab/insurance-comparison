@@ -26,7 +26,7 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction, isUnlocked
             30여 개 주요 보험사 공시 기준 맞춤 조립 플랜 비교 안내
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[1.15]">
-            가장 균형 잡힌 보장 자산의 완성,<br />
+            균형 잡힌 보장 자산의 완성,<br />
             <span className="text-orange-500">종합건강보험의 올바른 기준</span>을 제시합니다.
           </h2>
         </div>
@@ -66,7 +66,7 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction, isUnlocked
               <span className="bg-orange-100 text-orange-700 font-bold px-2 py-0.5 rounded text-[10px]">손해보험협회 공시 기준</span>
             </div>
             <p className="font-bold text-slate-700">
-              • **예시 산출 기준**: 주요 손해보험사 종합건강 표준 플랜 / 40세 남성 / 상해 1급(사무직) / 20년납 90세만기 / 해약환급금 미지급형(무해지형) / 월 보험료 68,500원 기준 (가입자의 연령, 성별, 직업, 특약 선택 및 회사별 심사 기준에 따라 실제 보험료와 보장금액은 상이할 수 있습니다).
+              • **예시 산출 기준**: 주요 손해보험사 종합건강 표준 플랜 공시 요율 기준이며, 최종 월 납입 보험료는 고객님이 상단에서 직접 설정하신 연령, 성별, 직업급수, 보장금액 및 보험사별 인수 심사 기준에 따라 실시간 반영됩니다.
             </p>
             <div className="pt-2 border-t border-orange-100 text-[11px] text-slate-500 space-y-1">
               <p>• **해약환급금 미지급형 유의사항**: 해약환급금 미지급형(무해지) 상품은 보험료 납입기간 중 계약을 해지할 경우 해약환급금이 전혀 없으며(0원), 납입기간이 완료된 이후에는 일반 표준형 상품 수준의 해약환급금이 발생합니다.</p>
@@ -100,9 +100,9 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction, isUnlocked
 
           <div className="space-y-3">
             {[
-              { title: '일반암 진단비', label: '소액암/유사암 제외 범위 확인', color: 'bg-orange-50/50 border-orange-100', badge: 'text-orange-700 bg-orange-100', desc: '유사암(기저세포암, 갑상선암, 제자리암, 경계성종양) 외 일반암 100% 보장 (가입 후 90일 면책, 1년 미만 50% 감액 적용)' },
-              { title: '뇌질환 보장 범위', label: '뇌출혈/뇌졸중 ❌ 뇌혈관질환 ⭕', color: 'bg-amber-50/50 border-amber-100', badge: 'text-amber-700 bg-amber-100', desc: '통계청 다빈도 통계 기준 뇌경색증(I63)과 협착증을 폭넓게 포함하는 [뇌혈관질환진단특약]으로 충족' },
-              { title: '심장질환 범위', label: '급성심근경색 ❌ 허혈성/심혈관 ⭕', color: 'bg-yellow-50 border-yellow-100', badge: 'text-yellow-700 bg-yellow-100', desc: '다빈도 협심증(허혈성)과 부정맥, 심부전 등 넓은 심혈관질환 진단 특약을 연계하여 균형 잡힌 보장선 구축' },
+              { title: '일반암 진단비', label: '소액암/유사암 제외 범위 확인', color: 'bg-orange-50/50 border-orange-100', badge: 'text-orange-700 bg-orange-100', desc: '유사암(기타피부암, 갑상선암, 제자리암, 경계성종양) 외 일반암 보장 (가입 후 90일 면책, 1년 미만 50% 감액 적용)' },
+              { title: '뇌질환 보장 범위', label: '뇌출혈/뇌졸중 ❌ 뇌혈관질환 ⭕', color: 'bg-amber-50/50 border-amber-100', badge: 'text-amber-700 bg-amber-100', desc: '뇌경색증(I63)과 뇌혈관 협착증 등을 폭넓게 포함하는 [뇌혈관질환진단비] 특약으로 대비' },
+              { title: '심장질환 범위', label: '급성심근경색 ❌ 허혈성/심혈관 ⭕', color: 'bg-yellow-50 border-yellow-100', badge: 'text-yellow-700 bg-yellow-100', desc: '급성심근경색 외에도 협심증(허혈성)과 부정맥, 심부전 등 넓은 심혈관질환 진단 특약을 연계하여 균형 잡힌 보장선 구축' },
             ].map((item, i) => (
               <div key={i} className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-5 rounded-3xl border ${item.color}`}>
                 <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 w-full sm:w-24 text-center ${item.badge}`}>{item.title}</div>
@@ -117,7 +117,7 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction, isUnlocked
           <div className="mt-8 p-5 md:p-6 bg-orange-50 rounded-3xl border border-orange-100">
             <p className="text-orange-700 font-black text-xs mb-1">⚠️ 보장 범위 확대 가이드</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
-              기존 가입 증권 분석 시 **'뇌출혈'**, **'급성심근경색증'**으로만 한정되어 있다면 다빈도 뇌경색이나 협심증 발생 시 해당 진단비 지급이 제한될 수 있으므로, 보장 범위(뇌혈관·허혈성)를 점검해 보시는 것이 권장됩니다.
+              기존 가입 증권 분석 시 **'뇌출혈'**, **'급성심근경색증'**으로만 한정되어 있다면 뇌경색이나 협심증 발생 시 해당 진단비 지급이 제한될 수 있으므로, 보장 범위(뇌혈관·허혈성)를 점검해 보시는 것이 권장됩니다.
             </p>
           </div>
         </div>
@@ -196,7 +196,7 @@ export const HealthGeneralExplanation: React.FC<Props> = ({ onAction, isUnlocked
             </div>
             <h3 className="text-3xl font-black mb-4 tracking-tight">수술비 한도 극대화와 표적항암 치료제 특약의 대세화</h3>
             <p className="text-sm opacity-70 font-bold leading-relaxed">
-              최근 출시되는 건강보험은 수술 방식(다빈치로봇 수술 등)에 따른 연간 보장 한도를 대폭 확대하고 있으며, 수천만 원이 드는 고가의 표적항암 약물 치료 및 면역치료 요율을 단돈 몇 천 원의 특약으로 매칭하여 암 진단비의 부담을 덜고 있습니다.
+              최근 출시되는 건강보험은 수술 방식(다빈치로봇 수술 등)에 따른 연간 보장 한도를 대폭 확대하고 있으며, 고가의 표적항암 약물 치료 및 면역치료 요율을 저렴한 금액의 특약으로 매칭하여 암 진단비의 부담을 덜고 있습니다.
             </p>
           </div>
           <div className="space-y-4">

@@ -18,7 +18,7 @@ export const DementiaGuideSection = ({ onAction, isUnlocked }: { onAction: () =>
         <div>
           <div className="inline-flex items-center gap-2 bg-amber-100 text-amber-700 px-4 py-2 rounded-full text-sm font-black mb-6 border border-amber-200 shadow-sm">
             <div className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse" />
-            부모님을 위한 가장 따뜻한 준비, 치매 간병보험 가이드
+            부모님을 위한 든든한 준비, 치매 간병보험 가이드
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[1.1]">
             기억을 잃어도 <span className="text-amber-600">존엄함</span>은<br />
@@ -64,7 +64,7 @@ export const DementiaGuideSection = ({ onAction, isUnlocked }: { onAction: () =>
               <span className="bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded text-[10px]">생명·손해보험협회 공시 기준</span>
             </div>
             <p className="font-bold text-slate-800">
-              • **표준 예시 산출 기준**: 무배당 치매간병보험 / 60세 남성 및 여성 (상해 1급 사무직) / 20년납 90세만기 / 무해지환급형(해약환급금 미지급형) / 주계약 및 주요 특약: 경도치매(CDR 1점) 300만 원, 중등도치매(CDR 2점) 500만 원, 중증치매(CDR 3점 이상) 2,000만 원, 중증치매 간병생활자금 매월 100만 원(최초 36회 보증지급) 기준 예시 월 보험료: 60세 남성 약 38,700원, 60세 여성 약 43,500원 (가입자의 연령, 성별, 건강상태, 가입금액 및 회사별 심사 기준에 따라 실제 보험료는 상이할 수 있습니다).
+              • **표준 예시 산출 기준**: 주요 생명·손해보험사 치매간병보험 공시 요율 기준이며, 주계약 및 주요 특약(경도·중등도·중증 치매 진단비, 간병생활자금 등)의 최종 월 납입 보험료는 고객님이 상단에서 직접 설정하신 연령, 성별, 가입금액 및 보험사별 인수 심사 기준에 따라 실시간 반영됩니다.
             </p>
             <div className="pt-2.5 border-t border-amber-200 text-[11px] text-slate-600 space-y-1.5">
               <p>• **90일 이상 상태 지속 조건**: 치매 진단비는 전문의(신경과·정신건강의학과)에 의한 임상치매척도(CDR) 및 뇌영상검사(CT, MRI, PET 등)를 기초로 진단 확정된 후, 최소 90일 이상 그 상태가 계속되었음이 확인되어야 보험금이 지급됩니다.</p>
@@ -104,7 +104,7 @@ export const DementiaGuideSection = ({ onAction, isUnlocked }: { onAction: () =>
               { score: 'CDR 0.5점', label: '경도인지장애', color: 'bg-blue-50 border-blue-100',     badge: 'text-blue-600 bg-blue-100',     dot: true,  desc: '인지지원등급 — 일부 최신 상품만 보장' },
               { score: 'CDR 1점',   label: '경증 치매',    color: 'bg-amber-50 border-amber-100',   badge: 'text-amber-700 bg-amber-100',   dot: true,  desc: '일상생활 지장 시작 — 대부분 보장 시작점 ✅' },
               { score: 'CDR 2점',   label: '중등도 치매',  color: 'bg-orange-50 border-orange-100', badge: 'text-orange-700 bg-orange-100', dot: true,  desc: '상당한 도움 필요 — 간병비 본격 지급' },
-              { score: 'CDR 3점+',  label: '중증 치매',    color: 'bg-red-50 border-red-100',       badge: 'text-red-700 bg-red-100',       dot: true,  desc: '독립생활 불가 — 최대 보험금 지급 🔴' },
+              { score: 'CDR 3점+',  label: '중증 치매',    color: 'bg-red-50 border-red-100',       badge: 'text-red-700 bg-red-100',       dot: true,  desc: '독립생활 불가 — 중증 진단비 및 생활자금 지급' },
             ].map((item, i) => (
               <div key={i} className={`flex items-center gap-4 p-5 rounded-3xl border ${item.color}`}>
                 <div className={`text-[11px] font-black px-3 py-1.5 rounded-xl shrink-0 ${item.badge}`}>{item.score}</div>
@@ -186,10 +186,10 @@ export const DementiaGuideSection = ({ onAction, isUnlocked }: { onAction: () =>
           </div>
 
           <div className="relative z-10 mt-8 p-5 md:p-6 bg-white/5 rounded-3xl border border-white/10">
-            <p className="text-amber-400 font-black text-xs mb-1 uppercase tracking-widest">💡 전문가 추천</p>
+            <p className="text-amber-400 font-black text-xs mb-1 uppercase tracking-widest">💡 연령별 설계 팁</p>
             <p className="text-white font-bold text-xs leading-relaxed opacity-80">
               "40~50대는 혼합형으로, 60대 이상 부모님께는 월 지급 생활자금 중심으로
-              설계하는 것이 가장 현명합니다."
+              설계하는 것이 효과적일 수 있습니다."
             </p>
           </div>
         </div>

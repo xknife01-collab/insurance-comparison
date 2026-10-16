@@ -31,7 +31,7 @@ export const CancerExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
             </span>
           </h2>
           <p className="text-rose-200/80 font-semibold text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            암 발병률 38% 시대. 일반암과 유사암의 지급 비율 규정부터 고액의 치료비가 드는 중입자, 표적항암 및 카티(CAR-T) 치료에 특화된 스마트 암보장 설계 가이드입니다.
+            암 발병률이 높은 시대, 일반암과 유사암의 지급 비율 규정부터 고액의 치료비가 드는 중입자, 표적항암 및 카티(CAR-T) 치료에 특화된 스마트 암보장 설계 가이드입니다.
           </p>
         </div>
       </div>
@@ -95,8 +95,7 @@ export const CancerExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
             <span>📋</span> 예시 보장금액 산출 기준 안내
           </p>
           <p className="text-xs font-bold text-slate-700 leading-relaxed break-keep">
-            [산출 기준 예시] 주요 손해보험사 표준 암플랜 기준 / 40세 남성, 상해 1급(사무직), 20년납 100세만기, 월 보험료 94,700원<br className="hidden sm:inline" />
-            (일반암 진단비 5,000만 원, 유사암 1,000만 원, 비급여 암주요치료비 연간 1억 한도 특약 구성 기준)
+            [산출 기준 예시] 주요 손해보험사 표준 암보험 공시 요율 기준이며, 일반암·유사암 진단비 및 주요치료비 특약의 최종 월 납입 보험료는 고객님이 상단에서 직접 설정하신 연령, 성별, 직업급수, 보장금액 및 보험사별 인수 심사 기준에 따라 실시간 반영됩니다.
           </p>
           <p className="text-[11px] font-semibold text-slate-400 leading-relaxed">
             ※ 상기 예시는 소비자의 이해를 돕기 위한 특정 조건의 가입 예시이며, 가입자의 연령, 성별, 직업급수, 납입기간 및 각 보험사별 인수 조건에 따라 가입 가능한 보장 금액과 실제 납입 보험료는 상이할 수 있습니다. 세부 보장 범위는 해당 상품 약관을 참조하시기 바랍니다.
@@ -163,7 +162,7 @@ export const CancerExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
                 <span className="text-xs font-black text-pink-600 bg-pink-50 px-3 py-1 rounded-lg border border-pink-100">일반암의 20%만 지급</span>
               </div>
               <p className="text-xs text-gray-500 font-bold leading-relaxed">
-                암과 조직학적 유사성은 있으나 병변 부위의 전이 위험이 현저히 낮고 치료가 간단한 암입니다. 갑상선암, 제자리암, 경계성 종양, 기타피부암이 고정 포함됩니다.
+                일반암(악성신생물)과 비교하여 약관상 별도로 구분하여 보장하는 유형으로, 대표적으로 갑상선암, 제자리암, 경계성 종양, 기타피부암 등이 해당됩니다.
               </p>
               <div className="p-5 bg-white rounded-2xl border border-slate-100 space-y-3">
                 <p className="text-xs font-black text-slate-800">💡 유사암의 4가지 고정 정의</p>
@@ -222,14 +221,14 @@ export const CancerExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
             </div>
             
             <p className="text-sm text-slate-300 font-semibold leading-relaxed">
-              암에 걸렸을 때 가장 무서운 것은 치료 중 발생하는 엄청난 약제비와 고가의 첨단 장비 시술 비용입니다. 최근 개발되어 건강보험이 미적용되는 비급여 신의료 항목의 보장 여부가 암보험의 승부처입니다.
+              암에 걸렸을 때 치료 중 발생하는 약제비와 첨단 장비 시술 비용은 큰 부담이 될 수 있습니다. 최근 개발되어 건강보험이 미적용되는 비급여 신의료 항목의 보장 여부를 미리 확인해 둘 필요가 있습니다.
             </p>
             
             <div className="space-y-4 pt-4">
               {[
                 { title: '표적항암 약물 허가 치료비', desc: '암세포의 특정 단백질만 저격하여 치료 효율을 높이고 구토, 탈모 등 항암 부작용을 극대화하여 줄여주는 표적 항암제 처방 비용을 정액(최대 5,000만~1억) 지원합니다.' },
-                { title: '양성자 / 중입자 치료비', desc: '무통증, 무부작용으로 암세포를 정밀 살상하는 "꿈의 치료기"입니다. 1회 치료당 5,000만원 이상의 비급여 치료비가 발생하므로 특약 한도 확보가 필수입니다.' },
-                { title: '카티(CAR-T) 항암면역치료비', desc: '환자 본인의 면역세포를 추출/유전자 조작 후 배양하여 투여하는 초고가 1대1 개인 맞춤형 백신 치료비 보장 특약입니다.' }
+                { title: '양성자 / 중입자 치료비', desc: '적은 통증과 부작용으로 암세포를 정밀하게 살상하는 치료기입니다. 1회 치료당 비급여 치료비 부담이 발생할 수 있으므로 해당 특약의 보장 한도와 조건을 확인하시기 바랍니다.' },
+                { title: '카티(CAR-T) 항암면역치료비', desc: '환자 본인의 면역세포를 추출/유전자 조작 후 배양하여 투여하는 개인 맞춤형 백신 치료비 보장 특약입니다.' }
               ].map((tip, i) => (
                 <div key={i} className="flex gap-4 p-4 rounded-2xl bg-white/5 border border-white/10">
                   <div className="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0 text-xs font-black">{i + 1}</div>
@@ -257,7 +256,7 @@ export const CancerExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
             </div>
 
             <p className="text-xs text-gray-500 font-bold leading-relaxed">
-              최근 암보험 시장의 패러다임이 진단비 일시금 중심에서 **'실제 쓴 치료비 연간 정산형'**으로 완전히 이동하고 있습니다. 매년 환자가 암 치료에 쓴 연간 비급여 치료비 구간에 따라 매년 최대 1억원씩 10년간 총 10억원을 지급하는 획기적인 담보입니다.
+              최근 암보험 시장의 패러다임이 진단비 일시금 중심에서 **'실제 쓴 치료비 연간 정산형'**으로 이동하고 있습니다. 매년 환자가 암 치료에 쓴 연간 비급여 치료비 구간에 따라 매년 최대 1억원씩 10년간 총 10억원을 지급하는 획기적인 담보입니다.
             </p>
 
             <div className="bg-rose-50/50 p-5 md:p-6 rounded-2xl border border-rose-100 space-y-4">
@@ -286,7 +285,7 @@ export const CancerExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
           <div className="p-5 md:p-6 bg-slate-50 rounded-2xl border border-slate-100">
             <p className="text-xs text-rose-600 font-black mb-1">📢 암보험 핵심 조언</p>
             <p className="text-[11px] text-gray-600 font-bold leading-relaxed">
-              "진단비 5,000만 원은 가입 후 1번 받으면 소멸하지만, 비급여 암 주요치료비는 10년 동안 생존하여 치료를 받는 내내 매년 구간별로 리필 지급되므로 장기 투병 시 고정비 리스크 방어에 가장 유리합니다."
+              "진단비 5,000만 원은 가입 후 1번 받으면 소멸하지만, 비급여 암 주요치료비는 10년 동안 생존하여 치료를 받는 내내 매년 구간별로 리필 지급되므로 장기 투병 시 고정비 리스크 방어에 유리합니다."
             </p>
           </div>
         </div>
@@ -396,7 +395,7 @@ export const CancerExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
             {
               step: '01',
               title: '진단비 규모는 본인 연봉 수준으로 설정하기',
-              desc: '실손이 치료비를 보완하더라도 암 투병 기간(평균 1~2년) 동안의 경제 활동 중단은 막을 수 없습니다. 진단비 일시금은 최소 본인 세후 연봉의 1~1.5배로 확보해야 가정이 안정적으로 유지됩니다.'
+              desc: '실손보험이 치료비를 보완하더라도 암 투병 기간 동안의 경제 활동 중단에 대비할 필요가 있습니다. 진단비 일시금은 치료 기간 동안의 생활비와 고정 지출을 고려하여 적정 수준으로 준비하는 것이 도움이 될 수 있습니다.'
             },
             {
               step: '02',
@@ -406,7 +405,7 @@ export const CancerExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
             {
               step: '03',
               title: '나이에 맞춰 비갱신형과 갱신형 선택하기',
-              desc: '20~40대 젊은 층은 평생 보험료가 오르지 않는 "비갱신형(20년납 90세만기 등)"이 무조건 유리합니다. 반면, 50대 이후 노령층은 초기 납입비가 저렴한 "갱신형"을 활용해 보장을 보완하는 것이 효율적입니다.'
+              desc: '20~40대 젊은 층은 평생 보험료가 오르지 않는 "비갱신형(20년납 90세만기 등)"이 유리합니다. 반면, 50대 이후 노령층은 초기 납입비가 저렴한 "갱신형"을 활용해 보장을 보완하는 것이 효율적입니다.'
             },
             {
               step: '04',
