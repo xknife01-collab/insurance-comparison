@@ -110,9 +110,9 @@ export const fetchVariablePremium = async (analysis: InsuranceAnalysis): Promise
           company: '교보라이프플래닛',
           productName: '(무)라이프플래닛 e정기보험 (순수보장형)',
           subType: 'term',
-          feeOrDiscount: '우량체 최대 18% 할인',
+          feeOrDiscount: '우량체 우대 할인',
           baseRateOrYield: 22000,
-          features: '인터넷 다이렉트 전용 최저가 보험료 | 비흡연/건강상태 우량체 추가 할인율 적용 | 공인인증 간편 가입'
+          features: '인터넷 다이렉트 전용 실속 보험료 | 비흡연/건강상태 우량체 추가 할인율 적용 | 공인인증 간편 가입'
         },
         {
           company: '한화생명',

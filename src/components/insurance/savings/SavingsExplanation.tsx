@@ -241,7 +241,7 @@ export const SavingsExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
             <Quote className="w-8 h-8 opacity-60 rotate-180" />
           </div>
           <p className="text-2xl font-black text-slate-900 tracking-tight leading-tight">
-            "불필요한 세금을 차단하고 자산 가치를 올리는 비과세의 힘,<br />
+            "자산 가치를 올리는 비과세의 힘,<br />
             <span className="text-emerald-600 font-black">체계적인 분석과 비과세 복리 설계를 통해 소중한 목돈 형성의 디딤돌을 놓아드립니다.</span>"
           </p>
         </div>

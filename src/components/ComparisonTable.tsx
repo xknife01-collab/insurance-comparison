@@ -98,13 +98,6 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     p.riders?.some((r: any) => /배상책임/.test(r.rider_name))
   ) || false;
 
-
-  const benchmark = isSilbi ? 55000 : isDental ? 85000 : isCaregiving ? 45000 : isNursing ? 70000 : isHeart ? 120000 : isChild ? (analysis.child?.maturity === 30 ? 45000 : 95000) : isDriver ? 22000 : isPet ? 42000 : isGolf ? 15000 : isFire ? 12000 : isProperty ? 45000 : isWholeLife ? 150000 : isVariable ? 150000 : isLegal ? 18000 : isCredit ? 40000 : isAccident ? 30000 : 180000;
-  const dietPremium = recommendation.estimatedPremium;
-  const currentPremium = analysis.monthlyPremium;
-  
-  const displaySavings = currentPremium > dietPremium + 5000 ? (currentPremium - dietPremium) : (benchmark - dietPremium);
-  
   // 1. 치아보험
   const dentalRows = [
     { 
@@ -1174,15 +1167,6 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
               </div>
             </motion.div>
           ))}
-        </div>
-
-        <div className="text-center pt-8 border-t border-gray-50 mt-10">
-          <p className="text-[10px] font-black text-gray-400 italic tracking-widest uppercase text-center">
-            {isCar 
-              ? `최적화 분석 완료: 매년 ${Math.round(displaySavings * 12).toLocaleString()}원을 자산으로 전환할 수 있습니다.`
-              : `최적화 분석 완료: 매달 ${displaySavings.toLocaleString()}원을 자산으로 전환할 수 있습니다.`
-            }
-          </p>
         </div>
 
       </div>

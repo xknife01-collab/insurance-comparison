@@ -167,15 +167,15 @@ export const PetExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
           </div>
           <div className="space-y-4">
             {[
-              { company: '국가동물등록 할인', product: '내장형 칩/외장형 식별 번호', limit: '2% ~ 5% 보험료 영구 감면', note: '가입 시 등록증 또는 내장 번호 입력 시 바로 자동 적용 완료' },
-              { company: '원스톱 현장 청구', product: '보험금 현장 간편 접수 서비스', limit: '제휴 서류 생략 모바일 연동', note: '제휴 병원에서 진료 후 원무과에서 팩스/앱 없이 직접 전송 가능' },
-              { company: '노령견 안심 가입 연령', product: '신규 가입 상한선 연장 트렌드', limit: '최대 만 10세까지 첫 가입 가능', note: '과거 만 8세 한도에서 확대되어 노령 반려동물도 초기 진입 개방' },
+              { title: '국가동물등록 할인', feature: '내장형 칩/외장형 식별 번호', limit: '2% ~ 5% 보험료 영구 감면', note: '가입 시 등록증 또는 내장 번호 입력 시 바로 자동 적용 완료' },
+              { title: '원스톱 현장 청구', feature: '보험금 현장 간편 접수 서비스', limit: '제휴 서류 생략 모바일 연동', note: '제휴 병원에서 진료 후 원무과에서 팩스/앱 없이 직접 전송 가능' },
+              { title: '노령견 안심 가입 연령', feature: '신규 가입 상한선 연장 트렌드', limit: '최대 만 10세까지 첫 가입 가능', note: '과거 만 8세 한도에서 확대되어 노령 반려동물도 초기 진입 개방' },
             ].map((item, i) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
-                    {maskCompany(item.company, isUnlocked)}{' '}
-                    <span className="text-orange-300 text-xs font-bold ml-1">{maskProductName(item.product, isUnlocked)}</span>
+                    {item.title}{' '}
+                    <span className="text-orange-300 text-xs font-bold ml-1">{item.feature}</span>
                   </p>
                   <p className="text-[11px] text-slate-400 font-bold mt-0.5">{maskText(item.note, isUnlocked)}</p>
                 </div>

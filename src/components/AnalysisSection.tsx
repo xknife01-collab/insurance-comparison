@@ -90,7 +90,7 @@ const categoryGroups = [
     title: "기타 보장 자산",
     emoji: "💎",
     items: [
-      { id: "brain", name: "뇌혈관", desc: "뇌질환 무제한 보장" },
+      { id: "brain", name: "뇌혈관", desc: "뇌혈관질환 집중 보장" },
       { id: "heart", name: "심장질환", desc: "허혈성 심장 집중" },
       { id: "accident", name: "상해보험", desc: "사고 장해 및 골절 치료 자산" },
     ]
@@ -129,7 +129,7 @@ const categoryGroups = [
     emoji: "💰",
     items: [
       { id: "annuity", name: "연금저축", desc: "노후 자금 준비" },
-      { id: "whole_life", name: "종신", desc: "가격대비 최다보장" },
+      { id: "whole_life", name: "종신", desc: "소중한 가족 안심 설계" },
       { id: "variable", name: "변액, 정기", desc: "수익형 자산 관리" },
       { id: "legal", name: "민사/형사", desc: "법률 비용 보전" },
       { id: "savings", name: "일반 저축", desc: "비과세 목돈 마련 재테크" },

@@ -75,7 +75,7 @@ const ALL_CATEGORIES: MajorCategory[] = [
     icon: Activity,
     accentColor: '#64748B',
     items: [
-      { id: 'brain', label: '뇌혈관', description: '뇌질환 무제한 보장', icon: Brain, color: '#8B5CF6', bgColor: '#F5F3FF', subTypes: ['뇌혈관질환', '뇌출혈'] },
+      { id: 'brain', label: '뇌혈관', description: '뇌혈관질환 집중 보장', icon: Brain, color: '#8B5CF6', bgColor: '#F5F3FF', subTypes: ['뇌혈관질환', '뇌출혈'] },
       { id: 'heart', label: '심장질환', description: '허혈성 심장 집중', icon: Heart, color: '#FB7185', bgColor: '#FFF1F2', subTypes: ['급성 심근경색', '통합(급성+허혈성)'] },
       { id: 'accident', label: '상해보험', description: '사고 장해 및 골절 치료 자산', icon: Activity, color: '#8B5CF6', bgColor: '#F5F3FF', subTypes: ['상해장해형', '골절/치료형'] },
     ]
@@ -123,7 +123,7 @@ const ALL_CATEGORIES: MajorCategory[] = [
     accentColor: '#10B981',
     items: [
       { id: 'pension', label: '연금저축', description: '노후 자금 준비', icon: PiggyBank, color: '#10B981', bgColor: '#ECFDF5', subTypes: ['세액 공제형', '비과세형'] },
-      { id: 'whole', label: '종신', description: '가격대비 최다보장', icon: Clock, color: '#6366F1', bgColor: '#EEF2FF', subTypes: ['납입 면제', '연말 정산'] },
+      { id: 'whole', label: '종신', description: '소중한 가족 안심 설계', icon: Clock, color: '#6366F1', bgColor: '#EEF2FF', subTypes: ['납입 면제', '연말 정산'] },
       { id: 'variable', label: '변액, 정기', description: '수익형 자산 관리', icon: TrendingUp, color: '#3B82F6', bgColor: '#EFF6FF', subTypes: ['적립식 투자', '정기적 보호'] },
       { id: 'legal', label: '민사/형사', description: '법률 비용 보전', icon: Scale, color: '#64748B', bgColor: '#F1F5F9', subTypes: ['변호사 선임', '소송 비용'] },
       { id: 'savings_general', label: '일반 저축', description: '비과세 목돈 마련 재테크', icon: PiggyBank, color: '#10B981', bgColor: '#ECFDF5', subTypes: ['적립식 저축', '일시납 저축'] },

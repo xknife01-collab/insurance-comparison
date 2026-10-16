@@ -26,8 +26,8 @@ const ComparisonSection = () => {
             transition={{ delay: 0.1 }}
             className="text-3xl md:text-5xl lg:text-6xl font-semibold text-white leading-[1.25] tracking-tight"
           >
-            어려운 경기, 가장 먼저 줄여야 할 것은<br />
-            생활비가 아니라 <span className="text-orange-400 underline decoration-orange-400/40 decoration-4 underline-offset-8">내 통장에서 새나가는 보험료</span>입니다.
+            어려운 경기 속 늘어나는 가계 부담,<br />
+            <span className="text-orange-400 underline decoration-orange-400/40 decoration-4 underline-offset-8">혹시 모르게 새어나갈 수 있는 보험료</span>부터 꼼꼼히 점검해보세요.
           </motion.h1>
           
           <motion.p 

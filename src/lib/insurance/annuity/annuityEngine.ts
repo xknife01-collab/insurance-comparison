@@ -84,19 +84,19 @@ export const analyzeAnnuity = (analysis: any): any => {
   const deficiencies: string[] = [];
   if (annuityType === 'savings') {
     if (annualPremium < 6000000) {
-      deficiencies.push(`세액공제 한도 미달 (연간 ${Math.round((6000000 - annualPremium)/10000)}만원 한도 추가 공제 가능)`);
+      deficiencies.push('세액공제 한도 미달 (연간 공제 가능 한도 추가 납입 검토 권장)');
     } else if (annualPremium > 6000000 && !annuityOpts.hasIrp) {
-      deficiencies.push('세액공제 한도 초과 (초과액은 IRP로 전환하여 최대 900만원까지 세액공제 권장)');
+      deficiencies.push('세액공제 한도 초과 (초과분은 IRP 등을 활용한 세액공제 한도 확대 검토 권장)');
     }
   } else {
     deficiencies.push('연말정산 세액공제 혜택 제외 (비과세 저축 보험으로 연말 환급 없음)');
   }
 
   if (annuityOpts.paymentPeriod < 10) {
-    deficiencies.push('짧은 납입 기간 (연금저축은 장기 적립식 복리 효과 극대화를 위해 10년 이상 권장)');
+    deficiencies.push('납입 기간 점검 (연금저축은 장기 적립식 운용 특성을 고려하여 충분한 납입 기간 검토 권장)');
   }
   if (annuityOpts.commencementAge < 60) {
-    deficiencies.push('이른 연금 개시 설정 (55~59세 개시 시 연금소득세 5.5% 최대 세율 적용, 70세 이후 개시 시 3.3% 절세 가능)');
+    deficiencies.push('연금 개시 연령 설정 (수령 개시 시점에 따른 연금소득세율 차등 점검 권장)');
   }
 
   // 6. 세 가지 추천 시나리오 설계
@@ -108,7 +108,7 @@ export const analyzeAnnuity = (analysis: any): any => {
 
   const diet: RecommendationPlan = {
     title: `[${opt1.companyName}] 실속 세액공제 플랜`,
-    description: `연말정산 환급 혜택을 챙기면서 월 납입 부담을 10~15만 원 수준으로 대폭 낮춘 저예산 실속 플랜입니다.`,
+    description: `연말정산 환급 혜택을 챙기면서 월 납입 부담을 10~15만 원 수준으로 낮춘 실속 플랜입니다.`,
     estimatedPremium: dietPremium,
     companyName: opt1.companyName,
     productName: opt1.productName,
@@ -128,15 +128,15 @@ export const analyzeAnnuity = (analysis: any): any => {
   const upgradeRefund = upgradePremium * 12 * (taxCreditRate / 100);
 
   const upgrade: RecommendationPlan = {
-    title: `[${opt2.companyName}] 세액공제 풀 최적화 플랜`,
-    description: `연금저축 단독 한도인 연 600만 원(월 50만 원)을 가득 채워 매년 최대 환급금을 확보하고 노후 자금을 채우는 베스트 플랜입니다.`,
+    title: `[${opt2.companyName}] 세액공제 최적화 플랜`,
+    description: `연금저축 단독 한도인 연 600만 원(월 50만 원)에 맞추어 세액공제 혜택을 챙기고 노후 자금을 준비하는 플랜입니다.`,
     estimatedPremium: upgradePremium,
     companyName: opt2.companyName,
     productName: opt2.productName,
     coverageChanges: [
       `연 한도 600만 원 최적화 세팅 (월 50만 원)`,
       `매년 최대 ${Math.round(upgradeRefund).toLocaleString()}원 연말정산 환급`,
-      `공시이율 복리 적립을 통한 원금 복구 가속화`
+      `공시이율 복리 적립을 통한 안정적 자산 증식`
     ],
     switchingLossNotice: '중도 해지 시 기타소득세 16.5%가 부과되므로 반드시 납입 유지 가능한 예산 범위여야 합니다.',
     isFire: false
@@ -150,14 +150,14 @@ export const analyzeAnnuity = (analysis: any): any => {
 
   const hybrid: RecommendationPlan = {
     title: `[${opt3.companyName}] 1:1 하이브리드 연금 자산 플랜`,
-    description: `연금저축(월 50만)과 IRP 퇴직연금(월 25만)을 매칭하여 세액공제 통합 한도 연 900만 원을 든든하게 소화하는 상위 5% 프리미엄 은퇴 세팅입니다.`,
+    description: `연금저축(월 50만)과 IRP 퇴직연금(월 25만)을 매칭하여 세액공제 통합 한도 연 900만 원을 채우는 하이브리드 은퇴 세팅입니다.`,
     estimatedPremium: hybridPremium,
     companyName: opt3.companyName,
     productName: opt3.productName,
     coverageChanges: [
       `연금저축 연 600만 원 + IRP 연 300만 원 복합 구성`,
       `매년 최대 한도 ${Math.round(hybridRefund).toLocaleString()}원 환급 세이브`,
-      `수령 개시 시 70세 이후 설정으로 연금소득세 3.3% 절세 극대화`
+      `수령 개시 시 70세 이후 설정으로 연금소득세 절세 혜택 적용`
     ],
     switchingLossNotice: 'IRP는 퇴직연금 특성상 법에서 정한 일부 조건 외에는 중도 인출이 전면 불가능하여 계좌가 폐쇄될 수 있습니다.',
     isFire: false

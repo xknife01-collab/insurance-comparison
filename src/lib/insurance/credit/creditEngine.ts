@@ -106,7 +106,7 @@ export const analyzeCredit = (analysis: any): any => {
   // 4. 부족한 보장 진단 (Deficiencies)
   const deficiencies: string[] = [];
   if (creditScore < 700) {
-    deficiencies.push(`신용점수 관리 필요 (${creditBureau.toUpperCase()} ${creditScore}점 기준, 신용 등급 개선 시 최대 10% 보험료 할인 획득 가능)`);
+    deficiencies.push(`신용점수 관리 점검 권장 (${creditBureau.toUpperCase()} ${creditScore}점 기준, 신용도 개선 시 보험료 우대 요율 적용 가능)`);
   }
   if (!hasIllnessRider) {
     deficiencies.push('중대질병(암/뇌/심장) 진단 상환 특약 부재 (사망 외 질병으로 인한 대출 연체 위협 노출)');
@@ -124,7 +124,7 @@ export const analyzeCredit = (analysis: any): any => {
   const recommendations = {
     diet: {
       title: `[${dietCompName}] 실속 ${loanLabel} 대출안심 플랜`,
-      description: `특약을 최소화하여 오직 사망에 따른 대출금 상환에 집중한 초실속형 플랜입니다. 현재 ${creditBureau.toUpperCase()} ${creditScore}점 기준으로 적용 가능한 ${Math.round(discountRate * 100)}% 할인이 선반영되어 월 ${dietPremium.toLocaleString()}원에 채무 변제 위험을 완전히 제거합니다.`,
+      description: `특약을 최소화하여 오직 사망에 따른 대출금 상환에 집중한 실속형 플랜입니다. 현재 ${creditBureau.toUpperCase()} ${creditScore}점 기준으로 적용 가능한 우대 요율이 선반영되어 월 ${dietPremium.toLocaleString()}원 수준으로 채무 변제 위험에 대비합니다.`,
       estimatedPremium: dietPremium,
       coverageChanges: [
         `사망 시 대출 잔액 최대 ${Math.round(loanAmount / 10000).toLocaleString()}만 원 전액 상환`,
@@ -137,7 +137,7 @@ export const analyzeCredit = (analysis: any): any => {
     },
     upgrade: {
       title: `[${upgradeCompName}] 3대 질병 연계 ${loanLabel} 대출안심 든든 플랜`,
-      description: `사망 보장은 물론, 차주가 암/뇌출혈/급성심근경색 등 3대 중대질병으로 진단받았을 때도 보험사가 남은 대출금을 즉시 완납해 줍니다. 질병으로 일하지 못해 이자가 연체되고 담보 주택이 경매에 넘어가는 비극을 방어하는 가장 선호도 높은 플랜입니다.`,
+      description: `사망 보장은 물론, 차주가 암/뇌출혈/급성심근경색 등 3대 중대질병으로 진단받았을 때도 보험사가 남은 대출금을 상환 지원하여 가계 부담을 덜어주는 안심 플랜입니다.`,
       estimatedPremium: upgradePremium,
       coverageChanges: [
         `사망 시 대출 잔액 최대 ${Math.round(loanAmount / 10000).toLocaleString()}만 원 전액 상환`,
@@ -150,14 +150,14 @@ export const analyzeCredit = (analysis: any): any => {
     },
     hybrid: {
       title: `[${hybridCompName}] 신용 헬스케어 ${loanLabel} 대출안심 마스터 플랜`,
-      description: `사망 + 3대 질병 + 50% 이상 고도후유장해까지 모든 신용 위험 요소를 안정적으로 커버하고, 개인 신용등급 변동 추이에 맞춘 '신용 관리 헬스케어 서비스'를 매달 모바일로 지원하는 프리미엄 통합 보장 안심 플랜입니다.`,
+      description: `사망 + 3대 질병 + 50% 이상 고도후유장해까지 신용 위험 요소를 안정적으로 커버하고, 개인 신용등급 변동 추이에 맞춘 '신용 관리 서비스'를 지원하는 통합 보장 안심 플랜입니다.`,
       estimatedPremium: hybridPremium,
       coverageChanges: [
         `사망 및 50% 이상 장해 시 대출 잔액 최대 ${Math.round(loanAmount / 10000).toLocaleString()}만 원 완납`,
         '3대 질병(암/뇌/심장) 진단 확정 즉시 대출 대위변제',
-        '매년 신용 점수 상승 시 추가 요율 할인을 제공하는 신용케어 연계'
+        '신용 점수 상승 시 추가 요율 할인을 제공하는 신용케어 연계'
       ],
-      switchingLossNotice: '보장 범위가 넓은 만큼 월 납입 보험료가 실속형 대비 가산되지만, 통합 위험 관리 차원에서 가장 안전합니다.',
+      switchingLossNotice: '보장 범위가 넓은 만큼 월 납입 보험료가 실속형 대비 가산되지만, 통합 위험 관리 차원에서 폭넓은 안전판을 제공합니다.',
       companyName: hybridCompName,
       productName: hybridProdName
     }

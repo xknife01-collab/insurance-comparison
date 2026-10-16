@@ -88,7 +88,7 @@ export const analyzeGolf = (analysis: any): any => {
   }
 
   if (!golfOpts.isGroup) {
-    deficiencies.push('동반 4인 단체 할인 미적용 (5% 즉시 절감 가능)');
+    deficiencies.push('동반 4인 단체 할인 미적용 (단체 요율 할인 혜택 가능 여부 확인 권장)');
   }
 
   // 4. 세 가지 시나리오별 추천안 설계
@@ -99,12 +99,12 @@ export const analyzeGolf = (analysis: any): any => {
   
   const diet: RecommendationPlan = {
     title: `[${opt1.companyName}] 실속 원데이/연간 플랜`,
-    description: `골프 라운딩 중 타인에게 입힌 상해 배상책임과 기본 상해 사망 위주로 설계하여 보험료를 극한으로 다이어트한 실속 플랜입니다.`,
+    description: `골프 라운딩 중 타인에게 입힌 상해 배상책임과 기본 상해 사망 위주로 설계하여 보험료 부담을 낮춘 알뜰형 실속 플랜입니다.`,
     estimatedPremium: dietPremium,
     coverageChanges: [
       '골프 배상책임 1,000만 원 보장',
       '홀인원 및 골프용품 특약 제외',
-      '4인 단체 가입 시 5% 추가 할인 적용'
+      '4인 단체 가입 시 단체 할인 요율 적용 가능'
     ],
     switchingLossNotice: '홀인원 축하비용 및 골프용품 분실/도난 비용은 보장 대상에서 제외됩니다.'
   };
@@ -133,14 +133,14 @@ export const analyzeGolf = (analysis: any): any => {
 
   const hybrid: RecommendationPlan = {
     title: `[${opt3.companyName}] VIP 프리미엄 플랜`,
-    description: `홀인원 축하비용을 최대 한도(200만)로 증액하고 골프용품 손해 및 골프 카트 탑승 중 상해까지 폭넓게 케어하는 프리미엄 안심 보장 패키지입니다.`,
+    description: `홀인원 축하비용 한도를 증액하고 골프용품 손해 및 골프 카트 탑승 중 상해까지 폭넓게 케어하는 프리미엄 안심 보장 패키지입니다.`,
     estimatedPremium: hybridPremium,
     coverageChanges: [
-      '홀인원 비용 200만 원 업계 우수 보장',
+      '홀인원 비용 200만 원 보장',
       '골프 배상책임 3,000만 원 확장',
       '골프용품 손해 200만 원 및 카트 사고 상해 탑재'
     ],
-    switchingLossNotice: '보장 한도가 극대화된 프리미엄 플랜으로, 다른 골프보험과 중복 가입 시 비례 보상됩니다.'
+    switchingLossNotice: '보장 한도가 강화된 프리미엄 플랜으로, 다른 골프보험과 중복 가입 시 비례 보상됩니다.'
   };
 
   return {

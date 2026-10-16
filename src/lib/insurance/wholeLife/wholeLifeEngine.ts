@@ -103,19 +103,19 @@ export const analyzeWholeLife = (analysis: any): any => {
   // 5. 보장 공백(Deficiencies) 도출
   const deficiencies: string[] = [];
   if (objective === 'family' && deathBenefit < 100000000) {
-    deficiencies.push(`가족생활비 대비 사망보장 미달 (최소 1억 원 수준의 사망보장 확보 권장)`);
+    deficiencies.push(`가족생활비 대비 사망보장 미달 (가계 소득 및 부양가족을 고려한 적정 사망보장 확보 권장)`);
   }
   if (objective === 'inheritance' && deathBenefit < 200000000) {
-    deficiencies.push(`상속세 재원 부족 우려 (부동산 자산 상속 시 현금 유동성 확보를 위해 사망금 2억 이상 권장)`);
+    deficiencies.push(`상속세 재원 부족 우려 (자산 상속 시 현금 유동성 확보를 위한 상속 재원 규모 검토 권장)`);
   }
   if (refundType === 'standard') {
-    deficiencies.push(`일반 환급형 선택 상태 (동일 보장 대비 보험료가 15~20% 더 비싸며, 완납 후 환급률이 낮음)`);
+    deficiencies.push(`일반 환급형 선택 상태 (무(저)해약환급형 대비 보험료 차이가 있을 수 있어 상품 구조 비교 권장)`);
   }
   if (!isStepUp && (objective === 'family' || objective === 'inheritance')) {
-    deficiencies.push(`기본형 사망보장 리스크 (매년 3%대 물가상승 시 20년 뒤 사망보험금 실질 구매력이 반토막남)`);
+    deficiencies.push(`기본형 사망보장 구조 (장기 인플레이션에 따른 사망보험금 실질 가치 변동 가능성 점검 필요)`);
   }
   if (paymentPeriod >= 20) {
-    deficiencies.push(`장기 납입 부담 (20~30년 납입은 은퇴 시점까지 지속 납입해야 하므로 실직/휴직 시 실효 우려 높음)`);
+    deficiencies.push(`장기 납입 구조 (소득 활동 기간과 은퇴 시점을 고려한 납입 기간 적정성 검토 권장)`);
   }
 
   // 6. 세 가지 추천 시나리오 설계
@@ -123,14 +123,14 @@ export const analyzeWholeLife = (analysis: any): any => {
   const dietPremium = opt1.premium;
   const diet: RecommendationPlan = {
     title: `[${opt1.companyName}] 실속형 사망보장 다이어트 플랜`,
-    description: `불필요한 사업비를 덜어내고 핵심 사망보험금 5,000만 원만 집중하여 고정 지출을 절반으로 다이어트하는 플랜입니다.`,
+    description: `불필요한 지출 요소를 점검하고 핵심 사망보험금 중심으로 월 납입 부담을 낮추는 실속형 플랜입니다.`,
     estimatedPremium: dietPremium,
     companyName: opt1.companyName,
     productName: opt1.productName,
     coverageChanges: [
       `월 보험료 ${(dietPremium).toLocaleString()}원으로 맞춤 설계`,
       `사망 보장금 5,000만 원 (기본형 고정)`,
-      `저해지 환급형 적용으로 일반 상품 대비 15% 추가 할인`
+      `저해약환급형 적용으로 일반 표준형 대비 월 보험료 부담 경감`
     ],
     switchingLossNotice: '보장액이 축소되어 유가족의 장기적인 생활비 보장에는 다소 미흡할 수 있습니다.',
     isFire: false
@@ -140,17 +140,17 @@ export const analyzeWholeLife = (analysis: any): any => {
   const upgradePremium = opt2.premium;
   const upgrade: RecommendationPlan = {
     title: `[${opt2.companyName}] 7년완납 체증형 자산보존 플랜`,
-    description: `7년 단기완납으로 은퇴 전 보험료 납입을 종료하고, 물가상승에 비례해 사망보험금이 매년 5%씩 불어나는 프리미엄 설계입니다.`,
+    description: `7년 단기완납으로 은퇴 전 보험료 납입을 종료하고, 사망보험금이 점진적으로 증액되는 체증형 설계입니다.`,
     estimatedPremium: upgradePremium,
     companyName: opt2.companyName,
     productName: opt2.productName,
     coverageChanges: [
       `월 보험료 ${(upgradePremium).toLocaleString()}원으로 맞춤 설계`,
       `사망 보장 기본 1억 원 ➡️ 매년 5%씩 체증식 증액`,
-      `7년 단기납 적용으로 조기 완납 및 연간 복리 환급률 극대화`,
-      `저해지 환급형 설계로 납입 완료 시점 환급률 120% 돌파`
+      `7년 단기납 적용으로 조기 완납 및 장기 환급률 제고`,
+      `저해약환급형 설계로 완납 이후 환급률 개선`
     ],
-    switchingLossNotice: '7년 이내 중도 해지 시 해약환급금이 납입원금의 10% 미만으로 매우 적어 반드시 유지가 필수적입니다.',
+    switchingLossNotice: '중도 해지 시 환급금이 적거나 없을 수 있으므로 신중한 유지가 권장됩니다.',
     isFire: false
   } as any;
 
@@ -165,8 +165,8 @@ export const analyzeWholeLife = (analysis: any): any => {
     coverageChanges: [
       `월 보험료 ${(hybridPremium).toLocaleString()}원으로 맞춤 설계`,
       `사망 보장 기본 7,000만 원 안심 설계`,
-      `10년납으로 월 부담 완화 및 10년 시점 비과세 혜택 완벽 매칭`,
-      `완납 후 연금 전환 특약 또는 적립금 중도인출 기능 무료 탑재`
+      `10년납으로 월 부담 완화 및 10년 시점 비과세 혜택 매칭`,
+      `완납 후 연금 전환 특약 또는 적립금 중도인출 기능 탑재`
     ],
     switchingLossNotice: '사망 보장과 저축 기능이 결합된 상품이므로, 순수 저축성 보험보다 초기 사업비 차감이 다소 큽니다.',
     isFire: false

@@ -26,8 +26,8 @@ const Hero = () => (
         transition={{ delay: 0.2 }}
         className="text-4xl md:text-6xl font-semibold text-gray-900 mb-8 leading-tight tracking-tight px-4"
       >
-        어려운 경기, 가장 먼저 줄여야 할 것은<br />
-        생활비가 아니라 <span className="text-orange-500">내 통장에서 새나가는 보험료</span>입니다.
+        어려운 경기 속 늘어나는 가계 부담,<br />
+        <span className="text-orange-500">혹시 모르게 새어나갈 수 있는 보험료</span>부터 꼼꼼히 점검해보세요.
       </motion.h1>
       <motion.p 
         initial={{ opacity: 0, y: 20 }}

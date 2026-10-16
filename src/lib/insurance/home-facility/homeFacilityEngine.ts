@@ -46,10 +46,10 @@ export const analyzeHomeFacility = (analysis: any): any => {
   const recommendationsTips: string[] = [];
 
   if (prefService === 'home' && homeAmount < 500000) {
-    deficiencies.push('방문요양(재가) 보장 한도 부족 (최소 50만 원 권장)');
+    deficiencies.push('방문요양(재가) 보장 한도 점검 필요 (적정 한도 권장)');
   }
   if (prefService === 'facility' && facilityAmount < 500000) {
-    deficiencies.push('시설 입소 요양원 보장 금액 부족 (식재료비 고려 최소 50만 원 권장)');
+    deficiencies.push('시설 입소 요양원 보장 금액 점검 필요 (식재료비 등 실비 고려 권장)');
   }
   if (prefService === 'both' && (homeAmount < 500000 || facilityAmount < 500000)) {
     deficiencies.push('재가 및 시설 양대 보장 균형 미달');
@@ -75,7 +75,7 @@ export const analyzeHomeFacility = (analysis: any): any => {
 
   const diet: RecommendationPlan = {
     title: '실속 방문요양형 (재가 집중)',
-    description: '최근 인기가 높은 방문 요양보호사(재가급여) 중심으로 구성하여 월 보험료를 아끼는 경제형 플랜입니다.',
+    description: '방문 요양보호사(재가급여) 중심으로 구성하여 월 보험료를 아끼는 경제형 플랜입니다.',
     estimatedPremium: dietOption ? dietOption.premium : Math.floor(currentPremium * 0.45),
     companyName: dietOption?.companyName || '흥국화재',
     productName: dietOption?.productName || '(무)흥국재가케어간병보험',
@@ -84,12 +84,12 @@ export const analyzeHomeFacility = (analysis: any): any => {
   };
 
   const upgrade: RecommendationPlan = {
-    title: '체증형 무제한 전체보장 플랜',
-    description: '재가 및 시설 구분 없이 등급 판정 시 매월 최대 100만 원까지 보장받고, 인플레이션을 대비해 매년 지급액이 상승하는 프리미엄 플랜입니다.',
+    title: '체증형 든든 전체보장 플랜',
+    description: '재가 및 시설 구분 없이 등급 판정 시 매월 생활자금을 보장받고, 물가 변동을 고려해 지급액이 점진적으로 상승하는 플랜입니다.',
     estimatedPremium: upgradeOption ? (upgradeOption === dietOption ? Math.round(upgradeOption.premium * 1.5) : upgradeOption.premium) : Math.floor(currentPremium * 1.4),
     companyName: upgradeOption?.companyName || '라이나생명',
     productName: upgradeOption?.productName || '(무)라이나방문요양시설종합보험',
-    coverageChanges: ['매년 5% 체증형 보장 상향', '1-5등급 전부 무제한 보장'],
+    coverageChanges: ['연차별 체증형 보장 상향', '1-5등급 통합 케어 보장'],
     switchingLossNotice: '보장이 큰 대신 초기 보험료 수준이 높습니다.'
   };
 

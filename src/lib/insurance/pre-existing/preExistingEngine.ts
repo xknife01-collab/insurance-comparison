@@ -19,26 +19,26 @@ export const analyzePreExisting = (analysis: any): any => {
   return {
     estimatedPremium: opt1.premium,
     efficiency: 85,
-    deficiencies: ['고지 항목 대비 보험료 높음'],
+    deficiencies: ['고지 유형에 따른 보험료 적정성 점검 권장'],
     scores: { totalScore: 82 },
     recommendations: {
       diet: {
         title: '실속형 유병자 플랜',
-        description: '병력이 있어도 꼭 필요한 보장만 골라 담은 저렴한 플랜입니다.',
+        description: '병력이 있어도 꼭 필요한 보장만 골라 담은 실속형 플랜입니다.',
         estimatedPremium: opt1.premium,
         companyName: opt1.companyName,
         productName: opt1.productName,
         coverageChanges: ['핵심 진단비 위주 구성', '불필요한 사망담보 제외'],
-        switchingLossNotice: '믍병 이력 고지 항목에 따라 유병자 보험만 가입 가능할 수 있습니다.',
+        switchingLossNotice: '질병 이력 및 고지 유형에 따라 인수 조건이 상이할 수 있습니다.',
       },
       upgrade: {
         title: '3.10.5 건강체급 플랜',
-        description: '약 복용 중이라도 건강하다면 최대 할인을 받을 수 있는 플랜입니다.',
+        description: '약 복용 중이라도 건강 기준 충족 시 우대 할인을 검토할 수 있는 플랜입니다.',
         estimatedPremium: Math.round(opt1.premium * 0.9),
         companyName: 'KB손해보험',
         productName: 'KB 3.10.5 슬기로운 간편보험',
         coverageChanges: ['무사고 시 보험료 할인', '대형 보험사 안정성 확보'],
-        switchingLossNotice: '건강체급 할인은 가입 심사 시 정밀한 가이드라인이 적용됩니다.',
+        switchingLossNotice: '건강 상태 및 무사고 요건에 따라 인수 기준이 상이할 수 있습니다.',
       },
       hybrid: {
         title: '질병후유장해 결합형',

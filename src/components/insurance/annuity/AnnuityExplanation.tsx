@@ -153,7 +153,7 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
 
               <div className="p-5 md:p-6 bg-emerald-950/40 rounded-2xl md:rounded-[2.5rem] border border-emerald-500/20 hover:bg-emerald-950/60 transition-colors">
                 <p className="font-black text-emerald-300 mb-2 flex items-center gap-2">
-                  🏡 전업주부 / 자녀 / 고소득 자산가 (일반연금 권장)
+                  🏡 전업주부 / 무소득자 / 고소득 자산가 (일반연금 권장)
                 </p>
                 <p className="text-xs opacity-75 font-bold leading-relaxed mb-2">
                   납세 소득이 없어 세액공제 환급 혜택을 받지 못하거나, 은퇴 후 비과세 혜택을 원하고 금융소득종합과세 한도를 우려하는 분은, 수령 시 이자소득세를 아끼는 **일반 연금보험(비과세)**이 적합한 대안이 될 수 있습니다.
@@ -245,7 +245,7 @@ export const AnnuityExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =>
               <Clock className="text-blue-500 w-5 h-5" /> 장기 유지의 마법
             </h4>
             <p className="text-xs font-bold text-slate-500 leading-relaxed">
-              연금저축은 복리가 적용되므로 가입 시점부터 개시 시점까지의 기간(거치 기간)이 길어질수록 적립 자산이 기하급수적으로 늘어납니다. 단 5년이라도 먼저 시작하는 것이 미래의 월 수령액을 20% 이상 끌어올리는 비결입니다.
+              연금저축은 복리가 적용되므로 가입 시점부터 개시 시점까지의 기간(거치 기간)이 길어질수록 적립 자산이 비례하여 늘어납니다. 먼저 시작하는 것이 미래의 월 수령액을 높이는 데 도움이 됩니다.
             </p>
           </div>
         </div>

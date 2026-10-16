@@ -178,6 +178,9 @@ export function maskProductName(name: string, isUnlocked: boolean): string {
   if (cleanLower.includes('간병') || cleanLower.includes('care') || cleanLower.includes('요양')) {
     return '안심 간병비지원보험' + suffix;
   }
+  if (cleanLower.includes('변액')) {
+    return '수익형 변액유니버설보험' + suffix;
+  }
   if (cleanLower.includes('연금') || cleanLower.includes('pension')) {
     return '안심 연금저축보험' + suffix;
   }
@@ -187,8 +190,8 @@ export function maskProductName(name: string, isUnlocked: boolean): string {
   if (cleanLower.includes('골프') || cleanLower.includes('golf') || cleanLower.includes('오잘공') || cleanLower.includes('굿샷')) {
     return '안심 골프레저보험' + suffix;
   }
-  if (cleanLower.includes('변액')) {
-    return '수익형 변액유니버설보험' + suffix;
+  if (cleanLower.includes('신용') || cleanLower.includes('대출')) {
+    return '대출상환 안심신용보험' + suffix;
   }
   if (cleanLower.includes('정기')) {
     return '합리적 정기사망보험' + suffix;
@@ -201,9 +204,6 @@ export function maskProductName(name: string, isUnlocked: boolean): string {
   }
   if (cleanLower.includes('민사') || cleanLower.includes('형사') || cleanLower.includes('법률')) {
     return '민형사 법률비용보험' + suffix;
-  }
-  if (cleanLower.includes('신용') || cleanLower.includes('대출')) {
-    return '대출상환 안심신용보험' + suffix;
   }
   if (cleanLower.includes('유병') || cleanLower.includes('간편')) {
     return '간편고지 맞춤보장보험' + suffix;

@@ -294,7 +294,7 @@ export const DementiaGuideSection = ({ onAction, isUnlocked }: { onAction: () =>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             { company: '메리츠화재', product: '간편한 치매간병보험',      highlight: '유병력자 간편심사 플랜, 단계별 진단비 및 생활자금 설계',       badges: ['단계별 보장', '간편고지']    },
-            { company: '삼성화재',   product: '마이핏 건강보험',           highlight: '중증질환 및 치매 통합 케어, 가족 결합 할인 혜택 연동',     badges: ['가족 결합 할인', '통합 케어'] },
+            { company: '삼성화재',   product: '마이핏 건강보험(치매간병플랜)', highlight: '중증질환 및 치매 통합 케어, 가족 결합 할인 혜택 연동',     badges: ['가족 결합 할인', '통합 케어'] },
             { company: 'DB손보',     product: '프로미라이프 더보장간병',   highlight: '알츠하이머 표적치료비 특약 탑재, 체증형 보장 옵션 운영',   badges: ['체증형', '표적치료']           },
             { company: 'KB손보',     product: 'KB골든라이프케어',          highlight: '신약 치료비 연계 및 간병인 지원 서비스 결합형 설계',      badges: ['간병인 지원', '체증형']      },
             { company: '현대해상',   product: '퍼펙트케어간병보험',        highlight: '국가 인지지원등급부터 단계별 보장, 장기요양 재가급여 연계',       badges: ['인지지원등급', '재가연계']               },

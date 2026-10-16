@@ -100,7 +100,7 @@ const ALL_GROUPS: NavGroup[] = [
     itemHover: 'hover:text-emerald-600',
     items: [
       { label: '연금저축', view: 'annuity', desc: '노후 자금 준비' },
-      { label: '종신', view: 'whole', desc: '가격대비 최다보장' },
+      { label: '종신', view: 'whole', desc: '소중한 가족 안심 설계' },
       { label: '변액, 정기', view: 'variable', desc: '수익형 자산 관리' },
       { label: '민사/형사', view: 'legal', desc: '법률 비용 보전' },
       { label: '일반 저축', view: 'savings_general', desc: '비과세 목돈 마련 재테크' },

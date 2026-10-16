@@ -55,7 +55,7 @@ export function classifyPolicy(policy: any): { typeLabel: string; description: s
 
   if (/종신|whole/i.test(name)) {
     typeLabel = '종신보험';
-    description = '가격대비 최다보장';
+    description = '소중한 가족 안심 설계';
     bgColor = 'bg-indigo-100';
     textColor = 'text-indigo-500';
   } else if (/자동차|car\s*insurance/i.test(name)) {
@@ -110,7 +110,7 @@ export function classifyPolicy(policy: any): { typeLabel: string; description: s
     textColor = 'text-rose-500';
   } else if (hasBrain) {
     typeLabel = '뇌혈관';
-    description = '뇌질환 무제한 보장';
+    description = '뇌혈관질환 집중 보장';
     bgColor = 'bg-indigo-100';
     textColor = 'text-indigo-500';
   } else if (hasHeart) {
@@ -1288,7 +1288,8 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
         </div>
       )}
 
-      {/* 3. Magic Remodeling Savings Calculator (신규 추가) */}
+      {/* 3. Magic Remodeling Savings Calculator (신규 추가) - 심의 보완 시까지 임시 비노출 처리 */}
+      {false && (
       <section className="bg-gradient-to-br from-[#0a051d] via-[#10072b] to-[#070217] text-white rounded-[4rem] p-10 md:p-16 shadow-[0_50px_120px_rgba(5,2,18,0.7)] relative overflow-hidden border border-[#2b1654]/80">
         <div className="absolute top-0 right-0 p-12 opacity-5 scale-125">
           <Sparkles className="w-80 h-80 text-purple-400" />
@@ -1397,6 +1398,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
           </p>
         </div>
       </section>
+      )}
 
       <section className="space-y-16">
         <div className="text-center space-y-6">

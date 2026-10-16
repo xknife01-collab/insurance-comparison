@@ -338,9 +338,9 @@ export async function analyzeRemodeling(
   const totalScore = Math.round((cancerScore + cerebrovascularScore + cardiovascularScore) / 3);
 
   const deficiencies: string[] = [];
-  if (coverage.cancer_diagnosis < 30000000) deficiencies.push('일반암 진단비 부족');
-  if (coverage.brain_vascular < 20000000) deficiencies.push('뇌혈관질환 진단비 부족');
-  if (coverage.ischemic_heart < 20000000) deficiencies.push('허혈성심장질환 진단비 부족');
+  if (coverage.cancer_diagnosis < 30000000) deficiencies.push('일반암 진단비 보완 권장');
+  if (coverage.brain_vascular < 20000000) deficiencies.push('뇌혈관질환 진단비 보완 권장');
+  if (coverage.ischemic_heart < 20000000) deficiencies.push('허혈성심장질환 진단비 보완 권장');
 
   // Attach lists to analysis object
   const augmentedAnalysis = {

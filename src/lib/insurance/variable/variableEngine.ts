@@ -110,12 +110,12 @@ export const analyzeVariable = (analysis: any): any => {
     const dietPremium = 150000;
     const diet: RecommendationPlan = {
       title: `[${opt1.companyName}] 온라인 다이렉트 변액적립 플랜`,
-      description: `오프라인 설계사 채널 대비 사업비(수수료)를 약 35% 절감하여, 매월 더 많은 원금이 펀드에 자동 투자되는 실속형 적립식 플랜입니다.`,
+      description: `다이렉트 채널 특성상 사업비 부담을 낮추어 실속 있게 투자 가능한 적립식 플랜입니다.`,
       estimatedPremium: dietPremium,
       companyName: opt1.companyName,
       productName: opt1.productName,
       coverageChanges: [
-        `사업비 업계 최저 수준 (3.5%대 적용으로 원금 회복 가속)`,
+        `사업비 부담 경감 구조로 원금 회복 기간 단축 고려`,
         `주식형 채권형 펀드 전환 연 12회 수수료 무료`,
         `10년 유지 시 투자 이익 전액 비과세 혜택`
       ],
@@ -136,7 +136,7 @@ export const analyzeVariable = (analysis: any): any => {
         `AI 자동 펀드 리밸런싱 옵션 제공 (시장 급변 시 채권형 자동 전환)`,
         `연 1회 이상 중도인출 및 추가납입 기능으로 유동성 확보`
       ],
-      switchingLossNotice: '실적 배당형 상품으로 원금 보호 대상이 아니며, 주식 시장 폭락 시 환급금이 대폭 줄어들 수 있습니다.',
+      switchingLossNotice: '실적 배당형 상품으로 원금 보호 대상이 아니며, 주식 시장 급변 시 환급금이 줄어들 수 있습니다.',
       isFire: false
     } as any;
 
@@ -182,7 +182,7 @@ export const analyzeVariable = (analysis: any): any => {
     // 2-1. 사망 보장 금액 적절성 (score1)
     if (deathBenefit < 50000000) {
       score1 = 50;
-      deficiencies.push('경제활동기 가족 생활비 대비 과소한 사망보장 금액 (최소 1억 원 수준의 안전자산 세팅 권장)');
+      deficiencies.push('경제활동기 가족 생활비 대비 과소한 사망보장 금액 (부양가족 생활 안정에 부합하는 적정 수준 권장)');
     } else if (deathBenefit < 100000000) {
       score1 = 80;
     } else {
@@ -193,7 +193,7 @@ export const analyzeVariable = (analysis: any): any => {
     // 자녀가 경제적 자립을 마칠 때(만 60세~70세)까지만 보호하면 충분함. 너무 긴 보장(80세 만기)은 보험료 과도.
     if (coveragePeriod >= 80) {
       score2 = 70;
-      deficiencies.push('과도하게 긴 보장 만기 설정 (정기보험은 자녀 독립기인 만 60~70세로 한정하여 보험료를 아끼는 것이 합리적)');
+      deficiencies.push('과도하게 긴 보장 만기 설정 (실제 필요한 보장 기간에 맞추어 보험료 최적화 권장)');
     } else {
       score2 = 95;
     }
@@ -203,7 +203,7 @@ export const analyzeVariable = (analysis: any): any => {
       score3 = 98;
     } else {
       score3 = 75;
-      deficiencies.push('우량체 할인 미적용 (비흡연 + 혈압/BMI 정상 기준 만족 시 최대 15%~20% 보험료 즉시 절감 혜택 적용 가능)');
+      deficiencies.push('건강체(우량체) 할인 미적용 (비흡연 및 건강검진 요건 충족 시 보험료 감면 혜택 가능 여부 점검 권장)');
     }
 
     const totalScore = Math.round((score1 + score2 + score3) / 3);
@@ -238,14 +238,14 @@ export const analyzeVariable = (analysis: any): any => {
 
       upgrade = {
         title: `[${opt2.companyName}] CEO 체증형 안심 보호플랜`,
-        description: `매년 사망보장금과 환급액이 증가하는 체증형 구조로, 기업 성장세에 맞추어 CEO 자산 가치를 극대화하는 프리미엄 플랜입니다.`,
+        description: `매년 사망보장금과 환급액이 증가하는 체증형 구조로, 기업 성장세에 맞추어 CEO 자산 가치를 제고하는 프리미엄 플랜입니다.`,
         estimatedPremium: upgradePremium,
         companyName: opt2.companyName,
         productName: opt2.productName,
         coverageChanges: [
           `사망 보장 매년 5%~10% 체증 적용 (기업 가치 상승 대응)`,
-          `최대 환급률 시점(10~15년) 은퇴 퇴직금 일시 지급 최적화`,
-          `법인 자산의 합법적 개인 자산화 플랜 연계`
+          `환급률 정점 시점(10~15년) 은퇴 퇴직금 지급 연계 검토`,
+          `법인 규정에 맞춘 임원 퇴직금 플랜 연계`
         ],
         switchingLossNotice: '체증형 상품은 초기 보험료가 다소 높게 책정되므로 법인 유동성 상태를 사전 고려해야 합니다.',
         isFire: false
@@ -298,7 +298,7 @@ export const analyzeVariable = (analysis: any): any => {
 
       hybrid = {
         title: `[${opt3.companyName}] 변액 정기+적립 하이브리드 플랜`,
-        description: `가장 활동기 사망 보장과 노후 연금/적립 자산 전환 기능을 결합하여, 생애 주기별 자산 관리 효율을 극대화한 스마트 믹스 플랜입니다.`,
+        description: `가장 활동기 사망 보장과 노후 연금/적립 자산 전환 기능을 결합하여, 생애 주기별 자산 관리 효율을 높인 스마트 믹스 플랜입니다.`,
         estimatedPremium: hybridPremium,
         companyName: opt3.companyName,
         productName: opt3.productName,
@@ -314,13 +314,13 @@ export const analyzeVariable = (analysis: any): any => {
       // term_pure or term
       diet = {
         title: `[${opt1.companyName}] 초가성비 실속 정기 플랜`,
-        description: `종신보험 대비 보험료를 85% 이상 다이어트! 자녀 독립 시점인 60세까지 핵심 사망 1억 원을 든든하게 보호하는 초실속 플랜입니다.`,
+        description: `종신보험 대비 보험료 부담을 낮추어 자녀 독립 시점인 60세까지 핵심 사망 보장을 준비하는 실속 플랜입니다.`,
         estimatedPremium: dietPremium,
         companyName: opt1.companyName,
         productName: opt1.productName,
         coverageChanges: [
           `사망 보장금 1억 원 확보 (경제 활동기 집중 케어)`,
-          `종신보험 대비 매월 평균 150,000원 이상의 지출 다이어트`,
+          `종신보험 대비 월 납입 부담 경감 효과`,
           `우량체 할인 선반영으로 월 보험료 ${dietPremium.toLocaleString()}원 실현`
         ],
         switchingLossNotice: '순수 보장형 상품이므로 보장 기간 만기 시 해약환급금은 0원이 됩니다.',
@@ -329,7 +329,7 @@ export const analyzeVariable = (analysis: any): any => {
 
       upgrade = {
         title: `[${opt2.companyName}] 든든 유가족 자산 보존 플랜`,
-        description: `사망 보장 한도를 3억 원으로 증액하여, 가장 부재 시 상속세 세원 확보 및 유가족이 최소 5년간 안정적인 품격을 유지할 수 있는 프리미엄 세팅입니다.`,
+        description: `사망 보장 한도를 증액하여 가장 부재 시 상속 재원 확보 및 유가족의 생활 안정을 도모하는 설계입니다.`,
         estimatedPremium: upgradePremium,
         companyName: opt2.companyName,
         productName: opt2.productName,
@@ -338,20 +338,20 @@ export const analyzeVariable = (analysis: any): any => {
           `만기 70세 보장으로 대학 등록금 및 자녀 자립 시점까지 커버`,
           `비흡연 우량체 특별 추가 할인율 적용`
         ],
-        switchingLossNotice: '비우량체(흡연 또는 혈압 기준 초과) 판정 시 표준 요율이 적용되어 안내된 보험료보다 10~15% 상승할 수 있습니다.',
+        switchingLossNotice: '건강체 요건 미충족 시 표준 요율이 적용되어 안내된 보험료보다 높아질 수 있습니다.',
         isFire: false
       } as any;
 
       hybrid = {
         title: `[${opt3.companyName}] 정기 + 종신 믹스 매치 결합 플랜`,
-        description: `평생 상속 자산(종신보험 5천만 원)과 경제활동기 집중 사망 자산(정기보험 2억 원)을 결합하여, 보장 공백은 차단하고 전체 지출 포트폴리오를 슬림하게 완성한 똑똑한 결합안입니다.`,
+        description: `평생 상속 자산(종신보험 5천만 원)과 경제활동기 집중 사망 자산(정기보험 2억 원)을 결합하여, 보장 공백은 차단하고 전체 지출 포트폴리오를 슬림하게 완성한 결합안입니다.`,
         estimatedPremium: hybridPremium,
         companyName: opt3.companyName,
         productName: opt3.productName,
         coverageChanges: [
           `자녀 독립 전 사망 보장 총 2억 5,000만 원 확보`,
-          `자녀 독립 후에도 평생 사망 장례금 및 기본 상속세 세원 5,000만 원 영구 유지`,
-          `단일 종신보험 가입 대비 보험료 효율성 58% 개선`
+          `자녀 독립 후에도 평생 사망 장례금 및 기본 상속세 세원 5,000만 원 유지`,
+          `단일 종신보험 가입 대비 월 납입 효율성 제고`
         ],
         switchingLossNotice: '두 개의 계약을 동시 관리하므로, 각각의 납입 만기 및 청구 프로세스를 확인해 두어야 합니다.',
         isFire: false

@@ -68,10 +68,10 @@ export const analyzePet = (analysis: any): any => {
     deficiencies.push('치과 스케일링/구내염 보장 공백');
   }
   if (!petOpts.isRegistered) {
-    deficiencies.push('동물등록 할인 미적용 (5% 할인 가능)');
+    deficiencies.push('동물등록 할인 미적용 (등록 시 우대 요율 적용 가능 여부 확인 권장)');
   }
   if (petOpts.selfPayRatio < 70) {
-    deficiencies.push('낮은 보장 비율 (치료비의 50%만 보장됨)');
+    deficiencies.push('보장 비율 확인 필요 (자기부담금 및 보장 비율 비교 점검 권장)');
   }
 
   // 4. 세 가지 시나리오별 추천안 설계
@@ -79,12 +79,12 @@ export const analyzePet = (analysis: any): any => {
   const dietPremium = opt1.premium;
   const diet: RecommendationPlan = {
     title: `[${opt1.companyName}] 실속 가성비 플랜`,
-    description: `${petOpts.petName}의 필수 일상 의료비(통원/입원)만 최저 비용으로 지켜주는 최적가 플랜입니다.`,
+    description: `${petOpts.petName}의 필수 일상 의료비(통원/입원)를 부담 없이 지켜주는 알뜰형 플랜입니다.`,
     estimatedPremium: dietPremium,
     coverageChanges: [
       '자기부담금 3만 원 기본 설정',
       '보장비율 70% 알뜰 세팅',
-      '동물등록 5% 즉시 할인 적용'
+      '동물등록 우대 요율 적용 가능'
     ],
     switchingLossNotice: '상세 설계 조건에 따라 자기부담금 및 보장 비율을 유연하게 조정할 수 있습니다.'
   };

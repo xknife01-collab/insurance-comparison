@@ -121,7 +121,7 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction, isUnlocked }) 
           <div className="mt-8 p-5 md:p-6 bg-rose-50 rounded-3xl border border-rose-100">
             <p className="text-rose-700 font-black text-xs mb-1">⚠️ 저해지 환급형 가입 시 주의사항</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
-              저해지/무해지 환급형은 동일 사망보장 대비 월 납입 보험료가 약 15~18% 저렴하지만, **납입 기한 도중 해약할 경우 해약환급금이 0원이거나 납입원금 대비 현저히 적어 막대한 원금 손실**이 발생합니다. 반드시 중도 해지 없이 만기 유지가 가능한 여유자금 범위에서 가입해야 합니다.
+              저해지/무해지 환급형은 동일 사망보장 대비 월 납입 보험료가 상대적으로 저렴하지만, **납입 기한 도중 해약할 경우 해약환급금이 없거나 납입원금 대비 현저히 적어 원금 손실**이 발생할 수 있습니다. 중도 해지 없이 만기 유지가 가능한 여유자금 범위에서 신중하게 가입을 결정해야 합니다.
             </p>
           </div>
         </div>
@@ -190,15 +190,15 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction, isUnlocked }) 
           </div>
           <div className="space-y-4">
             {[
-              { company: '건강인 할인제도', product: '비흡연/혈압/BMI 조건 충족 시', limit: '월 보험료 약 5% ~ 10% 할인', note: '가입 전 건강검진 결과를 제출하여 심사 통과 시 매월 보험료 우량체 감면 적용' },
-              { company: '연금 전환 특약', product: '해약환급금 기반 연금 수령 전환', limit: '노후 연금 분할 수령 옵션', note: '사망보장 필요성이 낮아진 은퇴기에 해약환급금을 연금 형태로 분할 수령 가능' },
-              { company: '계약유지 보너스', product: '납입 완료 및 장기 유지 시 가산', limit: '유지 보너스 가산 적립', note: '중도 해약 없이 성실히 완납 유지한 계약자에게 환급률 보완 혜택 제공' },
+              { title: '건강인 할인제도', feature: '비흡연/혈압/BMI 조건 충족 시', limit: '월 보험료 약 5% ~ 10% 할인', note: '가입 전 건강검진 결과를 제출하여 심사 통과 시 매월 보험료 우량체 감면 적용' },
+              { title: '연금 전환 특약', feature: '해약환급금 기반 연금 수령 전환', limit: '노후 연금 분할 수령 옵션', note: '사망보장 필요성이 낮아진 은퇴기에 해약환급금을 연금 형태로 분할 수령 가능' },
+              { title: '계약유지 보너스', feature: '납입 완료 및 장기 유지 시 가산', limit: '유지 보너스 가산 적립', note: '중도 해약 없이 성실히 완납 유지한 계약자에게 환급률 보완 혜택 제공' },
             ].map((item, i) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
-                    {maskCompany(item.company, isUnlocked)}{' '}
-                    <span className="text-indigo-300 text-xs font-bold ml-1">{maskProductName(item.product, isUnlocked)}</span>
+                    {item.title}{' '}
+                    <span className="text-indigo-300 text-xs font-bold ml-1">{item.feature}</span>
                   </p>
                   <p className="text-[11px] text-slate-400 font-bold mt-0.5">{maskText(item.note, isUnlocked)}</p>
                 </div>
@@ -287,19 +287,62 @@ export const WholeLifeExplanation: React.FC<Props> = ({ onAction, isUnlocked }) 
         </div>
 
         {/* ── 금소법 제19조 및 표준 소비자 보호 법적 안내 ── */}
-        <div className="mt-10 p-6 md:p-8 bg-slate-50 rounded-2xl md:rounded-3xl border border-slate-200 text-xs text-slate-600 space-y-2 leading-relaxed">
+        <div className="mt-10 p-6 md:p-8 bg-slate-50 rounded-2xl md:rounded-3xl border border-slate-200 text-xs text-slate-600 space-y-4 leading-relaxed">
           <p className="font-black text-slate-800 flex items-center gap-2 text-sm">
             <AlertTriangle className="w-4 h-4 text-amber-600" /> 종신보험 계약 체결 전 금융소비자 필수 안내사항 (금융소비자보호법 제19조 준수)
           </p>
-          <ul className="list-disc pl-5 space-y-1 font-medium text-[11px] text-slate-500">
-            <li><strong>본 상품은 피보험자의 사망을 보장하는 보장성 보험이며 은행의 저축이나 적금 상품이 아닙니다.</strong></li>
-            <li>보험계약 체결 전 반드시 해당 상품의 약관 및 상품설명서를 확인하시기 바랍니다.</li>
-            <li>보험계약자가 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 경우, 질병 이력이나 연령 증가 등으로 인하여 가입이 거절되거나 보험료가 인상될 수 있으며, 보장 내용이 달라질 수 있습니다.</li>
-            <li>무·저해지환급형 상품은 납입기간 중 해약 시 해약환급금이 전혀 없거나 일반 표준형 상품 대비 적어 원금 손실이 발생할 수 있습니다.</li>
-            <li>피보험자가 계약일(부활일)로부터 2년 이내에 고의로 자신을 해친 경우(자살 등) 약관상 사망보험금 지급이 제한됩니다.</li>
-            <li>보험계약자는 보험증권을 받은 날로부터 15일(단, 청약일로부터 30일 한도, 만 65세 이상 고령자는 45일) 이내에 청약 철회가 가능합니다.</li>
-            <li>본 보험계약은 예금자보호법에 따라 해약환급금(또는 만기 시 보험금이나 사고보험금)에 기타지급금을 합하여 1인당 최고 5천만 원까지 보호되며, 5천만 원을 초과하는 나머지 금액은 보호하지 않습니다. (단, 보험계약자 및 보험료 납부자가 법인인 경우 보호 대상에서 제외됩니다.)</li>
-          </ul>
+
+          {/* 5대 종신보험 유형별 필수 유의사항 (생명보험협회 심의필 표준 양식) */}
+          <div className="space-y-3 pt-1 text-[11px] text-slate-700">
+            <div>
+              <p className="font-black text-slate-800 mb-1">1. 일반종신보험 유의사항</p>
+              <ul className="list-disc pl-5 space-y-0.5 text-slate-600">
+                <li>종신보험은 피보험자의 사망을 보장하는 보장성보험으로 저축(연금) 목적에는 적합하지 않습니다.</li>
+                <li>일반사망보험금은 고의적 사고 및 2년 이내 자살의 경우 지급이 제한됩니다.</li>
+                <li>중도해약시 환급금이 이미 납부한 보험료보다 적거나 없을 수 있습니다.</li>
+              </ul>
+            </div>
+
+            <div>
+              <p className="font-black text-slate-800 mb-1">2. 단기납 종신보험 유의사항</p>
+              <ul className="list-disc pl-5 space-y-0.5 text-slate-600">
+                <li>단기납 종신보험은 동일한 보장내용의 일반 종신보험에 비해 보험료가 비쌀 수 있습니다.</li>
+              </ul>
+            </div>
+
+            <div>
+              <p className="font-black text-slate-800 mb-1">3. 체증형 종신보험 유의사항</p>
+              <ul className="list-disc pl-5 space-y-0.5 text-slate-600">
+                <li>체증형 종신보험은 동일한 보장내용의 표준형 종신보험에 비해 사망보험금이 증가하는 만큼 보험료가 비쌀 수 있습니다.</li>
+              </ul>
+            </div>
+
+            <div>
+              <p className="font-black text-slate-800 mb-1">4. 무(저)해약 환급형 종신보험 유의사항</p>
+              <ul className="list-disc pl-5 space-y-0.5 text-slate-600">
+                <li>무(저)해약환급형 종신보험은 해약환급금이 표준형 상품보다 적거나 없을 수 있습니다.</li>
+              </ul>
+            </div>
+
+            <div>
+              <p className="font-black text-slate-800 mb-1">5. 유니버셜 종신보험 유의사항</p>
+              <ul className="list-disc pl-5 space-y-0.5 text-slate-600">
+                <li>유니버셜 종신보험은 납입하기로 한 보험료보다 적게 납입하거나 중도인출 등을 하는 경우 종신까지 보장을 받지 못할 수 있으며, 보험금 및 해약환급금이 줄어들 수 있습니다.</li>
+                <li>의무납입기간 내에 납입을 연체하거나 기본보험료에서 월대체보험료를 충당할 수 없게 된 경우 계약이 해지될 수 있습니다.</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* 공통 기본 법정 고지 (플랫폼 대리점 지위, 청약철회, 예금자보호) */}
+          <div className="pt-3 border-t border-slate-200">
+            <ul className="list-disc pl-5 space-y-0.5 font-medium text-[11px] text-slate-500">
+              <li>본 플랫폼(보험대리점)은 다수의 보험사와 계약을 체결하고 중개하는 금융상품판매대리·중개업자로서, 보험사로부터 계약체결권을 부여받지 아니하며 직접 보험계약을 체결할 수 없습니다.</li>
+              <li>보험계약 체결 전 반드시 해당 상품의 약관 및 상품설명서를 확인하시기 바랍니다.</li>
+              <li>보험계약자가 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 경우, 질병 이력이나 연령 증가 등으로 인하여 가입이 거절되거나 보험료가 인상될 수 있으며, 보장 내용이 달라질 수 있습니다.</li>
+              <li>보험계약자는 보험증권을 받은 날로부터 15일(단, 청약일로부터 30일 한도, 만 65세 이상 고령자는 45일) 이내에 청약 철회가 가능합니다.</li>
+              <li>본 보험계약은 예금자보호법에 따라 해약환급금(또는 만기 시 보험금이나 사고보험금)에 기타지급금을 합하여 1인당 최고 5천만 원까지 보호되며, 5천만 원을 초과하는 나머지 금액은 보호하지 않습니다. (단, 보험계약자 및 보험료 납부자가 법인인 경우 보호 대상에서 제외됩니다.)</li>
+            </ul>
+          </div>
         </div>
       </div>
 

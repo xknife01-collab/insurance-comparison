@@ -27,9 +27,9 @@ export const analyzeCancer = (analysis: any): any => {
     companyName: opt1.companyName,
     estimatedPremium: Math.round(opt1.premium / 10) * 10,
     coverageChanges: [
-      '일반암 진단비 최대 확보',
+      '일반암 진단비 집중 확보',
       '비유사암 전이 시 보장 강화',
-      '업계 최저 수준 보험료'
+      '실속형 요율 설계'
     ],
     switchingLossNotice: '기존 보험 해지 후 재가입 시 조건 및 연령에 따라 제한이 생길 수 있습니다.'
   };
@@ -49,12 +49,12 @@ export const analyzeCancer = (analysis: any): any => {
   
   if (!hasTreatment2025) deficiencies.push('최신 암주요치료비 미가입');
   if (!hasTargeted) deficiencies.push('중입자/표적항암 치료비 공백');
-  if (currentDiagnosis < 30000000) deficiencies.push('일반암 진단비 부족');
+  if (currentDiagnosis < 30000000) deficiencies.push('일반암 진단비 보완 권장');
 
-  if (isBrainDeficient) deficiencies.push('뇌혈관 질환 보장 부족');
-  if (isHeartDeficient) deficiencies.push('심혈관 질환 보장 부족');
-  if (isSurgeryDeficient) deficiencies.push('질병/상해 수술비 부족');
-  if (isAftereffectDeficient) deficiencies.push('질병후유장해 보장 부족');
+  if (isBrainDeficient) deficiencies.push('뇌혈관 질환 보장 보완 권장');
+  if (isHeartDeficient) deficiencies.push('심혈관 질환 보장 보완 권장');
+  if (isSurgeryDeficient) deficiencies.push('질병/상해 수술비 보완 권장');
+  if (isAftereffectDeficient) deficiencies.push('질병후유장해 보장 점검 권장');
 
   if (deficiencies.length === 0) {
     deficiencies.push('보완할 점이 거의 없는 균형 잡힌 설계');
@@ -68,8 +68,8 @@ export const analyzeCancer = (analysis: any): any => {
 
   if (hasFamilyHistory) {
     if (currentDiagnosis < 70000000) {
-      if (!deficiencies.includes('가족력 대비 진단비 매우 부족')) {
-        deficiencies.unshift('가족력 대비 진단비 매우 부족');
+      if (!deficiencies.includes('가족력 대비 진단비 보완 권장')) {
+        deficiencies.unshift('가족력 대비 진단비 보완 권장');
       }
       totalScore -= 10;
     } else {
@@ -93,7 +93,7 @@ export const analyzeCancer = (analysis: any): any => {
       diet,
       upgrade: {
         title: `[${opt2.companyName}] 2025 암주요치료비 결합 플랜`,
-        description: `진단비는 물론, 연간 최대 1억 원까지 지급되는 ${opt2.companyName}의 '암 주요 치료비' 특약이 포함된 최신 트렌드 플랜입니다.`,
+        description: `진단비는 물론, 치료비 부담을 덜어주는 '암 주요 치료비' 특약이 포함된 최신 설계 플랜입니다.`,
         productName: opt2.productName,
         companyName: opt2.companyName,
         estimatedPremium: Math.round(opt2.premium / 10) * 10,
@@ -105,16 +105,16 @@ export const analyzeCancer = (analysis: any): any => {
           ? `[${opt3.companyName}] 초기 저렴한 갱신형 실속 플랜`
           : `[${opt3.companyName}] 평생 보장 비갱신 프리미엄`,
         description: (analysis as any).cancer?.paymentType === 'renewable'
-          ? `초기 비용 부담을 획기적으로 줄인 ${opt3.companyName}의 갱신형 플랜입니다. 경제적인 보험료로 넓은 보장을 준비할 수 있습니다.`
+          ? `초기 비용 부담을 줄인 ${opt3.companyName}의 갱신형 플랜입니다. 경제적인 보험료로 넓은 보장을 준비할 수 있습니다.`
           : (hasFamilyHistory 
               ? `가족력이 있으신 고객님께 꼭 필요한 ${opt3.companyName}의 VIP 집중 보장 플랜입니다. 반복되는 재발암까지 안정적으로 보장합니다.`
-              : `보험료 인상 걱정 없이 100세까지 든든하게 보장받는 ${opt3.companyName}의 명품 암보험입니다.`),
+              : `보험료 인상 걱정 없이 100세까지 든든하게 보장받는 ${opt3.companyName}의 종합 암보험입니다.`),
         productName: opt3.productName,
         companyName: opt3.companyName,
         estimatedPremium: Math.round(opt3.premium / 10) * 10,
         coverageChanges: (analysis as any).cancer?.paymentType === 'renewable'
-          ? ['초기 보험료 매우 저렴', '유연한 보장 설계 가능', '최신 치료비 풀세트 탑재']
-          : ['비갱신형 고정 보험료', '재발암/전이암 반복 지급', 'VIP 건강검진 서비스 연계'],
+          ? ['초기 보험료 알뜰 구성', '유연한 보장 설계 가능', '최신 치료비 풀세트 탑재']
+          : ['비갱신형 고정 보험료', '재발암/전이암 반복 지급', '건강관리 서비스 연계'],
         switchingLossNotice: '보험료 인상 가능성이 있는 갱신형 상품의 경우 장기 보험료를 반드시 확인하세요.',
       }
     }

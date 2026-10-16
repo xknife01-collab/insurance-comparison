@@ -41,7 +41,7 @@ export const analyzeHeart = (analysis: any) => {
 
   return {
     efficiency: heartScore > 80 ? 90 : 65,
-    deficiencies: heartScore < 40 ? ['심혈관 보장 범위 확대 필요', '급성 심근경색 외 담보 부족'] : heartScore < 80 ? ['허혈성 진단비 보강 권고'] : [],
+    deficiencies: heartScore < 40 ? ['심혈관 보장 범위 확대 검토 권장', '급성 심근경색 외 담보 보강 확인'] : heartScore < 80 ? ['허혈성 진단비 보강 검토 권장'] : [],
     scores: {
       heartScore,
       totalScore: heartScore,
@@ -52,7 +52,7 @@ export const analyzeHeart = (analysis: any) => {
     recommendations: {
       diet: {
         title: '보험료 절감형 실속 플랜',
-        description: '보장 범위는 협심증 등 핵심 위주로 구성하고, 보험료를 최대로 낮춘 가성비 플랜입니다.',
+        description: '보장 범위는 협심증 등 핵심 위주로 구성하고, 보험료 부담을 낮춘 알뜰형 플랜입니다.',
         estimatedPremium: dietOption.premium,
         productName: dietOption.productName,
         companyName: dietOption.companyName,

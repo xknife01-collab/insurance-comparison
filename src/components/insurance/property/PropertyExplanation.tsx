@@ -191,15 +191,15 @@ export const PropertyExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
           </div>
           <div className="space-y-4">
             {[
-              { company: '재난배상책임 의무', product: '1층 100㎡ 이상 매장 필수', limit: '대인 1.5억 / 대물 10억 보장', note: '미가입 시 가입 불이행 기간에 따라 과태료 최대 300만 원 부과' },
-              { company: '점포 휴업일당 지원', product: '화재로 인한 임시 영업 중단', limit: '1일 최대 10~20만 원 지급', note: '실제 피해 복구 완료 후 영업 재개 선언 시점까지 전격 정액 보호' },
-              { company: '기계 및 전기 고장 보상', product: '산업/공장 모터 및 기계 과부하', limit: '전기적 오작동 수리비 한도', note: '제조 공장 및 물류 창고 핵심 생산 기계의 사고 고장 실비 정산' },
+              { title: '재난배상책임 의무', feature: '1층 100㎡ 이상 매장 필수', limit: '대인 1.5억 / 대물 10억 보장', note: '미가입 시 가입 불이행 기간에 따라 과태료 최대 300만 원 부과' },
+              { title: '점포 휴업일당 지원', feature: '화재로 인한 임시 영업 중단', limit: '1일 최대 10~20만 원 지급', note: '실제 피해 복구 완료 후 영업 재개 선언 시점까지 전격 정액 보호' },
+              { title: '기계 및 전기 고장 보상', feature: '산업/공장 모터 및 기계 과부하', limit: '전기적 오작동 수리비 한도', note: '제조 공장 및 물류 창고 핵심 생산 기계의 사고 고장 실비 정산' },
             ].map((item, i) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
-                    {maskCompany(item.company, isUnlocked)}{' '}
-                    <span className="text-orange-300 text-xs font-bold ml-1">{maskProductName(item.product, isUnlocked)}</span>
+                    {item.title}{' '}
+                    <span className="text-orange-300 text-xs font-bold ml-1">{item.feature}</span>
                   </p>
                   <p className="text-[11px] text-slate-400 font-bold mt-0.5">{maskText(item.note, isUnlocked)}</p>
                 </div>

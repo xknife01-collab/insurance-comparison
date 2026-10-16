@@ -101,10 +101,10 @@ export const analyzeFire = (analysis: any): any => {
     deficiencies.push('화재 복구기간 중 임시 거주비(숙식/일당) 공백');
   }
   if (fireOpts.occupancyType !== 'tenant' && fireOpts.buildingLimit < 80000000) {
-    deficiencies.push('건물 가입금액 과소 설정 (실제 재건축/복구 단가 미달 우려)');
+    deficiencies.push('건물 가입금액 적정성 점검 권장 (실제 재건축/복구 단가 고려)');
   }
   if (fireOpts.householdGoodsLimit < 20000000) {
-    deficiencies.push('가재도구 한도 부족 (고급 가전/가구 재구입 비용 대비 부족)');
+    deficiencies.push('가재도구 한도 점검 권장 (가전/가구 재구입 비용 고려)');
   }
 
   // 4. 추천 플랜 3가지 설계
@@ -116,7 +116,7 @@ export const analyzeFire = (analysis: any): any => {
   
   const diet: any = {
     title: `[${opt1.companyName}] 실속 세입자 가성비 플랜`,
-    description: `세입자(임차인) 필수인 임차자배상책임과 내 가재도구 유실만 딱 집중하여 월 납입금을 아끼는 알짜배기 플랜입니다.`,
+    description: `세입자(임차인) 필수인 임차자배상책임과 내 가재도구 유실만 집중하여 월 납입금을 아끼는 실속형 플랜입니다.`,
     estimatedPremium: dietPremium,
     riskPremium: dietRisk,
     savingsPremium: dietSavings,
@@ -140,7 +140,7 @@ export const analyzeFire = (analysis: any): any => {
   
   const upgrade: any = {
     title: `[${opt2.companyName}] 올인원 안심 밸런스 플랜`,
-    description: `소유주와 임차인 모두 만족하는 최적 설계로, 급배수 누수 보장과 화재배상 한도를 넉넉히 탑재한 대표 추천 플랜입니다.`,
+    description: `소유주와 임차인 모두 만족하는 균형 있는 설계로, 급배수 누수 보장과 화재배상 한도를 탑재한 대표 추천 플랜입니다.`,
     estimatedPremium: upgradePremium,
     riskPremium: upgradeRisk,
     savingsPremium: upgradeSavings,
@@ -150,7 +150,7 @@ export const analyzeFire = (analysis: any): any => {
     coverageChanges: [
       '건물/가재도구 실손 보상 기준 설정',
       '급배수시설누출손해 특약 기본 탑재',
-      '화재배상책임 대물 20억 최대한도 업그레이드',
+      '화재배상책임 대물 20억 증액',
       `최저보험료 차액 ${upgradeSavings.toLocaleString()}원 적립금으로 자동 전환`
     ],
     switchingLossNotice: '일반 콘크리트조(1급) 구조가 아닌 목조주택 등의 경우 인수 심사 과정에서 추가 할증이 발생할 수 있습니다.'
@@ -164,7 +164,7 @@ export const analyzeFire = (analysis: any): any => {
   
   const hybrid: any = {
     title: `[${opt3.companyName}] 프리미엄 토탈 마스터 플랜`,
-    description: `건물 및 가재도구 복구 한도를 극대화하고, 임시 거주비 일당 상향 및 6대 가전제품 고장 수리비 특약까지 풀패키지로 탑재한 프리미엄 설계입니다.`,
+    description: `건물 및 가재도구 복구 한도를 확대하고, 임시 거주비 일당 상향 및 6대 가전제품 고장 수리비 특약까지 고루 갖춘 프리미엄 설계입니다.`,
     estimatedPremium: hybridPremium,
     riskPremium: hybridRisk,
     savingsPremium: hybridSavings,
@@ -172,8 +172,8 @@ export const analyzeFire = (analysis: any): any => {
     productName: opt3.productName,
     isFire: true,
     coverageChanges: [
-      '건물 복구 가입금액 최대 한도 증액',
-      '임시 거주비(숙식비용) 90일 무상 매칭',
+      '건물 복구 가입금액 증액',
+      '임시 거주비(숙식비용) 90일 매칭',
       '가전제품 고장수리비 특약 및 가족 일상생활 배상책임 탑재',
       `최저보험료 차액 ${hybridSavings.toLocaleString()}원 적립금으로 자동 전환`
     ],

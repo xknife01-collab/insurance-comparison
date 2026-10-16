@@ -79,41 +79,33 @@ export const analyzeChild = (analysis: any): any => {
   let totalScore = 0;
   if (ageGroup === 'prenatal' && !isPreFamily) {
     totalScore = Math.round((prenatalScore + hospitalScore + surgeryScore + majorScore + maturityScore) / 5);
-  } else {
-    totalScore = Math.round((hospitalScore + surgeryScore + majorScore + maturityScore) / 4);
-  }
-
-  // 2. Deficiencies & Recommendations Tips
-  const deficiencies: string[] = [];
-  const recommendationsTips: string[] = [];
-
-  if (isPreFamily) {
+  } else  if (isPreFamily) {
     // 유병력아 타겟별 특수 결손 진단 및 팁
     if (illnessType === 'development') {
-      deficiencies.push('발달지연 놀이/언어치료 이력으로 표준체 일반 어린이보험 거절 상태');
-      recommendationsTips.push('발달지연 이력은 일반보험에서 거절 1순위이지만, 간편 어린이보험의 3개월 고지만 패스하면 현대해상/KB에서 일반 아이들과 안정적으로 동일한 3대 진단비를 세팅할 수 있습니다.');
+      deficiencies.push('발달지연 놀이/언어치료 이력 관련 심사 요건 확인 필요');
+      recommendationsTips.push('발달지연 치료 이력이 있는 경우 간편심사 고지 요건을 확인하여 주요 3대 진단비를 세팅할 수 있는지 점검하는 것이 유리합니다.');
     } else if (illnessType === 'adhd') {
-      deficiencies.push('ADHD 장기 약물 처방으로 인한 정신과 진료 거절 위험');
-      recommendationsTips.push('ADHD 치료제를 매일 복용 중이더라도, 3개월 이내에 입원/수술/추가 소견이 없었다면 유병력자 3대 진단비 한도를 최대 한도(암 5천, 뇌/심 각 3천)로 안정적으로 보강할 수 있습니다.');
+      deficiencies.push('ADHD 치료 이력 관련 심사 요건 확인 필요');
+      recommendationsTips.push('ADHD 치료제를 복용 중이더라도 일정 기간 입원/수술/추가 소견이 없었다면 유병력자 진단비 한도를 적정 수준으로 보강할 수 있는지 비교 검토를 추천합니다.');
     } else if (illnessType === 'puberty') {
-      deficiencies.push('성조숙증 호르몬 억제 주사 투여로 인한 인과 부위 부담보 우려');
-      recommendationsTips.push('호르몬 치료 중이라 하더라도 메리츠화재 등 유병자 종합 플랜을 적용하면, 자궁/난소 부위에 부담보(치료 기간 보장 제외) 조건 없이 깨끗하게 승인받는 것이 유리합니다.');
+      deficiencies.push('성조숙증 치료 관련 인수 조건 점검 필요');
+      recommendationsTips.push('호르몬 치료 중이라 하더라도 유병자 종합 플랜을 비교 검토하여 부담보 조건 여부를 꼼꼼히 확인하는 것이 좋습니다.');
     } else if (illnessType === 'asthma') {
-      deficiencies.push('천식 및 급성 아토피 치료로 호흡기/피부 부담보 적용 위험');
-      recommendationsTips.push('최근 3개월 내 입원만 없으셨다면, 호흡기 및 피부 전신 보장을 확보하기 위해 간편 3.5.5 등급으로 진행해 할증 부담을 최소화하는 전략을 추천합니다.');
+      deficiencies.push('천식 및 아토피 치료 이력에 따른 인수 조건 점검 필요');
+      recommendationsTips.push('입원/수술 이력 여부에 따라 간편심사 유형을 적절히 선택하여 보장 공백을 최소화하는 전략을 추천합니다.');
     } else if (illnessType === 'fracture') {
-      deficiencies.push('최근 깁스/수술 이력으로 상해/질병 심사 보류 우려');
-      recommendationsTips.push('깁스나 골절 수술 후 3개월 소견이 종결되었다면 심사 서류 제출이 전부 면제되는 모바일 프리패스 플랜을 활용해 당일 즉시 승인이 가능합니다.');
+      deficiencies.push('최근 상해/수술 이력에 따른 심사 서류 점검 필요');
+      recommendationsTips.push('골절 및 수술 치료 종결 여부를 확인하여 간소화된 심사 플랜을 활용 가능한지 검토할 수 있습니다.');
     } else {
-      deficiencies.push('만성 질환 또는 지속 복약으로 가입 문턱 높음');
-      recommendationsTips.push('간단한 3.5.5 질문지만 패스하면 만성 질환 약을 먹고 있더라도 보험료 할증폭을 10% 이내로 막으며 표준 수준의 보장을 유지할 수 있습니다.');
+      deficiencies.push('만성 질환 또는 지속 복약 시 간편고지 심사 확인 필요');
+      recommendationsTips.push('간편심사 질문지를 충족할 경우 지속적인 약 복용 중에도 적정 보장을 준비할 수 있습니다.');
     }
 
     if (noAccidentYears === '0') {
-      deficiencies.push('무사고 0년(최근 입원/수술)으로 인한 높은 간편 요율 할증 (3.0.5)');
-      recommendationsTips.push('최근 입원/수술 이력이 있으셔 가입 심사 기준이 3.0.5 초간편으로 자동 적용되었습니다. 향후 치료 후 2~3년 무사고 기간을 채우면 보험료를 대폭 할인받는 "할인계약 전환권"이 있는 상품을 택하셔야 합니다.');
+      deficiencies.push('최근 치료 이력으로 인한 간편심사 요율 적용');
+      recommendationsTips.push('최근 치료 이력에 따라 간편심사 유형이 적용될 수 있으며, 향후 무사고 기간 경과 시 보험료를 재산정받을 수 있는 무사고 전환 제도를 확인해 두시면 좋습니다.');
     } else if (noAccidentYears === '5') {
-      recommendationsTips.push('🥇 축하합니다! 5년 무사고 우량 등급이 적용되어 일반 건강체(표준형) 대비 단 8~10% 수준의 초저할증 특약 혜택을 누릴 수 있습니다.');
+      recommendationsTips.push('무사고 기간 요건을 충족하여 우대 요율 적용 가능 여부를 확인해 보실 수 있습니다.');
     }
   } else {
     if (ageGroup === 'prenatal') {
@@ -131,8 +123,8 @@ export const analyzeChild = (analysis: any): any => {
       recommendationsTips.push('30세 만기는 저렴하지만 자녀가 독립하는 시점에 새로 성인보험에 가입해야 합니다. 계약전환제도(무심사로 100세 연장 가능)가 있는 상품을 고르시는 것이 필수적입니다.');
     } else {
       if (currentPremium < 60000) {
-        deficiencies.push('100세 만기 플랜 대비 예산 부족 (보장 한도 축소 위험)');
-        recommendationsTips.push('100세 만기형은 장기 계약이므로 월 7~8만 원 이상의 예산이 잡혀있지 않으면 핵심 진단비(암/뇌/심) 한도가 너무 낮게 설계될 수 있습니다.');
+        deficiencies.push('100세 만기 플랜 대비 월 납입 여력 및 보장 한도 균형 점검 권장');
+        recommendationsTips.push('100세 만기형은 장기 계약이므로 월 납입 여력에 맞추어 암/뇌/심 핵심 진단비 한도를 적정하게 배분하는 설계가 필요합니다.');
       }
     }
   }
@@ -161,7 +153,7 @@ export const analyzeChild = (analysis: any): any => {
 
     diet = {
       title: '간편 실속 다이어트 플랜',
-      description: `${illnessLabel} 이력이 있어도 3대 핵심 진단비(암·뇌·심) 위주로만 슬림하게 묶어 할증료 거품을 빼고 보험료를 4만 원 선으로 조율한 가성비 특화 안심 설계입니다.`,
+      description: `${illnessLabel} 이력이 있어도 3대 핵심 진단비(암·뇌·심) 위주로 슬림하게 구성하여 월 보험료 부담을 낮춘 실속형 설계입니다.`,
       estimatedPremium: dietOption ? dietOption.premium : 45000,
       companyName: dietOption?.companyName || '현대해상',
       productName: dietOption?.productName || `간편한 3.${noAccidentYears}.5 건강보험`,
@@ -171,7 +163,7 @@ export const analyzeChild = (analysis: any): any => {
 
     upgrade = {
       title: '무사고 할인 계약전환형 플랜',
-      description: `가입 당시에는 간편 심사로 승인받고, 가입 후 무사고 기간을 채울 때마다 최대 5회에 걸쳐 표준체(일반 건강한 아이) 수준까지 보험료를 계속 깎아주는 스마트 무사고 연동형 플랜입니다.`,
+      description: `가입 후 무사고 기간 경과 시 심사를 거쳐 보험료 할인을 적용받을 수 있는 무사고 계약전환 연동형 플랜입니다.`,
       estimatedPremium: upgradeOption ? (upgradeOption === dietOption ? Math.round(upgradeOption.premium * 1.8) : upgradeOption.premium) : 85000,
       companyName: upgradeOption?.companyName || 'KB손해보험',
       productName: upgradeOption?.productName || `KB 슬기로운 간편어린이보험(3.${noAccidentYears}.5)`,
@@ -180,13 +172,13 @@ export const analyzeChild = (analysis: any): any => {
     };
 
     hybrid = {
-      title: '질병수술비 보강 부담보 제로형',
-      description: `소아 빈번 통원 질환에 대해 가입 제한이나 특정 신체부위 부담보(보장 제외) 조건 없이 안정적으로 전신 인수를 승인받고, 질병 수술 시 반복해서 수술비를 돌려받는 프리미엄 종합 절충형입니다.`,
+      title: '질병수술비 보강 안심형',
+      description: `소아 빈번 질환에 대해 부담보 조건을 점검하고, 질병 및 상해 수술비를 안정적으로 보강하는 종합 절충형 설계입니다.`,
       estimatedPremium: hybridOption ? (hybridOption === dietOption || hybridOption === upgradeOption ? Math.round(hybridOption.premium * 1.3) : hybridOption.premium) : 68000,
       companyName: hybridOption?.companyName || '메리츠화재',
       productName: hybridOption?.productName || `간편한 3.${noAccidentYears}.5 어른이종합보험`,
-      coverageChanges: ['호르몬/피부/상해 수술비 전액 부담보 해제', '질병/상해 1-5종 수술비 반복 지급 특약 추가'],
-      switchingLossNotice: '유병력 특성상 특약이 가입에 연동되어 해지 시 동일 조건 재가입이 절대 불가능합니다.'
+      coverageChanges: ['호르몬/피부/상해 수술비 부담보 조건 확인', '질병/상해 1-5종 수술비 반복 지급 특약 추가'],
+      switchingLossNotice: '유병력 특성상 해지 시 동일 조건 재가입이 어려울 수 있으니 신중히 결정하세요.'
     };
   } else {
     diet = {
@@ -195,7 +187,7 @@ export const analyzeChild = (analysis: any): any => {
       estimatedPremium: dietOption ? dietOption.premium : 32000,
       companyName: dietOption?.companyName || '현대해상',
       productName: dietOption?.productName || '굿앤굿어린이종합보험(무)',
-      coverageChanges: ['30세 만기 설정으로 보험료 50% 이상 절감', '성장기 입원일당 및 수술비 최대 보강'],
+      coverageChanges: ['30세 만기 설정으로 보험료 부담 절감', '성장기 입원일당 및 수술비 보강'],
       switchingLossNotice: '30세 이후에는 보장이 종료되므로 만기 시 반드시 계약전환 권리를 행사해 연장해야 합니다.'
     };
 
@@ -205,18 +197,18 @@ export const analyzeChild = (analysis: any): any => {
       estimatedPremium: upgradeOption ? (upgradeOption === dietOption ? Math.round(upgradeOption.premium * 2.2) : upgradeOption.premium) : 78000,
       companyName: upgradeOption?.companyName || 'KB손해보험',
       productName: upgradeOption?.productName || 'KB희망플러스어린이보험(무)',
-      coverageChanges: ['100세 만기 비갱신형 완료', '암 5천만 + 뇌혈관 2천만 평생 보장 확정'],
+      coverageChanges: ['100세 만기 비갱신형 완료', '암/뇌/심 주요 진단비 평생 보장 설계'],
       switchingLossNotice: '보장 기간이 긴 만큼 매월 납입하는 초기 보험료 부담이 상대적으로 큽니다.'
     };
 
     hybrid = {
       title: '복합 절충형 스마트 플랜',
-      description: '치료비 부담이 큰 3대 진단비는 100세 만기로 평생 보장받고, 성장기에만 일시적으로 필요한 입원/수술 특약은 30세 만기로 믹스해 가성비를 극대화한 스마트 설계입니다.',
+      description: '치료비 부담이 큰 3대 진단비는 100세 만기로 평생 보장받고, 성장기에만 일시적으로 필요한 입원/수술 특약은 30세 만기로 믹스한 스마트 설계입니다.',
       estimatedPremium: hybridOption ? (hybridOption === dietOption || hybridOption === upgradeOption ? Math.round(hybridOption.premium * 1.5) : hybridOption.premium) : 55000,
       companyName: hybridOption?.companyName || 'DB손해보험',
       productName: hybridOption?.productName || '아이러브건강보험(무)',
-      coverageChanges: ['진단비(100세) + 입원수술(30세) 복합 구성', '가장 효율적인 다이렉트 설계 매칭'],
-      switchingLossNotice: '특약별로 만기가 상이하여 관리가 조금 복잡할 수 있습니다.'
+      coverageChanges: ['진단비(100세) + 입원수술(30세) 복합 구성', '효율적인 다이렉트 설계 매칭'],
+      switchingLossNotice: '특약별로 만기가 상이하여 관리가 다소 복잡할 수 있습니다.'
     };
   }
 

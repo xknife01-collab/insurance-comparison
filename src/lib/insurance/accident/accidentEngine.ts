@@ -43,10 +43,10 @@ export const analyzeAccident = (analysis: any): any => {
   // 3. 부족 보장 항목 도출
   const deficiencies: string[] = [];
   if (opts.accidentDeathLimit < 100000000) {
-    deficiencies.push('상해사망 보장액 부족 (최소 1억 권장)');
+    deficiencies.push('상해사망 보장액 점검 권장 (가구 소득 및 부양가족 고려)');
   }
   if (opts.accidentDisabilityLimit < 100000000) {
-    deficiencies.push('상해후유장해 보장액 부족 (최소 1억 권장)');
+    deficiencies.push('상해후유장해 보장액 점검 권장 (장해 등급별 보장성 확인)');
   }
   if (opts.fractureLimit < 500000) {
     deficiencies.push('골절진단비 한도 확대 권장 (치아파절 대비)');
@@ -146,20 +146,20 @@ export const analyzeAccident = (analysis: any): any => {
       ? `[${hybridPlan.companyName}] 장해 프리미엄 마스터 플랜`
       : `[${hybridPlan.companyName}] 치료 프리미엄 마스터 플랜`,
     description: isDisability
-      ? '상해사망 2억, 후유장해 1.5억의 업계 최대 한도를 구성하고 주말/레저 재해 장해까지 빈틈없이 커버하는 프리미엄 보장 자산 플랜입니다.'
-      : '치아파절 포함 골절 진단 100만 원, 상해수술 200만 원, 깁스 50만 원 등 일상 치료비 한도를 한계까지 극대화한 치료 집중 프리미엄 플랜입니다.',
+      ? '상해사망 2억, 후유장해 1.5억의 높은 한도를 구성하고 주말/레저 재해 장해까지 커버하는 프리미엄 보장 플랜입니다.'
+      : '치아파절 포함 골절 진단 100만 원, 상해수술 200만 원, 깁스 50만 원 등 일상 치료비 한도를 강화한 치료 집중 프리미엄 플랜입니다.',
     estimatedPremium: hybridPlan.premium,
     companyName: hybridPlan.companyName,
     productName: hybridPlan.productName,
     coverageChanges: isDisability
       ? [
-          '상해사망 2억 / 후유장해 1.5억 우수한 수준 보장',
-          '중대 장해 진단 시 거액의 대체 소득 확보 가능',
-          '안정적인 자산 보존을 위한 하이엔드 솔루션'
+          '상해사망 2억 / 후유장해 1.5억 집중 보장',
+          '중대 장해 진단 시 대체 소득 확보 가능',
+          '안정적인 자산 보존을 위한 솔루션'
         ]
       : [
           '골절진단비 100만 원 및 상해수술비 200만 원 확보',
-          '깁스치료비 50만 원 및 입원일당 3만 원 최대화',
+          '깁스치료비 50만 원 및 입원일당 3만 원 구성',
           '레저스포츠 상해 특약(주말/야외 상해 추가 보장) 탑재'
         ],
     switchingLossNotice: '보험료 납입에 무리가 없는지 월 소득 대비 상해보험 지출 비율을 꼭 확인하세요.'

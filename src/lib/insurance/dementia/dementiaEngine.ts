@@ -31,23 +31,23 @@ export const analyzeDementia = (analysis: any): any => {
 
   // 1. 진단비 점검
   if (diag < 20000000) {
-    deficiencies.push('중증 치매 진단비 심각 부족 (2천만원 미만)');
-    recommendationsTips.push('중증 치매 진단 시 발생하는 초기 시설 입소 및 주택 개조 비용을 충당하기 위해 진단비를 최소 3천만원 수준으로 인상하는 것을 추천합니다.');
+    deficiencies.push('중증 치매 진단비 보완 권장');
+    recommendationsTips.push('중증 치매 진단 시 발생하는 초기 시설 입소 및 간병 비용 충당을 위해 진단비 한도를 적정 수준으로 보완하는 것을 권장합니다.');
   } else if (diag < 30000000) {
-    deficiencies.push('중증 치매 진단비 소폭 부족 (3천만원 권장)');
-    recommendationsTips.push('물가 상승률을 고려하여 진단비를 3천만원 이상으로 든든하게 설정하는 것이 유리합니다.');
+    deficiencies.push('중증 치매 진단비 적정 한도 점검 권장');
+    recommendationsTips.push('물가 상승률과 치료 환경을 고려하여 진단비 한도를 충실하게 설정하는 것이 유리합니다.');
   }
 
   // 2. 생활비 점검
   if (allowance < 500000) {
-    deficiencies.push('매월 간병 생활비 부족 (50만원 미만)');
-    recommendationsTips.push('치매 장기 투병 시 고정 요양비 지출에 대비하여 생활자금을 월 50만원 이상으로 조율하시는 것을 권장합니다.');
+    deficiencies.push('매월 간병 생활비 보장 수준 점검 권장');
+    recommendationsTips.push('치매 장기 투병 시 고정 요양비 지출에 대비하여 생활자금 보장 한도를 여건에 맞게 조율하시는 것을 권장합니다.');
   }
 
   // 3. 지정대리청구인 지정 점검
   if (!hasProxy) {
-    deficiencies.push('지정대리청구인 미지정 (청구 불가 위험)');
-    recommendationsTips.push('치매 발병 시 본인의 인지 능력 상실로 보험금 직접 청구가 매우 어렵습니다. 반드시 배우자나 자녀를 대리청구인으로 지정하여 가입하십시오.');
+    deficiencies.push('지정대리청구인 미지정 (청구 편의 점검)');
+    recommendationsTips.push('치매 발병 시 본인의 인지 능력 저하로 보험금 청구가 어려울 수 있으므로 대리청구인을 지정하여 가입하시는 것이 안전합니다.');
   }
 
   // 4. 유병자 심사 상태 체크
@@ -66,12 +66,12 @@ export const analyzeDementia = (analysis: any): any => {
     : (allOptions[2] || allOptions[1] || dietOption);
 
   const diet: RecommendationPlan = {
-    title: '동일 보장 실속형 (최저가)',
-    description: '현재 설정을 유지하면서 불필요한 연계 특약만 제외한 최적가 플랜입니다.',
+    title: '동일 보장 실속형 (알뜰 플랜)',
+    description: '현재 설정을 유지하면서 불필요한 연계 특약만 제외한 실속형 플랜입니다.',
     estimatedPremium: dietOption ? dietOption.premium : Math.floor((analysis.monthlyPremium || 65000) * 0.4),
     companyName: dietOption?.companyName || '교보생명',
     productName: dietOption?.productName || '교보더안심치매간병보험',
-    coverageChanges: ['연계 담보 최소화', '업계 최저가 요율 적용'],
+    coverageChanges: ['연계 담보 최소화', '실속 요율 적용'],
     switchingLossNotice: '가입 기간에 따라 해약 환급금이 적을 수 있습니다.'
   };
 

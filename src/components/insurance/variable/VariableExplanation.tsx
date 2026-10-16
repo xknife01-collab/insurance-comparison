@@ -50,7 +50,7 @@ export const VariableExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
               </span>
             </div>
             <p className="text-slate-700">
-              * 본 비교 안내 화면의 보험료 및 해약환급금 예시는 <strong>[가입기준: 40세 남성 / 월 납입액 15만 원 / 10년 납입 / 특별계정 펀드 운용 / 표준 예시수익률 가정]</strong>을 기준으로 산출된 단순 참고용 예시이며, 실제 투자 수익률 및 해약환급금은 펀드 운용 실적과 시장 상황에 따라 매일 변동됩니다.
+              * 본 안내는 주요 생명보험사의 대표 상품 특징에 대한 단순 참고용 정보이며, 실제 가입 조건, 투자 수익률 및 해약환급금은 가입자의 연령·성별 및 펀드 운용 실적과 시장 상황에 따라 달라집니다.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1 text-[11px]">
               <div className="bg-rose-50/70 p-3 rounded-xl border border-rose-100">
@@ -147,7 +147,7 @@ export const VariableExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
                   🛡️ 경제적 활동기 중심의 집중 보장 설계
                 </p>
                 <p className="text-xs opacity-75 font-bold leading-relaxed">
-                  자녀의 양육 및 학업 기간 등 가장의 경제적 책임이 큰 시점(만 60~70세)에 한정하여 사망보장을 집중 설계할 경우, 종신보험 대비 동일 보장금액을 훨씬 합리적인 보험료로 준비할 수 있습니다.
+                  자녀의 양육 및 학업 기간 등 가장의 경제적 책임이 큰 시점(만 60~70세)에 한정하여 사망보장을 집중 설계함으로써, 필요한 기간 동안 합리적인 보험료로 대비할 수 있습니다.
                 </p>
               </div>
 
@@ -156,7 +156,7 @@ export const VariableExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
                   🏃 건강할수록 유리한 우량체 할인 제도
                 </p>
                 <p className="text-xs opacity-75 font-bold leading-relaxed">
-                  비흡연 기간 1년 이상 충족, 정상 혈압(수축기 120mmHg 미만), 정상 체질량지수(BMI 18.5~25.0) 조건을 만족할 경우, 표준 요율 대비 할인되는 **우량체 특약**을 반드시 대조하여 가입하는 것이 유리합니다.
+                  비흡연 기간 1년 이상 충족, 정상 혈압(수축기 120mmHg 미만), 정상 체질량지수(BMI 18.5~25.0) 조건을 만족할 경우, 표준 요율 대비 할인되는 **우량체 특약**을 확인하여 가입하는 것이 유리합니다.
                 </p>
               </div>
             </div>
@@ -240,10 +240,10 @@ export const VariableExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
           </div>
           <div className="bg-white border border-indigo-100 rounded-3xl md:rounded-[3.5rem] p-6 md:p-10 shadow-sm hover:shadow-xl transition-all">
             <h4 className="text-xl font-black mb-4 flex items-center gap-2">
-              <Clock className="text-indigo-500 w-5 h-5" /> 가입 및 전환 최적 연령대
+              <Clock className="text-indigo-500 w-5 h-5" /> 가입 및 설계 최적 연령대
             </h4>
             <p className="text-xs font-bold text-slate-500 leading-relaxed">
-              자녀의 성장 및 학업 기간 등 가장 경제적 책임 자산이 커지는 만 30세~45세 사이가 고비용 종신을 가성비 정기보험으로 리모델링하고, 절감액을 변액 복리 상품에 투자하는 최적의 리포지셔닝 골든타임입니다.
+              자녀의 성장 및 학업 기간 등 경제적 책임이 커지는 만 30세~45세 시기에 정기보험으로 설계하고, 변액 복리 상품과 함께 목적에 맞추어 운용하는 시기입니다.
             </p>
           </div>
         </div>
@@ -292,19 +292,43 @@ export const VariableExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
         </div>
 
         {/* ── 법적 고지 및 소비자 유의사항 (금소법 제19조 및 투자위험 준수) ── */}
-        <div className="mt-10 p-6 bg-slate-50 rounded-2xl border border-slate-200 text-slate-600 text-xs leading-relaxed space-y-2">
-          <p className="font-bold text-slate-800 flex items-center gap-1.5">
+        <div className="mt-10 p-6 md:p-8 bg-slate-50 rounded-2xl md:rounded-3xl border border-slate-200 text-xs text-slate-600 space-y-4 leading-relaxed">
+          <p className="font-bold text-slate-800 flex items-center gap-1.5 text-sm">
             <CheckCircle className="w-4 h-4 text-indigo-600 shrink-0" />
             금융소비자보호법 제19조에 따른 법적 고지 및 유의사항
           </p>
-          <ul className="list-disc list-inside space-y-1 pl-1 text-[11px] text-slate-600 font-medium">
-            <li>본 비교 안내는 특정 금융상품의 청약을 권유하거나 확정하는 것이 아니며, 생명보험협회 공시자료를 기초로 한 단순 비교 정보입니다.</li>
-            <li>보험계약 체결 전 반드시 해당 상품의 약관 및 상품설명서를 면밀히 확인하시기 바랍니다.</li>
-            <li>보험계약자가 기존 보험계약을 해지하고 새로운 보험계약을 체결할 경우, 인수가 거절되거나 보험료가 인상될 수 있으며 보장 내용이 달라질 수 있습니다.</li>
-            <li><strong>변액보험 투자위험 안내:</strong> 변액보험은 실적배당형 상품으로 특별계정의 운용실적에 따라 투자원금의 손실이 발생할 수 있으며, 그 손실은 계약자에게 귀속됩니다. 과거의 운용실적이 미래의 수익을 보장하지 않습니다.</li>
-            <li><strong>예금자보호법 적용 구분:</strong> 변액보험의 특별계정(투자자산)은 예금자보호법에 따라 보호되지 않습니다. 단, 최저보증(최저사망보험금, 최저연금적립금) 및 일반계정에서 운용되는 선택특약은 예금자보호법에 따라 1인당 "최고 5천만 원" 한도 내에서 보호됩니다.</li>
-            <li>변액보험은 납입보험료에서 계약체결비용, 계약관리비용, 위험보험료 및 최저보증비용, 펀드운용보수가 차감된 후 특별계정에 투입되므로, <strong>중도 해지 시 지급되는 해약환급금은 납입원금에 미달</strong>할 수 있습니다.</li>
-          </ul>
+
+          {/* 변액연금 관련 유의사항 안내 (생명보험협회 심의 규정) */}
+          <div className="space-y-1.5 pt-1 text-[11px] text-slate-700">
+            <p className="font-black text-slate-800">📌 변액연금 관련 유의사항 안내</p>
+            <ul className="list-disc pl-5 space-y-0.5 text-slate-600">
+              <li>운용성과에 따라 납입한 보험료의 원금에 손실이 발생할 수 있으며, 손실은 가입자에게 귀속됩니다.</li>
+              <li>해당 예시율은 미래의 수익을 보장하지 않습니다.</li>
+              <li>관련 세법요건 충족 시 적용되며 자세한 사항은 세무사 등 전문가 및 관련 법령을 확인하시기 바랍니다.</li>
+              <li>해당 이율은 연금기준금액을 산출할 때 적용하는 이율(연단리)로 변액연금보험의 투자수익률을 보증하는 이율이 아니며, 연금수령 이전에 중도해지하면 해당 이율은 적용이 안 되어 손실을 볼 수 있습니다.</li>
+            </ul>
+          </div>
+
+          {/* 특별계정 운용에 따른 보험금 또는 해약환급금 손실 가능성 표기 */}
+          <div className="space-y-1.5 pt-1 text-[11px] text-slate-700">
+            <p className="font-black text-slate-800">📌 특별계정 운용에 따른 보험금 또는 해약환급금 손실 가능성 표기</p>
+            <ul className="list-disc pl-5 space-y-0.5 text-slate-600">
+              <li>해지환급금에는 최저보증이 없어 원금손실이 발생할 수 있으며, 그 손실은 모두 계약자에게 귀속됩니다.</li>
+              <li>상기 해약환급금 예시표는 가정된 수익률을 예시로 산출된 예시이며 실제 특별계정 투자수익률에 따라 해약환급금은 변동됩니다.</li>
+            </ul>
+          </div>
+
+          {/* 기본 공통 법정 고지 (플랫폼 대리점 지위, 예금자보호법 등) */}
+          <div className="pt-3 border-t border-slate-200">
+            <ul className="list-disc pl-5 space-y-0.5 font-medium text-[11px] text-slate-500">
+              <li>본 플랫폼(보험대리점)은 다수의 보험사와 계약을 체결하고 중개하는 금융상품판매대리·중개업자로서, 보험사로부터 계약체결권을 부여받지 아니하며 직접 보험계약을 체결할 수 없습니다.</li>
+              <li>본 비교 안내는 특정 금융상품의 청약을 권유하거나 확정하는 것이 아니며, 생명보험협회 공시자료를 기초로 한 단순 비교 정보입니다.</li>
+              <li>보험계약 체결 전 반드시 해당 상품의 약관 및 상품설명서를 면밀히 확인하시기 바랍니다.</li>
+              <li>보험계약자가 기존 보험계약을 해지하고 새로운 보험계약을 체결할 경우, 인수가 거절되거나 보험료가 인상될 수 있으며 보장 내용이 달라질 수 있습니다.</li>
+              <li><strong>예금자보호법 적용 구분:</strong> 변액보험의 특별계정(투자자산)은 예금자보호법에 따라 보호되지 않습니다. 단, 최저보증(최저사망보험금, 최저연금적립금) 및 일반계정에서 운용되는 선택특약은 예금자보호법에 따라 1인당 "최고 5천만 원" 한도 내에서 보호됩니다.</li>
+              <li>변액보험은 납입보험료에서 계약체결비용, 계약관리비용, 위험보험료 및 최저보증비용, 펀드운용보수가 차감된 후 특별계정에 투입되므로, 중도 해지 시 지급되는 해약환급금은 납입원금에 미달할 수 있습니다.</li>
+            </ul>
+          </div>
         </div>
       </div>
 

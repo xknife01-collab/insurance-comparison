@@ -13,8 +13,8 @@ export const analyzeDental = (analysis: any): any => {
   const total = (implantScore + crownScore + conservativeScore) / 3;
 
   const deficiencies: string[] = [];
-  if (analysis.implantLimit !== 'unlimited') deficiencies.push('임플란트 개수 제한 (무제한 추천)');
-  if (analysis.crownAmount < 400000) deficiencies.push('크라운 보장 금액 40만 원 이상 권장');
+  if (analysis.implantLimit !== 'unlimited') deficiencies.push('임플란트 연간 개수 제한 여부 확인 필요 (충분한 한도 권장)');
+  if (analysis.crownAmount < 400000) deficiencies.push('크라운 치료비 보장 한도 점검 권장');
 
   const allOptions = (analysis as any)._allOptions || [];
   
@@ -43,25 +43,25 @@ export const analyzeDental = (analysis: any): any => {
     deficiencies,
     recommendations: {
       diet: {
-        title: '다이어트 최적가 플랜',
+        title: '다이어트 실속 플랜',
         companyName: bestPlan.companyName,
         productName: cleanName(bestPlan.productName),
-        description: '보장은 그대로 유지하면서 40대 평균 보험료 대비 약 20%를 절감합니다.',
+        description: '필수 치료 항목을 중심으로 구성하여 월 보험료 부담을 낮춥니다.',
         estimatedPremium: bestPlan.premium,
         coverageChanges: [
-          '40대 치아보험 평균가 대비 저렴한 보험사 선정',
+          '치아보험 주요 보장 중심의 실속 설계',
           '불필요한 소액 특약 다이어트'
         ],
         switchingLossNotice: '감액 기간(1~2년)이 초기화되므로 치료 계획을 확인하세요.'
       },
       upgrade: {
-        title: '임플란트 무제한 플랜',
+        title: '임플란트 집중 보장 플랜',
         companyName: upgradePlan.companyName,
         productName: cleanName(upgradePlan.productName),
-        description: '개수 제한 없는 임플란트 보장과 높은 크라운 한도를 확보합니다.',
+        description: '치아 상태에 맞춘 폭넓은 임플란트 보장과 든든한 크라운 한도를 확보합니다.',
         estimatedPremium: upgradePlan.premium,
         coverageChanges: [
-          '임플란트 보장 한도 무제한 상향',
+          '임플란트 보장 한도 집중 상향',
           '크라운 치료비 50만 원으로 증액'
         ],
         switchingLossNotice: '90일 면책 기간 동안은 질병 보장이 제한됩니다.'

@@ -57,28 +57,28 @@ export const analyzeHealthGeneral = (analysis: any): any => {
   // 3. 보장 공백 및 부족 항목 분석
   const deficiencies: string[] = [];
   if (opts.cancerLimit < 30000000) {
-    deficiencies.push('일반암 진단비 한도 부족 (권장 5,000만 원)');
+    deficiencies.push('일반암 진단비 한도 점검 권장 (치료비 및 생활비 고려)');
   }
   if (opts.similarCancerLimit < 6000000) {
-    deficiencies.push('유사암 진단비 한도 부족 (일반암의 20% 수준 권장)');
+    deficiencies.push('유사암 진단비 한도 적정 여부 확인 필요');
   }
   if (opts.brainLimit < 20000000) {
-    deficiencies.push('뇌혈관질환 진단비 한도 부족 (권장 3,000만 원)');
+    deficiencies.push('뇌혈관질환 진단비 한도 점검 권장 (초기 뇌졸중 등 포괄 보장)');
   }
   if (opts.heartLimit < 20000000) {
-    deficiencies.push('허혈성 심장질환 진단비 한도 부족 (권장 2,000만 원)');
+    deficiencies.push('허혈성 심장질환 진단비 한도 점검 권장');
   }
   if (opts.cardioLimit < 10000000) {
-    deficiencies.push('심혈관질환(부정맥, 심부전 등) 보장 공백');
+    deficiencies.push('심혈관질환(부정맥, 심부전 등) 보장 범위 점검 필요');
   }
   if (!opts.has1to5Surgery) {
     deficiencies.push('질병/상해 1-5종 수술비 특약 미가입');
   }
   if (!opts.hasTargetedTherapy) {
-    deficiencies.push('고액 치료비 대비 표적항암 치료비 특약 누락');
+    deficiencies.push('항암 치료비 대비 표적항암 치료비 특약 보완 권장');
   }
   if (!opts.hasLiability) {
-    deficiencies.push('일상생활배상책임 특약 누락 (타인 피해 대비 필수)');
+    deficiencies.push('일상생활배상책임 특약 구성 여부 확인 권장');
   }
 
   // 4. 3가지 최적 추천 시나리오 플랜 설계
@@ -121,13 +121,13 @@ export const analyzeHealthGeneral = (analysis: any): any => {
   // Diet: 선택한 보장(진단비 및 특약)을 그대로 유지하면서 업계 최저 요율 매칭
   const diet: RecommendationPlan = {
     title: `[${dietPlan.companyName}] 실속 다이어트 플랜`,
-    description: '선택하신 보장 조건(진단비 및 특약)을 그대로 유지하면서, 시중 종합건강보험 중 가장 저렴한 최저가 요율을 매칭한 실속 플랜입니다.',
+    description: '선택하신 보장 조건(진단비 및 특약)을 유지하면서, 합리적인 요율을 매칭한 실속형 플랜입니다.',
     estimatedPremium: dietPlan.premium,
     companyName: dietPlan.companyName,
     productName: dietPlan.productName,
     coverageChanges: [
       '선택하신 진단비 및 특약 한도 전액 유지',
-      '해당 가입 조건 기준 업계 최저 요율 상품 매칭',
+      '해당 가입 조건 기준 실속 요율 상품 매칭',
       '무해지환급형(저해약환급금형) 최적 세팅 적용'
     ],
     switchingLossNotice: '무해지환급형(저해약환급금형) 상품으로 납입 기간 중 해지 시 해지환급금이 없을 수 있으므로 신중히 검토하세요.'
@@ -141,7 +141,7 @@ export const analyzeHealthGeneral = (analysis: any): any => {
   // Upgrade: 3대 진단비 강화, 1-5종 수술비 및 표적항암 탑재, 비갱신 무해지형
   const upgrade: RecommendationPlan = {
     title: `[${upgradePlan.companyName}] 안심 밸런스 플랜`,
-    description: '대한민국 평균 권장 한도에 맞춰 3대 진단비를 든든히 보강하고, 수술비와 최신 표적항암 특약까지 골고루 갖춘 강력 추천 플랜입니다.',
+    description: '3대 진단비를 충실히 보강하고, 수술비와 최신 표적항암 특약까지 골고루 갖춘 안심 밸런스 플랜입니다.',
     estimatedPremium: upgradePlan.premium,
     companyName: upgradePlan.companyName,
     productName: upgradePlan.productName,
@@ -162,12 +162,12 @@ export const analyzeHealthGeneral = (analysis: any): any => {
   // Hybrid: 최대 진단비 한도, 전체 특약 풀패키지 탑재
   const hybrid: RecommendationPlan = {
     title: `[${hybridPlan.companyName}] 프리미엄 마스터 플랜`,
-    description: '암·뇌·심장 우수한 수준 한도는 물론이고 부정맥 진단비, 혈전용해, 가족일상배책까지 빈틈없이 꽉 채운 든든한 보장형 플랜입니다.',
+    description: '암·뇌·심장 보장 한도를 높이고 부정맥 진단비, 혈전용해, 가족일상배상책임까지 폭넓게 채운 종합 보장형 플랜입니다.',
     estimatedPremium: hybridPlan.premium,
     companyName: hybridPlan.companyName,
     productName: hybridPlan.productName,
     coverageChanges: [
-      `일반암 최대 ${(hybridCancer / 10000).toLocaleString()}만 원 및 유사암 ${(hybridSimilar / 10000).toLocaleString()}만 원 최대 한도 확보`,
+      `일반암 ${(hybridCancer / 10000).toLocaleString()}만 원 및 유사암 ${(hybridSimilar / 10000).toLocaleString()}만 원 집중 한도 확보`,
       `뇌혈관 ${(hybridBrain / 10000).toLocaleString()}만 원 / 허혈성 심장 ${(hybridHeart / 10000).toLocaleString()}만 원 / 심혈관 ${(hybridCardio / 10000).toLocaleString()}만 원 풀 케어`,
       '1-5종 수술비 + 표적항암 + 혈전용해 + 가족일상배상책임 풀 패키지'
     ],

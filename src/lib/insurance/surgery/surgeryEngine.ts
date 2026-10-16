@@ -22,12 +22,12 @@ export const analyzeSurgery = (analysis: any): any => {
   return {
     estimatedPremium: opt1.premium,
     efficiency: 92,
-    deficiencies: ['종수술비 한도 부족', '입원 일당 비중 낮음'],
+    deficiencies: ['종수술비 한도 점검 권장', '입원 일당 비중 확인 필요'],
     scores: { totalScore: 88 },
     recommendations: {
       diet: {
         title: '수술비 실속 플랜',
-        description: '자주 발생하는 생활 질환 수술비를 최저가로 구성한 플랜입니다.',
+        description: '자주 발생하는 생활 질환 수술비를 실속형으로 구성한 플랜입니다.',
         estimatedPremium: opt1.premium,
         companyName: opt1.companyName,
         productName: opt1.productName,
@@ -36,7 +36,7 @@ export const analyzeSurgery = (analysis: any): any => {
       },
       upgrade: {
         title: '입원/수술 복합 플랜',
-        description: '수술비는 물론 첫날부터 지급되는 입원 일당까지 강화한 플랜입니다.',
+        description: '수술비는 물론 첫날부터 지급되는 입원 일당까지 보완한 플랜입니다.',
         estimatedPremium: opt2.premium,
         companyName: opt2.companyName,
         productName: opt2.productName,
@@ -50,7 +50,7 @@ export const analyzeSurgery = (analysis: any): any => {
         companyName: '현대해상',
         productName: '상해수술비 집중보험',
         coverageChanges: ['골절 수술비 가산', '깁스 치료비 포함'],
-        switchingLossNotice: '상해특화 플랜은 일반 질병 수술에는 보장이 상대적으로 있으니 확인이 필요합니다.',
+        switchingLossNotice: '상해 특화 플랜은 일반 질병 수술 보장 범위가 상이할 수 있으므로 가입 전 확인이 필요합니다.',
       }
     }
   };

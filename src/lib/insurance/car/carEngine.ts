@@ -142,12 +142,12 @@ export const analyzeCar = async (analysis: InsuranceAnalysis): Promise<AnalysisR
   }
   if (car.currentPropertyLimit < 5) {
     deficiencies.push(
-      `대물배상 ${car.currentPropertyLimit}억 부족: 고가 수입차 다중 추돌 시 개인 변제 한도 초과 위험.`
+      '대물배상 한도 점검 필요: 고가 차량 사고 대비 대물배상 한도 5억 이상 상향 권장.'
     );
   }
   if (carOwnDamage === 'none') {
     deficiencies.push(
-      `자차 미가입: 단독사고·침수 시 차량가액 ${Math.round(calculatedCarValue / 10000).toLocaleString()}만 원 전액 본인 부담.`
+      '자차 미가입: 단독사고·침수 시 차량 손해 전액 본인 부담 가능성 확인 필요.'
     );
   }
   if (carDriverLimit === 'single' && car.hasChildRider) {
@@ -157,7 +157,7 @@ export const analyzeCar = async (analysis: InsuranceAnalysis): Promise<AnalysisR
   }
   if (!car.hasConnectedCar && car.safeDrivingScore === 'none') {
     deficiencies.push(
-      '안전운전 특약 누락: 티맵/커넥티드카 연동 시 연 최대 12% 캐시백 환급 특약이 비활성화 상태입니다.'
+      '안전운전 특약 누락: 티맵/커넥티드카 연동 시 안전운전 할인 특약 적용 가능 여부 점검 권장.'
     );
   }
 
@@ -293,30 +293,30 @@ export const analyzeCar = async (analysis: InsuranceAnalysis): Promise<AnalysisR
     recommendations: {
       diet: {
         title: '실속 다이어트 플랜',
-        description: `마일리지·다이렉트 초저가 특약 집중 적용으로 월 보험료를 극도로 낮춘 실속형입니다.`,
+        description: `마일리지·다이렉트 특약 집중 적용으로 월 보험료 부담을 낮춘 실속형입니다.`,
         estimatedPremium: Math.round(dietPremium * 0.97),
         coverageChanges: [
           `${brandLabel} ${modelLabel} (${engineLabel} ${trimLabel}, ${carYear}년식) 차량가액 ${Math.round(calculatedCarValue / 10000).toLocaleString()}만 원 반영`,
           `운전자 범위: ${driverLabel}`,
-          '마일리지 주행거리 할인 최대 35% 즉시 연계',
-          '블랙박스·차선이탈·전방충돌 안전운전 특약 최저가 조합',
+          '마일리지 주행거리 할인 특약 연계 가능',
+          '블랙박스·차선이탈·전방충돌 안전운전 특약 조합',
         ],
-        switchingLossNotice: '불필요한 마케팅 수수료를 제거하여 연간 보험료 지출을 최대 30% 다이어트합니다.',
+        switchingLossNotice: '다이렉트 채널 및 특약 할인을 통해 연간 보험료 부담을 낮춥니다.',
         companyName: '메리츠화재',
         productName: '다이렉트 메리츠 자동차보험 (실속)',
       },
       upgrade: {
         title: '대물 10억 + 자상 프리미엄 플랜',
-        description: `사고 시 탑승자 및 보행 중 가족까지 빈틈없이 보장하는 프리미엄형 안심 포트폴리오입니다.`,
+        description: `사고 시 탑승자 및 보행 중 가족까지 폭넓게 보장하는 프리미엄형 안심 포트폴리오입니다.`,
         estimatedPremium: Math.round(upgradePremium * 1.02),
         coverageChanges: [
-          `${brandLabel} ${modelLabel} (${engineLabel} ${trimLabel}, ${carYear}년식) 자차손해 완전 보장`,
-          `운전자 범위: ${driverLabel} → 풀 커버리지 업그레이드`,
-          '대물배상 기존 1~2억 ➔ 10억 확장',
-          '자기신체사고(자손) ➔ 자동차상해(자상) 전격 교체',
-          '무보험차상해 2억 ➔ 5억 확장 + 긴급출동 60km',
+          `${brandLabel} ${modelLabel} (${engineLabel} ${trimLabel}, ${carYear}년식) 자차손해 보장`,
+          `운전자 범위: ${driverLabel} → 맞춤 커버리지 업그레이드`,
+          '대물배상 10억 확장 설계',
+          '자기신체사고(자손) ➔ 자동차상해(자상) 교체',
+          '무보험차상해 5억 확장 + 긴급출동 확대',
         ],
-        switchingLossNotice: '커피 한 잔 가격 차이로 사고 리스크를 최대한 최소화합니다.',
+        switchingLossNotice: '합리적인 보험료 차이로 사고 리스크를 든든하게 대비합니다.',
         companyName: '삼성화재',
         productName: '다이렉트 애니카 자동차보험 (프리미엄)',
       },
@@ -329,9 +329,9 @@ export const analyzeCar = async (analysis: InsuranceAnalysis): Promise<AnalysisR
           `운전자 범위: ${driverLabel}`,
           '대물배상 5억 안정적 라인 구축',
           '자동차상해(자상 사망 1억/부상 2천) 가성비형',
-          'Tmap 연계 최대 추가 캐시백 및 차선/전방 안전 특약 연동',
+          'Tmap 연계 및 차선/전방 안전 특약 연동',
         ],
-        switchingLossNotice: '가장 많은 고객이 선택하는 밸런스 플랜, 가격 대비 최대 효율 지수를 제공합니다.',
+        switchingLossNotice: '가격과 보장의 균형을 고려한 추천 밸런스 플랜입니다.',
         companyName: 'DB손해보험',
         productName: '다이렉트 프로미 자동차보험 (가성비)',
       },

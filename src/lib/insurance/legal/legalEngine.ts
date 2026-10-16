@@ -72,16 +72,16 @@ export const analyzeLegal = (analysis: any): any => {
   
   if (legalOpts.subType === 'lawyer') {
     if (legalOpts.lawyerLimit < 20000000) {
-      deficiencies.push('변호사 선임 집중형을 선택하셨으나 변호사 선임 비용 한도가 협소합니다. (최소 2,000만 원 권장)');
+      deficiencies.push('변호사 선임 집중형을 선택하셨으나 변호사 선임 비용 한도에 대한 추가 검토가 필요합니다.');
     }
   } else {
     if (legalOpts.courtFeeLimit < 5000000) {
-      deficiencies.push('소송 비용 집중형을 선택하셨으나 인지대/송달료 보장 한도가 협소합니다. (최소 500만 원 권장)');
+      deficiencies.push('소송 비용 집중형을 선택하셨으나 인지대/송달료 보장 한도에 대한 추가 검토가 필요합니다.');
     }
   }
 
   if (legalOpts.lawyerLimit < 10000000) {
-    deficiencies.push('변호사 선임 비용 절대 한도 부족 (최소 1,000만 원 기본 확보 필요)');
+    deficiencies.push('변호사 선임 비용 한도 점검 권장 (소송 심급별 예상 선임비 충당 여부 확인)');
   }
   if (!legalOpts.suddenAccelerationRider) {
     deficiencies.push('급발진 사고 소송 대응 특약 미가입 (EDR 입증 분쟁 방어 필요)');
@@ -90,7 +90,7 @@ export const analyzeLegal = (analysis: any): any => {
     deficiencies.push('소송 전 변호사 1:1 상담 비용 보장 공백');
   }
   if (!legalOpts.isElectronicLitigation) {
-    deficiencies.push('전자소송 할인 요건 미확인 (5% 월 보험료 추가 절감 가능)');
+    deficiencies.push('전자소송 할인 요건 확인 필요 (해당 시 보험료 할인 혜택 가능)');
   }
 
   // 4. 세 가지 시나리오별 추천안 설계 (선택한 상세 타입에 따른 동적 맞춤 설명 적용)
@@ -133,11 +133,11 @@ export const analyzeLegal = (analysis: any): any => {
     companyName: opt3.companyName,
     productName: opt3.productName,
     description: isLawyerFocus
-      ? `변호사 선임비용 업계 최대 한도(3,000만 원)를 설정하고 민/형사 방어력을 극대화한 ${opt3.companyName}의 프리미엄 마스터 변호사 플랜입니다.`
-      : `심급별 인지대/송달료 최대 한도 지원과 급발진 EDR 소송 대응력까지 완비한 ${opt3.companyName}의 하이엔드 소송비용 마스터플랜입니다.`,
+      ? `변호사 선임비용 집중 한도를 설정하고 민/형사 방어력을 강화한 ${opt3.companyName}의 프리미엄 마스터 변호사 플랜입니다.`
+      : `심급별 인지대/송달료 지원과 급발진 EDR 소송 대응력까지 완비한 ${opt3.companyName}의 하이엔드 소송비용 마스터플랜입니다.`,
     estimatedPremium: opt3.premium,
     coverageChanges: [
-      isLawyerFocus ? '변호사 선임 한도 심급별 최대 3,000만 원' : '인지대/송달료 우수한 수준(1,000만 원) 보장',
+      isLawyerFocus ? '변호사 선임 한도 심급별 든든 보장' : '인지대/송달료 충실 보장',
       '소송 전 대면 변호사 상담 및 급발진 특약 풀패키지 탑재',
       '민사, 형사, 행정 소송 전방위 가드 탑재'
     ],

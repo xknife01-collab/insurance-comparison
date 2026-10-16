@@ -678,13 +678,37 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen,liveDiet
     return Math.max(10000, Math.round((safeBase * (0.98 + idx * 0.02)) / 100) * 100);
   };
 
+  const getFallbackName = (prefix: string) => {
+    switch (t) {
+      case 'cancer': return `${prefix} 암보험`;
+      case 'brain': return `${prefix} 뇌혈관보험`;
+      case 'heart': return `${prefix} 허혈성심장보험`;
+      case 'driver': return `${prefix} 운전자보험`;
+      case 'car': return `${prefix} 자동차보험`;
+      case 'child': return `${prefix} 어린이보험`;
+      case 'dental': return `${prefix} 치아보험`;
+      case 'dementia': return `${prefix} 치매간병보험`;
+      case 'pet': return `${prefix} 펫보험`;
+      case 'golf': return `${prefix} 골프보험`;
+      case 'fire': return `${prefix} 주택화재보험`;
+      case 'property': return `${prefix} 재물종합보험`;
+      case 'annuity': return `${prefix} 연금저축보험`;
+      case 'whole': return `${prefix} 종신보험`;
+      case 'variable': return `${prefix} 변액보험`;
+      case 'legal': return `${prefix} 법률비용보험`;
+      case 'savings': return `${prefix} 저축보험`;
+      case 'credit': return `${prefix} 대출안심신용보험`;
+      default: return `${prefix} 종합건강보험`;
+    }
+  };
+
   const dietOpts = hasliveOpts
     ? myDiet.map((o: any, i: number) => ({
         company: o.companyName || o.company || '',
         product: o.productName || o.product || '',
         premium: fixPremium(o.premium || o.estimatedPremium || 0, o.currentPremium || p, i)
       }))
-    : COMPANIES.map((c,i) => ({ company: c, product: '비교 상품', premium: Math.round(p*0.76)+Math.round(p*0.024)*i }));
+    : COMPANIES.map((c,i) => ({ company: c, product: getFallbackName('실속 다이어트'), premium: Math.round(p*0.76)+Math.round(p*0.024)*i }));
   const dietPremium = dietOpts[0]?.premium || Math.round(p*0.76);
   const saving = Math.max(0, p - dietPremium);
 
@@ -697,7 +721,7 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen,liveDiet
         product: o.productName || o.product || '',
         premium: fixUpgradePremium(o.premium || o.estimatedPremium || 0, o.currentPremium || p, i)
       }))
-    : COMPANIES.map((c,i) => ({ company: c, product: '업그레이드 상품', premium: p }));
+    : COMPANIES.map((c,i) => ({ company: c, product: getFallbackName('프리미엄 든든'), premium: p }));
 
   // Problems
   const probs:string[]=[];

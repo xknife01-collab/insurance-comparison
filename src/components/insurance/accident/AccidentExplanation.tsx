@@ -192,15 +192,15 @@ export const AccidentExplanation: React.FC<Props> = ({ onAction, isUnlocked }) =
           </div>
           <div className="space-y-4">
             {[
-              { company: '레저 스포츠 상해', product: '등산/골프/자전거 사고 보강', limit: '골절 및 깁스비 추가 지원', note: '취미 활동 중 발생한 물리 충격 골절 및 외상 수술 케어' },
-              { company: '주말 상해 특약', product: '휴일 교통/재해 특약', limit: '약정 가입금액 추가 지급', note: '주말 야외 나들이 차량 통행 중 돌발 재해에 특화 설계' },
-              { company: '비운전자 할인 특약', product: '대중교통 이용자 요율 혜택', limit: '회사별 기준에 따라 감면', note: '소유 차량 유무와 무관하게 실질 운전을 하지 않는 피보험자 우대' },
+              { title: '레저 스포츠 상해', feature: '등산/골프/자전거 사고 보강', limit: '골절 및 깁스비 추가 지원', note: '취미 활동 중 발생한 물리 충격 골절 및 외상 수술 케어' },
+              { title: '주말 상해 특약', feature: '휴일 교통/재해 특약', limit: '약정 가입금액 추가 지급', note: '주말 야외 나들이 차량 통행 중 돌발 재해에 특화 설계' },
+              { title: '비운전자 할인 특약', feature: '대중교통 이용자 요율 혜택', limit: '회사별 기준에 따라 감면', note: '소유 차량 유무와 무관하게 실질 운전을 하지 않는 피보험자 우대' },
             ].map((item, i) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
-                    {maskCompany(item.company, isUnlocked)}{' '}
-                    <span className="text-red-300 text-xs font-bold ml-1">{maskProductName(item.product, isUnlocked)}</span>
+                    {item.title}{' '}
+                    <span className="text-red-300 text-xs font-bold ml-1">{item.feature}</span>
                   </p>
                   <p className="text-[11px] text-slate-400 font-bold mt-0.5">{maskText(item.note, isUnlocked)}</p>
                 </div>

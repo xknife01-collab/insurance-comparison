@@ -31,7 +31,7 @@ export const analyzeBrain = (analysis: any): any => {
   return {
     estimatedPremium,
     efficiency: score > 80 ? 95 : 70,
-    deficiencies: currentPremium > estimatedPremium ? ['보험료 과다 지출', '뇌혈관 보장 범위 협소'] : [],
+    deficiencies: currentPremium > estimatedPremium ? ['보험료 지출 규모 점검 권장', '뇌혈관 보장 범위 확대 검토'] : [],
     scores: {
       totalScore: score,
       cerebrovascularScore: score,

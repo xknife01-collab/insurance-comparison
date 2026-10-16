@@ -50,7 +50,7 @@ export const CreditExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
               </span>
             </div>
             <p className="text-slate-700">
-              * <strong>신용생명보험은 피보험자가 사망하거나 80% 이상 고도후유장해, 중대 질병 진단 등 약관상 규정된 보험사고 발생 시 가입금액 한도 내에서 대출금을 대신 상환해 주는 순수 보장성 보험입니다.</strong> 본 화면의 보장 및 예시 보험료는 <strong>[가입기준: 40세 남성 / 주택담보대출 1억 원 잔액 연동 / 10년 만기 / 표준체 / NICE 신용 1~2등급 가정]</strong>을 기준으로 산출된 단순 참고용 예시입니다.
+              * <strong>신용생명보험은 피보험자가 사망하거나 80% 이상 고도후유장해, 중대 질병 진단 등 약관상 규정된 보험사고 발생 시 가입금액 한도 내에서 대출금을 대신 상환해 주는 순수 보장성 보험입니다.</strong> 본 안내는 주요 보험사의 대표 상품 특징에 대한 단순 참고 정보이며, 실제 보험료 및 가입 조건은 차주의 연령, 대출 잔액 및 기간, 건강상태 등에 따라 달라집니다.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1 text-[11px]">
               <div className="bg-amber-50/70 p-3 rounded-xl border border-amber-100">
@@ -197,15 +197,15 @@ export const CreditExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
           </div>
           <div className="space-y-4">
             {[
-              { company: '실시간 신용 점수 조회', product: 'NICE / KCB 등급 연동', limit: '3% ~ 10% 보험료 추가 할인', note: '가입 시 간편 인증으로 실시간 개인 신용 구간을 판정하여 자동 우대 혜택 연동' },
-              { company: '분할 납부 청약제도', product: '대출 분납 주기 매칭 청구', limit: '보험료 대출금과 분납 연계', note: '가입 시 월납 방식 외에 대출 이자와 함께 납부할 수 있는 편의 옵션 제공' },
-              { company: '비대면 다이렉트 가입', product: '간편 심사형 청약 절차', limit: '대출 계약 확인 시 신속 심사', note: '대출 실행 고객의 경우 심사 절차를 간소화하여 모바일로 신속 가입 지원' },
+              { title: '실시간 신용 점수 조회', feature: 'NICE / KCB 등급 연동', limit: '3% ~ 10% 보험료 추가 할인', note: '가입 시 간편 인증으로 실시간 개인 신용 구간을 판정하여 자동 우대 혜택 연동' },
+              { title: '분할 납부 청약제도', feature: '대출 분납 주기 매칭 청구', limit: '보험료 대출금과 분납 연계', note: '가입 시 월납 방식 외에 대출 이자와 함께 납부할 수 있는 편의 옵션 제공' },
+              { title: '비대면 다이렉트 가입', feature: '간편 심사형 청약 절차', limit: '대출 계약 확인 시 신속 심사', note: '대출 실행 고객의 경우 심사 절차를 간소화하여 모바일로 신속 가입 지원' },
             ].map((item, i) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">
                 <div>
                   <p className="font-black text-sm">
-                    {maskCompany(item.company, isUnlocked)}{' '}
-                    <span className="text-blue-300 text-xs font-bold ml-1">{maskProductName(item.product, isUnlocked)}</span>
+                    {item.title}{' '}
+                    <span className="text-blue-300 text-xs font-bold ml-1">{item.feature}</span>
                   </p>
                   <p className="text-[11px] text-slate-400 font-bold mt-0.5">{maskText(item.note, isUnlocked)}</p>
                 </div>
@@ -255,7 +255,7 @@ export const CreditExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
               <Clock className="text-blue-500 w-5 h-5" /> 가입 최적 시점
             </h4>
             <p className="text-xs font-bold text-slate-500 leading-relaxed">
-              주택담보대출 또는 신용대출을 새로 실행하는 시점이 가장 적기입니다. 대출 실행 후 건강 상태가 악화되거나 신용등급에 변동이 생기면 가입 심사에서 승인이 제한될 수 있으므로 대출 개시 시점에 맞추어 설계하는 것이 안전합니다.
+              주택담보대출 또는 신용대출을 새로 실행하는 시점이 가입에 유리합니다. 대출 실행 후 건강 상태가 악화되거나 신용점수에 변동이 생기면 가입 심사에서 승인이 제한될 수 있으므로 대출 개시 시점에 맞추어 설계하는 것이 안전합니다.
             </p>
           </div>
         </div>

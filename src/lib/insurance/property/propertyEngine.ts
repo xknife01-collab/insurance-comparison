@@ -129,12 +129,12 @@ export const analyzeProperty = (analysis: any): any => {
       deficiencies.push('⚠️ 음식물배상책임 누락: 식중독 및 매장 내 이물 사고 대비 필수 특약이 누락되었습니다.');
     }
     if (totalAssets < 100000000) {
-      deficiencies.push('화재 복구 자산 한도 협소 (최소한의 가재도구 및 시설물 복구비 부족)');
+      deficiencies.push('화재 복구 자산 한도 점검 권장 (가재도구 및 시설물 복구비 충당 여부 확인)');
     }
   } else {
     // 상가 화재형
     if (totalAssets < 200000000) {
-      deficiencies.push('⚠️ 건물/인테리어 화재실손 보장한도 부족 (실손 화재 복구비 대비 과소가입 상태)');
+      deficiencies.push('⚠️ 건물/인테리어 화재실손 보장한도 점검 권장 (실제 화재 복구비 대비 적정 여부 확인)');
     }
     if (!propOpts.hasWaterLeak) {
       deficiencies.push('급배수시설누출손해(누수) 보장 공백 (매장 인테리어 침수 피해 우려)');
@@ -198,8 +198,8 @@ export const analyzeProperty = (analysis: any): any => {
       ? `[${dietPlan.companyName}] 실속 배상책임 방어 플랜`
       : `[${dietPlan.companyName}] 실속 화재재산 안심 플랜`,
     description: subType === '화재배상책임형'
-      ? `최소 비용으로 타인에 대한 화재 배상 및 대인/대물 시설소유자 책임만 핵심적으로 방어하는 소상공인 알뜰 플랜입니다.`
-      : `자산 한도를 필수 수준으로 맞추고 최소 비용으로 화재 재산 손해만 깔끔하게 보장하는 실속 재물 플랜입니다.`,
+      ? `타인에 대한 화재 배상 및 대인/대물 시설소유자 책임을 핵심 보장으로 구성한 소상공인 실속 플랜입니다.`
+      : `자산 한도를 필수 수준으로 맞추고 화재 재산 손해를 집중 보장하는 실속 재물 플랜입니다.`,
     estimatedPremium: dietPlan.premium,
     riskPremium: dietPlan.riskPremium,
     savingsPremium: dietPlan.savingsPremium,
@@ -208,7 +208,7 @@ export const analyzeProperty = (analysis: any): any => {
     isProperty: true,
     coverageChanges: subType === '화재배상책임형'
       ? [
-          '건물/시설 가입금액 최소 설계 (건물 1억, 시설 3천만)',
+          '건물/시설 가입금액 실속 설계 (건물 1억, 시설 3천만)',
           '의무 배상책임 및 시설배상 한도 유지',
           '누수 및 휴업손해 등 부가 특약 제외',
           `최저보험료 차액 ${(dietPlan.savingsPremium || 0).toLocaleString()}원 적립금으로 자동 전환`
@@ -230,7 +230,7 @@ export const analyzeProperty = (analysis: any): any => {
       ? `[${upgradePlan.companyName}] 배상 든든 밸런스 플랜`
       : `[${upgradePlan.companyName}] 자산 실손 밸런스 플랜`,
     description: subType === '화재배상책임형'
-      ? `대인/대물 시설배상 한도를 극대화하고 음식물 배상까지 탑재하여 소상공인의 법적 리스크를 안정적으로 방어하는 맞춤형 플랜입니다.`
+      ? `대인/대물 시설배상 한도를 강화하고 음식물 배상까지 탑재하여 소상공인의 법적 리스크를 안정적으로 대비하는 맞춤형 플랜입니다.`
       : `설정한 매장 자산 가치 범위 내에서 실제 손해를 보상하며, 누수로 인한 건물 침수 피해까지 안정적으로 커버하는 권장해 드리는 설계안입니다.`,
     estimatedPremium: upgradePlan.premium,
     riskPremium: upgradePlan.riskPremium,
@@ -260,7 +260,7 @@ export const analyzeProperty = (analysis: any): any => {
 
   const hybrid: any = {
     title: `[${hybridPlan.companyName}] 프리미엄 사업장 마스터 플랜`,
-    description: `화재 재산 손해 가액 한도 내 보장은 물론 주변 상가 피해 배상 한도 최대(10억) 설정, 영업 중단 시 임차료/인건비를 지원하는 프리미엄 소상공인 올케어 플랜입니다.`,
+    description: `화재 재산 손해 가액 한도 내 보장은 물론 주변 상가 피해 배상 한도 확대(10억) 설정, 영업 중단 시 임차료/인건비를 지원하는 프리미엄 소상공인 올케어 플랜입니다.`,
     estimatedPremium: hybridPlan.premium,
     riskPremium: hybridPlan.riskPremium,
     savingsPremium: hybridPlan.savingsPremium,
@@ -268,8 +268,8 @@ export const analyzeProperty = (analysis: any): any => {
     productName: hybridPlan.productName,
     isProperty: true,
     coverageChanges: [
-      '대물 배상책임 한도 최대 10억 원 상향',
-      '점포휴업손해 특약 추가 (1일당 최대 10만 원 지원)',
+      '대물 배상책임 한도 10억 원 상향',
+      '점포휴업손해 특약 추가 (1일당 약정 금액 지원)',
       '급배수시설누출 및 기계/전기 고장 보장 종합 탑재',
       `최저보험료 차액 ${(hybridPlan.savingsPremium || 0).toLocaleString()}원 적립금으로 자동 전환`
     ],
