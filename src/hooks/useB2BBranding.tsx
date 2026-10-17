@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { createClient } from '../utils/supabase/client';
+import { trackVisit } from '../lib/analytics/visitTracker';
 
 export interface B2BBranding {
   type: 'organic' | 'planner' | 'agency';
@@ -388,22 +389,14 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
 
       const supabase = createClient();
 
-      // [전체 방문자 100% 실시간 SNS 유입 집계]
-      // 설계사 코드 유무와 관계없이 15대 SNS(유튜브, 인스타, 틱톡, 블로그, 카페 등) 방문을 세션당 1회 무조건 Supabase visitor_logs에 기록
-      if (!sessionStorage.getItem('ins_visit_logged')) {
-        const sessionId = Math.random().toString(36).substring(2, 15);
-        supabase.from('visitor_logs')
-          .insert({
-            planner_code: plannerCode || 'direct',
-            utm_source: finalSource,
-            session_id: sessionId
-          })
-          .then(({ error }) => {
-            if (!error) {
-              sessionStorage.setItem('ins_visit_logged', 'true');
-            }
-          });
-      }
+      // [전체 방문자 방문 기록] 실제 기록 로직은 src/lib/analytics/visitTracker.ts 에서 처리
+      // 설계사 코드가 확정되는 시점(또는 조회 실패 시 'direct')에 정확히 1회만 호출한다.
+      let visitTracked = false;
+      const trackVisitOnce = (code: string | null | undefined) => {
+        if (visitTracked) return;
+        visitTracked = true;
+        void trackVisit({ plannerCode: code || 'direct' });
+      };
 
       try {
         const isStandaloneApp = typeof window !== 'undefined' && (
@@ -440,6 +433,7 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
           }
           if (planner) {
             planner.agencies = agency;
+            trackVisitOnce(planner.planner_code);
           }
 
           if (!pError && planner && planner.subscription_status === 'active') {
@@ -507,11 +501,12 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
             try {
               const { data: planners } = await supabase
                 .from('planners')
-                .select('id')
+                .select('id, planner_code')
                 .eq('agency_id', agency.id)
                 .limit(1);
               if (planners && planners.length > 0) {
                 fallbackPlannerId = planners[0].id;
+                trackVisitOnce(planners[0].planner_code);
               }
             } catch (pe) {
               console.warn('Failed to fetch fallback planner for agency:', pe);
@@ -618,6 +613,10 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
       } catch (err) {
         console.error('Error fetching B2B branding:', err);
       } finally {
+        // 설계사/대리점을 확정하지 못했으면 'direct'로 반드시 1회 기록 (관리자·파트너 등 시스템 경로는 제외)
+        if (!isSystemPath) {
+          trackVisitOnce('direct');
+        }
         setLoading(false);
       }
     }
