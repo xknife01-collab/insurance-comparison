@@ -307,7 +307,7 @@ export const analyzeVariable = (analysis: any): any => {
         productName: opt3.productName,
         coverageChanges: [
           `사망 보장 기간 만료 전 적립형/연금 전환 가능 옵션`,
-          `펀드 리밸런싱 수수료 무제한 면제 혜택`,
+          `펀드 변경 시 수수료 면제 혜택`,
           `10년 이상 유지 시 투자 수익 비과세 혜택 완비`
         ],
         switchingLossNotice: '전환 옵션 실행 시 해지 환급금 수준 및 세부 전환 조건이 적용되므로 사전에 약관을 확인하셔야 합니다.',

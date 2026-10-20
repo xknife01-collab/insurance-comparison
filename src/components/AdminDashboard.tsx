@@ -285,6 +285,8 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
     editCompanyName, setEditCompanyName,
     editRegistrationNumber, setEditRegistrationNumber,
     editAgencyRegistrationNumber, setEditAgencyRegistrationNumber,
+    editNonLifeRegistrationNumber, setEditNonLifeRegistrationNumber,
+    editLifeRegistrationNumber, setEditLifeRegistrationNumber,
     editEmail, setEditEmail,
     editCertificationMessage, setEditCertificationMessage,
     editPlannerName, setEditPlannerName,
@@ -2038,6 +2040,10 @@ export default function AdminDashboard({ initialTab }: { initialTab?: 'login' | 
                   setEditRegistrationNumber={setEditRegistrationNumber}
                   editAgencyRegistrationNumber={editAgencyRegistrationNumber}
                   setEditAgencyRegistrationNumber={setEditAgencyRegistrationNumber}
+                  editNonLifeRegistrationNumber={editNonLifeRegistrationNumber}
+                  setEditNonLifeRegistrationNumber={setEditNonLifeRegistrationNumber}
+                  editLifeRegistrationNumber={editLifeRegistrationNumber}
+                  setEditLifeRegistrationNumber={setEditLifeRegistrationNumber}
                   editPassword={editPassword}
                   setEditPassword={setEditPassword}
                   editProfileImg={editProfileImg}

@@ -133,7 +133,7 @@ export const ChildSummary: React.FC<Props> = ({ result, forceMobile }) => {
             <span className="text-xs font-black text-yellow-100 uppercase tracking-widest bg-yellow-900/30 px-3 py-1 rounded-full mb-4 inline-block">
               Child & Prenatal Care Analysis
             </span>
-            <h4 className="text-2xl font-black mb-2">동일 연령·조건 기준 월 예상 절약 보험료</h4>
+            <h4 className="text-2xl font-black mb-2">동일 연령·조건 기준 예상 보험료 절감 검토</h4>
             <p className="text-yellow-50 text-sm font-bold opacity-80">
               자녀의 성장 주기와 연령에 맞춘 최적의 어린이·태아 플랜으로 전환 시 절감되는 금액입니다.
             </p>

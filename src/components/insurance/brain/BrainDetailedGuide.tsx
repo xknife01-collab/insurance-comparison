@@ -33,7 +33,7 @@ export const CerebrovascularDetailedGuide: React.FC = () => {
             <div className="bg-indigo-50/50 p-8 rounded-[2.5rem] border border-indigo-100">
               <p className="font-black text-indigo-700 mb-2">💎 뇌혈관질환 (I60~I69)</p>
               <p className="text-sm text-gray-600 font-bold leading-relaxed">
-                뇌출혈, 뇌졸중은 물론 뇌동맥류, 협착 등 뇌혈관의 모든 이상을 보장합니다. 전체 뇌혈관 질환을 100% 커버하는 필수 담보입니다.
+                뇌출혈, 뇌졸중은 물론 뇌동맥류, 협착 등 뇌혈관의 주요 질환을 폭넓게 보장하는 핵심 담보입니다.
               </p>
             </div>
             <div className="bg-gray-50 p-8 rounded-[2.5rem] border border-gray-100 opacity-60">

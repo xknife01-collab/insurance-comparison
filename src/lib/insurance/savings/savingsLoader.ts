@@ -162,7 +162,7 @@ export const fetchSavingsPremium = async (analysis: InsuranceAnalysis): Promise<
           declaredRate: rate,
           guaranteedRate: rate * 0.35,
           businessFee: businessFee,
-          features: row.features || "가입 즉시 복리 부리 및 추가 납입 지원",
+          features: row.features || "복리 부리 및 추가 납입 지원",
           hasUniversal: !isLump
         });
       });

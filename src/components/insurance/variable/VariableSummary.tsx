@@ -249,7 +249,7 @@ export const VariableSummary: React.FC<Props> = ({ result }) => {
               
               <div className="grid grid-cols-2 gap-4 shrink-0 w-full lg:w-auto">
                 <div className="bg-white/5 border border-white/10 p-5 rounded-3xl backdrop-blur-md text-left">
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">동일 연령·조건 기준 월 예상 절약 보험료</p>
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">동일 연령·조건 기준 평균 대비 월 예상 절약 보험료</p>
                   <p className="text-3xl font-black text-[#FF6B00] tracking-tighter mt-1">
                     {monthlySaving.toLocaleString()} <span className="text-sm font-bold text-slate-300">원</span>
                   </p>

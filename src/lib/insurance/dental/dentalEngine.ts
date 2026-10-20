@@ -13,8 +13,6 @@ export const analyzeDental = (analysis: any): any => {
   const total = (implantScore + crownScore + conservativeScore) / 3;
 
   const deficiencies: string[] = [];
-  if (analysis.implantLimit !== 'unlimited') deficiencies.push('임플란트 연간 개수 제한 여부 확인 필요 (충분한 한도 권장)');
-  if (analysis.crownAmount < 400000) deficiencies.push('크라운 치료비 보장 한도 점검 권장');
 
   const allOptions = (analysis as any)._allOptions || [];
   

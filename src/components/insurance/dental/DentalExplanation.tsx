@@ -181,7 +181,7 @@ export const DentalExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
           <div className="space-y-4">
             {[
               { title: '무진단형 (간편 심사형)', desc: '검진 없이 3가지 질문 고지만으로 간편 체결', info: '90일 면책 & 1~2년 50% 감액' },
-              { title: '진단형 (건강 심사형)', desc: '치과 방문 사전 구강 검진 통과 시 심사 승인', info: '가입 즉시 보장 개시' },
+              { title: '진단형 (건강 심사형)', desc: '치과 방문 사전 구강 검진 통과 시 심사 승인', info: '심사 승인 시 보장 개시' },
               { title: '연령대별 보장 비중 최적화', desc: '2030 보존치료 집중 ➔ 4050 보철치료 결합형', info: '나이별 맞춤 특약 배분 설계' },
             ].map((item, i) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 bg-white/10 rounded-3xl border border-white/10 hover:bg-white/15 transition-colors">

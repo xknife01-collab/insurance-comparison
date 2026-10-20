@@ -935,6 +935,7 @@ export const InsuranceCalculator: React.FC<InsuranceCalculatorProps> = ({ onCalc
           tertiaryHospital
         } : undefined,
         pre_existing_sub_type: (selectedId === 'pre' || selectedId === 'pre_family') ? activeItem.subTypes[selectedDetail] : undefined,
+        pre_existing_type: selectedId === 'pre' ? preExistingType : undefined,
         child: selectedId === 'child' ? {
           targetAgeGroup: childAgeGroup,
           maturity: childMaturity,

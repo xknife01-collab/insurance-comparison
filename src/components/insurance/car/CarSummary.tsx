@@ -183,7 +183,7 @@ export const CarSummary: React.FC<Props> = ({ result, forceMobile }) => {
               <Sparkles size={12} className="text-blue-400" />
               Dynamic Auto Insurance Optimizer
             </div>
-            <h4 className="text-2xl font-black mb-2">동일 연령·차종 기준 예상 절약 보험료</h4>
+            <h4 className="text-2xl font-black mb-2">동일 연령·조건 기준 평균 대비 예상 절약 보험료</h4>
             <p className="text-sm font-bold text-blue-200/90 leading-relaxed max-w-xl">
               운전자 연령과 차량 차종에 맞춘 최적의 다이렉트 할인 플랜으로 전환 시 절감되는 금액입니다.
             </p>

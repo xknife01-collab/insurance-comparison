@@ -1153,7 +1153,7 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen,liveDiet
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">📋 상세 보장 분석 현황</p>
                   <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden">
                     <CovRow label="반려동물 의료실비(통원/입원)" value={cov.petMedical > 0 ? '가입' : '미가입'} status={cov.petMedical > 0 ? 'good' : 'none'} note="반려동물 핵심 의료비 실손 보장"/>
-                    <CovRow label="반려동물 수술비" value={cov.petMedical > 0 ? '가입' : '미가입'} status={cov.petMedical > 0 ? 'good' : 'none'} note="반려동물 주요 수술비 100% 보강"/>
+                    <CovRow label="반려동물 수술비" value={cov.petMedical > 0 ? '가입' : '미가입'} status={cov.petMedical > 0 ? 'good' : 'none'} note="반려동물 주요 수술비 집중 보강"/>
                     <CovRow label="반려동물 배상책임" value={cov.petLiability > 0 ? fmt(cov.petLiability) : '미가입'} status={statusOf(cov.petLiability, 10000000, 5000000)} note="권장: 사고당 1,000만원 한도"/>
                   </div>
                 </div>

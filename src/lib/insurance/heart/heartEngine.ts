@@ -41,7 +41,7 @@ export const analyzeHeart = (analysis: any) => {
 
   return {
     efficiency: heartScore > 80 ? 90 : 65,
-    deficiencies: heartScore < 40 ? ['심혈관 보장 범위 확대 검토 권장', '급성 심근경색 외 담보 보강 확인'] : heartScore < 80 ? ['허혈성 진단비 보강 검토 권장'] : [],
+    deficiencies: [],
     scores: {
       heartScore,
       totalScore: heartScore,

@@ -19,7 +19,7 @@ export const analyzePreExisting = (analysis: any): any => {
   return {
     estimatedPremium: opt1.premium,
     efficiency: 85,
-    deficiencies: ['고지 유형에 따른 보험료 적정성 점검 권장'],
+    deficiencies: [],
     scores: { totalScore: 82 },
     recommendations: {
       diet: {

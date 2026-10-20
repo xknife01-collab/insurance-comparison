@@ -445,6 +445,8 @@ export function useAdminState(initialTab?: 'login' | 'register') {
   const [editAgencyCode, setEditAgencyCode] = useState('');
   const [editRegistrationNumber, setEditRegistrationNumber] = useState('');
   const [editAgencyRegistrationNumber, setEditAgencyRegistrationNumber] = useState('');
+  const [editNonLifeRegistrationNumber, setEditNonLifeRegistrationNumber] = useState('');
+  const [editLifeRegistrationNumber, setEditLifeRegistrationNumber] = useState('');
   const [editEmail, setEditEmail] = useState('');
   const [editCertificationMessage, setEditCertificationMessage] = useState('');
   const [editPlannerName, setEditPlannerName] = useState('');
@@ -2374,6 +2376,12 @@ export function useAdminState(initialTab?: 'login' | 'register') {
           const rawRegNum = myProfile.registration_number || '';
           const delibPart = rawRegNum.includes('|') ? rawRegNum.split('|')[0] : (rawRegNum.startsWith('dist_') ? '' : rawRegNum);
           setEditRegistrationNumber(delibPart);
+          const savedAgencyReg = myProfile.agency_registration_number || (typeof window !== 'undefined' ? (localStorage.getItem(`planner_agency_reg_${myProfile.id}`) || localStorage.getItem(`planner_agency_reg_${myProfile.planner_code}`) || '') : '');
+          setEditAgencyRegistrationNumber(savedAgencyReg);
+          const savedNonLife = myProfile.non_life_registration_number || (typeof window !== 'undefined' ? (localStorage.getItem(`planner_non_life_reg_${myProfile.id}`) || localStorage.getItem(`planner_non_life_reg_${myProfile.planner_code}`) || '') : '');
+          setEditNonLifeRegistrationNumber(savedNonLife);
+          const savedLife = myProfile.life_registration_number || (typeof window !== 'undefined' ? (localStorage.getItem(`planner_life_reg_${myProfile.id}`) || localStorage.getItem(`planner_life_reg_${myProfile.planner_code}`) || '') : '');
+          setEditLifeRegistrationNumber(savedLife);
           setEditEmail(myProfile.email || '');
           setEditCertificationMessage(myProfile.certification_message || '');
           setEditPlannerName(myProfile.name || '');
@@ -2916,9 +2924,23 @@ export function useAdminState(initialTab?: 'login' | 'register') {
         agencyName: editCompanyName || '',
         agencyAddress: editCustomAddress || '',
         registrationNumber: editRegistrationNumber || null,
+        agencyRegistrationNumber: editAgencyRegistrationNumber || null,
+        nonLifeRegistrationNumber: editNonLifeRegistrationNumber || null,
+        lifeRegistrationNumber: editLifeRegistrationNumber || null,
         customEmail: editEmail || '',
         leadRoutingType: sessionStorage.getItem('demo_lead_routing_type') || null
       };
+
+      if (typeof window !== 'undefined' && currentUser.plannerId) {
+        localStorage.setItem(`planner_agency_reg_${currentUser.plannerId}`, editAgencyRegistrationNumber);
+        localStorage.setItem(`planner_non_life_reg_${currentUser.plannerId}`, editNonLifeRegistrationNumber);
+        localStorage.setItem(`planner_life_reg_${currentUser.plannerId}`, editLifeRegistrationNumber);
+        if (currentUser.plannerCode) {
+          localStorage.setItem(`planner_agency_reg_${currentUser.plannerCode}`, editAgencyRegistrationNumber);
+          localStorage.setItem(`planner_non_life_reg_${currentUser.plannerCode}`, editNonLifeRegistrationNumber);
+          localStorage.setItem(`planner_life_reg_${currentUser.plannerCode}`, editLifeRegistrationNumber);
+        }
+      }
 
       const currentPlanner = planners.find(p => p.id === currentUser.plannerId);
       const rawRegNum_save = currentPlanner?.registration_number || '';
@@ -2945,6 +2967,8 @@ export function useAdminState(initialTab?: 'login' | 'register') {
           company_name: editCompanyName,
           registration_number: editRegistrationNumber,
           agency_registration_number: editAgencyRegistrationNumber,
+          non_life_registration_number: editNonLifeRegistrationNumber,
+          life_registration_number: editLifeRegistrationNumber,
           email: editEmail
         } : p));
         if (currentUser.role === 'agency' && currentUser.agencyId) {
@@ -2980,6 +3004,10 @@ export function useAdminState(initialTab?: 'login' | 'register') {
         password: editPassword,
         company_name: editCompanyName,
         registration_number: combinedRegistrationNumber,
+        agency_registration_number: editAgencyRegistrationNumber,
+        non_life_registration_number: editNonLifeRegistrationNumber || null,
+        life_registration_number: editLifeRegistrationNumber || null,
+        deliberation_code: (editNonLifeRegistrationNumber || editLifeRegistrationNumber) ? `${editNonLifeRegistrationNumber || ''}|${editLifeRegistrationNumber || ''}` : null,
         email: editEmail
       };
 
@@ -3433,6 +3461,8 @@ export function useAdminState(initialTab?: 'login' | 'register') {
     editAgencyCode, setEditAgencyCode,
     editRegistrationNumber, setEditRegistrationNumber,
     editAgencyRegistrationNumber, setEditAgencyRegistrationNumber,
+    editNonLifeRegistrationNumber, setEditNonLifeRegistrationNumber,
+    editLifeRegistrationNumber, setEditLifeRegistrationNumber,
     editEmail, setEditEmail,
     editCertificationMessage, setEditCertificationMessage,
     editPlannerName, setEditPlannerName,

@@ -82,53 +82,14 @@ export const analyzeChild = (analysis: any): any => {
   let totalScore = 0;
   if (ageGroup === 'prenatal' && !isPreFamily) {
     totalScore = Math.round((prenatalScore + hospitalScore + surgeryScore + majorScore + maturityScore) / 5);
-  } else  if (isPreFamily) {
-    // 유병력아 타겟별 특수 결손 진단 및 팁
-    if (illnessType === 'development') {
-      deficiencies.push('발달지연 놀이/언어치료 이력 관련 심사 요건 확인 필요');
-      recommendationsTips.push('발달지연 치료 이력이 있는 경우 간편심사 고지 요건을 확인하여 주요 3대 진단비를 세팅할 수 있는지 점검하는 것이 유리합니다.');
-    } else if (illnessType === 'adhd') {
-      deficiencies.push('ADHD 치료 이력 관련 심사 요건 확인 필요');
-      recommendationsTips.push('ADHD 치료제를 복용 중이더라도 일정 기간 입원/수술/추가 소견이 없었다면 유병력자 진단비 한도를 적정 수준으로 보강할 수 있는지 비교 검토를 추천합니다.');
-    } else if (illnessType === 'puberty') {
-      deficiencies.push('성조숙증 치료 관련 인수 조건 점검 필요');
-      recommendationsTips.push('호르몬 치료 중이라 하더라도 유병자 종합 플랜을 비교 검토하여 부담보 조건 여부를 꼼꼼히 확인하는 것이 좋습니다.');
-    } else if (illnessType === 'asthma') {
-      deficiencies.push('천식 및 아토피 치료 이력에 따른 인수 조건 점검 필요');
-      recommendationsTips.push('입원/수술 이력 여부에 따라 간편심사 유형을 적절히 선택하여 보장 공백을 최소화하는 전략을 추천합니다.');
-    } else if (illnessType === 'fracture') {
-      deficiencies.push('최근 상해/수술 이력에 따른 심사 서류 점검 필요');
-      recommendationsTips.push('골절 및 수술 치료 종결 여부를 확인하여 간소화된 심사 플랜을 활용 가능한지 검토할 수 있습니다.');
-    } else {
-      deficiencies.push('만성 질환 또는 지속 복약 시 간편고지 심사 확인 필요');
-      recommendationsTips.push('간편심사 질문지를 충족할 경우 지속적인 약 복용 중에도 적정 보장을 준비할 수 있습니다.');
-    }
-
-    if (noAccidentYears === '0') {
-      deficiencies.push('최근 치료 이력으로 인한 간편심사 요율 적용');
-      recommendationsTips.push('최근 치료 이력에 따라 간편심사 유형이 적용될 수 있으며, 향후 무사고 기간 경과 시 보험료를 재산정받을 수 있는 무사고 전환 제도를 확인해 두시면 좋습니다.');
-    } else if (noAccidentYears === '5') {
+  } else if (isPreFamily) {
+    // 유병력아 타겟별 권장 팁
+    if (noAccidentYears === '5') {
       recommendationsTips.push('무사고 기간 요건을 충족하여 우대 요율 적용 가능 여부를 확인해 보실 수 있습니다.');
     }
   } else {
-    if (ageGroup === 'prenatal') {
-      if (!hasPrenatal) {
-        deficiencies.push('태아 핵심 특약 누락 (선천성 이상 및 저체중 인큐베이터 보장 없음)');
-        recommendationsTips.push('태아보험의 핵심은 출생 직후 발생할 수 있는 이상 징후 대비입니다. 태아 특약을 필히 구성해 주십시오.');
-      }
-      if (hasPrenatal && weeksPregnancy > 22) {
-        deficiencies.push('임신 22주 경과로 태아특약 가입 제한');
-        recommendationsTips.push('현재 임신 22주 6일이 지나 태아특약 추가가 거절될 수 있습니다. 이 경우 출생 후에 가입하는 신생아 보험으로 설계를 변경해야 합니다.');
-      }
-    }
-
     if (maturity === 30) {
-      recommendationsTips.push('30세 만기는 저렴하지만 자녀가 독립하는 시점에 새로 성인보험에 가입해야 합니다. 계약전환제도(무심사로 100세 연장 가능)가 있는 상품을 고르시는 것이 필수적입니다.');
-    } else {
-      if (currentPremium < 60000) {
-        deficiencies.push('100세 만기 플랜 대비 월 납입 여력 및 보장 한도 균형 점검 권장');
-        recommendationsTips.push('100세 만기형은 장기 계약이므로 월 납입 여력에 맞추어 암/뇌/심 핵심 진단비 한도를 적정하게 배분하는 설계가 필요합니다.');
-      }
+      recommendationsTips.push('30세 만기는 저렴하지만 자녀가 독립하는 시점에 새로 성인보험에 가입해야 합니다. 계약전환제도(무심사로 100세 연장 가능)가 있는 상품을 고르시는 것이 유리합니다.');
     }
   }
 

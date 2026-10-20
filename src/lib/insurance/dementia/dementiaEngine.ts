@@ -26,35 +26,9 @@ export const analyzeDementia = (analysis: any): any => {
   let proxyScore = hasProxy ? 100 : 40;
   const totalScore = Math.round((diagScore + allowanceScore + proxyScore) / 3);
 
+  // 부족 보장 항목 도출 (고객 선택 미단정 원칙)
   const deficiencies: string[] = [];
   const recommendationsTips: string[] = [];
-
-  // 1. 진단비 점검
-  if (diag < 20000000) {
-    deficiencies.push('중증 치매 진단비 보완 권장');
-    recommendationsTips.push('중증 치매 진단 시 발생하는 초기 시설 입소 및 간병 비용 충당을 위해 진단비 한도를 적정 수준으로 보완하는 것을 권장합니다.');
-  } else if (diag < 30000000) {
-    deficiencies.push('중증 치매 진단비 적정 한도 점검 권장');
-    recommendationsTips.push('물가 상승률과 치료 환경을 고려하여 진단비 한도를 충실하게 설정하는 것이 유리합니다.');
-  }
-
-  // 2. 생활비 점검
-  if (allowance < 500000) {
-    deficiencies.push('매월 간병 생활비 보장 수준 점검 권장');
-    recommendationsTips.push('치매 장기 투병 시 고정 요양비 지출에 대비하여 생활자금 보장 한도를 여건에 맞게 조율하시는 것을 권장합니다.');
-  }
-
-  // 3. 지정대리청구인 지정 점검
-  if (!hasProxy) {
-    deficiencies.push('지정대리청구인 미지정 (청구 편의 점검)');
-    recommendationsTips.push('치매 발병 시 본인의 인지 능력 저하로 보험금 청구가 어려울 수 있으므로 대리청구인을 지정하여 가입하시는 것이 안전합니다.');
-  }
-
-  // 4. 유병자 심사 상태 체크
-  if (hasHistory || hasLtc) {
-    deficiencies.push('가입 심사 제한 대상 (유병자/등급 보유)');
-    recommendationsTips.push('최근 병력 또는 장기요양등급 이력이 있으므로 일반 상품보다 심사 기준이 완화된 간편고지 전용 상품 비교 결과를 확인해 보시기 바랍니다.');
-  }
 
   const allOptions = (analysis as any)._allOptions || [];
   const dietOption = allOptions[0];

@@ -50,7 +50,7 @@ export const DentalSummary: React.FC<Props> = ({ result }) => {
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-4">
               {[
-                { label: '보철(임플란트)', targetId: 'input-dental-fields', val: analysis.dental?.implantLimit === 'unlimited' ? '무제한' : '연 3회', score: scores.implant },
+                { label: '보철(임플란트)', targetId: 'input-dental-fields', val: analysis.dental?.implantLimit === 'unlimited' ? '연간 제한 없음' : '연간 3개 (치아당)', score: scores.implant },
                 { label: '보존(크라운)', targetId: 'input-dental-fields', val: formatAmount(analysis.dental?.crownAmount || 0), score: scores.crown },
                 { label: '보존치료', targetId: 'input-dental-fields', val: '레진/인레이', score: scores.conservative },
                 { label: '감액기간', targetId: 'input-dental-fields', val: '90일/1년', score: 95 },

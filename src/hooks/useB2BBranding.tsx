@@ -19,6 +19,8 @@ export interface B2BBranding {
   agencyAddress?: string | null;
   registrationNumber?: string | null;
   agencyRegistrationNumber?: string | null;
+  nonLifeRegistrationNumber?: string | null;
+  lifeRegistrationNumber?: string | null;
   customEmail?: string | null;
   leadRoutingType?: string | null;
 }
@@ -40,6 +42,8 @@ const DEFAULT_BRANDING: B2BBranding = {
   agencyAddress: '보험대리점 : 인카금융서비스 (등록번호 : 제2006038313호)',
   registrationNumber: null,
   agencyRegistrationNumber: null,
+  nonLifeRegistrationNumber: null,
+  lifeRegistrationNumber: null,
   customEmail: 'support@rebalance.com',
 };
 
@@ -456,6 +460,8 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
               agencyAddress: planner.custom_address || planner.agencies?.address || null,
               registrationNumber: extractDelibNumber(planner.registration_number),
               agencyRegistrationNumber: planner.agency_registration_number || planner.agencies?.agency_registration_number || null,
+              nonLifeRegistrationNumber: planner.non_life_registration_number || (typeof window !== 'undefined' ? (localStorage.getItem(`planner_non_life_reg_${planner.id}`) || localStorage.getItem(`planner_non_life_reg_${planner.planner_code}`)) : null) || null,
+              lifeRegistrationNumber: planner.life_registration_number || (typeof window !== 'undefined' ? (localStorage.getItem(`planner_life_reg_${planner.id}`) || localStorage.getItem(`planner_life_reg_${planner.planner_code}`)) : null) || null,
               customEmail: planner.email || planner.agencies?.email || DEFAULT_BRANDING.customEmail,
               leadRoutingType: demoRoutingOverride || planner.agencies?.lead_routing_type || 'direct',
             };
@@ -591,6 +597,9 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
               agencyName: adminPlanner.company_name || adminPlanner.agencies?.name || null,
               agencyAddress: adminPlanner.custom_address || adminPlanner.agencies?.address || null,
               registrationNumber: extractDelibNumber(adminPlanner.registration_number),
+              agencyRegistrationNumber: adminPlanner.agency_registration_number || adminPlanner.agencies?.agency_registration_number || null,
+              nonLifeRegistrationNumber: adminPlanner.non_life_registration_number || (typeof window !== 'undefined' ? localStorage.getItem(`planner_non_life_reg_${adminPlanner.id}`) : null) || null,
+              lifeRegistrationNumber: adminPlanner.life_registration_number || (typeof window !== 'undefined' ? localStorage.getItem(`planner_life_reg_${adminPlanner.id}`) : null) || null,
               customEmail: adminPlanner.email || adminPlanner.agencies?.email || DEFAULT_BRANDING.customEmail,
               leadRoutingType: demoRoutingOverride || adminPlanner.agencies?.lead_routing_type || 'direct',
             };

@@ -57,7 +57,7 @@ export const SilbiDetailedGuide: React.FC = () => {
           <div className="bg-white p-8 rounded-3xl border border-slate-100 space-y-3">
             <div className="text-slate-400 font-black text-3xl">02</div>
             <h5 className="font-black text-gray-900">갱신 및 재가입</h5>
-            <p className="text-sm text-gray-500 font-bold leading-relaxed">실손은 100% 갱신형이며, 가입 시기에 따라 1~5년 주기로 조건이 변경됩니다.</p>
+            <p className="text-sm text-gray-500 font-bold leading-relaxed">실손의료보험은 전 건 갱신형 구조이며, 가입 시기에 따라 1~5년 주기로 조건이 변경됩니다.</p>
           </div>
           <div className="bg-white p-8 rounded-3xl border border-slate-100 space-y-3">
             <div className="text-slate-400 font-black text-3xl">03</div>

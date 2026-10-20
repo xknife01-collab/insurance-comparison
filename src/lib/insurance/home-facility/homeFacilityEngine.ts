@@ -42,26 +42,9 @@ export const analyzeHomeFacility = (analysis: any): any => {
   }
 
   // 2. Deficiencies & Recommendations Tips
+  // 2. Deficiencies & Recommendations Tips (고객 선택 미단정 원칙)
   const deficiencies: string[] = [];
   const recommendationsTips: string[] = [];
-
-  if (prefService === 'home' && homeAmount < 500000) {
-    deficiencies.push('방문요양(재가) 보장 한도 점검 필요 (적정 한도 권장)');
-  }
-  if (prefService === 'facility' && facilityAmount < 500000) {
-    deficiencies.push('시설 입소 요양원 보장 금액 점검 필요 (식재료비 등 실비 고려 권장)');
-  }
-  if (prefService === 'both' && (homeAmount < 500000 || facilityAmount < 500000)) {
-    deficiencies.push('재가 및 시설 양대 보장 균형 미달');
-  }
-  if (!hasProxy) {
-    deficiencies.push('대리청구인 지정 미선택 (지급 차질 가능성)');
-    recommendationsTips.push('장기요양등급 수급 시 본인이 직접 청구하기 어려운 상태를 대비해 지정대리청구인을 지정하는 것이 안전합니다.');
-  }
-  if (hasHistory || hasLtc) {
-    deficiencies.push('가입 심사 제한 대상 (간편심사 전용 가입 필요)');
-    recommendationsTips.push('치매/뇌질환 병력 또는 요양등급 이력이 있으시므로 일반 심사형이 아닌 간편고지(초간편) 플랜이 권장됩니다.');
-  }
 
   // 3. Recommended plans selection
   const allOptions = (analysis as any)._allOptions || [];

@@ -87,9 +87,9 @@ export function getComplianceStatSource(categoryRaw?: string): ComplianceStatSou
   }
 
   // 8. 어린이 / 태아 / 신생아 / 유병력자 어린이
-  if (category.includes('child') || category.includes('어린이') || category.includes('태아') || category.includes('pre_family')) {
+  if (category.includes('child') || category.includes('어린이') || category.includes('태아') || category.includes('pre_family') || category.includes('유병력자')) {
     return {
-      categoryName: '어린이·태아보험',
+      categoryName: (category.includes('유병') || category.includes('child_sick') || category === 'pre_family') ? '유병력자 어린이보험' : (category.includes('태아') ? '태아보험' : '어린이보험'),
       title: '2022년 출생통계 및 소아 다빈도 질환 통계',
       publisher: '통계청 · 건강보험심사평가원',
       publishDate: '2023년 8월'

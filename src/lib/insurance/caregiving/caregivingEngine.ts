@@ -10,9 +10,8 @@ export const analyzeCaregiving = (analysis: any): any => {
   const stepUpScore = analysis.isStepUp ? 98 : 60;
   const totalScore = (careTypeScore + stepUpScore) / 2;
   
+  // 부족 보장 항목 도출 (고객 선택 미단정 원칙)
   const deficiencies: string[] = [];
-  if (!analysis.isStepUp) deficiencies.push('인건비 상승 대비(체증형)');
-  if (analysis.careType === 'expense') deficiencies.push('간병인 직접 매칭 부담');
 
   const allOptions = (analysis as any)._allOptions || [];
   const dietOption = allOptions[0];

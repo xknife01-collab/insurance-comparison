@@ -56,30 +56,6 @@ export const analyzeHealthGeneral = (analysis: any): any => {
 
   // 3. 보장 공백 및 부족 항목 분석
   const deficiencies: string[] = [];
-  if (opts.cancerLimit < 30000000) {
-    deficiencies.push('일반암 진단비 한도 점검 권장 (치료비 및 생활비 고려)');
-  }
-  if (opts.similarCancerLimit < 6000000) {
-    deficiencies.push('유사암 진단비 한도 적정 여부 확인 필요');
-  }
-  if (opts.brainLimit < 20000000) {
-    deficiencies.push('뇌혈관질환 진단비 한도 점검 권장 (초기 뇌졸중 등 포괄 보장)');
-  }
-  if (opts.heartLimit < 20000000) {
-    deficiencies.push('허혈성 심장질환 진단비 한도 점검 권장');
-  }
-  if (opts.cardioLimit < 10000000) {
-    deficiencies.push('심혈관질환(부정맥, 심부전 등) 보장 범위 점검 필요');
-  }
-  if (!opts.has1to5Surgery) {
-    deficiencies.push('질병/상해 1-5종 수술비 특약 미가입');
-  }
-  if (!opts.hasTargetedTherapy) {
-    deficiencies.push('항암 치료비 대비 표적항암 치료비 특약 보완 권장');
-  }
-  if (!opts.hasLiability) {
-    deficiencies.push('일상생활배상책임 특약 구성 여부 확인 권장');
-  }
 
   // 4. 3가지 최적 추천 시나리오 플랜 설계
   // 첫 번째 실속 다이어트 카드는 하단 가격 비교 테이블의 1순위(최저가) 상품과 가격/정보를 100% 동기화

@@ -168,7 +168,7 @@ export const DriverSummary: React.FC<Props> = ({ result, forceMobile }) => {
             <span className="text-xs font-black text-indigo-200 uppercase tracking-widest bg-indigo-900/30 px-3 py-1 rounded-full mb-4 inline-block">
               Driver Protection Specialization Analysis
             </span>
-            <h4 className="text-2xl font-black mb-2">동일 연령·운전조건 기준 월 예상 절약 보험료</h4>
+            <h4 className="text-2xl font-black mb-2">동일 연령·조건 기준 평균 대비 월 예상 절약 보험료</h4>
             <p className="text-indigo-100 text-sm font-bold opacity-80">
               사용자님의 연령과 운전 환경에 맞춘 최적의 운전자 필수 담보 플랜으로 전환 시 절감되는 금액입니다.
             </p>

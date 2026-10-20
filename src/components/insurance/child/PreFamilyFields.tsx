@@ -150,7 +150,7 @@ export const PreFamilyFields: React.FC<PreFamilyFieldsProps> = ({
         <div className="space-y-6 pt-4">
           <div className="flex justify-between items-center bg-slate-50 p-2.5 rounded-[1.8rem] border border-slate-100">
             {[
-              { val: '0', label: '0년 (3.0.5)', desc: '치료 종결 즉시' },
+              { val: '0', label: '0년 (3.0.5)', desc: '치료 종결 후' },
               { val: '2', label: '2년 (3.2.5)', desc: '경증 병력자' },
               { val: '3', label: '3년 (3.3.5)', desc: '안정기 진입' },
               { val: '5', label: '5년 (3.5.5)', desc: '최대 25% 할인' }
@@ -179,7 +179,7 @@ export const PreFamilyFields: React.FC<PreFamilyFieldsProps> = ({
                   ? '✨ 간편 3.3.5 실속 할인 적용! 보험료 할증폭이 15% 이내로 줄어듭니다.'
                   : noAccidentYears === '2'
                   ? '👍 간편 3.2.5 기본 인수 보장 플랜 적용! 심사 서류 없이 모바일 프리패스가 작동합니다.'
-                  : '⚠️ 3.0.5 초간편 가입 적용! 과거 입원/수술 이력과 무관하게 3개월 질문 하나로 즉시 가입 가능합니다.'}
+                  : '⚠️ 3.0.5 초간편 가입 적용! 과거 입원/수술 이력과 무관하게 3개월 질문 하나로 간편 심사 신청이 가능합니다.'}
               </span>
             </div>
           </div>

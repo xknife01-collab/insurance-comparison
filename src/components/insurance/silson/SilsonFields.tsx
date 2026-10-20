@@ -99,11 +99,11 @@ export const SilsonFields: React.FC<Props> = ({
            <p className="text-[0.65rem] font-black text-slate-400 pl-1 uppercase tracking-widest mb-4">비급여 의료 이용량 (직전 1년 기준)</p>
            <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
              {[
-               { id: 'none', label: '없음', desc: '5% 할인' },
-               { id: 'under100', label: '100만원 미만', desc: '유지' },
-               { id: '100to150', label: '100~150만원', desc: '보험료 2배' },
-               { id: '150to300', label: '150~300만원', desc: '보험료 3배' },
-               { id: 'over300', label: '300만원 이상', desc: '보험료 4배' },
+               { id: 'none', label: '없음', desc: '할인 적용 대상' },
+               { id: 'under100', label: '100만원 미만', desc: '유지 (기본)' },
+               { id: '100to150', label: '100~150만원', desc: '할증 1단계' },
+               { id: '150to300', label: '150~300만원', desc: '할증 2단계' },
+               { id: 'over300', label: '300만원 이상', desc: '할증 3단계' },
              ].map((opt) => (
                <button
                  key={opt.id}

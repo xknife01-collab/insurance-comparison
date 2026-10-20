@@ -142,7 +142,7 @@ export const DentalFields: React.FC<Props> = (props) => {
                     ))}
                   </div>
                   <p className="text-[0.6rem] font-bold text-slate-400 pl-1 leading-relaxed">
-                    * 진단형: 치과 검진 후 가입. 보험료 약 20% 할인 + 면책/감액기간 없음 (즉시 전액 보장)<br/>
+                    * 진단형: 치과 검진 후 가입. 보험료 약 20% 할인 + 면책/감액기간 없음<br/>
                     * 무진단형: 검진 없이 바로 가입. 가입 절차가 간편하지만 1~2년의 감액기간 존재
                   </p>
                </div>
@@ -156,7 +156,7 @@ export const DentalFields: React.FC<Props> = (props) => {
                       className="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl text-[0.85rem] font-black text-slate-800 outline-none focus:border-emerald-200 transition-all"
                    >
                       <option value="3">연간 3개 한도 (절약)</option>
-                      <option value="unlimited">무제한 (강력추천)</option>
+                      <option value="unlimited">연간 개수 제한 없음 (가입 2년 후)</option>
                    </select>
                 </div>
                 <div className="space-y-3">
@@ -166,9 +166,9 @@ export const DentalFields: React.FC<Props> = (props) => {
                       onChange={(e) => setCrownAmount(Number(e.target.value))}
                       className="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl text-[0.85rem] font-black text-slate-800 outline-none focus:border-emerald-200 transition-all"
                    >
-                      <option value={200000}>개당 20만원</option>
-                      <option value={300000}>개당 30만원</option>
-                      <option value={500000}>개당 50만원</option>
+                      <option value={200000}>치아당 20만원</option>
+                      <option value={300000}>치아당 30만원</option>
+                      <option value={500000}>치아당 50만원</option>
                    </select>
                 </div>
               </div>
@@ -185,7 +185,7 @@ export const DentalFields: React.FC<Props> = (props) => {
                최근 2년간 치과 검진 이력이 깨끗하시다면 <span className="text-emerald-600 underline underline-offset-4 decoration-2">"진단형"</span> 가입을 강력 추천합니다.
             </p>
             <p className="text-[0.7rem] text-slate-400 font-bold">
-               감액기간(50% 지급) 없이 가입 즉시 전액 보장을 받을 수 있는 효과적인 방법입니다.
+               감액기간(50% 지급) 없이 보장을 받을 수 있는 효과적인 방법입니다.
             </p>
          </div>
          <button className="md:ml-auto px-10 py-5 bg-slate-900 text-white rounded-[1.8rem] text-[0.85rem] font-black hover:bg-black shadow-xl active:scale-95 transition-all">

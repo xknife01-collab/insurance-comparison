@@ -40,23 +40,8 @@ export const analyzeAccident = (analysis: any): any => {
   const premium = analysis.monthlyPremium || opt1.premium || 15000;
   const efficiency = Math.min(99.9, Math.max(20, (totalScore / (premium / 1000)) * 12));
 
-  // 3. 부족 보장 항목 도출
+  // 3. 부족 보장 항목 도출 (고객 선택 미단정 원칙)
   const deficiencies: string[] = [];
-  if (opts.accidentDeathLimit < 100000000) {
-    deficiencies.push('상해사망 보장액 점검 권장 (가구 소득 및 부양가족 고려)');
-  }
-  if (opts.accidentDisabilityLimit < 100000000) {
-    deficiencies.push('상해후유장해 보장액 점검 권장 (장해 등급별 보장성 확인)');
-  }
-  if (opts.fractureLimit < 500000) {
-    deficiencies.push('골절진단비 한도 확대 권장 (치아파절 대비)');
-  }
-  if (opts.surgeryLimit < 1000000) {
-    deficiencies.push('상해수술비 보장 보완 권장');
-  }
-  if (opts.jobClass >= 2 && !opts.hasLeisureRider) {
-    deficiencies.push('레저스포츠/야외 활동 재해를 위한 전용 특약 추가 권장');
-  }
 
   // 4. 추천 시나리오 플랜 설계 (브랜드 중복 회피)
   const dietPlan = {

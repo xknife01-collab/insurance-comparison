@@ -22,7 +22,7 @@ export const analyzeSurgery = (analysis: any): any => {
   return {
     estimatedPremium: opt1.premium,
     efficiency: 92,
-    deficiencies: ['종수술비 한도 점검 권장', '입원 일당 비중 확인 필요'],
+    deficiencies: ['수술 및 입원 치료비 적정 한도 점검 필요'],
     scores: { totalScore: 88 },
     recommendations: {
       diet: {

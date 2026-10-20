@@ -32,7 +32,7 @@ export const analyzeBrain = (analysis: any): any => {
   return {
     estimatedPremium,
     efficiency: score > 80 ? 95 : 70,
-    deficiencies: currentPremium > estimatedPremium ? ['보험료 지출 규모 점검 권장', '뇌혈관 보장 범위 확대 검토'] : [],
+    deficiencies: [],
     scores: {
       totalScore: score,
       cerebrovascularScore: score,

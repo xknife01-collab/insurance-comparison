@@ -262,17 +262,27 @@ export default defineConfig(({mode}) => {
                       .update(plannerData)
                       .eq('id', plannerId);
 
-                    if (plannerErr && plannerErr.message.includes('certification_message')) {
-                      const { certification_message, ...fallbackData } = plannerData;
-                      const { error: retryErr } = await supabase
-                        .from('planners')
-                        .update(fallbackData)
-                        .eq('id', plannerId);
-                      
-                      if (!retryErr) {
-                        hasCertWarning = true;
-                      } else {
-                        plannerErr = retryErr;
+                    if (plannerErr) {
+                      const problematicKeys = ['non_life_registration_number', 'life_registration_number', 'agency_registration_number', 'certification_message'];
+                      let sanitizedData = { ...plannerData };
+                      let hadRetry = false;
+                      for (const key of problematicKeys) {
+                        if (plannerErr && plannerErr.message.includes(key)) {
+                          delete sanitizedData[key];
+                          hadRetry = true;
+                        }
+                      }
+                      if (hadRetry) {
+                        const { error: retryErr } = await supabase
+                          .from('planners')
+                          .update(sanitizedData)
+                          .eq('id', plannerId);
+                        if (!retryErr) {
+                          hasCertWarning = true;
+                          plannerErr = null;
+                        } else {
+                          plannerErr = retryErr;
+                        }
                       }
                     }
 

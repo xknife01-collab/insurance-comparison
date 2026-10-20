@@ -54,7 +54,7 @@ export const PetExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
       <div className="mb-14 p-5 md:p-6 bg-orange-50/50 rounded-2xl md:rounded-3xl border border-orange-100 text-xs text-slate-600 leading-relaxed space-y-1">
         <p className="font-bold text-orange-900 text-sm mb-1">[반려동물보험 표준 가입 기준 및 주요 면책사항 안내]</p>
         <p>• <strong>대표 면책(보상 제외) 항목:</strong> 예방접종, 정기 건강검진, 스케일링(단순 치석 제거), 불임·중성화 수술, 임신·출산 관련 비용, 미용 및 성형 목적 치료는 보험금 지급 대상에서 제외됩니다.</p>
-        <p>• <strong>면책 대기기간 안내:</strong> 상해 사고는 가입 즉시 보장되나, 일반 질병은 가입일로부터 30일, 슬개골 탈구 및 고관절 등 특정 관절 질환은 가입일로부터 1년(또는 회사별 6개월)의 면책 대기기간이 적용됩니다.</p>
+        <p>• <strong>면책 대기기간 안내:</strong> 상해 사고는 별도 대기기간 없이 적용될 수 있으나, 일반 질병은 가입일로부터 30일, 슬개골 탈구 및 고관절 등 특정 관절 질환은 가입일로부터 1년(또는 회사별 6개월)의 면책 대기기간이 적용됩니다.</p>
         <p>• <strong>실손보상 및 갱신 안내:</strong> 실제 지출한 병원비에서 자기부담금을 차감한 후 가입한 보상 비율(50%~90%) 한도 내에서 실손 보상(다수 가입 시 비례보상)되며, 갱신 시 반려동물 연령 증가 및 손해율 변동에 따라 보험료가 인상될 수 있습니다.</p>
       </div>
 
@@ -98,7 +98,7 @@ export const PetExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => (
           <div className="mt-8 p-5 md:p-6 bg-orange-50 rounded-3xl border border-orange-100">
             <p className="text-orange-700 font-black text-xs mb-1">⚠️ 가입 전 주의사항 (대기기간 및 면책)</p>
             <p className="text-slate-700 font-bold text-xs leading-relaxed">
-              펫보험은 가입 즉시 효력이 발생하는 상해 치료와 달리, 질병 보장은 30일, 슬개골 등 특정 관절 질환은 1년(또는 6개월)의 면책 대기기간이 적용됩니다. 과거 병력 발생 시 해당 부위 부담보 또는 가입 제한이 발생할 수 있으므로 건강할 때 가입 조건을 꼼꼼히 비교하는 것이 권장됩니다.
+              펫보험은 별도 대기기간이 적용되지 않는 상해 치료와 달리, 질병 보장은 30일, 슬개골 등 특정 관절 질환은 1년(또는 6개월)의 면책 대기기간이 적용됩니다. 과거 병력 발생 시 해당 부위 부담보 또는 가입 제한이 발생할 수 있으므로 건강할 때 가입 조건을 꼼꼼히 비교하는 것이 권장됩니다.
             </p>
           </div>
         </div>

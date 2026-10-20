@@ -670,7 +670,7 @@ export const DentalSection = ({ onAction, isUnlocked }: { onAction: () => void, 
               <div className="bg-white p-6 rounded-3xl border border-emerald-100">
                 <p className="font-black text-emerald-600 mb-2 whitespace-nowrap">🛠️ 보존치료 (내 치아 살리기)</p>
                 <p className="text-sm text-gray-600 font-bold leading-relaxed">
-                  레진, 인레이, 온레이, 크라운 등 치아를 뽑지 않고 치료하는 방식입니다. 대기기간 없이 개수 무제한 보장이 많습니다.
+                  레진, 인레이, 온레이, 크라운 등 치아를 뽑지 않고 치료하는 방식입니다. 가입 플랜 및 보험사 약관에 따라 연간 보장 기준이 상이할 수 있습니다.
                 </p>
               </div>
               <div className="bg-white p-6 rounded-3xl border border-emerald-100">
@@ -730,7 +730,7 @@ export const DentalSection = ({ onAction, isUnlocked }: { onAction: () => void, 
                  <TrendingUp className="text-emerald-500" /> DB / 메리츠
                </h4>
                <p className="text-sm text-gray-400 font-bold leading-relaxed">
-                 크라운 치료 무제한 플랜 등 가성비 높은 보존치료 중심의 경쟁력 있는 상품을 보유하고 있습니다.
+                 크라운 치료 등 자주 발생하는 보존치료 중심의 경쟁력 있는 플랜을 제공하고 있습니다.
                </p>
             </div>
             <div className="flex flex-col justify-center">
@@ -1458,6 +1458,22 @@ export const Footer = ({ isPreExisting }: { isPreExisting?: boolean } = {}) => {
                     (보험대리점 등록번호: {branding?.agencyRegistrationNumber || '제 2019020052 호'})
                   </span>
                 </p>
+                <div className="space-y-0.5 text-slate-400 text-[9.5px] font-semibold pl-2 border-l border-slate-800">
+                  <p>
+                    - 모집종사자 손해보험협회등록번호: {(() => {
+                      const reg = branding?.nonLifeRegistrationNumber?.trim();
+                      if (!reg) return '제 00000000000000호';
+                      return reg.startsWith('제') ? reg : `제 ${reg}호`;
+                    })()}
+                  </p>
+                  <p>
+                    - 모집종사자 생명보험협회등록번호: {(() => {
+                      const reg = branding?.lifeRegistrationNumber?.trim();
+                      if (!reg) return '제 00000000000000호';
+                      return reg.startsWith('제') ? reg : `제 ${reg}호`;
+                    })()}
+                  </p>
+                </div>
                 {branding?.customAddress && !branding.customAddress.includes('인카금융서비스') && (
                   <p className="text-slate-400 text-[9.5px]">
                     주소: {branding.customAddress}

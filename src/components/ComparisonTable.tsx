@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { TrendingDown, TrendingUp, ShieldCheck, HeartPulse, Brain, Heart, Stethoscope, Clock, Scale, Dog, Cat, Coins, Calendar, PiggyBank } from 'lucide-react';
+import { TrendingDown, TrendingUp, ShieldCheck, HeartPulse, Brain, Heart, Stethoscope, Clock, Scale, Dog, Cat, Coins, Calendar, PiggyBank, CheckCircle } from 'lucide-react';
 import { InsuranceAnalysis, RecommendationPlan } from '../types/insurance';
 import disclosureDates from '../lib/insurance/disclosure_dates.json';
 
@@ -102,89 +102,128 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
   const dentalRows = [
     { 
       label: '임플란트 보장 한도', 
-      current: analysis.dental?.implantLimit === 'unlimited' ? '무제한' : (analysis.dental?.implantLimit ? `${analysis.dental.implantLimit}개` : '연 3개'), 
-      recommended: '무제한 (보증금 한도 걱정 없이 든든하게)', 
+      current: analysis.dental?.implantLimit === 'unlimited' ? '연간 개수 제한 없음' : (analysis.dental?.implantLimit ? `연간 ${analysis.dental.implantLimit}개 (치아당)` : '연간 3개 (치아당)'), 
+      recommended: '연간 개수 제한 없음 (가입 2년 경과 시, 치아당 보장)', 
       icon: <ShieldCheck className="w-4 h-4 text-purple-600" /> 
     },
     { 
       label: '크라운 보장 금액', 
-      current: formatAmt(analysis.dental?.crownAmount || 200000), 
-      recommended: '최대 50만 원 (고액 보존치료 자기부담금 축소)', 
+      current: `치아당 ${formatAmt(analysis.dental?.crownAmount || 200000)}`, 
+      recommended: '치아당 최대 50만 원 (상품별 연간 한도 기준 준수)', 
       icon: <TrendingUp className="w-4 h-4 text-purple-600" /> 
     },
     { 
       label: '레진/인레이 보장', 
-      current: formatAmt(analysis.dental?.inlayAmount || 100000), 
-      recommended: '최대 15만 원 (자주 쓰는 보존치료 집중 케어)', 
+      current: `치아당 ${formatAmt(analysis.dental?.inlayAmount || 100000)}`, 
+      recommended: '치아당 최대 15만 원 (연간 개수 제한 없음)', 
       icon: <HeartPulse className="w-4 h-4 text-purple-600" /> 
     },
   ];
 
-  // 2. 실손의료비
+  // 2. 실손의료비 전용 비교행 (고객 선택값 1:1 연동)
+  const silsonInfo = (analysis as any).silson || {};
+  const silsonCurrentStatus = silsonInfo.hasCurrent === 'no' 
+    ? '미보유 (신규 가입 희망)' 
+    : silsonInfo.hasCurrent === 'yes'
+    ? '기존 실손 보유 (전환 검토)'
+    : '기본 설계 기준';
+
+  const usageLabel = 
+    silsonInfo.nonReimbursableUsage === 'none' ? '없음 (할인 대상)' :
+    silsonInfo.nonReimbursableUsage === 'under100' ? '100만원 미만 (기본 유지)' :
+    silsonInfo.nonReimbursableUsage === '100to150' ? '100~150만원 (할증 1단계)' :
+    silsonInfo.nonReimbursableUsage === '150to300' ? '150~300만원 (할증 2단계)' :
+    silsonInfo.nonReimbursableUsage === 'over300' ? '300만원 이상 (할증 3단계)' :
+    '연간 비급여 의료이용량 기준';
+
   const silbiRows = [
     { 
-      label: '세대 구분 및 본인부담금', 
-      current: `${analysis.silbi?.generation || 4}세대 (급여 20%/비급여 30%)`, 
-      recommended: '4세대 유지 및 비급여 특약 할인 연동 적용', 
+      label: '실손 가입 구분 및 세대', 
+      current: silsonCurrentStatus, 
+      recommended: `${silsonInfo.subType || '4세대 실손'} (급여 20% / 비급여 30% 본인부담)`, 
       icon: <ShieldCheck className="w-4 h-4 text-blue-600" /> 
     },
     { 
-      label: '비급여 주사제 보장', 
-      current: '가입 (연 250만 원 한도)', 
-      recommended: '가입 유지 및 3대 비급여 한도 관리', 
+      label: '비급여 특약 할인·할증 구간', 
+      current: usageLabel, 
+      recommended: '직전 1년 비급여 지급액 연동 차등 적용 (비급여 미이용 시 할인 검토)', 
+      icon: <TrendingUp className="w-4 h-4 text-blue-600" /> 
+    },
+    { 
+      label: '3대 비급여 특약 보장한도', 
+      current: '법정 표준 보장 기준', 
+      recommended: '도수·체외충격파(최대 350만/50회), 주사제(최대 250만/50회), MRI(최대 300만)', 
       icon: <HeartPulse className="w-4 h-4 text-blue-600" /> 
     },
   ];
 
   // 3. 치매보험
+  const demDiag = analysis.caregiving?.dementiaDiagnosis || 10000000;
+  const demAllowance = analysis.caregiving?.monthlyAllowance || 500000;
   const dementiaRows = [
     { 
       label: '경도 치매 진단금 (CDR 1점)', 
-      current: formatAmt(analysis.caregiving?.dementiaDiagnosis || 3000000), 
+      current: formatAmt(demDiag), 
       recommended: '최대 1,000만 원 (초기 발견 시 즉각 치료비 확보)', 
       icon: <Brain className="w-4 h-4 text-rose-600" /> 
     },
     { 
       label: '중등도 치매 진단금 (CDR 2점)', 
-      current: formatAmt((analysis.caregiving?.dementiaDiagnosis || 3000000) * 2), 
+      current: formatAmt(demDiag * 2), 
       recommended: '최대 2,000만 원 (간병 인프라 조기 세팅 자금)', 
       icon: <Brain className="w-4 h-4 text-rose-600" /> 
     },
     { 
       label: '중증 치매 생활비 (CDR 3점)', 
-      current: '없음', 
+      current: `매월 ${formatAmt(demAllowance)}`, 
       recommended: '매월 100만 원 평생 지급 (종신 보장으로 가족 간병 부담 해소)', 
       icon: <Clock className="w-4 h-4 text-rose-600" /> 
     },
   ];
 
   // 4. 일반 간병보험
+  const careOpts = analysis.caregiving || {};
+  const isCareSupport = careOpts.type === 'support' || (analysis as any).careType === 'support';
+  const isCareStepUp = careOpts.isStepUp ?? (analysis as any).isStepUp ?? false;
+  const isCareNursing = careOpts.isNursingHospital ?? (analysis as any).isNursingHospital ?? false;
+
   const caregivingRows = [
     { 
-      label: '간병인 지원 일당 (보험사 직접 파견)', 
-      current: '없음', 
-      recommended: '일반 병실/요양병원 간병인 매칭 지원', 
-      icon: <Stethoscope className="w-4 h-4 text-emerald-600" /> 
+      label: '간병 서비스 매칭 방식', 
+      current: isCareSupport ? '보험사 직접 파견 (지원형)' : '현금 일당 지급 (사용형)', 
+      recommended: isCareSupport ? '보험사 파견 (간병인 구인 부담 해소)' : '사용일당형 (자율적 간병인 선택 및 영수증 청구)', 
+      icon: <Stethoscope className="w-4 h-4 text-purple-600" /> 
     },
     { 
-      label: '간병비 사용 일당 (현금 지급형)', 
-      current: '없음', 
-      recommended: '하루 최대 15만 원 현금 지급 (간병비 부담 제거)', 
-      icon: <ShieldCheck className="w-4 h-4 text-emerald-600" /> 
+      label: '인건비 상승 대비 체증형', 
+      current: isCareStepUp ? '체증형 가입 (매년 증액)' : '일반 고정형', 
+      recommended: isCareStepUp ? '체증형 유지 (물가 및 인건비 상승 방어)' : '체증형 검토 (장기 입원 시 간병비 실질 가치 보전)', 
+      icon: <TrendingUp className="w-4 h-4 text-purple-600" /> 
+    },
+    { 
+      label: '요양병원 간병비 보장', 
+      current: isCareNursing ? '강화 가입' : '기본형', 
+      recommended: isCareNursing ? '강화 유지 (장기 요양 시 본인부담 완화)' : '강화 검토 (노인 장기 요양 입원 대비)', 
+      icon: <ShieldCheck className="w-4 h-4 text-purple-600" /> 
     },
   ];
 
   // 5. 재가/시설 (장기요양)
+  const nursingOpts = analysis.nursing || {};
+  const nHomeAmt = nursingOpts.homeAmount || 500000;
+  const nFacilityAmt = nursingOpts.facilityAmount || 500000;
+  const nPref = nursingOpts.preferredService || 'both';
+
   const nursingRows = [
     { 
       label: '재가급여 지원 한도 (장기요양 1~5등급)', 
-      current: '없음', 
+      current: nPref === 'facility' ? '미선택' : `매월 ${formatAmt(nHomeAmt)}`, 
       recommended: '매월 최대 100만 원 (방문요양/방문목욕 서비스 국가지원 외 추가 지원)', 
       icon: <ShieldCheck className="w-4 h-4 text-teal-600" /> 
     },
     { 
       label: '시설급여 지원 한도 (요양원/실버타운)', 
-      current: '없음', 
+      current: nPref === 'home' ? '미선택' : `매월 ${formatAmt(nFacilityAmt)}`, 
       recommended: '매월 최대 120만 원 (요양시설 입소 시 매달 생활비 보조)', 
       icon: <HeartPulse className="w-4 h-4 text-teal-600" /> 
     },
@@ -356,19 +395,41 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
 
   // 10. 어린이보험
   const childInfo = analysis.child || { targetAgeGroup: 'youth', maturity: 100 };
-  const isPreFamily = category === 'pre_family' || category === 'child_sick' || category.includes('유병력자') || !!analysis.child?.isPreFamily;
+  const isChildSick = category === 'child_sick' || category.includes('유병력자') || (category.includes('어린이') && category.includes('유병')) || category === 'pre_family';
+  const isPreFamily = (category.includes('태아') || !!analysis.child?.isPreFamily) && !isChildSick;
+
+  const childSickRows = [
+    { 
+      label: '성장기 주요 질병 진단비', 
+      current: '간편고지 심사 기준', 
+      recommended: '소아 다빈도 만성질환 및 3대 질병 중심 정액 보장', 
+      icon: <ShieldCheck className="w-4 h-4 text-blue-600" /> 
+    },
+    { 
+      label: '입원일당 및 수술비 보장', 
+      current: '회사별 인수 심사 매칭', 
+      recommended: '성장기 치료 빈도가 높은 소아 수술 및 입원비 집중 보강', 
+      icon: <HeartPulse className="w-4 h-4 text-blue-600" /> 
+    },
+    { 
+      label: '간편심사 및 무사고 전환', 
+      current: '3-N-5 간편고지 플랜', 
+      recommended: '무사고 기간 경과 시 일반 표준체 전환 및 보험료 인하 옵션', 
+      icon: <CheckCircle className="w-4 h-4 text-blue-600" /> 
+    },
+  ];
 
   const preFamilyRows = [
     { 
       label: '산모 임신질환 수술/입원비', 
-      current: '없음', 
-      recommended: '가입 (임신성 고혈압/당뇨 및 조기진통 집중 방어)', 
+      current: '미가입 시 본인 부담', 
+      recommended: '임신성 고혈압/당뇨 및 조기진통 집중 방어', 
       icon: <ShieldCheck className="w-4 h-4 text-emerald-600" /> 
     },
     { 
       label: '태아 선천이상 수술비', 
-      current: '없음', 
-      recommended: '최대 500만 원 (혀유착증, 다지증 등 출생 즉시 수술 케어)', 
+      current: '미가입 시 본인 부담', 
+      recommended: '최대 500만 원 (혀유착증, 다지증 등 신생아 주요 수술 케어)', 
       icon: <HeartPulse className="w-4 h-4 text-emerald-600" /> 
     },
   ];
@@ -376,14 +437,14 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
   const prenatalRows = [
     { 
       label: '저체중아/신생아 입원일당', 
-      current: '없음', 
+      current: '미가입 시 본인 부담', 
       recommended: '2.5kg 미만 출생 시 인큐베이터 비용 매칭 지원', 
       icon: <ShieldCheck className="w-4 h-4 text-emerald-600" /> 
     },
     { 
       label: '선천이상 수술비 (혀유착 등)', 
-      current: '없음', 
-      recommended: '1회당 최대 500만 원 (다지증, 선천성 모반 등 사소한 이상 든든하게 보장)', 
+      current: '미가입 시 본인 부담', 
+      recommended: '1회당 최대 500만 원 (다지증, 선천성 모반 등 주요 이상 보장)', 
       icon: <HeartPulse className="w-4 h-4 text-emerald-600" /> 
     },
   ];
@@ -403,11 +464,31 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     },
   ];
 
+  const childOpts = analysis.child || {};
+  const childMaturity = childOpts.maturity || 30;
+  const childFocus = childOpts.focusArea || 'majorDisease';
+
   const childRows = [
+    { 
+      label: '보장 만기 및 설계 유형', 
+      current: childMaturity === 100 ? '100세 만기 (평생 안심형)' : '30세 만기 (가성비 실속형)', 
+      recommended: childMaturity === 100 
+        ? '100세 비갱신 유지 (평생 동안 동일한 보험료로 3대 질병 보장)' 
+        : '30세 만기 + 계약전환권 (성장기 알뜰 보장 후 성인보험 무심사 전환)', 
+      icon: <Calendar className="w-4 h-4 text-emerald-600" /> 
+    },
+    { 
+      label: '중점 보장 영역', 
+      current: childFocus === 'majorDisease' ? '3대 질환 (암·뇌·심) 집중' : '입원일당 & 수술비 강화', 
+      recommended: childFocus === 'majorDisease' 
+        ? '소아암·뇌혈관·허혈성심장 진단비 극대화 (성장기 중대 질환 집중 보강)' 
+        : '잦은 독감/폐렴 입원 및 성장기 생활 안전사고 수술비 집중 대비', 
+      icon: <HeartPulse className="w-4 h-4 text-emerald-600" /> 
+    },
     { 
       label: '3대 진단비 (암·뇌·심장)', 
       current: formatAmt(30000000), 
-      recommended: '최대 5,000만 원 (어린이보험 특유의 면책기간/감액기간 없음 활용)', 
+      recommended: '최대 5,000만 원 (성인기까지 이어지는 든든한 3대 치료 자금 확보)', 
       icon: <ShieldCheck className="w-4 h-4 text-emerald-600" /> 
     },
   ];
@@ -911,7 +992,9 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     { 
       label: '레저스포츠 상해 특약', 
       current: accidentOpts.hasLeisureRider ? '가입 완료' : '미가입', 
-      recommended: '가입 (등산, 골프, 자전거 등 야외 취미 활동 리스크 집중 대비)', 
+      recommended: accidentOpts.hasLeisureRider 
+        ? '유지 (등산, 골프, 자전거 등 야외 취미 활동 리스크 집중 대비)' 
+        : '선택 권장 (야외 취미 활동 빈도에 따른 선별적 대비)', 
       icon: <Clock className="w-4 h-4 text-red-600" /> 
     },
   ];
@@ -953,29 +1036,29 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
 
   // 17. 유병자보험 전용 비교행
   const preExistingTypeLabel: Record<string, string> = {
-    '3.0.5': '3개월 고지 (경증)',
-    '3.2.5': '1년 고지 (중등)',
-    '3.3.5': '3년 고지 (중증)',
-    '3.5.5': '5년 고지 (최중증)',
+    '3.0.5': '3개월 고지 (초경증)',
+    '3.2.5': '2년 무사고 (일반 간편)',
+    '3.3.5': '3년 무사고 (실속 간편)',
+    '3.5.5': '5년 무사고 (우대 간편)',
   };
-  const currentPreExType = analysis.preExistingType || '3.3.5';
+  const currentPreExType = analysis.preExistingType || '3.2.5';
   const preExistingRows = [
     {
       label: '고지의무 기간 (현재 유형)',
-      current: preExistingTypeLabel[currentPreExType] || '3년 고지',
-      recommended: '3개월 고지형 전환 가능 여부 검토 (병력 기준 완화 시 보험료 최대 35% 절감)',
+      current: preExistingTypeLabel[currentPreExType] || '간편고지 심사형',
+      recommended: '3개월 고지형 전환 가능 여부 검토 (병력 기준 완화 시 인수 조건 재확인)',
       icon: <ShieldCheck className="w-4 h-4 text-amber-600" />
     },
     {
       label: '표준체 대비 보험료 할증',
-      current: currentPreExType === '3.0.5' ? '~15% 할증' : currentPreExType === '3.2.5' ? '~30% 할증' : '~50% 이상 할증',
-      recommended: '할증 최소화 플랜 (동일 보장 유지하면서 보험사별 할증률 최저 구간 선택)',
+      current: '고지 유형별 인수 심사 기준 상이',
+      recommended: '할증 최소화 플랜 (동일 보장 유지하면서 보험사별 인수 조건 비교)',
       icon: <TrendingDown className="w-4 h-4 text-amber-600" />
     },
     {
-      label: '일반암 진단비 보장 한도',
-      current: formatAmt(analysis.cancer?.currentAmount ?? 20000000),
-      recommended: '최대 3,000만 원 (유병자 한도 내 최대치 — 할증 없이 보장 극대화)',
+      label: '3대 질병 수술·입원 보장',
+      current: '기본 가입 한도',
+      recommended: '유병자 전용 수술·입원 한도 내 최적 구성 (반복 지급형)',
       icon: <HeartPulse className="w-4 h-4 text-amber-600" />
     },
     {
@@ -986,30 +1069,52 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     },
   ];
 
-  // 18. 수술/입원보험 전용 비교행
+  // 18. 수술/입원보험 전용 비교행 (고객 실제 선택 옵션 1:1 연동)
+  const surgOpts = (analysis as any).surgery_hospital || {};
+  const surgFocusLabel = 
+    surgOpts.focus === 'named' ? '1~5종 정밀 요율형' :
+    surgOpts.focus === 'major' ? '중증 질환 집중형' : '광범위 질병/상해형';
+  const hospitalAmtLabel = surgOpts.hospitalAmount 
+    ? `${Number(surgOpts.hospitalAmount).toLocaleString()}원` 
+    : '기본 설계 기준';
+  const caregiverLabel = 
+    surgOpts.caregiverOption === 'support' ? '지원 일당형' :
+    surgOpts.caregiverOption === 'use' ? '사용 일당형' : '선택 안함';
+  const tertiaryLabel = surgOpts.tertiaryHospital ? '상급종합병원 특약 적용' : '일반 병원 기준';
+
   const surgeryHospitalRows = [
     {
-      label: '1~5종 수술비 보장',
-      current: formatAmt(analysis.surgery?.currentAmount ?? 500000),
-      recommended: '5종 수술 최대 500만 원 (맹장·담낭·자궁 등 빈번한 수술 전액 실손 대비)',
+      label: '수술비 보장 스타일',
+      current: surgFocusLabel,
+      recommended: surgOpts.focus === 'named' 
+        ? '1~5종 수술 난이도별 차등 고액 보장 (수술 부위별 정밀 대비)' 
+        : surgOpts.focus === 'major'
+        ? '암·뇌·심 등 3대 중증 수술 집중 보장'
+        : '질병·상해 전반을 폭넓게 커버하는 다빈도 수술 보장',
       icon: <Stethoscope className="w-4 h-4 text-sky-600" />
     },
     {
-      label: '질병 입원일당',
-      current: '없음 또는 1~2만 원',
-      recommended: '하루 최대 5만 원 (장기 입원 시 생활비 손실 보전)',
+      label: '1일당 입원비 보장',
+      current: hospitalAmtLabel,
+      recommended: surgOpts.hospitalAmount && surgOpts.hospitalAmount > 0
+        ? `하루 ${Number(surgOpts.hospitalAmount).toLocaleString()}원 (입원 1일차부터 정액 보장)`
+        : '기본 입원 치료비 기준 설계',
       icon: <ShieldCheck className="w-4 h-4 text-sky-600" />
     },
     {
-      label: '중환자실(ICU) 입원일당',
-      current: '없음',
-      recommended: '하루 최대 10만 원 (일반 병실 대비 5배 비용 — 중증 입원 핵심 방어)',
+      label: '간병인 서비스 옵션',
+      current: caregiverLabel,
+      recommended: surgOpts.caregiverOption && surgOpts.caregiverOption !== 'none'
+        ? `${caregiverLabel} (간병 발생 시 실질 비용 부담 완화)`
+        : '필요 시 간병인 일당 연계 검토',
       icon: <HeartPulse className="w-4 h-4 text-sky-600" />
     },
     {
-      label: '종합병원 이상 입원일당 할증',
-      current: '없음',
-      recommended: '3차 상급 종합병원 이상 입원 시 일당 2배 지급 특약 적용',
+      label: '상급종합병원 집중 보장',
+      current: tertiaryLabel,
+      recommended: surgOpts.tertiaryHospital 
+        ? '3차 상급 종합병원 입원 시 추가 일당 보전' 
+        : '대학병원·종합병원 집중 치료 환경 고려 검토',
       icon: <TrendingUp className="w-4 h-4 text-sky-600" />
     },
   ];
@@ -1019,9 +1124,11 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
   if (isCancer) {
     comparisonRows = cancerRows;
   } else if (isChild) {
-    comparisonRows = isPreFamily 
-      ? preFamilyRows 
-      : (childInfo.targetAgeGroup === 'prenatal' ? prenatalRows : childInfo.targetAgeGroup === 'youth' ? youthRows : childRows);
+    comparisonRows = isChildSick
+      ? childSickRows
+      : (isPreFamily 
+          ? preFamilyRows 
+          : (childInfo.targetAgeGroup === 'prenatal' ? prenatalRows : childInfo.targetAgeGroup === 'youth' ? youthRows : childRows));
   } else if (isDental) {
     comparisonRows = dentalRows;
   } else if (isSilbi) {
@@ -1168,6 +1275,78 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
             </motion.div>
           ))}
         </div>
+
+        {isDental && (
+          <div className="mt-2 px-2">
+            <p className="text-[11px] sm:text-xs font-bold text-gray-400 leading-relaxed break-keep">
+              ※ 각 담보는 질병(충치·치주질환) 치료 시 면책기간 및 감액기간이 적용될 수 있으며, 보험사 및 가입 상품 플랜에 따라 연간 보장 한도와 세부 지급 기준이 상이할 수 있습니다.
+            </p>
+          </div>
+        )}
+
+        {isPreExisting && (
+          <div className="mt-2 px-2">
+            <p className="text-[11px] sm:text-xs font-bold text-gray-400 leading-relaxed break-keep">
+              ※ 유병자(간편심사) 보험은 일반 표준체에 비해 가입 심사가 간소화된 반면, 보험료가 다소 높을 수 있으며 가입 한도가 일부 제한될 수 있습니다.
+            </p>
+          </div>
+        )}
+
+        {isSurgeryHospital && (
+          <div className="mt-2 px-2">
+            <p className="text-[11px] sm:text-xs font-bold text-gray-400 leading-relaxed break-keep">
+              ※ 수술비 및 입원비 특약은 동일 질병으로 인한 반복 수술 시 지급 제한 조건이나 면책 기간이 적용될 수 있으며, 가입 담보 및 보험사별 상품 약관에 따라 세부 지급 기준이 상이할 수 있습니다.
+            </p>
+          </div>
+        )}
+
+        {isSilbi && (
+          <div className="mt-2 px-2">
+            <p className="text-[11px] sm:text-xs font-bold text-gray-400 leading-relaxed break-keep">
+              ※ 실손의료보험은 실제 발생한 치료비 한도 내에서 비례 보상되며(중복 보상 불가), 1년 단위 갱신형 상품으로 5년마다 재가입 주기가 도래합니다. 직전 1년간 비급여 의료 이용량에 따라 보험료 할인 또는 할증이 차등 적용될 수 있습니다.
+            </p>
+          </div>
+        )}
+
+        {isAccident && (
+          <div className="mt-2 px-2">
+            <p className="text-[11px] sm:text-xs font-bold text-gray-400 leading-relaxed break-keep">
+              ※ 상해보험은 피보험자의 직업·직무 위험도(직업급수) 및 운전 여부 변경 시 보험회사에 지체 없이 알려야 할 의무(통지의무)가 있으며, 이를 이행하지 않을 경우 보험금 지급이 제한되거나 계약이 해지될 수 있습니다. 세부 보장 범위 및 면책 사항은 해당 상품 약관을 참조하시기 바랍니다.
+            </p>
+          </div>
+        )}
+
+        {isGeneralCaregiving && (
+          <div className="mt-2 px-2">
+            <p className="text-[11px] sm:text-xs font-bold text-gray-400 leading-relaxed break-keep">
+              ※ 간병인 지원/사용일당 및 요양병원 관련 특약은 1회 입원당 또는 연간 최대 보장 일수(최대 180일 등)가 상품 약관에 따라 제한될 수 있으며, 간병인 파견 여건 및 의료기관 종별(일반병원 vs 요양병원)에 따라 1일당 지급 금액이 상이할 수 있습니다.
+            </p>
+          </div>
+        )}
+
+        {isDementia && (
+          <div className="mt-2 px-2">
+            <p className="text-[11px] sm:text-xs font-bold text-gray-400 leading-relaxed break-keep">
+              ※ 치매보험은 전문의(신경과·정신건강의학과)에 의한 임상치매척도(CDR) 판정 및 뇌영상 검사(CT·MRI) 결과가 일치해야 진단비가 지급되며, 가입 후 일정 기간 이내 발병 시 감액 또는 면책 기간이 적용될 수 있습니다. 치매 발병 시 피보험자 본인의 보험금 청구가 어려울 수 있으므로 계약 체결 시 지정대리청구인을 사전 지정하시기 바랍니다.
+            </p>
+          </div>
+        )}
+
+        {isNursing && (
+          <div className="mt-2 px-2">
+            <p className="text-[11px] sm:text-xs font-bold text-gray-400 leading-relaxed break-keep">
+              ※ 재가·시설 요양보험은 국민건강보험공단 장기요양 등급 판정(1~5등급 및 인지지원등급)을 받아야 보장이 개시되며, 재가급여는 복지용구 및 방문요양·방문목욕 등의 실제 월 이용 내역이 충족되어야 지원금이 지급됩니다. 시설급여 시 요양원 등 입소 시설 종류에 따라 비급여 식재료비 등 본인부담금이 추가로 발생할 수 있습니다.
+            </p>
+          </div>
+        )}
+
+        {isChild && (
+          <div className="mt-2 px-2">
+            <p className="text-[11px] sm:text-xs font-bold text-gray-400 leading-relaxed break-keep">
+              ※ 어린이보험은 상법 제732조에 따라 만 15세 미만 피보험자의 사망 담보 가입이 금지되어 진단비·수술비 등 순수 치료비 중심으로 설계됩니다. 담보별 세부 지급 기준 및 면책 조건은 해당 상품 약관을 참조하시기 바라며, 30세 만기 플랜의 경우 만기 시점에 무심사로 계약을 연장할 수 있는 계약전환제도 지원 여부를 확인하시기 바랍니다.
+            </p>
+          </div>
+        )}
 
       </div>
     </div>

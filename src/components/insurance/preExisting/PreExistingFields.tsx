@@ -110,21 +110,6 @@ export const PreExistingFields: React.FC<Props> = ({
                 </div>
             </div>
          </div>
-         <div className="text-left sm:text-right z-10 w-full sm:w-auto">
-            <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-[1.8rem] border border-white/10 inline-block w-full sm:w-auto">
-              <p className="text-[0.65rem] text-indigo-200 font-black mb-1">예상 보험료 할인율</p>
-              <div className="flex items-baseline justify-start sm:justify-end gap-1">
-                <span className="text-3xl font-black text-orange-400">
-                  {threeMonth === 'yes' || fiveYearMajor === 'yes' ? '0' : 
-                   noAccidentYears === '5' ? '40' : 
-                   noAccidentYears === '3' ? '25' : 
-                   noAccidentYears === '2' ? '15' : 
-                   noAccidentYears === '1' ? '8' : '0'}%
-                </span>
-                <span className="text-white font-black text-sm">SAVE</span>
-              </div>
-            </div>
-         </div>
       </div>
     </div>
   );
