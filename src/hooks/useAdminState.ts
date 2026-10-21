@@ -2389,7 +2389,14 @@ export function useAdminState(initialTab?: 'login' | 'register') {
           if (currentUser.agencyId) {
             const myAgency = currentAgencies.find(a => a.id === currentUser.agencyId);
             if (myAgency) {
-              setEditAgencyCode(myAgency.code || myAgency.id || '');
+              const latestAgencyCode = myAgency.code || myAgency.id || '';
+              setEditAgencyCode(latestAgencyCode);
+              if (currentUser.agencyCode !== latestAgencyCode) {
+                setCurrentUser(prev => ({
+                  ...prev,
+                  agencyCode: latestAgencyCode || undefined
+                }));
+              }
             }
           }
         }
@@ -2972,6 +2979,11 @@ export function useAdminState(initialTab?: 'login' | 'register') {
           email: editEmail
         } : p));
         if (currentUser.role === 'agency' && currentUser.agencyId) {
+          const cleanAgencyCode = editAgencyCode.trim().toLowerCase();
+          setCurrentUser(prev => ({
+            ...prev,
+            agencyCode: cleanAgencyCode
+          }));
           setAgencies(prev => prev.map(a => a.id === currentUser.agencyId ? {
             ...a,
             name: editCompanyName,
@@ -2979,7 +2991,7 @@ export function useAdminState(initialTab?: 'login' | 'register') {
             address: editCustomAddress,
             logo_url: editLogoUrl,
             email: editEmail,
-            code: editAgencyCode.trim().toLowerCase(),
+            code: cleanAgencyCode,
             greeting_title: editGreetingTitle,
             greeting_content: editGreetingContent
           } : a));
@@ -3039,6 +3051,13 @@ export function useAdminState(initialTab?: 'login' | 'register') {
       }
 
       updateBranding(updatedBranding);
+      if (currentUser.role === 'agency' && currentUser.agencyId) {
+        const cleanAgencyCode = editAgencyCode.trim().toLowerCase();
+        setCurrentUser(prev => ({
+          ...prev,
+          agencyCode: cleanAgencyCode
+        }));
+      }
       if (resData.warning === 'missing_columns' || resData.warning === 'certification_message_missing') {
         alert(resData.message);
         setToastMessage("⚠️ 일부 항목 제외 저장됨");

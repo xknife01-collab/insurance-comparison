@@ -299,3 +299,18 @@ export const renderPagination = (
     </div>
   );
 };
+
+/**
+ * 대리점 고유코드 표시용 포맷터
+ * - UUID 형태(예: 3f2b1c9e-8a4d-4e2f-9b1a-... )인 경우 앞 8자리만 노출
+ * - 그 외 일반 코드(예: won-novel, 2019020052)는 원본 그대로 반환
+ * - null / undefined / 빈 문자열은 빈 문자열 반환
+ */
+export const formatAgencyCode = (codeOrId?: string | null): string => {
+  if (!codeOrId) return '';
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(codeOrId);
+  if (isUuid) {
+    return codeOrId.substring(0, 8);
+  }
+  return codeOrId;
+};

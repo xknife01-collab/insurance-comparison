@@ -2,7 +2,7 @@ import React from 'react';
 import { Check } from 'lucide-react';
 import { Lead, Planner, Agency } from '../AdminDashboard';
 import { LeadDistributionSimulator } from '../LeadDistributionSimulator';
-import { getInsuranceTypeName, isLeadConsult } from './adminUtils';
+import { getInsuranceTypeName, isLeadConsult, formatAgencyCode } from './adminUtils';
 
 interface SettingsTabProps {
   currentUser: any;
@@ -199,14 +199,14 @@ export function SettingsTab({
                       <span className="text-[10px] text-slate-500 font-mono select-all">
                         /
                         {currentUser.agencyId 
-                          ? `${currentUser.agencyCode ? (currentUser.agencyCode.length > 8 ? currentUser.agencyCode.substring(0, 8) : currentUser.agencyCode) : (currentUser.agencyId ? currentUser.agencyId.substring(0, 8) : '')}/${p.planner_code}`
+                          ? `${formatAgencyCode(currentUser.agencyCode || currentUser.agencyId || '')}/${p.planner_code}`
                           : p.planner_code}
                       </span>
                     </div>
                     <button
                       onClick={() => {
                         const agencyPath = currentUser.agencyId 
-                          ? `${currentUser.agencyCode ? (currentUser.agencyCode.length > 8 ? currentUser.agencyCode.substring(0, 8) : currentUser.agencyCode) : (currentUser.agencyId ? currentUser.agencyId.substring(0, 8) : '')}/`
+                          ? `${formatAgencyCode(currentUser.agencyCode || currentUser.agencyId || '')}/`
                           : '';
                         navigator.clipboard.writeText(`${window.location.origin}/${agencyPath}${p.planner_code}`);
                         alert(`[${p.name}] 설계사의 개인 홍보 링크가 복사되었습니다!`);

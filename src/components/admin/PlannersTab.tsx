@@ -2,7 +2,7 @@ import React from 'react';
 import { Copy, Check, Plus } from 'lucide-react';
 import { Planner, Agency } from '../AdminDashboard';
 import { createClient } from '../../utils/supabase/client';
-import { DEFAULT_PROFILE_IMG } from './adminUtils';
+import { DEFAULT_PROFILE_IMG, formatAgencyCode } from './adminUtils';
 
 interface PlannersTabProps {
   currentUser: any;
@@ -225,13 +225,13 @@ export function PlannersTab({
                   <span>
                     개인주소: /
                     {currentUser.agencyId 
-                      ? `${currentUser.agencyCode ? (currentUser.agencyCode.length > 8 ? currentUser.agencyCode.substring(0, 8) : currentUser.agencyCode) : (currentUser.agencyId ? currentUser.agencyId.substring(0, 8) : '')}/${p.planner_code}`
+                      ? `${formatAgencyCode(currentUser.agencyCode || currentUser.agencyId || '')}/${p.planner_code}`
                       : p.planner_code}
                   </span>
                   <button
                     onClick={() => {
                       const agencyPath = currentUser.agencyId 
-                        ? `${currentUser.agencyCode ? (currentUser.agencyCode.length > 8 ? currentUser.agencyCode.substring(0, 8) : currentUser.agencyCode) : (currentUser.agencyId ? currentUser.agencyId.substring(0, 8) : '')}/`
+                        ? `${formatAgencyCode(currentUser.agencyCode || currentUser.agencyId || '')}/`
                         : '';
                       navigator.clipboard.writeText(`${window.location.origin}/${agencyPath}${p.planner_code}`);
                       alert("개인 홍보 링크가 복사되었습니다!");
