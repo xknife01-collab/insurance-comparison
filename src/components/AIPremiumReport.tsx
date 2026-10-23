@@ -19,6 +19,20 @@ interface AIPremiumReportProps {
 
 export const AIPremiumReport: React.FC<AIPremiumReportProps> = ({ analysis, deficiencies, scores, forceMobile }) => {
   const category = analysis.selectedCategory ?? '';
+  const isCar = category === 'car' || category.includes('자동차');
+  const isDriver = category === 'driver' || category.includes('운전자');
+  const isPet = category === 'pet' || category.includes('펫') || category.includes('반려');
+  const isGolf = category === 'golf' || category.includes('골프') || category.includes('레저');
+  const isFire = category === 'fire_real' || category.includes('주택화재') || (category.includes('화재') && !category.includes('재물'));
+  const isProperty = category.includes('재물') || category.includes('property');
+  const isPension = category.includes('연금') || category.includes('annuity') || category.includes('pension');
+  const isWholeLife = category.includes('종신') || category.includes('whole');
+  const isTerm = category.includes('정기') || category === 'term';
+  const isVariable = category.includes('변액') || category.includes('variable');
+  const isSavings = category.includes('저축') || category.includes('savings');
+  const isCredit = category.includes('신용') || category.includes('credit');
+  const isSilson = category.includes('실손') || category.includes('실비') || category.includes('silson');
+  const isLegal = (category.includes('법률') || category.includes('legal') || category.includes('민사') || category.includes('형사')) && !isDriver;
   const { riskTitle, riskPercent, riskStats, goodPoints, badPoints, actionTips } = generateComplianceReportData(category, analysis, deficiencies);
   const statSource = getComplianceStatSource(category);
 
@@ -38,7 +52,9 @@ export const AIPremiumReport: React.FC<AIPremiumReportProps> = ({ analysis, defi
         <div className="space-y-4 max-w-3xl">
           <div className="inline-flex items-center gap-3 px-6 py-2.5 bg-purple-500/20 text-purple-300 rounded-full text-sm md:text-base font-black tracking-wide border border-purple-500/30 shadow-sm">
             <Sparkles className="w-5 h-5 text-orange-400 animate-pulse" />
-            <span className="text-orange-400">선택 맞춤 플랜 AI 1:1 정밀분석 리포트</span>
+            <span className="text-orange-400">
+              {isCar || isDriver || isPet || isGolf || isFire || isProperty || isPension || isWholeLife || isTerm || isVariable || isLegal || isSavings || isCredit || isSilson ? '[간편플랜] 표준 기본 분석 리포트 (미입력 정보는 표준값 적용)' : '선택 맞춤 플랜 AI 1:1 정밀분석 리포트'}
+            </span>
           </div>
           <h3 className="text-3xl md:text-4xl font-black tracking-tight text-white leading-tight">
             {riskTitle}
@@ -87,8 +103,8 @@ export const AIPremiumReport: React.FC<AIPremiumReportProps> = ({ analysis, defi
 
           <div className="border-t border-white/10 pt-6 mt-8 space-y-4">
             <div className="flex items-center justify-between text-xs font-bold text-gray-400">
-              <span>동일 성별/연령대 건강 취약 리스크 지표</span>
-              <span className="text-purple-400 font-black">{riskPercent}% 위험 노출</span>
+              <span>{isCar ? '동일 차종/연령대 사고 배상 리스크 지표' : isDriver ? '동일 연령/운전경력별 형사사고 리스크 지표' : isPet ? '동일 품종/연령대 반려동물 다발질환 리스크 지표' : isGolf ? '동일 연령/활동별 필드 안전사고 리스크 지표' : isFire ? '동일 주거유형/면적별 주거화재 리스크 지표' : isProperty ? '동일 업종/사업장 규모별 재난 배상 리스크 지표' : isPension ? '동일 연령대 은퇴자산 준비 및 노후소득 공백 리스크 지표' : isSavings ? '동일 연령대 자산형성 및 비과세 저축 리스크 지표' : isCredit ? '동일 연령대 대출 상환 및 채무 상속 리스크 지표' : isSilson ? '동일 연령대 실손 의료비 지출 및 비급여 이용 리스크 지표' : isWholeLife ? '동일 연령대 가장 유고 및 유가족 경제 리스크 지표' : (isTerm || isVariable) ? '동일 연령대 가장 조기사망 및 자산변동 리스크 지표' : isLegal ? '동일 연령/활동별 일상생활 법적 분쟁 리스크 지표' : '동일 성별/연령대 건강 취약 리스크 지표'}</span>
+              <span className="text-purple-400 font-black">{riskPercent}% {isCar || isDriver || isPet || isGolf || isFire || isProperty || isPension || isSavings || isCredit || isSilson || isWholeLife || isTerm || isVariable || isLegal ? '주의 요망' : '위험 노출'}</span>
             </div>
             <div className="w-full h-3 bg-white/10 rounded-full overflow-hidden">
               <motion.div 

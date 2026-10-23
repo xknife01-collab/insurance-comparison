@@ -237,7 +237,7 @@ export function getComplianceStatSource(categoryRaw?: string): ComplianceStatSou
   }
 
   // 23. 법률비용보험
-  if (category.includes('legal') || category.includes('법률')) {
+  if ((category.includes('legal') || category.includes('법률') || category.includes('민사') || category.includes('형사')) && !category.includes('운전자') && category !== 'driver') {
     return {
       categoryName: '법률비용보험',
       title: '2022년 사법연감 (민사·가사·행정 소송 통계)',

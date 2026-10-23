@@ -1348,6 +1348,176 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
           </div>
         )}
 
+        {isCar && (
+          <div className="mt-4 p-5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-2 text-left">
+            <p className="text-xs font-black text-slate-800">
+              ※ [고객 미선택 담보에 대한 보장 제외 안내]
+            </p>
+            <p className="text-[11px] font-bold text-slate-600 leading-relaxed break-keep">
+              고객이 선택하지 않은 담보(자기차량손해 미가입, 자동차상해 미선택, 대물배상 기본한도 유지 등)는 사고 발생 시 해당 손해에 대해 보상받으실 수 없거나 보장 한도가 제한되며, 초과 손해액은 전액 본인 부담이 발생할 수 있습니다.
+            </p>
+            <p className="text-xs font-black text-slate-800 pt-2 border-t border-slate-200">
+              ※ [고객 미제공 정보 및 간편플랜 산출 기준 안내]
+            </p>
+            <p className="text-[11px] font-bold text-slate-600 leading-relaxed break-keep">
+              고객이 직접 정보를 입력하지 않거나 간편플랜으로 조회한 경우, 통계적 표준 기본값(현대 그랜저 2024년식, 1인 한정, 3년 무사고, 연간 주행거리 등)을 적용하여 산출된 예상 보험료이므로 실제 청약 시 본인의 가입 조건, 사고 이력 및 할인특약 증빙 제출 여부에 따라 실제 납입 보험료와 상이할 수 있습니다.
+            </p>
+          </div>
+        )}
+
+        {isDriver && (
+          <div className="mt-4 p-5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-2 text-left">
+            <p className="text-xs font-black text-slate-800">
+              ※ [고객 미선택 담보에 대한 보장 제외 안내]
+            </p>
+            <p className="text-[11px] font-bold text-slate-600 leading-relaxed break-keep">
+              고객이 선택하지 않은 담보(경찰조사단계 변호사선임비용, 자동차사고부상치료비(자부상), 대물벌금 등)는 사고 발생 시 해당 손해에 대해 보상받으실 수 없거나 보장 한도가 제한되며, 초과 형사합의금 및 변호사 선임료는 전액 본인 부담이 발생할 수 있습니다.
+            </p>
+            <p className="text-xs font-black text-slate-800 pt-2 border-t border-slate-200">
+              ※ [고객 미제공 정보 및 간편플랜 산출 기준 안내]
+            </p>
+            <p className="text-[11px] font-bold text-slate-600 leading-relaxed break-keep">
+              고객이 직접 정보를 입력하지 않거나 간편플랜으로 조회한 경우, 통계적 표준 기본값(자가용 운행, 상해 위험 1급 사무직, 40세 등)을 적용하여 산출된 예상 보험료이므로 실제 청약 시 본인의 실제 운전 목적(영업용/화물차 등) 및 직업 급수 변경에 따라 실제 납입 보험료와 가입 가능 담보가 상이할 수 있습니다.
+            </p>
+          </div>
+        )}
+
+        {isPet && (
+          <div className="mt-4 p-5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-2 text-left">
+            <p className="text-xs font-black text-slate-800">
+              ※ [고객 미선택 담보에 대한 보장 제외 안내]
+            </p>
+            <p className="text-[11px] font-bold text-slate-600 leading-relaxed break-keep">
+              고객이 선택하지 않은 선택 특약(슬개골/고관절 탈구, 피부 질환, 치과/구강 질환, 반려동물 배상책임 등)은 진료 및 사고 발생 시 보상 범위에서 제외되며 전액 본인 부담이 발생할 수 있습니다.
+            </p>
+            <p className="text-xs font-black text-slate-800 pt-2 border-t border-slate-200">
+              ※ [고객 미제공 정보 및 간편플랜 산출 기준 안내]
+            </p>
+            <p className="text-[11px] font-bold text-slate-600 leading-relaxed break-keep">
+              고객이 직접 품종 및 연령 정보를 입력하지 않거나 간편플랜으로 조회한 경우, 통계적 표준 기본값을 적용하여 산출된 예상 보험료이므로 실제 청약 시 실제 품종, 연령, 동물등록 여부 및 과거 동물병원 진료 이력에 따라 인수 거절 또는 보험료가 상이할 수 있습니다.
+            </p>
+          </div>
+        )}
+
+        {isGolf && (
+          <div className="mt-4 p-5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-2 text-left">
+            <p className="text-xs font-black text-slate-800">
+              ※ [고객 미선택 담보에 대한 보장 제외 안내]
+            </p>
+            <p className="text-[11px] font-bold text-slate-600 leading-relaxed break-keep">
+              고객이 선택하지 않은 특약(골프용품 손해/도난, 홀인원 축하비용, 골프활동 중 배상책임 등)은 사고 발생 시 해당 손해에 대해 보상받으실 수 없으며 전액 본인 부담이 발생할 수 있습니다.
+            </p>
+            <p className="text-xs font-black text-slate-800 pt-2 border-t border-slate-200">
+              ※ [고객 미제공 정보 및 간편플랜 산출 기준 안내]
+            </p>
+            <p className="text-[11px] font-bold text-slate-600 leading-relaxed break-keep">
+              고객이 직접 경기 유형(일반 아마추어/프로·지도자) 정보를 입력하지 않거나 간편플랜으로 조회한 경우, 통계적 표준 기본값(일반 아마추어 라운딩 기준)을 적용하여 산출된 예상 보험료이므로 실제 프로 골퍼나 레슨 지도자 자격 여부에 따라 일부 특약 가입이 제한되거나 보험료가 상이할 수 있습니다.
+            </p>
+          </div>
+        )}
+
+        {isFire && (
+          <div className="mt-4 p-5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-2 text-left">
+            <p className="text-xs font-black text-slate-800">
+              ※ [고객 미선택 담보에 대한 보장 제외 안내]
+            </p>
+            <p className="text-[11px] font-bold text-slate-600 leading-relaxed break-keep">
+              고객이 선택하지 않은 선택 특약(가족일상생활배상책임/누수 손해, 가재도구 손해, 화재 대물배상 초과분, 임시거주비 등)은 화재 및 누수 사고 발생 시 보상 범위에서 제외되며 전액 본인 부담이 발생할 수 있습니다.
+            </p>
+            <p className="text-xs font-black text-slate-800 pt-2 border-t border-slate-200">
+              ※ [고객 미제공 정보 및 간편플랜 산출 기준 안내]
+            </p>
+            <p className="text-[11px] font-bold text-slate-600 leading-relaxed break-keep">
+              고객이 직접 주거 유형, 건물 구조 및 전용 면적 정보를 입력하지 않거나 간편플랜으로 조회한 경우, 통계적 표준 기본값(표준 아파트, 철근콘크리트 구조)을 적용하여 산출된 예상 보험료이므로 실제 단독주택, 목조/조적조 건물 구조 또는 실제 전용 면적에 따라 인수 제한이나 실제 납입 보험료가 상이할 수 있습니다.
+            </p>
+          </div>
+        )}
+
+        {isProperty && (
+          <div className="mt-4 p-5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-2 text-left">
+            <p className="text-xs font-black text-slate-800">
+              ※ [고객 미선택 담보에 대한 보장 제외 안내]
+            </p>
+            <p className="text-[11px] font-bold text-slate-600 leading-relaxed break-keep">
+              고객이 선택하지 않은 선택 특약(점포 휴업손해, 시설소유관리자 배상책임, 가스사고 배상책임, 음식물 배상책임 등)은 화재, 재난 및 영업장 내 안전사고 발생 시 보상 범위에서 제외되며 영업 중단 손실과 피해 배상액은 전액 사업자 본인 부담이 발생할 수 있습니다.
+            </p>
+            <p className="text-xs font-black text-slate-800 pt-2 border-t border-slate-200">
+              ※ [고객 미제공 정보 및 간편플랜 산출 기준 안내]
+            </p>
+            <p className="text-[11px] font-bold text-slate-600 leading-relaxed break-keep">
+              고객이 직접 영위 업종, 다중이용업소 해당 여부 및 사업장 전용 면적 정보를 입력하지 않거나 간편플랜으로 조회한 경우, 통계적 표준 기본값(표준 일반 사무실/도소매 업종)을 적용하여 산출된 예상 보험료이므로 실제 고위험 업종(일반음식점, 유흥주점, 제조업 등) 여부 및 건축물 급수에 따라 법적 의무 가입 요건, 가입 한도 또는 실제 납입 보험료가 상이할 수 있습니다.
+            </p>
+          </div>
+        )}
+
+        {isAnnuity && (
+          <div className="mt-4 p-5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-2 text-left">
+            <p className="text-xs font-black text-slate-800">
+              ※ [고객 미선택 옵션에 대한 보장 제외 안내]
+            </p>
+            <p className="text-[11px] font-bold text-slate-600 leading-relaxed break-keep">
+              고객이 선택하지 않은 수령 옵션(종신연금형 미선택, 조기 사망 시 유족 연금 특약 등)은 지정 수령 기간 종료 시점 이후 노후 연금 지급이 중단되거나 조기 사망 시 지속적인 유족 연금 혜택이 제한될 수 있습니다. 또한, 중도 해지 시에는 세액공제 받은 원금 및 이자에 대해 기타소득세가 부과되는 등 세제상 불이익이 발생할 수 있습니다.
+            </p>
+            <p className="text-xs font-black text-slate-800 pt-2 border-t border-slate-200">
+              ※ [고객 미제공 정보 및 간편플랜 산출 기준 안내]
+            </p>
+            <p className="text-[11px] font-bold text-slate-600 leading-relaxed break-keep">
+              고객이 직접 총급여(소득 수준), 타 금융기관 IRP/연금저축 기납입액 및 희망 연금 개시 연령 정보를 입력하지 않거나 간편플랜으로 조회한 경우, 통계적 표준 기본값을 적용하여 산출된 예상 절세액 및 연금 수령액이므로 실제 소득 구간에 따른 세액공제율 차이, 연간 공제 한도 초과 여부 및 향후 공시이율 변동에 따라 실제 절세액과 연금 수령액이 상이할 수 있습니다.
+            </p>
+          </div>
+        )}
+
+        {isWholeLife && (
+          <div className="mt-4 p-5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-2 text-left">
+            <p className="text-xs font-black text-slate-800">
+              ※ [고객 미선택 담보에 대한 보장 제외 안내]
+            </p>
+            <p className="text-[11px] font-bold text-slate-600 leading-relaxed break-keep">
+              종신보험은 주계약상 피보험자의 사망을 보장하는 상품으로, 고객이 선택하지 않은 선택 특약(3대 질병 납입면제, 암/뇌/심장 진단비, 수술/입원비 등)은 질병 및 상해 사고 발생 시 보상 범위에서 제외되며 전액 본인 부담이 발생할 수 있습니다. 또한 체증형 사망 특약 미선택 시 물가 상승에 따른 사망보험금의 실질 가치가 하락할 수 있습니다.
+            </p>
+            <p className="text-xs font-black text-slate-800 pt-2 border-t border-slate-200">
+              ※ [고객 미제공 정보 및 간편플랜 산출 기준 안내]
+            </p>
+            <p className="text-[11px] font-bold text-slate-600 leading-relaxed break-keep">
+              고객이 직접 직업 위험 등급, 건강 고지 사항(표준체/간편고지) 및 흡연 여부 정보를 입력하지 않거나 간편플랜으로 조회한 경우, 통계적 표준 기본값(표준체 1급 사무직, 일반 표준체 요율)을 적용하여 산출된 예상 보험료이므로 실제 청약 시 과거 병력에 따른 할증/인수 거절, 비흡연체 할인특약 증빙 제출 여부에 따라 실제 납입 보험료와 상이할 수 있습니다.
+            </p>
+          </div>
+        )}
+
+        {isVariable && (
+          <div className="mt-4 p-5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-2 text-left">
+            <p className="text-xs font-black text-slate-800">
+              ※ [고객 미선택 담보 및 옵션에 대한 보장 제외 안내]
+            </p>
+            <p className="text-[11px] font-bold text-slate-600 leading-relaxed break-keep">
+              정기보험은 약정한 보장 만기 도래 시 사망보장 효력이 종료되며 종신 전환 옵션을 선택하지 않은 경우 만기 이후 사망에 대해서는 보험금이 지급되지 않습니다. 또한 변액보험의 경우 펀드 투자 실적에 따라 해약환급금의 원금 손실이 발생할 수 있으며 고객이 선택하지 않은 3대 질병 납입면제 및 건강 치료비 특약은 질병 발생 시 보상에서 제외되어 전액 본인 부담이 발생할 수 있습니다.
+            </p>
+            <p className="text-xs font-black text-slate-800 pt-2 border-t border-slate-200">
+              ※ [고객 미제공 정보 및 간편플랜 산출 기준 안내]
+            </p>
+            <p className="text-[11px] font-bold text-slate-600 leading-relaxed break-keep">
+              고객이 직접 직업 등급, 건강 상태(흡연 여부) 및 펀드 편입 비율 정보를 입력하지 않거나 간편플랜으로 조회한 경우, 통계적 표준 기본값(표준체 1급 사무직, 기본 채권/주식 분산 포트폴리오)을 적용하여 산출된 예상 보험료이므로 실제 비흡연체 할인 증빙 제출 여부 및 금융시장 변동에 따라 실제 납입 보험료와 해약환급금이 상이할 수 있습니다.
+            </p>
+          </div>
+        )}
+
+        {isLegal && (
+          <div className="mt-4 p-5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-2 text-left">
+            <p className="text-xs font-black text-slate-800">
+              ※ [고객 미선택 담보에 대한 보장 제외 안내]
+            </p>
+            <p className="text-[11px] font-bold text-slate-600 leading-relaxed break-keep">
+              법률비용보험은 피보험자가 실제 지출한 소송비용을 대법원 규칙상 한도 및 약관 기준 내에서 실손 보상하는 상품으로, 고객이 선택하지 않은 선택 특약(형사사건 방어비용, 행정소송 특약, 항소심·상고심 심급 확장 등)은 해당 사건 발생 시 보상 범위에서 제외되며 변호사 선임료와 소송 인지·송달료 전액이 본인 부담으로 발생할 수 있습니다.
+            </p>
+            <p className="text-xs font-black text-slate-800 pt-2 border-t border-slate-200">
+              ※ [고객 미제공 정보 및 간편플랜 산출 기준 안내]
+            </p>
+            <p className="text-[11px] font-bold text-slate-600 leading-relaxed break-keep">
+              고객이 직접 희망 소송 유형(민사 중심/형사 방어) 및 직업 정보를 입력하지 않거나 간편플랜으로 조회한 경우, 통계적 표준 기본값(민사소송 중심 플랜, 1심 본안 기준, 표준 자기부담금)을 적용하여 산출된 예상 보험료이므로 실제 청약 시 소송가액(소가)의 규모, 과거 소송 계류 이력 및 특약 확장에 따라 실제 납입 보험료와 가입 가능 담보가 상이할 수 있습니다.
+            </p>
+          </div>
+        )}
+
       </div>
     </div>
   );
