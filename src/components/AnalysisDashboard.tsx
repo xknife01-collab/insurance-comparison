@@ -1551,7 +1551,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
                         {/* 대체 보험 */}
                         <div className="flex-1 bg-blue-50 border border-blue-200 rounded-2xl px-4 py-3">
                           <span className="text-[8px] font-black text-blue-500 block uppercase mb-0.5">✅ 대체 보험</span>
-                          <span className="text-[9px] font-black text-blue-600 block">{r.company}</span>
+                          <span className="text-[9px] font-black text-blue-600 block">{maskCompany(r.company, isUnlocked)}</span>
                           <span className="text-xs font-bold text-slate-700 leading-snug">{r.prodType}</span>
                           <span className="text-sm font-black text-blue-700 mt-1 block">{r.dietPrem.toLocaleString()}원</span>
                         </div>
@@ -1704,7 +1704,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
                            {/* 업그레이드 보험 */}
                            <div className="flex-1 bg-orange-500/10 border border-orange-500/20 rounded-2xl px-4 py-3">
                              <span className="text-[8px] font-black text-orange-400 block uppercase mb-0.5">🚀 업그레이드</span>
-                             <span className="text-[9px] font-black text-orange-300 block">{r.company}</span>
+                             <span className="text-[9px] font-black text-orange-300 block">{maskCompany(r.company, isUnlocked)}</span>
                              <span className="text-xs font-bold text-white leading-snug">{r.prodType}</span>
                              <span className="text-sm font-black text-orange-400 mt-1 block">{r.orig.monthly_premium.toLocaleString()}원</span>
                            </div>
@@ -2014,7 +2014,7 @@ const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ result, onSubmitL
                 {/* Product Name */}
                 <div className={`w-full ${forceMobile ? '' : 'md:col-span-5'} text-left`}>
                    <div className="flex flex-col gap-1">
-                      <p className="text-xs md:text-sm text-gray-500 font-bold group-hover:text-gray-900 transition-colors">{maskProductName(opt.productName, isUnlocked)}</p>
+                      <p className="text-xs md:text-sm text-gray-500 font-bold group-hover:text-gray-900 transition-colors">{maskProductName(opt.productName, isUnlocked, cat)}</p>
                       <div className="flex flex-wrap gap-1.5 mt-1">
                         {isVariable && (
                           <>

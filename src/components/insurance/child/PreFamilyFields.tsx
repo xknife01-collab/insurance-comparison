@@ -31,7 +31,7 @@ export const PreFamilyFields: React.FC<PreFamilyFieldsProps> = ({
     },
     development: {
       title: '발달지연 (언어·미술·놀이치료) 안심 플랜',
-      text: '일반 어린이보험은 심사에서 거절 빈도가 매우 높은 대표 질환입니다. 하지만 간편 고지를 사용하면 3개월 소견 통과 시 뇌/심장 진단비와 수술비 한도를 동일하게 확보할 수 있습니다.',
+      text: '일반 어린이보험에서 심사가 어려운 대표 질환입니다. 하지만 간편 고지를 사용하면 3개월 소견 통과 시 뇌/심장 진단비와 수술비 한도를 동일하게 확보할 수 있습니다.',
       badge: '발달지연 치료 중 인수 통과'
     },
     puberty: {
@@ -89,7 +89,7 @@ export const PreFamilyFields: React.FC<PreFamilyFieldsProps> = ({
         <h4 className="text-xl font-black text-slate-800 mb-2 flex items-center gap-2">
           <Stethoscope className="text-blue-500 w-6 h-6" /> 우리아이 맞춤 병력을 체크해 주세요 (인수 우대)
         </h4>
-        <p className="text-xs font-bold text-slate-400 mb-6 ml-8">실제 현장에서 거절 빈도가 높지만 간편 고지로 승인율이 높은 대표 질환군입니다.</p>
+        <p className="text-xs font-bold text-slate-400 mb-6 ml-8">실제 현장에서 가입이 거절될 경우 간편 고지로 승인될 수 있는 대표 질환군입니다.</p>
         
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {[
@@ -202,7 +202,7 @@ export const PreFamilyFields: React.FC<PreFamilyFieldsProps> = ({
             <div>
               <span className={`font-black text-xl block ${maturity === 30 ? 'text-blue-600' : 'text-slate-800'}`}>30세 만기 (자립 집중형)</span>
               <p className="text-xs text-slate-400 font-bold mt-1 leading-relaxed">
-                유병자 할증이 붙더라도 월 보험료 부담을 극도로 낮추어 성장기 동안 확실하게 리스크를 방어하고 30세에 자립 전환합니다.
+                유병자 할증이 붙더라도 월 보험료 부담을 낮추어 성장기 동안 확실하게 리스크를 방어하고 30세에 자립 전환합니다.
               </p>
             </div>
             <div className={`text-xs font-black px-4 py-1.5 rounded-full self-start ${maturity === 30 ? 'bg-blue-500 text-white' : 'bg-slate-100 text-slate-400'}`}>
@@ -218,9 +218,9 @@ export const PreFamilyFields: React.FC<PreFamilyFieldsProps> = ({
                 : 'border-slate-100 bg-slate-50/50 hover:bg-slate-50 hover:border-slate-200'}`}
           >
             <div>
-              <span className={`font-black text-xl block ${maturity === 100 ? 'text-blue-600' : 'text-slate-800'}`}>100세 만기 (평생 보장형)</span>
+              <span className={`font-black text-xl block ${maturity === 100 ? 'text-blue-600' : 'text-slate-800'}`}>100세 만기 (보장형)</span>
               <p className="text-xs text-slate-400 font-bold mt-1 leading-relaxed">
-                소아기 유병 이력이 나이가 들어 더 큰 성인 만성 질환으로 이어지기 전에, 100세 만기 비갱신형으로 평생 보장 자산을 확정해 두는 추천 플랜입니다.
+                소아기 유병 이력이 나이가 들어 더 큰 성인 만성 질환으로 이어지기 전에, 100세 만기 비갱신형으로 보장 자산을 확정해 두는 추천 플랜입니다.
               </p>
             </div>
             <div className={`text-xs font-black px-4 py-1.5 rounded-full self-start ${maturity === 100 ? 'bg-blue-500 text-white' : 'bg-slate-100 text-slate-400'}`}>

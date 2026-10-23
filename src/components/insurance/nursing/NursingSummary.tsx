@@ -94,13 +94,13 @@ export const NursingSummary: React.FC<Props> = ({ result, forceMobile }) => {
             <div className="bg-white/5 backdrop-blur-md rounded-[2.5rem] p-8 border border-white/10 w-full max-w-sm">
               <div className="flex justify-between items-end mb-6">
                 <div>
-                  <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest font-sans">보장 최적화 지수</p>
-                  <p className="text-4xl font-black text-pink-400">{efficiencyScore} <span className="text-lg text-slate-500">점</span></p>
+                  <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest font-sans">요양 보장 밸런스</p>
+                  <p className="text-3xl font-black text-pink-400">맞춤 설계</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-[0.65rem] font-black text-pink-500 uppercase">분석 완료</p>
+                  <p className="text-[0.65rem] font-black text-pink-500 uppercase">보장 분석</p>
                   <div className="flex gap-1 mt-1">
-                    {[1,2,3,4].map(s => <div key={s} className="w-2 h-2 rounded-full bg-pink-500 animate-pulse" />) }
+                    {[1,2,3,4].map(s => <div key={s} className="w-2 h-2 rounded-full bg-pink-500" />) }
                     {[5].map(s => <div key={s} className="w-2 h-2 rounded-full bg-white/10" />)}
                   </div>
                 </div>

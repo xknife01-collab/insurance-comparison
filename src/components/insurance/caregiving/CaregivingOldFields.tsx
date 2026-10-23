@@ -119,7 +119,7 @@ export const CaregivingOldFields: React.FC<Props> = ({
             <div className="mt-4 p-5 bg-white/60 rounded-3xl border border-amber-100 flex gap-4">
               <HelpCircle className="text-amber-500 shrink-0" size={20} />
               <p className="text-[0.7rem] text-slate-500 font-bold leading-relaxed">
-                최근에는 <span className="text-amber-600 font-black">재가급여</span>를 선호하는 비중이 80% 이상입니다. 익숙한 집에서 요양보호사의 도움을 받는 플랜이 가장 인기가 높습니다.
+                최근에는 <span className="text-amber-600 font-black">재가급여</span>를 선택하는 비중이 높습니다. 익숙한 집에서 요양보호사의 도움을 받는 플랜이 가장 인기가 높습니다.
               </p>
             </div>
           </div>

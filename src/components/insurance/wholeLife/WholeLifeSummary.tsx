@@ -46,7 +46,7 @@ export const WholeLifeSummary: React.FC<Props> = ({ result }) => {
   const getObjectiveText = (obj: string) => {
     if (obj === 'family') return '유가족 생활비 보장';
     if (obj === 'inheritance') return '상속세 재원 마련';
-    return '목돈 마련 및 연금 전환';
+    return '노후 생활자금 (연금 전환)';
   };
 
   const formatAmt = (amt: number) => {
@@ -56,95 +56,71 @@ export const WholeLifeSummary: React.FC<Props> = ({ result }) => {
 
   return (
     <div className="space-y-12 text-left">
-      {/* 1. Header: Breed Card & Score Card */}
-      <div className="grid lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 bg-white rounded-[3.5rem] p-10 md:p-12 border border-slate-100 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.08)] relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-16 opacity-[0.03] group-hover:scale-110 transition-transform duration-700">
-            <Award size={200} className="text-indigo-500" />
-          </div>
-          
-          <div className="relative z-10 space-y-8">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/20">
-                <Award size={28} />
-              </div>
-              <div>
-                <h3 className="text-2xl font-black text-slate-800 tracking-tight">
-                  {getObjectiveText(wholeLifeOpts.objective)} 종신 자산 분석 리포트
-                </h3>
-                <p className="text-xs font-bold text-slate-400">
-                  가입 연령: 만 {analysis.age || 35}세 · 사망보험금: {formatAmt(wholeLifeOpts.deathBenefit)} · {wholeLifeOpts.paymentPeriod}년납
-                </p>
-              </div>
-            </div>
-
-            {/* 저해지 환급 리스크 경고/체증형 혜택 배너 */}
-            <div className="p-5 rounded-2xl bg-indigo-50/50 border border-indigo-100/50 flex gap-3 items-start">
-              <AlertCircle className="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" />
-              <div className="space-y-1">
-                <p className="text-xs font-black text-indigo-800">종신 보장 설계 세부 진단</p>
-                <p className="text-[11px] text-slate-500 font-bold leading-relaxed">
-                  {isLowRefund ? (
-                    <>
-                      고객님은 일반 상품보다 동일 보장료가 <span className="text-indigo-600 font-black">15~20% 저렴한 저해지형</span>을 가입 설계하셨습니다. 완납 후 10년 환급률은 우수하나, 납입 완료 전 해지 시 원금 손실이 막대하므로 <span className="text-rose-600 font-black">철저히 만기 유지를 강제</span>하셔야 합니다.
-                    </>
-                  ) : (
-                    <>
-                      일반형 구조로 중도 해지 시에도 비례형 환급금을 보존받아 유연합니다. 단, 월 납입 보험료가 저해지형 대비 다소 고가로 산출되므로 가계 소득 대비 적정선인지 확인해 주세요.
-                    </>
-                  )}
-                  {isStepUp && (
-                    <span className="block mt-1 font-black text-indigo-700">
-                      💡 물가상승 방어(체증형) 옵션 설정으로, 만 60세부터 보장 금액이 매년 5%씩 점진적으로 불어납니다.
-                    </span>
-                  )}
-                </p>
-              </div>
-            </div>
-
-            {/* 세부 점수 리스트 */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-4">
-              {[
-                { label: '사망금 적정성', targetId: 'input-wholeLife-fields', val: `${formatAmt(wholeLifeOpts.deathBenefit)} 설정`, score: scores.cancerScore },
-                { label: '환급형 효율성', targetId: 'input-wholeLife-fields', val: isLowRefund ? '저해지형 특약 반영' : '일반환급형 반영', score: scores.cerebrovascularScore },
-                { label: '보장구조 최적성', targetId: 'input-wholeLife-fields', val: isStepUp ? '체증형(물가대응)' : '기본고정형', score: scores.cardiovascularScore },
-                { label: '소득대비 납입적성', targetId: 'input-wholeLife-fields', val: '월 보험료 비율 분석', score: 85 },
-              ].map((item, i) => (
-                <div key={i} className="space-y-2">
-                  <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">{item.label}</p>
-                  <p className="text-sm font-black text-slate-800">{item.val}</p>
-                  <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                    <motion.div 
-                      initial={{ width: 0 }}
-                      animate={{ width: `${item.score}%` }}
-                      className={`h-full ${getProgressColor(item.score)}`}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+      {/* 1. Header: WholeLife Coverage Summary */}
+      <div className="bg-white rounded-[3.5rem] p-10 md:p-12 border border-slate-100 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.08)] relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-16 opacity-[0.03] group-hover:scale-110 transition-transform duration-700">
+          <Award size={200} className="text-indigo-500" />
         </div>
+        
+        <div className="relative z-10 space-y-8">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/20">
+              <Award size={28} />
+            </div>
+            <div>
+              <h3 className="text-2xl font-black text-slate-800 tracking-tight">
+                {getObjectiveText(wholeLifeOpts.objective)} 종신 자산 분석 리포트
+              </h3>
+              <p className="text-xs font-bold text-slate-400">
+                가입 연령: 만 {analysis.age || 35}세 · 사망보험금: {formatAmt(wholeLifeOpts.deathBenefit)} · {wholeLifeOpts.paymentPeriod}년납
+              </p>
+            </div>
+          </div>
 
-        {/* 종합 점수 카드 */}
-        <div className="bg-indigo-600 rounded-[3.5rem] p-12 text-white shadow-[0_30px_70px_-20px_rgba(79,70,229,0.3)] flex flex-col justify-between relative overflow-hidden group">
-          <div className="absolute -bottom-10 -right-10 opacity-10 group-hover:scale-125 transition-transform duration-1000">
-            <Zap size={200} fill="currentColor" />
-          </div>
-          <div className="relative z-10 text-left">
-            <p className="text-indigo-100 font-black text-[0.65rem] uppercase tracking-[0.3em] mb-4">Whole Life Score</p>
-            <div className="flex items-baseline gap-2">
-              <span className="text-7xl font-black tracking-tighter">{scores.totalScore}</span>
-              <span className="text-2xl font-bold opacity-80">점</span>
+          {/* 저해지 환급 리스크 경고/체증형 혜택 배너 */}
+          <div className="p-5 rounded-2xl bg-indigo-50/50 border border-indigo-100/50 flex gap-3 items-start">
+            <AlertCircle className="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <p className="text-xs font-black text-indigo-800">종신 보장 설계 세부 진단</p>
+              <p className="text-[11px] text-slate-500 font-bold leading-relaxed">
+                {isLowRefund ? (
+                  <>
+                    고객님은 일반 상품보다 동일 보장료가 <span className="text-indigo-600 font-black">저렴한 저해지형</span>을 가입 설계하셨습니다. 완납 후 10년 환급률은 우수하나, 납입 완료 전 해지 시 원금 손실이 막대하므로 <span className="text-rose-600 font-black">만기 유지를 권장드립니다.</span>
+                  </>
+                ) : (
+                  <>
+                    일반형 구조로 중도 해지 시에도 비례형 환급금을 보존받아 유연합니다. 단, 월 납입 보험료가 저해지형 대비 다소 고가로 산출되므로 가계 소득 대비 적정선인지 확인해 주세요.
+                  </>
+                )}
+                {isStepUp && (
+                  <span className="block mt-1 font-black text-indigo-700">
+                    💡 물가상승 방어(체증형) 옵션 설정으로, 만 60세부터 보장 금액이 매년 5%씩 점진적으로 불어납니다.
+                  </span>
+                )}
+              </p>
             </div>
           </div>
-          <div className="relative z-10 pt-8 text-left">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full backdrop-blur-sm border border-white/10">
-              <CheckCircle2 size={16} className="text-indigo-200" />
-              <span className="text-xs font-bold">
-                {scores.totalScore >= 85 ? '아주 합리적으로 사망자산을 준비 중입니다!' : scores.totalScore >= 65 ? '보통 수준의 종신보장 상태입니다.' : '종신 리스크 및 연금 연계 진단이 시급합니다.'}
-              </span>
-            </div>
+
+          {/* 세부 상태 리스트 */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-4">
+            {[
+              { label: '사망금 적정성', targetId: 'input-wholeLife-fields', val: `${formatAmt(wholeLifeOpts.deathBenefit)} 설정`, status: '보장' },
+              { label: '환급형 효율성', targetId: 'input-wholeLife-fields', val: isLowRefund ? '저해지형 특약 반영' : '일반환급형 반영', status: isLowRefund ? '저해지' : '일반형' },
+              { label: '보장구조 최적성', targetId: 'input-wholeLife-fields', val: isStepUp ? '체증형(물가대응)' : '기본고정형', status: isStepUp ? '체증형' : '기본형' },
+              { label: '소득대비 납입적성', targetId: 'input-wholeLife-fields', val: '월 보험료 비율 분석', status: '적정' },
+            ].map((item, i) => (
+              <div 
+                key={i} 
+                onClick={() => scrollToInputAndHighlight((item as any).targetId)}
+                className="bg-slate-50/70 p-6 rounded-2xl border border-slate-100 flex flex-col justify-center gap-2 group hover:border-indigo-300 hover:shadow-sm cursor-pointer transition-all duration-300"
+              >
+                <div className="flex justify-between items-center w-full">
+                  <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">{item.label}</p>
+                  <span className="text-[10px] font-black px-2.5 py-0.5 rounded-md bg-indigo-100 text-indigo-700">{item.status}</span>
+                </div>
+                <p className="text-sm font-black text-slate-800">{item.val}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

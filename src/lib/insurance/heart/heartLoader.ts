@@ -111,9 +111,16 @@ export async function fetchHeartPremium(analysis: InsuranceAnalysis) {
         if (!hasAcute || hasIntegrated) return false;
       }
 
-      // 2. 심장 전문보험이 아닌 상품 제외 (암, 종합, 당뇨, 대출, 유병자 필터 적용)
+      // 2. 심장 전문보험이 아닌 상품 제외 (어린이, 암, 종합, 당뇨, 대출, 유병자 필터 적용)
       const name = p.productName;
       const isMixed = 
+        name.includes('어린이') ||
+        name.includes('아이') ||
+        name.includes('자녀') ||
+        name.includes('주니어') ||
+        name.includes('키즈') ||
+        name.includes('태아') ||
+        name.includes('0세') ||
         name.includes('암') || 
         name.includes('종합') || 
         name.includes('통합건강') || 

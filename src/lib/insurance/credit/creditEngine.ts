@@ -80,12 +80,13 @@ export const analyzeCredit = (analysis: any): any => {
   const upgradeProdName = upgradePlanDb ? upgradePlanDb.productName : '대출안심 신용생명 플랜 (3대질병형)';
   const upgradeCompName = upgradePlanDb ? upgradePlanDb.company : '추천 보험사';
 
-  // Determine Hybrid Plan
-  // Highest premium plan in comprehensive, or the last option
+  // Determine Hybrid Plan (사망 + 3대질병 + 80% 이상 중대장해 종합안심형)
   const hybridPlanDb = comprehensivePlans[comprehensivePlans.length - 1] || options[options.length - 1] || options[0];
-  const hybridPremium = hybridPlanDb ? hybridPlanDb.premium : Math.round(baseMonthlyPremium * 1.60 * (1 - discountRate));
-  const hybridProdName = hybridPlanDb ? hybridPlanDb.productName : '대출안심 신용생명 플랜 (통합형)';
-  const hybridCompName = hybridPlanDb ? hybridPlanDb.company : '추천 보험사';
+  const hybridPremium = hybridPlanDb && hybridPlanDb.premium <= upgradePremium * 1.35 && hybridPlanDb.premium > upgradePremium
+    ? hybridPlanDb.premium
+    : Math.round(upgradePremium * 1.25);
+  const hybridProdName = '대출안심 신용생명 플랜 (종합안심형)';
+  const hybridCompName = upgradeCompName || '추천 보험사';
 
   // 3. 점수 평가지표 산출 (NICE/KCB 매핑 구조 활용)
   let coverageScore = 80;
@@ -112,7 +113,7 @@ export const analyzeCredit = (analysis: any): any => {
     deficiencies.push('중대질병(암/뇌/심장) 진단 상환 특약 부재 (사망 외 질병으로 인한 대출 연체 위협 노출)');
   }
   if (!hasDisabilityRider) {
-    deficiencies.push('고도후유장해 상환 보장 누락 (장해율 50% 이상 시 대출 대위변제 지원 불가)');
+    deficiencies.push('고도후유장해 상환 보장 누락 (장해율 80% 이상 시 대출 대위변제 지원 불가)');
   }
   if (loanPeriod < 5) {
     deficiencies.push('단기 만기 설정 (대출 잔여 상환 기간보다 보험 보장 기간이 짧을 시 만기 전 리스크 노출)');
@@ -152,16 +153,16 @@ export const analyzeCredit = (analysis: any): any => {
       productName: upgradeProdName
     },
     hybrid: {
-      title: `신용 헬스케어 ${loanLabel} 대출안심 마스터 플랜`,
-      description: `사망 + 3대 질병 + 50% 이상 고도후유장해까지 신용 위험 요소를 안정적으로 커버하고, 개인 신용등급 변동 추이에 맞춘 '신용 관리 서비스'를 지원하는 통합 보장 안심 플랜입니다.`,
+      title: `종합 ${loanLabel} 대출안심 플러스 플랜`,
+      description: `사망은 물론 3대 중대질병(암/뇌/심장) 및 고도장해(80% 이상) 발생 시 보험사가 남은 대출 원리금을 상환 지원하여 가계의 빚 대물림을 방지하는 종합 안심 플랜입니다.`,
       estimatedPremium: hybridPremium,
       periodBadge: creditBadge,
       coverageChanges: [
-        `사망 및 50% 이상 장해 시 대출 잔액 최대 ${Math.round(loanAmount / 10000).toLocaleString()}만 원 완납`,
-        '3대 질병(암/뇌/심장) 진단 확정 즉시 대출 대위변제',
-        '신용 점수 상승 시 추가 요율 할인을 제공하는 신용케어 연계'
+        `사망 및 고도장해(80% 이상) 시 대출 잔액 최대 ${Math.round(loanAmount / 10000).toLocaleString()}만 원 전액 상환`,
+        '암 / 뇌출혈 / 급성심근경색 진단 시 잔여 대출금 대위변제 지원',
+        '대출금 상환 후 잔여 보험금 발생 시 유가족 생활안정자금 지급'
       ],
-      switchingLossNotice: '보장 범위가 넓은 만큼 월 납입 보험료가 실속형 대비 가산되지만, 통합 위험 관리 차원에서 폭넓은 안전판을 제공합니다.',
+      switchingLossNotice: '보장 범위가 넓은 만큼 실속형 대비 보험료가 소폭 추가되지만, 질병 및 중대장해로 인한 채무 연체 위험을 포괄적으로 예방합니다.',
       companyName: hybridCompName,
       productName: hybridProdName
     }

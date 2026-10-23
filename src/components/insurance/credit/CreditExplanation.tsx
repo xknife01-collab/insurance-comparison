@@ -69,7 +69,7 @@ export const CreditExplanation: React.FC<Props> = ({ onAction, isUnlocked }) => 
         {[
           { num: '신용점수 연계 할인', label: 'NICE/KCB 등급별 감면', sub: '3% ~ 최대 10% 주계약 보험료 할인' },
           { num: '대출금 한도 연동', label: '실제 대출 잔액 한도 매칭', sub: '초과 가입 방지 및 합리적 보험료 설계' },
-          { num: '채권기관 직접 상환', label: '대출 실행 은행으로 상환금 지급', sub: '유가족 빚 상속 방지 및 채무 소거' },
+          { num: '채권기관 직접 상환', label: '대출 실행 은행으로 상환금 지급', sub: '유가족 빚 상속 방지 및 채무 상환 지원' },
           { num: '가계 안정 안전판', label: '사망/장해/3대 질병 시 지원', sub: '소득 중단 시 주거환경 및 가족 보호' },
         ].map((s, i) => (
           <div key={i} className="bg-white border border-blue-100 rounded-3xl md:rounded-[3rem] p-5 md:p-8 text-center shadow-sm hover:shadow-xl hover:border-blue-200 transition-all group">

@@ -112,7 +112,7 @@ export const analyzeWholeLife = (analysis: any): any => {
     deficiencies.push(`일반 환급형 선택 상태 (무(저)해약환급형 대비 보험료 차이가 있을 수 있어 상품 구조 비교 권장)`);
   }
   if (!isStepUp && (objective === 'family' || objective === 'inheritance')) {
-    deficiencies.push(`기본형 사망보장 구조 (장기 인플레이션에 따른 사망보험금 실질 가치 변동 가능성 점검 필요)`);
+    deficiencies.push(`기본형 사망보장 리스크 (장기 물가상승 시 20년 뒤 사망보험금 실질 구매력이 절반 수준으로 줄어들 수 있음)`);
   }
   if (paymentPeriod >= 20) {
     deficiencies.push(`장기 납입 구조 (소득 활동 기간과 은퇴 시점을 고려한 납입 기간 적정성 검토 권장)`);
@@ -156,11 +156,11 @@ export const analyzeWholeLife = (analysis: any): any => {
     isFire: false
   } as any;
 
-  // Hybrid: 10년납 목적자금 하이브리드 플랜 (사망 7천만 원, 10년납, 저해지형, 완납 후 비과세 저축 연계)
+  // Hybrid: 10년납 연금전환 연계 하이브리드 플랜 (사망 7천만 원, 10년납, 저해지형, 완납 후 연금 전환 연계)
   const hybridPremium = opt3.premium;
   const hybrid: RecommendationPlan = {
-    title: '10년납 목돈마련 하이브리드 플랜',
-    description: `사망 보장과 목돈 저축 기능을 최적으로 배분하여, 10년 완납 후 해약하여 연금으로 전환하거나 목적자금으로 쓸 수 있는 실용형 종신 모델입니다.`,
+    title: '10년납 연금전환 하이브리드 플랜',
+    description: `사망 보장과 완납 후 유동성 혜택을 조율하여, 10년 완납 후 필요 시 연금으로 전환하여 노후 자금으로 활용할 수 있는 실용형 종신 모델입니다.`,
     estimatedPremium: hybridPremium,
     periodBadge: '10년납 · 종신보장 (환급연계형)',
     companyName: opt3.companyName,
@@ -168,10 +168,10 @@ export const analyzeWholeLife = (analysis: any): any => {
     coverageChanges: [
       `월 보험료 ${(hybridPremium).toLocaleString()}원으로 맞춤 설계`,
       `사망 보장 기본 7,000만 원 안심 설계`,
-      `10년납으로 월 부담 완화 및 10년 시점 비과세 혜택 매칭`,
-      `완납 후 연금 전환 특약 또는 적립금 중도인출 기능 탑재`
+      `10년납으로 월 부담 완화 및 세제 혜택 매칭`,
+      `완납 후 연금 전환 특약 또는 적립금 유동성 기능 탑재`
     ],
-    switchingLossNotice: '사망 보장과 저축 기능이 결합된 상품이므로, 순수 저축성 보험보다 초기 사업비 차감이 다소 큽니다.',
+    switchingLossNotice: '종신보험은 사망을 보장하는 보장성 보험이므로 순수 저축성 보험과 상이하며, 초기 해지 시 원금 손실이 발생할 수 있습니다.',
     isFire: false
   } as any;
 

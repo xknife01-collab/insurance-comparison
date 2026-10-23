@@ -94,91 +94,56 @@ export const SurgerySummary = ({ result }: { result: AnalysisResult }) => {
   return (
     <div className="space-y-12">
 
-      {/* ── 상단: 보장 현황 카드 + Coverage Score ── */}
-      <div className="grid lg:grid-cols-3 gap-8">
-
-        {/* 좌측: 보장 현황 카드 */}
-        <div className="lg:col-span-2 bg-white rounded-[3.5rem] p-10 md:p-12 border border-slate-100 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.08)] relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-16 opacity-[0.025] group-hover:scale-110 transition-transform duration-700">
-            <Activity size={200} className="text-orange-500" />
-          </div>
-
-          <div className="relative z-10 space-y-8">
-            {/* 헤더 */}
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-orange-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-orange-500/20">
-                <Activity size={28} />
-              </div>
-              <div>
-                <h3 className="text-2xl font-black text-slate-800 tracking-tight">
-                  고객님의 수술·입원 보장 현황
-                </h3>
-                <p className="text-xs font-bold text-slate-400">
-                  보장 스타일: {focusLabel}
-                </p>
-              </div>
-            </div>
-
-            {/* 설계 요약 안내 배너 */}
-            <div className="p-5 rounded-2xl bg-orange-50/50 border border-orange-100/50 flex gap-3 items-start">
-              <AlertCircle className="w-5 h-5 text-orange-500 shrink-0 mt-0.5" />
-              <div className="space-y-1">
-                <p className="text-xs font-black text-orange-800">수술비 보장 설계 분석 완료</p>
-                <p className="text-[11px] text-slate-500 font-bold leading-relaxed">
-                  수술 난이도별 종별 분류(1~5종), 관혈·비관혈 수술 구분, 입원일당 한도를 기준으로
-                  <span className="text-orange-600 font-black"> 현재 보장 공백과 최적 설계 방향</span>을 분석했습니다.
-                </p>
-              </div>
-            </div>
-
-            {/* 보장 항목별 현황 */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 pt-2">
-              {coverageItems.map((item, i) => (
-                <div key={i} className="space-y-2">
-                  <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest flex items-center gap-1">
-                    <item.icon size={10} className="text-slate-300" />
-                    {item.label}
-                  </p>
-                  <p className={`text-xs font-black px-2 py-1 rounded-lg border inline-block ${getStatusColor(item)}`}>
-                    {item.status}
-                  </p>
-                  <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${item.score}%` }}
-                      transition={{ duration: 0.8, delay: i * 0.1 }}
-                      className={`h-full ${getBarColor(item.score)}`}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+      {/* ── 상단: 보장 현황 카드 ── */}
+      <div className="bg-white rounded-[3.5rem] p-10 md:p-12 border border-slate-100 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.08)] relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-16 opacity-[0.025] group-hover:scale-110 transition-transform duration-700">
+          <Activity size={200} className="text-orange-500" />
         </div>
 
-        {/* 우측: Coverage Score 카드 */}
-        <div className="bg-orange-500 rounded-[3.5rem] p-12 text-white shadow-[0_30px_70px_-20px_rgba(249,115,22,0.35)] flex flex-col justify-between relative overflow-hidden group">
-          <div className="absolute -bottom-10 -right-10 opacity-10 group-hover:scale-125 transition-transform duration-1000">
-            <Zap size={200} fill="currentColor" />
-          </div>
-          <div className="relative z-10">
-            <p className="text-orange-100 font-black text-[0.65rem] uppercase tracking-[0.3em] mb-4">Coverage Score</p>
-            <div className="flex items-baseline gap-2">
-              <span className="text-7xl font-black tracking-tighter">{totalScore}</span>
-              <span className="text-2xl font-bold opacity-80">점</span>
+        <div className="relative z-10 space-y-8">
+          {/* 헤더 */}
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 bg-orange-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-orange-500/20">
+              <Activity size={28} />
+            </div>
+            <div>
+              <h3 className="text-2xl font-black text-slate-800 tracking-tight">
+                고객님의 수술·입원 보장 현황
+              </h3>
+              <p className="text-xs font-bold text-slate-400">
+                보장 스타일: {focusLabel}
+              </p>
             </div>
           </div>
-          <div className="relative z-10 pt-8">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full backdrop-blur-sm border border-white/10">
-              <CheckCircle2 size={16} className="text-orange-200" />
-              <span className="text-xs font-bold">
-                {totalScore >= 85
-                  ? '수술·입원 보장이 탄탄합니다!'
-                  : totalScore >= 65
-                    ? '일부 보장 공백이 있습니다.'
-                    : '보장 보강이 시급합니다.'}
-              </span>
+
+          {/* 설계 요약 안내 배너 */}
+          <div className="p-5 rounded-2xl bg-orange-50/50 border border-orange-100/50 flex gap-3 items-start">
+            <AlertCircle className="w-5 h-5 text-orange-500 shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <p className="text-xs font-black text-orange-800">수술비 보장 설계 분석 완료</p>
+              <p className="text-[11px] text-slate-500 font-bold leading-relaxed">
+                수술 난이도별 종별 분류(1~5종), 관혈·비관혈 수술 구분, 입원일당 한도를 기준으로
+                <span className="text-orange-600 font-black"> 현재 보장 공백과 최적 설계 방향</span>을 분석했습니다.
+              </p>
             </div>
+          </div>
+
+          {/* 보장 항목별 현황 */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 pt-2">
+            {coverageItems.map((item, i) => (
+              <div key={i} className="bg-slate-50/70 p-5 rounded-2xl border border-slate-100 flex flex-col justify-between gap-3">
+                <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
+                  <item.icon size={12} className="text-orange-500" />
+                  {item.label}
+                </p>
+                <div className="flex justify-between items-center">
+                  <span className="text-xs font-black text-slate-700">{item.status}</span>
+                  <span className={`text-[10px] font-black px-2 py-0.5 rounded-md border ${getStatusColor(item)}`}>
+                    확인
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

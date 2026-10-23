@@ -70,7 +70,7 @@ export const analyzeHomeFacility = (analysis: any): any => {
   const upgrade: RecommendationPlan = {
     title: '체증형 든든 전체보장 플랜',
     description: '재가 및 시설 구분 없이 등급 판정 시 20년납으로 매월 생활자금을 보장받고, 물가 변동을 고려해 지급액이 점진적으로 상승하는 플랜입니다.',
-    estimatedPremium: upgradeOption ? (upgradeOption === dietOption ? Math.round(upgradeOption.premium * 1.5) : upgradeOption.premium) : Math.floor(currentPremium * 1.4),
+    estimatedPremium: upgradeOption ? upgradeOption.premium : (dietOption ? Math.round(dietOption.premium * 1.25) : Math.floor(currentPremium * 1.2)),
     periodBadge: '20년납 · 90세만기',
     companyName: upgradeOption?.companyName || '추천 보험사',
     productName: upgradeOption?.productName || '재가/시설 체증형 플랜',
@@ -81,7 +81,7 @@ export const analyzeHomeFacility = (analysis: any): any => {
   const hybrid: RecommendationPlan = {
     title: '재가/시설 복합 실속형',
     description: '본인부담금 매칭(재가 15% / 시설 20%)에 딱 맞춰 20년납 합리적인 보험료로 불균형을 해결한 가성비 복합형입니다.',
-    estimatedPremium: hybridOption ? (hybridOption === dietOption || hybridOption === upgradeOption ? Math.round(hybridOption.premium * 1.1) : hybridOption.premium) : Math.floor(currentPremium * 0.85),
+    estimatedPremium: hybridOption ? hybridOption.premium : (dietOption ? Math.round(dietOption.premium * 1.15) : Math.floor(currentPremium * 0.85)),
     periodBadge: '20년납 · 90세만기',
     companyName: hybridOption?.companyName || '추천 보험사',
     productName: hybridOption?.productName || '재가/시설 복합 플랜',

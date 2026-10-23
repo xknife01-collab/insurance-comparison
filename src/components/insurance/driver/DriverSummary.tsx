@@ -123,13 +123,17 @@ export const DriverSummary: React.FC<Props> = ({ result, forceMobile }) => {
             <div className="bg-white/5 backdrop-blur-md rounded-[2.5rem] p-8 border border-white/10 w-full max-w-sm">
               <div className="flex justify-between items-end mb-6">
                 <div>
-                  <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">보장 분석 점수</p>
-                  <p className="text-4xl font-black text-purple-400">{score} <span className="text-lg text-slate-500">점</span></p>
+                  <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">운전자 보장 밸런스</p>
+                  <p className="text-3xl font-black text-purple-400">
+                    {deficiencies.length === 0 ? '안심 설계' : '보강 권장'}
+                  </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-[0.65rem] font-black text-red-500 uppercase">보강 추천</p>
+                  <p className="text-[0.65rem] font-black text-purple-400 uppercase">
+                    {deficiencies.length === 0 ? '보장 충족' : '보강 추천'}
+                  </p>
                   <div className="flex gap-1 mt-1">
-                    {[1, 2, 3].map(s => <div key={s} className="w-2 h-2 rounded-full bg-red-500" />)}
+                    {[1, 2, 3].map(s => <div key={s} className="w-2 h-2 rounded-full bg-purple-500" />)}
                     {[4, 5].map(s => <div key={s} className="w-2 h-2 rounded-full bg-white/10" />)}
                   </div>
                 </div>

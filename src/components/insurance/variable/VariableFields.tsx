@@ -82,7 +82,7 @@ export const VariableFields: React.FC<Props> = ({
               </div>
               <span className="font-black text-lg text-white mb-2">🛡️ 실속 순수보장형 정기보험</span>
               <p className="text-xs text-slate-400 font-semibold leading-relaxed">
-                종신보험 대비 더욱 합리적인 비용! 만기 시 소멸하지만, 가족의 경제적 자립이 필요한 시기만 골라 실속있게 사망보금 1억원을 세팅합니다. (예: {maskProductName('흥국생명 온라인정기보험', !!isUnlocked)} 등)
+                만기 시 소멸하지만, 가족의 경제적 자립이 필요한 시기만 골라 실속있게 사망보금 1억원을 세팅합니다. (예: {maskProductName('흥국생명 온라인정기보험', !!isUnlocked)} 등)
               </p>
             </button>
 

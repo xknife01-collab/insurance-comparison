@@ -119,7 +119,7 @@ export const analyzeChild = (analysis: any): any => {
       title: '간편 실속 다이어트 플랜',
       description: `${illnessLabel} 이력이 있어도 3대 핵심 진단비(암·뇌·심) 위주로 슬림하게 구성하여 월 보험료 부담을 낮춘 실속형 설계입니다.`,
       estimatedPremium: dietOption ? dietOption.premium : 45000,
-      periodBadge: '20년납 · 90세만기 (간편심사형)',
+      periodBadge: maturity === 30 ? '30세만기 · 20년납 (간편심사형)' : '100세만기 · 20년납 (간편심사형)',
       companyName: dietOption?.companyName || '추천 보험사',
       productName: dietOption?.productName || `간편 어린이 3대 진단 플랜`,
       coverageChanges: ['필수 진단비 중심 구성', '3대 중대 진단비 핵심 한도 집중'],
@@ -129,40 +129,74 @@ export const analyzeChild = (analysis: any): any => {
     upgrade = {
       title: '무사고 할인 계약전환형 플랜',
       description: `가입 후 무사고 기간 경과 시 심사를 거쳐 보험료 할인을 적용받을 수 있는 무사고 계약전환 연동형 플랜입니다.`,
-      estimatedPremium: upgradeOption ? (upgradeOption === dietOption ? Math.round(upgradeOption.premium * 1.8) : upgradeOption.premium) : 85000,
-      periodBadge: '20년납 · 100세만기 (비갱신형)',
+      estimatedPremium: upgradeOption ? upgradeOption.premium : (dietOption ? Math.round(dietOption.premium * 1.25) : 85000),
+      periodBadge: maturity === 30 ? '30세만기 · 20년납 (간편심사형)' : '100세만기 · 20년납 (간편심사형)',
       companyName: upgradeOption?.companyName || '추천 보험사',
       productName: upgradeOption?.productName || `무사고 할인 간편 어린이종합 플랜`,
-      coverageChanges: ['무사고 기간에 따른 자동 보험료 인하권 확보', '종합 비갱신 100세 만기 고정'],
+      coverageChanges: ['무사고 기간에 따른 자동 보험료 인하권 확보', '종합 비갱신 만기 고정'],
       switchingLossNotice: '가입 초기 보험료가 다이어트 플랜 대비 높게 형성됩니다.'
     };
 
     hybrid = {
       title: '질병수술비 보강 안심형',
       description: `소아 빈번 질환에 대해 부담보 조건을 점검하고, 질병 및 상해 수술비를 안정적으로 보강하는 종합 절충형 설계입니다.`,
-      estimatedPremium: hybridOption ? (hybridOption === dietOption || hybridOption === upgradeOption ? Math.round(hybridOption.premium * 1.3) : hybridOption.premium) : 68000,
-      periodBadge: '20년납 · 90세만기 (간편심사형)',
+      estimatedPremium: hybridOption ? hybridOption.premium : (dietOption ? Math.round(dietOption.premium * 1.15) : 68000),
+      periodBadge: maturity === 30 ? '30세만기 · 20년납 (간편심사형)' : '100세만기 · 20년납 (간편심사형)',
       companyName: hybridOption?.companyName || '추천 보험사',
       productName: hybridOption?.productName || `간편 어린이 수술종합 플랜`,
       coverageChanges: ['호르몬/피부/상해 수술비 부담보 조건 확인', '질병/상해 1-5종 수술비 반복 지급 특약 추가'],
       switchingLossNotice: '유병력 특성상 해지 시 동일 조건 재가입이 어려울 수 있으니 신중히 결정하세요.'
     };
-  } else {
+  } else if (maturity === 30) {
     diet = {
-      title: '30세 만기 가성비 플랜',
-      description: '자녀 성장기(0~30세) 동안 소아암, 선천성 장애, 잦은 입원비 등을 저렴한 비용으로 촘촘하게 채워주는 실속 구조입니다.',
+      title: '30세 만기 실속 가성비 플랜',
+      description: '자녀 성장기(0~30세) 동안 소아암, 선천성 장애, 잦은 입원비 등을 저렴한 비용으로 촘촘하게 채워주는 30세 만기 실속 구조입니다.',
       estimatedPremium: dietOption ? dietOption.premium : 32000,
       periodBadge: '30세만기 · 20년납 (실속형)',
       companyName: dietOption?.companyName || '추천 보험사',
-      productName: dietOption?.productName || '어린이 성장기 집중 플랜',
+      productName: dietOption?.productName || '어린이 30세 성장기 집중 플랜',
       coverageChanges: ['30세 만기 설정으로 보험료 부담 절감', '성장기 입원일당 및 수술비 보강'],
-      switchingLossNotice: '30세 이후에는 보장이 종료되므로 만기 시 반드시 계약전환 권리를 행사해 연장해야 합니다.'
+      switchingLossNotice: '30세 이후에는 보장이 종료되므로 만기 시 계약전환 권리를 통해 성인보험으로 연장할 수 있습니다.'
     };
 
     upgrade = {
-      title: '100세 만기 비갱신 안심 플랜',
-      description: '어릴 때 저렴한 보험료로 가입하여 20년 납입 완료 후 암/뇌/심장 3대 진단비를 100세 만기까지 비갱신형으로 안정적으로 가져가는 플랜입니다.',
-      estimatedPremium: upgradeOption ? (upgradeOption === dietOption ? Math.round(upgradeOption.premium * 2.2) : upgradeOption.premium) : 78000,
+      title: '30세 만기 표준 안심 플랜',
+      description: '성장기 주요 3대 진단비와 수술비, 일상 골절 및 입원비까지 30세 만기 표준형으로 빈틈없이 균형을 맞춘 밸런스 추천 플랜입니다.',
+      estimatedPremium: upgradeOption ? upgradeOption.premium : (dietOption ? Math.round(dietOption.premium * 1.25) : 42000),
+      periodBadge: '30세만기 · 20년납 (표준형)',
+      companyName: upgradeOption?.companyName || '추천 보험사',
+      productName: upgradeOption?.productName || '어린이 30세 표준 종합 플랜',
+      coverageChanges: ['30세 만기 표준 비갱신형 설계', '암/뇌/심 진단비 + 수술입원 균형 설계'],
+      switchingLossNotice: '보장 범위가 넓은 만큼 다이어트 플랜 대비 월 납입료가 다소 높습니다.'
+    };
+
+    hybrid = {
+      title: '30세 만기 3대진단 집중 플랜',
+      description: '성장기 소아암 및 주요 뇌·심장 중대 질환 치료비 한도를 극대화하고 입원·수술 특약을 조화롭게 결합한 30세 만기 맞춤 설계입니다.',
+      estimatedPremium: hybridOption ? hybridOption.premium : (dietOption ? Math.round(dietOption.premium * 1.15) : 38000),
+      periodBadge: '30세만기 · 20년납 (진단비 강화형)',
+      companyName: hybridOption?.companyName || '추천 보험사',
+      productName: hybridOption?.productName || '어린이 30세 진단비 집중 플랜',
+      coverageChanges: ['30세 만기 3대 진단비 한도 극대화', '성장기 필수 다이렉트 설계 매칭'],
+      switchingLossNotice: '진단비 중심 설계로 기타 경증 통원 특약 한도는 기본형으로 적용됩니다.'
+    };
+  } else {
+    // 100세 만기 선택 시
+    diet = {
+      title: '100세 만기 슬림 실속 플랜',
+      description: '평생 든든한 100세 만기 비갱신 보장 중 필수 3대 진단비 위주로 슬림하게 구성하여 초기 보험료 부담을 낮춘 100세 실속형 구조입니다.',
+      estimatedPremium: dietOption ? dietOption.premium : 68000,
+      periodBadge: '100세만기 · 20년납 (순수보장형)',
+      companyName: dietOption?.companyName || '추천 보험사',
+      productName: dietOption?.productName || '어린이 100세 실속 플랜',
+      coverageChanges: ['100세 만기 비갱신형 기본 세팅', '필수 진단비 중심 월 보험료 절감'],
+      switchingLossNotice: '100세 장기 보장이므로 중도 해지 시 손실이 발생할 수 있습니다.'
+    };
+
+    upgrade = {
+      title: '100세 만기 표준 종합 안심 플랜',
+      description: '어릴 때 저렴한 보험료로 가입하여 20년 납입 완료 후 암/뇌/심장 3대 진단비를 100세 만기까지 비갱신형으로 안정적으로 가져가는 추천 플랜입니다.',
+      estimatedPremium: upgradeOption ? upgradeOption.premium : (dietOption ? Math.round(dietOption.premium * 1.25) : 85000),
       periodBadge: '100세만기 · 20년납 (비갱신형)',
       companyName: upgradeOption?.companyName || '추천 보험사',
       productName: upgradeOption?.productName || '어린이 100세 종합 플랜',
@@ -171,14 +205,14 @@ export const analyzeChild = (analysis: any): any => {
     };
 
     hybrid = {
-      title: '복합 절충형 스마트 플랜',
-      description: '치료비 부담이 큰 3대 진단비는 100세 만기로 길게 보장받고, 성장기에만 일시적으로 필요한 입원/수술 특약은 30세 만기로 믹스한 스마트 설계입니다.',
-      estimatedPremium: hybridOption ? (hybridOption === dietOption || hybridOption === upgradeOption ? Math.round(hybridOption.premium * 1.5) : hybridOption.premium) : 55000,
-      periodBadge: '복합설계 (진단비 100세 · 수술입원 30세)',
+      title: '100세 만기 프리미엄 보장 플랜',
+      description: '3대 진단비뿐 아니라 질병/상해 수술비와 입원일당까지 100세 만기 비갱신형으로 폭넓게 커버하는 프리미엄 설계입니다.',
+      estimatedPremium: hybridOption ? hybridOption.premium : (dietOption ? Math.round(dietOption.premium * 1.15) : 78000),
+      periodBadge: '100세만기 · 20년납 (종합 프리미엄)',
       companyName: hybridOption?.companyName || '추천 보험사',
-      productName: hybridOption?.productName || '어린이 하이브리드 맞춤 플랜',
-      coverageChanges: ['진단비(100세) + 입원수술(30세) 복합 구성', '효율적인 다이렉트 설계 매칭'],
-      switchingLossNotice: '특약별로 만기가 상이하여 관리가 다소 복잡할 수 있습니다.'
+      productName: hybridOption?.productName || '어린이 100세 프리미엄 플랜',
+      coverageChanges: ['100세 만기 수술/입원/진단 풀패키지', '평생 비갱신 보장 확정'],
+      switchingLossNotice: '종합 풀보장 플랜으로 월 납입 보험료가 가장 높게 형성됩니다.'
     };
   }
 

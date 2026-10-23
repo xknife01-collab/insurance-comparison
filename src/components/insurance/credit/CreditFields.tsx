@@ -122,7 +122,7 @@ export const CreditFields: React.FC<Props> = ({
               </h4>
             </div>
             <p className="text-xs text-slate-400 font-bold">
-              대출 잔액을 한도로 보장받아 가계 위험을 완전히 소거합니다.
+              대출 잔액을 한도로 보장받아 가계 위험을 줄여드립니다.
             </p>
           </div>
         </div>

@@ -95,8 +95,8 @@ export const WholeLifeFields: React.FC<Props> = ({
               }`}
             >
               <PiggyBank className={`w-8 h-8 mb-4 ${objective === 'savings' ? 'text-indigo-400' : 'text-slate-400'}`} />
-              <span className="font-black text-base text-white">목돈 마련 (연금 연계)</span>
-              <span className="text-[10px] text-slate-400 font-bold mt-1">완납 후 비과세 저축/연금으로 전환 및 목적자금</span>
+              <span className="font-black text-base text-white">노후 생활자금 (연금 전환)</span>
+              <span className="text-[10px] text-slate-400 font-bold mt-1">완납 후 은퇴 시점에 맞춘 연금 전환 옵션 연계</span>
             </button>
           </div>
 
@@ -165,7 +165,7 @@ export const WholeLifeFields: React.FC<Props> = ({
               ))}
             </div>
             <p className="text-[10px] text-slate-400 font-medium leading-relaxed mt-2">
-              * 최근 트렌드는 조기 완납 후 장기 복리 혜택을 누리는 5년납/7년납 단기납의 선택 비중이 75% 이상입니다.
+              * 최근 트렌드는 조기 완납 후 장기 복리 혜택을 누리는 5년납/7년납 단기납의 선택 비중이 높습니다.
             </p>
           </div>
 
@@ -203,7 +203,7 @@ export const WholeLifeFields: React.FC<Props> = ({
                 <ShieldCheck size={18} className="text-indigo-600 shrink-0 mt-0.5" />
                 <p className="text-[10px] text-indigo-900 font-bold leading-relaxed">
                   <span className="font-black text-indigo-700 block mb-0.5">💰 저해지형의 장점 & 주의점</span>
-                  납입 중 해지 시에는 원금 회복률이 매우 낮으나, 대신 동일 보장 대비 월 보험료가 <span className="text-rose-600 font-black">15~20% 저렴</span>하며 완납 후 환급률은 일반형 대비 훨씬 월등합니다. (장기 유지 최적화)
+                  납입 중 해지 시에는 원금 회복률이 매우 낮으나, 대신 동일 보장 대비 월 보험료가 <span className="text-rose-600 font-black">저렴</span>하며 완납 후 환급률은 일반형 대비 유리합니다. (장기 유지 최적화)
                 </p>
               </div>
             ) : (

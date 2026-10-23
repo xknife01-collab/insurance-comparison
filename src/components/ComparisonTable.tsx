@@ -504,7 +504,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     {
       label: '표적항암 치료비',
       current: analysis.cancer?.targetedTherapy ? '가입 완료' : '미가입',
-      recommended: '최대 5,000만 원 (부작용 없는 정밀 표적항암제 처방비 실손 지원)',
+      recommended: '최대 5,000만 원 (부작용 적은 정밀 표적항암제 처방비 실손 지원)',
       icon: <HeartPulse className="w-4 h-4 text-rose-500" />
     },
     {
@@ -777,7 +777,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     { 
       label: '해약환급금 구조', 
       current: '일반형 (비싸고 완납 후 환급률 낮음)', 
-      recommended: wholeLifeOpts.refundType === 'low' ? '저해지/무해지형 (보험료 18% 즉시할인 + 완납 후 높은 환급금 확보)' : '일반형 (중도 해지 페널티 최소화 구조)', 
+      recommended: wholeLifeOpts.refundType === 'low' ? '저해지/무해지형 (완납 후 높은 환급금 확보)' : '일반형 (중도 해지 페널티 최소화 구조)', 
       icon: <PiggyBank className="w-4 h-4 text-indigo-600" /> 
     },
     { 
@@ -860,7 +860,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     },
     {
       label: '이자 계산 방식',
-      current: '단리 이자 (원금에만 이자가 붙는 은행 적금 방식)',
+      current: '단리 이자 (원금에만 이자가 붙는 일반 단리 방식)',
       recommended: '월 복리 이자 (원금+이자가 새로운 원금이 되어 굴러가는 복리 부리)',
       icon: <TrendingUp className="w-4 h-4 text-emerald-600" />
     },
@@ -872,8 +872,8 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     },
     {
       label: '금리 방어막 (최저보증)',
-      current: '시중 연동 금리 (기준금리 급락 시 0%대 만기금리 발생 우려)',
-      recommended: '최저보증이율 (금리가 아무리 하락해도 평생 0.75%~1.25% 최저 이율 보장)',
+      current: '시중 변동 금리 (시장 금리 변동에 따른 이율 연동)',
+      recommended: '최저보증이율 적용 (금리 하락 시에도 약관상 최저 이율 보장)',
       icon: <ShieldCheck className="w-4 h-4 text-emerald-600" />
     }
   ];
@@ -934,7 +934,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     {
       label: '사망 상환 보장',
       current: '미가입 (유고 시 대출금이 가족에게 승계)',
-      recommended: `대출금 ${formatAmt(creditLoanAmount)} 전액 즉시 대위변제 (채무 완전소거)`,
+      recommended: `대출금 ${formatAmt(creditLoanAmount)} 대위변제 지원 (채무 상환)`,
       icon: <ShieldCheck className="w-4 h-4 text-emerald-600" />
     },
     {
@@ -1017,7 +1017,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ analysis, recommendat
     {
       label: '표적항암 치료비 특약',
       current: hg?.hasTargetedTherapy ? '가입 완료' : '미가입',
-      recommended: '가입 (부작용 없는 정밀 표적항암제 처방비 연간 최대 5,000만 원)',
+      recommended: '가입 (부작용 적은 정밀 표적항암제 처방비 연간 최대 5,000만 원)',
       icon: <HeartPulse className="w-4 h-4 text-violet-600" />
     },
     {

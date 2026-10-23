@@ -59,145 +59,119 @@ export const VariableSummary: React.FC<Props> = ({ result }) => {
   return (
     <div className="space-y-12 text-left">
       
-      {/* 1. Header & Score Dashboard */}
-      <div className="grid lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 bg-white rounded-[3.5rem] p-10 md:p-12 border border-slate-100 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.08)] relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-16 opacity-[0.03] group-hover:scale-110 transition-transform duration-700">
-            {isPremiumTheme ? <TrendingUp size={200} className="text-blue-500" /> : <Scale size={200} className="text-orange-500" />}
-          </div>
-          
-          <div className="relative z-10 space-y-8">
-            <div className="flex items-center gap-4">
-              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-lg ${
-                isPremiumTheme ? 'bg-blue-600 shadow-blue-500/20' : 'bg-orange-600 shadow-orange-500/20'
-              }`}>
-                {isPremiumTheme ? <TrendingUp size={28} /> : <Scale size={28} />}
-              </div>
-              <div>
-                <h3 className="text-2xl font-black text-slate-800 tracking-tight">
-                  {subType === 'variable_saving' ? '수익형 변액 적립/저축보험 리포트' :
-                   subType === 'variable_term' ? '투자보장형 변액 정기보험 리포트' :
-                   subType === 'term_ceo' ? 'CEO 경영인 절세형 정기보험 리포트' :
-                   subType === 'term_pure' ? '실속 순수보장형 정기보험 리포트' :
-                   isInvestment ? '변액 적립식 투자 자산 리포트' : '가성비 정기보장 사망설계 리포트'}
-                </h3>
-                <p className="text-xs font-bold text-slate-400">
-                  {isInvestment ? (
-                    <>월 {varOpts.monthlyPremium.toLocaleString()}원 · {varOpts.paymentPeriod}년납 · 투자성향: {varOpts.investmentStyle === 'aggressive' ? '공격형' : varOpts.investmentStyle === 'balanced' ? '중립형' : '안정형'}</>
-                  ) : (
-                    <>사망보장 {(varOpts.deathBenefit / 100000000).toFixed(1)}억원 · 만 {varOpts.coveragePeriod}세 만기 · {varOpts.isHealthyDiscount ? '우량체 적용' : '표준요율 적용'}</>
-                  )}
-                </p>
-              </div>
-            </div>
-
-            {/* AI 맞춤 정보 배너 */}
-            <div className={`p-5 rounded-2xl border flex gap-3 items-start ${
-              isPremiumTheme ? 'bg-blue-50/50 border-blue-100/50' : 'bg-orange-50/50 border-orange-100/50'
-            }`}>
-              <AlertCircle className={`w-5 h-5 shrink-0 mt-0.5 ${isPremiumTheme ? 'text-blue-600' : 'text-orange-600'}`} />
-              <div className="space-y-1">
-                <p className={`text-xs font-black ${isPremiumTheme ? 'text-blue-800' : 'text-orange-800'}`}>
-                  {isInvestment ? (isB2BMode ? '맞춤형 변액자산 배분 가이드' : 'AI 변액자산 배분 가이드') : (isB2BMode ? '보장 비교 분석 설계' : 'AI 보장 리모델링 설계')}
-                </p>
-                <p className="text-[11px] text-slate-500 font-bold leading-relaxed">
-                  {subType === 'variable_saving' ? (
-                    <>
-                      설정하신 주식형 펀드 비율은 <span className="text-blue-600 font-black">{varOpts.equityRatio}%</span>입니다. 투자 성향이 {varOpts.investmentStyle === 'aggressive' ? '공격형' : varOpts.investmentStyle === 'balanced' ? '중립형' : '안정형'}이므로 이에 맞추어 펀드 포트폴리오를 다이내믹하게 유지하는 편이 장기 수익률 극대화에 유리합니다.
-                    </>
-                  ) : subType === 'variable_term' ? (
-                    <>
-                      사망 보장과 펀드 투자를 결합한 변액정기보험입니다. 인플레이션을 헤지할 수 있는 실적배당 혜택이 있으나, 투자 성과에 따라 해약환급금 변동성이 있으므로 안정적인 중장기 유지가 필요합니다.
-                    </>
-                  ) : subType === 'term_ceo' ? (
-                    <>
-                      법인세 절세 및 CEO 은퇴 퇴직금 플랜을 위한 경영인 정기보험입니다. 납입 보험료의 비용 처리(손비 인정) 요건과 최대 환급률 시점(10~15년)을 전략적으로 모니터링하여 법인 자산 효율을 높이십시오.
-                    </>
-                  ) : (
-                    <>
-                      동일한 사망 보장 {(varOpts.deathBenefit / 100000000).toFixed(1)}억원을 평생 유지하는 종신보험 대비 정기보험으로 교체 시 **매월 보험료를 최대 85% 이상 절감**할 수 있습니다. 절약한 기회비용은 개인연금저축 등으로 재투자하는 방안이 매우 효과적입니다.
-                    </>
-                  )}
-                </p>
-              </div>
-            </div>
-
-            {/* 세부 점수 리스트 */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-4">
-              {isInvestment ? (
-                [
-                  { label: '펀드 매칭 최적성', targetId: 'input-variable-fields', val: `${varOpts.equityRatio}% 주식형 비중`, score: scores.cancerScore },
-                  { label: '납입 구조 효율성', targetId: 'input-variable-fields', val: `${varOpts.paymentPeriod}년납 설정`, score: scores.cerebrovascularScore },
-                  { label: '위험 대응 적합도', targetId: 'input-variable-fields', val: varOpts.isAnnuityConversion ? '연금전환 옵션 연결' : '연금전환 미지정', score: scores.cardiovascularScore },
-                  { label: '비과세 절세 효율', targetId: 'input-variable-fields', val: varOpts.paymentPeriod >= 10 ? '10년 비과세 만족' : '절세 조건 불충족', score: varOpts.paymentPeriod >= 10 ? 95 : 50 }
-                ].map((item, i) => (
-                  <div key={i} className="space-y-2">
-                    <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">{item.label}</p>
-                    <p className="text-sm font-black text-slate-800">{item.val}</p>
-                    <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                      <motion.div 
-                        initial={{ width: 0 }}
-                        animate={{ width: `${item.score}%` }}
-                        className={`h-full ${getProgressColor(item.score)}`}
-                      />
-                    </div>
-                  </div>
-                ))
-              ) : (
-                (subType === 'term_ceo' ? [
-                  { label: '사망보장액 적정성', targetId: 'input-variable-fields', val: `${(varOpts.deathBenefit / 100000000).toFixed(1)}억원 보장`, score: scores.cancerScore },
-                  { label: '보장 만기 설계', targetId: 'input-variable-fields', val: `만 ${varOpts.coveragePeriod}세 만기`, score: scores.cerebrovascularScore },
-                  { label: '법인세 절세 효과', targetId: 'input-variable-fields', val: '납입액 전액 비용처리', score: scores.cardiovascularScore },
-                  { label: '환급 효율 최적도', targetId: 'input-variable-fields', val: '목표 환급률 달성', score: 95 }
-                ] : subType === 'variable_term' ? [
-                  { label: '사망보장액 적정성', targetId: 'input-variable-fields', val: `${(varOpts.deathBenefit / 100000000).toFixed(1)}억원 보장`, score: scores.cancerScore },
-                  { label: '보장 만기 설계', targetId: 'input-variable-fields', val: `만 ${varOpts.coveragePeriod}세 만기`, score: scores.cerebrovascularScore },
-                  { label: '펀드 투자 연계도', targetId: 'input-variable-fields', val: '글로벌 자산배분', score: scores.cardiovascularScore },
-                  { label: '실적배당 가성비', targetId: 'input-variable-fields', val: '투자수익 반영 가능', score: 92 }
-                ] : [
-                  { label: '사망보장액 적정성', targetId: 'input-variable-fields', val: `${(varOpts.deathBenefit / 100000000).toFixed(1)}억원 보장`, score: scores.cancerScore },
-                  { label: '보장 만기 설계', targetId: 'input-variable-fields', val: `만 ${varOpts.coveragePeriod}세 만기`, score: scores.cerebrovascularScore },
-                  { label: '우량체 할인 적용', targetId: 'input-variable-fields', val: varOpts.isHealthyDiscount ? '15% 특별 할인' : '할인 미지정', score: scores.cardiovascularScore },
-                  { label: '종신 대비 가성비', targetId: 'input-variable-fields', val: '약 85% 지출 절감', score: 98 }
-                ]).map((item, i) => (
-                  <div key={i} className="space-y-2">
-                    <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">{item.label}</p>
-                    <p className="text-sm font-black text-slate-800">{item.val}</p>
-                    <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                      <motion.div 
-                        initial={{ width: 0 }}
-                        animate={{ width: `${item.score}%` }}
-                        className={`h-full ${isPremiumTheme ? 'bg-blue-500' : 'bg-orange-500'}`}
-                      />
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
-          </div>
+      {/* 1. Header: Variable Coverage Summary */}
+      <div className="bg-white rounded-[3.5rem] p-10 md:p-12 border border-slate-100 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.08)] relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-16 opacity-[0.03] group-hover:scale-110 transition-transform duration-700">
+          {isPremiumTheme ? <TrendingUp size={200} className="text-blue-500" /> : <Scale size={200} className="text-orange-500" />}
         </div>
+        
+        <div className="relative z-10 space-y-8">
+          <div className="flex items-center gap-4">
+            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-lg ${
+              isPremiumTheme ? 'bg-blue-600 shadow-blue-500/20' : 'bg-orange-600 shadow-orange-500/20'
+            }`}>
+              {isPremiumTheme ? <TrendingUp size={28} /> : <Scale size={28} />}
+            </div>
+            <div>
+              <h3 className="text-2xl font-black text-slate-800 tracking-tight">
+                {subType === 'variable_saving' ? '수익형 변액 적립/저축보험 리포트' :
+                 subType === 'variable_term' ? '투자보장형 변액 정기보험 리포트' :
+                 subType === 'term_ceo' ? 'CEO 경영인 절세형 정기보험 리포트' :
+                 subType === 'term_pure' ? '실속 순수보장형 정기보험 리포트' :
+                 isInvestment ? '변액 적립식 투자 자산 리포트' : '가성비 정기보장 사망설계 리포트'}
+              </h3>
+              <p className="text-xs font-bold text-slate-400">
+                {isInvestment ? (
+                  <>월 {varOpts.monthlyPremium.toLocaleString()}원 · {varOpts.paymentPeriod}년납 · 투자성향: {varOpts.investmentStyle === 'aggressive' ? '공격형' : varOpts.investmentStyle === 'balanced' ? '중립형' : '안정형'}</>
+                ) : (
+                  <>사망보장 {(varOpts.deathBenefit / 100000000).toFixed(1)}억원 · 만 {varOpts.coveragePeriod}세 만기 · {varOpts.isHealthyDiscount ? '우량체 적용' : '표준요율 적용'}</>
+                )}
+              </p>
+            </div>
+          </div>
 
-        {/* 종합 점수 카드 */}
-        <div className={`rounded-[3.5rem] p-12 text-white shadow-lg flex flex-col justify-between relative overflow-hidden group ${
-          isPremiumTheme ? 'bg-gradient-to-br from-blue-600 to-indigo-800 shadow-blue-500/20' : 'bg-gradient-to-br from-[#FF6B00] to-red-600 shadow-orange-500/20'
-        }`}>
-          <div className="absolute -bottom-10 -right-10 opacity-10 group-hover:scale-125 transition-transform duration-1000">
-            <Zap size={200} fill="currentColor" />
-          </div>
-          <div className="relative z-10 text-left">
-            <p className="opacity-80 font-black text-[0.65rem] uppercase tracking-[0.3em] mb-4">Rebalance Score</p>
-            <div className="flex items-baseline gap-2">
-              <span className="text-7xl font-black tracking-tighter">{scores.totalScore}</span>
-              <span className="text-2xl font-bold opacity-80">점</span>
+          {/* AI 맞춤 정보 배너 */}
+          <div className={`p-5 rounded-2xl border flex gap-3 items-start ${
+            isPremiumTheme ? 'bg-blue-50/50 border-blue-100/50' : 'bg-orange-50/50 border-orange-100/50'
+          }`}>
+            <AlertCircle className={`w-5 h-5 shrink-0 mt-0.5 ${isPremiumTheme ? 'text-blue-600' : 'text-orange-600'}`} />
+            <div className="space-y-1">
+              <p className={`text-xs font-black ${isPremiumTheme ? 'text-blue-800' : 'text-orange-800'}`}>
+                {isInvestment ? (isB2BMode ? '맞춤형 변액자산 배분 가이드' : 'AI 변액자산 배분 가이드') : (isB2BMode ? '보장 비교 분석 설계' : 'AI 보장 리모델링 설계')}
+              </p>
+              <p className="text-[11px] text-slate-500 font-bold leading-relaxed">
+                {subType === 'variable_saving' ? (
+                  <>
+                    설정하신 주식형 펀드 비율은 <span className="text-blue-600 font-black">{varOpts.equityRatio}%</span>입니다. 투자 성향이 {varOpts.investmentStyle === 'aggressive' ? '공격형' : varOpts.investmentStyle === 'balanced' ? '중립형' : '안정형'}이므로 이에 맞추어 펀드 포트폴리오를 다이내믹하게 유지하는 편이 장기 수익률 극대화에 유리합니다.
+                  </>
+                ) : subType === 'variable_term' ? (
+                  <>
+                    사망 보장과 펀드 투자를 결합한 변액정기보험입니다. 인플레이션을 헤지할 수 있는 실적배당 혜택이 있으나, 투자 성과에 따라 해약환급금 변동성이 있으므로 안정적인 중장기 유지가 필요합니다.
+                  </>
+                ) : subType === 'term_ceo' ? (
+                  <>
+                    법인세 절세 및 CEO 은퇴 퇴직금 플랜을 위한 경영인 정기보험입니다. 납입 보험료의 비용 처리(손비 인정) 요건과 최대 환급률 시점(10~15년)을 전략적으로 모니터링하여 법인 자산 효율을 높이십시오.
+                  </>
+                ) : (
+                  <>
+                    자녀 독립 시점 등 경제활동기에 집중하여 사망 보장 {(varOpts.deathBenefit / 100000000).toFixed(1)}억원을 설계함으로써 **월 납입 보험료 부담을 효과적으로 경감**할 수 있습니다. 절약된 보험료 차액은 개인연금저축 등으로 재투자하는 방안이 효과적입니다.
+                  </>
+                )}
+              </p>
             </div>
           </div>
-          <div className="relative z-10 pt-8 text-left">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full backdrop-blur-sm border border-white/10">
-              <CheckCircle2 size={16} className="opacity-80" />
-              <span className="text-xs font-bold">
-                {scores.totalScore >= 85 ? '아주 합리적으로 자산을 관리하고 계십니다!' : scores.totalScore >= 65 ? '보통 수준의 포트폴리오를 유지하고 있습니다.' : '포트폴리오 리모델링이 적극 권장됩니다.'}
-              </span>
-            </div>
+
+          {/* 세부 상태 리스트 */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-4">
+            {isInvestment ? (
+              [
+                { label: '펀드 매칭 최적성', targetId: 'input-variable-fields', val: `${varOpts.equityRatio}% 주식형 비중`, status: '배분' },
+                { label: '납입 구조 효율성', targetId: 'input-variable-fields', val: `${varOpts.paymentPeriod}년납 설정`, status: '적정' },
+                { label: '위험 대응 적합도', targetId: 'input-variable-fields', val: varOpts.isAnnuityConversion ? '연금전환 옵션 연결' : '연금전환 미지정', status: varOpts.isAnnuityConversion ? '연결' : '미지정' },
+                { label: '비과세 절세 효율', targetId: 'input-variable-fields', val: varOpts.paymentPeriod >= 10 ? '10년 비과세 만족' : '절세 조건 불충족', status: varOpts.paymentPeriod >= 10 ? '비과세' : '과세' }
+              ].map((item, i) => (
+                <div 
+                  key={i} 
+                  onClick={() => scrollToInputAndHighlight((item as any).targetId)}
+                  className="bg-slate-50/70 p-6 rounded-2xl border border-slate-100 flex flex-col justify-center gap-2 group hover:border-blue-300 hover:shadow-sm cursor-pointer transition-all duration-300"
+                >
+                  <div className="flex justify-between items-center w-full">
+                    <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">{item.label}</p>
+                    <span className="text-[10px] font-black px-2.5 py-0.5 rounded-md bg-blue-100 text-blue-700">{item.status}</span>
+                  </div>
+                  <p className="text-sm font-black text-slate-800">{item.val}</p>
+                </div>
+              ))
+            ) : (
+              (subType === 'term_ceo' ? [
+                { label: '사망보장액 적정성', targetId: 'input-variable-fields', val: `${(varOpts.deathBenefit / 100000000).toFixed(1)}억원 보장`, status: '보장' },
+                { label: '보장 만기 설계', targetId: 'input-variable-fields', val: `만 ${varOpts.coveragePeriod}세 만기`, status: '설계' },
+                { label: '법인세 절세 효과', targetId: 'input-variable-fields', val: '납입액 전액 비용처리', status: '절세' },
+                { label: '환급 효율 최적도', targetId: 'input-variable-fields', val: '목표 환급률 달성', status: '최적' }
+              ] : subType === 'variable_term' ? [
+                { label: '사망보장액 적정성', targetId: 'input-variable-fields', val: `${(varOpts.deathBenefit / 100000000).toFixed(1)}억원 보장`, status: '보장' },
+                { label: '보장 만기 설계', targetId: 'input-variable-fields', val: `만 ${varOpts.coveragePeriod}세 만기`, status: '설계' },
+                { label: '펀드 투자 연계도', targetId: 'input-variable-fields', val: '글로벌 자산배분', status: '연동' },
+                { label: '실적배당 가성비', targetId: 'input-variable-fields', val: '투자수익 반영 가능', status: '반영' }
+              ] : [
+                { label: '사망보장액 적정성', targetId: 'input-variable-fields', val: `${(varOpts.deathBenefit / 100000000).toFixed(1)}억원 보장`, status: '보장' },
+                { label: '보장 만기 설계', targetId: 'input-variable-fields', val: `만 ${varOpts.coveragePeriod}세 만기`, status: '설계' },
+                { label: '우량체 할인 적용', targetId: 'input-variable-fields', val: varOpts.isHealthyDiscount ? '15% 특별 할인' : '할인 미지정', status: varOpts.isHealthyDiscount ? '할인' : '표준' },
+                { label: '종신 대비 가성비', targetId: 'input-variable-fields', val: '약 85% 지출 절감', status: '우수' }
+              ]).map((item, i) => (
+                <div 
+                  key={i} 
+                  onClick={() => scrollToInputAndHighlight((item as any).targetId)}
+                  className="bg-slate-50/70 p-6 rounded-2xl border border-slate-100 flex flex-col justify-center gap-2 group hover:border-orange-300 hover:shadow-sm cursor-pointer transition-all duration-300"
+                >
+                  <div className="flex justify-between items-center w-full">
+                    <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">{item.label}</p>
+                    <span className={`text-[10px] font-black px-2.5 py-0.5 rounded-md ${isPremiumTheme ? 'bg-blue-100 text-blue-700' : 'bg-orange-100 text-orange-700'}`}>{item.status}</span>
+                  </div>
+                  <p className="text-sm font-black text-slate-800">{item.val}</p>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>

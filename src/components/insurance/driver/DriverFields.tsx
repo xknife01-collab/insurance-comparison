@@ -130,7 +130,6 @@ export const DriverFields: React.FC<Props> = ({
             {
               id: 'saving',
               label: '실속형 (가성비 플랜)',
-              price: '월 1~2만 원대',
               desc: '벌금 및 기본적인 형사합의금만 가성비 있게 커버하는 미니멀 세팅',
               features: ['교사처(형사합의금) 1억 원', '변호사 선임비 3,000만 원', '벌금 대인 2,000만 원'],
               icon: ShieldCheck,
@@ -139,7 +138,6 @@ export const DriverFields: React.FC<Props> = ({
             {
               id: 'standard',
               label: '표준형 (가장 균형 잡힌 플랜)',
-              price: '월 2~3만 원대',
               desc: '평균 리스크를 안정적으로 대비하고 주요 상해 담보까지 탄탄히 추가된 정석 세팅',
               features: ['교사처(형사합의금) 1.5억 원', '변호사 선임비 5,000만 원', '벌금 대인 3,000만 원 최대'],
               icon: Scale,
@@ -148,7 +146,6 @@ export const DriverFields: React.FC<Props> = ({
             {
               id: 'premium',
               label: 'VIP 안심형 (프리미엄 플랜)',
-              price: '월 3~4만 원대',
               desc: '2026 최신 트렌드인 경찰 첫 출석 단계 변호인 선임비 선지급 및 최대 한도 보강 설계',
               features: ['교사처(형사합의금) 2억 원', '경찰조사 변호사비 5,000만 원', '대인 3,000만/대물 500만 벌금'],
               icon: ShieldAlert,
@@ -165,10 +162,7 @@ export const DriverFields: React.FC<Props> = ({
                   : 'bg-white border-slate-100 hover:border-slate-200'
               }`}
             >
-              <div className="flex justify-between items-center w-full mb-6">
-                <span className={`text-[10px] font-black px-3.5 py-1.5 rounded-xl border ${item.accent}`}>
-                  {item.price}
-                </span>
+              <div className="flex justify-end items-center w-full mb-6">
                 <item.icon className={`w-6 h-6 ${planType === item.id ? 'text-purple-600' : 'text-slate-300 group-hover:text-slate-400'}`} />
               </div>
               <h5 className={`font-black text-base md:text-lg mb-2 ${planType === item.id ? 'text-purple-600' : 'text-slate-800'}`}>

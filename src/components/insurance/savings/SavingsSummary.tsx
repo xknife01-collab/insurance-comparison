@@ -78,90 +78,66 @@ export const SavingsSummary: React.FC<Props> = ({ result }) => {
 
   return (
     <div className="space-y-12 text-left">
-      {/* 1. Header: Breed Card & Score Card */}
-      <div className="grid lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 bg-white rounded-[3.5rem] p-10 md:p-12 border border-slate-100 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.08)] relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-16 opacity-[0.03] group-hover:scale-110 transition-transform duration-700">
-            <PiggyBank size={200} className="text-emerald-500" />
-          </div>
-          
-          <div className="relative z-10 space-y-8">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-emerald-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-emerald-500/20">
-                <PiggyBank size={28} />
-              </div>
-              <div>
-                <h3 className="text-2xl font-black text-slate-800 tracking-tight">
-                  {isInstallment ? '적립식 비과세 저축보험' : '거치식 일시납 저축보험'} 자산 분석 리포트
-                </h3>
-                <p className="text-xs font-bold text-slate-400">
-                  가입 연령: 만 {analysis.age || 35}세 · {isInstallment ? `납입료: 월 ${premium.toLocaleString()}원 · ${payYears}년납` : `거치금: 일시납 ${premium.toLocaleString()}원`} · {keepYears}년만기 유지
-                </p>
-              </div>
-            </div>
-
-            {/* 맞춤형 비과세 정보 배너 */}
-            <div className="p-5 rounded-2xl bg-emerald-50/50 border border-emerald-100/50 flex gap-3 items-start">
-              <AlertCircle className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-              <div className="space-y-1">
-                <p className="text-xs font-black text-emerald-800">이자소득 비과세 혜택 분석</p>
-                <p className="text-[11px] text-slate-500 font-bold leading-relaxed">
-                  {isTaxExempt ? (
-                    <>
-                      고객님은 현재 비과세 충족 조건을 안정적으로 만족하고 계십니다! 만기 시점 예상 적립금 {Math.round(accumulated / 10000).toLocaleString()}만 원에 대한 이자 소득세(15.4%)가 전액 면제되며, 예상되는 절세 규모는 약 <span className="text-emerald-600 font-black">{savedTax.toLocaleString()}원</span>입니다.
-                    </>
-                  ) : (
-                    <>
-                      현재 설정된 저축 조건은 비과세 세법 기준(적립식: 5년 이상 납입, 10년 이상 유지, 월 150만원 이하 / 일시납: 10년 이상 유지, 총 1억 이하)에 어긋나 만기 시점에 **이자소득세 15.4%가 일반과세**됩니다. 조건 수정을 권장합니다.
-                    </>
-                  )}
-                </p>
-              </div>
-            </div>
-
-            {/* 세부 점수 리스트 */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-4">
-              {[
-                { label: '비과세 혜택 최적성', targetId: 'input-savings-fields', val: isTaxExempt ? '비과세 요건 매칭' : '일반과세 대상', score: scores.cancerScore },
-                { label: '이율 안전성 점수', targetId: 'input-savings-fields', val: `공시이율 ${(declaredRate*100).toFixed(2)}%`, score: scores.cerebrovascularScore },
-                { label: '사업비 효율 점수', targetId: 'input-savings-fields', val: `수수료 ${(feeRate*100).toFixed(1)}% 수준`, score: scores.cardiovascularScore },
-                { label: '유니버셜 기능성', targetId: 'input-savings-fields', val: savingsOpts.hasUniversal ? '기능 보유 (우수)' : '미보유 (기본)', score: savingsOpts.hasUniversal ? 95 : 50 },
-              ].map((item, i) => (
-                <div key={i} className="space-y-2">
-                  <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">{item.label}</p>
-                  <p className="text-sm font-black text-slate-800">{item.val}</p>
-                  <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                    <motion.div 
-                      initial={{ width: 0 }}
-                      animate={{ width: `${item.score}%` }}
-                      className={`h-full ${getProgressColor(item.score)}`}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+      {/* 1. Header: Savings Coverage Summary */}
+      <div className="bg-white rounded-[3.5rem] p-10 md:p-12 border border-slate-100 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.08)] relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-16 opacity-[0.03] group-hover:scale-110 transition-transform duration-700">
+          <PiggyBank size={200} className="text-emerald-500" />
         </div>
+        
+        <div className="relative z-10 space-y-8">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 bg-emerald-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-emerald-500/20">
+              <PiggyBank size={28} />
+            </div>
+            <div>
+              <h3 className="text-2xl font-black text-slate-800 tracking-tight">
+                {isInstallment ? '적립식 비과세 저축보험' : '거치식 일시납 저축보험'} 자산 분석 리포트
+              </h3>
+              <p className="text-xs font-bold text-slate-400">
+                가입 연령: 만 {analysis.age || 35}세 · {isInstallment ? `납입료: 월 ${premium.toLocaleString()}원 · ${payYears}년납` : `거치금: 일시납 ${premium.toLocaleString()}원`} · {keepYears}년만기 유지
+              </p>
+            </div>
+          </div>
 
-        {/* 종합 점수 카드 */}
-        <div className="bg-emerald-600 rounded-[3.5rem] p-12 text-white shadow-[0_30px_70px_-20px_rgba(16,185,129,0.3)] flex flex-col justify-between relative overflow-hidden group">
-          <div className="absolute -bottom-10 -right-10 opacity-10 group-hover:scale-125 transition-transform duration-1000">
-            <Zap size={200} fill="currentColor" />
-          </div>
-          <div className="relative z-10 text-left">
-            <p className="text-emerald-100 font-black text-[0.65rem] uppercase tracking-[0.3em] mb-4">Savings Score</p>
-            <div className="flex items-baseline gap-2">
-              <span className="text-7xl font-black tracking-tighter">{scores.totalScore}</span>
-              <span className="text-2xl font-bold opacity-80">점</span>
+          {/* 맞춤형 비과세 정보 배너 */}
+          <div className="p-5 rounded-2xl bg-emerald-50/50 border border-emerald-100/50 flex gap-3 items-start">
+            <AlertCircle className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <p className="text-xs font-black text-emerald-800">이자소득 비과세 혜택 분석</p>
+              <p className="text-[11px] text-slate-500 font-bold leading-relaxed">
+                {isTaxExempt ? (
+                  <>
+                    고객님은 현재 비과세 충족 조건을 안정적으로 만족하고 계십니다! 만기 시점 예상 적립금 {Math.round(accumulated / 10000).toLocaleString()}만 원에 대한 이자 소득세(15.4%)가 전액 면제되며, 예상되는 절세 규모는 약 <span className="text-emerald-600 font-black">{savedTax.toLocaleString()}원</span>입니다.
+                  </>
+                ) : (
+                  <>
+                    현재 설정된 저축 조건은 비과세 세법 기준(적립식: 5년 이상 납입, 10년 이상 유지, 월 150만원 이하 / 일시납: 10년 이상 유지, 총 1억 이하)에 어긋나 만기 시점에 **이자소득세 15.4%가 일반과세**됩니다. 조건 수정을 권장합니다.
+                  </>
+                )}
+              </p>
             </div>
           </div>
-          <div className="relative z-10 pt-8 text-left">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full backdrop-blur-sm border border-white/10">
-              <CheckCircle2 size={16} className="text-emerald-200" />
-              <span className="text-xs font-bold">
-                {scores.totalScore >= 85 ? '아주 현명하게 자산을 굴리는 중입니다!' : scores.totalScore >= 65 ? '보통 수준의 저축보험 활용 상태입니다.' : '적립식 비과세 자산 재설계가 시급합니다.'}
-              </span>
-            </div>
+
+          {/* 세부 상태 리스트 */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-4">
+            {[
+              { label: '비과세 혜택 최적성', targetId: 'input-savings-fields', val: isTaxExempt ? '비과세 요건 매칭' : '일반과세 대상', status: isTaxExempt ? '비과세' : '과세' },
+              { label: '이율 안전성 점수', targetId: 'input-savings-fields', val: `공시이율 ${(declaredRate*100).toFixed(2)}%`, status: '안정' },
+              { label: '사업비 효율 점수', targetId: 'input-savings-fields', val: `수수료 ${(feeRate*100).toFixed(1)}% 수준`, status: '적정' },
+              { label: '유니버셜 기능성', targetId: 'input-savings-fields', val: savingsOpts.hasUniversal ? '기능 보유 (우수)' : '미보유 (기본)', status: savingsOpts.hasUniversal ? '보유' : '기본' },
+            ].map((item, i) => (
+              <div 
+                key={i} 
+                onClick={() => scrollToInputAndHighlight((item as any).targetId)}
+                className="bg-slate-50/70 p-6 rounded-2xl border border-slate-100 flex flex-col justify-center gap-2 group hover:border-emerald-300 hover:shadow-sm cursor-pointer transition-all duration-300"
+              >
+                <div className="flex justify-between items-center w-full">
+                  <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">{item.label}</p>
+                  <span className="text-[10px] font-black px-2.5 py-0.5 rounded-md bg-emerald-100 text-emerald-700">{item.status}</span>
+                </div>
+                <p className="text-sm font-black text-slate-800">{item.val}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

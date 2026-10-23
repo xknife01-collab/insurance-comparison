@@ -190,23 +190,17 @@ export const PetFields: React.FC<Props> = ({
                 className="w-full bg-slate-800 border border-white/10 rounded-2xl py-3.5 px-5 text-white font-bold focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all cursor-pointer"
               >
                 {petType === 'dog' ? (
-                  currentDogBreeds.map((b) => {
-                    const labelRisk = b.risk_group === 'super_high' ? '최고위험' : b.risk_group === 'high' ? '고위험' : b.risk_group === 'medium' ? '중위험' : '일반';
-                    return (
-                      <option key={b.breed_name} value={b.breed_name} className="bg-slate-900 text-white">
-                        {b.breed_name} ({labelRisk} - {b.multiplier}배)
-                      </option>
-                    );
-                  })
+                  currentDogBreeds.map((b) => (
+                    <option key={b.breed_name} value={b.breed_name} className="bg-slate-900 text-white">
+                      {b.breed_name}
+                    </option>
+                  ))
                 ) : (
-                  currentCatBreeds.map((b) => {
-                    const labelRisk = b.risk_group === 'high' ? '고위험' : b.risk_group === 'discount' ? '할인' : '일반';
-                    return (
-                      <option key={b.breed_name} value={b.breed_name} className="bg-slate-900 text-white">
-                        {b.breed_name} ({labelRisk} - {b.multiplier}배)
-                      </option>
-                    );
-                  })
+                  currentCatBreeds.map((b) => (
+                    <option key={b.breed_name} value={b.breed_name} className="bg-slate-900 text-white">
+                      {b.breed_name}
+                    </option>
+                  ))
                 )}
               </select>
             </div>

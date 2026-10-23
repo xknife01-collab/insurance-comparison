@@ -46,7 +46,7 @@ export const LegalFields: React.FC<Props> = ({
           <div className="flex items-center gap-3">
             <span className="text-[10px] font-black bg-indigo-500/25 text-indigo-300 px-3 py-1.5 rounded-full border border-indigo-400/30 uppercase tracking-widest">Step 01</span>
             <h4 className="text-xl md:text-2xl font-black tracking-tight text-white">
-              가장 빈번하게 우려되는 법적 분쟁 대상을 정해주세요
+              가장 우려되는 법적 분쟁 대상을 정해주세요
             </h4>
           </div>
 

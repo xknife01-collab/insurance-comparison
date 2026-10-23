@@ -102,7 +102,7 @@ export const NursingFields: React.FC<NursingFieldsProps> = ({
         <div className="bg-pink-50/50 p-5 rounded-3xl border border-pink-100/50 flex gap-3">
           <Info className="text-pink-500 shrink-0 mt-0.5" size={16} />
           <p className="text-xs font-bold text-pink-700 leading-relaxed">
-            최근에는 **재가급여를 선호하는 비중이 80% 이상**입니다. 익숙한 집에서 익숙한 사람들과 머무르며 요양보호사의 전문적인 도움을 받는 플랜이 현재 가장 인기가 높습니다.
+            최근에는 **재가급여를 선택하는 비중이 높습니다**. 익숙한 집에서 익숙한 사람들과 머무르며 요양보호사의 전문적인 도움을 받는 플랜이 현재 가장 인기가 높습니다.
           </p>
         </div>
       </div>

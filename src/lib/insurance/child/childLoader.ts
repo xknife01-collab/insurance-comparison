@@ -12,11 +12,11 @@ const MOCK_CHILD_PRODUCTS = [
   { companyName: '메리츠화재', productName: '내맘같은어린이보험(무)', basePremium30M: 29000, basePremium100M: 72000, category: 'hospitalization', targetCategory: 'child' },
   { companyName: 'DB손해보험', productName: '아이러브건강어린이보험(무)', basePremium30M: 30000, basePremium100M: 74000, category: 'majorDisease', targetCategory: 'child' },
   
-  // Youth (청년 / 어른이)
+  // Youth (청년)
   { companyName: '현대해상', productName: '굿앤굿2030종합보험(무)', basePremium30M: 42000, basePremium100M: 98000, category: 'majorDisease', targetCategory: 'youth' },
   { companyName: '메리츠화재', productName: '내맘같은청년보험(무)', basePremium30M: 38000, basePremium100M: 89000, category: 'hospitalization', targetCategory: 'youth' },
   { companyName: 'KB손해보험', productName: 'KB금쪽같은청년보험(무)', basePremium30M: 39000, basePremium100M: 92000, category: 'majorDisease', targetCategory: 'youth' },
-  { companyName: 'DB손해보험', productName: '청춘어른이종합보험(무)', basePremium30M: 40000, basePremium100M: 94000, category: 'hospitalization', targetCategory: 'youth' },
+  { companyName: 'DB손해보험', productName: '청춘종합보험(무)', basePremium30M: 40000, basePremium100M: 94000, category: 'hospitalization', targetCategory: 'youth' },
 ];
 
 /**
@@ -76,7 +76,7 @@ export async function fetchChildPremium(analysis: InsuranceAnalysis) {
     } else if (targetAge <= 15) {
       ageMultiplier = 1.05; // Adolescent growth risks
     } else {
-      // Youth (16~35) - 어른이보험
+      // Youth (16~35) - 청년보험
       const diffYears = targetAge - 15;
       ageMultiplier = 1.15 + (diffYears * 0.04); // Rises gradually as age increases
     }
@@ -168,7 +168,7 @@ export async function fetchChildPremium(analysis: InsuranceAnalysis) {
         } else if (prod.companyName === 'KB손해보험') {
           finalProductName = `KB 슬기로운 간편어린이보험(3.${nVal}.5)`;
         } else if (prod.companyName === '메리츠화재') {
-          finalProductName = `간편한 3.${nVal}.5 어른이종합보험`;
+          finalProductName = `간편한 3.${nVal}.5 청년종합보험`;
         } else {
           finalProductName = `${prod.companyName} 참좋은간편어린이(3.${nVal}.5)`;
         }

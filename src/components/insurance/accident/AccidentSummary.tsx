@@ -59,82 +59,58 @@ export const AccidentSummary: React.FC<Props> = ({ result }) => {
 
   return (
     <div className="space-y-12">
-      {/* 1. Header: Risk Card & Overall Score Card */}
-      <div className="grid lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 bg-white rounded-[3.5rem] p-10 md:p-12 border border-slate-100 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.08)] relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-16 opacity-[0.03] group-hover:scale-110 transition-transform duration-700">
-            <Shield size={200} className="text-red-600" />
-          </div>
-          
-          <div className="relative z-10 space-y-8">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-red-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-red-600/20">
-                <UserCheck size={28} />
-              </div>
-              <div>
-                <h3 className="text-2xl font-black text-slate-800 tracking-tight">
-                  {analysis.name || '고객'}님 상해 위험 프로필 분석
-                </h3>
-                <p className="text-xs font-bold text-slate-400">
-                  직업: {jobClassLabel} · 운전: {drivingLabel} · 연령: {analysis.age || 40}세 ({analysis.gender === 'M' ? '남성' : '여성'})
-                </p>
-              </div>
-            </div>
-
-            {/* 직업 맞춤형 위험 정보 */}
-            <div className="p-5 rounded-2xl bg-red-50/50 border border-red-100/50 flex gap-3 items-start">
-              <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
-              <div className="space-y-1">
-                <p className="text-xs font-black text-red-800">직무 환경 리스크 경고</p>
-                <p className="text-[11px] text-slate-500 font-bold leading-relaxed">
-                  {getJobVulnerability(opts.jobClass)}
-                </p>
-              </div>
-            </div>
-
-            {/* 세부 점수 리스트 */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-4">
-              {[
-                { label: '상해사망', targetId: 'input-accident-death', val: formatWon(opts.accidentDeathLimit), score: scores.deathScore },
-                { label: '후유장해', targetId: 'input-accident-disability', val: formatWon(opts.accidentDisabilityLimit), score: scores.disabilityScore },
-                { label: '일상치료 (골절/깁스)', targetId: 'input-accident-fracture', val: `${formatWon(opts.fractureLimit)} (깁스: ${opts.castLimit > 0 ? formatWon(opts.castLimit) : '미가입'})`, score: scores.treatmentScore },
-                { label: '수술/입원/레저', targetId: 'input-accident-surgery', val: `수술: ${formatWon(opts.surgeryLimit)} / ${opts.hasLeisureRider ? '레저 가입' : '레저 미가입'}`, score: opts.hasLeisureRider ? 95 : 65 },
-              ].map((item, i) => (
-                <div key={i} className="space-y-2">
-                  <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">{item.label}</p>
-                  <p className="text-xs font-black text-slate-800 truncate" title={item.val}>{item.val}</p>
-                  <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                    <motion.div 
-                      initial={{ width: 0 }}
-                      animate={{ width: `${item.score}%` }}
-                      className={`h-full ${getProgressColor(item.score)}`}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+      {/* 1. Header: Accident Coverage Summary */}
+      <div className="bg-white rounded-[3.5rem] p-10 md:p-12 border border-slate-100 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.08)] relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-16 opacity-[0.03] group-hover:scale-110 transition-transform duration-700">
+          <Shield size={200} className="text-red-600" />
         </div>
+        
+        <div className="relative z-10 space-y-8">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 bg-red-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-red-600/20">
+              <UserCheck size={28} />
+            </div>
+            <div>
+              <h3 className="text-2xl font-black text-slate-800 tracking-tight">
+                {analysis.name || '고객'}님 상해 위험 프로필 분석
+              </h3>
+              <p className="text-xs font-bold text-slate-400">
+                직업: {jobClassLabel} · 운전: {drivingLabel} · 연령: {analysis.age || 40}세 ({analysis.gender === 'M' ? '남성' : '여성'})
+              </p>
+            </div>
+          </div>
 
-        {/* 종합 점수 카드 */}
-        <div className="bg-red-600 rounded-[3.5rem] p-12 text-white shadow-[0_30px_70px_-20px_rgba(220,38,38,0.3)] flex flex-col justify-between relative overflow-hidden group">
-          <div className="absolute -bottom-10 -right-10 opacity-10 group-hover:scale-125 transition-transform duration-1000">
-            <Zap size={200} fill="currentColor" />
-          </div>
-          <div className="relative z-10">
-            <p className="text-red-100 font-black text-[0.65rem] uppercase tracking-[0.3em] mb-4">Accident Safety Score</p>
-            <div className="flex items-baseline gap-2">
-              <span className="text-7xl font-black tracking-tighter">{scores.totalScore}</span>
-              <span className="text-2xl font-bold opacity-80">점</span>
+          {/* 직업 맞춤형 위험 정보 */}
+          <div className="p-5 rounded-2xl bg-red-50/50 border border-red-100/50 flex gap-3 items-start">
+            <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <p className="text-xs font-black text-red-800">직무 환경 안내</p>
+              <p className="text-[11px] text-slate-500 font-bold leading-relaxed">
+                {getJobVulnerability(opts.jobClass)}
+              </p>
             </div>
           </div>
-          <div className="relative z-10 pt-8">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full backdrop-blur-sm border border-white/10">
-              <CheckCircle2 size={16} className="text-red-200" />
-              <span className="text-[10px] font-bold">
-                {scores.totalScore >= 85 ? '안전망이 탄탄히 구축되었습니다!' : scores.totalScore >= 65 ? '보통 수준의 일상 상해 보장입니다.' : '긴급한 상해 특약 보강을 권장합니다.'}
-              </span>
-            </div>
+
+          {/* 세부 점수 리스트 */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-4">
+            {[
+              { label: '상해사망', targetId: 'input-accident-death', val: formatWon(opts.accidentDeathLimit), status: '가입' },
+              { label: '후유장해', targetId: 'input-accident-disability', val: formatWon(opts.accidentDisabilityLimit), status: '가입' },
+              { label: '일상치료 (골절/깁스)', targetId: 'input-accident-fracture', val: `${formatWon(opts.fractureLimit)} (깁스: ${opts.castLimit > 0 ? formatWon(opts.castLimit) : '미가입'})`, status: '선택' },
+              { label: '수술/입원/레저', targetId: 'input-accident-surgery', val: `수술: ${formatWon(opts.surgeryLimit)} / ${opts.hasLeisureRider ? '레저 가입' : '레저 미가입'}`, status: '선택' },
+            ].map((item, i) => (
+              <div 
+                key={i} 
+                onClick={() => scrollToInputAndHighlight((item as any).targetId)}
+                className="bg-slate-50/70 p-6 rounded-2xl border border-slate-100 flex flex-col justify-center gap-2 group hover:border-red-300 hover:shadow-sm cursor-pointer transition-all duration-300"
+              >
+                <div className="flex justify-between items-center w-full">
+                  <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">{item.label}</p>
+                  <span className="text-[10px] font-black px-2.5 py-0.5 bg-red-100 text-red-700 rounded-md">{item.status}</span>
+                </div>
+                <p className="text-sm font-black text-slate-800 truncate" title={item.val}>{item.val}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -115,11 +115,11 @@ export const SilsonSummary: React.FC<Props> = ({ result, forceMobile }) => {
             <div className="bg-white/5 backdrop-blur-md rounded-[2.5rem] p-8 border border-white/10 w-full max-w-sm">
               <div className="flex justify-between items-end mb-6">
                 <div>
-                  <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">실손 보험 가성비</p>
-                  <p className="text-4xl font-black text-emerald-400">95.0 <span className="text-lg text-slate-500">점</span></p>
+                  <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">실손 보장 상태</p>
+                  <p className="text-3xl font-black text-emerald-400">안정적 보장</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-[0.65rem] font-black text-emerald-500 uppercase">보장 완벽</p>
+                  <p className="text-[0.65rem] font-black text-emerald-500 uppercase">보장 충족</p>
                   <div className="flex gap-1 mt-1">
                     {[1,2,3,4,5].map(s => <div key={s} className="w-2 h-2 rounded-full bg-emerald-500" />)}
                   </div>
@@ -128,7 +128,7 @@ export const SilsonSummary: React.FC<Props> = ({ result, forceMobile }) => {
               <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
                 <motion.div 
                    initial={{ width: 0 }}
-                   animate={{ width: '95%' }}
+                   animate={{ width: '100%' }}
                    transition={{ duration: 1.5, ease: "easeOut" }}
                    className="h-full bg-emerald-500"
                 />

@@ -52,19 +52,19 @@ export const analyzeDementia = (analysis: any): any => {
 
   const upgrade: RecommendationPlan = {
     title: '균형 잡힌 밸런스 안심 플랜',
-    description: '진단비와 매월 간병생활자금 보장 기간을 약정 만기(90/100세)까지 확대 보장하는 프리미엄 안심 설계입니다.',
-    estimatedPremium: upgradeOption ? (upgradeOption === dietOption ? Math.round(upgradeOption.premium * 1.5) : upgradeOption.premium) : Math.floor((analysis.monthlyPremium || 65000) * 1.5),
-    periodBadge: '20년납 · 90세/100세만기',
+    description: '진단비와 매월 간병생활자금 보장 기간을 약정 만기까지 균형 있게 설계한 안심 추천 플랜입니다.',
+    estimatedPremium: upgradeOption ? upgradeOption.premium : (dietOption ? Math.round(dietOption.premium * 1.25) : 85000),
+    periodBadge: '20년납 · 90세만기',
     companyName: upgradeOption?.companyName || '추천 보험사',
     productName: upgradeOption?.productName || '치매간병 집중케어 플랜',
     coverageChanges: ['중증치매 보장 기간 연장', '재가/시설 동시 보장'],
-    switchingLossNotice: '변경 시 보험료가 상승할 수 있습니다.'
+    switchingLossNotice: '보장 범위가 확대되어 다이어트 플랜 대비 월 납입료가 다소 높습니다.'
   };
 
   const hybrid: RecommendationPlan = {
     title: '가성비 실속형 복합 플랜',
     description: '기본적인 치매 진단비와 재가케어를 결합하여 보험료 부담은 줄이고 실속은 높였습니다.',
-    estimatedPremium: hybridOption ? (hybridOption === dietOption || hybridOption === upgradeOption ? Math.round(hybridOption.premium * 1.1) : hybridOption.premium) : Math.floor((analysis.monthlyPremium || 65000) * 0.8),
+    estimatedPremium: hybridOption ? hybridOption.premium : (dietOption ? Math.round(dietOption.premium * 1.15) : 65000),
     periodBadge: '20년납 · 90세만기',
     companyName: hybridOption?.companyName || '추천 보험사',
     productName: hybridOption?.productName || '치매 재가간병 복합 플랜',

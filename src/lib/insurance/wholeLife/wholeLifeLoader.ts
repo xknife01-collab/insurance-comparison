@@ -59,7 +59,7 @@ export const fetchWholeLifePremium = async (analysis: InsuranceAnalysis): Promis
       refundType: 'low', 
       declaredRate: 3.25, 
       businessFee: 4.8, 
-      features: "완납 후 업계 우수한 수준 환급률 (123.4%) CM 전용 | 저해지 환급형 18% 할인 요율 반영 | 1:1 전담 계약유지 관리 서비스 제공" 
+      features: "완납 후 업계 우수한 수준 환급률 (123.4%) CM 전용 | 저해지 환급형 우대 요율 반영 | 1:1 전담 계약유지 관리 서비스 제공" 
     },
     { 
       company: '신한라이프', 

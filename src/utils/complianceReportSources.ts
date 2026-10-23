@@ -1,6 +1,13 @@
 /**
  * 보험 광고 심의 기준 통계 출처 메타데이터 제공 모듈
- * 심의 필수 3요소: 자료명, 발표기관, 발표일 명시
+ *
+ * [심의 필수 3요소]
+ *  - 자료명(title)
+ *  - 발표기관(publisher)
+ *  - 발표일(publishDate)
+ *
+ * 본 모듈은 28개 전체 보험 카테고리에 대해 공인 통계 출처를 1:1 독립 매핑한다.
+ * (간병/치매, 어린이/태아/유병력자 어린이, 종신/정기/변액 등 통합 매핑을 전면 분리)
  */
 
 export interface ComplianceStatSource {
@@ -11,143 +18,259 @@ export interface ComplianceStatSource {
 }
 
 /**
- * 27개 보험 카테고리별 공인 통계 출처 데이터 매핑
+ * 카테고리 원문(raw)을 정규화한다.
+ * - 소문자 변환
+ * - 공백/하이픈/언더스코어/가운뎃점 제거 → '유병력자 어린이', 'child-sick', 'child_sick' 모두 동일 취급
+ */
+function normalizeCategory(categoryRaw?: string): string {
+  return (categoryRaw || '')
+    .toLowerCase()
+    .replace(/[\s\-_·./]/g, '');
+}
+
+/**
+ * 28개 보험 카테고리별 공인 통계 출처 1:1 독립 매핑
+ *
+ * 매칭 우선순위(배타 조건이 있는 카테고리를 먼저 판정):
+ *  - 유병력자 어린이(11) → 어린이(9) / 유병자간편(18) 보다 먼저
+ *  - 태아(10) → 어린이(9) 보다 먼저
+ *  - 치매(7) → 간병(6) 보다 먼저
+ *  - 재물종합(20) → 주택화재(19) 보다 먼저
+ *  - 운전자(12) → 법률비용(27) 보다 먼저
+ *  - 연금저축(24) → 일반저축(25) 보다 먼저
  */
 export function getComplianceStatSource(categoryRaw?: string): ComplianceStatSource {
-  const category = (categoryRaw || '').toLowerCase();
+  const c = normalizeCategory(categoryRaw);
 
-  // 1. 암보험
-  if (category.includes('cancer') || category.includes('암')) {
+  // ─────────────────────────────────────────────────────────────
+  // 11. 유병력자 어린이 (child_sick, pre_family, 유병력자 어린이, 어린이 유병)
+  //     ※ 어린이(9) / 유병자간편(18) 보다 먼저 판정
+  // ─────────────────────────────────────────────────────────────
+  if (
+    c.includes('childsick') ||
+    c.includes('prefamily') ||
+    c.includes('유병력자어린이') ||
+    c.includes('어린이유병') ||
+    c.includes('소아유병') ||
+    (c.includes('유병') && (c.includes('어린이') || c.includes('child') || c.includes('소아')))
+  ) {
+    return {
+      categoryName: '유병력자 어린이보험',
+      title: '2022 소아 만성질환 및 다빈도 외래 진료 통계',
+      publisher: '건강보험심사평가원',
+      publishDate: '2023년 10월'
+    };
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // 10. 태아 (prenatal, 태아) ※ 유병 제외
+  //     ※ 어린이(9) 보다 먼저 판정
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('prenatal') || c.includes('태아')) {
+    return {
+      categoryName: '태아보험',
+      title: '2022년 출생통계 (모의 연령별 출산율 및 다태아·조산아 통계)',
+      publisher: '통계청',
+      publishDate: '2023년 8월'
+    };
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // 7. 치매 (dementia, care_old, 치매) ※ 간병(6) 보다 먼저 판정
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('dementia') || c.includes('careold') || c.includes('치매')) {
+    return {
+      categoryName: '치매보험',
+      title: '2022 대한민국 치매현황 보고서',
+      publisher: '보건복지부 · 중앙치매센터',
+      publishDate: '2023년 4월'
+    };
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // 20. 재물종합 (property, 재물) ※ 주택화재(19) 보다 먼저 판정
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('property') || c.includes('재물')) {
+    return {
+      categoryName: '재물종합보험',
+      title: '2022 국가화재통계연보 (비주거·산업시설 화재 분석)',
+      publisher: '소방청',
+      publishDate: '2023년 4월'
+    };
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // 12. 운전자 (driver, 운전자) ※ 법률비용(27) 보다 먼저 판정
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('driver') || c.includes('운전자')) {
+    return {
+      categoryName: '운전자보험',
+      title: '2022년판 교통사고 통계분석 (중대법규위반 및 형사사고)',
+      publisher: '도로교통공단 · 경찰청',
+      publishDate: '2023년 8월'
+    };
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // 24. 연금저축 (annuity, pension, 연금) ※ 일반저축(25) 보다 먼저 판정
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('annuity') || c.includes('pension') || c.includes('연금')) {
+    return {
+      categoryName: '연금저축보험',
+      title: '2022년 연금저축 영업실적 분석 및 비교공시 통계',
+      publisher: '금융감독원',
+      publishDate: '2023년 6월'
+    };
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // 1. 암 (cancer, 암)
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('cancer') || c.includes('암')) {
     return {
       categoryName: '암보험',
       title: '2021년 국가암등록통계',
-      publisher: '보건복지부 · 국립암센터(중앙암등록본부)',
+      publisher: '보건복지부 · 국립암센터',
       publishDate: '2023년 12월'
     };
   }
 
-  // 2. 뇌혈관질환
-  if (category.includes('brain') || category.includes('뇌')) {
+  // ─────────────────────────────────────────────────────────────
+  // 2. 뇌혈관 (brain, 뇌)
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('brain') || c.includes('뇌')) {
     return {
       categoryName: '뇌혈관질환보험',
-      title: '2022년 사망원인통계 및 중증질환 등록자료',
-      publisher: '통계청 · 국민건강보험공단',
+      title: '2022년 사망원인통계 결과 (뇌혈관질환 사망률)',
+      publisher: '통계청',
       publishDate: '2023년 9월'
     };
   }
 
-  // 3. 심장질환 (허혈성/심혈관)
-  if (category.includes('heart') || category.includes('심장') || category.includes('허혈')) {
+  // ─────────────────────────────────────────────────────────────
+  // 3. 심장 (heart, 심장, 허혈)
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('heart') || c.includes('심장') || c.includes('허혈')) {
     return {
       categoryName: '심장질환보험',
-      title: '2022년 사망원인통계 (심혈관질환 통계)',
-      publisher: '통계청 · 질병관리청',
+      title: '2022년 사망원인통계 (순환계통 질환 사망 통계)',
+      publisher: '통계청',
       publishDate: '2023년 9월'
     };
   }
 
-  // 4. 실손의료비
-  if (category.includes('silson') || category.includes('실손') || category.includes('실비')) {
+  // ─────────────────────────────────────────────────────────────
+  // 4. 실손의료비 (silson, 실손, 실비)
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('silson') || c.includes('실손') || c.includes('실비')) {
     return {
-      categoryName: '실손의료비',
-      title: '2022년도 건강보험환자 진료비 실태조사',
+      categoryName: '실손의료비보험',
+      title: '2022년도 건강보험환자 진료비 실태조사 보고서',
       publisher: '국민건강보험공단',
       publishDate: '2023년 12월'
     };
   }
 
-  // 5. 치아보험
-  if (category.includes('dental') || category.includes('치아')) {
+  // ─────────────────────────────────────────────────────────────
+  // 5. 치아 (dental, 치아)
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('dental') || c.includes('치아')) {
     return {
       categoryName: '치아보험',
-      title: '2022년 건강보험통계연보 (외래 다빈도 상병 통계)',
+      title: '2022 건강보험통계연보 (외래 다빈도 상병 통계)',
       publisher: '건강보험심사평가원 · 국민건강보험공단',
       publishDate: '2023년 10월'
     };
   }
 
-  // 6. 간병보험 / 치매
-  if (category.includes('caregiving') || category.includes('간병') || category.includes('dementia') || category.includes('치매')) {
+  // ─────────────────────────────────────────────────────────────
+  // 6. 간병 (caregiving, care_svc, 간병) ※ 치매 제외
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('caregiving') || c.includes('caresvc') || c.includes('간병')) {
     return {
-      categoryName: '간병·치매보험',
-      title: '2022년 노인장기요양보험 통계연보',
+      categoryName: '간병보험',
+      title: '2022 노인장기요양보험 통계연보',
       publisher: '국민건강보험공단',
       publishDate: '2023년 7월'
     };
   }
 
-  // 7. 요양(재가/시설)
-  if (category.includes('nursing') || category.includes('재가') || category.includes('시설')) {
+  // ─────────────────────────────────────────────────────────────
+  // 8. 재가/시설 요양 (nursing, 재가, 시설)
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('nursing') || c.includes('재가') || c.includes('시설')) {
     return {
       categoryName: '재가·시설 요양보험',
-      title: '2022년 장기요양 실태조사 및 급여통계',
-      publisher: '보건복지부 · 국민건강보험공단',
+      title: '2022년 장기요양 실태조사 결과보고서',
+      publisher: '보건복지부',
       publishDate: '2023년 7월'
     };
   }
 
-  // 8. 어린이 / 태아 / 신생아 / 유병력자 어린이
-  if (category.includes('child') || category.includes('어린이') || category.includes('태아') || category.includes('pre_family') || category.includes('유병력자')) {
+  // ─────────────────────────────────────────────────────────────
+  // 9. 어린이 (child, 어린이, 신생아) ※ 태아/유병력자 제외
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('child') || c.includes('어린이') || c.includes('신생아')) {
     return {
-      categoryName: (category.includes('유병') || category.includes('child_sick') || category === 'pre_family') ? '유병력자 어린이보험' : (category.includes('태아') ? '태아보험' : '어린이보험'),
+      categoryName: '어린이보험',
       title: '2022년 출생통계 및 소아 다빈도 질환 통계',
       publisher: '통계청 · 건강보험심사평가원',
       publishDate: '2023년 8월'
     };
   }
 
-  // 9. 운전자보험
-  if (category.includes('driver') || category.includes('운전자')) {
-    return {
-      categoryName: '운전자보험',
-      title: '2022년 교통사고 통계분석 (중대법규위반 및 형사사고)',
-      publisher: '도로교통공단 · 경찰청',
-      publishDate: '2023년 8월'
-    };
-  }
-
-  // 10. 자동차보험
-  if (category.includes('car') || category.includes('자동차')) {
+  // ─────────────────────────────────────────────────────────────
+  // 13. 자동차 (car, 자동차)
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('car') || c.includes('자동차')) {
     return {
       categoryName: '자동차보험',
-      title: '2023년 자동차보험 사업실적 및 대인·대물 통계',
-      publisher: '금융감독원 · 손해보험협회',
+      title: '2023년 자동차보험 사업실적(잠정)',
+      publisher: '금융감독원',
       publishDate: '2024년 3월'
     };
   }
 
-  // 11. 펫보험
-  if (category.includes('pet') || category.includes('펫')) {
+  // ─────────────────────────────────────────────────────────────
+  // 14. 펫 (pet, 펫, 반려동물)
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('pet') || c.includes('펫') || c.includes('반려동물')) {
     return {
       categoryName: '펫보험',
-      title: '2023년 동물보호에 대한 국민의식조사 및 반려견 질환 실태',
+      title: '2023년 동물복지에 대한 국민의식조사 결과보고서',
       publisher: '농림축산식품부',
-      publishDate: '2023년 6월'
+      publishDate: '2024년 1월'
     };
   }
 
-  // 12. 골프 / 레저
-  if (category.includes('golf') || category.includes('골프')) {
+  // ─────────────────────────────────────────────────────────────
+  // 15. 골프/레저 (golf, 골프, 레저)
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('golf') || c.includes('골프') || c.includes('레저')) {
     return {
       categoryName: '골프·레저보험',
-      title: '2022년 스포츠안전사고 실태조사',
+      title: '2022 스포츠안전사고 실태조사 보고서',
       publisher: '스포츠안전재단 · 문화체육관광부',
       publishDate: '2023년 5월'
     };
   }
 
-  // 13. 상해보험 (사고, 골절, 깁스)
-  if (category.includes('accident') || category.includes('상해')) {
+  // ─────────────────────────────────────────────────────────────
+  // 16. 상해 (accident, 상해)
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('accident') || c.includes('상해')) {
     return {
       categoryName: '상해보험',
-      title: '2022년 생활안전사고 통계연보 (손상통계)',
-      publisher: '질병관리청 · 소방청',
-      publishDate: '2023년 6월'
+      title: '제13차 국가손상종합통계 (2022년 손상 발생 현황)',
+      publisher: '질병관리청',
+      publishDate: '2023년 12월'
     };
   }
 
-  // 14. 수술/입원
-  if (category.includes('surgery') || category.includes('hospital') || category.includes('수술') || category.includes('입원')) {
+  // ─────────────────────────────────────────────────────────────
+  // 17. 수술/입원 (surgery, hospital, 수술, 입원)
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('surgery') || c.includes('hospital') || c.includes('수술') || c.includes('입원')) {
     return {
       categoryName: '수술·입원비보험',
       title: '2022년 주요수술통계연보',
@@ -156,100 +279,108 @@ export function getComplianceStatSource(categoryRaw?: string): ComplianceStatSou
     };
   }
 
-  // 15. 유병자 간편건강
-  if (category.includes('pre_existing') || category.includes('유병자')) {
+  // ─────────────────────────────────────────────────────────────
+  // 18. 유병자간편 (pre_existing, 유병자) ※ 어린이 유병 제외
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('preexisting') || c.includes('유병자')) {
     return {
       categoryName: '유병자간편보험',
-      title: '2022년 만성질환 현황과 이슈 통계',
+      title: '2022 만성질환 현황과 이슈 통계집',
       publisher: '질병관리청',
       publishDate: '2023년 11월'
     };
   }
 
-  // 16. 주택화재
-  if (category.includes('fire') || category.includes('화재')) {
+  // ─────────────────────────────────────────────────────────────
+  // 19. 주택화재 (fire, 주택화재, 화재) ※ 재물 제외
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('fire') || c.includes('주택화재') || c.includes('화재')) {
     return {
       categoryName: '주택화재보험',
-      title: '2022년 국가화재통계연보 (주거시설 화재 분석)',
+      title: '2022 국가화재통계연보 (주거시설 화재 분석)',
       publisher: '소방청',
       publishDate: '2023년 4월'
     };
   }
 
-  // 17. 재물종합 (사업장/상가)
-  if (category.includes('property') || category.includes('재물')) {
-    return {
-      categoryName: '재물종합보험',
-      title: '2022년 화재발생통계 및 소상공인 재난피해 실태',
-      publisher: '소방청 · 행정안전부',
-      publishDate: '2023년 4월'
-    };
-  }
-
-  // 18. 종신보험
-  if (category.includes('whole') || category.includes('종신')) {
+  // ─────────────────────────────────────────────────────────────
+  // 21. 종신 (whole, 종신)
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('whole') || c.includes('종신')) {
     return {
       categoryName: '종신보험',
-      title: '2023년 생명보험 통계연보 및 가계금융복지조사',
-      publisher: '생명보험협회 · 통계청',
+      title: '2023 생명보험통계연보',
+      publisher: '생명보험협회',
       publishDate: '2023년 12월'
     };
   }
 
-  // 19. 변액 / 정기보험
-  if (category.includes('variable') || category.includes('term') || category.includes('변액') || category.includes('정기')) {
+  // ─────────────────────────────────────────────────────────────
+  // 22. 정기 (term, 정기)
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('term') || c.includes('정기')) {
     return {
-      categoryName: '변액·정기보험',
-      title: '2023년 금융투자상품 공시 및 변액보험 수익통계',
+      categoryName: '정기보험',
+      title: '2022년 사망원인통계 (경제활동기 연령별 사망 통계)',
+      publisher: '통계청',
+      publishDate: '2023년 9월'
+    };
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // 23. 변액 (variable, 변액)
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('variable') || c.includes('변액')) {
+    return {
+      categoryName: '변액보험',
+      title: '2023년 금융투자상품 공시 및 변액보험 펀드 수익통계',
       publisher: '생명보험협회 · 금융투자협회',
       publishDate: '2023년 12월'
     };
   }
 
-  // 20. 연금저축
-  if (category.includes('annuity') || category.includes('연금')) {
-    return {
-      categoryName: '연금저축보험',
-      title: '2022년 연금저축 취급기관별 비교공시 통계',
-      publisher: '금융감독원',
-      publishDate: '2023년 6월'
-    };
-  }
-
-  // 21. 일반 저축보험
-  if (category.includes('savings') || category.includes('저축')) {
+  // ─────────────────────────────────────────────────────────────
+  // 25. 일반저축 (savings, savings_general, 저축) ※ 연금 제외
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('savings') || c.includes('저축')) {
     return {
       categoryName: '저축보험',
-      title: '2023년 가계금융복지조사 (가계 저축 및 자산 운용)',
+      title: '2023년 가계금융복지조사 결과 (가계 저축 및 자산 운용)',
       publisher: '통계청 · 한국은행 · 금융감독원',
       publishDate: '2023년 12월'
     };
   }
 
-  // 22. 신용보험 (대출상환보장)
-  if (category.includes('credit') || category.includes('신용')) {
+  // ─────────────────────────────────────────────────────────────
+  // 26. 신용보험 (credit, 신용)
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('credit') || c.includes('신용')) {
     return {
-      categoryName: '신용대출안심보험',
-      title: '2023년 가계부채 동향 및 대출차주 신용위험 지표',
-      publisher: '한국은행 · 금융감독원',
-      publishDate: '2023년 11월'
+      categoryName: '신용보험',
+      title: '2023년 하반기 금융안정보고서 (가계신용 동향)',
+      publisher: '한국은행',
+      publishDate: '2023년 12월'
     };
   }
 
-  // 23. 법률비용보험
-  if ((category.includes('legal') || category.includes('법률') || category.includes('민사') || category.includes('형사')) && !category.includes('운전자') && category !== 'driver') {
+  // ─────────────────────────────────────────────────────────────
+  // 27. 법률비용 (legal, 법률, 민사, 형사) ※ 운전자 제외
+  // ─────────────────────────────────────────────────────────────
+  if (c.includes('legal') || c.includes('법률') || c.includes('민사') || c.includes('형사')) {
     return {
       categoryName: '법률비용보험',
-      title: '2022년 사법연감 (민사·가사·행정 소송 통계)',
+      title: '2023 사법연감 (2022년 사법통계 편람)',
       publisher: '대법원 법원행정처',
       publishDate: '2023년 10월'
     };
   }
 
-  // 24. 종합건강 / 리모델링 / 기본 공통
+  // ─────────────────────────────────────────────────────────────
+  // 28. 기본 / 종합건강 (fallback)
+  // ─────────────────────────────────────────────────────────────
   return {
     categoryName: '종합건강보험',
-    title: '2022년 국민보건의료통계 및 주요 사망원인통계',
+    title: '2022년 국민보건의료실태조사 및 주요 사망원인통계',
     publisher: '보건복지부 · 통계청',
     publishDate: '2023년 9월'
   };

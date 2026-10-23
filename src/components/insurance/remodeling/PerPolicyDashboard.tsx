@@ -1086,7 +1086,7 @@ function PolicyCard({policy,index,isDup,totalCount,isUnlocked,forceOpen,liveDiet
                     <>
                       <CovRow label="사망 보장 한도" value={cov.variableDeath > 0 ? fmt(cov.variableDeath) : '미가입'} status={statusOf(cov.variableDeath, 100000000, 50000000)} note="경제활동기 집중 사망보장"/>
                       <CovRow label="보험료 납입 규모" value={cov.variablePremium > 0 ? `${fmt(cov.variablePremium)}/월` : '평가 불가'} status="good" note="동일 보장 대비 저렴한 정기보험"/>
-                      <CovRow label="우량체 특별 할인" value={cov.variableDiscount ? '최대 18% 즉시할인' : '미적용'} status={cov.variableDiscount ? 'good' : 'warn'} note="비흡연/혈압 정상 시 즉시할인"/>
+                      <CovRow label="우량체 특별 할인" value={cov.variableDiscount ? '건강체 우대 할인' : '미적용'} status={cov.variableDiscount ? 'good' : 'warn'} note="비흡연/혈압 정상 시 할인 혜택"/>
                     </>
                   )}
                   {t === 'legal' && (

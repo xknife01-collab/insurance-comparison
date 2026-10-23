@@ -61,7 +61,7 @@ export const analyzeCaregiving = (analysis: any): any => {
       upgrade: {
         title: '체증형 든든 안심 플랜',
         description: '매년 보장 금액이 늘어나는 체증형으로 20년납 비갱신형 설계하여 미래 간병 비용에 든든하게 대비합니다.',
-        estimatedPremium: upgradeOption ? (upgradeOption === dietOption ? Math.round(upgradeOption.premium * 1.25) : upgradeOption.premium) : Math.round(analysis.monthlyPremium * 1.2 / 100) * 100,
+        estimatedPremium: upgradeOption ? upgradeOption.premium : (dietOption ? Math.round(dietOption.premium * 1.25) : Math.round(analysis.monthlyPremium * 1.2 / 100) * 100),
         periodBadge: '20년납 · 90세만기 (비갱신형)',
         companyName: upgradeOption?.companyName || '추천 보험사',
         productName: upgradeOption?.productName || '체증형 간병비 플랜',
@@ -71,7 +71,7 @@ export const analyzeCaregiving = (analysis: any): any => {
       hybrid: {
         title: '지원+일당 복합형',
         description: '보험사 지원과 현금 일당의 장점을 20년납 비갱신형으로 합친 하이브리드 구성입니다.',
-        estimatedPremium: hybridOption ? (hybridOption === dietOption || hybridOption === upgradeOption ? Math.round(hybridOption.premium * 1.1) : hybridOption.premium) : analysis.monthlyPremium,
+        estimatedPremium: hybridOption ? hybridOption.premium : (dietOption ? Math.round(dietOption.premium * 1.15) : analysis.monthlyPremium),
         periodBadge: '20년납 · 90세만기 (비갱신형)',
         companyName: hybridOption?.companyName || '추천 보험사',
         productName: hybridOption?.productName || '간병 지원·일당 복합 플랜',

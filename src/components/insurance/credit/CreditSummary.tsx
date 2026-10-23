@@ -89,86 +89,59 @@ export const CreditSummary: React.FC<Props> = ({ result }) => {
   return (
     <div className="space-y-12 text-left">
       
-      {/* ── 상단 웅장한 대출 리포트 헤더 & 종합 점수 ── */}
-      <div className="grid lg:grid-cols-3 gap-8">
+      {/* ── 상단 웅장한 대출 리포트 헤더 ── */}
+      <div className="bg-slate-950 rounded-[3.5rem] p-10 md:p-12 text-white border border-slate-800 shadow-2xl relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-16 opacity-5 group-hover:scale-110 transition-transform duration-700">
+          <ShieldCheck size={220} className="text-emerald-400" />
+        </div>
         
-        {/* 왼쪽: 대출 상환 리스크 리포트 카드 */}
-        <div className="lg:col-span-2 bg-slate-950 rounded-[3.5rem] p-10 md:p-12 text-white border border-slate-800 shadow-2xl relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-16 opacity-5 group-hover:scale-110 transition-transform duration-700">
-            <ShieldCheck size={220} className="text-emerald-400" />
+        <div className="relative z-10 space-y-8">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 bg-emerald-500/10 border border-emerald-500/25 rounded-2xl flex items-center justify-center shadow-lg">
+              {getLoanIcon(creditOpts.loanType)}
+            </div>
+            <div>
+              <span className="text-[10px] font-black uppercase tracking-widest text-emerald-400">Credit Debt-Erasure Report</span>
+              <h3 className="text-2xl md:text-3xl font-black tracking-tight text-white mt-0.5">
+                {getLoanLabel(creditOpts.loanType)} 상환 안심 분석 리포트
+              </h3>
+            </div>
           </div>
-          
-          <div className="relative z-10 space-y-8">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-emerald-500/10 border border-emerald-500/25 rounded-2xl flex items-center justify-center shadow-lg">
-                {getLoanIcon(creditOpts.loanType)}
-              </div>
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-widest text-emerald-400">Credit Debt-Erasure Report</span>
-                <h3 className="text-2xl md:text-3xl font-black tracking-tight text-white mt-0.5">
-                  {getLoanLabel(creditOpts.loanType)} 상환 안심 분석 리포트
-                </h3>
-              </div>
-            </div>
 
-            {/* 핵심 가치 제안 배너 */}
-            <div className="p-6 rounded-[2rem] bg-white/5 border border-white/10 space-y-3">
-              <div className="flex items-center gap-2 text-emerald-400">
-                <Sparkles size={18} />
-                <span className="text-xs font-black uppercase tracking-wider">채무 상환 지원 & 주거 환경 보존</span>
-              </div>
-              <p className="text-xs text-slate-300 font-bold leading-relaxed">
-                차주 본인에게 유고 발생 시, 남겨진 유가족에게 빚이 상속되거나 담보 주택이 경매 처리되는 위험을 완화하고, 
-                <strong> 약관상 보험사고 발생 시 가입금액 한도 내에서 대출금({formatAmount(loanAmount)}) 상환을 지원</strong>하여 가계 안정을 수호합니다.
-              </p>
+          {/* 핵심 가치 제안 배너 */}
+          <div className="p-6 rounded-[2rem] bg-white/5 border border-white/10 space-y-3">
+            <div className="flex items-center gap-2 text-emerald-400">
+              <Sparkles size={18} />
+              <span className="text-xs font-black uppercase tracking-wider">채무 상환 지원 & 주거 환경 보존</span>
             </div>
+            <p className="text-xs text-slate-300 font-bold leading-relaxed">
+              차주 본인에게 유고 발생 시, 남겨진 유가족에게 빚이 상속되거나 담보 주택이 경매 처리되는 위험을 완화하고, 
+              <strong> 약관상 보험사고 발생 시 가입금액 한도 내에서 대출금({formatAmount(loanAmount)}) 상환을 지원</strong>하여 가계 안정을 수호합니다.
+            </p>
+          </div>
 
-            {/* 세부 평가 점수 바 */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-4 border-t border-white/5">
-              {[
-                { label: '대출상환 안전성', targetId: 'input-credit-fields', val: `한도 ${formatAmount(loanAmount)}`, score: scores.cancerScore },
-                { label: '신용할인 최적도', targetId: 'input-credit-fields', val: `${creditBureau.toUpperCase()} ${discountRate}% 할인`, score: scores.cerebrovascularScore },
-                { label: '특약 구성 종합도', targetId: 'input-credit-fields', val: hasIllnessRider && hasDisabilityRider ? '종합안심 가입' : '일부 위험 노출', score: scores.cardiovascularScore },
-                { label: '보장 만기 적절성', targetId: 'input-credit-fields', val: `${loanPeriod}년 보장`, score: loanPeriod >= 10 ? 95 : 55 },
-              ].map((item, i) => (
-                <div key={i} className="space-y-2">
+          {/* 세부 상태 리스트 */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-4 border-t border-white/5">
+            {[
+              { label: '대출상환 안전성', targetId: 'input-credit-fields', val: `한도 ${formatAmount(loanAmount)}`, status: '보장' },
+              { label: '신용할인 최적도', targetId: 'input-credit-fields', val: `${creditBureau.toUpperCase()} ${discountRate}% 할인`, status: `${discountRate}% 할인` },
+              { label: '특약 구성 종합도', targetId: 'input-credit-fields', val: hasIllnessRider && hasDisabilityRider ? '종합안심 가입' : '일부 위험 노출', status: hasIllnessRider && hasDisabilityRider ? '종합' : '일반' },
+              { label: '보장 만기 적절성', targetId: 'input-credit-fields', val: `${loanPeriod}년 보장`, status: `${loanPeriod}년` },
+            ].map((item, i) => (
+              <div 
+                key={i} 
+                onClick={() => scrollToInputAndHighlight((item as any).targetId)}
+                className="bg-white/5 p-6 rounded-2xl border border-white/10 flex flex-col justify-center gap-2 group hover:border-emerald-400/50 hover:shadow-sm cursor-pointer transition-all duration-300"
+              >
+                <div className="flex justify-between items-center w-full">
                   <p className="text-[10px] font-black text-slate-400 tracking-wider uppercase">{item.label}</p>
-                  <p className="text-xs font-black text-white">{item.val}</p>
-                  <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
-                    <motion.div 
-                      initial={{ width: 0 }}
-                      animate={{ width: `${item.score}%` }}
-                      className={`h-full ${getProgressColor(item.score)}`}
-                    />
-                  </div>
+                  <span className="text-[10px] font-black px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">{item.status}</span>
                 </div>
-              ))}
-            </div>
+                <p className="text-xs font-black text-white">{item.val}</p>
+              </div>
+            ))}
           </div>
         </div>
-
-        {/* 오른쪽: 종합 상환 신뢰도 점수 카드 */}
-        <div className="bg-emerald-600 rounded-[3.5rem] p-12 text-white shadow-[0_30px_70px_-20px_rgba(16,185,129,0.3)] flex flex-col justify-between relative overflow-hidden group">
-          <div className="absolute -bottom-10 -right-10 opacity-10 group-hover:scale-125 transition-transform duration-1000">
-            <Zap size={220} fill="currentColor" />
-          </div>
-          <div className="relative z-10 text-left">
-            <span className="text-emerald-200 font-black text-[10px] uppercase tracking-[0.2em] mb-4 block">Debt Safety Index</span>
-            <div className="flex items-baseline gap-2">
-              <span className="text-7xl font-black tracking-tighter">{scores.totalScore}</span>
-              <span className="text-2xl font-bold opacity-80">점</span>
-            </div>
-          </div>
-          <div className="relative z-10 pt-8 text-left">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/15 rounded-full backdrop-blur-md border border-white/10">
-              <CheckCircle2 size={16} className="text-emerald-200" />
-              <span className="text-[11px] font-black">
-                {scores.totalScore >= 85 ? '안전한 대출 자산 보호망 가동 중' : scores.totalScore >= 65 ? '보통 수준의 대출 안전도' : '대출상환 공백 리스크 위험 수준'}
-              </span>
-            </div>
-          </div>
-        </div>
-
       </div>
 
       {/* ── 대출금 대비 보장 공백 시각화 ── */}

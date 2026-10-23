@@ -79,7 +79,7 @@ export const analyzePet = (analysis: any): any => {
   const dietPremium = opt1.premium;
   const diet: RecommendationPlan = {
     title: '실속 가성비 플랜',
-    description: `${petOpts.petName}의 필수 일상 의료비(통원/입원)를 갱신 주기에 맞춰 부담 없이 지켜주는 알뜰형 플랜입니다.`,
+    description: '반려동물의 필수 일상 의료비(통원/입원)를 갱신 주기에 맞춰 부담 없이 지켜주는 알뜰형 플랜입니다.',
     estimatedPremium: dietPremium,
     periodBadge: '3년/5년 갱신형 (전기납)',
     coverageChanges: [

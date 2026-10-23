@@ -84,11 +84,12 @@ export function maskCompany(name: string, isUnlocked: boolean): string {
     'DGB생명보험': 'S생보',
     '푸본현대생명': 'U생보',
     '푸본현대': 'U생보',
+    'IBK연금보험': 'V생보',
+    'IBK연금': 'V생보',
     
     // Short / Abbreviated Brand mappings (non-duplicate)
     '교보라플': 'H사',
     '신한': 'D사',
-    '우리': 'U사',
     'KDB': 'I사',
     'ABL': 'P사',
     'AIA': 'N사',
@@ -110,24 +111,43 @@ export function maskCompany(name: string, isUnlocked: boolean): string {
     '카카오페이': 'L사',
     '처브': 'T사',
     '푸본': 'U사',
+    'IBK': 'V사',
   };
 
+  const clean = name.replace(/\s+/g, '').toUpperCase();
+
+  // 1. Direct or partial match with original name
   for (const [key, val] of Object.entries(companyMap)) {
     if (name.includes(key)) {
       return val;
     }
   }
 
-  // Fallback for generic brands
-  if (name.includes('삼성')) return 'A사';
-  if (name.includes('현대')) return 'B사';
-  if (name.includes('동양')) return 'E사';
-  if (name.includes('교보')) return 'B사';
+  // 2. Normalized match (handles spaces, casing, e.g. 'aig 손보', 'axa 다이렉트', 'AIG')
+  for (const [key, val] of Object.entries(companyMap)) {
+    const cleanKey = key.replace(/\s+/g, '').toUpperCase();
+    if (clean.includes(cleanKey)) {
+      return val;
+    }
+  }
+
+  // Fallback for foreign/English and generic brands
+  if (clean.includes('AIG') || clean.includes('에이아이지')) return 'O손보';
+  if (clean.includes('AXA') || clean.includes('악사')) return 'M손보';
+  if (clean.includes('CARROT') || clean.includes('캐롯')) return 'N손보';
+  if (clean.includes('ACE') || clean.includes('에이스')) return 'P손보';
+  if (clean.includes('CHUBB') || clean.includes('처브')) return 'P손보';
+  if (clean.includes('SHINHAN') || clean.includes('신한EZ') || clean.includes('신한이즈')) return 'R손보';
+  if (clean.includes('삼성')) return 'A사';
+  if (clean.includes('현대')) return 'B사';
+  if (clean.includes('동양')) return 'E사';
+  if (clean.includes('교보')) return 'B사';
+  if (clean.includes('IBK')) return 'V생보';
   
   return name;
 }
 
-export function maskProductName(name: string, isUnlocked: boolean): string {
+export function maskProductName(name: string, isUnlocked: boolean, categoryHint?: string): string {
   if (isUnlocked || !name) return name;
 
   const lower = name.toLowerCase();
@@ -149,6 +169,90 @@ export function maskProductName(name: string, isUnlocked: boolean): string {
   const types = ['A형', 'B형', 'C형', 'D형', 'E형', 'F형'];
   const suffix = ` (${types[sum % types.length]})`;
 
+  // 1. 카테고리 힌트가 주어진 경우 해당 카테고리 전문 보험명으로 우선 매핑 (타 질환 침범 원천 방지)
+  if (categoryHint) {
+    const hint = categoryHint.toLowerCase();
+    if (hint.includes('심장') || hint === 'heart' || hint.includes('cardio') || hint.includes('허혈')) {
+      if (cleanLower.includes('급성') || cleanLower.includes('심근경색')) return '급성심근경색 안심보장보험' + suffix;
+      if (cleanLower.includes('심혈관') || cleanLower.includes('부정맥') || cleanLower.includes('혈전')) return '심혈관질환 집중보장보험' + suffix;
+      return '허혈성 심장질환보장보험' + suffix;
+    }
+    if (hint.includes('뇌') || hint === 'brain' || hint.includes('cerebro') || hint.includes('stroke')) {
+      if (cleanLower.includes('뇌출혈')) return '뇌출혈질환 안심보장보험' + suffix;
+      if (cleanLower.includes('뇌졸중')) return '뇌졸중 집중보장보험' + suffix;
+      return '뇌혈관질환 안심보장보험' + suffix;
+    }
+    if (hint.includes('암') || hint === 'cancer') {
+      if (cleanLower.includes('표적') || cleanLower.includes('치료비')) return '안심 표적항암치료보험' + suffix;
+      if (cleanLower.includes('재진단') || cleanLower.includes('또받는')) return '반복보장 재진단암보험' + suffix;
+      return '실속 암진단보장보험' + suffix;
+    }
+    if (hint.includes('어린이') || hint.includes('태아') || hint === 'child' || hint === 'pre_family' || hint === 'child_sick' || hint.includes('유병력자')) {
+      return '희망 어린이종합보험' + suffix;
+    }
+    if (hint.includes('치아') || hint === 'dental') {
+      return '실속 치아케어보장보험' + suffix;
+    }
+    if (hint.includes('실손') || hint.includes('실비') || hint === 'silson') {
+      return '표준 실손의료비보험' + suffix;
+    }
+    if (hint.includes('운전자') || hint === 'driver') {
+      return '안심 운전자보장보험' + suffix;
+    }
+    if (hint.includes('자동차') || hint === 'car') {
+      return '전사 자동차다이렉트보험' + suffix;
+    }
+    if (hint.includes('펫') || hint === 'pet') {
+      return '반려동물 건강케어보험' + suffix;
+    }
+    if (hint.includes('골프') || hint.includes('레저') || hint === 'golf') {
+      return '안심 골프레저보험' + suffix;
+    }
+    if (hint.includes('화재') || hint === 'fire' || hint === 'fire_real') {
+      return '가정 주택화재보험' + suffix;
+    }
+    if (hint.includes('재물') || hint === 'property') {
+      return '재물종합 사업자보험' + suffix;
+    }
+    if (hint.includes('치매') || hint === 'dementia') {
+      return '실버 치매간병보장보험' + suffix;
+    }
+    if (hint.includes('재가') || hint.includes('시설') || hint === 'nursing') {
+      return '실속 재가시설지원보험' + suffix;
+    }
+    if (hint.includes('간병') || hint === 'caregiving') {
+      return '안심 간병비지원보험' + suffix;
+    }
+    if (hint.includes('연금') || hint === 'annuity_savings') {
+      return '안심 연금저축보험' + suffix;
+    }
+    if (hint.includes('종신') || hint === 'whole') {
+      return '평생 종신보장보험' + suffix;
+    }
+    if (hint.includes('변액') || hint === 'variable') {
+      return '수익형 변액유니버설보험' + suffix;
+    }
+    if (hint.includes('정기') || hint === 'term') {
+      return '합리적 정기사망보험' + suffix;
+    }
+    if (hint.includes('저축') || hint === 'savings_general') {
+      return '비과세 일반저축보험' + suffix;
+    }
+    if (hint.includes('신용') || hint === 'credit') {
+      return '대출상환 안심신용보험' + suffix;
+    }
+    if (hint.includes('법률') || hint.includes('민사') || hint.includes('형사') || hint === 'legal') {
+      return '민형사 법률비용보험' + suffix;
+    }
+    if (hint.includes('상해') || hint === 'accident') {
+      return '데일리 상해보장보험' + suffix;
+    }
+    if (hint.includes('수술') || hint.includes('입원')) {
+      return '실속 수술입원보장보험' + suffix;
+    }
+  }
+
+  // 2. 카테고리 힌트가 없는 경우 (키워드 기반 fallback)
   if (cleanLower.includes('암') || cleanLower.includes('cancer')) {
     if (cleanLower.includes('표적') || cleanLower.includes('치료비')) return '안심 표적항암치료보험' + suffix;
     if (cleanLower.includes('재진단') || cleanLower.includes('또받는')) return '반복보장 재진단암보험' + suffix;
@@ -241,7 +345,7 @@ export function maskText(text: string, isUnlocked: boolean): string {
   const companyKeys = [
     'BNP파리바 카디프생명', '교보라이프플래닛생명', '교보라이프플래닛', 'NH농협손해보험', '농협손해보험', '신한라이프생명', '미래에셋생명',
     '카카오페이손해보험', 'AXA손해보험', '악사손해보험', '캐롯손해보험',
-    'AIG손해보험', '에이아이지손해보험', '에이스손해보험', '처브손해보험', '푸본현대생명',
+    'AIG손해보험', '에이아이지손해보험', '에이스손해보험', '처브손해보험', '푸본현대생명', 'IBK연금보험', 'IBK연금', 'IBK',
     '처브라이프생명',
     'KB라이프생명', 'NH농협생명', '메트라이프생명', '하나손해보험', '신한라이프', '동양생명', '라이나생명', '카디프생명', '라이프플래닛',
     '삼성화재', '현대해상', 'DB손해보험', 'KB손해보험', '메리츠화재', '한화손해보험', '롯데손해보험', 'MG손해보험',
@@ -249,7 +353,7 @@ export function maskText(text: string, isUnlocked: boolean): string {
     '카카오페이손보', 'AXA손보', '악사손보', '캐롯손보', 'AIG손보', '에이아이지손보', '에이스손보', '처브손보', '푸본현대',
     '처브라이프',
     'KB라이프', 'NH농협손보', '농협손보', '하나손보', 'DB손보', 'KB손보', '한화손보', '롯데손보', 'MG손보', '메리츠',
-    '미래에셋', '라이나', '메트라이프', 'iM라이프생명', 'DGB생명보험', 'iM라이프', 'DGB생명', '신한', '우리', 'KDB',
+    '미래에셋', '라이나', '메트라이프', 'iM라이프생명', 'DGB생명보험', 'iM라이프', 'DGB생명', '신한', 'KDB',
     'ABL', 'AIA', 'AIG', '에이아이지', 'MG', 'DB', 'KB', '흥국', '삼성', '현대', '교보', '동양', '한화', '롯데', '농협', '하나',
     '카카오페이', 'AXA', '악사', '캐롯',
     '처브',

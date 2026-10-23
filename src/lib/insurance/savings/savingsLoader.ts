@@ -59,7 +59,7 @@ export const fetchSavingsPremium = async (analysis: InsuranceAnalysis): Promise<
       declaredRate: 3.15,
       guaranteedRate: 1.25,
       businessFee: 3.2,
-      features: "인터넷 CM 전용 최저 수수료(사업비 3.2%) | 업계 최우수 공시이율 (3.15%) | 자유로운 추가납입(2배수) 및 중도인출",
+      features: "인터넷 CM 전용 낮은 수수료(사업비 3.2%) | 우수한 공시이율 (3.15%) | 자유로운 추가납입(2배수) 및 중도인출",
       hasUniversal: true
     },
     {

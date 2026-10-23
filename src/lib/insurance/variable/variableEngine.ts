@@ -278,7 +278,7 @@ export const analyzeVariable = (analysis: any): any => {
         coverageChanges: [
           `사망 보장금 1억 원 확보 (실적 배당에 따른 증액 가능)`,
           `펀드 운용 성과에 따라 해약환급금 상승 기회 확보`,
-          `동일 보장 종신보험 대비 월 납입 부담 최소화`
+          `사망 보장 기간 선택을 통한 월 납입 부담 최소화`
         ],
         switchingLossNotice: '투자 성과에 따라 사망보장금 및 해약환급금이 변동하며 원금 손실이 발생할 수 있습니다.',
         isFire: false
@@ -317,14 +317,14 @@ export const analyzeVariable = (analysis: any): any => {
       // term_pure or term
       diet = {
         title: '초가성비 실속 정기 플랜',
-        description: `종신보험 대비 보험료 부담을 낮추어 자녀 독립 시점인 60세까지 핵심 사망 보장을 준비하는 실속 정기 플랜입니다.`,
+        description: `보험료 부담을 합리적으로 낮추어 자녀 독립 시점인 60세까지 핵심 사망 보장을 준비하는 실속 정기 플랜입니다.`,
         estimatedPremium: dietPremium,
         periodBadge: '60세만기 · 전기납 (정기보험)',
         companyName: opt1.companyName,
         productName: opt1.productName,
         coverageChanges: [
           `사망 보장금 1억 원 확보 (경제 활동기 집중 케어)`,
-          `종신보험 대비 월 납입 부담 경감 효과`,
+          `필요 기간 집중 설계를 통한 월 납입 부담 경감 효과`,
           `우량체 할인 선반영으로 월 보험료 ${dietPremium.toLocaleString()}원 실현`
         ],
         switchingLossNotice: '순수 보장형 상품이므로 보장 기간 만기 시 해약환급금은 0원이 됩니다.',

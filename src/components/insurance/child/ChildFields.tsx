@@ -42,7 +42,7 @@ export const ChildFields: React.FC<ChildFieldsProps> = ({
           {[
             { id: 'prenatal', label: '태아 / 임산부', desc: '출생 전 태아특약 설계' },
             { id: 'child', label: '어린이 (0~15세)', desc: '성장기 집중 안심 보장' },
-            { id: 'youth', label: '청년 (16~35세)', desc: '어른이보험 실속 구성' }
+            { id: 'youth', label: '청년 (16~35세)', desc: '실속 구성' }
           ].map((item) => (
             <button
               key={item.id}
@@ -182,7 +182,7 @@ export const ChildFields: React.FC<ChildFieldsProps> = ({
               </p>
             </div>
             <div className={`text-xs font-black px-4 py-1.5 rounded-full self-start ${maturity === 30 ? 'bg-yellow-500 text-white' : 'bg-slate-100 text-slate-400'}`}>
-              월 3~4만원대 실속형
+              실속형
             </div>
           </button>
 

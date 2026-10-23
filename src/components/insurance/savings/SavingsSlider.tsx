@@ -208,12 +208,7 @@ export const SavingsSlider: React.FC<{ result: AnalysisResult }> = ({ result }) 
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-emerald-500/20 bg-emerald-950/20 -mx-4 px-4 py-2 rounded-xl">
-                  <p className="text-[10px] font-black text-emerald-400">은행 대비 추가 수령액</p>
-                  <p className="text-2xl font-black text-white">
-                    +{Math.round(metrics.gain / 10000).toLocaleString()} <span className="text-sm">만원</span>
-                  </p>
-                </div>
+
               </div>
             </div>
 
@@ -247,7 +242,7 @@ export const SavingsSlider: React.FC<{ result: AnalysisResult }> = ({ result }) 
             ℹ️ 저축보험 시뮬레이션 산출 기준 및 소비자 유의사항
           </p>
           <p>
-            * 상기 시뮬레이션은 다이렉트(CM) 평균 공시이율(연 2.9%~3.15% 가정) 및 사업비(3.0%~3.5% 차감 가정)를 기준으로 산출된 단순 이해를 돕기 위한 예시이며, 실제 적립액 및 해약환급금은 매월 변동되는 공시이율에 따라 달라집니다.
+            * 상기 시뮬레이션은 다이렉트(CM) 평균 공시이율(연 {savingType === 'installment' ? '3.15%' : '2.90%'} 가정) 및 사업비({savingType === 'installment' ? '3.5%' : '3.0%'} 차감 가정) 기준으로 산출된 단순 이해를 돕기 위한 예시이며, 실제 적립액 및 해약환급금은 매월 변동되는 공시이율에 따라 달라집니다.
           </p>
           <p className="mt-1 text-[11px] text-slate-400">
             * 저축보험은 은행의 예·적금과 달리 납입보험료에서 사업비가 차감된 후 적립되므로 초기 중도 해약 시 원금 손실이 발생할 수 있으며, 비과세 혜택은 소득세법 시행령 요건 충족 시에만 적용됩니다.
